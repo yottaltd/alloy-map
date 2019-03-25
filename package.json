@@ -1,0 +1,31 @@
+{
+  "name": "alloy-map",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "@types/lodash": "^4.14.123",
+    "lodash": "^4.17.11",
+    "ol": "^5.3.1",
+    "proj4": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/ol": "^4.6.5",
+    "@types/proj4": "^2.5.0",
+    "eslint": "^5.15.3",
+    "npm": "^6.9.0",
+    "prettier": "^1.16.4",
+    "typescript": "^3.3.4000"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "printWidth": 100
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11"
+  ]
+}
