@@ -18,7 +18,8 @@
     "lodash": "^4.17.11",
     "ol": "^5.3.1",
     "proj4": "^2.5.0",
-    "ste-simple-events": "^1.4.10"
+    "ste-simple-events": "^1.4.10",
+    "typescript": "^3.3.3333"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.0.3",
@@ -35,8 +36,9 @@
     "prettier": "^1.16.4",
     "start-server-and-test": "^1.7.12",
     "ts-loader": "^5.3.3",
+    "tslint": "^5.14.0",
+    "tslint-no-unused-expression-chai": "^0.1.4",
     "typedoc": "^0.14.2",
-    "typescript": "^3.3.4000",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
   },

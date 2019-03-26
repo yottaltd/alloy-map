@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "noImplicitAny": true,
-    "types": ["node", "mocha", "chai", "cypress"]
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
