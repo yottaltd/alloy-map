@@ -1,21 +1,44 @@
 {
   "name": "alloy-map",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
-  "scripts": {},
+  "main": "dist/alloy-map.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "test:start-server": "http-server ./ -p 8888 -c-1 --silent",
+    "test:cypress-ci": "cypress run",
+    "test:cypress": "cypress open",
+    "test:ci": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress-ci",
+    "test": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress",
+    "build": "webpack --config webpack.config.js",
+    "docs": "typedoc ./src"
+  },
   "dependencies": {
     "@types/lodash": "^4.14.123",
     "lodash": "^4.17.11",
     "ol": "^5.3.1",
-    "proj4": "^2.5.0"
+    "proj4": "^2.5.0",
+    "ste-simple-events": "^1.4.10"
   },
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^4.0.3",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
     "@types/ol": "^4.6.5",
     "@types/proj4": "^2.5.0",
+    "chai": "^4.2.0",
+    "cypress": "^3.2.0",
     "eslint": "^5.15.3",
+    "http-server": "^0.11.1",
+    "mocha": "^6.0.2",
     "npm": "^6.9.0",
     "prettier": "^1.16.4",
-    "typescript": "^3.3.4000"
+    "start-server-and-test": "^1.7.12",
+    "ts-loader": "^5.3.3",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "prettier": {
     "singleQuote": true,

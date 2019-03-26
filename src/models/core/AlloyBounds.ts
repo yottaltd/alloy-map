@@ -8,4 +8,8 @@ export class AlloyBounds {
     this.sw = sw;
     this.ne = ne;
   }
+
+  public toArray(): [number, number, number, number] {
+    return [this.sw.lat, this.sw.lon, this.ne.lat, this.ne.lon];
+  }
 }

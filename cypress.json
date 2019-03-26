@@ -1,0 +1,12 @@
+{
+  "pluginsFile": "cypress/plugins/index.js",
+  "supportFile": "cypress/support/index.ts",
+  "integrationFolder": "cypress/specs",
+  "fixturesFolder": "cypress/fixtures",
+  "screenshotsFolder": "cypress/screenshots",
+  "videosFolder": "cypress/videos",
+  "baseUrl": "http://localhost:8888",
+  "testFiles": "**/*.spec.ts",
+  "userAgent": "E2E",
+  "video": true
+}
