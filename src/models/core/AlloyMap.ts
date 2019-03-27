@@ -3,15 +3,15 @@ import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { MapChangeCentreEvent } from '../events/MapChangeCentreEvent';
 import { MapChangeCentreEventHandler } from '../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
 import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
-import { AlloyBasemap } from './AlloyBasemap';
+import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyFeature } from './AlloyFeature';
-import { AlloyLayer } from './AlloyLayer';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
 
@@ -48,6 +48,12 @@ export class AlloyMap {
    * @ignore
    */
   private currentBasemap: AlloyBasemap | null = null;
+
+  /**
+   * the layers currently managed by the map
+   * @ignore
+   */
+  private managedLayers: Set<AlloyLayer> = new Set();
 
   /**
    * event dispatcher for change center events
@@ -111,7 +117,7 @@ export class AlloyMap {
    * layers currently on display in the map
    */
   public get layers(): Readonly<AlloyLayer[]> {
-    return null as any;
+    return Array.from(this.managedLayers);
   }
 
   /**
@@ -226,7 +232,8 @@ export class AlloyMap {
   }
 
   public addLayer(layer: AlloyLayer): void {
-    throw new Error('Method not implemented.');
+    this.olMap.addLayer(layer.layer);
+    this.managedLayers.add(layer);
   }
 
   public removeLayer(layer: AlloyLayer): void {

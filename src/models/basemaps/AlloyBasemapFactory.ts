@@ -1,4 +1,4 @@
-import { AlloyBasemap } from '../core/AlloyBasemap';
+import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
 import { AlloyTileBasemap } from './AlloyTileBasemap';
 

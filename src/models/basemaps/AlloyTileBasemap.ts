@@ -1,11 +1,11 @@
 import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
-import { AlloyBasemap } from '../core/AlloyBasemap';
+import { AlloyBasemap } from './AlloyBasemap';
 
 export class AlloyTileBasemap implements AlloyBasemap {
-  protected readonly tileLayer: OLTileLayer;
-  protected readonly source: OLXYZ;
+  private readonly tileLayer: OLTileLayer;
+  private readonly source: OLXYZ;
 
   constructor(url: string, tileSize: number = 512) {
     this.source = new OLXYZ({

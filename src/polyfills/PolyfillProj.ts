@@ -1,9 +1,10 @@
 import { fromLonLat, toLonLat } from 'ol/proj.js';
 
 /**
- * utility class for accessing ol/proj functions due to typing issues
+ * utility class for accessing ol/proj functions due to typing issues.
+ * see: https://openlayers.org/en/latest/apidoc/module-ol_proj.html
  */
-export abstract class OLProj {
+export abstract class PolyfillProj {
   /**
    * transforms a coordinate to lon lat [EPSG:4326](https://epsg.io/4326)
    * @param coordinate the coordinate to transform

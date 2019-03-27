@@ -2,6 +2,7 @@ import { AlloyBasemapFactory } from '../../src/models/basemaps/AlloyBasemapFacto
 import { AlloyBounds } from '../../src/models/core/AlloyBounds';
 import { AlloyCoordinate } from '../../src/models/core/AlloyCoordinate';
 import { AlloyMap } from '../../src/models/core/AlloyMap';
+import { AlloyClusterLayer } from '../../src/models/layers/AlloyClusterLayer';
 import { MapChangeCentreEvent } from '../../src/models/events/MapChangeCentreEvent';
 import { MapChangeZoomEvent } from '../../src/models/events/MapChangeZoomEvent';
 
@@ -193,6 +194,19 @@ describe('map', () => {
       cy.wait(500).screenshot({
         capture: 'runner',
       });
+    });
+  });
+
+  describe('layers', () => {
+    it('should set cluster layer', () => {
+      // test data
+      const layer = new AlloyClusterLayer();
+
+      // add the layer
+      map.addLayer(layer);
+
+      // check the property is updated
+      assert.include(map.layers, layer);
     });
   });
 });

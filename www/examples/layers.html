@@ -35,6 +35,9 @@
       });
       const basemap = alloymap.AlloyBasemapFactory.createSkyward();
       map.setBasemap(basemap);
+
+      const layer = new alloymap.AlloyClusterLayer();
+      map.addLayer(layer);
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
+import { PolyfillProj } from '../../polyfills/PolyfillProj';
 import { MathUtils } from '../../utils/MathUtils';
-import { OLProj } from '../../utils/OLProj';
 
 /**
  * the difference between two lat/lon values allowed to be considered as the same value
@@ -18,7 +18,7 @@ export class AlloyCoordinate {
    * @param array assumed to be in `[x,y]` format [EPSG:3857](https://epsg.io/3857)
    */
   public static fromMapCoordinate(array: [number, number]) {
-    array = OLProj.toLonLat(array);
+    array = PolyfillProj.toLonLat(array);
     return new AlloyCoordinate(array[0], array[1]);
   }
 
@@ -47,7 +47,7 @@ export class AlloyCoordinate {
    * [EPSG:3857](https://epsg.io/3857)
    */
   public toMapCoordinate(): [number, number] {
-    return OLProj.fromLonLat([this.lon, this.lat]);
+    return PolyfillProj.fromLonLat([this.lon, this.lat]);
   }
 
   /**

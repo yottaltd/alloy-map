@@ -1,14 +1,14 @@
 import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
-import BingMaps from 'ol/source/BingMaps';
-import { AlloyBasemap } from '../core/AlloyBasemap';
+import OLBingMaps from 'ol/source/BingMaps';
+import { AlloyBasemap } from './AlloyBasemap';
 
 export class AlloyBingBasemap implements AlloyBasemap {
-  protected readonly tileLayer: OLTileLayer;
-  protected readonly source: BingMaps;
+  private readonly tileLayer: OLTileLayer;
+  private readonly source: OLBingMaps;
 
   constructor(key: string) {
-    this.source = new BingMaps({
+    this.source = new OLBingMaps({
       key,
       imagerySet: 'AerialWithLabels',
     });

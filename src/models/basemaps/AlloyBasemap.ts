@@ -5,7 +5,7 @@ import OLLayer from 'ol/layer/Layer';
  */
 export interface AlloyBasemap {
   /**
-   * the openlayers layer instance for the basemp
+   * the openlayers layer instance for the basemap
    */
   readonly layer: Readonly<OLLayer>;
 }
