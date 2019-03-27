@@ -18,8 +18,8 @@ module.exports = {
   },
   output: {
     filename: 'alloy-map.js',
-    library: 'AlloyMap',
-    libraryTarget: 'var',
+    library: 'alloymap',
+    libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist'),
   },
   externals: {

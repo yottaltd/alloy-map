@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<!-- test file used for cypress automation -->
+
+<html>
+  <head>
+    <title>Alloy Map Sandbox - Basemap</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
+
+    <script>
+      const map = new alloymap.AlloyMap({
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(52, 2),
+        zoom: 10,
+      });
+      const basemap = alloymap.AlloyBasemapFactory.createSkyward();
+      map.setBasemap(basemap);
+    </script>
+  </body>
+</html>

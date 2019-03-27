@@ -1,4 +1,4 @@
-import { AlloyTileBasemap } from '../../src/models/basemaps/AlloyTileBasemap';
+import { AlloyBasemapFactory } from '../../src/models/basemaps/AlloyBasemapFactory';
 import { AlloyBounds } from '../../src/models/core/AlloyBounds';
 import { AlloyCoordinate } from '../../src/models/core/AlloyCoordinate';
 import { AlloyMap } from '../../src/models/core/AlloyMap';
@@ -6,8 +6,10 @@ import { MapChangeCentreEvent } from '../../src/models/events/MapChangeCentreEve
 import { MapChangeZoomEvent } from '../../src/models/events/MapChangeZoomEvent';
 
 describe('map', () => {
-  const MAP_ZOOM = 5;
-  const MAP_CENTRE = new AlloyCoordinate(0, 0);
+  const UK_LON = -2;
+  const UK_LAT = 52;
+  const MAP_ZOOM = 10;
+  const MAP_CENTRE = new AlloyCoordinate(UK_LON, UK_LAT);
   let map: AlloyMap;
 
   beforeEach(() => {
@@ -21,82 +23,176 @@ describe('map', () => {
     });
   });
 
-  it('should set centre and trigger centre event', () => {
-    // test data
-    const coordinate = new AlloyCoordinate(4, 4);
-    const expected = new AlloyCoordinate(4, 4);
-    let event = new MapChangeCentreEvent(new AlloyCoordinate(0, 0));
+  describe('navigation', () => {
+    it('should set centre and trigger centre event', () => {
+      // test data
+      const coordinate = new AlloyCoordinate(UK_LON - 1, UK_LAT + 1);
+      const expected = new AlloyCoordinate(UK_LON - 1, UK_LAT + 1);
+      let event = new MapChangeCentreEvent(new AlloyCoordinate(0, 0));
 
-    // listen to change event
-    map.addMapChangeCentreListener((e) => {
-      event = e;
+      // listen to change event
+      map.addMapChangeCentreListener((e) => {
+        event = e;
+      });
+
+      // update the centre
+      map.setCentre(coordinate);
+
+      // check the event and property is updated
+      assert.isTrue(event.centre.equals(expected));
+      assert.isTrue(map.centre.equals(expected));
     });
 
-    // update the centre
-    map.setCentre(coordinate);
+    it('should set zoom and trigger zoom event', () => {
+      // test data
+      const zoom = MAP_ZOOM + 2;
+      const expected = MAP_ZOOM + 2;
+      let event = new MapChangeZoomEvent(0);
 
-    // check the event and property is updated
-    assert.isTrue(event.centre.equals(expected));
-    assert.isTrue(map.centre.equals(expected));
+      // listen to change event
+      map.addMapChangeZoomListener((e) => {
+        event = e;
+      });
+
+      // update the zoom
+      map.setZoom(zoom);
+
+      // check the event and property is updated
+      assert.notEqual(event.zoom, MAP_ZOOM);
+      assert.equal(event.zoom, expected);
+      assert.equal(map.zoom, expected);
+    });
+
+    it('should set viewport and trigger centre/zoom event', () => {
+      // test data
+      const bounds = new AlloyBounds(
+        new AlloyCoordinate(UK_LON, UK_LAT),
+        new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+      );
+      let centreEvent = new MapChangeCentreEvent(new AlloyCoordinate(0, 0));
+      let zoomEvent = new MapChangeZoomEvent(0);
+
+      // listen to change event
+      map.addMapChangeCentreListener((e) => {
+        centreEvent = e;
+      });
+      map.addMapChangeZoomListener((e) => {
+        zoomEvent = e;
+      });
+
+      // update the viewport
+      map.setViewport(bounds);
+
+      // check the event and property is updated
+      assert.isNotTrue(centreEvent.centre.equals(MAP_CENTRE));
+      assert.isNotTrue(map.centre.equals(MAP_CENTRE));
+      assert.notEqual(zoomEvent.zoom, MAP_ZOOM);
+      assert.notEqual(map.zoom, MAP_ZOOM);
+    });
   });
 
-  it('should set zoom and trigger zoom event', () => {
-    // test data
-    const zoom = 10;
-    const expected = 10;
-    let event = new MapChangeZoomEvent(0);
+  describe('basemaps', () => {
+    it('should set skyward basemap', () => {
+      // test data
+      const basemap = AlloyBasemapFactory.createSkyward();
 
-    // listen to change event
-    map.addMapChangeZoomListener((e) => {
-      event = e;
+      // set a basemap
+      map.setBasemap(basemap);
+
+      // check the property is updated
+      assert.equal(map.basemap, basemap);
+
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
     });
 
-    // update the zoom
-    map.setZoom(zoom);
+    it('should set nightscape basemap', () => {
+      // test data
+      const basemap = AlloyBasemapFactory.createNightscape();
 
-    // check the event and property is updated
-    assert.notEqual(event.zoom, MAP_ZOOM);
-    assert.equal(event.zoom, expected);
-    assert.equal(map.zoom, expected);
-  });
+      // set a basemap
+      map.setBasemap(basemap);
 
-  it('should set viewport and trigger centre/zoom event', () => {
-    // test data
-    const bounds = new AlloyBounds(new AlloyCoordinate(4, 4), new AlloyCoordinate(5, 5));
-    const expected = new AlloyCoordinate(4.5, 4.5); // centre of the above bounds
-    let centreEvent = new MapChangeCentreEvent(new AlloyCoordinate(0, 0));
-    let zoomEvent = new MapChangeZoomEvent(0);
+      // check the property is updated
+      assert.equal(map.basemap, basemap);
 
-    // listen to change event
-    map.addMapChangeCentreListener((e) => {
-      centreEvent = e;
-    });
-    map.addMapChangeZoomListener((e) => {
-      zoomEvent = e;
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
     });
 
-    // update the viewport
-    map.setViewport(bounds);
+    it('should set open streetmap basemap', () => {
+      // test data
+      const basemap = AlloyBasemapFactory.createOpenStreetmap();
 
-    // check the event and property is updated
-    assert.isTrue(centreEvent.centre.equals(expected));
-    assert.isTrue(map.centre.equals(expected));
-    assert.notEqual(zoomEvent.zoom, MAP_ZOOM);
-    assert.notEqual(map.zoom, MAP_ZOOM);
-  });
+      // set a basemap
+      map.setBasemap(basemap);
 
-  it('should set basemap', () => {
-    // test data
-    const url = 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    const basemap = new AlloyTileBasemap(url);
+      // check the property is updated
+      assert.equal(map.basemap, basemap);
 
-    // set a basemap
-    map.setBasemap(basemap);
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
+    });
 
-    // check the property is updated
-    assert.equal(map.basemap, basemap);
+    it('should set ordnance survey basemap', () => {
+      // test data
+      const basemap = AlloyBasemapFactory.createOrdnanceSurvey();
 
-    // screenshot the map for debugging
-    cy.screenshot();
+      // set a basemap
+      map.setBasemap(basemap);
+
+      // check the property is updated
+      assert.equal(map.basemap, basemap);
+
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
+    });
+
+    it('should set satellite basemap', () => {
+      // test data
+      const basemap = AlloyBasemapFactory.createSatellite();
+
+      // set a basemap
+      map.setBasemap(basemap);
+
+      // check the property is updated
+      assert.equal(map.basemap, basemap);
+
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
+    });
+
+    it('should change basemap', () => {
+      // test data
+      const basemap1 = AlloyBasemapFactory.createSkyward();
+      const basemap2 = AlloyBasemapFactory.createNightscape();
+
+      // set a basemap
+      map.setBasemap(basemap1);
+
+      // check the property is updated
+      assert.equal(map.basemap, basemap1);
+
+      // set the other basemap
+      map.setBasemap(basemap2);
+
+      // check the property is updated
+      assert.equal(map.basemap, basemap2);
+
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
+    });
   });
 });

@@ -1,3 +1,5 @@
+export { AlloyBasemapFactory } from './models/basemaps/AlloyBasemapFactory';
+export { AlloyBingBasemap } from './models/basemaps/AlloyBingBasemap';
 export { AlloyTileBasemap } from './models/basemaps/AlloyTileBasemap';
 export { AlloyBounds } from './models/core/AlloyBounds';
 export { AlloyCoordinate } from './models/core/AlloyCoordinate';

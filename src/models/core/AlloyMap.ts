@@ -68,7 +68,7 @@ export class AlloyMap {
   constructor(options: AlloyMapOptions) {
     // create the view (initial positioning)
     this.olView = new OLView({
-      center: options.centre ? options.centre.toArray() : [0, 0],
+      center: options.centre ? options.centre.toMapCoordinate() : [0, 0],
       zoom: _.clamp(options.zoom || MIN_ZOOM, MIN_ZOOM, MAX_ZOOM),
       minZoom: MIN_ZOOM,
       maxZoom: MAX_ZOOM,
@@ -90,7 +90,7 @@ export class AlloyMap {
     // listen for view centre changes
     this.olView.on('change:center', (e) => {
       this.onChangeCenter.dispatch(
-        new MapChangeCentreEvent(AlloyCoordinate.fromArray(this.olView.getCenter())),
+        new MapChangeCentreEvent(AlloyCoordinate.fromMapCoordinate(this.olView.getCenter())),
       );
     });
 
@@ -154,17 +154,14 @@ export class AlloyMap {
    */
   public get viewport(): Readonly<AlloyBounds> {
     const extent = this.olView.calculateExtent();
-    return new AlloyBounds(
-      new AlloyCoordinate(extent[0], extent[1]),
-      new AlloyCoordinate(extent[2], extent[3]),
-    );
+    return AlloyBounds.fromMapExtent(extent);
   }
 
   /**
    * the coordinates of the current map centre
    */
   public get centre(): Readonly<AlloyCoordinate> {
-    return AlloyCoordinate.fromArray(this.olView.getCenter());
+    return AlloyCoordinate.fromMapCoordinate(this.olView.getCenter());
   }
 
   /**
@@ -172,7 +169,7 @@ export class AlloyMap {
    * @param coordinate the location to centre the map on
    */
   public setCentre(coordinate: AlloyCoordinate): void {
-    this.olView.setCenter(coordinate.toArray());
+    this.olView.setCenter(coordinate.toMapCoordinate());
   }
 
   /**
@@ -197,7 +194,7 @@ export class AlloyMap {
    * @param bounds the bounds to fit on the screen
    */
   public setViewport(bounds: AlloyBounds): void {
-    this.olView.fit(bounds.toArray());
+    this.olView.fit(bounds.toMapExtent());
   }
 
   /**
