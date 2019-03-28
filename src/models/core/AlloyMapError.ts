@@ -12,12 +12,15 @@ export class AlloyMapError extends Error {
       potentialAlloyError.hasOwnProperty('httpStatusCode') &&
       potentialAlloyError.hasOwnProperty('message')
     ) {
-      return new AlloyMapError(parseInt(potentialAlloyError.errorCode.substring(1), 10), {
-        httpStatusCode: potentialAlloyError.httpStatusCode,
-        message: potentialAlloyError.message,
-        data: potentialAlloyError.errorData,
-        category: potentialAlloyError.category,
-      });
+      return new AlloyMapError(
+        parseInt(potentialAlloyError.errorCode.substring(1), 10),
+        potentialAlloyError.message || '',
+        {
+          httpStatusCode: potentialAlloyError.httpStatusCode,
+          data: potentialAlloyError.errorData,
+          category: potentialAlloyError.category,
+        },
+      );
     }
   }
 
@@ -28,17 +31,20 @@ export class AlloyMapError extends Error {
 
   constructor(
     code: number,
-    options: {
+    message: string,
+    options?: {
       httpStatusCode?: number;
-      message?: string;
       data?: any;
       category?: number;
     },
   ) {
-    super(`E${code} - ${options.message}`);
+    super(`E${code} - ${typeof message}`);
 
     this.code = code;
-    this.category = options.category;
-    this.httpStatusCode = options.httpStatusCode;
+    if (options) {
+      this.category = options.category;
+      this.httpStatusCode = options.httpStatusCode;
+      this.data = options.data;
+    }
   }
 }

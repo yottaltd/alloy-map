@@ -4,10 +4,14 @@ import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { AlloyStyleFunction } from '../AlloyStyleFunction';
+import { AlloyStyleProcessor } from '../AlloyStyleProcessor';
 
-export class AlloyClusterStyleFunction extends AlloyStyleFunction {
-  public func(
+/**
+ * processes the cluster styled feature items
+ * @ignore
+ */
+export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
+  public onStyleProcess(
     feature: OLFeature | OLRenderFeature,
     resolution: number,
   ): OLStyle | OLStyle[] | null {

@@ -10,7 +10,7 @@ export interface AlloyMapOptions {
   element: Element;
 
   /**
-   * the basepath of the alloy api to make tile requests to e.g. https://api.labs.alloyapp.io/api
+   * the basepath of the alloy api to make tile requests to e.g. https://api.labs.alloyapp.io/
    */
   api: string;
 

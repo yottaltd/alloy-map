@@ -1,4 +1,5 @@
-import { fromLonLat, toLonLat } from 'ol/proj.js';
+import { fromLonLat, toLonLat, get } from 'ol/proj.js';
+import OLProjection from 'ol/proj/Projection';
 
 /**
  * utility class for accessing ol/proj functions due to typing issues.
@@ -22,5 +23,13 @@ export abstract class PolyfillProj {
    */
   public static fromLonLat(coordinate: [number, number], projection?: string): [number, number] {
     return fromLonLat(coordinate, projection);
+  }
+
+  /**
+   * fetches a Projection object for the code specified
+   * @param projection the projection code to fetch e.g. EPSG:4326
+   */
+  public static get(projection: string): OLProjection | null {
+    return get(projection) || null;
   }
 }

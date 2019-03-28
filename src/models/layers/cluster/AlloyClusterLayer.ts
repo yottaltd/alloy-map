@@ -10,24 +10,34 @@ import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayer } from '../AlloyLayer';
 import { AlloyClusterFeatureLoaderFunction } from './AlloyClusterFeatureLoaderFunction';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
-import { AlloyClusterStyleFunction } from './AlloyClusterStyleFunction';
+import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
+import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
+
+const TILE_GRID_MAX_ZOOM = 18;
 
 export class AlloyClusterLayer implements AlloyLayer {
   public readonly map: AlloyMap;
   public readonly extent: Readonly<AlloyBounds>;
   public readonly layerCode: string;
+  public readonly styles: Readonly<AlloyClusterLayerStyle[]>;
   public readonly olLayer: OLVectorLayer;
   public readonly olSource: OLVectorSource;
-  public readonly olTileGrid = PolyfillTileGrid.createXYZ({ maxZoom: 18 });
+  public readonly olTileGrid = PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM });
   public readonly olFormat = new OLGeoJSON();
   private readonly features = new Map<string, AlloyItemFeature | AlloyClusterFeature>();
-  private readonly style = new AlloyClusterStyleFunction(this);
-  private readonly loader = new AlloyClusterFeatureLoaderFunction(this);
+  private readonly styleProcessor;
+  private readonly featureLoader;
 
   constructor(options: AlloyClusterLayerOptions) {
     this.map = options.map;
     this.extent = options.extent;
     this.layerCode = options.layerCode;
+    this.styles = options.styles;
+
+    // initialised here because feature loader and style processor need some of the above internal
+    // properties of the layer
+    this.featureLoader = new AlloyClusterFeatureLoaderFunction(this);
+    this.styleProcessor = new AlloyClusterStyleProcessor(this);
 
     // create a new source to hold map features
     this.olSource = new OLVectorSource({
@@ -36,7 +46,8 @@ export class AlloyClusterLayer implements AlloyLayer {
       strategy: PolyfillLoadingStrategy.tile(this.olTileGrid),
       // arrow function required here to get around "this" being in the VectorSource scope
       // the loader function handles loading tiles of features
-      loader: (extent, resolution, projection) => this.loader.func(extent, resolution, projection),
+      loader: (extent, resolution, projection) =>
+        this.featureLoader.loadFeatures(extent, resolution, projection),
     });
 
     // create a new vector layer instance to render our features
@@ -44,7 +55,7 @@ export class AlloyClusterLayer implements AlloyLayer {
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (feature, resolution) => this.style.func(feature, resolution),
+      style: (feature, resolution) => this.styleProcessor.onStyleProcess(feature, resolution),
       source: this.olSource,
       zIndex: 100,
     });

@@ -21,13 +21,16 @@ export function responseInterceptor(response: Response): PromiseLike<Response> {
           throw potentialAlloyError;
         }
       } else if (response.status < 200 || response.status >= 300) {
-        throw new AlloyMapError(1549368024, {
-          message: `Unexpected status code for api call: ${response.status}`,
-          data: {
-            statusCode: response.status,
-            statusText: response.statusText,
+        throw new AlloyMapError(
+          1549368024,
+          `Unexpected status code for api call: ${response.status}`,
+          {
+            data: {
+              statusCode: response.status,
+              statusText: response.statusText,
+            },
           },
-        });
+        );
       }
       return json;
     })
@@ -36,8 +39,7 @@ export function responseInterceptor(response: Response): PromiseLike<Response> {
         return Promise.reject(err);
       }
       return Promise.reject(
-        new AlloyMapError(1549368181, {
-          message: 'Failed to parse json response',
+        new AlloyMapError(1549368181, 'Failed to parse json response', {
           data: {
             error: err.message,
           },
