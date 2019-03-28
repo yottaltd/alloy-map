@@ -4,6 +4,7 @@ import OLTileGrid from 'ol/tilegrid/TileGrid';
 /**
  * wraps the ol/tilegrid functions for openlayers due to type saftey issues:
  * see: https://openlayers.org/en/latest/apidoc/module-ol_tilegrid.html
+ * @ignore
  */
 export abstract class PolyfillTileGrid {
   /**

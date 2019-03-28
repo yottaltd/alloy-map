@@ -1,0 +1,9 @@
+// tslint:disable
+
+/**
+ * Base model for workflow action parameter definitions
+ * @export
+ * @interface WorkflowActionParameterValueWebModelBase
+ */
+export interface WorkflowActionParameterValueWebModelBase {
+}

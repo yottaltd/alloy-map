@@ -10,6 +10,16 @@ export interface AlloyMapOptions {
   element: Element;
 
   /**
+   * the basepath of the alloy api to make tile requests to e.g. https://api.labs.alloyapp.io/api
+   */
+  api: string;
+
+  /**
+   * the authentication token to use for api requests
+   */
+  token: string;
+
+  /**
    * the starting centre location for the map
    */
   centre?: AlloyCoordinate;

@@ -3,6 +3,7 @@ import { intersects } from 'ol/extent.js';
 /**
  * wraps the openlayers ol/extent module due to typing issues.
  * see: https://openlayers.org/en/latest/apidoc/module-ol_extent.html
+ * @ignore
  */
 export abstract class PolyfillExtent {
   /**

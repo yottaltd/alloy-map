@@ -11,7 +11,8 @@
     "test:ci": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress-ci",
     "test": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress",
     "build": "webpack --config webpack.config.js",
-    "docs": "typedoc ./src"
+    "docs": "typedoc ./src",
+    "codegen": "node ./submodules/alloy-typescript-codegen/copyToLocal.js ./submodules/alloy-typescript-codegen/dist ./src/api"
   },
   "dependencies": {
     "@types/lodash": "^4.14.123",

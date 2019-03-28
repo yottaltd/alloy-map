@@ -14,6 +14,8 @@ import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
+import { Api } from '../../svr/Api';
+import { ApiFactory } from '../../svr/ApiFactory';
 
 /**
  * minimum zoom level for the map
@@ -32,16 +34,22 @@ const MAX_ZOOM: number = 22;
  */
 export class AlloyMap {
   /**
+   * the api service to use for making calls to the alloy web api
+   * @ignore
+   */
+  public readonly api: Api;
+
+  /**
    * open layers maps instance
    * @ignore
    */
-  protected readonly olMap: OLMap;
+  public readonly olMap: OLMap;
 
   /**
    * open layers view instance
    * @ignore
    */
-  protected readonly olView: OLView;
+  public readonly olView: OLView;
 
   /**
    * the currently active basemap or null if not set
@@ -72,6 +80,9 @@ export class AlloyMap {
    * @param options the options to initialise the map
    */
   constructor(options: AlloyMapOptions) {
+    // create a new api instance
+    this.api = ApiFactory.api(options.api, options.token);
+
     // create the view (initial positioning)
     this.olView = new OLView({
       center: options.centre ? options.centre.toMapCoordinate() : [0, 0],
@@ -232,7 +243,7 @@ export class AlloyMap {
   }
 
   public addLayer(layer: AlloyLayer): void {
-    this.olMap.addLayer(layer.layer);
+    this.olMap.addLayer(layer.olLayer);
     this.managedLayers.add(layer);
   }
 
