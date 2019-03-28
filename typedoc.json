@@ -1,4 +1,6 @@
 {
   "mode": "file",
-  "out": "./docs"
+  "out": "./docs",
+  "exclude": "src/api/**/*.ts",
+  "excludePrivate": true
 }
