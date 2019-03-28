@@ -1,3 +1,4 @@
+import { Debugger } from 'debug';
 import OLGeoJSON from 'ol/format/GeoJSON';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
@@ -16,6 +17,11 @@ import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
 const TILE_GRID_MAX_ZOOM = 18;
 
 export class AlloyClusterLayer implements AlloyLayer {
+  /**
+   * debugger instance
+   * @ignore
+   */
+  public readonly debugger: Debugger;
   public readonly map: AlloyMap;
   public readonly extent: Readonly<AlloyBounds>;
   public readonly layerCode: string;
@@ -34,6 +40,9 @@ export class AlloyClusterLayer implements AlloyLayer {
     this.layerCode = options.layerCode;
     this.styles = options.styles;
 
+    // set the debugger instance
+    this.debugger = this.map.debugger.extend(AlloyClusterLayer.name + ':' + this.layerCode);
+
     // initialised here because feature loader and style processor need some of the above internal
     // properties of the layer
     this.featureLoader = new AlloyClusterFeatureLoaderFunction(this);
@@ -41,8 +50,6 @@ export class AlloyClusterLayer implements AlloyLayer {
 
     // create a new source to hold map features
     this.olSource = new OLVectorSource({
-      // expected to have data in geo json format
-      format: new OLGeoJSON(),
       strategy: PolyfillLoadingStrategy.tile(this.olTileGrid),
       // arrow function required here to get around "this" being in the VectorSource scope
       // the loader function handles loading tiles of features
@@ -58,6 +65,12 @@ export class AlloyClusterLayer implements AlloyLayer {
       style: (feature, resolution) => this.styleProcessor.onStyleProcess(feature, resolution),
       source: this.olSource,
       zIndex: 100,
+    });
+
+    // listen for zoom changes so we can wipe the cache
+    this.map.addMapChangeZoomListener((e) => {
+      this.debugger('map zoomed, clearing features');
+      this.clearFeatures();
     });
   }
 
@@ -78,5 +91,13 @@ export class AlloyClusterLayer implements AlloyLayer {
   public addFeatures(features: Array<AlloyItemFeature | AlloyClusterFeature>) {
     this.olSource.addFeatures(features.map((f) => f.olFeature));
     this.features.forEach((f) => this.features.set(f.olFeature.getId().toString(), f));
+  }
+
+  /**
+   * clear all features from the layer
+   */
+  public clearFeatures() {
+    this.olSource.clear(true /* fast option doesn't dispatch removeFeature events */);
+    this.features.clear();
   }
 }

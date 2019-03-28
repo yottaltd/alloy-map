@@ -1,18 +1,32 @@
+import { Debugger } from 'debug';
 import OLProjection from 'ol/proj/Projection';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
+import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyFeatureLoader } from '../AlloyFeatureLoader';
+import { AlloyTileCache } from '../cache/AlloyTileCache';
 import { AlloyClusterLayer } from './AlloyClusterLayer';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
+
+/**
+ * the number of tile requests to cache in memory
+ * @ignore
+ */
+const TILE_CACHE_SIZE = 256;
 
 /**
  * loads cluster layer features from the alloy api
  * @ignore
  */
 export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
+  /**
+   * debugger instance
+   * @ignore
+   */
+  private readonly debugger: Debugger;
+
   /**
    * the layer we are loading features for
    */
@@ -30,6 +44,13 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
   private readonly styleIds: string[];
 
   /**
+   * a cache of tiles requested by this loader
+   */
+  private readonly tileCache = new AlloyTileCache<Array<AlloyItemFeature | AlloyClusterFeature>>(
+    TILE_CACHE_SIZE,
+  );
+
+  /**
    * creates a new instance
    * @param layer the layer to load features for
    */
@@ -39,6 +60,9 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
     this.olLayerExtent = layer.extent.toMapExtent();
     // calculate the style ids and cache
     this.styleIds = layer.styles.map((s) => s.styleId);
+
+    // setup the debugger
+    this.debugger = layer.debugger.extend(AlloyClusterFeatureLoaderFunction.name);
   }
 
   public async loadFeatures(
@@ -46,8 +70,11 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
     resolution: number,
     projection: OLProjection,
   ): Promise<void> {
+    this.debugger('load features requested, resolution: %d, extent: %o', resolution, extent);
+
     // short circuit if the view is out of bounds
     if (!PolyfillExtent.intersects(this.olLayerExtent, extent)) {
+      this.debugger('view is out of bounds');
       return;
     }
 
@@ -58,9 +85,19 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
 
     // iterate through tile coords for the current extent and zoom
     this.layer.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: [number, number, number]) => {
+      this.debugger('features requested for tile, %o', coordinate);
+
+      // check the tile cache first, if we have results then use them
+      const tileCacheItem = this.tileCache.get(AlloyTileCache.createKey(coordinate, this.styleIds));
+      if (tileCacheItem) {
+        this.debugger('data cached, reusing tile, %o');
+        return tileCacheItem;
+      }
+
       // short circuit if the tile is out of bounds
       const tileCoordExtent = this.layer.olTileGrid.getTileCoordExtent(coordinate);
       if (!PolyfillExtent.intersects(this.olLayerExtent, tileCoordExtent)) {
+        this.debugger('tile is out of bounds');
         return;
       }
 
@@ -86,16 +123,21 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
   private async requestTile(
     coordinate: [number, number, number],
   ): Promise<Array<AlloyItemFeature | AlloyClusterFeature>> {
+    const x: number = coordinate[1];
+    const y: number = Math.abs(coordinate[2] + 1);
+    const z: number = coordinate[0];
+    this.debugger('requesting tile data for x: %d, y: %d, z: %d', x, y, z);
     const response = await this.layer.map.api.layer.layerGetClusterLayerTile(
       this.layer.layerCode,
-      coordinate[1], // x
-      Math.abs(coordinate[2] + 1), // y
-      coordinate[0], // z
+      x,
+      y,
+      z,
       this.styleIds,
     );
 
     // return early if no results
     if (response.results.length === 0) {
+      this.debugger('no results for tile x: %d, y: %d, z: %d', x, y, z);
       return [];
     }
 
@@ -117,7 +159,7 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
     // result in the following process, be careful when modifying these and make sure they match
     // what the service is giving us. Think about performance because there could be MANY results
     // and this is called potentially 30-40 times in a second when panning
-    return response.results.map((r: any /* we don't have typings */, i: number) => {
+    const features = response.results.map((r: any /* we don't have typings */, i: number) => {
       // we switch on "type" we know this exists because of the spec for the cluster endpoint
       switch (r.properties.type) {
         case AlloyFeatureType.Cluster:
@@ -131,5 +173,19 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
           );
       }
     });
+
+    // add the results to the tile cache
+    this.tileCache.set(AlloyTileCache.createKey(coordinate, this.styleIds), features);
+    if (this.debugger.enabled) {
+      this.debugger(
+        '%d results added to cache for tile x: %d, y: %d, z: %d',
+        features.length,
+        x,
+        y,
+        z,
+      );
+    }
+
+    return features;
   }
 }

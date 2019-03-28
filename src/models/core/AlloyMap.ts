@@ -1,21 +1,22 @@
+import { debug, Debugger } from 'debug';
 import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+import { Api } from '../../svr/Api';
+import { ApiFactory } from '../../svr/ApiFactory';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { MapChangeCentreEvent } from '../events/MapChangeCentreEvent';
 import { MapChangeCentreEventHandler } from '../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
 import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
+import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
-import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { Api } from '../../svr/Api';
-import { ApiFactory } from '../../svr/ApiFactory';
 
 /**
  * minimum zoom level for the map
@@ -33,6 +34,12 @@ const MAX_ZOOM: number = 22;
  * the alloy map manages basemaps, layers and drawing
  */
 export class AlloyMap {
+  /**
+   * debugger instance
+   * @ignore
+   */
+  public readonly debugger: Debugger = debug('alloymaps');
+
   /**
    * the api service to use for making calls to the alloy web api
    * @ignore
@@ -105,16 +112,25 @@ export class AlloyMap {
     });
 
     // listen for view centre changes
-    this.olView.on('change:center', (e) => {
-      this.onChangeCenter.dispatch(
-        new MapChangeCentreEvent(AlloyCoordinate.fromMapCoordinate(this.olView.getCenter())),
-      );
-    });
+    this.olView.on(
+      'change:center',
+      _.debounce(
+        () =>
+          this.onChangeCenter.dispatch(
+            new MapChangeCentreEvent(AlloyCoordinate.fromMapCoordinate(this.olView.getCenter())),
+          ),
+        100,
+      ),
+    );
 
     // listen for resolution changes (we broadcast zoom levels)
-    this.olView.on('change:resolution', (e) => {
-      this.onChangeZoom.dispatch(new MapChangeZoomEvent(this.olView.getZoom()));
-    });
+    this.olView.on(
+      'change:resolution',
+      _.debounce(
+        () => this.onChangeZoom.dispatch(new MapChangeZoomEvent(this.olView.getZoom())),
+        100,
+      ),
+    );
   }
 
   /**
