@@ -11,7 +11,7 @@ import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
-import { AlloyFeature } from './AlloyFeature';
+import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
 
@@ -53,7 +53,7 @@ export class AlloyMap {
    * the layers currently managed by the map
    * @ignore
    */
-  private managedLayers: Set<AlloyLayer> = new Set();
+  private managedLayers = new Set<AlloyLayer>();
 
   /**
    * event dispatcher for change center events
