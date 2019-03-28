@@ -8,7 +8,7 @@ import { AlloyFeatureType } from './AlloyFeatureType';
  * an alloy cluster feature which represents several items "clustered" together based on proximity
  */
 export class AlloyClusterFeature implements AlloyFeature {
-  public readonly type = AlloyFeatureType.Cluster;
+  public type!: AlloyFeatureType.Cluster; // see end of file for prototype
   public readonly olFeature: OLFeature;
 
   /**
@@ -34,3 +34,11 @@ export class AlloyClusterFeature implements AlloyFeature {
     return this.olFeature.getGeometry() as OLPoint;
   }
 }
+
+/**
+ * we are prototyping this property because it is the same on every single instance of this class.
+ * there is no built in typescript way to define this without it being turned into an initialised
+ * property (set on each constructor) and due to the frequency that these objects are created we
+ * really need every small optimisation we can get with regard to features
+ */
+AlloyClusterFeature.prototype.type = AlloyFeatureType.Cluster;

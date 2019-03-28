@@ -14,7 +14,7 @@ import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
  * an alloy item feature which represents a basic item feature on the map
  */
 export class AlloyItemFeature implements AlloyFeature {
-  public readonly type = AlloyFeatureType.Item;
+  public type!: AlloyFeatureType.Item; // see end of file for prototype
   public readonly olFeature: OLFeature;
 
   /**
@@ -48,3 +48,11 @@ export class AlloyItemFeature implements AlloyFeature {
     return this.olFeature.getGeometry() as any;
   }
 }
+
+/**
+ * we are prototyping this property because it is the same on every single instance of this class.
+ * there is no built in typescript way to define this without it being turned into an initialised
+ * property (set on each constructor) and due to the frequency that these objects are created we
+ * really need every small optimisation we can get with regard to features
+ */
+AlloyItemFeature.prototype.type = AlloyFeatureType.Item;

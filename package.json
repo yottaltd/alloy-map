@@ -18,6 +18,7 @@
     "@types/lodash": "^4.14.123",
     "lodash": "^4.17.11",
     "ol": "^5.3.1",
+    "portable-fetch": "^3.0.0",
     "proj4": "^2.5.0",
     "ste-simple-events": "^1.4.10",
     "typescript": "^3.3.3333"
