@@ -14,6 +14,28 @@ export class AlloyTileCache<T> {
   }
 
   /**
+   * generates a tile cache key with a time portion which allows the key to be cached for a number
+   * of minutes before being invalidated. An example key may look like `240:320:18:4-7`
+   * @param coordinate the coordinate to generate a key for
+   * @param cacheForMinutes the number of minutes for the key to be valid for, this is a rolling
+   *                        window so if a tile is cached partway through it may be invalidated
+   *                        earlier than the value specified
+   */
+  public static createTimeBasedKey(
+    coordinate: [number, number, number],
+    cacheForMinutes: number,
+  ): string {
+    const now = new Date();
+    return (
+      coordinate.join(':') +
+      ':' +
+      now.getHours() +
+      '-' +
+      Math.floor(now.getMinutes() / cacheForMinutes)
+    );
+  }
+
+  /**
    * the internal cache of items against the tile key
    */
   private readonly cache = new Map<string, AlloyTileCacheItem<T>>();

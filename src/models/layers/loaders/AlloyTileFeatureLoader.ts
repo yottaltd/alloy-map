@@ -13,6 +13,12 @@ import { AlloyFeatureLoader } from './AlloyFeatureLoader';
 const TILE_CACHE_SIZE = 256;
 
 /**
+ * the number of minutes to cache a tile for, it isn't guaranteed to be cached this long due to
+ * either cache pressure or being added towards the end of the cache window
+ */
+const TILE_CACHE_MINUTES = 1;
+
+/**
  * base implementation which loads features from a source by tile coordinates
  * @template T the feature types the loader is expected to load
  * @ignore
@@ -71,6 +77,7 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     // calculate the zoom level for the current resolution
     const zoom = this.olTileGrid.getZForResolution(resolution);
 
+    // array of requests for tiles, each result is the loaded features for a given tile
     const requests: Array<Promise<T[]>> = [];
 
     // iterate through tile coords for the current extent and zoom
@@ -78,7 +85,8 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
       this.debugger('features requested for tile, %o', coordinate);
 
       // check the tile cache first, if we have results then use them
-      const tileCacheItem = this.tileCache.get(AlloyTileCache.createKey(coordinate));
+      const tileCacheKey = AlloyTileCache.createTimeBasedKey(coordinate, TILE_CACHE_MINUTES);
+      const tileCacheItem = this.tileCache.get(tileCacheKey);
       if (tileCacheItem) {
         this.debugger('data cached, reusing tile, %o', coordinate);
         requests.push(Promise.resolve(tileCacheItem));
@@ -93,7 +101,7 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
       }
 
       // load the tile
-      requests.push(this.loadTile(coordinate));
+      requests.push(this.loadTile(coordinate, tileCacheKey));
     });
 
     if (requests.length > 0) {
@@ -135,8 +143,9 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
   /**
    * requests a single tile of features from the api
    * @param coordinate the tile coordinate in z, x, y
+   * @param tileCacheKey the cache key for the tile
    */
-  private async loadTile(coordinate: [number, number, number]): Promise<T[]> {
+  private async loadTile(coordinate: [number, number, number], tileCacheKey: string): Promise<T[]> {
     // calculate x, y and z
     const x: number = coordinate[1];
     const y: number = Math.abs(coordinate[2] + 1);
@@ -144,10 +153,18 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
     // make the request for data
     this.debugger('requesting tile data for x: %d, y: %d, z: %d', x, y, z);
-    const features = await this.requestTile(x, y, z);
+    let features: T[];
+    try {
+      features = await this.requestTile(x, y, z);
+    } catch (e) {
+      this.debugger('failed to get tile data for x: %d, y: %d, z: %d, error: %o', x, y, z, e);
+      return []; // we specifically are not caching failed api calls
+    }
 
     // add the results to the tile cache
-    this.tileCache.set(AlloyTileCache.createKey(coordinate), features);
+    this.tileCache.set(tileCacheKey, features);
+
+    // debug message is behind guard because we evaluate length of variable
     if (this.debugger.enabled) {
       this.debugger(
         '%d results added to cache for tile x: %d, y: %d, z: %d',
