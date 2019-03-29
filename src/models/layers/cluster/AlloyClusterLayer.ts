@@ -2,14 +2,14 @@ import { Debugger } from 'debug';
 import OLGeoJSON from 'ol/format/GeoJSON';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import { PolyfillLoadingStrategy } from '../../../polyfills/PolyfillLoadingStrategy';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
+import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayer } from '../AlloyLayer';
-import { AlloyClusterFeatureLoaderFunction } from './AlloyClusterFeatureLoaderFunction';
+import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
 import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
 import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
@@ -31,8 +31,8 @@ export class AlloyClusterLayer implements AlloyLayer {
   public readonly olTileGrid = PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM });
   public readonly olFormat = new OLGeoJSON();
   private readonly features = new Map<string, AlloyItemFeature | AlloyClusterFeature>();
-  private readonly styleProcessor;
-  private readonly featureLoader;
+  private readonly styleProcessor: AlloyClusterStyleProcessor;
+  private readonly featureLoader: AlloyClusterFeatureLoader;
 
   constructor(options: AlloyClusterLayerOptions) {
     this.map = options.map;
@@ -45,17 +45,11 @@ export class AlloyClusterLayer implements AlloyLayer {
 
     // initialised here because feature loader and style processor need some of the above internal
     // properties of the layer
-    this.featureLoader = new AlloyClusterFeatureLoaderFunction(this);
+    this.featureLoader = new AlloyClusterFeatureLoader(this);
     this.styleProcessor = new AlloyClusterStyleProcessor(this);
 
     // create a new source to hold map features
-    this.olSource = new OLVectorSource({
-      strategy: PolyfillLoadingStrategy.tile(this.olTileGrid),
-      // arrow function required here to get around "this" being in the VectorSource scope
-      // the loader function handles loading tiles of features
-      loader: (extent, resolution, projection) =>
-        this.featureLoader.loadFeatures(extent, resolution, projection),
-    });
+    this.olSource = new OLVectorSource();
 
     // create a new vector layer instance to render our features
     this.olLayer = new OLVectorLayer({
@@ -67,11 +61,25 @@ export class AlloyClusterLayer implements AlloyLayer {
       zIndex: 100,
     });
 
-    // listen for zoom changes so we can wipe the cache
+    // listen for zoom changes so we can manage what is on screen
     this.map.addMapChangeZoomListener((e) => {
       this.debugger('map zoomed, clearing features');
+
+      // removes all features currently in the layer
       this.clearFeatures();
+
+      // begin loading features for the new level of detail
+      this.featureLoader.loadFeatures(
+        this.map.olView.calculateExtent(),
+        e.olResolution,
+        ProjectionUtils.MAP_PROJECTION,
+      );
     });
+
+    // when the map moves begin loading features
+    this.map.addMapChangeCentreListener((e) =>
+      this.featureLoader.loadFeatures(e.olExtent, e.olResolution, ProjectionUtils.MAP_PROJECTION),
+    );
   }
 
   /**

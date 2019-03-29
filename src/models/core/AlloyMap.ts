@@ -31,6 +31,12 @@ const MIN_ZOOM: number = 4;
 const MAX_ZOOM: number = 22;
 
 /**
+ * the number in milliseconds to debounce very shouty openlayers events e.g. resolution change
+ * @ignore
+ */
+const DEBOUNCED_EVENT_TIMEOUT: number = 100;
+
+/**
  * the alloy map manages basemaps, layers and drawing
  */
 export class AlloyMap {
@@ -117,9 +123,13 @@ export class AlloyMap {
       _.debounce(
         () =>
           this.onChangeCenter.dispatch(
-            new MapChangeCentreEvent(AlloyCoordinate.fromMapCoordinate(this.olView.getCenter())),
+            new MapChangeCentreEvent(
+              AlloyCoordinate.fromMapCoordinate(this.olView.getCenter()),
+              this.olView.getResolution(),
+              this.olView.calculateExtent(),
+            ),
           ),
-        100,
+        DEBOUNCED_EVENT_TIMEOUT,
       ),
     );
 
@@ -127,8 +137,11 @@ export class AlloyMap {
     this.olView.on(
       'change:resolution',
       _.debounce(
-        () => this.onChangeZoom.dispatch(new MapChangeZoomEvent(this.olView.getZoom())),
-        100,
+        () =>
+          this.onChangeZoom.dispatch(
+            new MapChangeZoomEvent(this.olView.getZoom(), this.olView.getResolution()),
+          ),
+        DEBOUNCED_EVENT_TIMEOUT,
       ),
     );
   }

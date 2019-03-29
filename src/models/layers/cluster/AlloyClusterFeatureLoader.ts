@@ -20,7 +20,7 @@ const TILE_CACHE_SIZE = 256;
  * loads cluster layer features from the alloy api
  * @ignore
  */
-export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
+export class AlloyClusterFeatureLoader implements AlloyFeatureLoader {
   /**
    * debugger instance
    * @ignore
@@ -62,7 +62,7 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
     this.styleIds = layer.styles.map((s) => s.styleId);
 
     // setup the debugger
-    this.debugger = layer.debugger.extend(AlloyClusterFeatureLoaderFunction.name);
+    this.debugger = layer.debugger.extend(AlloyClusterFeatureLoader.name);
   }
 
   public async loadFeatures(
@@ -90,8 +90,9 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
       // check the tile cache first, if we have results then use them
       const tileCacheItem = this.tileCache.get(AlloyTileCache.createKey(coordinate, this.styleIds));
       if (tileCacheItem) {
-        this.debugger('data cached, reusing tile, %o');
-        return tileCacheItem;
+        this.debugger('data cached, reusing tile, %o', coordinate);
+        requests.push(Promise.resolve(tileCacheItem));
+        return;
       }
 
       // short circuit if the tile is out of bounds
@@ -106,12 +107,17 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
     });
 
     if (requests.length > 0) {
+      // wait for all the results to finish loading
       const results = await Promise.all(requests);
-      // flatten the results and add to the layer in one operation for performance because
-      // individual calls would potentially trigger a repaint
-      const features = results.reduce((acc, val) => acc.concat(val), []);
-      if (features.length > 0) {
-        this.layer.addFeatures(features);
+
+      // check if we are still at the same resolution as when the original request was made
+      if (this.layer.map.olView.getResolution() === resolution) {
+        // flatten the results and add to the layer in one operation for performance because
+        // individual calls would potentially trigger a repaint
+        const features = results.reduce((acc, val) => acc.concat(val), []);
+        if (features.length > 0) {
+          this.layer.addFeatures(features);
+        }
       }
     }
   }
@@ -138,6 +144,8 @@ export class AlloyClusterFeatureLoaderFunction implements AlloyFeatureLoader {
     // return early if no results
     if (response.results.length === 0) {
       this.debugger('no results for tile x: %d, y: %d, z: %d', x, y, z);
+      // add the empty results to the tile cache
+      this.tileCache.set(AlloyTileCache.createKey(coordinate, this.styleIds), []);
       return [];
     }
 
