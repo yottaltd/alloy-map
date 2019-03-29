@@ -8,16 +8,18 @@ import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
+// tslint:disable-next-line: max-line-length
+import { AlloySimplifiedGeometryFeatureProperties } from './AlloySimplifiedGeometryFeatureProperties';
 
 /**
- * an alloy item feature which represents a basic item feature on the map
+ * an alloy simplified geometry feature which represents geometry or geometries that have been
+ * optimised for low lod rendering
  */
-export class AlloyItemFeature implements AlloyFeature {
+export class AlloySimplifiedGeometryFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType.Item; // see end of file for prototype
+  public type!: AlloyFeatureType.SimplifiedGeometry; // see end of file for prototype
 
   /**
    * @implements
@@ -25,33 +27,33 @@ export class AlloyItemFeature implements AlloyFeature {
   public readonly olFeature: OLFeature;
 
   /**
-   * the cached properties of the alloy item feature
+   * the cached properties of the alloy simplified geometry feature
    */
-  public readonly properties: Readonly<AlloyItemFeatureProperties>;
+  public readonly properties: Readonly<AlloySimplifiedGeometryFeatureProperties>;
 
   /**
    * creates a new instance
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
    */
-  constructor(olFeature: OLFeature, properties: AlloyItemFeatureProperties) {
+  constructor(olFeature: OLFeature, properties: AlloySimplifiedGeometryFeatureProperties) {
     this.olFeature = olFeature;
     this.properties = properties;
   }
 
   /**
-   * get the "expected" geometry of the alloy item, this is assumed based on its type
+   * get the "expected" geometry of the alloy simplified geometry feature, this is assumed based on
+   * its type
    */
   public getExpectedGeometry():
     | OLPoint
-    | OLMultiPoint
     | OLLineString
-    | OLMultiLineString
     | OLPolygon
+    | OLMultiPoint
+    | OLMultiLineString
     | OLMultiPolygon
     | OLGeometryCollection {
-    // naughty cast here but we are expecting the geometry to always be of one of the above types
-    // the reason we don't check is down to performance
+    // naughty cast here but we are expecting the geometry to be any of the above
     return this.olFeature.getGeometry() as any;
   }
 }
@@ -62,4 +64,4 @@ export class AlloyItemFeature implements AlloyFeature {
  * property (set on each constructor) and due to the frequency that these objects are created we
  * really need every small optimisation we can get with regard to features
  */
-AlloyItemFeature.prototype.type = AlloyFeatureType.Item;
+AlloySimplifiedGeometryFeature.prototype.type = AlloyFeatureType.SimplifiedGeometry;

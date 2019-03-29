@@ -4,20 +4,19 @@ import OLVectorSource from 'ol/source/Vector';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloySimplifiedGeometryFeature } from '../../features/AlloySimplifiedGeometryFeature';
 import { AlloyLayer } from '../AlloyLayer';
-import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
-import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
-import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
-import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
+import { AlloyNetworkFeatureLoader } from './AlloyNetworkFeatureLoader';
+import { AlloyNetworkLayerOptions } from './AlloyNetworkLayerOptions';
+import { AlloyNetworkLayerStyle } from './AlloyNetworkLayerStyle';
+import { AlloyNetworkStyleProcessor } from './AlloyNetworkStyleProcessor';
 
 /**
- * an alloy cluster layer uses the `/api/layer/{code}/{x}/{y}/{z}/cluster` endpoint to request and
- * display features. it will cluster features that are close together until they are suitably
- * dispersed or at a required zoom level then they will become individual items.
+ * an alloy network layer uses the `/api/layer/{code}/{x}/{y}/{z}/network` endpoint to request and
+ * display features. it will not cluster items and will heavily simplify low lod geometry
  */
-export class AlloyClusterLayer implements AlloyLayer {
+export class AlloyNetworkLayer implements AlloyLayer {
   /**
    * debugger instance
    * @ignore
@@ -42,7 +41,7 @@ export class AlloyClusterLayer implements AlloyLayer {
   /**
    * the styles being displayed on the layer
    */
-  public readonly styles: Readonly<AlloyClusterLayerStyle[]>;
+  public readonly styles: Readonly<AlloyNetworkLayerStyle[]>;
 
   /**
    * the openlayers layer to render on
@@ -59,35 +58,35 @@ export class AlloyClusterLayer implements AlloyLayer {
   /**
    * the features currently in the source for this layer
    */
-  private readonly features = new Map<string, AlloyItemFeature | AlloyClusterFeature>();
+  private readonly features = new Map<string, AlloyItemFeature | AlloySimplifiedGeometryFeature>();
 
   /**
    * the processor for styles on the layer
    */
-  private readonly styleProcessor: AlloyClusterStyleProcessor;
+  private readonly styleProcessor: AlloyNetworkStyleProcessor;
 
   /**
    * the loader tha handles fetching and caching features
    */
-  private readonly featureLoader: AlloyClusterFeatureLoader;
+  private readonly featureLoader: AlloyNetworkFeatureLoader;
 
   /**
    * creates a new instance
-   * @param options the options for the alloy cluster layer
+   * @param options the options for the alloy network layer
    */
-  constructor(options: AlloyClusterLayerOptions) {
+  constructor(options: AlloyNetworkLayerOptions) {
     this.map = options.map;
     this.extent = options.extent;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
 
     // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyClusterLayer.name + ':' + this.layerCode);
+    this.debugger = this.map.debugger.extend(AlloyNetworkLayer.name + ':' + this.layerCode);
 
     // initialised here because feature loader and style processor need some of the above internal
     // properties of the layer
-    this.featureLoader = new AlloyClusterFeatureLoader(this);
-    this.styleProcessor = new AlloyClusterStyleProcessor(this);
+    this.featureLoader = new AlloyNetworkFeatureLoader(this);
+    this.styleProcessor = new AlloyNetworkStyleProcessor(this);
 
     // create a new source to hold map features
     this.olSource = new OLVectorSource();
@@ -128,7 +127,7 @@ export class AlloyClusterLayer implements AlloyLayer {
    * adds a feature to the layer
    * @param feature the feature to add to the layer
    */
-  public addFeature(feature: AlloyItemFeature | AlloyClusterFeature) {
+  public addFeature(feature: AlloyItemFeature | AlloySimplifiedGeometryFeature) {
     this.olSource.addFeature(feature.olFeature);
     this.features.set(feature.olFeature.getId().toString(), feature);
   }
@@ -138,7 +137,7 @@ export class AlloyClusterLayer implements AlloyLayer {
    * individually where possible
    * @param features the features to add to the layer
    */
-  public addFeatures(features: Array<AlloyItemFeature | AlloyClusterFeature>) {
+  public addFeatures(features: Array<AlloyItemFeature | AlloySimplifiedGeometryFeature>) {
     this.olSource.addFeatures(features.map((f) => f.olFeature));
     this.features.forEach((f) => this.features.set(f.olFeature.getId().toString(), f));
   }

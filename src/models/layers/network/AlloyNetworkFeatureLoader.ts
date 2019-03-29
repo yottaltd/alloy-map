@@ -2,11 +2,11 @@ import OLGeoJSON from 'ol/format/GeoJSON';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloySimplifiedGeometryFeature } from '../../features/AlloySimplifiedGeometryFeature';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
-import { AlloyClusterLayer } from './AlloyClusterLayer';
+import { AlloyNetworkLayer } from './AlloyNetworkLayer';
 
 /**
  * max zoom level supported for the tile grid (won't make requests beyond this point)
@@ -15,16 +15,16 @@ import { AlloyClusterLayer } from './AlloyClusterLayer';
 const TILE_GRID_MAX_ZOOM = 18;
 
 /**
- * loads cluster layer features from the alloy api
+ * loads network layer features from the alloy api
  * @ignore
  */
-export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
-  AlloyClusterFeature | AlloyItemFeature
+export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
+  AlloySimplifiedGeometryFeature | AlloyItemFeature
 > {
   /**
    * the layer we are loading features for
    */
-  private readonly layer: AlloyClusterLayer;
+  private readonly layer: AlloyNetworkLayer;
 
   /**
    * the computed style ids for the current layer to loader
@@ -45,7 +45,7 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
    * creates a new instance
    * @param layer the layer to load features for
    */
-  constructor(layer: AlloyClusterLayer) {
+  constructor(layer: AlloyNetworkLayer) {
     super(
       PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM }),
       layer.extent.toMapExtent(),
@@ -73,7 +73,9 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
   /**
    * @override
    */
-  protected featuresLoaded(features: Array<AlloyClusterFeature | AlloyItemFeature>): void {
+  protected featuresLoaded(
+    features: Array<AlloySimplifiedGeometryFeature | AlloyItemFeature>,
+  ): void {
     // check if we need to clear the source before adding features
     if (this.shouldClearSource) {
       this.shouldClearSource = false;
@@ -89,8 +91,8 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
     x: number,
     y: number,
     z: number,
-  ): Promise<Array<AlloyClusterFeature | AlloyItemFeature>> {
-    const response = await this.layer.map.api.layer.layerGetClusterLayerTile(
+  ): Promise<Array<AlloySimplifiedGeometryFeature | AlloyItemFeature>> {
+    const response = await this.layer.map.api.layer.layerGetNetworkLayerTile(
       this.layer.layerCode,
       x,
       y,
@@ -125,14 +127,16 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
     return response.results.map((r: any /* we don't have typings */, i: number) => {
       // we switch on "type" we know this exists because of the spec for the cluster endpoint
       switch (r.properties.type) {
-        case AlloyFeatureType.Cluster:
-          return new AlloyClusterFeature(olFeatures[i], r.properties);
+        case AlloyFeatureType.SimplifiedGeometry:
+          return new AlloySimplifiedGeometryFeature(olFeatures[i], r.properties);
         case AlloyFeatureType.Item:
           return new AlloyItemFeature(olFeatures[i], r.properties);
         default:
           throw new AlloyMapError(
-            1553737510,
-            `unhandled alloy feature type ${r.properties.type}, expected Cluster or Item`,
+            1553883056,
+            `unhandled alloy feature type ${
+              r.properties.type
+            }, expected SimplifiedGeometry or Item`,
           );
       }
     });

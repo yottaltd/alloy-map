@@ -15,3 +15,5 @@ export { AlloyFeature } from './models/features/AlloyFeature';
 export { AlloyLayer } from './models/layers/AlloyLayer';
 export { AlloyClusterLayer } from './models/layers/cluster/AlloyClusterLayer';
 export { AlloyClusterLayerOptions } from './models/layers/cluster/AlloyClusterLayerOptions';
+export { AlloyNetworkLayer } from './models/layers/network/AlloyNetworkLayer';
+export { AlloyNetworkLayerOptions } from './models/layers/network/AlloyNetworkLayerOptions';

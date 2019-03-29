@@ -61,6 +61,9 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     this.debugger = parentDebugger.extend(AlloyTileFeatureLoader.name);
   }
 
+  /**
+   * @implements
+   */
   public async loadFeatures(
     extent: [number, number, number, number],
     resolution: number,

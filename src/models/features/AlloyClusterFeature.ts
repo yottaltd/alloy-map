@@ -8,7 +8,14 @@ import { AlloyFeatureType } from './AlloyFeatureType';
  * an alloy cluster feature which represents several items "clustered" together based on proximity
  */
 export class AlloyClusterFeature implements AlloyFeature {
+  /**
+   * @implements
+   */
   public type!: AlloyFeatureType.Cluster; // see end of file for prototype
+
+  /**
+   * @implements
+   */
   public readonly olFeature: OLFeature;
 
   /**

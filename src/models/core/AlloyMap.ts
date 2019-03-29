@@ -65,26 +65,23 @@ export class AlloyMap {
   public readonly olView: OLView;
 
   /**
-   * the currently active basemap or null if not set
+   * the currently active basemap or null if not se
    * @ignore
    */
   private currentBasemap: AlloyBasemap | null = null;
 
   /**
    * the layers currently managed by the map
-   * @ignore
    */
   private managedLayers = new Set<AlloyLayer>();
 
   /**
    * event dispatcher for change center events
-   * @ignore
    */
   private readonly onChangeCenter = new SimpleEventDispatcher<MapChangeCentreEvent>();
 
   /**
    * event dispatcher for change zoom events
-   * @ignore
    */
   private readonly onChangeZoom = new SimpleEventDispatcher<MapChangeZoomEvent>();
 
