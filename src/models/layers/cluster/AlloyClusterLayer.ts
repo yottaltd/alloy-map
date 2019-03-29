@@ -1,8 +1,6 @@
 import { Debugger } from 'debug';
-import OLGeoJSON from 'ol/format/GeoJSON';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
@@ -13,8 +11,6 @@ import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
 import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
 import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
-
-const TILE_GRID_MAX_ZOOM = 18;
 
 export class AlloyClusterLayer implements AlloyLayer {
   /**
@@ -28,8 +24,6 @@ export class AlloyClusterLayer implements AlloyLayer {
   public readonly styles: Readonly<AlloyClusterLayerStyle[]>;
   public readonly olLayer: OLVectorLayer;
   public readonly olSource: OLVectorSource;
-  public readonly olTileGrid = PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM });
-  public readonly olFormat = new OLGeoJSON();
   private readonly features = new Map<string, AlloyItemFeature | AlloyClusterFeature>();
   private readonly styleProcessor: AlloyClusterStyleProcessor;
   private readonly featureLoader: AlloyClusterFeatureLoader;

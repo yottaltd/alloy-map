@@ -1,17 +1,16 @@
 import { AlloyTileCacheItem } from './AlloyTileCacheItem';
 
 /**
- * represents a LRU style cache for tiles
+ * represents a FIFO style cache for tiles
  * @ignore
  */
 export class AlloyTileCache<T> {
   /**
    * generates a consistent tile cache key
    * @param coordinate the coordinate to generate a key for
-   * @param styleIds the style ids to generate a key for
    */
-  public static createKey(coordinate: [number, number, number], styleIds?: string[]): string {
-    return coordinate.join(':') + (styleIds && styleIds.length > 0 ? ':' + styleIds.join(':') : '');
+  public static createKey(coordinate: [number, number, number]): string {
+    return coordinate.join(':');
   }
 
   /**
