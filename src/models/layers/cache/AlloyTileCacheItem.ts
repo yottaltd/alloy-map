@@ -1,5 +1,6 @@
 /**
  * a cacheable tile item
+ * @ignore
  */
 export interface AlloyTileCacheItem<T> {
   /**

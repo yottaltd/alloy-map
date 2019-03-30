@@ -1,5 +1,6 @@
 /**
  * maths utilities
+ * @ignore
  */
 export abstract class MathUtils {
   /**

@@ -15,6 +15,7 @@ const TILE_CACHE_SIZE = 256;
 /**
  * the number of minutes to cache a tile for, it isn't guaranteed to be cached this long due to
  * either cache pressure or being added towards the end of the cache window
+ * @ignore
  */
 const TILE_CACHE_MINUTES = 1;
 
