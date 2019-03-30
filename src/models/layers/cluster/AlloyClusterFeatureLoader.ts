@@ -48,7 +48,7 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
   constructor(layer: AlloyClusterLayer) {
     super(
       PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM }),
-      layer.extent.toMapExtent(),
+      layer.bounds.toMapExtent(),
       layer.debugger,
     );
     this.layer = layer;

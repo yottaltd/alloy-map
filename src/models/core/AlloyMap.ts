@@ -268,15 +268,28 @@ export class AlloyMap {
     throw new Error('Method not implemented.');
   }
 
+  /**
+   * adds a layer to the map
+   * @param layer the layer to add to the map
+   */
   public addLayer(layer: AlloyLayer): void {
     this.olMap.addLayer(layer.olLayer);
     this.managedLayers.add(layer);
   }
 
+  /**
+   * removes a layer from the map
+   * @param layer the layer to remove
+   */
   public removeLayer(layer: AlloyLayer): void {
-    throw new Error('Method not implemented.');
+    this.olMap.removeLayer(layer.olLayer);
+    this.managedLayers.delete(layer);
   }
 
+  /**
+   * sets the active basemap to render layers on top of
+   * @param basemap the basemap to use
+   */
   public setBasemap(basemap: AlloyBasemap): void {
     // remove the layer from the map
     if (this.currentBasemap) {

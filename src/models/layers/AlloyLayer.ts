@@ -18,7 +18,7 @@ export interface AlloyLayer {
   readonly olLayer: Readonly<OLLayer>;
 
   /**
-   * the extent of the layer to load tiles for (its bounding box)
+   * the bounds of the layer to load tiles for (its bounding box)
    */
-  readonly extent: Readonly<AlloyBounds>;
+  readonly bounds: Readonly<AlloyBounds>;
 }

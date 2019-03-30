@@ -2,21 +2,28 @@ import { AlloyBasemapFactory } from '../../src/models/basemaps/AlloyBasemapFacto
 import { AlloyBounds } from '../../src/models/core/AlloyBounds';
 import { AlloyCoordinate } from '../../src/models/core/AlloyCoordinate';
 import { AlloyMap } from '../../src/models/core/AlloyMap';
-import { AlloyClusterLayer } from '../../src/models/layers/AlloyClusterLayer';
 import { MapChangeCentreEvent } from '../../src/models/events/MapChangeCentreEvent';
 import { MapChangeZoomEvent } from '../../src/models/events/MapChangeZoomEvent';
+import { AlloyClusterLayer } from '../../src/models/layers/cluster/AlloyClusterLayer';
+import { AlloyClusterLayerStyle } from '../../src/models/layers/cluster/AlloyClusterLayerStyle';
+import { AlloyNetworkLayer } from '../../src/models/layers/network/AlloyNetworkLayer';
+import { AlloyNetworkLayerStyle } from '../../src/models/layers/network/AlloyNetworkLayerStyle';
 
 describe('map', () => {
   const UK_LON = -2;
   const UK_LAT = 52;
   const MAP_ZOOM = 10;
   const MAP_CENTRE = new AlloyCoordinate(UK_LON, UK_LAT);
+  const API_URL = 'https://api.labs.alloyapp.io';
+  const API_TOKEN = 'XYZ';
   let map: AlloyMap;
 
   beforeEach(() => {
     cy.visit('/www/index.html');
     cy.get('#map').then((el) => {
       map = new AlloyMap({
+        api: API_URL,
+        token: API_TOKEN,
         element: el[0],
         centre: MAP_CENTRE,
         zoom: MAP_ZOOM,
@@ -29,7 +36,7 @@ describe('map', () => {
       // test data
       const coordinate = new AlloyCoordinate(UK_LON - 1, UK_LAT + 1);
       const expected = new AlloyCoordinate(UK_LON - 1, UK_LAT + 1);
-      let event = new MapChangeCentreEvent(new AlloyCoordinate(0, 0));
+      let event = new MapChangeCentreEvent(new AlloyCoordinate(0, 0), 0, [0, 0, 0, 0]);
 
       // listen to change event
       map.addMapChangeCentreListener((e) => {
@@ -48,7 +55,7 @@ describe('map', () => {
       // test data
       const zoom = MAP_ZOOM + 2;
       const expected = MAP_ZOOM + 2;
-      let event = new MapChangeZoomEvent(0);
+      let event = new MapChangeZoomEvent(0, 0);
 
       // listen to change event
       map.addMapChangeZoomListener((e) => {
@@ -70,8 +77,8 @@ describe('map', () => {
         new AlloyCoordinate(UK_LON, UK_LAT),
         new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
       );
-      let centreEvent = new MapChangeCentreEvent(new AlloyCoordinate(0, 0));
-      let zoomEvent = new MapChangeZoomEvent(0);
+      let centreEvent = new MapChangeCentreEvent(new AlloyCoordinate(0, 0), 0, [0, 0, 0, 0]);
+      let zoomEvent = new MapChangeZoomEvent(0, 0);
 
       // listen to change event
       map.addMapChangeCentreListener((e) => {
@@ -198,9 +205,26 @@ describe('map', () => {
   });
 
   describe('layers', () => {
-    it('should set cluster layer', () => {
+    it('should add cluster layer', () => {
       // test data
-      const layer = new AlloyClusterLayer();
+      const bounds = new AlloyBounds(
+        new AlloyCoordinate(UK_LON, UK_LAT),
+        new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+      );
+      const layerCode = 'myFakeLayer';
+      const styles: AlloyClusterLayerStyle[] = [
+        {
+          colour: '#cc3300',
+          icon: 'icon-stl',
+          styleId: 'myFakeStyleId',
+        },
+      ];
+      const layer = new AlloyClusterLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
 
       // add the layer
       map.addLayer(layer);
@@ -209,4 +233,67 @@ describe('map', () => {
       assert.include(map.layers, layer);
     });
   });
+
+  it('should add network layer', () => {
+    // test data
+    const bounds = new AlloyBounds(
+      new AlloyCoordinate(UK_LON, UK_LAT),
+      new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+    );
+    const layerCode = 'myFakeLayer';
+    const styles: AlloyNetworkLayerStyle[] = [
+      {
+        colour: '#cc3300',
+        icon: 'icon-stl',
+        styleId: 'myFakeStyleId',
+      },
+    ];
+    const layer = new AlloyNetworkLayer({
+      bounds,
+      layerCode,
+      map,
+      styles,
+    });
+
+    // add the layer
+    map.addLayer(layer);
+
+    // check the property is updated
+    assert.include(map.layers, layer);
+  });
+
+  it('should remove layer', () => {
+    // test data
+    const bounds = new AlloyBounds(
+      new AlloyCoordinate(UK_LON, UK_LAT),
+      new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+    );
+    const layerCode = 'myFakeLayer';
+    const styles: AlloyClusterLayerStyle[] = [
+      {
+        colour: '#cc3300',
+        icon: 'icon-stl',
+        styleId: 'myFakeStyleId',
+      },
+    ];
+    const layer = new AlloyClusterLayer({
+      bounds,
+      layerCode,
+      map,
+      styles,
+    });
+
+    // add the layer
+    map.addLayer(layer);
+
+    // check the property is updated
+    assert.include(map.layers, layer);
+
+    // remove the layer
+    map.removeLayer(layer);
+
+    // check the property is updated
+    assert.notInclude(map.layers, layer);
+  });
+  })
 });

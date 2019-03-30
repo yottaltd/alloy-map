@@ -19,7 +19,7 @@ export interface AlloyNetworkLayerOptions {
   /**
    * the bounds of the layer to make requests within
    */
-  extent: AlloyBounds;
+  bounds: AlloyBounds;
 
   /**
    * the styles to show on the layer

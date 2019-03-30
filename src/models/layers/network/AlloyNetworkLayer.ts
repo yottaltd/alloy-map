@@ -31,7 +31,7 @@ export class AlloyNetworkLayer implements AlloyLayer {
   /**
    * @override
    */
-  public readonly extent: Readonly<AlloyBounds>;
+  public readonly bounds: Readonly<AlloyBounds>;
 
   /**
    * the layer code for the cluster layer
@@ -76,7 +76,7 @@ export class AlloyNetworkLayer implements AlloyLayer {
    */
   constructor(options: AlloyNetworkLayerOptions) {
     this.map = options.map;
-    this.extent = options.extent;
+    this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
 
