@@ -46,9 +46,12 @@ describe('map', () => {
       // update the centre
       map.setCentre(coordinate);
 
-      // check the event and property is updated
-      assert.isTrue(event.centre.equals(expected));
-      assert.isTrue(map.centre.equals(expected));
+      // events exposed via the map instance are debounced
+      cy.wait(500).then(() => {
+        // check the event and property is updated
+        assert.isTrue(event.centre.equals(expected));
+        assert.isTrue(map.centre.equals(expected));
+      });
     });
 
     it('should set zoom and trigger zoom event', () => {
@@ -65,10 +68,13 @@ describe('map', () => {
       // update the zoom
       map.setZoom(zoom);
 
-      // check the event and property is updated
-      assert.notEqual(event.zoom, MAP_ZOOM);
-      assert.equal(event.zoom, expected);
-      assert.equal(map.zoom, expected);
+      // events exposed via the map instance are debounced
+      cy.wait(500).then(() => {
+        // check the event and property is updated
+        assert.notEqual(event.zoom, MAP_ZOOM);
+        assert.equal(event.zoom, expected);
+        assert.equal(map.zoom, expected);
+      });
     });
 
     it('should set viewport and trigger centre/zoom event', () => {
@@ -91,11 +97,14 @@ describe('map', () => {
       // update the viewport
       map.setViewport(bounds);
 
-      // check the event and property is updated
-      assert.isNotTrue(centreEvent.centre.equals(MAP_CENTRE));
-      assert.isNotTrue(map.centre.equals(MAP_CENTRE));
-      assert.notEqual(zoomEvent.zoom, MAP_ZOOM);
-      assert.notEqual(map.zoom, MAP_ZOOM);
+      // events exposed via the map instance are debounced
+      cy.wait(500).then(() => {
+        // check the event and property is updated
+        assert.isNotTrue(centreEvent.centre.equals(MAP_CENTRE));
+        assert.isNotTrue(map.centre.equals(MAP_CENTRE));
+        assert.notEqual(zoomEvent.zoom, MAP_ZOOM);
+        assert.notEqual(map.zoom, MAP_ZOOM);
+      });
     });
   });
 
@@ -232,68 +241,67 @@ describe('map', () => {
       // check the property is updated
       assert.include(map.layers, layer);
     });
-  });
 
-  it('should add network layer', () => {
-    // test data
-    const bounds = new AlloyBounds(
-      new AlloyCoordinate(UK_LON, UK_LAT),
-      new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
-    );
-    const layerCode = 'myFakeLayer';
-    const styles: AlloyNetworkLayerStyle[] = [
-      {
-        colour: '#cc3300',
-        icon: 'icon-stl',
-        styleId: 'myFakeStyleId',
-      },
-    ];
-    const layer = new AlloyNetworkLayer({
-      bounds,
-      layerCode,
-      map,
-      styles,
+    it('should add network layer', () => {
+      // test data
+      const bounds = new AlloyBounds(
+        new AlloyCoordinate(UK_LON, UK_LAT),
+        new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+      );
+      const layerCode = 'myFakeLayer';
+      const styles: AlloyNetworkLayerStyle[] = [
+        {
+          colour: '#cc3300',
+          icon: 'icon-stl',
+          styleId: 'myFakeStyleId',
+        },
+      ];
+      const layer = new AlloyNetworkLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
+
+      // add the layer
+      map.addLayer(layer);
+
+      // check the property is updated
+      assert.include(map.layers, layer);
     });
 
-    // add the layer
-    map.addLayer(layer);
+    it('should remove layer', () => {
+      // test data
+      const bounds = new AlloyBounds(
+        new AlloyCoordinate(UK_LON, UK_LAT),
+        new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+      );
+      const layerCode = 'myFakeLayer';
+      const styles: AlloyClusterLayerStyle[] = [
+        {
+          colour: '#cc3300',
+          icon: 'icon-stl',
+          styleId: 'myFakeStyleId',
+        },
+      ];
+      const layer = new AlloyClusterLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
 
-    // check the property is updated
-    assert.include(map.layers, layer);
-  });
+      // add the layer
+      map.addLayer(layer);
 
-  it('should remove layer', () => {
-    // test data
-    const bounds = new AlloyBounds(
-      new AlloyCoordinate(UK_LON, UK_LAT),
-      new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
-    );
-    const layerCode = 'myFakeLayer';
-    const styles: AlloyClusterLayerStyle[] = [
-      {
-        colour: '#cc3300',
-        icon: 'icon-stl',
-        styleId: 'myFakeStyleId',
-      },
-    ];
-    const layer = new AlloyClusterLayer({
-      bounds,
-      layerCode,
-      map,
-      styles,
+      // check the property is updated
+      assert.include(map.layers, layer);
+
+      // remove the layer
+      map.removeLayer(layer);
+
+      // check the property is updated
+      assert.notInclude(map.layers, layer);
     });
-
-    // add the layer
-    map.addLayer(layer);
-
-    // check the property is updated
-    assert.include(map.layers, layer);
-
-    // remove the layer
-    map.removeLayer(layer);
-
-    // check the property is updated
-    assert.notInclude(map.layers, layer);
   });
-  })
 });
