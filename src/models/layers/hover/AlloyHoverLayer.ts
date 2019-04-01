@@ -92,6 +92,7 @@ export class AlloyHoverLayer implements AlloyLayer {
   /**
    * sets the currently hovered feature
    * @param feature the feature to hover
+   * @ignore
    */
   public setHoveredFeature(feature: AlloyFeature | null) {
     // no-op

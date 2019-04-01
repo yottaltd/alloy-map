@@ -96,6 +96,7 @@ export class AlloySelectionLayer implements AlloyLayer {
    * adds a feature to the layer
    * @param feature the feature to add to the layer
    * @returns a flag indicating if the feature was selected (false if its already selected)
+   * @ignore
    */
   public addFeature(feature: AlloyFeature): boolean {
     // check to see if we already have the feature
@@ -115,6 +116,7 @@ export class AlloySelectionLayer implements AlloyLayer {
    * individually where possible
    * @param features the features to add to the layer
    * @returns a flag indicating if the features were selected (false if they're already selected)
+   * @ignore
    */
   public addFeatures(features: AlloyFeature[]): boolean {
     const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
@@ -141,6 +143,7 @@ export class AlloySelectionLayer implements AlloyLayer {
   /**
    * clear all features from the layer
    * @returns flag indicating if any features were removed
+   * @ignore
    */
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;

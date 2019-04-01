@@ -91,7 +91,7 @@ export class AlloyClusterLayer implements AlloyBoundedLayer {
     this.styles = options.styles;
 
     // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyClusterLayer.name + ':' + this.layerCode);
+    this.debugger = this.map.debugger.extend(AlloyClusterLayer.name + ':' + this.id);
 
     // initialised here because feature loader and style processor need some of the above internal
     // properties of the layer
@@ -143,6 +143,7 @@ export class AlloyClusterLayer implements AlloyBoundedLayer {
   /**
    * adds a feature to the layer
    * @param feature the feature to add to the layer
+   * @ignore
    */
   public addFeature(feature: AlloyItemFeature | AlloyClusterFeature) {
     if (this.features.has(feature.id)) {
@@ -157,6 +158,7 @@ export class AlloyClusterLayer implements AlloyBoundedLayer {
    * adds several features at once to the layer, should be used instead of adding features
    * individually where possible
    * @param features the features to add to the layer
+   * @ignore
    */
   public addFeatures(features: Array<AlloyItemFeature | AlloyClusterFeature>) {
     const featuresNotInLayer = features.filter((f) => !this.features.has(f.id));
@@ -170,6 +172,7 @@ export class AlloyClusterLayer implements AlloyBoundedLayer {
 
   /**
    * clear all features from the layer
+   * @ignore
    */
   public clearFeatures() {
     this.olSource.clear(true /* fast option doesn't dispatch removeFeature events */);

@@ -1,5 +1,6 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
+import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
@@ -128,8 +129,7 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
       // we switch on "type" we know this exists because of the spec for the cluster endpoint
       const olFeature = olFeatures[i];
 
-      // the feature id is provided ready from the service so we use it without any modification
-      const featureId = olFeature.getId().toString();
+      const featureId = FeatureUtils.createFeatureId(this.layer.layerCode, olFeature);
       switch (r.properties.type) {
         case AlloyFeatureType.SimplifiedGeometry:
           return new AlloySimplifiedGeometryFeature(featureId, olFeature, r.properties);

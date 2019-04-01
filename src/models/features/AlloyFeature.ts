@@ -12,7 +12,9 @@ export interface AlloyFeature {
   readonly type: AlloyFeatureType;
 
   /**
-   * the id of the feature
+   * the id of the feature, this is meaningless for 3rd parties using this library except for
+   * directly referencing the feature on the map, it should not be relied upon to be, for instance,
+   * an item id
    */
   readonly id: string;
 

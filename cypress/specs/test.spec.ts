@@ -303,5 +303,94 @@ describe('map', () => {
       // check the property is updated
       assert.notInclude(map.layers, layer);
     });
+
+    it('should not allow layer with same id to be added twice', () => {
+      // test data
+      const bounds = new AlloyBounds(
+        new AlloyCoordinate(UK_LON, UK_LAT),
+        new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+      );
+      const layerCode = 'myFakeLayer';
+      const styles: AlloyClusterLayerStyle[] = [
+        {
+          colour: '#cc3300',
+          icon: 'icon-stl',
+          styleId: 'myFakeStyleId',
+        },
+      ];
+      const layer = new AlloyClusterLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
+      const layerWithSameCode = new AlloyClusterLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
+
+      // add the layer
+      map.addLayer(layer);
+
+      // check the property is updated
+      assert.include(map.layers, layer);
+
+      // try to add a second layer
+      assert.throws(() => map.addLayer(layerWithSameCode));
+    });
+
+    it('should not allow layer not in map to be removed', () => {
+      // test data
+      const bounds = new AlloyBounds(
+        new AlloyCoordinate(UK_LON, UK_LAT),
+        new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
+      );
+      const layerCode = 'myFakeLayer';
+      const styles: AlloyClusterLayerStyle[] = [
+        {
+          colour: '#cc3300',
+          icon: 'icon-stl',
+          styleId: 'myFakeStyleId',
+        },
+      ];
+      const layer = new AlloyClusterLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
+      const otherLayer = new AlloyClusterLayer({
+        bounds,
+        layerCode,
+        map,
+        styles,
+      });
+
+      // add the layer
+      map.addLayer(layer);
+
+      // check the property is updated
+      assert.include(map.layers, layer);
+
+      assert.throws(() => map.removeLayer(otherLayer));
+    });
+  });
+
+  describe('features', () => {
+    it('should add feature to map', () => {});
+    it('should remove feature from map', () => {});
+    it('should select feature on map on click', () => {});
+    it('should select feature on map programatically', () => {});
+    it('should remove selection from feature on map on click', () => {});
+    it('should remove selection from feature on map when clicking basemap', () => {});
+    it('should remove selection from feature on map programatically', () => {});
+    it('should select feature on top of other features on click', () => {});
+    it('should suggest features underneath stack of features on click', () => {});
+    it('should multi select features on map on click', () => {});
+    it('should multi select features on map programatically', () => {});
+    it('should not select non-selectable feature', () => {});
+    it('should run interaction processing on selected feature', () => {});
   });
 });

@@ -14,6 +14,15 @@ const OL_FEATURE_TO_FEATURE_ID = '__AlloyFeatureId__';
  */
 export abstract class FeatureUtils {
   /**
+   * creates a feature id in a consistent format
+   * @param layerCode the layer the feature originated from when loaded
+   * @param olFeature the feature that was loaded (should have an id)
+   */
+  public static createFeatureId(layerCode: string, olFeature: OLFeature): string {
+    return layerCode + ':' + olFeature.getId();
+  }
+
+  /**
    * gets the consistent feature id given an openlayers feature
    * @param olFeature the openlayers feature to get the id from
    */

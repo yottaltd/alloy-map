@@ -21,9 +21,9 @@ import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
 import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
+import { AlloyMapError } from './AlloyMapError';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { AlloyMapError } from './AlloyMapError';
 
 /**
  * minimum zoom level for the map
@@ -314,11 +314,14 @@ export class AlloyMap {
    * @param layer the layer to remove
    */
   public removeLayer(layer: AlloyLayer): void {
-    if (this.managedLayers.has(layer) || this.layers.map((l) => l.id).indexOf(layer.id) === 0) {
+    if (!this.managedLayers.has(layer)) {
       throw new AlloyMapError(1554118768, 'layer does not exist in map');
     }
     this.olMap.removeLayer(layer.olLayer);
     this.managedLayers.delete(layer);
+
+    // TODO remove hover feature
+    // TODO remove selection feature
   }
 
   /**
