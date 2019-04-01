@@ -1,6 +1,7 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyLayer } from '../AlloyLayer';
@@ -72,9 +73,9 @@ export class AlloyHoverLayer implements AlloyLayer {
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (feature, resolution) => this.styleProcessor.onStyleProcess(feature, resolution),
+      style: (olFeature, resolution) => this.styleProcessor.onStyleProcess(olFeature, resolution),
       source: this.olSource,
-      zIndex: 3,
+      zIndex: AlloyLayerZIndex.Hover,
     });
   }
 
