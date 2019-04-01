@@ -31,7 +31,7 @@ export class AlloyTileBasemap implements AlloyBasemap {
     });
     this.tileLayer = new OLTileLayer({
       source: this.source,
-      zIndex: 1,
+      zIndex: 0,
     });
   }
 

@@ -60,4 +60,11 @@ export class AlloyCoordinate {
       MathUtils.approximateEquals(this.lon, other.lon, ALLOWED_EQUALITY_DIFFERENCE)
     );
   }
+
+  /**
+   * deep clones the alloy coordinate
+   */
+  public clone(): AlloyCoordinate {
+    return new AlloyCoordinate(this.lon, this.lat);
+  }
 }

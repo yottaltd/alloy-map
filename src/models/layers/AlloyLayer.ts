@@ -1,11 +1,16 @@
 import OLLayer from 'ol/layer/Layer';
-import { AlloyBounds } from '../core/AlloyBounds';
 import { AlloyMap } from '../core/AlloyMap';
+import { AlloyFeature } from '../features/AlloyFeature';
 
 /**
  * an alloy layer can be drawn on top of the map to render features or other visualisations
  */
 export interface AlloyLayer {
+  /**
+   * unique identifier for the layer
+   */
+  readonly id: string;
+
   /**
    * the map the alloy layer was created for
    */
@@ -18,7 +23,8 @@ export interface AlloyLayer {
   readonly olLayer: Readonly<OLLayer>;
 
   /**
-   * the bounds of the layer to load tiles for (its bounding box)
+   * gets an alloy feature by its id
+   * @param id the feature id
    */
-  readonly bounds: Readonly<AlloyBounds>;
+  getFeatureById(id: string): AlloyFeature | null;
 }

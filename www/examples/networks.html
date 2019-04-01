@@ -41,6 +41,10 @@
       const layer = new alloymap.AlloyNetworkLayer({
         map,
         layerCode: 'layers_craigsNetwork_5c9e61c3ff5c130f60129235',
+        bounds: new alloymap.AlloyBounds(
+          new alloymap.AlloyCoordinate(-5, 47),
+          new alloymap.AlloyCoordinate(3, 57),
+        ),
         styles: [
           {
             styleId: '5c9e61d8ff5c130f6012923a',
@@ -48,10 +52,6 @@
             icon: 'icon-footway-tacticle',
           },
         ],
-        extent: new alloymap.AlloyBounds(
-          new alloymap.AlloyCoordinate(-5, 47),
-          new alloymap.AlloyCoordinate(3, 57),
-        ),
       });
       map.addLayer(layer);
     </script>

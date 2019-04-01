@@ -16,9 +16,4 @@ export enum AlloySelectionMode {
    * allows selection of multiple features
    */
   Multi,
-
-  /**
-   * a drawing mode where the user can draw a polygon and have features inside it selected
-   */
-  Polygon,
 }

@@ -7,12 +7,18 @@ import { SimpleEventDispatcher } from 'ste-simple-events';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
+import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
+import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { MapChangeCentreEvent } from '../events/MapChangeCentreEvent';
 import { MapChangeCentreEventHandler } from '../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
 import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
+import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
 import { AlloyLayer } from '../layers/AlloyLayer';
+import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
+import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
@@ -65,6 +71,18 @@ export class AlloyMap {
   public readonly olView: OLView;
 
   /**
+   * the hover layer instance managing hover rendering
+   * @ignore
+   */
+  public readonly hoverLayer: AlloyHoverLayer;
+
+  /**
+   * the selection layer instance managing selection rendering
+   * @ignore
+   */
+  public readonly selectionLayer: AlloySelectionLayer;
+
+  /**
    * the currently active basemap or null if not se
    * @ignore
    */
@@ -74,6 +92,16 @@ export class AlloyMap {
    * the layers currently managed by the map
    */
   private managedLayers = new Set<AlloyLayer>();
+
+  /**
+   * the hover interaction manager, determines when mouseovers occur etc.
+   */
+  private hoverInteraction: AlloyHoverInteraction;
+
+  /**
+   * the selection interaction manager, determines when clicks occur etc.
+   */
+  private selectionInteraction: AlloySelectionInteraction;
 
   /**
    * event dispatcher for change center events
@@ -141,13 +169,16 @@ export class AlloyMap {
         DEBOUNCED_EVENT_TIMEOUT,
       ),
     );
-  }
 
-  /**
-   * the element containing the map
-   */
-  public get element(): Element {
-    return this.olMap.getTargetElement();
+    // setup hover layer, interaction and add it to the map
+    this.hoverLayer = new AlloyHoverLayer({ map: this });
+    this.hoverInteraction = new AlloyHoverInteraction(this);
+    this.olMap.addLayer(this.hoverLayer.olLayer);
+
+    // setup selection layer, interaction and add it to the map
+    this.selectionLayer = new AlloySelectionLayer({ map: this });
+    this.selectionInteraction = new AlloySelectionInteraction(this);
+    this.olMap.addLayer(this.selectionLayer.olLayer);
   }
 
   /**
@@ -165,24 +196,17 @@ export class AlloyMap {
   }
 
   /**
-   * the features on the map
-   */
-  public get features(): Readonly<Map<string, AlloyFeature>> {
-    return null as any;
-  }
-
-  /**
    * the currently selected features
    */
   public get selectedFeatures(): Readonly<Map<string, AlloyFeature>> {
-    return null as any;
+    return this.selectionLayer.features; // already wrapped in new map
   }
 
   /**
    * the current selection mode
    */
   public get selectionMode(): Readonly<AlloySelectionMode> {
-    return null as any;
+    return this.selectionInteraction.selectionMode;
   }
 
   /**
@@ -264,8 +288,12 @@ export class AlloyMap {
     this.onChangeZoom.unsubscribe(handler);
   }
 
+  /**
+   * sets the selection mode for the map and resets any applicable state
+   * @param mode the mode to set
+   */
   public setSelectionMode(mode: AlloySelectionMode): void {
-    throw new Error('Method not implemented.');
+    this.selectionInteraction.setSelectionMode(mode);
   }
 
   /**
@@ -304,27 +332,77 @@ export class AlloyMap {
     this.currentBasemap = basemap;
   }
 
-  public setSelectedFeature(feature: AlloyFeature): void {
-    throw new Error('Method not implemented.');
+  /**
+   * sets the currently selected feature, this will remove any existing selected feature(s) and
+   * trigger the `FeatureSelectionChangeEvent` if selected features were modified.
+   * @param feature the feature to select or null to deselect all features
+   */
+  public setSelectedFeature(feature: AlloyFeature | null): void {
+    if (feature === null) {
+      this.selectionInteraction.setSelectedFeatures([]);
+    } else {
+      this.selectionInteraction.setSelectedFeature(feature);
+    }
   }
 
+  /**
+   * sets the currently selected features, this will remove any existing selected feature(s) and
+   * trigger the `FeatureSelectionChangeEvent` if selected features were modified.
+   * @param features the features to select, passing an empty array will deselect all features
+   */
   public setSelectedFeatures(features: AlloyFeature[]): void {
-    throw new Error('Method not implemented.');
+    this.selectionInteraction.setSelectedFeatures(features);
   }
 
+  /**
+   * selects a feature in addition to the already selected features, this will retain any existing
+   * selected feature(s) and trigger the `FeatureSelectionChangeEvent` if selected features were
+   * modified.
+   * @param feature the feature to select
+   */
   public selectFeature(feature: AlloyFeature): void {
-    throw new Error('Method not implemented.');
+    this.selectionInteraction.selectFeature(feature);
   }
 
+  /**
+   * selects features in addition to the already selected features, this will retain any existing
+   * selected feature(s) and trigger the `FeatureSelectionChangeEvent` if selected features were
+   * modified.
+   * @param features the features to select
+   */
   public selectFeatures(features: AlloyFeature[]): void {
-    throw new Error('Method not implemented.');
+    this.selectionInteraction.selectFeatures(features);
   }
 
-  public deselectFeature(feature: AlloyFeature): void {
-    throw new Error('Method not implemented.');
+  /**
+   * adds an event handler to listen for the `FeatureSelectionChangeEvent` event
+   * @param handler the handler to call when the event is raised
+   */
+  public addFeatureSelectionChangeListener(handler: FeatureSelectionChangeEventHandler): void {
+    this.selectionInteraction.addFeatureSelectionChangeListener(handler);
   }
 
-  public deselectFeatures(features: AlloyFeature[]): void {
-    throw new Error('Method not implemented.');
+  /**
+   * removes an event handler listening to the `FeatureSelectionChangeEvent` event
+   * @param handler the handler to stop listening
+   */
+  public removeFeatureSelectionChangeListener(handler: FeatureSelectionChangeEventHandler): void {
+    this.selectionInteraction.removeFeatureSelectionChangeListener(handler);
+  }
+
+  /**
+   * adds an event handler to listen for the `FeaturesUnderSelectionEvent` event
+   * @param handler the handler to call when the event is raised
+   */
+  public addFeaturesUnderSelectionListener(handler: FeaturesUnderSelectionEventHandler): void {
+    this.selectionInteraction.addFeaturesUnderSelectionListener(handler);
+  }
+
+  /**
+   * removes an event handler listening to the `FeaturesUnderSelectionEvent` event
+   * @param handler the handler to stop listening
+   */
+  public removeFeaturesUnderSelectionListener(handler: FeaturesUnderSelectionEventHandler): void {
+    this.selectionInteraction.removeFeaturesUnderSelectionListener(handler);
   }
 }

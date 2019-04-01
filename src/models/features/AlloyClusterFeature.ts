@@ -1,5 +1,9 @@
 import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
+import { FeatureUtils } from '../../utils/FeatureUtils';
+import { AlloyBounds } from '../core/AlloyBounds';
+import { AlloyCoordinate } from '../core/AlloyCoordinate';
+import { AlloyMap } from '../core/AlloyMap';
 import { AlloyClusterFeatureProperties } from './AlloyClusterFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
@@ -16,6 +20,16 @@ export class AlloyClusterFeature implements AlloyFeature {
   /**
    * @implements
    */
+  public readonly id: string;
+
+  /**
+   * @implements
+   */
+  public allowsSelection!: false; // see end of file for prototype
+
+  /**
+   * @implements
+   */
   public readonly olFeature: OLFeature;
 
   /**
@@ -25,12 +39,30 @@ export class AlloyClusterFeature implements AlloyFeature {
 
   /**
    * creates a new instance
+   * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
    */
-  constructor(olFeature: OLFeature, properties: AlloyClusterFeatureProperties) {
+  constructor(id: string, olFeature: OLFeature, properties: AlloyClusterFeatureProperties) {
+    this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
+
+    // set the id of the feature on the ol feature
+    FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
+  }
+
+  /**
+   * @implements
+   */
+  public onSelectionInteraction(map: AlloyMap): void {
+    const bbox = this.properties.bbox;
+    map.setViewport(
+      new AlloyBounds(
+        new AlloyCoordinate(bbox.lonMin, bbox.latMin),
+        new AlloyCoordinate(bbox.lonMax, bbox.latMax),
+      ),
+    );
   }
 
   /**
@@ -49,3 +81,4 @@ export class AlloyClusterFeature implements AlloyFeature {
  * really need every small optimisation we can get with regard to features
  */
 AlloyClusterFeature.prototype.type = AlloyFeatureType.Cluster;
+AlloyClusterFeature.prototype.allowsSelection = false;

@@ -1,12 +1,14 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import * as uuid from 'uuid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyLayer } from '../AlloyLayer';
+import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
 import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
 import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
@@ -17,7 +19,7 @@ import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
  * display features. it will cluster features that are close together until they are suitably
  * dispersed or at a required zoom level then they will become individual items.
  */
-export class AlloyClusterLayer implements AlloyLayer {
+export class AlloyClusterLayer implements AlloyBoundedLayer {
   /**
    * debugger instance
    * @ignore
@@ -25,12 +27,17 @@ export class AlloyClusterLayer implements AlloyLayer {
   public readonly debugger: Debugger;
 
   /**
-   * @override
+   * @implements
+   */
+  public readonly id: string = uuid.v1();
+
+  /**
+   * @implements
    */
   public readonly map: AlloyMap;
 
   /**
-   * @override
+   * @implements
    */
   public readonly bounds: Readonly<AlloyBounds>;
 
@@ -46,6 +53,7 @@ export class AlloyClusterLayer implements AlloyLayer {
 
   /**
    * the openlayers layer to render on
+   * @implements
    * @ignore
    */
   public readonly olLayer: OLVectorLayer;
@@ -73,7 +81,7 @@ export class AlloyClusterLayer implements AlloyLayer {
 
   /**
    * creates a new instance
-   * @param options the options for the alloy cluster layer
+   * @param options the options for the layer
    */
   constructor(options: AlloyClusterLayerOptions) {
     this.map = options.map;
@@ -99,7 +107,7 @@ export class AlloyClusterLayer implements AlloyLayer {
       // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
       style: (feature, resolution) => this.styleProcessor.onStyleProcess(feature, resolution),
       source: this.olSource,
-      zIndex: 100,
+      zIndex: 2,
     });
 
     // listen for zoom changes so we can manage what is on screen
@@ -125,12 +133,23 @@ export class AlloyClusterLayer implements AlloyLayer {
   }
 
   /**
+   * @implements
+   */
+  public getFeatureById(id: string): AlloyFeature | null {
+    return this.features.get(id) || null;
+  }
+
+  /**
    * adds a feature to the layer
    * @param feature the feature to add to the layer
    */
   public addFeature(feature: AlloyItemFeature | AlloyClusterFeature) {
+    if (this.features.has(feature.id)) {
+      return; // no-op
+    }
+
     this.olSource.addFeature(feature.olFeature);
-    this.features.set(feature.olFeature.getId().toString(), feature);
+    this.features.set(feature.id, feature);
   }
 
   /**
@@ -139,8 +158,13 @@ export class AlloyClusterLayer implements AlloyLayer {
    * @param features the features to add to the layer
    */
   public addFeatures(features: Array<AlloyItemFeature | AlloyClusterFeature>) {
-    this.olSource.addFeatures(features.map((f) => f.olFeature));
-    this.features.forEach((f) => this.features.set(f.olFeature.getId().toString(), f));
+    const featuresNotInLayer = features.filter((f) => !this.features.has(f.id));
+    if (featuresNotInLayer.length === 0) {
+      return; // no-op
+    }
+
+    this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
+    featuresNotInLayer.forEach((f) => this.features.set(f.id, f));
   }
 
   /**

@@ -6,6 +6,7 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
+import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
@@ -22,6 +23,16 @@ export class AlloyItemFeature implements AlloyFeature {
   /**
    * @implements
    */
+  public readonly id: string;
+
+  /**
+   * @implements
+   */
+  public allowsSelection!: true; // see end of file for prototype
+
+  /**
+   * @implements
+   */
   public readonly olFeature: OLFeature;
 
   /**
@@ -31,12 +42,17 @@ export class AlloyItemFeature implements AlloyFeature {
 
   /**
    * creates a new instance
+   * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
    */
-  constructor(olFeature: OLFeature, properties: AlloyItemFeatureProperties) {
+  constructor(id: string, olFeature: OLFeature, properties: AlloyItemFeatureProperties) {
+    this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
+
+    // set the id of the feature on the ol feature
+    FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
   }
 
   /**
@@ -63,3 +79,4 @@ export class AlloyItemFeature implements AlloyFeature {
  * really need every small optimisation we can get with regard to features
  */
 AlloyItemFeature.prototype.type = AlloyFeatureType.Item;
+AlloyItemFeature.prototype.allowsSelection = true;

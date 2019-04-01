@@ -1,12 +1,14 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import * as uuid from 'uuid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloySimplifiedGeometryFeature } from '../../features/AlloySimplifiedGeometryFeature';
-import { AlloyLayer } from '../AlloyLayer';
+import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
 import { AlloyNetworkFeatureLoader } from './AlloyNetworkFeatureLoader';
 import { AlloyNetworkLayerOptions } from './AlloyNetworkLayerOptions';
 import { AlloyNetworkLayerStyle } from './AlloyNetworkLayerStyle';
@@ -16,7 +18,7 @@ import { AlloyNetworkStyleProcessor } from './AlloyNetworkStyleProcessor';
  * an alloy network layer uses the `/api/layer/{code}/{x}/{y}/{z}/network` endpoint to request and
  * display features. it will not cluster items and will heavily simplify low lod geometry
  */
-export class AlloyNetworkLayer implements AlloyLayer {
+export class AlloyNetworkLayer implements AlloyBoundedLayer {
   /**
    * debugger instance
    * @ignore
@@ -24,12 +26,17 @@ export class AlloyNetworkLayer implements AlloyLayer {
   public readonly debugger: Debugger;
 
   /**
-   * @override
+   * @implements
+   */
+  public readonly id: string = uuid.v1();
+
+  /**
+   * @implements
    */
   public readonly map: AlloyMap;
 
   /**
-   * @override
+   * @implements
    */
   public readonly bounds: Readonly<AlloyBounds>;
 
@@ -45,6 +52,7 @@ export class AlloyNetworkLayer implements AlloyLayer {
 
   /**
    * the openlayers layer to render on
+   * @implements
    * @ignore
    */
   public readonly olLayer: OLVectorLayer;
@@ -72,7 +80,7 @@ export class AlloyNetworkLayer implements AlloyLayer {
 
   /**
    * creates a new instance
-   * @param options the options for the alloy network layer
+   * @param options the options for the layer
    */
   constructor(options: AlloyNetworkLayerOptions) {
     this.map = options.map;
@@ -98,7 +106,7 @@ export class AlloyNetworkLayer implements AlloyLayer {
       // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
       style: (feature, resolution) => this.styleProcessor.onStyleProcess(feature, resolution),
       source: this.olSource,
-      zIndex: 100,
+      zIndex: 1,
     });
 
     // listen for zoom changes so we can manage what is on screen
@@ -124,12 +132,23 @@ export class AlloyNetworkLayer implements AlloyLayer {
   }
 
   /**
+   * @implements
+   */
+  public getFeatureById(id: string): AlloyFeature | null {
+    return this.features.get(id) || null;
+  }
+
+  /**
    * adds a feature to the layer
    * @param feature the feature to add to the layer
    */
   public addFeature(feature: AlloyItemFeature | AlloySimplifiedGeometryFeature) {
+    if (this.features.has(feature.id)) {
+      return; // no-op
+    }
+
     this.olSource.addFeature(feature.olFeature);
-    this.features.set(feature.olFeature.getId().toString(), feature);
+    this.features.set(feature.id, feature);
   }
 
   /**
@@ -138,8 +157,13 @@ export class AlloyNetworkLayer implements AlloyLayer {
    * @param features the features to add to the layer
    */
   public addFeatures(features: Array<AlloyItemFeature | AlloySimplifiedGeometryFeature>) {
-    this.olSource.addFeatures(features.map((f) => f.olFeature));
-    this.features.forEach((f) => this.features.set(f.olFeature.getId().toString(), f));
+    const featuresNotInLayer = features.filter((f) => !this.features.has(f.id));
+    if (featuresNotInLayer.length === 0) {
+      return; // no-op
+    }
+
+    this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
+    featuresNotInLayer.forEach((f) => this.features.set(f.id, f));
   }
 
   /**
