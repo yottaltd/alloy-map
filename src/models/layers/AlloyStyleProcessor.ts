@@ -23,11 +23,11 @@ export abstract class AlloyStyleProcessor {
 
   /**
    * the style function called during render
-   * @param feature the feature to style
+   * @param olFeature the feature to style
    * @param resolution the resolution of the view
    */
   public abstract onStyleProcess(
-    feature: OLFeature | OLRenderFeature,
+    olFeature: OLFeature | OLRenderFeature,
     resolution: number,
   ): OLStyle | OLStyle[] | null;
 }

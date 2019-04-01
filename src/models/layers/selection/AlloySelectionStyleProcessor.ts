@@ -12,7 +12,7 @@ import { AlloyStyleProcessor } from '../AlloyStyleProcessor';
  */
 export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
   public onStyleProcess(
-    feature: OLFeature | OLRenderFeature,
+    olFeature: OLFeature | OLRenderFeature,
     resolution: number,
   ): OLStyle | OLStyle[] | null {
     return new OLStyle({
