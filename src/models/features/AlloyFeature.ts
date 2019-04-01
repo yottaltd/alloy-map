@@ -18,11 +18,13 @@ export interface AlloyFeature {
 
   /**
    * whether the feature allows selection
+   * @ignore
    */
   readonly allowsSelection: boolean;
 
   /**
    * the underlying openlayers geojson feature
+   * @ignore
    */
   readonly olFeature: OLFeature;
 

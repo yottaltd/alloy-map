@@ -24,11 +24,13 @@ export class AlloyClusterFeature implements AlloyFeature {
 
   /**
    * @implements
+   * @ignore
    */
   public allowsSelection!: false; // see end of file for prototype
 
   /**
    * @implements
+   * @ignore
    */
   public readonly olFeature: OLFeature;
 
@@ -54,6 +56,7 @@ export class AlloyClusterFeature implements AlloyFeature {
 
   /**
    * @implements
+   * @ignore
    */
   public onSelectionInteraction(map: AlloyMap): void {
     const bbox = this.properties.bbox;
@@ -67,6 +70,7 @@ export class AlloyClusterFeature implements AlloyFeature {
 
   /**
    * get the "expected" geometry of the alloy cluster, this is assumed based on its type
+   * @ignore
    */
   public getExpectedGeometry(): OLPoint {
     // naughty cast here but we are expecting the geometry to always be a Point

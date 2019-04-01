@@ -16,6 +16,7 @@ export class AlloyCoordinate {
    * creates an alloy coordinate instance from an array of numbers provided by the map, this
    * function will convert the values into normalised lon lat
    * @param array assumed to be in `[x,y]` format [EPSG:3857](https://epsg.io/3857)
+   * @ignore
    */
   public static fromMapCoordinate(array: [number, number]) {
     array = PolyfillProj.toLonLat(array);
@@ -45,6 +46,7 @@ export class AlloyCoordinate {
   /**
    * creates an array ready to be used on the map, this function will convert the values into
    * [EPSG:3857](https://epsg.io/3857)
+   * @ignore
    */
   public toMapCoordinate(): [number, number] {
     return PolyfillProj.fromLonLat([this.lon, this.lat]);

@@ -91,17 +91,17 @@ export class AlloyMap {
   /**
    * the layers currently managed by the map
    */
-  private managedLayers = new Set<AlloyLayer>();
+  private readonly managedLayers = new Set<AlloyLayer>();
 
   /**
    * the hover interaction manager, determines when mouseovers occur etc.
    */
-  private hoverInteraction: AlloyHoverInteraction;
+  private readonly hoverInteraction: AlloyHoverInteraction;
 
   /**
    * the selection interaction manager, determines when clicks occur etc.
    */
-  private selectionInteraction: AlloySelectionInteraction;
+  private readonly selectionInteraction: AlloySelectionInteraction;
 
   /**
    * event dispatcher for change center events

@@ -27,11 +27,13 @@ export class AlloyItemFeature implements AlloyFeature {
 
   /**
    * @implements
+   * @ignore
    */
   public allowsSelection!: true; // see end of file for prototype
 
   /**
    * @implements
+   * @ignore
    */
   public readonly olFeature: OLFeature;
 
@@ -57,6 +59,7 @@ export class AlloyItemFeature implements AlloyFeature {
 
   /**
    * get the "expected" geometry of the alloy item, this is assumed based on its type
+   * @ignore
    */
   public getExpectedGeometry():
     | OLPoint

@@ -29,11 +29,13 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
 
   /**
    * @implements
+   * @ignore
    */
   public allowsSelection!: false; // see end of file for prototype
 
   /**
    * @implements
+   * @ignore
    */
   public readonly olFeature: OLFeature;
 
@@ -64,6 +66,7 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
   /**
    * get the "expected" geometry of the alloy simplified geometry feature, this is assumed based on
    * its type
+   * @ignore
    */
   public getExpectedGeometry():
     | OLPoint
