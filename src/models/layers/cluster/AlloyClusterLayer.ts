@@ -1,7 +1,6 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import * as uuid from 'uuid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
@@ -29,7 +28,7 @@ export class AlloyClusterLayer implements AlloyBoundedLayer {
   /**
    * @implements
    */
-  public readonly id: string = uuid.v1();
+  public readonly id: string;
 
   /**
    * @implements
@@ -86,6 +85,8 @@ export class AlloyClusterLayer implements AlloyBoundedLayer {
   constructor(options: AlloyClusterLayerOptions) {
     this.map = options.map;
     this.bounds = options.bounds;
+    // the id for this layer is a layer code (we don't want the same layer twice)
+    this.id = options.layerCode;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
 

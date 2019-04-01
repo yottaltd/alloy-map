@@ -23,6 +23,7 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
+import { AlloyMapError } from './AlloyMapError';
 
 /**
  * minimum zoom level for the map
@@ -301,6 +302,9 @@ export class AlloyMap {
    * @param layer the layer to add to the map
    */
   public addLayer(layer: AlloyLayer): void {
+    if (this.managedLayers.has(layer) || this.layers.map((l) => l.id).indexOf(layer.id) >= 0) {
+      throw new AlloyMapError(1554118465, 'layer already added to map');
+    }
     this.olMap.addLayer(layer.olLayer);
     this.managedLayers.add(layer);
   }
@@ -310,6 +314,9 @@ export class AlloyMap {
    * @param layer the layer to remove
    */
   public removeLayer(layer: AlloyLayer): void {
+    if (this.managedLayers.has(layer) || this.layers.map((l) => l.id).indexOf(layer.id) === 0) {
+      throw new AlloyMapError(1554118768, 'layer does not exist in map');
+    }
     this.olMap.removeLayer(layer.olLayer);
     this.managedLayers.delete(layer);
   }
