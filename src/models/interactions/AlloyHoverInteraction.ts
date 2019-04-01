@@ -1,3 +1,4 @@
+import { Debugger } from 'debug';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLLayer from 'ol/layer/Layer';
@@ -18,6 +19,12 @@ const POINTER_MOVE_THROTTLE = 50;
  * @ignore
  */
 export class AlloyHoverInteraction {
+  /**
+   * debugger instance
+   * @ignore
+   */
+  public readonly debugger: Debugger;
+
   /**
    * the map to add hover interaction to
    */
@@ -53,6 +60,9 @@ export class AlloyHoverInteraction {
    */
   constructor(map: AlloyMap) {
     this.map = map;
+
+    // set the debugger instance
+    this.debugger = this.map.debugger.extend(AlloyHoverInteraction.name);
 
     // listen for pointer move events, these can happen very frequently so we debounce the
     // processing done for these events

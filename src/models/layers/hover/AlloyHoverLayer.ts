@@ -1,7 +1,6 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import * as uuid from 'uuid';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyLayer } from '../AlloyLayer';
@@ -22,7 +21,7 @@ export class AlloyHoverLayer implements AlloyLayer {
   /**
    * @implements
    */
-  public readonly id: string = uuid.v1();
+  public readonly id: string = AlloyHoverLayer.name;
 
   /**
    * @override

@@ -1,7 +1,6 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import * as uuid from 'uuid';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyLayer } from '../AlloyLayer';
@@ -22,7 +21,7 @@ export class AlloySelectionLayer implements AlloyLayer {
   /**
    * @implements
    */
-  public readonly id: string = uuid.v1();
+  public readonly id: string = AlloySelectionLayer.name;
 
   /**
    * @override
@@ -101,9 +100,11 @@ export class AlloySelectionLayer implements AlloyLayer {
   public addFeature(feature: AlloyFeature): boolean {
     // check to see if we already have the feature
     if (this.currentFeatures.has(feature.id)) {
+      this.debugger('feature: %s already exists in layer', feature.id);
       return false;
     }
 
+    this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
     return true;
@@ -116,13 +117,24 @@ export class AlloySelectionLayer implements AlloyLayer {
    * @returns a flag indicating if the features were selected (false if they're already selected)
    */
   public addFeatures(features: AlloyFeature[]): boolean {
-    const featuresNotInLayer = features.filter((f) => !this.features.has(f.id));
+    const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
     if (featuresNotInLayer.length === 0) {
+      // behind guard because we are performing operations for a log
+      if (this.debugger.enabled) {
+        this.debugger('all features already exist in layer: %o', features.map((f) => f.id));
+      }
       return false; // no-op
     }
 
+    // behind guard because we are performing operations for a log
+    if (this.debugger.enabled) {
+      this.debugger(
+        'selecting features that are not already selected: %o',
+        featuresNotInLayer.map((f) => f.id),
+      );
+    }
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
-    featuresNotInLayer.forEach((f) => this.features.set(f.id, f));
+    featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
     return true;
   }
 
@@ -131,10 +143,13 @@ export class AlloySelectionLayer implements AlloyLayer {
    * @returns flag indicating if any features were removed
    */
   public clearFeatures(): boolean {
-    const hasFeatures = this.features.size > 0;
+    const hasFeatures = this.currentFeatures.size > 0;
     if (hasFeatures) {
+      this.debugger('clearing features');
       this.olSource.clear(true /* fast option doesn't dispatch removeFeature events */);
       this.currentFeatures.clear();
+    } else {
+      this.debugger('no features to clear');
     }
     return hasFeatures;
   }
