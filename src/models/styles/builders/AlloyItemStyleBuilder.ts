@@ -31,7 +31,10 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
   /**
    * @override
    */
-  protected createStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
+  protected createStyles(
+    feature: AlloyItemFeature,
+    resolution: number,
+  ): OLStyle | OLStyle[] | null {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554163777, 'missing layer style: ' + feature.properties.styleId);

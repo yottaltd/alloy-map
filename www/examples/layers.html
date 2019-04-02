@@ -30,7 +30,7 @@
 
       const map = new alloymap.AlloyMap({
         api: 'https://api.labs.alloyapp.io/',
-        token: '4fe8c8d1-4087-411a-9c15-fcffda39fd80',
+        token: '4b24ea43-0a61-4a98-b084-ff3761de196c',
         element: document.getElementById('map'),
         centre: new alloymap.AlloyCoordinate(-2, 52),
         zoom: 10,
@@ -40,46 +40,16 @@
 
       const layer = new alloymap.AlloyClusterLayer({
         map,
-        layerCode: 'layers_streetlights_5c939e12ff5c130c98e0e4df',
+        layerCode: 'layers_shibas_5ca3df44ff5c130b04e9ea19',
         bounds: new alloymap.AlloyBounds(
           new alloymap.AlloyCoordinate(-5, 47),
           new alloymap.AlloyCoordinate(3, 57),
         ),
         styles: [
           {
-            styleId: '5c939e26ff5c130c98e0e4e4',
+            styleId: '5ca3e002ff5c130b04e9ea1e',
             colour: '#cc3300',
             icon: 'icon-stl',
-          },
-          {
-            styleId: '5c94e75fff5c130b1c4ac5b4',
-            colour: '#3300cc',
-            icon: 'icon-close',
-          },
-          {
-            styleId: '5c94e783ff5c130b1c4ac5b8',
-            colour: '#00cc33',
-            icon: 'icon-system-404',
-          },
-          {
-            styleId: '5c94e7b6ff5c130b1c4ac5bc',
-            colour: '#cc0033',
-            icon: 'icon-close-small',
-          },
-          {
-            styleId: '5c94e7f7ff5c130b1c4ac5c8',
-            colour: '#33cc00',
-            icon: 'icon-circle',
-          },
-          {
-            styleId: '5c94e814ff5c130b1c4ac5d0',
-            colour: '#993333',
-            icon: 'icon-square',
-          },
-          {
-            styleId: '5c94e835ff5c130b1c4ac5d5',
-            colour: '#999933',
-            icon: 'icon-plus',
           },
         ],
       });

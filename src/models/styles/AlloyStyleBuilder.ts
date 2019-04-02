@@ -20,18 +20,18 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * @param feature
    * @param resolution
    */
-  public build(feature: T, resolution: number): OLStyle | OLStyle[] {
+  public build(feature: T, resolution: number): OLStyle | OLStyle[] | null {
     // generate the cache key for this feature and resolution
     const key: string = this.getKey(feature, resolution);
 
     // attempt to get the styles from the cache
-    const cachedStyle: OLStyle | OLStyle[] | null = this.styleCache.get(key);
-    if (cachedStyle) {
+    const cachedStyle: OLStyle | OLStyle[] | null | undefined = this.styleCache.get(key);
+    if (cachedStyle !== undefined) {
       return cachedStyle;
     }
 
     // generate new styles if not in the cache
-    const newStyle: OLStyle | OLStyle[] = this.createStyles(feature, resolution);
+    const newStyle: OLStyle | OLStyle[] | null = this.createStyles(feature, resolution);
 
     // cache the resulting styles and return
     this.styleCache.set(key, newStyle);
@@ -53,5 +53,5 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * @param feature the feature being styled
    * @param resolution the resolution to style at
    */
-  protected abstract createStyles(feature: T, resolution: number): OLStyle | OLStyle[];
+  protected abstract createStyles(feature: T, resolution: number): OLStyle | OLStyle[] | null;
 }
