@@ -4,14 +4,14 @@ import OLStyle from 'ol/style/Style';
 import * as uuid from 'uuid';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyLayerWithFeaturesBase } from '../AlloyLayerWithFeaturesBase';
+import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawingLayerOptions } from './AlloyDrawingLayerOptions';
 import { AlloyDrawingStyleProcessor } from './AlloyDrawingStyleProcessor';
 
 /**
  * an alloy drawing layer for rendering features provided externally on the map
  */
-export class AlloyDrawingLayer extends AlloyLayerWithFeaturesBase<AlloyFeature> {
+export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   /**
    * the processor for styles on the layer
    */

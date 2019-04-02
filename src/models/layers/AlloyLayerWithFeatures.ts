@@ -11,9 +11,10 @@ import { AlloyLayer } from './AlloyLayer';
 
 /**
  * base implementation for alloy layers with features
+ * @template T the feature types the loader is expected to load
  * @ignore
  */
-export abstract class AlloyLayerWithFeaturesBase<T extends AlloyFeature> implements AlloyLayer {
+export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements AlloyLayer {
   /**
    * debugger instance
    * @ignore
@@ -57,7 +58,7 @@ export abstract class AlloyLayerWithFeaturesBase<T extends AlloyFeature> impleme
    */
   constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
     // set the debugger instance
-    this.debugger = map.debugger.extend(AlloyLayerWithFeaturesBase.name + ':' + id);
+    this.debugger = map.debugger.extend(AlloyLayerWithFeatures.name + ':' + id);
 
     this.id = id;
     this.map = map;

@@ -6,11 +6,12 @@ import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
 import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
-import { AlloyLayerWithFeaturesBase } from '../AlloyLayerWithFeaturesBase';
+import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
+import { AlloyStyledLayer } from '../AlloyStyledLayer';
 import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
-import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
 import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
 
 /**
@@ -19,8 +20,8 @@ import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
  * dispersed or at a required zoom level then they will become individual items.
  */
 export class AlloyClusterLayer
-  extends AlloyLayerWithFeaturesBase<AlloyItemFeature | AlloyClusterFeature>
-  implements AlloyBoundedLayer {
+  extends AlloyLayerWithFeatures<AlloyItemFeature | AlloyClusterFeature>
+  implements AlloyBoundedLayer, AlloyStyledLayer {
   /**
    * @implements
    */
@@ -32,9 +33,9 @@ export class AlloyClusterLayer
   public readonly layerCode: string;
 
   /**
-   * the styles being displayed on the layer
+   * @implements
    */
-  public readonly styles: Readonly<AlloyClusterLayerStyle[]>;
+  public readonly styles: Readonly<AlloyLayerStyle[]>;
 
   /**
    * the processor for styles on the layer

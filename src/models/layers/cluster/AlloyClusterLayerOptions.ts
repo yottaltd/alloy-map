@@ -1,6 +1,6 @@
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyClusterLayerStyle } from './AlloyClusterLayerStyle';
+import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
 
 /**
  * options for the alloy cluster layer
@@ -24,5 +24,5 @@ export interface AlloyClusterLayerOptions {
   /**
    * the styles to show on the layer
    */
-  styles: AlloyClusterLayerStyle[];
+  styles: AlloyLayerStyle[];
 }

@@ -1,19 +1,43 @@
 import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
-import OLCircle from 'ol/style/Circle';
-import OLFill from 'ol/style/Fill';
-import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { AlloyStyleProcessor } from '../AlloyStyleProcessor';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloyClusterStyleBuilder } from '../../styles/builders/AlloyClusterStyleBuilder';
+import { AlloyItemStyleBuilder } from '../../styles/builders/AlloyItemStyleBuilder';
+import { AlloyStyleProcessor } from '../AlloyStyleProcessor';
+import { AlloyClusterLayer } from './AlloyClusterLayer';
 
 /**
  * processes the cluster styled feature items
  * @ignore
  */
 export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
+  /**
+   * cluster feature style builder
+   */
+  private readonly clusterStyleBuilder: AlloyClusterStyleBuilder;
+
+  /**
+   * item feature style builder
+   */
+  private readonly itemStyleBuilder: AlloyItemStyleBuilder;
+
+  /**
+   * creates a new instance
+   * @param layer the cluster layer to style
+   */
+  constructor(layer: AlloyClusterLayer) {
+    super(layer);
+
+    this.clusterStyleBuilder = new AlloyClusterStyleBuilder(layer.styles);
+    this.itemStyleBuilder = new AlloyItemStyleBuilder(layer.styles);
+  }
+
+  /**
+   * @override
+   */
   public onStyleProcess(
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
@@ -28,30 +52,11 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     }
 
     if (feature instanceof AlloyClusterFeature) {
-      return this.processClusterFeature(feature);
+      return this.clusterStyleBuilder.build(feature, resolution);
     } else if (feature instanceof AlloyItemFeature) {
-      return this.processItemFeature(feature);
+      return this.itemStyleBuilder.build(feature, resolution);
     } else {
       return null;
     }
-  }
-
-  private processClusterFeature(feature: AlloyClusterFeature): OLStyle | OLStyle[] | null {
-    return new OLStyle({
-      image: new OLCircle({
-        radius: 10,
-        fill: new OLFill({ color: 'red' }),
-        //stroke: new OLStroke({ color: 'red', width: 1 }),
-      }),
-    });
-  }
-
-  private processItemFeature(feature: AlloyItemFeature): OLStyle | OLStyle[] | null {
-    return new OLStyle({
-      image: new OLCircle({
-        radius: 25,
-        fill: new OLFill({ color: feature.properties.colour }),
-      }),
-    });
   }
 }

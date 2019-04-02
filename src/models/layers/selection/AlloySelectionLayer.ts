@@ -3,7 +3,7 @@ import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyLayerWithFeaturesBase } from '../AlloyLayerWithFeaturesBase';
+import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloySelectionLayerOptions } from './AlloySelectionLayerOptions';
 import { AlloySelectionStyleProcessor } from './AlloySelectionStyleProcessor';
 
@@ -11,7 +11,7 @@ import { AlloySelectionStyleProcessor } from './AlloySelectionStyleProcessor';
  * a special interaction layer for selected features
  * @ignore
  */
-export class AlloySelectionLayer extends AlloyLayerWithFeaturesBase<AlloyFeature> {
+export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   /**
    * the processor for styles on the layer
    */
