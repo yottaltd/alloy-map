@@ -23,7 +23,8 @@
     "proj4": "^2.5.0",
     "ste-simple-events": "^1.4.10",
     "typescript": "^3.3.3333",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.0.3",
@@ -33,6 +34,7 @@
     "@types/ol": "^4.6.5",
     "@types/proj4": "^2.5.0",
     "@types/uuid": "^3.4.4",
+    "@types/webfontloader": "^1.6.29",
     "chai": "^4.2.0",
     "cypress": "^3.2.0",
     "eslint": "^5.15.3",

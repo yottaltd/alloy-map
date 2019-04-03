@@ -3,6 +3,8 @@
 <html>
   <head>
     <title>Alloy Map Sandbox - Layers</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+    <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
     <style>
       html,
       body {
@@ -34,6 +36,12 @@
         element: document.getElementById('map'),
         centre: new alloymap.AlloyCoordinate(-2, 52),
         zoom: 10,
+        webfonts: [
+          {
+            fontFamily: 'Font Awesome 5 Free:n9',
+            testString: '\uf2fe',
+          },
+        ],
       });
       const basemap = alloymap.AlloyBasemapFactory.createSkyward();
       map.setBasemap(basemap);

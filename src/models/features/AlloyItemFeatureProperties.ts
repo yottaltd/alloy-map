@@ -15,12 +15,22 @@ export interface AlloyItemFeatureProperties {
   /**
    * the colour to represent the item
    */
-  readonly colour: string;
+  readonly colour?: string;
 
   /**
    * the icon of the item
    */
-  readonly icon: string;
+  readonly icon?: string;
+
+  /**
+   * the title of the item
+   */
+  readonly title: string;
+
+  /**
+   * the subtitle of the item
+   */
+  readonly subtitle: string;
 
   /**
    * its stringified type

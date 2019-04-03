@@ -1,9 +1,13 @@
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
+import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
+import { FontUtils } from '../../../utils/FontUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
+import { AlloyIconUtils } from '../utils/AlloyIconUtils';
+import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
 
 /**
  * builds styles for item features
@@ -40,11 +44,32 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       throw new AlloyMapError(1554163777, 'missing layer style: ' + feature.properties.styleId);
     }
 
-    return new OLStyle({
-      image: new OLCircle({
-        radius: 25,
-        fill: new OLFill({ color: feature.properties.colour || layerStyle.colour }),
+    const resolutionScale = AlloyScaleUtils.getScaleMultiplierForResolution(resolution);
+    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * resolutionScale;
+
+    const iconCanvas = AlloyIconUtils.createIconCanvas(
+      feature.properties.icon || layerStyle.icon,
+      '#ffffff',
+      FontUtils.FONT_ALLOY_ICONS,
+      FontUtils.FONT_WEIGHT_ALLOY_ICONS,
+    );
+    return [
+      new OLStyle({
+        image: new OLCircle({
+          radius,
+          fill: new OLFill({
+            color: feature.properties.colour || layerStyle.colour,
+          }),
+        }),
       }),
-    });
+      new OLStyle({
+        image: new OLIcon({
+          img: iconCanvas,
+          snapToPixel: false,
+          scale: radius / iconCanvas.width,
+          imgSize: [iconCanvas.width, iconCanvas.height],
+        }),
+      }),
+    ];
   }
 }

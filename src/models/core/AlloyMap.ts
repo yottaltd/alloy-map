@@ -6,6 +6,7 @@ import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
+import { FontUtils } from '../../utils/FontUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
@@ -121,6 +122,14 @@ export class AlloyMap {
   constructor(options: AlloyMapOptions) {
     // create a new api instance
     this.api = ApiFactory.api(options.api, options.token);
+
+    // if we have fonts, try to set them up
+    FontUtils.load([
+      // always load the alloy icons if we can
+      FontUtils.FONT_ALLOY_ICONS_LOADER_SETTINGS,
+      // merge the user provided webfonts into the loader for fonts
+      ...(options.webfonts ? options.webfonts : []),
+    ]);
 
     // create the view (initial positioning)
     this.olView = new OLView({
