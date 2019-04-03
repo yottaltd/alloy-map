@@ -132,9 +132,14 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
       const featureId = FeatureUtils.createFeatureId(this.layer.layerCode, olFeature);
       switch (r.properties.type) {
         case AlloyFeatureType.SimplifiedGeometry:
-          return new AlloySimplifiedGeometryFeature(featureId, olFeature, r.properties);
+          return new AlloySimplifiedGeometryFeature(
+            featureId,
+            olFeature,
+            r.properties,
+            this.layer.id,
+          );
         case AlloyFeatureType.Item:
-          return new AlloyItemFeature(featureId, olFeature, r.properties);
+          return new AlloyItemFeature(featureId, olFeature, r.properties, this.layer.id);
         default:
           throw new AlloyMapError(
             1553883056,

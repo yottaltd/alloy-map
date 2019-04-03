@@ -45,7 +45,7 @@ export class AlloyHoverLayer implements AlloyLayer {
   /**
    * the currently hovered feature
    */
-  private hoveredFeature: AlloyFeature | null = null;
+  private currentlyHoveredFeature: AlloyFeature | null = null;
 
   /**
    * the processor for styles on the layer
@@ -80,12 +80,19 @@ export class AlloyHoverLayer implements AlloyLayer {
   }
 
   /**
+   * gets the hovered feature
+   */
+  public get hoveredFeature(): AlloyFeature | null {
+    return this.currentlyHoveredFeature;
+  }
+
+  /**
    * @implements
    */
   public getFeatureById(id: string): AlloyFeature | null {
-    return this.hoveredFeature
-      ? this.hoveredFeature.id === id
-        ? this.hoveredFeature
+    return this.currentlyHoveredFeature
+      ? this.currentlyHoveredFeature.id === id
+        ? this.currentlyHoveredFeature
         : null
       : null;
   }
@@ -97,17 +104,17 @@ export class AlloyHoverLayer implements AlloyLayer {
    */
   public setHoveredFeature(feature: AlloyFeature | null) {
     // no-op
-    if (feature === this.hoveredFeature) {
+    if (feature === this.currentlyHoveredFeature) {
       return;
     }
 
     // clear any existing feature
-    if (this.hoveredFeature) {
+    if (this.currentlyHoveredFeature) {
       this.olSource.clear(true /* fast option doesn't dispatch removeFeature events */);
     }
 
     // set the new feature
-    this.hoveredFeature = feature;
+    this.currentlyHoveredFeature = feature;
 
     // potentially add new feature to source
     if (feature) {

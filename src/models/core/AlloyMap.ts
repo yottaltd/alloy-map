@@ -329,8 +329,30 @@ export class AlloyMap {
     this.olMap.removeLayer(layer.olLayer);
     this.managedLayers.delete(layer);
 
-    // TODO remove hover feature
-    // TODO remove selection feature
+    // get all the currently selected features
+    const currentlySelectedFeatures = this.selectionLayer.features;
+    if (currentlySelectedFeatures.size > 0) {
+      const selectedFeaturesNotInRemovedLayer = Array.from(
+        currentlySelectedFeatures.values(),
+      ).filter(
+        // filter out features that are in the layer we removed above
+        (f) => f.originatingLayerId !== layer.id,
+      );
+
+      // if the filtered list is not the same size as the original selected features then change
+      // what is selected to omit the features that were in the removed layer
+      if (selectedFeaturesNotInRemovedLayer.length !== currentlySelectedFeatures.size) {
+        this.selectionInteraction.setSelectedFeatures(selectedFeaturesNotInRemovedLayer);
+      }
+    }
+
+    // remove the currently hovered feature if its from the layer removed
+    if (
+      this.hoverLayer.hoveredFeature &&
+      this.hoverLayer.hoveredFeature.originatingLayerId === layer.id
+    ) {
+      this.hoverLayer.setHoveredFeature(null);
+    }
   }
 
   /**

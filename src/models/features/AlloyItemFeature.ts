@@ -38,6 +38,12 @@ export class AlloyItemFeature implements AlloyFeature {
   public readonly olFeature: OLFeature;
 
   /**
+   * @implements
+   * @ignore
+   */
+  public readonly originatingLayerId?: string;
+
+  /**
    * the cached properties of the alloy item feature
    */
   public readonly properties: Readonly<AlloyItemFeatureProperties>;
@@ -47,11 +53,18 @@ export class AlloyItemFeature implements AlloyFeature {
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
+   * @param originatingLayerId the layer id that the item originated from
    */
-  constructor(id: string, olFeature: OLFeature, properties: AlloyItemFeatureProperties) {
+  constructor(
+    id: string,
+    olFeature: OLFeature,
+    properties: AlloyItemFeatureProperties,
+    originatingLayerId?: string,
+  ) {
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
+    this.originatingLayerId = originatingLayerId;
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);

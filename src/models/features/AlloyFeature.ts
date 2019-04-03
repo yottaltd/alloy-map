@@ -31,6 +31,12 @@ export interface AlloyFeature {
   readonly olFeature: OLFeature;
 
   /**
+   * the layer that loaded the feature
+   * @ignore
+   */
+  readonly originatingLayerId?: string;
+
+  /**
    * function to call when the feature is selected by user interaction, this can provide custom
    * processing for a feature e.g. cluster features zoom in. **This function should not be called
    * when a feature is programatically selected**

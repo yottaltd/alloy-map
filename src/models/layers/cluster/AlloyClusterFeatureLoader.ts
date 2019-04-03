@@ -130,9 +130,9 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
       const featureId = FeatureUtils.createFeatureId(this.layer.layerCode, olFeature);
       switch (r.properties.type) {
         case AlloyFeatureType.Cluster:
-          return new AlloyClusterFeature(featureId, olFeature, r.properties);
+          return new AlloyClusterFeature(featureId, olFeature, r.properties, this.layer.id);
         case AlloyFeatureType.Item:
-          return new AlloyItemFeature(featureId, olFeature, r.properties);
+          return new AlloyItemFeature(featureId, olFeature, r.properties, this.layer.id);
         default:
           throw new AlloyMapError(
             1553737510,
