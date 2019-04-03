@@ -125,7 +125,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     // behind guard because we are performing operations for a log
     if (this.debugger.enabled) {
       this.debugger(
-        'selecting features that are not already selected: %o',
+        'adding features that are not already in layer: %o',
         featuresNotInLayer.map((f) => f.id),
       );
     }

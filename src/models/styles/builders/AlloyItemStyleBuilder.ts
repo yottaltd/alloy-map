@@ -46,14 +46,15 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     const resolutionScale = AlloyScaleUtils.getScaleMultiplierForResolution(resolution);
     const radius = AlloyScaleUtils.POINT_RADIUS_MAX * resolutionScale;
-
     const iconCanvas = AlloyIconUtils.createIconCanvas(
       feature.properties.icon || layerStyle.icon,
       '#ffffff',
       FontUtils.FONT_ALLOY_ICONS,
       FontUtils.FONT_WEIGHT_ALLOY_ICONS,
     );
+
     return [
+      // the background coloured circle
       new OLStyle({
         image: new OLCircle({
           radius,
@@ -62,6 +63,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           }),
         }),
       }),
+      // the icon of the item
       new OLStyle({
         image: new OLIcon({
           img: iconCanvas,

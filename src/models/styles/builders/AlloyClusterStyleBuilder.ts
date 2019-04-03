@@ -1,10 +1,13 @@
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
+import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
+import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
+import { AlloyTextUtils } from '../utils/AlloyTextUtils';
 
 /**
  * cluster scale multiplier for the band 2 to 99 items
@@ -40,11 +43,10 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       throw new AlloyMapError(1554163345, 'missing layer style: ' + feature.properties.styleId);
     }
 
-    const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
-
-    return (
-      Math.floor(resolution) + ':' + layerStyle.icon + ':' + layerStyle.colour + ':' + clusterScale
-    );
+    // key on the resulting text as this could be quite common after rounding and its just some
+    // string concatenation
+    const text = NumberFormatUtils.smallFormatNumber(feature.properties.count);
+    return Math.floor(resolution) + ':' + layerStyle.colour + ':' + text;
   }
 
   /**
@@ -62,15 +64,31 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
     const resolutionScale = AlloyScaleUtils.getScaleMultiplierForResolution(resolution);
     const radius = AlloyScaleUtils.POINT_RADIUS_MAX * resolutionScale * clusterScale;
+    const textCanvas = AlloyTextUtils.createTextCanvas(
+      NumberFormatUtils.smallFormatNumber(feature.properties.count),
+      '#ffffff',
+    );
 
-    return new OLStyle({
-      image: new OLCircle({
-        radius,
-        fill: new OLFill({
-          color: layerStyle.colour,
+    return [
+      // the background coloured circle
+      new OLStyle({
+        image: new OLCircle({
+          radius,
+          fill: new OLFill({
+            color: layerStyle.colour,
+          }),
         }),
       }),
-    });
+      // the text in the cluster
+      new OLStyle({
+        image: new OLIcon({
+          img: textCanvas,
+          snapToPixel: false,
+          scale: radius / textCanvas.width,
+          imgSize: [textCanvas.width, textCanvas.height],
+        }),
+      }),
+    ];
   }
 
   /**
