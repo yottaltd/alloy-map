@@ -1,13 +1,12 @@
 import { Debugger } from 'debug';
-import OLFeature from 'ol/Feature';
 import OLVectorLayer from 'ol/layer/Vector';
-import OLRenderFeature from 'ol/render/Feature';
 import OLVectorSource from 'ol/source/Vector';
-import OLStyle from 'ol/style/Style';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
 import { AlloyLayer } from './AlloyLayer';
+import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 
 /**
  * base implementation for alloy layers with features
@@ -32,7 +31,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public readonly map: AlloyMap;
 
   /**
-   * the openlayers layer to render on
    * @implements
    * @ignore
    */
@@ -51,6 +49,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   protected readonly currentFeatures = new Map<string, T>();
 
   /**
+   * the active style processor
+   */
+  private currentStyleProcessor: AlloyStyleProcessor | null = null;
+
+  /**
    * creates a new instance
    * @param id the id of the layer
    * @param map the map the layer is a member of
@@ -66,10 +69,29 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => this.onStyleProcess(olFeature, resolution),
+      style: (olFeature, resolution) => {
+        if (this.currentStyleProcessor) {
+          return this.currentStyleProcessor.onStyleProcess(
+            olFeature,
+            resolution,
+            AlloyStyleBuilderBuildState.Default,
+          );
+        } else {
+          this.debugger('style processor called but not set');
+          return null;
+        }
+      },
       source: this.olSource,
       zIndex,
     });
+  }
+
+  /**
+   * @implements
+   * @ignore
+   */
+  public get styleProcessor(): AlloyStyleProcessor | null {
+    return this.currentStyleProcessor;
   }
 
   /**
@@ -152,13 +174,10 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * should call the style process
-   * @param feature the feature to style
-   * @param resolution the resolution to style at
-   * @ignore
+   * sets the style processor
+   * @param processor the processor for styles
    */
-  protected abstract onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null;
+  protected setStyleProcessor(processor: AlloyStyleProcessor) {
+    this.currentStyleProcessor = processor;
+  }
 }

@@ -1,6 +1,3 @@
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
@@ -38,11 +35,6 @@ export class AlloyClusterLayer
   public readonly styles: Readonly<AlloyLayerStyle[]>;
 
   /**
-   * the processor for styles on the layer
-   */
-  private readonly styleProcessor: AlloyClusterStyleProcessor;
-
-  /**
    * the loader tha handles fetching and caching features
    */
   private readonly featureLoader: AlloyClusterFeatureLoader;
@@ -60,7 +52,7 @@ export class AlloyClusterLayer
     // initialised here because feature loader and style processor need some of the above internal
     // properties of the layer
     this.featureLoader = new AlloyClusterFeatureLoader(this);
-    this.styleProcessor = new AlloyClusterStyleProcessor(this);
+    this.setStyleProcessor(new AlloyClusterStyleProcessor(this));
 
     // listen for zoom changes so we can manage what is on screen
     this.map.addMapChangeZoomListener((e) => {
@@ -82,16 +74,5 @@ export class AlloyClusterLayer
     this.map.addMapChangeCentreListener((e) =>
       this.featureLoader.loadFeatures(e.olExtent, e.olResolution, ProjectionUtils.MAP_PROJECTION),
     );
-  }
-
-  /**
-   * @override
-   * @ignore
-   */
-  protected onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null {
-    return this.styleProcessor.onStyleProcess(olFeature, resolution);
   }
 }

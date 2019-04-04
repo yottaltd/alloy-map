@@ -4,12 +4,15 @@ import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
+import { LayersChangeEvent } from '../events/LayersChangeEvent';
+import { LayersChangeEventHandler } from '../events/LayersChangeEventHandler';
 import { MapChangeCentreEvent } from '../events/MapChangeCentreEvent';
 import { MapChangeCentreEventHandler } from '../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
@@ -22,7 +25,6 @@ import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
 import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
-import { AlloyMapError } from './AlloyMapError';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
 
@@ -93,7 +95,7 @@ export class AlloyMap {
   /**
    * the layers currently managed by the map
    */
-  private readonly managedLayers = new Set<AlloyLayer>();
+  private readonly managedLayers = new Map<string, AlloyLayer>();
 
   /**
    * the hover interaction manager, determines when mouseovers occur etc.
@@ -114,6 +116,11 @@ export class AlloyMap {
    * event dispatcher for change zoom events
    */
   private readonly onChangeZoom = new SimpleEventDispatcher<MapChangeZoomEvent>();
+
+  /**
+   * event dispatcher for change layers events
+   */
+  private readonly onChangeLayers = new SimpleEventDispatcher<LayersChangeEvent>();
 
   /**
    * creates a new alloy map instance
@@ -194,8 +201,8 @@ export class AlloyMap {
   /**
    * layers currently on display in the map
    */
-  public get layers(): Readonly<AlloyLayer[]> {
-    return Array.from(this.managedLayers);
+  public get layers(): Map<string, AlloyLayer> {
+    return new Map(this.managedLayers);
   }
 
   /**
@@ -314,11 +321,16 @@ export class AlloyMap {
    * @param layer the layer to add to the map
    */
   public addLayer(layer: AlloyLayer): void {
-    if (this.managedLayers.has(layer) || this.layers.map((l) => l.id).indexOf(layer.id) >= 0) {
+    if (this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118465, 'layer already added to map');
     }
     this.olMap.addLayer(layer.olLayer);
-    this.managedLayers.add(layer);
+    this.managedLayers.set(layer.id, layer);
+
+    // dispatch layers change event
+    this.onChangeLayers.dispatch(
+      new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
+    );
   }
 
   /**
@@ -326,11 +338,11 @@ export class AlloyMap {
    * @param layer the layer to remove
    */
   public removeLayer(layer: AlloyLayer): void {
-    if (!this.managedLayers.has(layer)) {
+    if (!this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118768, 'layer does not exist in map');
     }
     this.olMap.removeLayer(layer.olLayer);
-    this.managedLayers.delete(layer);
+    this.managedLayers.delete(layer.id);
 
     // get all the currently selected features
     const currentlySelectedFeatures = this.selectionLayer.features;
@@ -356,6 +368,27 @@ export class AlloyMap {
     ) {
       this.hoverLayer.setHoveredFeature(null);
     }
+
+    // dispatch layers change event
+    this.onChangeLayers.dispatch(
+      new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
+    );
+  }
+
+  /**
+   * adds an event handler to listen for the `LayersChangeEvent` event
+   * @param handler the handler to call when the event is raised
+   */
+  public addLayersChangeListener(handler: LayersChangeEventHandler): void {
+    this.onChangeLayers.subscribe(handler);
+  }
+
+  /**
+   * removes an event handler listening to the `LayersChangeEvent` event
+   * @param handler the handler to stop listening
+   */
+  public removeLayersChangeListener(handler: LayersChangeEventHandler): void {
+    this.onChangeLayers.unsubscribe(handler);
   }
 
   /**

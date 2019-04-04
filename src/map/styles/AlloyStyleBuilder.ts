@@ -1,6 +1,8 @@
 import OLStyle from 'ol/style/Style';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyStyleBuilderBuildState } from './AlloyStyleBuilderBuildState';
 import { AlloyStyleCache } from './cache/AlloyStyleCache';
+import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * base class for style builders, it implements caching in a local cache so styles can be reused.
@@ -16,13 +18,18 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
   private readonly styleCache = new AlloyStyleCache();
 
   /**
-   *
-   * @param feature
-   * @param resolution
+   * builds styles for a given feature
+   * @param feature the feature having styles built for
+   * @param resolution the current view resolution
+   * @param state the builder state to request styles for
    */
-  public build(feature: T, resolution: number): OLStyle | OLStyle[] | null {
+  public build(
+    feature: T,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ): OLStyle | OLStyle[] | null {
     // generate the cache key for this feature and resolution
-    const key: string = this.getKey(feature, resolution);
+    const key: string = this.getKey(feature, resolution, state);
 
     // attempt to get the styles from the cache
     const cachedStyle: OLStyle | OLStyle[] | null | undefined = this.styleCache.get(key);
@@ -31,7 +38,24 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
     }
 
     // generate new styles if not in the cache
-    const newStyle: OLStyle | OLStyle[] | null = this.createStyles(feature, resolution);
+    let newStyle: OLStyle | OLStyle[] | null = null;
+
+    switch (state) {
+      case AlloyStyleBuilderBuildState.Default:
+        newStyle = this.createStyles(feature, resolution);
+        break;
+      case AlloyStyleBuilderBuildState.Hover:
+        newStyle = this.createHoverStyles(feature, resolution);
+        break;
+      case AlloyStyleBuilderBuildState.Selected:
+        newStyle = this.createSelectedStyles(feature, resolution);
+        break;
+      default:
+        throw new AlloyMapError(
+          1554412457,
+          'unhandled state for style builder create styles request',
+        );
+    }
 
     // cache the resulting styles and return
     this.styleCache.set(key, newStyle);
@@ -44,8 +68,13 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * the styles e.g. colour, resolution, icon etc.
    * @param feature the feature being styled, common properties of the key should appear in the key
    * @param resolution the resolution we're rendering styles at
+   * @param state the state the builder is requesting styles for
    */
-  protected abstract getKey(feature: T, resolution: number): string;
+  protected abstract getKey(
+    feature: T,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ): string;
 
   /**
    * when the style builder decides to generate styles for a feature and resolution due to it
@@ -54,4 +83,23 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * @param resolution the resolution to style at
    */
   protected abstract createStyles(feature: T, resolution: number): OLStyle | OLStyle[] | null;
+
+  /**
+   * when the style builder decides to generate styles for a feature and resolution due to it
+   * missing in the cache, the result of this will be cached permanently for future styles
+   * @param feature the feature being styled
+   * @param resolution the resolution to style at
+   */
+  protected abstract createHoverStyles(feature: T, resolution: number): OLStyle | OLStyle[] | null;
+
+  /**
+   * when the style builder decides to generate styles for a feature and resolution due to it
+   * missing in the cache, the result of this will be cached permanently for future styles
+   * @param feature the feature being styled
+   * @param resolution the resolution to style at
+   */
+  protected abstract createSelectedStyles(
+    feature: T,
+    resolution: number,
+  ): OLStyle | OLStyle[] | null;
 }

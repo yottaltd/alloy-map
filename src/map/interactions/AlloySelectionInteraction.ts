@@ -2,9 +2,9 @@ import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyMap } from '../core/AlloyMap';
-import { AlloyMapError } from '../core/AlloyMapError';
 import { AlloySelectionMode } from '../core/AlloySelectionMode';
 import { FeatureSelectionChangeEvent } from '../events/FeatureSelectionChangeEvent';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
@@ -431,9 +431,9 @@ export class AlloySelectionInteraction {
    * @param pixel the pixel coordinate to find features under
    */
   private getFeaturesForPixel(pixel: [number, number]) {
-    const layers = this.map.layers;
+    const layers = Array.from(this.map.layers.values());
     // map the openlayers layers one to one with ours so indices are the same
-    const olLayers = this.map.layers.map((l) => l.olLayer);
+    const olLayers = layers.map((l) => l.olLayer);
     // create a set for fast lookup
     const olLayersSet = new Set(olLayers);
     // the features we found when clicking
@@ -441,7 +441,7 @@ export class AlloySelectionInteraction {
 
     // behind guard because we are performing operations for a log
     if (this.debugger.enabled) {
-      this.debugger('getting features for pixel: %o in layers: %o', pixel, layers.map((l) => l.id));
+      this.debugger('getting features for pixel: %o in layers: %o', pixel, layers.keys());
     }
 
     // iterate through each feature at the map pixel

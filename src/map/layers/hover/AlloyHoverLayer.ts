@@ -4,6 +4,7 @@ import OLVectorSource from 'ol/source/Vector';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
+import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyLayer } from '../AlloyLayer';
 import { AlloyHoverLayerOptions } from './AlloyHoverLayerOptions';
 import { AlloyHoverStyleProcessor } from './AlloyHoverStyleProcessor';
@@ -43,14 +44,15 @@ export class AlloyHoverLayer implements AlloyLayer {
   public readonly olSource: OLVectorSource;
 
   /**
+   * @implements
+   * @ignore
+   */
+  public readonly styleProcessor: AlloyHoverStyleProcessor;
+
+  /**
    * the currently hovered feature
    */
   private currentlyHoveredFeature: AlloyFeature | null = null;
-
-  /**
-   * the processor for styles on the layer
-   */
-  private readonly styleProcessor: AlloyHoverStyleProcessor;
 
   /**
    * creates a new instance
@@ -73,7 +75,13 @@ export class AlloyHoverLayer implements AlloyLayer {
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => this.styleProcessor.onStyleProcess(olFeature, resolution),
+      style: (olFeature, resolution) =>
+        this.styleProcessor.onStyleProcess(
+          olFeature,
+          resolution,
+          // always hover state even though the processor ignores it
+          AlloyStyleBuilderBuildState.Hover,
+        ),
       source: this.olSource,
       zIndex: AlloyLayerZIndex.Hover,
     });

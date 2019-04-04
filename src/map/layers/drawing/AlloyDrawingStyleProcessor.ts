@@ -4,7 +4,8 @@ import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { AlloyStyleProcessor } from '../AlloyStyleProcessor';
+import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 
 /**
  * processes the drawing styled feature items
@@ -14,6 +15,7 @@ export class AlloyDrawingStyleProcessor extends AlloyStyleProcessor {
   public onStyleProcess(
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
+    state: AlloyStyleBuilderBuildState,
   ): OLStyle | OLStyle[] | null {
     return new OLStyle({
       image: new OLCircle({

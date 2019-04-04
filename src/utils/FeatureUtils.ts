@@ -1,5 +1,5 @@
 import OLFeature from 'ol/Feature';
-import { AlloyMapError } from '../models/core/AlloyMapError';
+import { AlloyMapError } from '../error/AlloyMapError';
 
 /**
  * the property name of the feature id stored on an openlayers feature (so we can go from openlayers

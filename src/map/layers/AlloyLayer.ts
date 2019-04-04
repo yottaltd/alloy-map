@@ -1,6 +1,7 @@
 import OLLayer from 'ol/layer/Layer';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
 
 /**
  * an alloy layer can be drawn on top of the map to render features or other visualisations
@@ -21,6 +22,12 @@ export interface AlloyLayer {
    * @ignore
    */
   readonly olLayer: Readonly<OLLayer>;
+
+  /**
+   * the processor for styles on the layer, null until initialised
+   * @ignore
+   */
+  readonly styleProcessor: AlloyStyleProcessor | null;
 
   /**
    * gets an alloy feature by its id

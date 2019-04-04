@@ -1,4 +1,4 @@
-import { AlloyMapError } from '../core/AlloyMapError';
+import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * regex for testing a colour is valid hex

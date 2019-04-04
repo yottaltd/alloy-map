@@ -1,8 +1,11 @@
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
+import { AlloyMapError } from '../../../error/AlloyMapError';
+import { ColourUtils } from '../../../utils/ColourUtils';
 import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
-import { AlloyMapError } from '../../core/AlloyMapError';
+import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
+import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
@@ -27,6 +30,12 @@ const CLUSTER_100_9999 = 1.25;
 const CLUSTER_10000_INFINITY = 1.4;
 
 /**
+ * the text colour for clusters
+ * @ignore
+ */
+const TEXT_COLOUR = '#ffffff';
+
+/**
  * builds styles for cluster features
  * @ignore
  */
@@ -36,7 +45,11 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   /**
    * @override
    */
-  protected getKey(feature: AlloyClusterFeature, resolution: number): string {
+  protected getKey(
+    feature: AlloyClusterFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ): string {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554163345, 'missing layer style: ' + feature.properties.styleId);
@@ -45,7 +58,14 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     // key on the resulting text as this could be quite common after rounding and its just some
     // string concatenation
     const text = NumberFormatUtils.smallFormatNumber(feature.properties.count);
-    return Math.floor(resolution) + ':' + layerStyle.colour + ':' + text;
+
+    return StringUtils.cacheKeyConcat(
+      state,
+      Math.floor(resolution),
+      // icon is not in here because clusters don't have them
+      layerStyle.colour,
+      text,
+    );
   }
 
   /**
@@ -64,7 +84,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale;
     const textCanvas = AlloyTextUtils.createTextCanvas(
       NumberFormatUtils.smallFormatNumber(feature.properties.count),
-      '#ffffff',
+      TEXT_COLOUR,
     );
 
     return [
@@ -80,6 +100,58 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
         }),
       }),
     ];
+  }
+
+  /**
+   * @override
+   */
+  protected createHoverStyles(
+    feature: AlloyClusterFeature,
+    resolution: number,
+  ): OLStyle | OLStyle[] | null {
+    const layerStyle = this.layerStyles.get(feature.properties.styleId);
+    if (!layerStyle) {
+      throw new AlloyMapError(1554418359, 'missing layer style: ' + feature.properties.styleId);
+    }
+
+    const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
+    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale;
+    const textCanvas = AlloyTextUtils.createTextCanvas(
+      NumberFormatUtils.smallFormatNumber(feature.properties.count),
+      TEXT_COLOUR,
+    );
+
+    // modified hover colour
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
+
+    return [
+      // the halo circle
+      AlloyBallUtils.createBallHaloStyle(radius, hoverColour),
+      // the background coloured circle
+      AlloyBallUtils.createBallStyle(radius, hoverColour),
+      // the text in the cluster
+      new OLStyle({
+        image: new OLIcon({
+          img: textCanvas,
+          snapToPixel: false,
+          scale: 1,
+          imgSize: [textCanvas.width, textCanvas.height],
+        }),
+      }),
+    ];
+  }
+
+  /**
+   * @override
+   */
+  protected createSelectedStyles(
+    feature: AlloyClusterFeature,
+    resolution: number,
+  ): OLStyle | OLStyle[] | null {
+    throw new AlloyMapError(
+      1554418800,
+      'clusters have no selected state, they cannot be selected!',
+    );
   }
 
   /**

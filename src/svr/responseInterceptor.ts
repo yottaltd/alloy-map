@@ -1,4 +1,4 @@
-import { AlloyMapError } from '../models/core/AlloyMapError';
+import { AlloyMapError } from '../error/AlloyMapError';
 
 /**
  * function to intercept service calls and check for common error codes

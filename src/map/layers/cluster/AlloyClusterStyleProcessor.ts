@@ -4,9 +4,10 @@ import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyClusterStyleBuilder } from '../../styles/builders/AlloyClusterStyleBuilder';
 import { AlloyItemStyleBuilder } from '../../styles/builders/AlloyItemStyleBuilder';
-import { AlloyStyleProcessor } from '../AlloyStyleProcessor';
 import { AlloyClusterLayer } from './AlloyClusterLayer';
 
 /**
@@ -41,6 +42,7 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
   public onStyleProcess(
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
+    state: AlloyStyleBuilderBuildState,
   ): OLStyle | OLStyle[] | null {
     if (olFeature instanceof OLRenderFeature) {
       return null;
@@ -52,9 +54,9 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     }
 
     if (feature instanceof AlloyClusterFeature) {
-      return this.clusterStyleBuilder.build(feature, resolution);
+      return this.clusterStyleBuilder.build(feature, resolution, state);
     } else if (feature instanceof AlloyItemFeature) {
-      return this.itemStyleBuilder.build(feature, resolution);
+      return this.itemStyleBuilder.build(feature, resolution, state);
     } else {
       return null;
     }

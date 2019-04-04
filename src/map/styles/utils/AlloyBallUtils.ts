@@ -28,4 +28,21 @@ export abstract class AlloyBallUtils {
       }),
     });
   }
+
+  /**
+   * creates a ball halo style
+   * @param radius the radius of ball to add a halo around (the value will be modified by a standard
+   *               multiplier)
+   * @param colour the colour of the ball
+   */
+  public static createBallHaloStyle(radius: number, colour: string): OLStyle {
+    return new OLStyle({
+      image: new OLCircle({
+        radius: radius * 1.33,
+        fill: new OLFill({
+          color: ColourUtils.lightenHalo(colour),
+        }),
+      }),
+    });
+  }
 }

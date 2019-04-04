@@ -1,13 +1,12 @@
-import { AlloyBasemapFactory } from '../../src/models/basemaps/AlloyBasemapFactory';
-import { AlloyBounds } from '../../src/models/core/AlloyBounds';
-import { AlloyCoordinate } from '../../src/models/core/AlloyCoordinate';
-import { AlloyMap } from '../../src/models/core/AlloyMap';
-import { MapChangeCentreEvent } from '../../src/models/events/MapChangeCentreEvent';
-import { MapChangeZoomEvent } from '../../src/models/events/MapChangeZoomEvent';
-import { AlloyClusterLayer } from '../../src/models/layers/cluster/AlloyClusterLayer';
-import { AlloyClusterLayerStyle } from '../../src/models/layers/cluster/AlloyClusterLayerStyle';
-import { AlloyNetworkLayer } from '../../src/models/layers/network/AlloyNetworkLayer';
-import { AlloyNetworkLayerStyle } from '../../src/models/layers/network/AlloyNetworkLayerStyle';
+import { AlloyBasemapFactory } from '../../src/map/basemaps/AlloyBasemapFactory';
+import { AlloyBounds } from '../../src/map/core/AlloyBounds';
+import { AlloyCoordinate } from '../../src/map/core/AlloyCoordinate';
+import { AlloyMap } from '../../src/map/core/AlloyMap';
+import { MapChangeCentreEvent } from '../../src/map/events/MapChangeCentreEvent';
+import { MapChangeZoomEvent } from '../../src/map/events/MapChangeZoomEvent';
+import { AlloyClusterLayer } from '../../src/map/layers/cluster/AlloyClusterLayer';
+import { AlloyLayerStyle } from '../../src/map/styles/AlloyLayerStyle';
+import { AlloyNetworkLayer } from '../../src/map/layers/network/AlloyNetworkLayer';
 
 describe('map', () => {
   const UK_LON = -2;
@@ -221,7 +220,7 @@ describe('map', () => {
         new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
       );
       const layerCode = 'myFakeLayer';
-      const styles: AlloyClusterLayerStyle[] = [
+      const styles: AlloyLayerStyle[] = [
         {
           colour: '#cc3300',
           icon: 'icon-stl',
@@ -239,7 +238,7 @@ describe('map', () => {
       map.addLayer(layer);
 
       // check the property is updated
-      assert.include(map.layers, layer);
+      assert.isTrue(map.layers.has(layer.id));
     });
 
     it('should add network layer', () => {
@@ -249,7 +248,7 @@ describe('map', () => {
         new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
       );
       const layerCode = 'myFakeLayer';
-      const styles: AlloyNetworkLayerStyle[] = [
+      const styles: AlloyLayerStyle[] = [
         {
           colour: '#cc3300',
           icon: 'icon-stl',
@@ -267,7 +266,7 @@ describe('map', () => {
       map.addLayer(layer);
 
       // check the property is updated
-      assert.include(map.layers, layer);
+      assert.isTrue(map.layers.has(layer.id));
     });
 
     it('should remove layer', () => {
@@ -277,7 +276,7 @@ describe('map', () => {
         new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
       );
       const layerCode = 'myFakeLayer';
-      const styles: AlloyClusterLayerStyle[] = [
+      const styles: AlloyLayerStyle[] = [
         {
           colour: '#cc3300',
           icon: 'icon-stl',
@@ -295,13 +294,13 @@ describe('map', () => {
       map.addLayer(layer);
 
       // check the property is updated
-      assert.include(map.layers, layer);
+      assert.isTrue(map.layers.has(layer.id));
 
       // remove the layer
       map.removeLayer(layer);
 
       // check the property is updated
-      assert.notInclude(map.layers, layer);
+      assert.isFalse(map.layers.has(layer.id));
     });
 
     it('should not allow layer with same id to be added twice', () => {
@@ -311,7 +310,7 @@ describe('map', () => {
         new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
       );
       const layerCode = 'myFakeLayer';
-      const styles: AlloyClusterLayerStyle[] = [
+      const styles: AlloyLayerStyle[] = [
         {
           colour: '#cc3300',
           icon: 'icon-stl',
@@ -335,7 +334,7 @@ describe('map', () => {
       map.addLayer(layer);
 
       // check the property is updated
-      assert.include(map.layers, layer);
+      assert.isTrue(map.layers.has(layer.id));
 
       // try to add a second layer
       assert.throws(() => map.addLayer(layerWithSameCode));
@@ -348,7 +347,7 @@ describe('map', () => {
         new AlloyCoordinate(UK_LON + 2, UK_LAT + 2),
       );
       const layerCode = 'myFakeLayer';
-      const styles: AlloyClusterLayerStyle[] = [
+      const styles: AlloyLayerStyle[] = [
         {
           colour: '#cc3300',
           icon: 'icon-stl',
@@ -372,7 +371,7 @@ describe('map', () => {
       map.addLayer(layer);
 
       // check the property is updated
-      assert.include(map.layers, layer);
+      assert.isTrue(map.layers.has(layer.id));
 
       assert.throws(() => map.removeLayer(otherLayer));
     });

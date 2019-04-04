@@ -1,8 +1,8 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
+import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';

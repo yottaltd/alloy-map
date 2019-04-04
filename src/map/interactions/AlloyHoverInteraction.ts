@@ -31,28 +31,13 @@ export class AlloyHoverInteraction {
   private map: AlloyMap;
 
   /**
-   * cached function to get the pointer move layer payload based on the current state of layers
-   * and open layers revisions
+   * the pointer move payload which is cached because its used on every throttled pointer movement
    */
-  private memoizedPointerMoveLayerPayload: (
-    layers: AlloyLayer[],
-  ) => PointerMoveLayerPayload = _.memoize(
-    // gets the payload
-    (layers: AlloyLayer[]) => {
-      const olLayers = layers.map((l) => l.olLayer);
-      // TODO maybe work out the z-index?
-      const payload: PointerMoveLayerPayload = {
-        layers,
-        olLayers,
-        olLayersSet: new Set(olLayers),
-      };
-      return payload;
-    },
-    // function generates a consistent cache key
-    (layers: AlloyLayer[]) => {
-      return layers.map((l) => l.id + '@' + l.olLayer.getRevision()).join(':');
-    },
-  );
+  private pointerMovePayload: PointerMoveLayerPayload = {
+    layers: [],
+    olLayers: [],
+    olLayersSet: new Set([]),
+  };
 
   /**
    * creates a new instance
@@ -63,6 +48,9 @@ export class AlloyHoverInteraction {
 
     // set the debugger instance
     this.debugger = this.map.debugger.extend(AlloyHoverInteraction.name);
+
+    // recalculate the payload on initialisation
+    this.recalculatePointerMovePayload();
 
     // listen for pointer move events, these can happen very frequently so we debounce the
     // processing done for these events
@@ -77,6 +65,12 @@ export class AlloyHoverInteraction {
         maxWait: POINTER_MOVE_THROTTLE,
       }),
     );
+
+    // listen for layer changes to cache computed data
+    this.map.addLayersChangeListener((e) => {
+      // recalculate the pointer move payload when layers change
+      this.recalculatePointerMovePayload();
+    });
   }
 
   /**
@@ -90,7 +84,8 @@ export class AlloyHoverInteraction {
       return;
     }
 
-    const payload = this.memoizedPointerMoveLayerPayload(this.map.layers);
+    // reference to the pointer move payload
+    const payload = this.pointerMovePayload;
 
     // the features we found when hovering
     const features: AlloyFeature[] = [];
@@ -125,9 +120,28 @@ export class AlloyHoverInteraction {
     if (features.length > 0) {
       // TODO possible z-index issue
       this.map.hoverLayer.setHoveredFeature(features[0]);
+      // set the cursor to show it has moused over
+      (this.map.olMap.getViewport() as HTMLElement).style.cursor = 'pointer';
     } else {
       this.map.hoverLayer.setHoveredFeature(null);
+      // set the cursor to default
+      (this.map.olMap.getViewport() as HTMLElement).style.cursor = '';
     }
+  }
+
+  /**
+   * recalculates the payload of data used on pointer movement
+   */
+  private recalculatePointerMovePayload() {
+    const layers = Array.from(this.map.layers.values());
+    const olLayers = layers.map((l) => l.olLayer);
+
+    // TODO maybe work out the z-index?
+    this.pointerMovePayload = {
+      layers,
+      olLayers,
+      olLayersSet: new Set(olLayers),
+    };
   }
 }
 

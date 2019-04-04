@@ -1,5 +1,5 @@
 import OLProjection from 'ol/proj/Projection';
-import { AlloyMapError } from '../models/core/AlloyMapError';
+import { AlloyMapError } from '../error/AlloyMapError';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
 
 /**
