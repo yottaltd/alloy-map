@@ -33,7 +33,7 @@
 
       const map = new alloymap.AlloyMap({
         api: 'https://api.labs.alloyapp.io/',
-        token: 'ef107961-cf46-45ec-9e45-f7fee1ea03e5',
+        token: '97f03a7e-4187-4505-a78e-f022f347c443',
         element: document.getElementById('map'),
         centre: new alloymap.AlloyCoordinate(-2, 52),
         zoom: 10,
@@ -49,19 +49,30 @@
 
       const layer = new alloymap.AlloyClusterLayer({
         map,
-        layerCode: 'layers_shibas_5ca3df44ff5c130b04e9ea19',
+        layerCode: 'layers_aggregated_5c9e4846ff5c130f601273b0',
         bounds: new alloymap.AlloyBounds(
-          new alloymap.AlloyCoordinate(-5, 47),
-          new alloymap.AlloyCoordinate(3, 57),
+          new alloymap.AlloyCoordinate(-10, 37),
+          new alloymap.AlloyCoordinate(10, 67),
         ),
         styles: [
           {
-            styleId: '5ca3e002ff5c130b04e9ea1e',
+            styleId: '5c9e485cff5c130f601273bd',
             colour: '#cc3300',
             icon: 'icon-stl',
           },
+          {
+            styleId: '5c9e48a8ff5c130f601273c3',
+            colour: '#33cc00',
+            icon: 'icon-system-1',
+          },
+          {
+            styleId: '5c9e48f8ff5c130f60127544',
+            colour: '#3380cc',
+            icon: 'icon-drainage-sewers',
+          },
         ],
       });
+
       map.addLayer(layer);
     </script>
   </body>

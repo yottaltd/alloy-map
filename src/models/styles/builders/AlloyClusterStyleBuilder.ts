@@ -1,11 +1,10 @@
-import OLCircle from 'ol/style/Circle';
-import OLFill from 'ol/style/Fill';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
 import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
+import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
 import { AlloyTextUtils } from '../utils/AlloyTextUtils';
 
@@ -13,19 +12,19 @@ import { AlloyTextUtils } from '../utils/AlloyTextUtils';
  * cluster scale multiplier for the band 2 to 99 items
  * @ignore
  */
-const CLUSTER_2_99 = Math.sqrt(2);
+const CLUSTER_2_99 = 1.125;
 
 /**
  * cluster scale multiplier for the band 100 to 9999 items
  * @ignore
  */
-const CLUSTER_100_9999 = Math.sqrt(4);
+const CLUSTER_100_9999 = 1.25;
 
 /**
  * cluster scale multiplier for the band 10000 to infinity items
  * @ignore
  */
-const CLUSTER_10000_INFINITY = Math.sqrt(6);
+const CLUSTER_10000_INFINITY = 1.4;
 
 /**
  * builds styles for cluster features
@@ -62,8 +61,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     }
 
     const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
-    const resolutionScale = AlloyScaleUtils.getScaleMultiplierForResolution(resolution);
-    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * resolutionScale * clusterScale;
+    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale;
     const textCanvas = AlloyTextUtils.createTextCanvas(
       NumberFormatUtils.smallFormatNumber(feature.properties.count),
       '#ffffff',
@@ -71,20 +69,13 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return [
       // the background coloured circle
-      new OLStyle({
-        image: new OLCircle({
-          radius,
-          fill: new OLFill({
-            color: layerStyle.colour,
-          }),
-        }),
-      }),
+      AlloyBallUtils.createBallStyle(radius, layerStyle.colour),
       // the text in the cluster
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
           snapToPixel: false,
-          scale: radius / textCanvas.width,
+          scale: 1,
           imgSize: [textCanvas.width, textCanvas.height],
         }),
       }),

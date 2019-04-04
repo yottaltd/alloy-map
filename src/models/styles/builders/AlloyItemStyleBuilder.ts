@@ -1,11 +1,10 @@
-import OLCircle from 'ol/style/Circle';
-import OLFill from 'ol/style/Fill';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
 import { FontUtils } from '../../../utils/FontUtils';
 import { AlloyMapError } from '../../core/AlloyMapError';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
+import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
 
@@ -55,14 +54,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     return [
       // the background coloured circle
-      new OLStyle({
-        image: new OLCircle({
-          radius,
-          fill: new OLFill({
-            color: feature.properties.colour || layerStyle.colour,
-          }),
-        }),
-      }),
+      AlloyBallUtils.createBallStyle(radius, feature.properties.colour || layerStyle.colour),
       // the icon of the item
       new OLStyle({
         image: new OLIcon({

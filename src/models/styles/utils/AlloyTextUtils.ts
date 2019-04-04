@@ -1,18 +1,17 @@
 import * as _ from 'lodash';
 
 /**
- * the size in pixels of the canvas to render text on
+ * the canvas min size, width is always a multiple of this whilst height is always exactly this
  * @ignore
  */
-const TEXT_CANVAS_SIZE: number = 256;
+const CANVAS_SIZE = 50;
 
 /**
- * the font string used to render on the canvas
- * @param fontSize the font size to inject into the font string
+ * the font and size to use when rendering, we use a fixed size because using floating point
+ * font sizes results in very bad scaling
  * @ignore
  */
-const TEXT_FONT = (fontSize: number) =>
-  `700 ${fontSize}px/${TEXT_CANVAS_SIZE}px Open Sans, Arial, sans-serif`;
+const TEXT_FONT = '700 18px/50px Open Sans, Arial, sans-serif';
 
 /**
  * utility for rendering text
@@ -20,7 +19,7 @@ const TEXT_FONT = (fontSize: number) =>
  */
 export abstract class AlloyTextUtils {
   /**
-   * creates a text canvas for a the provided text, the canvas size is `TEXT_CANVAS_SIZE`
+   * creates a text canvas for a the provided text, the size is `c*50,50` where `c = no. of chars`
    * @param text the text to write on the canvas
    * @param colour the colour of the text
    */
@@ -51,13 +50,13 @@ export abstract class AlloyTextUtils {
    * @param colour the colour of the text
    */
   private static createTextCanvasImplementation(text: string, colour: string): HTMLCanvasElement {
-    // create a canvas to work on
-    const canvas = document.createElement('canvas') as HTMLCanvasElement;
-    canvas.width = TEXT_CANVAS_SIZE;
-    canvas.height = TEXT_CANVAS_SIZE;
-
     // clean the text input
     text = AlloyTextUtils.cleanText(text);
+
+    // create a canvas to work on
+    const canvas = document.createElement('canvas') as HTMLCanvasElement;
+    canvas.height = CANVAS_SIZE;
+    canvas.width = Math.max(CANVAS_SIZE, text.length * CANVAS_SIZE);
 
     // if we don't have any text then fail silently
     if (!text) {
@@ -68,25 +67,13 @@ export abstract class AlloyTextUtils {
     context.fillStyle = colour;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-
-    // now work out the text width for the default font size
-    let fontSize: number = TEXT_CANVAS_SIZE;
-    context.font = TEXT_FONT(fontSize);
-    let metrics: TextMetrics = context.measureText(text);
-
-    // if its too big then scale it down to what "should" exactly equal the width
-    if (metrics.width > TEXT_CANVAS_SIZE) {
-      fontSize *= TEXT_CANVAS_SIZE / metrics.width;
-      context.font = TEXT_FONT(fontSize); // update the font
-      metrics = context.measureText(text);
-    }
-
-    // work out if we need to "shift" the positioning of the text vertically to match the visual
-    // centre as it doesn't quite work. this number is bulls**t but it seems to work until
-    // all browsers implement TextMetrics properly
-    const offsetY = fontSize * 0.1;
-
-    context.fillText(text, TEXT_CANVAS_SIZE / 2, TEXT_CANVAS_SIZE / 2 + offsetY);
+    context.font = TEXT_FONT;
+    context.fillText(
+      text,
+      canvas.width / 2,
+      CANVAS_SIZE / 2 +
+        Math.floor(CANVAS_SIZE * 0.05) /* 5% of the overall height to nudge it down */,
+    );
     return canvas;
   }
 }
