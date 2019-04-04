@@ -269,9 +269,12 @@ export class AlloyMap {
    * attempts to set the viewport to the bounds provided, it will attempt a "best fit" approach
    * which makes sure both north east and south west are visible
    * @param bounds the bounds to fit on the screen
+   * @param animate whether to animate to the viewport
    */
-  public setViewport(bounds: AlloyBounds): void {
-    this.olView.fit(bounds.toMapExtent());
+  public setViewport(bounds: AlloyBounds, animate?: boolean): void {
+    this.olView.fit(bounds.toMapExtent(), {
+      duration: animate ? 500 : undefined,
+    });
   }
 
   /**

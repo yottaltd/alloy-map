@@ -78,6 +78,7 @@ export class AlloyClusterFeature implements AlloyFeature {
         new AlloyCoordinate(bbox.lonMin, bbox.latMin),
         new AlloyCoordinate(bbox.lonMax, bbox.latMax),
       ),
+      true,
     );
   }
 
