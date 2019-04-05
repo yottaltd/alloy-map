@@ -28,6 +28,11 @@ export abstract class AlloyScaleUtils {
   public static readonly POINT_RADIUS_MAX = 25;
 
   /**
+   * the max width of a line in pixels
+   */
+  public static readonly LINE_WIDTH_MAX = 10;
+
+  /**
    * calculates a value to multiply the size of an element on screen by (if it grows e.g. clusters)
    * in relation to the resolution
    * @param resolution the resolution to calculate the scale multiplier for

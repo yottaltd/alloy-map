@@ -1,3 +1,6 @@
+import OLFeature from 'ol/Feature';
+import OLGeometry from 'ol/geom/Geometry';
+import OLRenderFeature from 'ol/render/Feature';
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
@@ -13,8 +16,13 @@ export abstract class AlloyBallUtils {
    * creates a ball style
    * @param radius the radius of the ball
    * @param colour the colour of the ball
+   * @param geometryFunction the optional geometry function for the style
    */
-  public static createBallStyle(radius: number, colour: string): OLStyle {
+  public static createBallStyle(
+    radius: number,
+    colour: string,
+    geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
+  ): OLStyle {
     return new OLStyle({
       image: new OLCircle({
         radius,
@@ -26,6 +34,7 @@ export abstract class AlloyBallUtils {
           color: ColourUtils.darkenBorder(colour),
         }),
       }),
+      geometry: geometryFunction,
     });
   }
 
@@ -34,8 +43,13 @@ export abstract class AlloyBallUtils {
    * @param radius the radius of ball to add a halo around (the value will be modified by a standard
    *               multiplier)
    * @param colour the colour of the ball
+   * @param geometryFunction the optional geometry function for the style
    */
-  public static createBallHaloStyle(radius: number, colour: string): OLStyle {
+  public static createBallHaloStyle(
+    radius: number,
+    colour: string,
+    geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
+  ): OLStyle {
     return new OLStyle({
       image: new OLCircle({
         radius: radius * 1.33,
@@ -43,6 +57,7 @@ export abstract class AlloyBallUtils {
           color: ColourUtils.lightenHalo(colour),
         }),
       }),
+      geometry: geometryFunction,
     });
   }
 }

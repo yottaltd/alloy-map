@@ -38,11 +38,20 @@ export abstract class ColourUtils {
   }
 
   /**
+   * consistent semi transparent colours for things like polygons
+   * @param colour
+   */
+  public static semiTransparent(colour: string): [number, number, number, number] {
+    const rgb = color(colour);
+    return [rgb.red(), rgb.green(), rgb.blue(), 0.33];
+  }
+
+  /**
    * generates a halo colour which is a lightened and transparent version of the provided colour
    * @param colour the colour to generate the halo colour for
    */
   public static lightenHalo(colour: string): [number, number, number, number] {
-    const lightened = color(colour).lighten(LIGHTEN_AMOUNT);
-    return [lightened.red(), lightened.green(), lightened.blue(), 0.5];
+    const rgb = color(colour).lighten(LIGHTEN_AMOUNT);
+    return [rgb.red(), rgb.green(), rgb.blue(), 0.5];
   }
 }

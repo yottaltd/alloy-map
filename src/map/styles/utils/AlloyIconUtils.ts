@@ -1,4 +1,9 @@
 import * as _ from 'lodash';
+import OLFeature from 'ol/Feature';
+import OLGeometry from 'ol/geom/Geometry';
+import OLRenderFeature from 'ol/render/Feature';
+import OLIcon from 'ol/style/Icon';
+import OLStyle from 'ol/style/Style';
 import { FontUtils } from '../../../utils/FontUtils';
 
 /**
@@ -19,6 +24,38 @@ export abstract class AlloyIconUtils {
   public static readonly getUnicodeForFontClass = _.memoize(
     AlloyIconUtils.getUnicodeForFontClassImplementation,
   );
+
+  /**
+   * creates an alloy icon style, specifically for Alloy Icons, if you want custom icons use the
+   * constituent parts of this function separately!
+   * @param size the size of the icon
+   * @param alloyIconClass the alloy icon class e.g. icon-stl
+   * @param colour the colour of the icon
+   */
+  public static createAlloyIconStyle(
+    size: number,
+    alloyIconClass: string,
+    colour: string,
+    geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
+  ): OLStyle {
+    // generate the icon canvas
+    const iconCanvas = AlloyIconUtils.createIconCanvas(
+      alloyIconClass,
+      colour,
+      FontUtils.FONT_ALLOY_ICONS,
+      FontUtils.FONT_WEIGHT_ALLOY_ICONS,
+    );
+
+    return new OLStyle({
+      image: new OLIcon({
+        img: iconCanvas,
+        snapToPixel: false,
+        scale: size / iconCanvas.width,
+        imgSize: [iconCanvas.width, iconCanvas.height],
+      }),
+      geometry: geometryFunction,
+    });
+  }
 
   /**
    * creates an icon canvas for a unicode icon value, the canvas size is `ICON_CANVAS_SIZE`,

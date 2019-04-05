@@ -33,7 +33,7 @@
 
       const map = new alloymap.AlloyMap({
         api: 'https://api.labs.alloyapp.io/',
-        token: '1b3626fb-4b21-4bc8-8bd8-e2b852039449',
+        token: 'fba84fd9-28c3-40ea-957b-b8c38343bcad',
         element: document.getElementById('map'),
         centre: new alloymap.AlloyCoordinate(-2, 52),
         zoom: 10,
@@ -72,8 +72,24 @@
           },
         ],
       });
+      const layer2 = new alloymap.AlloyClusterLayer({
+        map,
+        layerCode: 'layers_parks_5ca74d84ff5c130ae454763b',
+        bounds: new alloymap.AlloyBounds(
+          new alloymap.AlloyCoordinate(-10, 37),
+          new alloymap.AlloyCoordinate(10, 67),
+        ),
+        styles: [
+          {
+            styleId: '5ca74da4ff5c130ae4547885',
+            colour: '#44a541',
+            icon: 'icon-tree-leaf-average',
+          },
+        ],
+      });
 
       map.addLayer(layer);
+      map.addLayer(layer2);
     </script>
   </body>
 </html>

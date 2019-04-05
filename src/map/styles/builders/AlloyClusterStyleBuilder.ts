@@ -36,7 +36,8 @@ const CLUSTER_10000_INFINITY = 1.4;
 const TEXT_COLOUR = '#ffffff';
 
 /**
- * builds styles for cluster features
+ * builds styles for cluster features, we only expect point features in this builder because
+ * clusters can't be anything else
  * @ignore
  */
 export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
