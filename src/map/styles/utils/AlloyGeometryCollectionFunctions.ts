@@ -17,12 +17,6 @@ import { AlloyMapError } from '../../../error/AlloyMapError';
  */
 export abstract class AlloyGeometryCollectionFunctions {
   /**
-   * TODO
-   * these functions should be cached!
-   * they are intensive on each render to unwind geometry collections!
-   */
-
-  /**
    * converts a geometry collection to its individual points
    */
   public static readonly TO_POINT_FUNCTION: (
@@ -38,16 +32,10 @@ export abstract class AlloyGeometryCollectionFunctions {
       );
     }
 
-    // recursively get all the geometries
-    const geometries: OLPoint[] = [];
-    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively<OLPoint>(
+    // get flattened geometry collection from behind the cache and grab the multi geom we want
+    return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
       geometry as OLGeometryCollection,
-      'Point',
-      geometries,
-    );
-
-    // create a single multi point of all points
-    return new OLMultiPoint(geometries.map((g) => g.getCoordinates()));
+    ).points;
   };
 
   /**
@@ -66,16 +54,10 @@ export abstract class AlloyGeometryCollectionFunctions {
       );
     }
 
-    // recursively get all the geometries
-    const geometries: OLMultiPoint[] = [];
-    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively<OLMultiPoint>(
+    // get flattened geometry collection from behind the cache and grab the multi geom we want
+    return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
       geometry as OLGeometryCollection,
-      'MultiPoint',
-      geometries,
-    );
-
-    // create a single multi point of all multi points
-    return new OLMultiPoint(_.flatten(geometries.map((g) => g.getCoordinates())));
+    ).multiPoints;
   };
 
   /**
@@ -94,16 +76,10 @@ export abstract class AlloyGeometryCollectionFunctions {
       );
     }
 
-    // recursively get all the geometries
-    const geometries: OLLineString[] = [];
-    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively<OLLineString>(
+    // get flattened geometry collection from behind the cache and grab the multi geom we want
+    return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
       geometry as OLGeometryCollection,
-      'LineString',
-      geometries,
-    );
-
-    // create a single multi point of all points
-    return new OLMultiLineString(geometries.map((g) => g.getCoordinates()));
+    ).lineStrings;
   };
 
   /**
@@ -122,16 +98,10 @@ export abstract class AlloyGeometryCollectionFunctions {
       );
     }
 
-    // recursively get all the geometries
-    const geometries: OLMultiLineString[] = [];
-    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively<OLMultiLineString>(
+    // get flattened geometry collection from behind the cache and grab the multi geom we want
+    return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
       geometry as OLGeometryCollection,
-      'MultiLineString',
-      geometries,
-    );
-
-    // create a single multi point of all multi points
-    return new OLMultiLineString(_.flatten(geometries.map((g) => g.getCoordinates())));
+    ).multiLineStrings;
   };
 
   /**
@@ -150,16 +120,10 @@ export abstract class AlloyGeometryCollectionFunctions {
       );
     }
 
-    // recursively get all the geometries
-    const geometries: OLPolygon[] = [];
-    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively<OLPolygon>(
+    // get flattened geometry collection from behind the cache and grab the multi geom we want
+    return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
       geometry as OLGeometryCollection,
-      'Polygon',
-      geometries,
-    );
-
-    // create a single multi point of all points
-    return new OLMultiPolygon(geometries.map((g) => g.getCoordinates()));
+    ).polygons;
   };
 
   /**
@@ -178,42 +142,154 @@ export abstract class AlloyGeometryCollectionFunctions {
       );
     }
 
-    // recursively get all the geometries
-    const geometries: OLMultiPolygon[] = [];
-    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively<OLMultiPolygon>(
+    // get flattened geometry collection from behind the cache and grab the multi geom we want
+    return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
       geometry as OLGeometryCollection,
-      'MultiPolygon',
-      geometries,
-    );
-
-    // create a single multi point of all multi points
-    return new OLMultiPolygon(_.flatten(geometries.map((g) => g.getCoordinates())));
+    ).multiPolygons;
   };
 
   /**
-   * gets all the geometries of a certain type recursively from a geometry collection
-   * @param olGeometry the geometry collection to recurse through
-   * @param geometryType the type of geometry to look for
-   * @param appendToArray the array to append results to
+   * cache of the flattened geometry collection data, using a weak map ensures we don't bump the
+   * revision counter on the openlayers geometry but we also release memory once nothing references
+   * the geometry collection anymore
    */
-  private static getAllGeometriesRecursively<T extends OLGeometry>(
+  private static readonly cache = new WeakMap<OLGeometryCollection, FlattenedGeometryCollection>();
+
+  /**
+   * gets or generates the data required to flatten a geometry collection and returns the result
+   * @param olGeometry the geometry collection to generate the data for
+   */
+  private static getAndCacheFlattenedGeometryCollection(
     olGeometry: OLGeometryCollection,
-    geometryType: string,
-    appendToArray: T[],
-  ) {
+  ): FlattenedGeometryCollection {
+    // first check the cache
+    let geometries:
+      | FlattenedGeometryCollection
+      | undefined = AlloyGeometryCollectionFunctions.cache.get(olGeometry);
+    if (geometries) {
+      // if its in the cache, great! short circuit!
+      console.log('got me from cache mate!', olGeometry);
+      return geometries;
+    }
+    console.log('load me hearties!', olGeometry);
+
+    const data: GeomtryCollectionGeometries = {
+      points: [],
+      multiPoints: [],
+      lineStrings: [],
+      multiLineStrings: [],
+      polygons: [],
+      multiPolygons: [],
+    };
+
+    // recursively populate the data model
+    AlloyGeometryCollectionFunctions.getAllGeometriesRecursively(olGeometry, data);
+
+    // create a geometry for each type
+    geometries = {
+      points: new OLMultiPoint(data.points.map((p) => p.getCoordinates())),
+      multiPoints: new OLMultiPoint(_.flatten(data.multiPoints.map((g) => g.getCoordinates()))),
+      lineStrings: new OLMultiLineString(data.lineStrings.map((l) => l.getCoordinates())),
+      multiLineStrings: new OLMultiLineString(
+        _.flatten(data.multiLineStrings.map((g) => g.getCoordinates())),
+      ),
+      polygons: new OLMultiPolygon(data.polygons.map((p) => p.getCoordinates())),
+      multiPolygons: new OLMultiPolygon(
+        _.flatten(data.multiPolygons.map((g) => g.getCoordinates())),
+      ),
+    };
+
+    // cache and return the results
+    AlloyGeometryCollectionFunctions.cache.set(olGeometry, geometries);
+    return geometries;
+  }
+
+  /**
+   * recursively traverses a geometry collection to find all its sub geometry and group them
+   * @param olGeometry the geometry collection to traverse
+   * @param geometries the geometries payload to populate as it finds children
+   */
+  private static getAllGeometriesRecursively(
+    olGeometry: OLGeometryCollection,
+    geometries: GeomtryCollectionGeometries,
+  ): void {
     olGeometry.getGeometries().forEach((g) => {
       switch (g.getType()) {
         case 'GeometryCollection':
+          // recursively work through the sub geometry collection
           AlloyGeometryCollectionFunctions.getAllGeometriesRecursively(
             g as OLGeometryCollection,
-            geometryType,
-            appendToArray,
+            geometries,
           );
           break;
-        case geometryType:
-          appendToArray.push(g as T);
+        case 'Point':
+          geometries.points.push(g as OLPoint);
+          break;
+        case 'MultiPoint':
+          geometries.multiPoints.push(g as OLMultiPoint);
+          break;
+        case 'LineString':
+          geometries.lineStrings.push(g as OLLineString);
+          break;
+        case 'MultiLineString':
+          geometries.multiLineStrings.push(g as OLMultiLineString);
+          break;
+        case 'Polygon':
+          geometries.polygons.push(g as OLPolygon);
+          break;
+        case 'MultiPolygon':
+          geometries.multiPolygons.push(g as OLMultiPolygon);
           break;
       }
     });
   }
+}
+
+/**
+ * data container for traversing a geometry collection to get its sub geometries
+ * @ignore
+ */
+interface GeomtryCollectionGeometries {
+  points: OLPoint[];
+  multiPoints: OLMultiPoint[];
+  lineStrings: OLLineString[];
+  multiLineStrings: OLMultiLineString[];
+  polygons: OLPolygon[];
+  multiPolygons: OLMultiPolygon[];
+}
+
+/**
+ * a geometry collection flattened into multiple multi geoms (one for each supported type)
+ * @ignore
+ */
+interface FlattenedGeometryCollection {
+  /**
+   * the multi point representing all points in the geometry collection
+   */
+  points: OLMultiPoint;
+
+  /**
+   * the multi point representing all multi points in the geometry collection
+   */
+  multiPoints: OLMultiPoint;
+
+  /**
+   * the multi line string representing all line strings in the geometry collection
+   */
+  lineStrings: OLMultiLineString;
+
+  /**
+   * the multi line string representing all multi line strings in the geometry collection
+   */
+  multiLineStrings: OLMultiLineString;
+
+  /**
+   * the multi polygon representing all polygons in the geometry collection
+   */
+  polygons: OLMultiPolygon;
+
+  /**
+   * the multi polygon representing all multi polygons in the geometry collection
+   */
+  multiPolygons: OLMultiPolygon;
 }
