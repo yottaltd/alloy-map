@@ -7,11 +7,14 @@ import { AlloyLayerStyle } from '../AlloyLayerStyle';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
-import { AlloyGeometryCollectionFunctions } from '../utils/AlloyGeometryCollectionFunctions';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
 import { AlloyPolygonUtils } from '../utils/AlloyPolygonUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
+import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineStringFunctions';
+import { AlloyGeometryFunctionUtils } from '../utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
 
 /**
  * the icon colour in the balls
@@ -156,14 +159,18 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour || layerStyle.colour,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
     ];
   }
@@ -182,7 +189,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -191,7 +198,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
     ];
@@ -208,7 +215,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         this.getLineWidth(resolution),
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
           : undefined,
       ),
     ];
@@ -225,7 +232,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         this.getLineWidth(resolution),
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
           : undefined,
       ),
     ];
@@ -244,7 +251,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
           : undefined,
       ),
     ];
@@ -263,7 +270,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
           : undefined,
       ),
     ];
@@ -303,20 +310,26 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
     ];
   }
@@ -339,7 +352,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
       // the background coloured circle
@@ -347,7 +360,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -356,7 +369,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
     ];
@@ -380,14 +393,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
           : undefined,
       ),
     ];
@@ -411,14 +424,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
           : undefined,
       ),
     ];
@@ -439,13 +452,13 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
           : undefined,
       ),
     ];
@@ -466,13 +479,13 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
           : undefined,
       ),
     ];
@@ -508,20 +521,26 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         feature.properties.colour || layerStyle.colour,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour || layerStyle.colour,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
-        processGeometryCollection ? AlloyGeometryCollectionFunctions.TO_POINT_FUNCTION : undefined,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          : undefined,
       ),
     ];
   }
@@ -540,7 +559,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
       // the background coloured circle
@@ -548,7 +567,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -557,7 +576,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POINT_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
           : undefined,
       ),
     ];
@@ -570,21 +589,62 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
+    const radius = this.getBallRadius(resolution);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
           : undefined,
+      ),
+      // the halo circle
+      AlloyBallUtils.createBallHaloStyle(
+        radius,
+        feature.properties.colour || layerStyle.colour,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              // then convert to mid points
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
+      ),
+      // the background coloured circle
+      AlloyBallUtils.createBallStyle(
+        radius,
+        feature.properties.colour || layerStyle.colour,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              // then convert to mid points
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
+      ),
+      // the icon of the item
+      AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              // then convert to mid points
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
     ];
   }
@@ -596,21 +656,62 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
+    const radius = this.getBallRadius(resolution);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_LINESTRING_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
           : undefined,
+      ),
+      // the halo circle
+      AlloyBallUtils.createBallHaloStyle(
+        radius,
+        feature.properties.colour || layerStyle.colour,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              // then convert to mid points
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
+      ),
+      // the background coloured circle
+      AlloyBallUtils.createBallStyle(
+        radius,
+        feature.properties.colour || layerStyle.colour,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              // then convert to mid points
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
+      ),
+      // the icon of the item
+      AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              // then convert to mid points
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
       ),
     ];
   }
@@ -625,13 +726,13 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyPolygonUtils.createPolygonHaloStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
           : undefined,
       ),
     ];
@@ -647,13 +748,13 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyPolygonUtils.createPolygonHaloStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.TO_MULTI_POLYGON_FUNCTION
+          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
           : undefined,
       ),
     ];

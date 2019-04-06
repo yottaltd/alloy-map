@@ -9,7 +9,7 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLRenderFeature from 'ol/render/Feature';
-import { AlloyMapError } from '../../../error/AlloyMapError';
+import { AlloyMapError } from '../../../../error/AlloyMapError';
 
 /**
  * geometry functions for openlayers styles, this allows us to work with multigeom instances
@@ -17,15 +17,18 @@ import { AlloyMapError } from '../../../error/AlloyMapError';
  */
 export abstract class AlloyGeometryCollectionFunctions {
   /**
+   * converts a feature of geometry collection to its individual points
+   */
+  public static convertFeatureToPoint(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
+    return AlloyGeometryCollectionFunctions.convertGeometryToPoint(olFeature.getGeometry());
+  }
+
+  /**
    * converts a geometry collection to its individual points
    */
-  public static readonly TO_POINT_FUNCTION: (
-    olFeature: OLFeature | OLRenderFeature,
-  ) => OLGeometry = (olFeature) => {
-    const geometry = olFeature.getGeometry();
-
+  public static convertGeometryToPoint(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (geometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
         1554478091,
         'cannot run geometry function for non-geometry collection',
@@ -34,20 +37,25 @@ export abstract class AlloyGeometryCollectionFunctions {
 
     // get flattened geometry collection from behind the cache and grab the multi geom we want
     return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
-      geometry as OLGeometryCollection,
+      olGeometry as OLGeometryCollection,
     ).points;
-  };
+  }
+
+  /**
+   * converts a feature of geometry collection to its individual multi points
+   */
+  public static convertFeatureToMultiPoint(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
+    return AlloyGeometryCollectionFunctions.convertGeometryToMultiPoint(olFeature.getGeometry());
+  }
 
   /**
    * converts a geometry collection to its individual multi points
    */
-  public static readonly TO_MULTI_POINT_FUNCTION: (
-    olFeature: OLFeature | OLRenderFeature,
-  ) => OLGeometry = (olFeature) => {
-    const geometry = olFeature.getGeometry();
-
+  public static convertGeometryToMultiPoint(
+    olGeometry: OLGeometry | OLRenderFeature,
+  ): OLMultiPoint {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (geometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
         1554479460,
         'cannot run geometry function for non-geometry collection',
@@ -56,20 +64,27 @@ export abstract class AlloyGeometryCollectionFunctions {
 
     // get flattened geometry collection from behind the cache and grab the multi geom we want
     return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
-      geometry as OLGeometryCollection,
+      olGeometry as OLGeometryCollection,
     ).multiPoints;
-  };
+  }
+
+  /**
+   * converts a feature of geometry collection to its individual line strings
+   */
+  public static convertFeatureToLineString(
+    olFeature: OLFeature | OLRenderFeature,
+  ): OLMultiLineString {
+    return AlloyGeometryCollectionFunctions.convertGeometryToLineString(olFeature.getGeometry());
+  }
 
   /**
    * converts a geometry collection to its individual line strings
    */
-  public static readonly TO_LINESTRING_FUNCTION: (
-    olFeature: OLFeature | OLRenderFeature,
-  ) => OLGeometry = (olFeature) => {
-    const geometry = olFeature.getGeometry();
-
+  public static convertGeometryToLineString(
+    olGeometry: OLGeometry | OLRenderFeature,
+  ): OLMultiLineString {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (geometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
         1554479613,
         'cannot run geometry function for non-geometry collection',
@@ -78,20 +93,29 @@ export abstract class AlloyGeometryCollectionFunctions {
 
     // get flattened geometry collection from behind the cache and grab the multi geom we want
     return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
-      geometry as OLGeometryCollection,
+      olGeometry as OLGeometryCollection,
     ).lineStrings;
-  };
+  }
+
+  /**
+   * converts a feature of geometry collection to its individual multi line strings
+   */
+  public static convertFeatureToMultiLineString(
+    olFeature: OLFeature | OLRenderFeature,
+  ): OLMultiLineString {
+    return AlloyGeometryCollectionFunctions.convertGeometryToMultiLineString(
+      olFeature.getGeometry(),
+    );
+  }
 
   /**
    * converts a geometry collection to its individual multi line strings
    */
-  public static readonly TO_MULTI_LINESTRING_FUNCTION: (
-    olFeature: OLFeature | OLRenderFeature,
-  ) => OLGeometry = (olFeature) => {
-    const geometry = olFeature.getGeometry();
-
+  public static convertGeometryToMultiLineString(
+    olGeometry: OLGeometry | OLRenderFeature,
+  ): OLMultiLineString {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (geometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
         1554479698,
         'cannot run geometry function for non-geometry collection',
@@ -100,20 +124,23 @@ export abstract class AlloyGeometryCollectionFunctions {
 
     // get flattened geometry collection from behind the cache and grab the multi geom we want
     return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
-      geometry as OLGeometryCollection,
+      olGeometry as OLGeometryCollection,
     ).multiLineStrings;
-  };
+  }
+
+  /**
+   * converts a feature of geometry collection to its individual polygons
+   */
+  public static convertFeatureToPolygon(olFeature: OLFeature | OLRenderFeature): OLMultiPolygon {
+    return AlloyGeometryCollectionFunctions.convertGeometryToPolygon(olFeature.getGeometry());
+  }
 
   /**
    * converts a geometry collection to its individual polygons
    */
-  public static readonly TO_POLYGON_FUNCTION: (
-    olFeature: OLFeature | OLRenderFeature,
-  ) => OLGeometry = (olFeature) => {
-    const geometry = olFeature.getGeometry();
-
+  public static convertGeometryToPolygon(olGeometry: OLGeometry | OLRenderFeature): OLMultiPolygon {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (geometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
         1554479633,
         'cannot run geometry function for non-geometry collection',
@@ -122,20 +149,27 @@ export abstract class AlloyGeometryCollectionFunctions {
 
     // get flattened geometry collection from behind the cache and grab the multi geom we want
     return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
-      geometry as OLGeometryCollection,
+      olGeometry as OLGeometryCollection,
     ).polygons;
-  };
+  }
+
+  /**
+   * converts a feature of geometry collection to its individual multi polygons
+   */
+  public static convertFeatureToMultiPolygon(
+    olFeature: OLFeature | OLRenderFeature,
+  ): OLMultiPolygon {
+    return AlloyGeometryCollectionFunctions.convertGeometryToMultiPolygon(olFeature.getGeometry());
+  }
 
   /**
    * converts a geometry collection to its individual multi polygons
    */
-  public static readonly TO_MULTI_POLYGON_FUNCTION: (
-    olFeature: OLFeature | OLRenderFeature,
-  ) => OLGeometry = (olFeature) => {
-    const geometry = olFeature.getGeometry();
-
+  public static convertGeometryToMultiPolygon(
+    olGeometry: OLGeometry | OLRenderFeature,
+  ): OLMultiPolygon {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (geometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
         1554479729,
         'cannot run geometry function for non-geometry collection',
@@ -144,9 +178,9 @@ export abstract class AlloyGeometryCollectionFunctions {
 
     // get flattened geometry collection from behind the cache and grab the multi geom we want
     return AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
-      geometry as OLGeometryCollection,
+      olGeometry as OLGeometryCollection,
     ).multiPolygons;
-  };
+  }
 
   /**
    * cache of the flattened geometry collection data, using a weak map ensures we don't bump the
@@ -168,10 +202,8 @@ export abstract class AlloyGeometryCollectionFunctions {
       | undefined = AlloyGeometryCollectionFunctions.cache.get(olGeometry);
     if (geometries) {
       // if its in the cache, great! short circuit!
-      console.log('got me from cache mate!', olGeometry);
       return geometries;
     }
-    console.log('load me hearties!', olGeometry);
 
     const data: GeomtryCollectionGeometries = {
       points: [],
