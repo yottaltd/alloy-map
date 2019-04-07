@@ -58,9 +58,9 @@ export class AlloySelectionInteraction {
     this.debugger = this.map.debugger.extend(AlloySelectionInteraction.name);
 
     // listen for click events
-    this.map.olMap.on('click', (e) =>
-      this.onClick(e as OLMapBrowserPointerEvent /* this is untyped in ol */),
-    );
+    this.map.olMap.on('click', (e) => {
+      this.onClick(e as OLMapBrowserPointerEvent /* this is untyped in ol */);
+    });
   }
 
   /**

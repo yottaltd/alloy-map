@@ -19,6 +19,7 @@ import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
 import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
+import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
 import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
@@ -106,6 +107,11 @@ export class AlloyMap {
    * the selection interaction manager, determines when clicks occur etc.
    */
   private readonly selectionInteraction: AlloySelectionInteraction;
+
+  /**
+   * the ping interaction manager, shows a nice ping animation
+   */
+  private readonly pingInteraction: AlloyPingInteraction;
 
   /**
    * event dispatcher for change center events
@@ -196,6 +202,9 @@ export class AlloyMap {
     this.selectionLayer = new AlloySelectionLayer({ map: this });
     this.selectionInteraction = new AlloySelectionInteraction(this);
     this.olMap.addLayer(this.selectionLayer.olLayer);
+
+    // setup ping interaction
+    this.pingInteraction = new AlloyPingInteraction(this);
   }
 
   /**
