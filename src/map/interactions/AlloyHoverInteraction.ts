@@ -117,9 +117,18 @@ export class AlloyHoverInteraction {
       },
     );
 
-    if (features.length > 0) {
-      // TODO possible z-index issue
-      this.map.hoverLayer.setHoveredFeature(features[0]);
+    // get the topmost feature
+    // TODO possible z-index issue
+    const topMostFeature: AlloyFeature | null = features.length > 0 ? features[0] : null;
+    // check if the top most feature is already selected, if so we don't want to register a hover
+    const topMostFeatureSelected =
+      !!topMostFeature && this.map.selectionLayer.getFeatureById(topMostFeature.id);
+
+    // update selected or not
+    if (topMostFeature) {
+      // hovered is set based on whether the feature being "hovered" is already selected, we still
+      // want a cursor indicator but we don't want another halo etc.
+      this.map.hoverLayer.setHoveredFeature(topMostFeatureSelected ? null : topMostFeature);
       // set the cursor to show it has moused over
       (this.map.olMap.getViewport() as HTMLElement).style.cursor = 'pointer';
     } else {
