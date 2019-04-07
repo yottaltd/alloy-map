@@ -353,6 +353,10 @@ export class AlloySelectionInteraction {
         firstFeature.id,
       );
       this.setSelectedFeatures([]);
+
+      // set the hovered feature because we are over it but it doesn't trigger a pointer move
+      // and deselecting means we are hovered over it
+      this.map.hoverLayer.setHoveredFeature(firstFeature);
       return;
     }
 
@@ -380,6 +384,10 @@ export class AlloySelectionInteraction {
           }
           this.setSelectedFeatures(Array.from(selectedFeatures.values()));
           // we are specifically not calling "onFeatureClicked" when deselecting, think its right?
+
+          // set the hovered feature because we are over it but it doesn't trigger a pointer move
+          // and deselecting means we are hovered over it
+          this.map.hoverLayer.setHoveredFeature(firstFeature);
         } else {
           this.debugger(
             'first feature: %s was shift/ctrl clicked and not already selected, selecting',
@@ -387,6 +395,9 @@ export class AlloySelectionInteraction {
           );
           this.selectFeature(firstFeature);
           this.callFeatureOnSelectionInteraction(firstFeature);
+
+          // unset the hovered feature because we are over it but it doesn't trigger a pointer move
+          this.map.hoverLayer.setHoveredFeature(null);
         }
       } else {
         this.onClickSelectSingleFeature(firstFeature);
@@ -413,6 +424,10 @@ export class AlloySelectionInteraction {
     this.debugger('first feature: %s was clicked and not already selected, selecting', feature.id);
     this.setSelectedFeature(feature);
     this.callFeatureOnSelectionInteraction(feature);
+
+    // clear the hovered feature, because this doesn't involve a pointer move and it will still have
+    // a hover style
+    this.map.hoverLayer.setHoveredFeature(null);
   }
 
   /**
