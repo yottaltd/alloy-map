@@ -2,10 +2,12 @@
 .DS_Store
 node_modules
 /dist
+/lib
+/docs
 
 # cypress io
-tests/e2e/screenshots
-tests/e2e/videos
+cypress/screenshots
+cypress/videos
 
 # Log files
 npm-debug.log*
