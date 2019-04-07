@@ -33,7 +33,7 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     super(layer);
 
     this.clusterStyleBuilder = new AlloyClusterStyleBuilder(layer.styles);
-    this.itemStyleBuilder = new AlloyItemStyleBuilder(layer.styles);
+    this.itemStyleBuilder = new AlloyItemStyleBuilder(layer.map, layer.styles);
   }
 
   /**

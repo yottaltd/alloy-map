@@ -62,7 +62,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return StringUtils.cacheKeyConcat(
       state,
-      Math.floor(resolution),
+      resolution,
       // icon is not in here because clusters don't have them
       layerStyle.colour,
       text,

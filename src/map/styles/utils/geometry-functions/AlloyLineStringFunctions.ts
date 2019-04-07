@@ -11,14 +11,14 @@ import { AlloyMapError } from '../../../../error/AlloyMapError';
  */
 export abstract class AlloyLineStringFunctions {
   /**
-   * converts a line string to its central point along the line
+   * converts a line string to its central point along the line. **this is cached per geometry**
    */
   public static convertFeatureToMidPoint(olFeature: OLFeature | OLRenderFeature): OLPoint {
     return AlloyLineStringFunctions.convertGeometryToMidPoint(olFeature.getGeometry());
   }
 
   /**
-   * converts a line string to its central point along the line
+   * converts a line string to its central point along the line. **this is cached per geometry**
    */
   public static convertGeometryToMidPoint(olGeometry: OLGeometry | OLRenderFeature): OLPoint {
     // MUST be a linestring, otherwise why are we running this?

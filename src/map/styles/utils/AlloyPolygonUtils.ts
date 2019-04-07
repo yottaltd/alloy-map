@@ -2,8 +2,8 @@ import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLFill from 'ol/style/Fill';
-import OLStyle from 'ol/style/Style';
 import OLStroke from 'ol/style/Stroke';
+import OLStyle from 'ol/style/Style';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { AlloyScaleUtils } from './AlloyScaleUtils';
 

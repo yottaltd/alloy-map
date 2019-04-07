@@ -17,16 +17,23 @@ import { AlloyMapError } from '../../../../error/AlloyMapError';
  */
 export abstract class AlloyGeometryCollectionFunctions {
   /**
-   * converts a feature of geometry collection to its individual points
+   * converts a feature of geometry collection to its individual points.
+   * **this is cached per geometry**
    */
-  public static convertFeatureToPoint(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
-    return AlloyGeometryCollectionFunctions.convertGeometryToPoint(olFeature.getGeometry());
+  public static convertFeaturePointsToMultiPoint(
+    olFeature: OLFeature | OLRenderFeature,
+  ): OLMultiPoint {
+    return AlloyGeometryCollectionFunctions.convertGeometryPointsToMultiPoint(
+      olFeature.getGeometry(),
+    );
   }
 
   /**
-   * converts a geometry collection to its individual points
+   * converts a geometry collection to its individual points. **this is cached per geometry**
    */
-  public static convertGeometryToPoint(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
+  public static convertGeometryPointsToMultiPoint(
+    olGeometry: OLGeometry | OLRenderFeature,
+  ): OLMultiPoint {
     // MUST be a geometry collection, otherwise why are we running this?
     if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
@@ -42,16 +49,21 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
-   * converts a feature of geometry collection to its individual multi points
+   * converts a feature of geometry collection to its individual multi points.
+   * **this is cached per geometry**
    */
-  public static convertFeatureToMultiPoint(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
-    return AlloyGeometryCollectionFunctions.convertGeometryToMultiPoint(olFeature.getGeometry());
+  public static convertFeatureMultiPointsToMultiPoint(
+    olFeature: OLFeature | OLRenderFeature,
+  ): OLMultiPoint {
+    return AlloyGeometryCollectionFunctions.convertGeometryMultiPointsToMultiPoint(
+      olFeature.getGeometry(),
+    );
   }
 
   /**
-   * converts a geometry collection to its individual multi points
+   * converts a geometry collection to its individual multi points. **this is cached per geometry**
    */
-  public static convertGeometryToMultiPoint(
+  public static convertGeometryMultiPointsToMultiPoint(
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiPoint {
     // MUST be a geometry collection, otherwise why are we running this?
@@ -69,18 +81,21 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
-   * converts a feature of geometry collection to its individual line strings
+   * converts a feature of geometry collection to its individual line strings.
+   * **this is cached per geometry**
    */
-  public static convertFeatureToLineString(
+  public static convertFeatureLineStringsToMultiLineString(
     olFeature: OLFeature | OLRenderFeature,
   ): OLMultiLineString {
-    return AlloyGeometryCollectionFunctions.convertGeometryToLineString(olFeature.getGeometry());
+    return AlloyGeometryCollectionFunctions.convertGeometryLineStringsToMultiLineString(
+      olFeature.getGeometry(),
+    );
   }
 
   /**
-   * converts a geometry collection to its individual line strings
+   * converts a geometry collection to its individual line strings. **this is cached per geometry**
    */
-  public static convertGeometryToLineString(
+  public static convertGeometryLineStringsToMultiLineString(
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiLineString {
     // MUST be a geometry collection, otherwise why are we running this?
@@ -98,20 +113,22 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
-   * converts a feature of geometry collection to its individual multi line strings
+   * converts a feature of geometry collection to its individual multi line strings.
+   * **this is cached per geometry**
    */
-  public static convertFeatureToMultiLineString(
+  public static convertFeatureMultiLineStringsToMultiLineString(
     olFeature: OLFeature | OLRenderFeature,
   ): OLMultiLineString {
-    return AlloyGeometryCollectionFunctions.convertGeometryToMultiLineString(
+    return AlloyGeometryCollectionFunctions.convertGeometryMultiLineStringsToMultiLineString(
       olFeature.getGeometry(),
     );
   }
 
   /**
-   * converts a geometry collection to its individual multi line strings
+   * converts a geometry collection to its individual multi line strings.
+   * **this is cached per geometry**
    */
-  public static convertGeometryToMultiLineString(
+  public static convertGeometryMultiLineStringsToMultiLineString(
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiLineString {
     // MUST be a geometry collection, otherwise why are we running this?
@@ -129,16 +146,23 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
-   * converts a feature of geometry collection to its individual polygons
+   * converts a feature of geometry collection to its individual polygons.
+   * **this is cached per geometry**
    */
-  public static convertFeatureToPolygon(olFeature: OLFeature | OLRenderFeature): OLMultiPolygon {
-    return AlloyGeometryCollectionFunctions.convertGeometryToPolygon(olFeature.getGeometry());
+  public static convertFeaturePolygonsToMultiPolygon(
+    olFeature: OLFeature | OLRenderFeature,
+  ): OLMultiPolygon {
+    return AlloyGeometryCollectionFunctions.convertGeometryPolygonsToMultiPolygon(
+      olFeature.getGeometry(),
+    );
   }
 
   /**
-   * converts a geometry collection to its individual polygons
+   * converts a geometry collection to its individual polygons. **this is cached per geometry**
    */
-  public static convertGeometryToPolygon(olGeometry: OLGeometry | OLRenderFeature): OLMultiPolygon {
+  public static convertGeometryPolygonsToMultiPolygon(
+    olGeometry: OLGeometry | OLRenderFeature,
+  ): OLMultiPolygon {
     // MUST be a geometry collection, otherwise why are we running this?
     if (olGeometry.getType() !== 'GeometryCollection') {
       throw new AlloyMapError(
@@ -154,18 +178,22 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
-   * converts a feature of geometry collection to its individual multi polygons
+   * converts a feature of geometry collection to its individual multi polygons.
+   * **this is cached per geometry**
    */
-  public static convertFeatureToMultiPolygon(
+  public static convertFeatureMultiPolygonsToMultiPolygon(
     olFeature: OLFeature | OLRenderFeature,
   ): OLMultiPolygon {
-    return AlloyGeometryCollectionFunctions.convertGeometryToMultiPolygon(olFeature.getGeometry());
+    return AlloyGeometryCollectionFunctions.convertGeometryMultiPolygonsToMultiPolygon(
+      olFeature.getGeometry(),
+    );
   }
 
   /**
-   * converts a geometry collection to its individual multi polygons
+   * converts a geometry collection to its individual multi polygons.
+   * **this is cached per geometry**
    */
-  public static convertGeometryToMultiPolygon(
+  public static convertGeometryMultiPolygonsToMultiPolygon(
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiPolygon {
     // MUST be a geometry collection, otherwise why are we running this?
@@ -183,11 +211,67 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
+   * calculates the largest polygon inside a geometry collection, searches both polygons and multi
+   * polygons to find the largest sub geometry **this is cached per geometry**
+   * @param olGeometry the geometry collection to find the largest polygon for
+   */
+  public static calculateLargestPolygon(olGeometry: OLGeometryCollection): OLPolygon | null {
+    // first check the cache
+    let largestPolygon:
+      | OLPolygon
+      | undefined
+      | null = AlloyGeometryCollectionFunctions.largestPolygonCache.get(olGeometry);
+    if (largestPolygon) {
+      return largestPolygon;
+    }
+
+    // get the cached flattened geometries
+    const geometries = AlloyGeometryCollectionFunctions.getAndCacheFlattenedGeometryCollection(
+      olGeometry as OLGeometryCollection,
+    );
+    const polygons = geometries.polygons
+      .getPolygons()
+      .concat(geometries.multiPolygons.getPolygons());
+
+    // short circuit for special cases
+    if (!polygons || polygons.length === 0) {
+      largestPolygon = null;
+    } else if (polygons.length === 1) {
+      largestPolygon = polygons[0];
+    } else {
+      // otherwise work out the area for each sub geometry and select the largest
+      largestPolygon = polygons
+        .map((p) => ({
+          polygon: p,
+          area: p.getArea(),
+        }))
+        .sort((a, b) => a.area - b.area)[0].polygon;
+    }
+
+    // cache the result
+    AlloyGeometryCollectionFunctions.largestPolygonCache.set(olGeometry, largestPolygon);
+    return largestPolygon;
+  }
+
+  /**
    * cache of the flattened geometry collection data, using a weak map ensures we don't bump the
    * revision counter on the openlayers geometry but we also release memory once nothing references
    * the geometry collection anymore
    */
-  private static readonly cache = new WeakMap<OLGeometryCollection, FlattenedGeometryCollection>();
+  private static readonly flattenedGeometryCollectionCache = new WeakMap<
+    OLGeometryCollection,
+    FlattenedGeometryCollection
+  >();
+
+  /**
+   * cache of the largest polygon for a geom collection, using a weak map ensures we don't bump the
+   * revision counter on the openlayers geometry but we also release memory once nothing references
+   * the geometry collection anymore
+   */
+  private static readonly largestPolygonCache = new WeakMap<
+    OLGeometryCollection,
+    OLPolygon | null
+  >();
 
   /**
    * gets or generates the data required to flatten a geometry collection and returns the result
@@ -197,9 +281,9 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometryCollection,
   ): FlattenedGeometryCollection {
     // first check the cache
-    let geometries:
-      | FlattenedGeometryCollection
-      | undefined = AlloyGeometryCollectionFunctions.cache.get(olGeometry);
+    let geometries = AlloyGeometryCollectionFunctions.flattenedGeometryCollectionCache.get(
+      olGeometry,
+    );
     if (geometries) {
       // if its in the cache, great! short circuit!
       return geometries;
@@ -232,7 +316,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     };
 
     // cache and return the results
-    AlloyGeometryCollectionFunctions.cache.set(olGeometry, geometries);
+    AlloyGeometryCollectionFunctions.flattenedGeometryCollectionCache.set(olGeometry, geometries);
     return geometries;
   }
 

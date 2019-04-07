@@ -11,14 +11,16 @@ import { AlloyMapError } from '../../../../error/AlloyMapError';
  */
 export abstract class AlloyMultiLineStringFunctions {
   /**
-   * converts a feature of multi line string to its central point along the line
+   * converts a feature of multi line string to its central point along the line.
+   * **this is cached per geometry**
    */
   public static convertFeatureToMidPoints(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
     return AlloyMultiLineStringFunctions.convertGeometryToMidPoints(olFeature.getGeometry());
   }
 
   /**
-   * converts a multi line string to its central point along the line
+   * converts a multi line string to its central point along the line.
+   * **this is cached per geometry**
    */
   public static convertGeometryToMidPoints(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
     // MUST be a multi linestring, otherwise why are we running this?

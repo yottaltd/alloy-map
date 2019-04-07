@@ -31,12 +31,13 @@ export abstract class AlloyIconUtils {
    * @param size the size of the icon
    * @param alloyIconClass the alloy icon class e.g. icon-stl
    * @param colour the colour of the icon
+   * @param geometryFunction the geometry or function to transform the style
    */
   public static createAlloyIconStyle(
     size: number,
     alloyIconClass: string,
     colour: string,
-    geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
+    geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // generate the icon canvas
     const iconCanvas = AlloyIconUtils.createIconCanvas(

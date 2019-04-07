@@ -1,7 +1,11 @@
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
+import OLPolygon from 'ol/geom/Polygon';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
+import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayerStyle } from '../AlloyLayerStyle';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
@@ -11,10 +15,14 @@ import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
 import { AlloyPolygonUtils } from '../utils/AlloyPolygonUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
+// tslint:disable-next-line: max-line-length
 import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
-import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineStringFunctions';
 import { AlloyGeometryFunctionUtils } from '../utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineStringFunctions';
+// tslint:disable-next-line: max-line-length
 import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
+import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
 
 /**
  * the icon colour in the balls
@@ -28,6 +36,21 @@ const ICON_COLOUR = '#ffffff';
  */
 export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<AlloyItemFeature> {
   /**
+   * shame we need a reference to the map :( but its for calculating coord to pixel coord transforms
+   */
+  private readonly map: AlloyMap;
+
+  /**
+   * creates a new instance
+   * @param map the map instance for calculations
+   * @param styles the styles to build
+   */
+  constructor(map: AlloyMap, styles: AlloyLayerStyle[]) {
+    super(styles);
+    this.map = map;
+  }
+
+  /**
    * @override
    */
   protected getKey(
@@ -40,13 +63,20 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       throw new AlloyMapError(1554163769, 'missing layer style: ' + feature.properties.styleId);
     }
 
+    const type = feature.olFeature.getGeometry().getType();
+
     return StringUtils.cacheKeyConcat(
       state,
-      Math.floor(resolution),
+      resolution,
       feature.properties.icon || layerStyle.icon,
       feature.properties.colour || layerStyle.colour,
       // need to key on geometry type as we support everything
-      feature.olFeature.getGeometry().getType(),
+      type,
+      // polygons, multi polygons and geometry collections are also special due to icon sizing
+      // inside polygons that need to be processed per item
+      type === 'Polygon' || type === 'MultiPolygon' || type === 'GeometryCollection'
+        ? feature.olFeature.getId()
+        : undefined,
     );
   }
 
@@ -160,7 +190,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -169,7 +199,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
     ];
@@ -189,7 +219,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -198,7 +228,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
     ];
@@ -215,7 +245,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         this.getLineWidth(resolution),
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
     ];
@@ -232,7 +262,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         this.getLineWidth(resolution),
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
     ];
@@ -247,12 +277,50 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     const semiTransparentColour = ColourUtils.semiTransparent(
       feature.properties.colour || layerStyle.colour,
     );
+
+    // we need to calculate the icon size on a feature by feature basis
+    let largestPolygon: OLPolygon | null;
+    if (processGeometryCollection) {
+      // calculate the largest polygon in the geometry collection, this is cached
+      largestPolygon = AlloyGeometryCollectionFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLGeometryCollection,
+      );
+    } else {
+      // single polygon, so it's always the largest...
+      largestPolygon = feature.olFeature.getGeometry() as OLPolygon;
+    }
+
+    // special case, we don't have a polygon in this geometry so no styles are necessary
+    if (!largestPolygon) {
+      return [];
+    }
+
+    // calculate the mid point of the largest polygon, this is cached
+    const midPoint = AlloyPolygonFunctions.convertGeometryToMidPoint(largestPolygon);
+
+    // calculate the mid point of the multi geometries largest polygon, this is cached
+    let iconSize = AlloyPolygonFunctions.calculateMidPointSize(
+      largestPolygon,
+      resolution,
+      this.map.olMap,
+    );
+
+    // clamp the icon size to a max
+    iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
+
     return [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
+      ),
+      AlloyIconUtils.createAlloyIconStyle(
+        iconSize,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        // we already have the mid point so use it
+        midPoint,
       ),
     ];
   }
@@ -266,12 +334,52 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     const semiTransparentColour = ColourUtils.semiTransparent(
       feature.properties.colour || layerStyle.colour,
     );
+
+    // we need to calculate the icon size on a feature by feature basis
+    let largestPolygon: OLPolygon | null;
+    if (processGeometryCollection) {
+      // calculate the largest polygon in the geometry collection, this is cached
+      largestPolygon = AlloyGeometryCollectionFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLGeometryCollection,
+      );
+    } else {
+      // calculate the largest polygon in the multi polygon, this is cached
+      largestPolygon = AlloyMultiPolygonFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLMultiPolygon,
+      );
+    }
+
+    // special case, we don't have a polygon in this geometry so no styles are necessary
+    if (!largestPolygon) {
+      return [];
+    }
+
+    // calculate the mid point of the multi geometries largest polygon, this is cached
+    let iconSize = AlloyPolygonFunctions.calculateMidPointSize(
+      largestPolygon,
+      resolution,
+      this.map.olMap,
+    );
+
+    // calculate the mid point of the largest polygon, this is cached
+    const midPoint = AlloyPolygonFunctions.convertGeometryToMidPoint(largestPolygon);
+
+    // clamp the icon size to a max
+    iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
+
     return [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
+      ),
+      AlloyIconUtils.createAlloyIconStyle(
+        iconSize,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        // we already have the mid point so use it
+        midPoint,
       ),
     ];
   }
@@ -311,7 +419,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
       // the background coloured circle
@@ -319,7 +427,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -328,7 +436,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
     ];
@@ -352,7 +460,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
       // the background coloured circle
@@ -360,7 +468,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -369,7 +477,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
     ];
@@ -393,14 +501,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
     ];
@@ -424,14 +532,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
     ];
@@ -448,18 +556,55 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       feature.properties.colour || layerStyle.colour,
     );
 
+    // we need to calculate the icon size on a feature by feature basis
+    let largestPolygon: OLPolygon | null;
+    if (processGeometryCollection) {
+      // calculate the largest polygon in the geometry collection, this is cached
+      largestPolygon = AlloyGeometryCollectionFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLGeometryCollection,
+      );
+    } else {
+      // single polygon, so it's always the largest...
+      largestPolygon = feature.olFeature.getGeometry() as OLPolygon;
+    }
+
+    // special case, we don't have a polygon in this geometry so no styles are necessary
+    if (!largestPolygon) {
+      return [];
+    }
+
+    // calculate the mid point of the largest polygon, this is cached
+    const midPoint = AlloyPolygonFunctions.convertGeometryToMidPoint(largestPolygon);
+
+    // calculate the mid point of the multi geometries largest polygon, this is cached
+    let iconSize = AlloyPolygonFunctions.calculateMidPointSize(
+      largestPolygon,
+      resolution,
+      this.map.olMap,
+    );
+
+    // clamp the icon size to a max
+    iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
+
     return [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
+      ),
+      AlloyIconUtils.createAlloyIconStyle(
+        iconSize,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        // we already have the mid point so use it
+        midPoint,
       ),
     ];
   }
@@ -475,18 +620,57 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       feature.properties.colour || layerStyle.colour,
     );
 
+    // we need to calculate the icon size on a feature by feature basis
+    let largestPolygon: OLPolygon | null;
+    if (processGeometryCollection) {
+      // calculate the largest polygon in the geometry collection, this is cached
+      largestPolygon = AlloyGeometryCollectionFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLGeometryCollection,
+      );
+    } else {
+      // calculate the largest polygon in the multi polygon, this is cached
+      largestPolygon = AlloyMultiPolygonFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLMultiPolygon,
+      );
+    }
+
+    // special case, we don't have a polygon in this geometry so no styles are necessary
+    if (!largestPolygon) {
+      return [];
+    }
+
+    // calculate the mid point of the largest polygon, this is cached
+    const midPoint = AlloyPolygonFunctions.convertGeometryToMidPoint(largestPolygon);
+
+    // calculate the mid point of the multi geometries largest polygon, this is cached
+    let iconSize = AlloyPolygonFunctions.calculateMidPointSize(
+      largestPolygon,
+      resolution,
+      this.map.olMap,
+    );
+
+    // clamp the icon size to a max
+    iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
+
     return [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
+      ),
+      AlloyIconUtils.createAlloyIconStyle(
+        iconSize,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        // we already have the mid point so use it
+        midPoint,
       ),
     ];
   }
@@ -522,7 +706,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
       // the background coloured circle
@@ -530,7 +714,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -539,7 +723,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPoint
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
     ];
@@ -559,7 +743,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
       // the background coloured circle
@@ -567,7 +751,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         radius,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
       // the icon of the item
@@ -576,7 +760,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         feature.properties.icon || layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPoint
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
     ];
@@ -596,14 +780,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
       // the halo circle
@@ -613,7 +797,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
               // then convert to mid points
               AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
             )
@@ -626,7 +810,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
               // then convert to mid points
               AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
             )
@@ -640,7 +824,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
               // then convert to mid points
               AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
             )
@@ -663,14 +847,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiLineString
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
       // the halo circle
@@ -680,7 +864,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
               // then convert to mid points
               AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
             )
@@ -693,7 +877,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
               // then convert to mid points
               AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
             )
@@ -707,7 +891,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureToLineString,
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
               // then convert to mid points
               AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
             )
@@ -722,18 +906,55 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
+    // we need to calculate the icon size on a feature by feature basis
+    let largestPolygon: OLPolygon | null;
+    if (processGeometryCollection) {
+      // calculate the largest polygon in the geometry collection, this is cached
+      largestPolygon = AlloyGeometryCollectionFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLGeometryCollection,
+      );
+    } else {
+      // single polygon, so it's always the largest...
+      largestPolygon = feature.olFeature.getGeometry() as OLPolygon;
+    }
+
+    // special case, we don't have a polygon in this geometry so no styles are necessary
+    if (!largestPolygon) {
+      return [];
+    }
+
+    // calculate the mid point of the largest polygon, this is cached
+    const midPoint = AlloyPolygonFunctions.convertGeometryToMidPoint(largestPolygon);
+
+    // calculate the mid point of the multi geometries largest polygon, this is cached
+    let iconSize = AlloyPolygonFunctions.calculateMidPointSize(
+      largestPolygon,
+      resolution,
+      this.map.olMap,
+    );
+
+    // clamp the icon size to a max
+    iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
+
     return [
       AlloyPolygonUtils.createPolygonHaloStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
+      ),
+      AlloyIconUtils.createAlloyIconStyle(
+        iconSize,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        // we already have the mid point so use it
+        midPoint,
       ),
     ];
   }
@@ -744,18 +965,57 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
+    // we need to calculate the icon size on a feature by feature basis
+    let largestPolygon: OLPolygon | null;
+    if (processGeometryCollection) {
+      // calculate the largest polygon in the geometry collection, this is cached
+      largestPolygon = AlloyGeometryCollectionFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLGeometryCollection,
+      );
+    } else {
+      // calculate the largest polygon in the multi polygon, this is cached
+      largestPolygon = AlloyMultiPolygonFunctions.calculateLargestPolygon(
+        feature.olFeature.getGeometry() as OLMultiPolygon,
+      );
+    }
+
+    // special case, we don't have a polygon in this geometry so no styles are necessary
+    if (!largestPolygon) {
+      return [];
+    }
+
+    // calculate the mid point of the largest polygon, this is cached
+    const midPoint = AlloyPolygonFunctions.convertGeometryToMidPoint(largestPolygon);
+
+    // calculate the mid point of the multi geometries largest polygon, this is cached
+    let iconSize = AlloyPolygonFunctions.calculateMidPointSize(
+      largestPolygon,
+      resolution,
+      this.map.olMap,
+    );
+
+    // clamp the icon size to a max
+    iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
+
     return [
       AlloyPolygonUtils.createPolygonHaloStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         feature.properties.colour || layerStyle.colour,
         processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureToMultiPolygon
+          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
+      ),
+      AlloyIconUtils.createAlloyIconStyle(
+        iconSize,
+        feature.properties.icon || layerStyle.icon,
+        ICON_COLOUR,
+        // we already have the mid point so use it
+        midPoint,
       ),
     ];
   }
