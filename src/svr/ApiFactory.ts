@@ -1,4 +1,4 @@
-import { Configuration } from '../api';
+import { Configuration } from '../api/Configuration';
 import { Api } from './Api';
 import { responseInterceptor } from './responseInterceptor';
 
