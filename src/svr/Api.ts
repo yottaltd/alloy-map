@@ -1,4 +1,5 @@
-import { LayerApi, Configuration } from '../api';
+import { Configuration } from '../api/configuration';
+import { LayerApi } from '../api/LayerApi';
 
 /**
  * the api acts as a service for exposing the individual controllers in the web api
