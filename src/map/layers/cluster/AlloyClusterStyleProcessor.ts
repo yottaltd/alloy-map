@@ -43,22 +43,22 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     if (olFeature instanceof OLRenderFeature) {
-      return null;
+      return [];
     }
 
     const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
     if (!feature) {
-      return null;
+      return [];
     }
 
     if (feature instanceof AlloyClusterFeature) {
-      return this.clusterStyleBuilder.build(feature, resolution, state);
+      return this.clusterStyleBuilder.build(feature, resolution, state) || [];
     } else if (feature instanceof AlloyItemFeature) {
-      return this.itemStyleBuilder.build(feature, resolution, state);
+      return this.itemStyleBuilder.build(feature, resolution, state) || [];
     } else {
-      return null;
+      return [];
     }
   }
 }

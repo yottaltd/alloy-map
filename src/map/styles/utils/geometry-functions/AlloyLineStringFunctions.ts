@@ -2,6 +2,7 @@ import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLLineString from 'ol/geom/LineString';
 import OLPoint from 'ol/geom/Point';
+import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLRenderFeature from 'ol/render/Feature';
 import { AlloyMapError } from '../../../../error/AlloyMapError';
 
@@ -28,6 +29,32 @@ export abstract class AlloyLineStringFunctions {
 
     // get mid point from behind the cache
     return AlloyLineStringFunctions.getAndCacheLineStringMidPoint(olGeometry as OLLineString);
+  }
+
+  /**
+   * converts a line string to its first and last points.
+   */
+  public static convertFeatureToEndPoints(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
+    return AlloyLineStringFunctions.convertGeometryToEndPoints(olFeature.getGeometry());
+  }
+
+  /**
+   * converts a line string to its first and last points.
+   */
+  public static convertGeometryToEndPoints(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
+    // MUST be a linestring, otherwise why are we running this?
+    if (olGeometry.getType() !== 'LineString') {
+      throw new AlloyMapError(
+        1555063870,
+        'cannot run geometry function for non-linestring - ' + olGeometry.getType(),
+      );
+    }
+
+    // get mid point from behind the cache
+    return new OLMultiPoint([
+      (olGeometry as OLLineString).getFirstCoordinate(),
+      (olGeometry as OLLineString).getLastCoordinate(),
+    ]);
   }
 
   /**

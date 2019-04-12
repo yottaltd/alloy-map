@@ -1,59 +1,62 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <title>Alloy Map Sandbox - Networks</title>
-    <style>
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-      }
-      #wrapper {
-        background-color: #ccc;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- dom elements for test setup -->
-    <div id="wrapper">
-      <div id="map" style="width: 100%; height: 800px;"></div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
-    <script src="../../dist/alloy-map.js"></script>
 
-    <script>
-      localStorage.debug = 'alloymaps:*';
+<head>
+  <title>Alloy Map Sandbox - Networks</title>
+  <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
 
-      const map = new alloymap.AlloyMap({
-        api: 'https://api.labs.alloyapp.io/',
-        token: 'd39f2e6a-c36f-49cf-88c7-79440bad47a6',
-        element: document.getElementById('map'),
-        centre: new alloymap.AlloyCoordinate(-2, 52),
-        zoom: 10,
-      });
-      const basemap = alloymap.AlloyBasemapFactory.createSkyward();
-      map.setBasemap(basemap);
+    #wrapper {
+      background-color: #ccc;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
 
-      const layer = new alloymap.AlloyNetworkLayer({
-        map,
-        layerCode: 'layers_craigsNetwork_5c9e61c3ff5c130f60129235',
-        bounds: new alloymap.AlloyBounds(
-          new alloymap.AlloyCoordinate(-5, 47),
-          new alloymap.AlloyCoordinate(3, 57),
-        ),
-        styles: [
-          {
-            styleId: '5c9e61d8ff5c130f6012923a',
-            colour: '#da5aa7',
-            icon: 'icon-footway-tacticle',
-          },
-        ],
-      });
-      map.addLayer(layer);
-    </script>
-  </body>
+<body>
+  <!-- dom elements for test setup -->
+  <div id="wrapper">
+    <div id="map" style="width: 100%; height: 800px;"></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+  <script src="../../dist/alloy-map.js"></script>
+
+  <script>
+    localStorage.debug = 'alloymaps:*';
+
+    const map = new alloymap.AlloyMap({
+      api: 'https://api.labs.alloyapp.io/',
+      token: '4ce49be7-faa8-4ab3-b63d-603661aa943e',
+      element: document.getElementById('map'),
+      centre: new alloymap.AlloyCoordinate(-2, 52),
+      zoom: 10,
+    });
+    const basemap = alloymap.AlloyBasemapFactory.createSkyward();
+    map.setBasemap(basemap);
+
+    const layer = new alloymap.AlloyNetworkLayer({
+      map,
+      layerCode: 'layers_tEst_5cb05e0eff5c130d1ce2090e',
+      bounds: new alloymap.AlloyBounds(
+        new alloymap.AlloyCoordinate(-5, 47),
+        new alloymap.AlloyCoordinate(3, 57),
+      ),
+      styles: [{
+        styleId: '5cb05e22ff5c130d1ce20913',
+        colour: '#da5aa7',
+        icon: 'icon-close',
+      }, ],
+    });
+    map.addLayer(layer);
+  </script>
+</body>
+
 </html>

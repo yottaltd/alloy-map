@@ -18,33 +18,35 @@ export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     if (olFeature instanceof OLRenderFeature) {
-      return null;
+      return [];
     }
 
     const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
     if (!feature) {
-      return null;
+      return [];
     }
 
     // if we don't have an originating layer then bail
     if (!feature.originatingLayerId) {
-      return null;
+      return [];
     }
 
     const layer = this.layer.map.layers.get(feature.originatingLayerId);
 
     // if we don't have a layer or processor, then bail
     if (!layer || !layer.styleProcessor) {
-      return null;
+      return [];
     }
 
-    return layer.styleProcessor.onStyleProcess(
-      olFeature,
-      resolution,
-      // we ignore the state and always pass "selected"
-      AlloyStyleBuilderBuildState.Selected,
+    return (
+      layer.styleProcessor.onStyleProcess(
+        olFeature,
+        resolution,
+        // we ignore the state and always pass "selected"
+        AlloyStyleBuilderBuildState.Selected,
+      ) || []
     );
   }
 }
