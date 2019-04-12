@@ -28,6 +28,7 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
+import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
 
 /**
  * minimum zoom level for the map
@@ -51,6 +52,55 @@ const DEBOUNCED_EVENT_TIMEOUT: number = 100;
  * the alloy map manages basemaps, layers and drawing
  */
 export class AlloyMap {
+  /**
+   * layers currently on display in the map
+   */
+  public get layers(): Map<string, AlloyLayer> {
+    return new Map(this.managedLayers);
+  }
+
+  /**
+   * the active basemap shown under all layers
+   */
+  public get basemap(): Readonly<AlloyBasemap | null> {
+    return this.currentBasemap;
+  }
+
+  /**
+   * the currently selected features
+   */
+  public get selectedFeatures(): Readonly<Map<string, AlloyFeature>> {
+    return this.selectionLayer.features; // already wrapped in new map
+  }
+
+  /**
+   * the current selection mode
+   */
+  public get selectionMode(): Readonly<AlloySelectionMode> {
+    return this.selectionInteraction.selectionMode;
+  }
+
+  /**
+   * the current zoom level
+   */
+  public get zoom(): number {
+    return this.olView.getZoom();
+  }
+
+  /**
+   * the current viewport representing the south west and north east corners of the map
+   */
+  public get viewport(): Readonly<AlloyBounds> {
+    const extent = this.olView.calculateExtent();
+    return AlloyBounds.fromMapExtent(extent);
+  }
+
+  /**
+   * the coordinates of the current map centre
+   */
+  public get centre(): Readonly<AlloyCoordinate> {
+    return AlloyCoordinate.fromMapCoordinate(this.olView.getCenter());
+  }
   /**
    * debugger instance
    * @ignore
@@ -88,6 +138,11 @@ export class AlloyMap {
   public readonly selectionLayer: AlloySelectionLayer;
 
   /**
+   * the selection interaction manager, determines when clicks occur etc.
+   */
+  public readonly selectionInteraction: AlloySelectionInteraction;
+
+  /**
    * the currently active basemap or null if not se
    * @ignore
    */
@@ -104,9 +159,9 @@ export class AlloyMap {
   private readonly hoverInteraction: AlloyHoverInteraction;
 
   /**
-   * the selection interaction manager, determines when clicks occur etc.
+   * the selection in polygon interaction manager, determines when clicks occur etc.
    */
-  private readonly selectionInteraction: AlloySelectionInteraction;
+  private readonly selectInPolygonInteraction: AlloySelectInPolygonInteraction;
 
   /**
    * the ping interaction manager, shows a nice ping animation
@@ -205,56 +260,9 @@ export class AlloyMap {
 
     // setup ping interaction
     this.pingInteraction = new AlloyPingInteraction(this);
-  }
 
-  /**
-   * layers currently on display in the map
-   */
-  public get layers(): Map<string, AlloyLayer> {
-    return new Map(this.managedLayers);
-  }
-
-  /**
-   * the active basemap shown under all layers
-   */
-  public get basemap(): Readonly<AlloyBasemap | null> {
-    return this.currentBasemap;
-  }
-
-  /**
-   * the currently selected features
-   */
-  public get selectedFeatures(): Readonly<Map<string, AlloyFeature>> {
-    return this.selectionLayer.features; // already wrapped in new map
-  }
-
-  /**
-   * the current selection mode
-   */
-  public get selectionMode(): Readonly<AlloySelectionMode> {
-    return this.selectionInteraction.selectionMode;
-  }
-
-  /**
-   * the current zoom level
-   */
-  public get zoom(): number {
-    return this.olView.getZoom();
-  }
-
-  /**
-   * the current viewport representing the south west and north east corners of the map
-   */
-  public get viewport(): Readonly<AlloyBounds> {
-    const extent = this.olView.calculateExtent();
-    return AlloyBounds.fromMapExtent(extent);
-  }
-
-  /**
-   * the coordinates of the current map centre
-   */
-  public get centre(): Readonly<AlloyCoordinate> {
-    return AlloyCoordinate.fromMapCoordinate(this.olView.getCenter());
+    // setup select in poly interaction
+    this.selectInPolygonInteraction = new AlloySelectInPolygonInteraction(this);
   }
 
   /**
@@ -398,6 +406,20 @@ export class AlloyMap {
    */
   public removeLayersChangeListener(handler: LayersChangeEventHandler): void {
     this.onChangeLayers.unsubscribe(handler);
+  }
+
+  /**
+   * Starts interaction to draw a polygon and select all features inside of it
+   */
+  public startPolygonSelect() {
+    this.selectInPolygonInteraction.startPolygonSelect();
+  }
+
+  /**
+   * Cancels interaction for selecting features in a drawn polygon
+   */
+  public cancelPolygonSelect() {
+    this.selectInPolygonInteraction.stopPolygonSelect();
   }
 
   /**
