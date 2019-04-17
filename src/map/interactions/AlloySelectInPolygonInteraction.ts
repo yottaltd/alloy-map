@@ -25,66 +25,20 @@ import { AlloyFeature } from '../features/AlloyFeature';
  */
 export class AlloySelectInPolygonInteraction {
   /**
-   *
-   * @param geometry geometry to get flat coorinates array for
-   */
-  private static flatCoordinates(geometry: OLGeometry): Array<[number, number]> {
-    if (geometry.getType() === 'Point') {
-      return [(geometry as OLPoint).getCoordinates()];
-    }
-    switch (geometry.getType()) {
-      case 'GeometryCollection':
-        return flatten(
-          (geometry as OLGeometryCollection)
-            .getGeometries()
-            .map((cg: any) =>
-              flattenDepth(
-                cg.getCoordinates(),
-                AlloySelectInPolygonInteraction.flattenDepthForGeometry(geometry),
-              ),
-            ),
-        ) as Array<[number, number]>;
-      default:
-        return flattenDepth(
-          (geometry as any).getCoordinates(),
-          AlloySelectInPolygonInteraction.flattenDepthForGeometry(geometry),
-        );
-    }
-  }
-
-  /**
-   * Get the depth needs to be used for _.flattenDepth for geometry provided
-   * @param geometry geometry to get depth for
-   * @returns depth of geometry for _.flattenDepth call
-   */
-  private static flattenDepthForGeometry(geometry: ol.geom.Geometry): number {
-    switch (geometry.getType()) {
-      default:
-      case 'MultiPoint':
-      case 'LineString':
-        return 0;
-      case 'MultiLineString':
-      case 'Polygon':
-        return 1;
-      case 'MultiPolygon':
-        return 2;
-    }
-  }
-  /**
    * debugger instance
    * @ignore
    */
   public readonly debugger: Debugger;
-  public selectionStyle: OLStyle[];
-  private layer: OLVectorLayer | null = null;
-
-  private wasSelectionEnabled: boolean = true;
-  private draw: OLDraw | null = null;
 
   /**
    * the map to add selection interaction to
    */
   private map: AlloyMap;
+
+  private selectionStyle: OLStyle[];
+  private layer: OLVectorLayer | null = null;
+  private draw: OLDraw | null = null;
+  private wasSelectionEnabled: boolean = true;
 
   /**
    * creates a new instance
@@ -119,7 +73,7 @@ export class AlloySelectInPolygonInteraction {
           if (f instanceof OLRenderFeature) {
             return f;
           }
-          return new OLMultiPoint(AlloySelectInPolygonInteraction.flatCoordinates(f.getGeometry()));
+          return new OLMultiPoint(this.flatCoordinates(f.getGeometry()));
         },
       }),
     ];
@@ -183,6 +137,49 @@ export class AlloySelectInPolygonInteraction {
       this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
     });
   }
+  /**
+   *
+   * @param geometry geometry to get flat coorinates array for
+   */
+  private flatCoordinates(geometry: OLGeometry): Array<[number, number]> {
+    if (geometry.getType() === 'Point') {
+      return [(geometry as OLPoint).getCoordinates()];
+    }
+    switch (geometry.getType()) {
+      case 'GeometryCollection':
+        return flatten(
+          (geometry as OLGeometryCollection)
+            .getGeometries()
+            .map((cg: any) =>
+              flattenDepth(cg.getCoordinates(), this.flattenDepthForGeometry(geometry)),
+            ),
+        ) as Array<[number, number]>;
+      default:
+        return flattenDepth(
+          (geometry as any).getCoordinates(),
+          this.flattenDepthForGeometry(geometry),
+        );
+    }
+  }
+
+  /**
+   * Get the depth needs to be used for _.flattenDepth for geometry provided
+   * @param geometry geometry to get depth for
+   * @returns depth of geometry for _.flattenDepth call
+   */
+  private flattenDepthForGeometry(geometry: ol.geom.Geometry): number {
+    switch (geometry.getType()) {
+      default:
+      case 'MultiPoint':
+      case 'LineString':
+        return 0;
+      case 'MultiLineString':
+      case 'Polygon':
+        return 1;
+      case 'MultiPolygon':
+        return 2;
+    }
+  }
 
   /**
    * Enables or disables double-click zoom interaction
@@ -214,8 +211,8 @@ export class AlloySelectInPolygonInteraction {
           .getFeaturesInExtent(extent)
           // filter features to only those whose coordinates intersect the polygon
           .filter((extentFeature) =>
-            AlloySelectInPolygonInteraction.flatCoordinates(extentFeature.getGeometry()).find(
-              (coord) => poly.intersectsCoordinate(coord),
+            this.flatCoordinates(extentFeature.getGeometry()).find((coord) =>
+              poly.intersectsCoordinate(coord),
             ),
           )
           // get AlloyFeature objects for features
