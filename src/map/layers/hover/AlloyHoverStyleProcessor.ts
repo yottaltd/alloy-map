@@ -40,13 +40,11 @@ export class AlloyHoverStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
 
-    return (
-      layer.styleProcessor.onStyleProcess(
-        olFeature,
-        resolution,
-        // we ignore the state and always pass "hover"
-        AlloyStyleBuilderBuildState.Hover,
-      ) || []
+    return layer.styleProcessor.onStyleProcess(
+      olFeature,
+      resolution,
+      // we ignore the state and always pass "hover"
+      AlloyStyleBuilderBuildState.Hover,
     );
   }
 }

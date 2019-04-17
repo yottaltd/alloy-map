@@ -41,6 +41,6 @@ export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
 
-    return this.networkStyleBuilder.build(feature as any, resolution, state) || [];
+    return this.networkStyleBuilder.build(feature as any, resolution, state);
   }
 }

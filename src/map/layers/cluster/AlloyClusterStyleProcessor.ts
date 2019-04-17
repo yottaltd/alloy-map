@@ -54,9 +54,9 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     }
 
     if (feature instanceof AlloyClusterFeature) {
-      return this.clusterStyleBuilder.build(feature, resolution, state) || [];
+      return this.clusterStyleBuilder.build(feature, resolution, state);
     } else if (feature instanceof AlloyItemFeature) {
-      return this.itemStyleBuilder.build(feature, resolution, state) || [];
+      return this.itemStyleBuilder.build(feature, resolution, state);
     } else {
       return [];
     }

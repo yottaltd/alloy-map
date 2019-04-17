@@ -40,13 +40,11 @@ export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
 
-    return (
-      layer.styleProcessor.onStyleProcess(
-        olFeature,
-        resolution,
-        // we ignore the state and always pass "selected"
-        AlloyStyleBuilderBuildState.Selected,
-      ) || []
+    return layer.styleProcessor.onStyleProcess(
+      olFeature,
+      resolution,
+      // we ignore the state and always pass "selected"
+      AlloyStyleBuilderBuildState.Selected,
     );
   }
 }

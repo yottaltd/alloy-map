@@ -63,7 +63,7 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   ): string {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
-      throw new AlloyMapError(1554163769, 'missing layer style: ' + feature.properties.styleId);
+      throw new AlloyMapError(1555504662, 'missing layer style: ' + feature.properties.styleId);
     }
 
     const type = feature.olFeature.getGeometry().getType();
@@ -86,13 +86,10 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   /**
    * @override
    */
-  protected createStyles(
-    feature: AlloyItemFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  protected createStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
-      throw new AlloyMapError(1554163777, 'missing layer style: ' + feature.properties.styleId);
+      throw new AlloyMapError(1555504675, 'missing layer style: ' + feature.properties.styleId);
     }
 
     switch (feature.olFeature.getGeometry().getType()) {
@@ -111,20 +108,17 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       case 'GeometryCollection':
         return this.createGeometryCollectionStyles(resolution, feature, layerStyle);
       default:
-        throw new AlloyMapError(1554458665, 'unsupported geometry type');
+        throw new AlloyMapError(1555504685, 'unsupported geometry type');
     }
   }
 
   /**
    * @override
    */
-  protected createHoverStyles(
-    feature: AlloyItemFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  protected createHoverStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
-      throw new AlloyMapError(1554419738, 'missing layer style: ' + feature.properties.styleId);
+      throw new AlloyMapError(1555504692, 'missing layer style: ' + feature.properties.styleId);
     }
 
     switch (feature.olFeature.getGeometry().getType()) {
@@ -143,7 +137,7 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       case 'GeometryCollection':
         return this.createGeometryCollectionHoverStyles(resolution, feature, layerStyle);
       default:
-        throw new AlloyMapError(1554458665, 'unsupported geometry type');
+        throw new AlloyMapError(1555504703, 'unsupported geometry type');
     }
   }
 
@@ -153,10 +147,10 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   protected createSelectedStyles(
     feature: AlloyItemFeature,
     resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
-      throw new AlloyMapError(1554419738, 'missing layer style: ' + feature.properties.styleId);
+      throw new AlloyMapError(1555504729, 'missing layer style: ' + feature.properties.styleId);
     }
 
     switch (feature.olFeature.getGeometry().getType()) {
@@ -175,7 +169,7 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       case 'GeometryCollection':
         return this.createGeometryCollectionSelectedStyles(resolution, feature, layerStyle);
       default:
-        throw new AlloyMapError(1554458665, 'unsupported geometry type');
+        throw new AlloyMapError(1555504758, 'unsupported geometry type');
     }
   }
 

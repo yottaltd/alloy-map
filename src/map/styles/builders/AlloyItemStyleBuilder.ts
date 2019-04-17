@@ -83,10 +83,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
   /**
    * @override
    */
-  protected createStyles(
-    feature: AlloyItemFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  protected createStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554163777, 'missing layer style: ' + feature.properties.styleId);
@@ -115,10 +112,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
   /**
    * @override
    */
-  protected createHoverStyles(
-    feature: AlloyItemFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  protected createHoverStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554419738, 'missing layer style: ' + feature.properties.styleId);
@@ -150,7 +144,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
   protected createSelectedStyles(
     feature: AlloyItemFeature,
     resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554419738, 'missing layer style: ' + feature.properties.styleId);
