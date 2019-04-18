@@ -18,7 +18,7 @@ export abstract class AlloyStyleBuilderWithLayerStyles<
    * creates a new instance
    * @param styles the layer styles to use when building styles
    */
-  constructor(styles: AlloyLayerStyle[]) {
+  constructor(styles: Readonly<AlloyLayerStyle[]>) {
     super();
 
     // populate the local layer style cache
