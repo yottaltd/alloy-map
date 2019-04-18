@@ -1,8 +1,8 @@
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLLineString from 'ol/geom/LineString';
-import OLPoint from 'ol/geom/Point';
 import OLMultiPoint from 'ol/geom/MultiPoint';
+import OLPoint from 'ol/geom/Point';
 import OLRenderFeature from 'ol/render/Feature';
 import { AlloyMapError } from '../../../../error/AlloyMapError';
 

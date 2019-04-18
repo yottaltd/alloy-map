@@ -13,13 +13,13 @@ import { AlloyNetworkLayer } from './AlloyNetworkLayer';
  */
 export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
   /**
-   * item feature style builder
+   * network feature style builder
    */
   private readonly networkStyleBuilder: AlloyNetworkStyleBuilder;
 
   /**
    * creates a new instance
-   * @param layer the cluster layer to style
+   * @param layer the network layer to style
    */
   constructor(layer: AlloyNetworkLayer) {
     super(layer);

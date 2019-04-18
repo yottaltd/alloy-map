@@ -45,7 +45,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
    * @param map the map instance for calculations
    * @param styles the styles to build
    */
-  constructor(map: AlloyMap, styles: AlloyLayerStyle[]) {
+  constructor(map: AlloyMap, styles: Readonly<AlloyLayerStyle[]>) {
     super(styles);
     this.map = map;
   }

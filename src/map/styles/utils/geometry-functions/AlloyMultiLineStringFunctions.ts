@@ -4,7 +4,7 @@ import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLRenderFeature from 'ol/render/Feature';
 import { AlloyMapError } from '../../../../error/AlloyMapError';
-import { flatten } from 'lodash';
+import * as _ from 'lodash';
 
 /**
  * geometry functions for openlayers styles, modifies multi linestring geometry for styling
@@ -53,7 +53,7 @@ export abstract class AlloyMultiLineStringFunctions {
 
     // get mid point from behind the cache
     return new OLMultiPoint(
-      flatten(
+      _.flatten(
         (olGeometry as OLMultiLineString)
           .getLineStrings()
           .map((l) => [l.getFirstCoordinate(), l.getLastCoordinate()]),
