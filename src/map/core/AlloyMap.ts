@@ -53,55 +53,6 @@ const DEBOUNCED_EVENT_TIMEOUT: number = 100;
  */
 export class AlloyMap {
   /**
-   * layers currently on display in the map
-   */
-  public get layers(): Map<string, AlloyLayer> {
-    return new Map(this.managedLayers);
-  }
-
-  /**
-   * the active basemap shown under all layers
-   */
-  public get basemap(): Readonly<AlloyBasemap | null> {
-    return this.currentBasemap;
-  }
-
-  /**
-   * the currently selected features
-   */
-  public get selectedFeatures(): Readonly<Map<string, AlloyFeature>> {
-    return this.selectionLayer.features; // already wrapped in new map
-  }
-
-  /**
-   * the current selection mode
-   */
-  public get selectionMode(): Readonly<AlloySelectionMode> {
-    return this.selectionInteraction.selectionMode;
-  }
-
-  /**
-   * the current zoom level
-   */
-  public get zoom(): number {
-    return this.olView.getZoom();
-  }
-
-  /**
-   * the current viewport representing the south west and north east corners of the map
-   */
-  public get viewport(): Readonly<AlloyBounds> {
-    const extent = this.olView.calculateExtent();
-    return AlloyBounds.fromMapExtent(extent);
-  }
-
-  /**
-   * the coordinates of the current map centre
-   */
-  public get centre(): Readonly<AlloyCoordinate> {
-    return AlloyCoordinate.fromMapCoordinate(this.olView.getCenter());
-  }
-  /**
    * debugger instance
    * @ignore
    */
@@ -263,6 +214,56 @@ export class AlloyMap {
 
     // setup select in poly interaction
     this.selectInPolygonInteraction = new AlloySelectInPolygonInteraction(this);
+  }
+
+  /**
+   * layers currently on display in the map
+   */
+  public get layers(): Map<string, AlloyLayer> {
+    return new Map(this.managedLayers);
+  }
+
+  /**
+   * the active basemap shown under all layers
+   */
+  public get basemap(): Readonly<AlloyBasemap | null> {
+    return this.currentBasemap;
+  }
+
+  /**
+   * the currently selected features
+   */
+  public get selectedFeatures(): Readonly<Map<string, AlloyFeature>> {
+    return this.selectionLayer.features; // already wrapped in new map
+  }
+
+  /**
+   * the current selection mode
+   */
+  public get selectionMode(): Readonly<AlloySelectionMode> {
+    return this.selectionInteraction.selectionMode;
+  }
+
+  /**
+   * the current zoom level
+   */
+  public get zoom(): number {
+    return this.olView.getZoom();
+  }
+
+  /**
+   * the current viewport representing the south west and north east corners of the map
+   */
+  public get viewport(): Readonly<AlloyBounds> {
+    const extent = this.olView.calculateExtent();
+    return AlloyBounds.fromMapExtent(extent);
+  }
+
+  /**
+   * the coordinates of the current map centre
+   */
+  public get centre(): Readonly<AlloyCoordinate> {
+    return AlloyCoordinate.fromMapCoordinate(this.olView.getCenter());
   }
 
   /**
