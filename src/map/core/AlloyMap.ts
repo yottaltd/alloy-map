@@ -20,6 +20,7 @@ import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
 import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
+import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
 import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
@@ -28,7 +29,6 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
 
 /**
  * minimum zoom level for the map
