@@ -16,7 +16,7 @@ export class AlloyDrawingStyleProcessor extends AlloyStyleProcessor {
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     return new OLStyle({
       image: new OLCircle({
         radius: 3,

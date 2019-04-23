@@ -72,10 +72,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   /**
    * @override
    */
-  protected createStyles(
-    feature: AlloyClusterFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  protected createStyles(feature: AlloyClusterFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554163016, 'missing layer style: ' + feature.properties.styleId);
@@ -109,7 +106,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   protected createHoverStyles(
     feature: AlloyClusterFeature,
     resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554418359, 'missing layer style: ' + feature.properties.styleId);
@@ -148,7 +145,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   protected createSelectedStyles(
     feature: AlloyClusterFeature,
     resolution: number,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     throw new AlloyMapError(
       1554418800,
       'clusters have no selected state, they cannot be selected!',

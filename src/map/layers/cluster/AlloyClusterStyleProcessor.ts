@@ -43,14 +43,14 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     if (olFeature instanceof OLRenderFeature) {
-      return null;
+      return [];
     }
 
     const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
     if (!feature) {
-      return null;
+      return [];
     }
 
     if (feature instanceof AlloyClusterFeature) {
@@ -58,7 +58,7 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     } else if (feature instanceof AlloyItemFeature) {
       return this.itemStyleBuilder.build(feature, resolution, state);
     } else {
-      return null;
+      return [];
     }
   }
 }

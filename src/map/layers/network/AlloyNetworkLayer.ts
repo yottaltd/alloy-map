@@ -73,5 +73,13 @@ export class AlloyNetworkLayer
     this.map.addMapChangeCentreListener((e) =>
       this.featureLoader.loadFeatures(e.olExtent, e.olResolution, ProjectionUtils.MAP_PROJECTION),
     );
+
+    // load initial features
+    // TODO load when the layer is added to the map
+    this.featureLoader.loadFeatures(
+      this.map.olView.calculateExtent(),
+      this.map.olView.getResolution(),
+      ProjectionUtils.MAP_PROJECTION,
+    );
   }
 }

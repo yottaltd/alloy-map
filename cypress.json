@@ -8,5 +8,6 @@
   "baseUrl": "http://localhost:8888",
   "testFiles": "**/*.spec.ts",
   "userAgent": "E2E",
-  "video": true
+  "video": true,
+  "projectId": "ueiarb"
 }

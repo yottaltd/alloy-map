@@ -32,5 +32,5 @@ export abstract class AlloyStyleProcessor {
     olFeature: OLFeature | OLRenderFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] | null;
+  ): OLStyle | OLStyle[];
 }
