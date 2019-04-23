@@ -28,9 +28,10 @@ export abstract class AlloyScaleUtils {
   public static readonly POINT_RADIUS_MAX = 25;
 
   /**
-   * the max width of a line in pixels
+   * the max width of a line in pixels, this is an odd number because of centering circular elements
+   * along the line, having a central point makes these visually align
    */
-  public static readonly LINE_WIDTH_MAX = 10;
+  public static readonly LINE_WIDTH_MAX = 11;
 
   /**
    * calculates a value to multiply the size of an element on screen by (if it grows e.g. clusters)

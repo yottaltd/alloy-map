@@ -27,18 +27,18 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
     feature: T,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] | null {
+  ): OLStyle | OLStyle[] {
     // generate the cache key for this feature and resolution
     const key: string = this.getKey(feature, resolution, state);
 
     // attempt to get the styles from the cache
-    const cachedStyle: OLStyle | OLStyle[] | null | undefined = this.styleCache.get(key);
+    const cachedStyle: OLStyle | OLStyle[] | undefined = this.styleCache.get(key);
     if (cachedStyle !== undefined) {
       return cachedStyle;
     }
 
     // generate new styles if not in the cache
-    let newStyle: OLStyle | OLStyle[] | null = null;
+    let newStyle: OLStyle | OLStyle[] = [];
 
     switch (state) {
       case AlloyStyleBuilderBuildState.Default:
@@ -82,7 +82,7 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * @param feature the feature being styled
    * @param resolution the resolution to style at
    */
-  protected abstract createStyles(feature: T, resolution: number): OLStyle | OLStyle[] | null;
+  protected abstract createStyles(feature: T, resolution: number): OLStyle | OLStyle[];
 
   /**
    * when the style builder decides to generate styles for a feature and resolution due to it
@@ -90,7 +90,7 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * @param feature the feature being styled
    * @param resolution the resolution to style at
    */
-  protected abstract createHoverStyles(feature: T, resolution: number): OLStyle | OLStyle[] | null;
+  protected abstract createHoverStyles(feature: T, resolution: number): OLStyle | OLStyle[];
 
   /**
    * when the style builder decides to generate styles for a feature and resolution due to it
@@ -98,8 +98,5 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
    * @param feature the feature being styled
    * @param resolution the resolution to style at
    */
-  protected abstract createSelectedStyles(
-    feature: T,
-    resolution: number,
-  ): OLStyle | OLStyle[] | null;
+  protected abstract createSelectedStyles(feature: T, resolution: number): OLStyle | OLStyle[];
 }

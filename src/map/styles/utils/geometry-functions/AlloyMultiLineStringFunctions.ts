@@ -4,6 +4,7 @@ import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLRenderFeature from 'ol/render/Feature';
 import { AlloyMapError } from '../../../../error/AlloyMapError';
+import * as _ from 'lodash';
 
 /**
  * geometry functions for openlayers styles, modifies multi linestring geometry for styling
@@ -31,6 +32,32 @@ export abstract class AlloyMultiLineStringFunctions {
     // get mid point from behind the cache
     return AlloyMultiLineStringFunctions.getAndCacheMultiLineStringMidPoints(
       olGeometry as OLMultiLineString,
+    );
+  }
+
+  /**
+   * converts a multi line string to its first and last points.
+   */
+  public static convertFeatureToEndPoints(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
+    return AlloyMultiLineStringFunctions.convertGeometryToEndPoints(olFeature.getGeometry());
+  }
+
+  /**
+   * converts a multi line string to its first and last points.
+   */
+  public static convertGeometryToEndPoints(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
+    // MUST be a multilinestring, otherwise why are we running this?
+    if (olGeometry.getType() !== 'MultiLineString') {
+      throw new AlloyMapError(1555066382, 'cannot run geometry function for non-multilinestring');
+    }
+
+    // get mid point from behind the cache
+    return new OLMultiPoint(
+      _.flatten(
+        (olGeometry as OLMultiLineString)
+          .getLineStrings()
+          .map((l) => [l.getFirstCoordinate(), l.getLastCoordinate()]),
+      ),
     );
   }
 
