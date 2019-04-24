@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Alloy Map Sandbox - Selection</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+    <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px;"></div>
+    </div>
+    <button onclick="startDraw(true)">Start Drawing (Append)</button>
+    <button onclick="startDraw(false)">Start Drawing (Replace)</button>
+    <button onclick="endDraw()">End Drawing</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
+
+    <script>
+      //localStorage.debug = 'alloymaps:*';
+
+      const map = new alloymap.AlloyMap({
+        api: 'https://api.labs.alloyapp.io/',
+        token: 'b6368ac0-6218-4553-a1a7-5d0f3d4a8d4a',
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(-2, 52),
+        zoom: 10,
+        webfonts: [
+          {
+            fontFamily: 'Font Awesome 5 Free:n9',
+            testString: '\uf2fe',
+          },
+        ],
+      });
+      const basemap = alloymap.AlloyBasemapFactory.createSkyward();
+      map.setBasemap(basemap);
+
+      const layer = new alloymap.AlloyClusterLayer({
+        map,
+        layerCode: 'layers_streetlights_5c939e12ff5c130c98e0e4df',
+        bounds: new alloymap.AlloyBounds(
+          new alloymap.AlloyCoordinate(-10, 37),
+          new alloymap.AlloyCoordinate(10, 67),
+        ),
+        styles: [
+          {
+            styleId: '5c939e26ff5c130c98e0e4e4',
+            colour: '#cc3300',
+            icon: 'icon-stl',
+          },
+          {
+            styleId: '5c94e75fff5c130b1c4ac5b4',
+            colour: '#33cc00',
+            icon: 'icon-system-1',
+          },
+        ],
+      });
+
+      map.addLayer(layer);
+
+      function startDraw(appendToSelection) {
+        map.startPolygonSelect(appendToSelection);
+      }
+
+      function endDraw() {
+        map.cancelPolygonSelect();
+      }
+    </script>
+  </body>
+</html>

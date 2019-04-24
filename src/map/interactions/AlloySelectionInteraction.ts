@@ -47,6 +47,9 @@ export class AlloySelectionInteraction {
     FeaturesUnderSelectionEvent
   >();
 
+  /**
+   * whether the interaction is enabled or not
+   */
   private enabled: boolean = true;
 
   /**
@@ -69,21 +72,10 @@ export class AlloySelectionInteraction {
   }
 
   /**
-   * @returns whether the map click interaction is processed for selection
+   * whether the map click interaction is processed for selection
    */
   public get isEnabled(): boolean {
     return this.enabled;
-  }
-
-  /**
-   * Enables or disables the handling of map click events for selection
-   * @param newValue whether to enable or disable select interaction
-   * @returns old state
-   */
-  public setEnabled(newValue: boolean): boolean {
-    const old = this.enabled;
-    this.enabled = newValue;
-    return old;
   }
 
   /**
@@ -91,6 +83,14 @@ export class AlloySelectionInteraction {
    */
   public get selectionMode(): AlloySelectionMode {
     return this.currentSelectionMode;
+  }
+
+  /**
+   * enables or disables the handling of map click events for selection
+   * @param value whether to enable or disable select interaction
+   */
+  public setEnabled(value: boolean): void {
+    this.enabled = value;
   }
 
   /**

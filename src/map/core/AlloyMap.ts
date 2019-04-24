@@ -411,9 +411,10 @@ export class AlloyMap {
 
   /**
    * Starts interaction to draw a polygon and select all features inside of it
+   * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect() {
-    this.selectInPolygonInteraction.startPolygonSelect();
+  public startPolygonSelect(appendToSelection: boolean = false) {
+    this.selectInPolygonInteraction.startPolygonSelect(appendToSelection);
   }
 
   /**
