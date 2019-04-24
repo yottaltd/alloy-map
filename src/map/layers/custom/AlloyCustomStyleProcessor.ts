@@ -2,30 +2,30 @@ import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
-import { AlloyDrawingFeature } from '../../features/AlloyDrawingFeature';
+import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyDrawingStyleBuilder } from '../../styles/builders/AlloyDrawingStyleBuilder';
-import { AlloyDrawingLayer } from './AlloyDrawingLayer';
+import { AlloyCustomStyleBuilder } from '../../styles/builders/AlloyCustomStyleBuilder';
+import { AlloyCustomLayer } from './AlloyCustomLayer';
 
 /**
- * processes the drawing styled feature items
+ * processes the custom styled feature items
  * @ignore
  */
-export class AlloyDrawingStyleProcessor extends AlloyStyleProcessor {
+export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
   /**
-   * drawing feature style builder
+   * custom feature style builder
    */
-  private readonly drawingStyleBuilder: AlloyDrawingStyleBuilder;
+  private readonly customStyleBuilder: AlloyCustomStyleBuilder;
 
   /**
    * creates a new instance
-   * @param layer the drawing layer to style
+   * @param layer the custom layer to style
    */
-  constructor(layer: AlloyDrawingLayer) {
+  constructor(layer: AlloyCustomLayer) {
     super(layer);
 
-    this.drawingStyleBuilder = new AlloyDrawingStyleBuilder(layer.map);
+    this.customStyleBuilder = new AlloyCustomStyleBuilder(layer.map);
   }
 
   /**
@@ -45,8 +45,8 @@ export class AlloyDrawingStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
 
-    if (feature instanceof AlloyDrawingFeature) {
-      return this.drawingStyleBuilder.build(feature, resolution, state);
+    if (feature instanceof AlloyCustomFeature) {
+      return this.customStyleBuilder.build(feature, resolution, state);
     } else {
       return [];
     }

@@ -6,7 +6,7 @@ import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyDrawingFeature } from '../../features/AlloyDrawingFeature';
+import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -30,10 +30,10 @@ import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonF
 const ICON_COLOUR = '#ffffff';
 
 /**
- * builds styles for drawing features, this can be any type of geometry
+ * builds styles for custom features, this can be any type of geometry
  * @ignore
  */
-export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeature> {
+export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature> {
   /**
    * shame we need a reference to the map :( but its for calculating coord to pixel coord transforms
    */
@@ -52,7 +52,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
    * @override
    */
   protected getKey(
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): string {
@@ -61,14 +61,14 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
       // scaling is undefined or true then we allow the feature to scale normally, if false it is a
       // fixed max size all the time
       feature.properties.scale === undefined || feature.properties.scale ? resolution : 1,
-      feature.id, // each drawn feature is unique (expensive)
+      feature.id, // each custom feature is unique (expensive)
     );
   }
 
   /**
    * @override
    */
-  protected createStyles(feature: AlloyDrawingFeature, resolution: number): OLStyle | OLStyle[] {
+  protected createStyles(feature: AlloyCustomFeature, resolution: number): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
       case 'Point':
         return this.createPointStyles(resolution, feature);
@@ -93,7 +93,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
    * @override
    */
   protected createHoverStyles(
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
@@ -120,7 +120,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
    * @override
    */
   protected createSelectedStyles(
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
@@ -145,7 +145,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createPointStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution, feature.properties.scale);
@@ -173,7 +173,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiPointStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution, feature.properties.scale);
@@ -201,7 +201,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createLineStringStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     return [
@@ -217,7 +217,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiLineStringStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     return [
@@ -233,7 +233,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createPolygonStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const semiTransparentColour = ColourUtils.semiTransparent(feature.properties.colour);
@@ -287,7 +287,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiPolygonStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const semiTransparentColour = ColourUtils.semiTransparent(feature.properties.colour);
@@ -343,7 +343,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createGeometryCollectionStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
@@ -359,7 +359,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createPointHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution, feature.properties.scale);
@@ -397,7 +397,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiPointHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution, feature.properties.scale);
@@ -435,7 +435,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createLineStringHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution, feature.properties.scale);
@@ -463,7 +463,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiLineStringHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution, feature.properties.scale);
@@ -491,7 +491,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createPolygonHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
@@ -552,7 +552,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiPolygonHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
@@ -615,7 +615,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createGeometryCollectionHoverStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
@@ -631,7 +631,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createPointSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution, feature.properties.scale);
@@ -667,7 +667,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiPointSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution, feature.properties.scale);
@@ -703,7 +703,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createLineStringSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution, feature.properties.scale);
@@ -769,7 +769,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiLineStringSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution, feature.properties.scale);
@@ -835,7 +835,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createPolygonSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // we need to calculate the icon size on a feature by feature basis
@@ -893,7 +893,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createMultiPolygonSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // we need to calculate the icon size on a feature by feature basis
@@ -953,7 +953,7 @@ export class AlloyDrawingStyleBuilder extends AlloyStyleBuilder<AlloyDrawingFeat
 
   private createGeometryCollectionSelectedStyles(
     resolution: number,
-    feature: AlloyDrawingFeature,
+    feature: AlloyCustomFeature,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will

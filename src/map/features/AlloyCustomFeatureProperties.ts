@@ -1,7 +1,7 @@
 /**
- * the properties for an alloy drawing feature
+ * the properties for an alloy custom feature
  */
-export interface AlloyDrawingFeatureProperties {
+export interface AlloyCustomFeatureProperties {
   /**
    * the colour to represent the feature
    */

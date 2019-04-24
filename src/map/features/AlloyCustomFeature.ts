@@ -7,18 +7,19 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyDrawingFeatureProperties } from './AlloyDrawingFeatureProperties';
+import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
- * an alloy drawing feature which represents something being added to the map
+ * an alloy custom feature which represents something being added to the map by a user or
+ * programatically, it can represent anything
  */
-export class AlloyDrawingFeature implements AlloyFeature {
+export class AlloyCustomFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType.Drawing; // see end of file for prototype
+  public type!: AlloyFeatureType.Custom; // see end of file for prototype
 
   /**
    * @implements
@@ -43,9 +44,9 @@ export class AlloyDrawingFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
-   * the properties for the drawing feature
+   * the properties for the custom feature
    */
-  public readonly properties: Readonly<AlloyDrawingFeatureProperties>;
+  public readonly properties: Readonly<AlloyCustomFeatureProperties>;
 
   /**
    * creates a new instance
@@ -57,7 +58,7 @@ export class AlloyDrawingFeature implements AlloyFeature {
   constructor(
     id: string,
     olFeature: OLFeature,
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     originatingLayerId: string,
   ) {
     this.id = id;
@@ -74,7 +75,7 @@ export class AlloyDrawingFeature implements AlloyFeature {
   }
 
   /**
-   * get the "expected" geometry of the alloy drawing feature, this is assumed based on its type
+   * get the "expected" geometry of the alloy custom feature, this is assumed based on its type
    * @ignore
    */
   public getExpectedGeometry():
@@ -97,4 +98,4 @@ export class AlloyDrawingFeature implements AlloyFeature {
  * property (set on each constructor) and due to the frequency that these objects are created we
  * really need every small optimisation we can get with regard to features
  */
-AlloyDrawingFeature.prototype.type = AlloyFeatureType.Drawing;
+AlloyCustomFeature.prototype.type = AlloyFeatureType.Custom;

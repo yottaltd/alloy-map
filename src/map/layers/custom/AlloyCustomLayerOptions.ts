@@ -1,9 +1,9 @@
 import { AlloyMap } from '../../core/AlloyMap';
 
 /**
- * options for the alloy drawing layer
+ * options for the alloy custom layer
  */
-export interface AlloyDrawingLayerOptions {
+export interface AlloyCustomLayerOptions {
   /**
    * the alloy map to associate tha layer with
    */

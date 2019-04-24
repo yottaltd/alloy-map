@@ -1,39 +1,40 @@
 import * as uuid from 'uuid';
 import { AlloyCoordinate } from '../../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyDrawingFeature } from '../../features/AlloyDrawingFeature';
-import { AlloyDrawingFeatureFactory } from '../../features/AlloyDrawingFeatureFactory';
-import { AlloyDrawingFeatureProperties } from '../../features/AlloyDrawingFeatureProperties';
+import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
+import { AlloyCustomFeatureFactory } from '../../features/AlloyCustomFeatureFactory';
+import { AlloyCustomFeatureProperties } from '../../features/AlloyCustomFeatureProperties';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
-import { AlloyDrawingLayerOptions } from './AlloyDrawingLayerOptions';
-import { AlloyDrawingStyleProcessor } from './AlloyDrawingStyleProcessor';
+import { AlloyCustomLayerOptions } from './AlloyCustomLayerOptions';
+import { AlloyCustomStyleProcessor } from './AlloyCustomStyleProcessor';
 
 /**
- * an alloy drawing layer for rendering features provided externally on the map
+ * an alloy custom layer for rendering custom features provided externally on the map, use this to
+ * add custom features onto the map and manage them manually
  */
-export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeature> {
+export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeature> {
   /**
    * creates a new instance
    * @param options the options for the layer
    */
-  constructor(options: AlloyDrawingLayerOptions) {
-    super(AlloyDrawingLayer.name + ':' + uuid.v1(), options.map, AlloyLayerZIndex.Drawing);
+  constructor(options: AlloyCustomLayerOptions) {
+    super(AlloyCustomLayer.name + ':' + uuid.v1(), options.map, AlloyLayerZIndex.Drawing);
 
     // initialised here because style processor need some of the above internal properties
-    this.setStyleProcessor(new AlloyDrawingStyleProcessor(this));
+    this.setStyleProcessor(new AlloyCustomStyleProcessor(this));
   }
 
   /**
-   * creates and adds a drawn feature to the layer
+   * creates and adds a custom feature to the layer
    * @param properties the properties of the feature
    * @param coordinate the coordinate of the geometry
    */
   public addPointFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     coordinate: AlloyCoordinate,
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createPoint(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createPoint(
       uuid.v1(),
       properties,
       this.id,
@@ -44,15 +45,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer
+   * creates and adds a custom feature to the layer
    * @param properties the properties of the feature
    * @param coordinates the coordinates of the geometry
    */
   public addMultiPointFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     coordinates: AlloyCoordinate[],
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createMultiPoint(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createMultiPoint(
       uuid.v1(),
       properties,
       this.id,
@@ -63,15 +64,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer
+   * creates and adds a custom feature to the layer
    * @param properties the properties of the feature
    * @param coordinates the coordinates of the geometry
    */
   public addLineStringFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     coordinates: AlloyCoordinate[],
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createLineString(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createLineString(
       uuid.v1(),
       properties,
       this.id,
@@ -82,15 +83,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer
+   * creates and adds a custom feature to the layer
    * @param properties the properties of the feature
    * @param coordinates the coordinates of the geometry
    */
   public addMultiLineStringFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     coordinates: AlloyCoordinate[][],
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createMultiLineString(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createMultiLineString(
       uuid.v1(),
       properties,
       this.id,
@@ -101,15 +102,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer
+   * creates and adds a custom feature to the layer
    * @param properties the properties of the feature
    * @param coordinates the coordinates of the geometry
    */
   public addPolygonFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     coordinates: AlloyCoordinate[][],
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createPolygon(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createPolygon(
       uuid.v1(),
       properties,
       this.id,
@@ -120,15 +121,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer
+   * creates and adds a custom feature to the layer
    * @param properties the properties of the feature
    * @param coordinates the coordinates of the geometry
    */
   public addMultiPolygonFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     coordinates: AlloyCoordinate[][][],
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createMultiPolygon(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createMultiPolygon(
       uuid.v1(),
       properties,
       this.id,
@@ -139,15 +140,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer from a geo json object
+   * creates and adds a custom feature to the layer from a geo json object
    * @param properties the properties of the feature
    * @param geoJson the geo json string or object to create a feature from
    */
   public addFeatureFromGeoJson(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     geoJson: string | any,
-  ): AlloyDrawingFeature {
-    const feature = AlloyDrawingFeatureFactory.createFromGeoJson(
+  ): AlloyCustomFeature {
+    const feature = AlloyCustomFeatureFactory.createFromGeoJson(
       uuid.v1(),
       properties,
       this.id,
@@ -158,15 +159,15 @@ export class AlloyDrawingLayer extends AlloyLayerWithFeatures<AlloyDrawingFeatur
   }
 
   /**
-   * creates and adds a drawn feature to the layer from an existing feature
+   * creates and adds a custom feature to the layer from an existing feature
    * @param properties the properties of the feature
-   * @param feature the feature to create a drawn feature from
+   * @param feature the feature to create a custom feature from
    */
   public addFeatureFromFeature(
-    properties: AlloyDrawingFeatureProperties,
+    properties: AlloyCustomFeatureProperties,
     feature: AlloyFeature,
-  ): AlloyDrawingFeature {
-    const newFeature = AlloyDrawingFeatureFactory.createFromFeature(
+  ): AlloyCustomFeature {
+    const newFeature = AlloyCustomFeatureFactory.createFromFeature(
       uuid.v1(),
       properties,
       this.id,
