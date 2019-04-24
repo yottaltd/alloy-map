@@ -1,6 +1,15 @@
+import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLLineString from 'ol/geom/LineString';
+import OLMultiLineString from 'ol/geom/MultiLineString';
+import OLMultiPoint from 'ol/geom/MultiPoint';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
+import OLPoint from 'ol/geom/Point';
+import OLPolygon from 'ol/geom/Polygon';
 import OLRenderFeature from 'ol/render/Feature';
+import { AlloyMapError } from '../../../../error/AlloyMapError';
 
 /**
  * utility for geometry functions
@@ -18,5 +27,40 @@ export abstract class AlloyGeometryFunctionUtils {
   ): (olFeature: OLFeature | OLRenderFeature) => OLGeometry {
     return (olFeature: OLFeature | OLRenderFeature) =>
       to.reduce((prev, curr) => curr(prev), from(olFeature));
+  }
+
+  /**
+   * converts a geometry object to a single multipoint, works recursively for collections
+   * @param geometry the geometry to convert to multi point
+   */
+  public static convertGeometryToMultiPoint(geometry: OLGeometry): OLMultiPoint {
+    switch (geometry.getType()) {
+      case 'GeometryCollection':
+        const points: Array<[number, number]> = _.flatten(
+          (geometry as OLGeometryCollection)
+            .getGeometries()
+            .map((g) => AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(g).getCoordinates()),
+        );
+        return new OLMultiPoint(points);
+      case 'LineString':
+        return new OLMultiPoint((geometry as OLLineString).getCoordinates());
+      case 'MultiLineString':
+        return new OLMultiPoint(_.flatten((geometry as OLMultiLineString).getCoordinates()));
+      case 'Point':
+        return new OLMultiPoint([(geometry as OLPoint).getCoordinates()]);
+      case 'MultiPoint':
+        return new OLMultiPoint((geometry as OLMultiPoint).getCoordinates());
+      case 'Polygon':
+        return new OLMultiPoint(_.flatten((geometry as OLPolygon).getCoordinates()));
+      case 'MultiPolygon':
+        return new OLMultiPoint(
+          _.flatten(_.flatten((geometry as OLMultiPolygon).getCoordinates())),
+        );
+      default:
+        throw new AlloyMapError(
+          1556029066,
+          'unhandled geometry type, cannot convert to multi point',
+        );
+    }
   }
 }

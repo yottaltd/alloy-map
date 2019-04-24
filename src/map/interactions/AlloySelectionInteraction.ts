@@ -48,6 +48,11 @@ export class AlloySelectionInteraction {
   >();
 
   /**
+   * whether the interaction is enabled or not
+   */
+  private enabled: boolean = true;
+
+  /**
    * creates a new instance
    * @param map the map to add selection interaction to
    */
@@ -59,8 +64,18 @@ export class AlloySelectionInteraction {
 
     // listen for click events
     this.map.olMap.on('click', (e) => {
+      if (!this.enabled) {
+        return;
+      }
       this.onClick(e as OLMapBrowserPointerEvent /* this is untyped in ol */);
     });
+  }
+
+  /**
+   * whether the map click interaction is processed for selection
+   */
+  public get isEnabled(): boolean {
+    return this.enabled;
   }
 
   /**
@@ -68,6 +83,14 @@ export class AlloySelectionInteraction {
    */
   public get selectionMode(): AlloySelectionMode {
     return this.currentSelectionMode;
+  }
+
+  /**
+   * enables or disables the handling of map click events for selection
+   * @param value whether to enable or disable select interaction
+   */
+  public setEnabled(value: boolean): void {
+    this.enabled = value;
   }
 
   /**

@@ -20,6 +20,7 @@ import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
 import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
+import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
 import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
@@ -88,6 +89,11 @@ export class AlloyMap {
   public readonly selectionLayer: AlloySelectionLayer;
 
   /**
+   * the selection interaction manager, determines when clicks occur etc.
+   */
+  public readonly selectionInteraction: AlloySelectionInteraction;
+
+  /**
    * the currently active basemap or null if not se
    * @ignore
    */
@@ -104,9 +110,9 @@ export class AlloyMap {
   private readonly hoverInteraction: AlloyHoverInteraction;
 
   /**
-   * the selection interaction manager, determines when clicks occur etc.
+   * the selection in polygon interaction manager, determines when clicks occur etc.
    */
-  private readonly selectionInteraction: AlloySelectionInteraction;
+  private readonly selectInPolygonInteraction: AlloySelectInPolygonInteraction;
 
   /**
    * the ping interaction manager, shows a nice ping animation
@@ -205,6 +211,9 @@ export class AlloyMap {
 
     // setup ping interaction
     this.pingInteraction = new AlloyPingInteraction(this);
+
+    // setup select in poly interaction
+    this.selectInPolygonInteraction = new AlloySelectInPolygonInteraction(this);
   }
 
   /**
@@ -398,6 +407,21 @@ export class AlloyMap {
    */
   public removeLayersChangeListener(handler: LayersChangeEventHandler): void {
     this.onChangeLayers.unsubscribe(handler);
+  }
+
+  /**
+   * Starts interaction to draw a polygon and select all features inside of it
+   * @param appendToSelection whether to append the final selection to the existing selection
+   */
+  public startPolygonSelect(appendToSelection: boolean = false) {
+    this.selectInPolygonInteraction.startPolygonSelect(appendToSelection);
+  }
+
+  /**
+   * Cancels interaction for selecting features in a drawn polygon
+   */
+  public cancelPolygonSelect() {
+    this.selectInPolygonInteraction.stopPolygonSelect();
   }
 
   /**
