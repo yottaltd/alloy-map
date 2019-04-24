@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Alloy Map Sandbox - Drawing</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+    <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
+
+    <script>
+      //localStorage.debug = 'alloymaps:*';
+
+      const map = new alloymap.AlloyMap({
+        api: 'https://api.labs.alloyapp.io/',
+        token: 'b6368ac0-6218-4553-a1a7-5d0f3d4a8d4a',
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(-2, 52),
+        zoom: 10,
+      });
+      const basemap = alloymap.AlloyBasemapFactory.createSkyward();
+      map.setBasemap(basemap);
+
+      const layer = new alloymap.AlloyDrawingLayer({
+        map,
+      });
+
+      layer.addPointFeature(
+        {
+          colour: '#cc3300',
+          icon: 'icon-stl',
+          title: 'item 1',
+          subtitle: 'fake item',
+          allowsSelection: true,
+        },
+        new alloymap.AlloyCoordinate(-1.308745915066494, 54.59854083207226),
+      );
+      layer.addMultiPointFeature(
+        {
+          colour: '#33cc00',
+          icon: 'icon-stl',
+          title: 'item 2',
+          subtitle: 'fake item',
+          allowsSelection: false,
+        },
+        [
+          new alloymap.AlloyCoordinate(-1.324766693336866, 54.536562851453205),
+          new alloymap.AlloyCoordinate(-1.124766693336866, 54.336562851453205),
+          new alloymap.AlloyCoordinate(-1.024766693336866, 54.036562851453205),
+        ],
+      );
+
+      map.addLayer(layer);
+
+      layer.addLineStringFeature(
+        {
+          colour: '#0033cc',
+          icon: 'icon-stl',
+          title: 'item 3',
+          subtitle: 'fake item',
+          allowsSelection: true,
+        },
+        [
+          new alloymap.AlloyCoordinate(-1.624766693336866, 54.836562851453205),
+          new alloymap.AlloyCoordinate(-1.224766693336866, 54.436562851453205),
+          new alloymap.AlloyCoordinate(-1.124766693336866, 54.036562851453205),
+        ],
+      );
+    </script>
+  </body>
+</html>
