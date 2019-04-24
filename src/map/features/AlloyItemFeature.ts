@@ -35,6 +35,12 @@ export class AlloyItemFeature implements AlloyFeature {
    * @implements
    * @ignore
    */
+  public allowsHover!: true; // see end of file for prototype
+
+  /**
+   * @implements
+   * @ignore
+   */
   public readonly olFeature: OLFeature;
 
   /**
@@ -96,3 +102,4 @@ export class AlloyItemFeature implements AlloyFeature {
  */
 AlloyItemFeature.prototype.type = AlloyFeatureType.Item;
 AlloyItemFeature.prototype.allowsSelection = true;
+AlloyItemFeature.prototype.allowsHover = true;

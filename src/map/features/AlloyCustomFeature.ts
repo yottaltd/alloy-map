@@ -33,6 +33,11 @@ export class AlloyCustomFeature implements AlloyFeature {
 
   /**
    * @implements
+   */
+  public readonly allowsHover: boolean;
+
+  /**
+   * @implements
    * @ignore
    */
   public readonly olFeature: OLFeature;
@@ -66,9 +71,10 @@ export class AlloyCustomFeature implements AlloyFeature {
     this.properties = properties;
     this.originatingLayerId = originatingLayerId;
 
-    // set the selection state
+    // set the selection and hover mode
     this.allowsSelection =
       properties.allowsSelection !== undefined ? properties.allowsSelection : true;
+    this.allowsHover = properties.allowsHover !== undefined ? properties.allowsHover : true;
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
