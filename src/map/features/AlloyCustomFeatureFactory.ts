@@ -150,11 +150,7 @@ export abstract class AlloyCustomFeatureFactory {
     return new AlloyCustomFeature(
       id,
       new OLFeature(
-        new OLFeature(
-          new OLMultiPolygon(
-            coordinates.map((o) => o.map((p) => p.map((c) => c.toMapCoordinate()))),
-          ),
-        ),
+        new OLMultiPolygon(coordinates.map((o) => o.map((p) => p.map((c) => c.toMapCoordinate())))),
       ),
       properties,
       customLayerId,
@@ -176,7 +172,7 @@ export abstract class AlloyCustomFeatureFactory {
   ): AlloyCustomFeature {
     return new AlloyCustomFeature(
       id,
-      new OLFeature(new OLFeature(GEOJSON.readGeometry(geoJson))),
+      new OLFeature(GEOJSON.readGeometry(geoJson)),
       properties,
       customLayerId,
     );
@@ -197,7 +193,7 @@ export abstract class AlloyCustomFeatureFactory {
   ): AlloyCustomFeature {
     return new AlloyCustomFeature(
       id,
-      new OLFeature(new OLFeature(feature.olFeature.clone().getGeometry())),
+      new OLFeature(feature.olFeature.clone().getGeometry()),
       properties,
       customLayerId,
     );
