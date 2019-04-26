@@ -7,18 +7,19 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
 
 /**
- * an alloy item feature which represents a basic item feature on the map
+ * an alloy custom feature which represents something being added to the map by a user or
+ * programatically, it can represent anything
  */
-export class AlloyItemFeature implements AlloyFeature {
+export class AlloyCustomFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType.Item; // see end of file for prototype
+  public type!: AlloyFeatureType.Custom; // see end of file for prototype
 
   /**
    * @implements
@@ -27,15 +28,13 @@ export class AlloyItemFeature implements AlloyFeature {
 
   /**
    * @implements
-   * @ignore
    */
-  public allowsSelection!: true; // see end of file for prototype
+  public readonly allowsSelection: boolean;
 
   /**
    * @implements
-   * @ignore
    */
-  public allowsHover!: true; // see end of file for prototype
+  public readonly allowsHover: boolean;
 
   /**
    * @implements
@@ -50,9 +49,9 @@ export class AlloyItemFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
-   * the cached properties of the alloy item feature
+   * the properties for the custom feature
    */
-  public readonly properties: Readonly<AlloyItemFeatureProperties>;
+  public readonly properties: Readonly<AlloyCustomFeatureProperties>;
 
   /**
    * creates a new instance
@@ -64,20 +63,25 @@ export class AlloyItemFeature implements AlloyFeature {
   constructor(
     id: string,
     olFeature: OLFeature,
-    properties: AlloyItemFeatureProperties,
-    originatingLayerId?: string,
+    properties: AlloyCustomFeatureProperties,
+    originatingLayerId: string,
   ) {
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
     this.originatingLayerId = originatingLayerId;
 
+    // set the selection and hover mode
+    this.allowsSelection =
+      properties.allowsSelection !== undefined ? properties.allowsSelection : true;
+    this.allowsHover = properties.allowsHover !== undefined ? properties.allowsHover : true;
+
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
   }
 
   /**
-   * get the "expected" geometry of the alloy item, this is assumed based on its type
+   * get the "expected" geometry of the alloy custom feature, this is assumed based on its type
    * @ignore
    */
   public getExpectedGeometry():
@@ -100,6 +104,4 @@ export class AlloyItemFeature implements AlloyFeature {
  * property (set on each constructor) and due to the frequency that these objects are created we
  * really need every small optimisation we can get with regard to features
  */
-AlloyItemFeature.prototype.type = AlloyFeatureType.Item;
-AlloyItemFeature.prototype.allowsSelection = true;
-AlloyItemFeature.prototype.allowsHover = true;
+AlloyCustomFeature.prototype.type = AlloyFeatureType.Custom;

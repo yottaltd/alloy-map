@@ -25,6 +25,12 @@ export interface AlloyFeature {
   readonly allowsSelection: boolean;
 
   /**
+   * whether the feature allows hover interaction
+   * @ignore
+   */
+  readonly allowsHover: boolean;
+
+  /**
    * the underlying openlayers geojson feature
    * @ignore
    */
