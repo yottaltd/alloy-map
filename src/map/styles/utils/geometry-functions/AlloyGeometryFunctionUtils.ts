@@ -63,4 +63,35 @@ export abstract class AlloyGeometryFunctionUtils {
         );
     }
   }
+
+  /**
+   * converts a geometry object to an array of simple geometries 'Point' | 'LineString' | 'Polygon'
+   * works recursively for collections
+   * @param geometry the geometry to convert to simple geometries
+   */
+  public static convertGeometryToSimpleGeometries(geometry: OLGeometry): OLGeometry[] {
+    switch (geometry.getType()) {
+      case 'GeometryCollection':
+        return _.flatten(
+          (geometry as OLGeometryCollection)
+            .getGeometries()
+            .map(AlloyGeometryFunctionUtils.convertGeometryToSimpleGeometries),
+        );
+      case 'MultiLineString':
+        return (geometry as OLMultiLineString).getLineStrings();
+      case 'MultiPoint':
+        return (geometry as OLMultiPoint).getPoints();
+      case 'MultiPolygon':
+        return (geometry as OLMultiPolygon).getPolygons();
+      case 'LineString':
+      case 'Point':
+      case 'Polygon':
+        return [geometry];
+      default:
+        throw new AlloyMapError(
+          1556211290,
+          `unhandled geometry type ${geometry.getType()}, cannot convert to simple geometry`,
+        );
+    }
+  }
 }

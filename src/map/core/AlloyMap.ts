@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
+import OLGeometry from 'ol/geom/Geometry';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { Api } from '../../svr/Api';
@@ -29,6 +30,11 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
+import { AlloyDrawInteraction, AlloyDrawGeometryType } from '../interactions/AlloyDrawInteraction';
+import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
+import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
+import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
+import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
 
 /**
  * minimum zoom level for the map
@@ -92,6 +98,11 @@ export class AlloyMap {
    * the selection interaction manager, determines when clicks occur etc.
    */
   public readonly selectionInteraction: AlloySelectionInteraction;
+
+  /**
+   * the draw interaction manager.
+   */
+  public readonly drawInteraction: AlloyDrawInteraction;
 
   /**
    * the currently active basemap or null if not se
@@ -214,6 +225,9 @@ export class AlloyMap {
 
     // setup select in poly interaction
     this.selectInPolygonInteraction = new AlloySelectInPolygonInteraction(this);
+
+    // setup draw interaction
+    this.drawInteraction = new AlloyDrawInteraction(this);
   }
 
   /**
@@ -413,15 +427,85 @@ export class AlloyMap {
    * Starts interaction to draw a polygon and select all features inside of it
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(appendToSelection: boolean = false) {
+  public startPolygonSelect(appendToSelection: boolean = false): void {
     this.selectInPolygonInteraction.startPolygonSelect(appendToSelection);
   }
 
   /**
    * Cancels interaction for selecting features in a drawn polygon
    */
-  public cancelPolygonSelect() {
+  public cancelPolygonSelect(): void {
     this.selectInPolygonInteraction.stopPolygonSelect();
+  }
+
+  /**
+   * adds an event handler to listen for the `AlloyDrawEvent` event
+   * @param handler the handler to call when the event is raised
+   */
+  public addDrawListener(handler: AlloyDrawEventHandler): void {
+    this.drawInteraction.dispatcher.subscribe(handler);
+  }
+
+  /**
+   * removes an event handler listening to the `AlloyDrawEvent` event
+   * @param handler the handler to stop listening
+   */
+  public removeDrawListener(handler: AlloyDrawEventHandler): void {
+    this.drawInteraction.dispatcher.unsubscribe(handler);
+  }
+
+  /**
+   * Starts draw interaction for provided type with provided properties
+   * @param type geometry type to start drawing for
+   * @param properties properties for created draw features
+   */
+  public startDraw(type: AlloyDrawGeometryType, properties: AlloyDrawFeatureProperties): void {
+    this.drawInteraction.startDraw(type, properties);
+  }
+
+  /**
+   * Cancels draw interaction if available
+   */
+  public cancelDraw(): void {
+    this.drawInteraction.cancelDraw();
+  }
+
+  /**
+   * Clears drawing layer and interactions
+   */
+  public clearDraw(): void {
+    this.drawInteraction.clear();
+  }
+
+  /**
+   * Starts draw layer vertices remove interaction
+   */
+  public startDrawRemoval(): void {
+    this.drawInteraction.startRemoval();
+  }
+
+  /**
+   * Cancels draw layer vertices remove interaction
+   */
+  public cancelDrawRemoval(): void {
+    this.drawInteraction.cancelRemoval();
+  }
+
+  /**
+   * Removes `AlloyDrawFeature` from draw layer and related interactions
+   * @param feature
+   */
+  public removeDrawFeature(feature: AlloyDrawFeature): void {
+    this.drawInteraction.removeFeature(feature);
+  }
+
+  /**
+   * Processes any `AlloyFeature` into `AlloyDrawFeature`s and adds them to the draw layer
+   * @param feature feature to process and add to draw layer
+   * @param properties properties for created `AlloyDrawFeature`s
+   */
+  public addDrawFeature(feature: AlloyFeature, properties: AlloyDrawFeatureProperties): void {
+    this.drawInteraction.addDrawFeature(feature, properties);
   }
 
   /**
