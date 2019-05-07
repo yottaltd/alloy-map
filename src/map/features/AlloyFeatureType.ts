@@ -18,6 +18,11 @@ export enum AlloyFeatureType {
   SimplifiedGeometry = 'SimplifiedGeometry',
 
   /**
+   * an alloy custom feature
+   */
+  Custom = 'Custom',
+
+  /**
    * an alloy draw feature
    */
   Draw = 'Draw',

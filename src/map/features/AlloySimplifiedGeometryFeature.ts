@@ -37,6 +37,12 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
    * @implements
    * @ignore
    */
+  public allowsHover!: false; // see end of file for prototype
+
+  /**
+   * @implements
+   * @ignore
+   */
   public readonly olFeature: OLFeature;
 
   /**
@@ -98,3 +104,4 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
  */
 AlloySimplifiedGeometryFeature.prototype.type = AlloyFeatureType.SimplifiedGeometry;
 AlloySimplifiedGeometryFeature.prototype.allowsSelection = false;
+AlloySimplifiedGeometryFeature.prototype.allowsHover = false;

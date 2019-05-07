@@ -104,8 +104,8 @@ export class AlloyHoverInteraction {
               FeatureUtils.getFeatureIdFromOlFeature(olFeature),
             );
 
-            // if we have a feature add it to the array
-            if (feature) {
+            // if we have a feature and it allows selection add it to the array
+            if (feature && feature.allowsHover) {
               features.push(feature);
             }
           }
