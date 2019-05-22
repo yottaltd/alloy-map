@@ -21,7 +21,8 @@ import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
 import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyDrawGeometryType, AlloyDrawInteraction } from '../interactions/AlloyDrawInteraction';
+import { AlloyDrawInteraction } from '../interactions/AlloyDrawInteraction';
+import { AlloyDrawInteractionGeometryType } from '../interactions/AlloyDrawInteractionGeometryType';
 import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
 import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
 import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
@@ -459,7 +460,10 @@ export class AlloyMap {
    * @param type geometry type to start drawing for
    * @param properties properties for created draw features
    */
-  public startDraw(type: AlloyDrawGeometryType, properties: AlloyDrawFeatureProperties): void {
+  public startDraw(
+    type: AlloyDrawInteractionGeometryType,
+    properties: AlloyDrawFeatureProperties,
+  ): void {
     this.drawInteraction.startDraw(type, properties);
   }
 
