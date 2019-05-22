@@ -23,20 +23,37 @@ import { GeoJSONObjectType } from '../../api';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
+import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
-import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { AlloyDrawInteractionGeometryType } from './AlloyDrawInteractionGeometryType';
+import { MathUtils } from '../../utils/MathUtils';
 
 /**
  * default colour for draw and modify interactions
  * @ignore
  */
 const DRAW_COLOUR = '#ffa500';
+
+/**
+ * colour for strokes on the draw interactions
+ * @ignore
+ */
 const DRAW_WHITE = '#ffffff';
+
+/**
+ * the line width for draw interactions
+ * @ignore
+ */
 const DRAW_LINE_WIDTH = 4;
+
+/**
+ * the radius of balls for draw interactions
+ * @ignore
+ */
 const DRAW_RADIUS = 10;
 
 /**
@@ -53,7 +70,7 @@ export class AlloyDrawInteraction {
   /**
    * dispatcher for `AlloyDrawEvent`
    */
-  public readonly dispatcher = new SimpleEventDispatcher<AlloyDrawEvent>();
+  private readonly dispatcher = new SimpleEventDispatcher<AlloyDrawEvent>();
 
   /**
    * The draw layer that holds all features
@@ -79,21 +96,23 @@ export class AlloyDrawInteraction {
   /**
    * `OLDraw` interaction when active, otherwise null
    */
-  private draw: OLDraw | null = null;
+  private olDraw: OLDraw | null = null;
+
   /**
    * `OLModify` interaction when active, null when remove is active
    */
-  private modify: OLModify | null = null;
+  private olModify: OLModify | null = null;
+
   /**
    * `OLSelect` interaction used together with `removeLayer`
    * to remove coordinates from source geometry on click
    */
-  private remove: OLSelect | null = null;
+  private olSelect: OLSelect | null = null;
 
   /**
    * `OLStyle`s for `draw` and `modify` interactions
    */
-  private drawStyles = [
+  private readonly drawStyles: OLStyle[] = [
     new OLStyle({
       stroke: new OLStroke({
         color: DRAW_COLOUR,
@@ -144,6 +163,22 @@ export class AlloyDrawInteraction {
   }
 
   /**
+   * adds an event handler to listen for the `AlloyDrawEvent` event
+   * @param handler the handler to call when the event is raised
+   */
+  public addDrawListener(handler: AlloyDrawEventHandler): void {
+    this.dispatcher.subscribe(handler);
+  }
+
+  /**
+   * removes an event handler listening to the `AlloyDrawEvent` event
+   * @param handler the handler to stop listening
+   */
+  public removeDrawListener(handler: AlloyDrawEventHandler): void {
+    this.dispatcher.unsubscribe(handler);
+  }
+
+  /**
    * stops all interactions and clears draw layer
    */
   public clear() {
@@ -164,32 +199,32 @@ export class AlloyDrawInteraction {
   /**
    * Starts draw interaction for provided geometry type
    * stays active until geometry is drawn or `cancelDraw` is called
-   * @param type `Point` | `LineString` | `Polygon` geometry type to draw
+   * @param type geometry type to draw
    * @param properties properties for feature to be drawn
    */
-  public startDraw(type: AlloyDrawGeometryType, properties: AlloyDrawFeatureProperties) {
+  public startDraw(type: AlloyDrawInteractionGeometryType, properties: AlloyDrawFeatureProperties) {
     // cancels previous draw interaction
     this.removeDrawInteraction();
 
     // initialise draw on draw layer source, with default draw styles
-    this.draw = new OLDraw({
+    this.olDraw = new OLDraw({
       type,
       source: this.drawLayer.olSource,
       style: this.drawStyles,
     });
 
     // on draw start disable map interactions
-    this.draw.on('drawstart', (e) => {
+    this.olDraw.on('drawstart', (e) => {
       this.wasSelectionEnabled = this.map.selectionInteraction.isEnabled;
       this.map.selectionInteraction.setEnabled(false);
       this.setDoubleClickZoomEnabled(false);
     });
 
     // on draw end save feature and reset interactions
-    this.draw.on('drawend', (e) => {
+    this.olDraw.on('drawend', (e) => {
       const event = e as OLDraw.Event;
 
-      // wrap created draw event feature into `AlloyDrawFeature` and save to draw layer
+      // wrap created draw event feature into AlloyDrawFeature and save to draw layer
       const feature = new AlloyDrawFeature(uuid.v1(), event.feature, properties);
       this.drawLayer.addFeature(feature);
 
@@ -197,7 +232,7 @@ export class AlloyDrawInteraction {
     });
 
     // add new draw interaction to the map
-    this.map.olMap.addInteraction(this.draw);
+    this.map.olMap.addInteraction(this.olDraw);
   }
 
   // resets draw interaction
@@ -206,12 +241,11 @@ export class AlloyDrawInteraction {
   }
 
   /**
-   * Populates draw layer with an existing `AlloyFeature`
-   * @param feature `AlloyFeature` to add to draw layer
-   * @param properties feature properties for created `AlloyDrawFeature`s
+   * adds a draw feature to the layer
+   * @param feature `AlloyDrawFeature` to add to draw layer
    */
-  public addDrawFeature(feature: AlloyFeature, properties: AlloyDrawFeatureProperties) {
-    this.drawLayer.addDrawFeature(feature, properties);
+  public addDrawFeature(feature: AlloyDrawFeature) {
+    this.drawLayer.addFeature(feature);
   }
 
   /**
@@ -258,12 +292,12 @@ export class AlloyDrawInteraction {
     this.setRemoveInteractionFeatures();
 
     // add new select interaction for remove layer
-    this.remove = new OLSelect({
+    this.olSelect = new OLSelect({
       layers: [this.removeLayer.olLayer],
     });
 
     // handler to remove coordinates from draw features on selection of remove features
-    this.remove.on('select', (e) => {
+    this.olSelect.on('select', (e) => {
       const event = e as OLSelect.Event;
       // don't process if no features are selected
       if (event.selected.length === 0) {
@@ -276,7 +310,7 @@ export class AlloyDrawInteraction {
       // get coordinate of selected remove point
       const coord = (selectedFeature.olFeature.getGeometry() as OLPoint).getCoordinates();
       // iterate over existing draw geometries to find matching coordinate for
-      for (const sourceFeature of this.drawLayer.features.values()) {
+      for (const sourceFeature of Array.from(this.drawLayer.features.values())) {
         // get geometry of draw feature and flatten coordinates
         const sourceGeometry = sourceFeature.olFeature.getGeometry();
         const flatCoords = AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
@@ -289,22 +323,22 @@ export class AlloyDrawInteraction {
 
         // delete selected point from remove layer
         this.removeLayer.removeFeature(selectedFeature);
-        this.remove!.getFeatures().remove(selectedFeature.olFeature);
+        this.olSelect!.getFeatures().remove(selectedFeature.olFeature);
 
         // process existining geometry on whether we need to remove a
         // single point or whole geometry if not enough points are left
         const geometryType = sourceFeature.olFeature.getGeometry().getType();
         let featureRemove = false;
         switch (geometryType) {
-          case AlloyDrawGeometryType.Point:
+          case AlloyDrawInteractionGeometryType.Point:
             featureRemove = true;
             break;
-          case AlloyDrawGeometryType.LineString:
+          case AlloyDrawInteractionGeometryType.LineString:
             if ((sourceGeometry as OLLineString).getCoordinates().length <= 2) {
               featureRemove = true;
             }
             break;
-          case AlloyDrawGeometryType.Polygon:
+          case AlloyDrawInteractionGeometryType.Polygon:
             if ((sourceGeometry as OLPolygon).getCoordinates()[0].length <= 4) {
               featureRemove = true;
             }
@@ -330,7 +364,7 @@ export class AlloyDrawInteraction {
     });
 
     // add remove interaction to the map
-    this.map.olMap.addInteraction(this.remove);
+    this.map.olMap.addInteraction(this.olSelect);
   }
 
   /**
@@ -340,10 +374,10 @@ export class AlloyDrawInteraction {
     // clears remove layer point features
     this.removeLayer.clearFeatures();
     // if remove interaction is active then disable it and re-enable modify
-    if (this.remove) {
-      this.remove.setActive(false);
-      this.map.olMap.removeInteraction(this.remove);
-      this.remove = null;
+    if (this.olSelect) {
+      this.olSelect.setActive(false);
+      this.map.olMap.removeInteraction(this.olSelect);
+      this.olSelect = null;
       this.initModify();
       return true;
     }
@@ -357,9 +391,9 @@ export class AlloyDrawInteraction {
    * Removes draw interaction from the map and resets the variable
    */
   private removeDrawInteraction() {
-    if (this.draw !== null) {
-      this.map.olMap.removeInteraction(this.draw);
-      this.draw = null;
+    if (this.olDraw !== null) {
+      this.map.olMap.removeInteraction(this.olDraw);
+      this.olDraw = null;
     }
   }
 
@@ -367,14 +401,14 @@ export class AlloyDrawInteraction {
    * Removes modify interaction from the map and resets the variable
    */
   private removeModifyInteraction() {
-    if (this.modify !== null) {
-      this.map.olMap.removeInteraction(this.modify);
-      this.modify = null;
+    if (this.olModify !== null) {
+      this.map.olMap.removeInteraction(this.olModify);
+      this.olModify = null;
     }
   }
 
   /**
-   * Resets selection and double-click zoom interactions
+   * resets selection and double-click zoom interactions
    * and dispatches draw event with drawn feature or null if was cancelled
    * @param feature drawn feature or null if draw interaction was cancelled
    */
@@ -390,19 +424,19 @@ export class AlloyDrawInteraction {
   }
 
   /**
-   * Initialise modify interaction
+   * initialise modify interaction
    */
   private initModify() {
     this.removeModifyInteraction();
     // create new modify interaction for all features in draw layer with default draw styles
-    this.modify = new OLModify({
+    this.olModify = new OLModify({
       source: this.drawLayer.olSource,
       style: this.drawStyles,
     });
 
-    this.modify.on('modifystart', (e) => {
+    this.olModify.on('modifystart', (e) => {
       // on modify start cancel draw interaction if available
-      if (this.draw !== null) {
+      if (this.olDraw !== null) {
         this.cancelDraw();
       }
       // disable selection and double-click zoom interactions
@@ -410,7 +444,8 @@ export class AlloyDrawInteraction {
       this.map.selectionInteraction.setEnabled(false);
       this.setDoubleClickZoomEnabled(false);
     });
-    this.modify.on('modifyend', (e) => {
+
+    this.olModify.on('modifyend', (e) => {
       const event = e as OLModify.Event;
       // find AlloyDrawFeature that was modified in the interaction
       const drawFeature = this.drawLayer.getFeatureById(
@@ -421,11 +456,11 @@ export class AlloyDrawInteraction {
     });
 
     // add modify interaction to the map
-    this.map.olMap.addInteraction(this.modify);
+    this.map.olMap.addInteraction(this.olModify);
   }
 
   /**
-   * Resets selection and double-click zoom interactions
+   * resets selection and double-click zoom interactions
    * and dispatches draw event with modified feature
    * @param feature modified feature
    */
@@ -442,14 +477,14 @@ export class AlloyDrawInteraction {
   }
 
   /**
-   * Processes draw layer features and creates point features for remove layer from all coordinates
+   * processes draw layer features and creates point features for remove layer from all coordinates
    */
   private setRemoveInteractionFeatures() {
     // clears remove layer
     this.removeLayer.clearFeatures();
     // convert all draw layer features to points
     _.flatten(
-      [...this.drawLayer.features.values()].map((feature) =>
+      Array.from(this.drawLayer.features.values()).map((feature) =>
         AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
           feature.olFeature.getGeometry(),
         ).getPoints(),
@@ -548,14 +583,15 @@ export class AlloyDrawInteraction {
   }
 
   /**
-   *
+   * checks if two coordinates are "equal"
    * @param first first coordinate
    * @param second second coordinate
    * @return true if coordinates are equals to 6dp
    */
   private isCoordinateEqual(first: [number, number], second: [number, number]): boolean {
     return (
-      first[0].toFixed(6) === second[0].toFixed(6) && first[1].toFixed(6) === second[1].toFixed(6)
+      MathUtils.approximateEquals(first[0], second[0], 0.000001) &&
+      MathUtils.approximateEquals(first[1], second[1], 0.000001)
     );
   }
 
@@ -570,13 +606,4 @@ export class AlloyDrawInteraction {
       .filter((i) => i instanceof OLDoubleClickZoom)
       .forEach((i) => i.setActive(enabled));
   }
-}
-
-/**
- * Allowed geometry types for draw interaction
- */
-export enum AlloyDrawGeometryType {
-  Point = 'Point',
-  LineString = 'LineString',
-  Polygon = 'Polygon',
 }

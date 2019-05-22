@@ -1,6 +1,6 @@
 {
-  "name": "alloy-map",
-  "version": "17.0.26",
+  "name": "@yotta/alloy-map",
+  "version": "0.0.0",
   "private": false,
   "main": "dist/alloy-map.js",
   "types": "types/index.d.ts",

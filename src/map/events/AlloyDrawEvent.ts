@@ -2,9 +2,13 @@ import { Geometry } from 'geojson';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 
+/**
+ * event fired when a draw feature has been created/modified/deleted
+ * @event
+ */
 export class AlloyDrawEvent {
   /**
-   * Last drawn, modified or removed feature
+   * last drawn, modified or removed feature
    */
   public feature: AlloyDrawFeature | null;
 
@@ -30,7 +34,7 @@ export class AlloyDrawEvent {
   }
 
   /**
-   * Get all features associated with draw layer
+   * get all features associated with draw layer
    * @return map of all draw features keyed on the id
    */
   public getDrawFeatures(): Map<string, AlloyDrawFeature> {

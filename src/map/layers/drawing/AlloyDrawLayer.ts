@@ -22,7 +22,8 @@ import {
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-import { AlloyDrawGeometryType } from '../../interactions/AlloyDrawInteraction';
+// tslint:disable-next-line: max-line-length
+import { AlloyDrawInteractionGeometryType } from '../../interactions/AlloyDrawInteractionGeometryType';
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
@@ -42,6 +43,7 @@ const GEOJSON = new OLGeoJson({
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
  * add draw features onto the map and manage them from draw interaction
+ * @ignore
  */
 export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**
@@ -71,21 +73,6 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     this.debugger('adding feature: %s', feature.id);
     this.currentFeatures.set(feature.id, feature);
     return true;
-  }
-
-  /**
-   * Processes an existing `AlloyFeature` into simple geometries and populates this
-   * layer with `AlloyDrawFeature`s with these geometries
-   * @param feature `AlloyFeature` to process
-   * @param properties properties for created `AlloyDrawFeature`s
-   */
-  public addDrawFeature(feature: AlloyFeature, properties: AlloyDrawFeatureProperties) {
-    const geometries = AlloyGeometryFunctionUtils.convertGeometryToSimpleGeometries(
-      feature.olFeature.getGeometry(),
-    );
-    for (const geometry of geometries) {
-      super.addFeature(new AlloyDrawFeature(uuid.v1(), new OLFeature(geometry), properties));
-    }
   }
 
   /**
