@@ -1,4 +1,5 @@
 import { AlloyDrawEvent } from './AlloyDrawEvent';
+
 /**
  * handler for the alloy draw event
  */

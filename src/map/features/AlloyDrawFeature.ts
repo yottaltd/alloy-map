@@ -1,5 +1,8 @@
 import OLFeature from 'ol/Feature';
+import * as uuid from 'uuid';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+// tslint:disable-next-line: max-line-length
+import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
@@ -9,6 +12,35 @@ import { AlloyFeatureType } from './AlloyFeatureType';
  * added programatically, it can represent anything
  */
 export class AlloyDrawFeature implements AlloyFeature {
+  /**
+   * creates alloy draw features from an alloy feature, this will break the feature apart into a
+   * feature per simple geometry
+   * @param feature the feature to create draw features for
+   * @param properties the properties to assign the feature
+   */
+  public static fromAlloyFeature(
+    feature: AlloyFeature,
+    properties: AlloyDrawFeatureProperties,
+  ): AlloyDrawFeature[] {
+    // if its already a draw feature we're good to go
+    if (feature instanceof AlloyDrawFeature) {
+      return [feature];
+    }
+
+    // breaks apart a features geometry into its individual geoms
+    const geometries = AlloyGeometryFunctionUtils.convertGeometryToSimpleGeometries(
+      feature.olFeature.getGeometry(),
+    );
+
+    // create a new feature for each
+    const features: AlloyDrawFeature[] = [];
+    for (const geometry of geometries) {
+      features.push(new AlloyDrawFeature(uuid.v1(), new OLFeature(geometry), properties));
+    }
+
+    return features;
+  }
+
   /**
    * @implements
    */
@@ -52,7 +84,7 @@ export class AlloyDrawFeature implements AlloyFeature {
    * creates a new instance
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
-   * @param properties the properties bundled with the service call
+   * @param properties the properties of the feature
    */
   constructor(id: string, olFeature: OLFeature, properties: AlloyDrawFeatureProperties) {
     this.id = id;

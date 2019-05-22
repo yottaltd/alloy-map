@@ -2,9 +2,13 @@ import OLGeometry from 'ol/geom/Geometry';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 
+/**
+ * event fired when a draw feature has been created/modified/deleted
+ * @event
+ */
 export class AlloyDrawEvent {
   /**
-   * Last drawn, modified or removed feature
+   * last drawn, modified or removed feature
    */
   public feature: AlloyDrawFeature | null;
 
@@ -22,15 +26,15 @@ export class AlloyDrawEvent {
   }
 
   /**
-   * Combine all draw features' geometries into a single openlayers geometry
-   * @return single OLGeometry of draw features
+   * combine all draw features' geometries into a single geometry
+   * @return single geometry of draw features
    */
   public getDrawGeometry(): OLGeometry {
     return this.drawLayer.getAllFeaturesGeometry();
   }
 
   /**
-   * Get all features associated with draw layer
+   * get all features associated with draw layer
    * @return map of all draw features keyed on the id
    */
   public getDrawFeatures(): Map<string, AlloyDrawFeature> {

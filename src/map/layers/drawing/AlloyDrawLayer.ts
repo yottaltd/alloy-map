@@ -6,23 +6,20 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import OLFeature from 'ol/Feature';
 import * as uuid from 'uuid';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-import { AlloyDrawGeometryType } from '../../interactions/AlloyDrawInteraction';
+// tslint:disable-next-line: max-line-length
+import { AlloyDrawInteractionGeometryType } from '../../interactions/AlloyDrawInteractionGeometryType';
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
-import { AlloyDrawFeatureProperties } from '../../features/AlloyDrawFeatureProperties';
-import { AlloyFeature } from '../../features/AlloyFeature';
-// tslint:disable-next-line: max-line-length
-import { AlloyGeometryFunctionUtils } from '../../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
  * add draw features onto the map and manage them from draw interaction
+ * @ignore
  */
 export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**
@@ -55,30 +52,6 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   }
 
   /**
-   * Processes an existing `AlloyFeature` into simple geometries and populates this
-   * layer with `AlloyDrawFeature`s with these geometries
-   * @param feature `AlloyFeature` to process
-   * @param properties properties for created `AlloyDrawFeature`s
-   */
-  public addDrawFeature(feature: AlloyFeature, properties: AlloyDrawFeatureProperties) {
-    const geometries = AlloyGeometryFunctionUtils.convertGeometryToSimpleGeometries(
-      feature.olFeature.getGeometry(),
-    );
-    for (const geometry of geometries) {
-      super.addFeature(new AlloyDrawFeature(uuid.v1(), new OLFeature(geometry), properties));
-    }
-  }
-
-  /**
-   * Removes a draw feature from the layer
-   * @param feature `AlloyDrawFeature` that needs to be removed
-   */
-  public removeFeature(feature: AlloyDrawFeature): void {
-    this.currentFeatures.delete(feature.id);
-    this.olSource.removeFeature(feature.olFeature);
-  }
-
-  /**
    * Combine all features' geometries in this layer into a single geometry
    * @return single openlayers geometry of all features in the layer
    */
@@ -92,13 +65,13 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
       // check if all the same type and create a Multi-geoemtry
       if (geometries.every((geom) => geom.getType() === geometries[0].getType())) {
         switch (geometries[0].getType()) {
-          case AlloyDrawGeometryType.Point:
+          case AlloyDrawInteractionGeometryType.Point:
             return new OLMultiPoint((geometries as OLPoint[]).map((geom) => geom.getCoordinates()));
-          case AlloyDrawGeometryType.LineString:
+          case AlloyDrawInteractionGeometryType.LineString:
             return new OLMultiLineString(
               (geometries as OLLineString[]).map((geom) => geom.getCoordinates()),
             );
-          case AlloyDrawGeometryType.Polygon:
+          case AlloyDrawInteractionGeometryType.Polygon:
             return new OLMultiPolygon(
               (geometries as OLPolygon[]).map((geom) => geom.getCoordinates()),
             );
