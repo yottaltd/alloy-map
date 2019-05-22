@@ -30,6 +30,11 @@ export interface AlloyMapOptions {
   zoom?: number;
 
   /**
+   * Whether the map can be interacted with, defaults to true
+   */
+  interactable?: boolean;
+
+  /**
    * the webfont family names to load into the map. "alloyicons" are attempted to be loaded by
    * default
    */

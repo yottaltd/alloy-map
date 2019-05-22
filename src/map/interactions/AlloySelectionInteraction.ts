@@ -94,6 +94,27 @@ export class AlloySelectionInteraction {
   }
 
   /**
+   * Deselects a feature, this will retain any other existing selected feature(s)
+   * and trigger the `FeatureSelectionChangeEvent` if selected features were modified.
+   * @param feature the feature to deselect
+   */
+  public deselectFeature(feature: AlloyFeature): void {
+    if (!feature.allowsSelection) {
+      throw new AlloyMapError(1556804618, 'feature is not selectable');
+    }
+
+    // only attempt to add the feature and track modified
+    this.debugger('remove feature: ', feature.id);
+    const modified = this.map.selectionLayer.removeFeature(feature);
+
+    // only trigger event on modified
+    if (modified) {
+      this.debugger('layer modified, dispatching selection change event');
+      this.dispatchFeatureSelectionChangeEvent();
+    }
+  }
+
+  /**
    * sets the current selection mode and cleans up any state
    * @param mode the mode to set
    */

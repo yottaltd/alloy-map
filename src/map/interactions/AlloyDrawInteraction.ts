@@ -1,4 +1,5 @@
 import { Debugger } from 'debug';
+import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
@@ -18,6 +19,7 @@ import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
+import { GeoJSONObjectType } from '../../api';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
@@ -148,6 +150,7 @@ export class AlloyDrawInteraction {
     this.cancelRemoval();
     this.onDrawEnd(null);
     this.drawLayer.clearFeatures();
+    this.initModify();
   }
 
   /**
@@ -209,6 +212,30 @@ export class AlloyDrawInteraction {
    */
   public addDrawFeature(feature: AlloyFeature, properties: AlloyDrawFeatureProperties) {
     this.drawLayer.addDrawFeature(feature, properties);
+  }
+
+  /**
+   * Gets all features in the draw layer
+   * @returns an array of `AlloyDrawFeature`
+   */
+  public getDrawFeatures(): AlloyDrawFeature[] {
+    return [...this.drawLayer.features.values()];
+  }
+
+  /**
+   * Gets all features geometries in the draw layer as a single geometry
+   * @returns a merged geometry GeoJSON of all draw features
+   */
+  public getDrawGeometry(): Geometry {
+    return this.drawLayer.getAllFeaturesGeometry();
+  }
+
+  /**
+   * Returns an array of current feature geometry types in the draw layer.
+   * @returns array of `GeoJSONObjectType`
+   */
+  public getDrawTypes(): GeoJSONObjectType[] {
+    return this.drawLayer.olSource.getFeatures().map((f) => f.getGeometry().getType() as any);
   }
 
   /**
@@ -366,6 +393,7 @@ export class AlloyDrawInteraction {
    * Initialise modify interaction
    */
   private initModify() {
+    this.removeModifyInteraction();
     // create new modify interaction for all features in draw layer with default draw styles
     this.modify = new OLModify({
       source: this.drawLayer.olSource,

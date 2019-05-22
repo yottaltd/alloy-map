@@ -6,10 +6,13 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
+import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
+import { Geometry } from 'geojson';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 
 /**
  * an alloy item feature which represents a basic item feature on the map
@@ -91,6 +94,22 @@ export class AlloyItemFeature implements AlloyFeature {
     // naughty cast here but we are expecting the geometry to always be of one of the above types
     // the reason we don't check is down to performance
     return this.olFeature.getGeometry() as any;
+  }
+
+  /**
+   * Sets geometry of the underlying alloy feature
+   * @param geometry geometry to set for feature
+   */
+  public setGeometry(geometry: Geometry) {
+    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  }
+
+  /**
+   * Sets style of the alloy feature
+   * @param style styles to sets on feature
+   */
+  public setStyle(style: OLStyle | OLStyle[] | null) {
+    this.olFeature.setStyle(style);
   }
 }
 

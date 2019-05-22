@@ -7,7 +7,18 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLFeature from 'ol/Feature';
+import OLGeoJson from 'ol/format/GeoJSON';
 import * as uuid from 'uuid';
+import {
+  Geometry,
+  GeometryCollection,
+  Point,
+  MultiPolygon,
+  Polygon,
+  MultiPoint,
+  LineString,
+  MultiLineString,
+} from 'geojson';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
@@ -19,6 +30,14 @@ import { AlloyDrawFeatureProperties } from '../../features/AlloyDrawFeaturePrope
 import { AlloyFeature } from '../../features/AlloyFeature';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { ProjectionUtils } from '../../../utils/ProjectionUtils';
+
+const GEOJSON = new OLGeoJson({
+  // the projection to convert the data into (should match the layer)
+  featureProjection: ProjectionUtils.MAP_PROJECTION,
+  // the projection the data is expected to be in
+  defaultDataProjection: ProjectionUtils.API_PROJECTION,
+});
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -70,38 +89,31 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   }
 
   /**
-   * Removes a draw feature from the layer
-   * @param feature `AlloyDrawFeature` that needs to be removed
-   */
-  public removeFeature(feature: AlloyDrawFeature): void {
-    this.currentFeatures.delete(feature.id);
-    this.olSource.removeFeature(feature.olFeature);
-  }
-
-  /**
    * Combine all features' geometries in this layer into a single geometry
    * @return single openlayers geometry of all features in the layer
    */
-  public getAllFeaturesGeometry(): OLGeometry {
+  public getAllFeaturesGeometry(): Geometry {
     const geometries: OLGeometry[] = this.olSource
       .getFeatures()
       .map((feature) => feature.getGeometry());
+    let geom: OLGeometry | undefined;
     if (geometries.length === 1) {
-      return geometries[0];
+      geom = geometries[0];
     } else if (geometries.length > 1) {
       // check if all the same type and create a Multi-geoemtry
-      if (geometries.every((geom) => geom.getType() === geometries[0].getType())) {
+      if (geometries.every((g) => g.getType() === geometries[0].getType())) {
         switch (geometries[0].getType()) {
           case AlloyDrawGeometryType.Point:
-            return new OLMultiPoint((geometries as OLPoint[]).map((geom) => geom.getCoordinates()));
+            geom = new OLMultiPoint((geometries as OLPoint[]).map((g) => g.getCoordinates()));
+            break;
           case AlloyDrawGeometryType.LineString:
-            return new OLMultiLineString(
-              (geometries as OLLineString[]).map((geom) => geom.getCoordinates()),
+            geom = new OLMultiLineString(
+              (geometries as OLLineString[]).map((g) => g.getCoordinates()),
             );
+            break;
           case AlloyDrawGeometryType.Polygon:
-            return new OLMultiPolygon(
-              (geometries as OLPolygon[]).map((geom) => geom.getCoordinates()),
-            );
+            geom = new OLMultiPolygon((geometries as OLPolygon[]).map((g) => g.getCoordinates()));
+            break;
           default:
             throw new AlloyMapError(
               1556196597,
@@ -110,7 +122,11 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
         }
       }
       // otherwise wrap all in multi-collection
-      return new OLGeometryCollection(geometries);
+      geom = new OLGeometryCollection(geometries);
+    }
+
+    if (geom) {
+      return GEOJSON.writeGeometryObject(geom) as any;
     }
 
     throw new AlloyMapError(1556196189, 'No geometries found in draw layer');

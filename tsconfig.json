@@ -3,13 +3,13 @@
     "target": "es6",
     "module": "esnext",
     "declaration": true,
-    "outDir": "./lib",
+    "outDir": "./types",
     "strict": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "noImplicitAny": false,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "types/**/*"],
   "exclude": ["node_modules"]
 }

@@ -128,6 +128,25 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
+   * Removes a feature from the layer
+   * @param feature the feature to remove from the layer
+   * @returns a flag indicating if the underlying sources were modified
+   * @ignore
+   */
+  public removeFeature(feature: T): boolean {
+    // check to see if we already have the feature
+    if (!this.currentFeatures.has(feature.id)) {
+      this.debugger("feature: %s doesn't exists in layer", feature.id);
+      return false;
+    }
+
+    this.debugger('removing feature: %s', feature.id);
+    this.olSource.removeFeature(feature.olFeature);
+    this.currentFeatures.delete(feature.id);
+    return true;
+  }
+
+  /**
    * adds several features at once to the layer, should be used instead of adding features
    * individually where possible
    * @param features the features to add to the layer

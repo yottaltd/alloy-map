@@ -3,7 +3,6 @@ import OLFeature from 'ol/Feature';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import OLDraw from 'ol/interaction/Draw';
-import OLVectorLayer from 'ol/layer/Vector';
 import OLRenderFeature from 'ol/render/Feature';
 import OLVectorSource from 'ol/source/Vector';
 import OLCircle from 'ol/style/Circle';
@@ -11,7 +10,6 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
 // tslint:disable-next-line: max-line-length
@@ -71,6 +69,11 @@ export class AlloySelectInPolygonInteraction {
    * whether to append the final selection to the existing selection or replace it
    */
   private appendToSelection: boolean = false;
+
+  /**
+   * Custom function to call on interaction end (e.g. to control button state)
+   */
+  private onInteractionEnd: (() => void) | null = null;
 
   /**
    * creates a new instance
@@ -147,13 +150,16 @@ export class AlloySelectInPolygonInteraction {
 
   /**
    * Starts draw interaction for polygon to select features inside of it
+   * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(appendToSelection: boolean = false): void {
+  public startPolygonSelect(onEnd?: () => void, appendToSelection: boolean = false): void {
     // if it's active, then no need to do anything
     if (this.olDraw.getActive()) {
       return;
     }
+
+    this.onInteractionEnd = onEnd || null;
 
     // remember the selection mode
     this.appendToSelection = appendToSelection;
@@ -180,6 +186,10 @@ export class AlloySelectInPolygonInteraction {
     // if its already disabled then no need to do anything
     if (!this.olDraw.getActive()) {
       return;
+    }
+
+    if (this.onInteractionEnd !== null) {
+      this.onInteractionEnd();
     }
 
     // deactivate draw interaction

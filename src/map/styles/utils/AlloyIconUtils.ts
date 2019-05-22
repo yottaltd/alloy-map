@@ -5,6 +5,7 @@ import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
 import { FontUtils } from '../../../utils/FontUtils';
+import { AlloyTextUtils } from './AlloyTextUtils';
 
 /**
  * the size in pixels of the canvas to render icons on
@@ -53,6 +54,33 @@ export abstract class AlloyIconUtils {
         snapToPixel: false,
         scale: size / iconCanvas.width,
         imgSize: [iconCanvas.width, iconCanvas.height],
+      }),
+      geometry: geometryFunction,
+    });
+  }
+
+  /**
+   * creates an alloy text style, specifically for any text
+   * @param size the size of the icon
+   * @param alloyIconText text to use as an icon for style
+   * @param colour the colour of the icon
+   * @param geometryFunction the geometry or function to transform the style
+   */
+  public static createAlloyTextIconStyle(
+    size: number,
+    alloyIconText: string,
+    colour: string,
+    geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
+  ): OLStyle {
+    // generate the text canvas
+    const textCanvas = AlloyTextUtils.createTextCanvas(alloyIconText, colour);
+
+    return new OLStyle({
+      image: new OLIcon({
+        img: textCanvas,
+        snapToPixel: false,
+        scale: size / textCanvas.width,
+        imgSize: [textCanvas.width, textCanvas.height],
       }),
       geometry: geometryFunction,
     });

@@ -1,8 +1,11 @@
 import OLFeature from 'ol/Feature';
+import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { Geometry } from 'geojson';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 
 /**
  * an alloy draw feature which represents something being drawn on the map by a user or
@@ -62,6 +65,22 @@ export class AlloyDrawFeature implements AlloyFeature {
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
+  }
+
+  /**
+   * Sets geometry of the underlying alloy feature
+   * @param geometry geometry to set for feature
+   */
+  public setGeometry(geometry: Geometry) {
+    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  }
+
+  /**
+   * Sets style of the alloy feature
+   * @param style styles to sets on feature
+   */
+  public setStyle(style: OLStyle | OLStyle[] | null) {
+    this.olFeature.setStyle(style);
   }
 }
 

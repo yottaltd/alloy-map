@@ -8,4 +8,9 @@ export interface AlloyCustomLayerOptions {
    * the alloy map to associate tha layer with
    */
   map: AlloyMap;
+
+  /**
+   * Optional id for custom layer
+   */
+  id?: string;
 }

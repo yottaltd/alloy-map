@@ -1,9 +1,10 @@
 import { debug, Debugger } from 'debug';
 import * as _ from 'lodash';
+import { intersects as extentIntersects, containsExtent } from 'ol/extent.js';
+import { defaults as defaultInteractions } from 'ol/interaction.js';
 import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
-import OLGeometry from 'ol/geom/Geometry';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { Api } from '../../svr/Api';
@@ -179,6 +180,7 @@ export class AlloyMap {
           className: 'map__attributions',
         }),
       ],
+      interactions: options.interactable === false ? [] : defaultInteractions(),
       view: this.olView,
     });
 
@@ -317,6 +319,21 @@ export class AlloyMap {
   }
 
   /**
+   * Checks if bounds intersect the viewport bounds
+   * @param bounds the bounds to check against viewport
+   * @returns true if bounds intersect
+   */
+  public viewportIntersects(bounds: AlloyBounds): boolean {
+    const boundsExtent = bounds.toMapExtent();
+    const viewportExtent = this.viewport.toMapExtent();
+    return (
+      extentIntersects(boundsExtent, viewportExtent) ||
+      containsExtent(boundsExtent, viewportExtent) ||
+      containsExtent(viewportExtent, boundsExtent)
+    );
+  }
+
+  /**
    * sets the zoom level of the map
    * @param zoom the zoom level
    */
@@ -425,10 +442,11 @@ export class AlloyMap {
 
   /**
    * Starts interaction to draw a polygon and select all features inside of it
+   * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(appendToSelection: boolean = false): void {
-    this.selectInPolygonInteraction.startPolygonSelect(appendToSelection);
+  public startPolygonSelect(onEnd?: () => void, appendToSelection: boolean = false): void {
+    this.selectInPolygonInteraction.startPolygonSelect(onEnd, appendToSelection);
   }
 
   /**
@@ -524,6 +542,15 @@ export class AlloyMap {
 
     // update internal basemap reference
     this.currentBasemap = basemap;
+  }
+
+  /**
+   * Sets the size of the map
+   * @param width DOM width in pixels
+   * @param height DOM height in pixels
+   */
+  public setSize(width: number, height: number) {
+    this.olMap.setSize([width, height]);
   }
 
   /**
