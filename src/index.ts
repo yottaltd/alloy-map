@@ -40,10 +40,10 @@ export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGe
 export {
   AlloySimplifiedGeometryFeatureProperties,
 } from './map/features/AlloySimplifiedGeometryFeatureProperties';
+export { AlloyDrawInteraction } from './map/interactions/AlloyDrawInteraction';
 export {
-  AlloyDrawGeometryType,
-  AlloyDrawInteraction,
-} from './map/interactions/AlloyDrawInteraction';
+  AlloyDrawInteractionGeometryType,
+} from './map/interactions/AlloyDrawInteractionGeometryType';
 export { AlloySelectionInteraction } from './map/interactions/AlloySelectionInteraction';
 export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';

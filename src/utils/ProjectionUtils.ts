@@ -1,4 +1,5 @@
 import OLProjection from 'ol/proj/Projection';
+import OLGeoJson from 'ol/format/GeoJSON';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
 
@@ -26,6 +27,13 @@ export abstract class ProjectionUtils {
    * the alloy api projection, same as `EPSG4326`
    */
   public static readonly API_PROJECTION: OLProjection = ProjectionUtils.EPSG4326;
+
+  public static readonly GEOJSON = new OLGeoJson({
+    // the projection to convert the data into (should match the layer)
+    featureProjection: ProjectionUtils.MAP_PROJECTION,
+    // the projection the data is expected to be in
+    defaultDataProjection: ProjectionUtils.API_PROJECTION,
+  });
 
   /**
    * gets a projection code or throws

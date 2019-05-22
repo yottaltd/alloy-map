@@ -1,13 +1,14 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLStyle from 'ol/style/Style';
+import * as uuid from 'uuid';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-import { Geometry } from 'geojson';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
 
 /**
  * an alloy draw feature which represents something being drawn on the map by a user or
