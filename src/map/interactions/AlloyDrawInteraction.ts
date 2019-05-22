@@ -283,7 +283,7 @@ export class AlloyDrawInteraction {
       // get coordinate of selected remove point
       const coord = (selectedFeature.olFeature.getGeometry() as OLPoint).getCoordinates();
       // iterate over existing draw geometries to find matching coordinate for
-      for (const sourceFeature of this.drawLayer.features.values()) {
+      for (const sourceFeature of [...this.drawLayer.features.values()]) {
         // get geometry of draw feature and flatten coordinates
         const sourceGeometry = sourceFeature.olFeature.getGeometry();
         const flatCoords = AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
