@@ -9,6 +9,7 @@ import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
+import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { LayersChangeEvent } from '../events/LayersChangeEvent';
@@ -17,7 +18,11 @@ import { MapChangeCentreEvent } from '../events/MapChangeCentreEvent';
 import { MapChangeCentreEventHandler } from '../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
 import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
+import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
+import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyDrawInteraction } from '../interactions/AlloyDrawInteraction';
+import { AlloyDrawInteractionGeometryType } from '../interactions/AlloyDrawInteractionGeometryType';
 import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
 import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
 import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
@@ -90,8 +95,15 @@ export class AlloyMap {
 
   /**
    * the selection interaction manager, determines when clicks occur etc.
+   * @ignore
    */
   public readonly selectionInteraction: AlloySelectionInteraction;
+
+  /**
+   * the draw interaction manager.
+   * @ignore
+   */
+  private readonly drawInteraction: AlloyDrawInteraction;
 
   /**
    * the currently active basemap or null if not se
@@ -214,6 +226,9 @@ export class AlloyMap {
 
     // setup select in poly interaction
     this.selectInPolygonInteraction = new AlloySelectInPolygonInteraction(this);
+
+    // setup draw interaction
+    this.drawInteraction = new AlloyDrawInteraction(this);
   }
 
   /**
@@ -413,15 +428,87 @@ export class AlloyMap {
    * Starts interaction to draw a polygon and select all features inside of it
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(appendToSelection: boolean = false) {
+  public startPolygonSelect(appendToSelection: boolean = false): void {
     this.selectInPolygonInteraction.startPolygonSelect(appendToSelection);
   }
 
   /**
    * Cancels interaction for selecting features in a drawn polygon
    */
-  public cancelPolygonSelect() {
+  public cancelPolygonSelect(): void {
     this.selectInPolygonInteraction.stopPolygonSelect();
+  }
+
+  /**
+   * adds an event handler to listen for the `AlloyDrawEvent` event
+   * @param handler the handler to call when the event is raised
+   */
+  public addDrawListener(handler: AlloyDrawEventHandler): void {
+    this.drawInteraction.addDrawListener(handler);
+  }
+
+  /**
+   * removes an event handler listening to the `AlloyDrawEvent` event
+   * @param handler the handler to stop listening
+   */
+  public removeDrawListener(handler: AlloyDrawEventHandler): void {
+    this.drawInteraction.removeDrawListener(handler);
+  }
+
+  /**
+   * starts the draw interaction for a geometry type
+   * @param type geometry type to start drawing for
+   * @param properties properties for created draw features
+   */
+  public startDraw(
+    type: AlloyDrawInteractionGeometryType,
+    properties: AlloyDrawFeatureProperties,
+  ): void {
+    this.drawInteraction.startDraw(type, properties);
+  }
+
+  /**
+   * cancels the draw interaction
+   */
+  public cancelDraw(): void {
+    this.drawInteraction.cancelDraw();
+  }
+
+  /**
+   * clears the drawing layer and interactions
+   */
+  public clearDraw(): void {
+    this.drawInteraction.clear();
+  }
+
+  /**
+   * starts the drawing layer vertices remove interaction
+   */
+  public startDrawRemoval(): void {
+    this.drawInteraction.startRemoval();
+  }
+
+  /**
+   * cancels the draw layer vertices remove interaction
+   */
+  public cancelDrawRemoval(): void {
+    this.drawInteraction.cancelRemoval();
+  }
+
+  /**
+   * removes an `AlloyDrawFeature` from draw layer and related interactions
+   * @param feature the feature to remove
+   */
+  public removeDrawFeature(feature: AlloyDrawFeature): void {
+    this.drawInteraction.removeFeature(feature);
+  }
+
+  /**
+   * adds an `AlloyDrawFeature` to the draw layer
+   * @param feature feature to process and add to draw layer
+   */
+  public addDrawFeature(feature: AlloyDrawFeature): void {
+    this.drawInteraction.addDrawFeature(feature);
   }
 
   /**

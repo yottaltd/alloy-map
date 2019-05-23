@@ -67,7 +67,7 @@ export class AlloyMapError extends Error {
       category?: number;
     },
   ) {
-    super(`E${code} - ${typeof message}`);
+    super(`E${code} - ${message}`);
 
     this.code = code;
     if (options) {
