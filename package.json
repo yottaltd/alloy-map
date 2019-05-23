@@ -10,6 +10,7 @@
     "name": "Craig McNicholas",
     "url": "https://weareyotta.com/"
   },
+  "private": false,
   "license": "GNU GPLv3",
   "main": "dist/alloy-map.js",
   "typings": "lib/index.d.ts",
