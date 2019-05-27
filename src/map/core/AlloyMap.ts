@@ -102,13 +102,11 @@ export class AlloyMap {
    */
   public readonly selectionInteraction: AlloySelectionInteraction;
 
-  public readonly animationUtils: AnimationUtils;
-
   /**
-   * the draw interaction manager.
+   * animation utils
    * @ignore
    */
-  private readonly drawInteraction: AlloyDrawInteraction;
+  public readonly animationUtils: AnimationUtils;
 
   /**
    * the draw interaction manager.

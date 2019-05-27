@@ -253,7 +253,7 @@ export class AlloyDrawInteraction {
    * @returns an array of `AlloyDrawFeature`
    */
   public getDrawFeatures(): AlloyDrawFeature[] {
-    return [...this.drawLayer.features.values()];
+    return Array.from(this.drawLayer.features.values());
   }
 
   /**

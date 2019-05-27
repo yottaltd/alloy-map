@@ -195,23 +195,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * removes a feature from the layer
-   * @param feature the feature to be removed
-   */
-  public removeFeature(feature: T): boolean {
-    // check to see if we already have the feature
-    if (!this.currentFeatures.has(feature.id)) {
-      this.debugger('feature: %s does not exists in layer', feature.id);
-      return false;
-    }
-
-    this.debugger('removing feature: %s', feature.id);
-    this.olSource.removeFeature(feature.olFeature);
-    this.currentFeatures.delete(feature.id);
-    return true;
-  }
-
-  /**
    * sets the style processor
    * @param processor the processor for styles
    */
