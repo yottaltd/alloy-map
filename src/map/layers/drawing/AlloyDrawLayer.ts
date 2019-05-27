@@ -1,5 +1,4 @@
 import { Geometry } from 'geojson';
-import OLGeoJson from 'ol/format/GeoJSON';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLLineString from 'ol/geom/LineString';
@@ -18,13 +17,6 @@ import { AlloyDrawInteractionGeometryType } from '../../interactions/AlloyDrawIn
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
-
-const GEOJSON = new OLGeoJson({
-  // the projection to convert the data into (should match the layer)
-  featureProjection: ProjectionUtils.MAP_PROJECTION,
-  // the projection the data is expected to be in
-  defaultDataProjection: ProjectionUtils.API_PROJECTION,
-});
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -99,7 +91,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     }
 
     if (geom) {
-      return GEOJSON.writeGeometryObject(geom) as any;
+      return ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
     }
 
     throw new AlloyMapError(1556196189, 'No geometries found in draw layer');

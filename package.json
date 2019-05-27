@@ -1,7 +1,17 @@
 {
   "name": "@yotta/alloy-map",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yottaltd/alloy-map.git"
+  },
+  "author": {
+    "email": "craig.mcnicholas@weareyotta.com",
+    "name": "Craig McNicholas",
+    "url": "https://weareyotta.com/"
+  },
   "private": false,
+  "license": "GNU GPLv3",
   "main": "dist/alloy-map.js",
   "types": "types/index.d.ts",
   "scripts": {

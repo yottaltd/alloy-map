@@ -509,8 +509,8 @@ export class AlloyDrawInteraction {
     switch (geometry.getType()) {
       case 'MultiPoint':
         const multiPoint = geometry as OLMultiPoint;
-        const multiPointCoordinates = _.slice(multiPoint.getCoordinates());
-        const pointIdx = _.findIndex(multiPointCoordinates, (mpc) =>
+        const multiPointCoordinates = multiPoint.getCoordinates().slice();
+        const pointIdx = multiPointCoordinates.findIndex((mpc) =>
           this.isCoordinateEqual(mpc, coordinate),
         );
         if (pointIdx > -1) {
@@ -520,8 +520,8 @@ export class AlloyDrawInteraction {
         break;
       case 'LineString':
         const lineString = geometry as OLLineString;
-        const lineStringCoordinates = _.slice(lineString.getCoordinates());
-        const lineIdx = _.findIndex(lineStringCoordinates, (lsc) =>
+        const lineStringCoordinates = lineString.getCoordinates().slice();
+        const lineIdx = lineStringCoordinates.findIndex((lsc) =>
           this.isCoordinateEqual(lsc, coordinate),
         );
         if (lineIdx > -1) {
@@ -531,9 +531,9 @@ export class AlloyDrawInteraction {
         break;
       case 'MultiLineString':
         const multiLineString = geometry as OLMultiLineString;
-        const multiLineStringCoordinates = _.slice(multiLineString.getCoordinates());
+        const multiLineStringCoordinates = multiLineString.getCoordinates().slice();
         for (const line of multiLineStringCoordinates) {
-          const idx = _.findIndex(line, (lc) => this.isCoordinateEqual(lc, coordinate));
+          const idx = line.findIndex((lc) => this.isCoordinateEqual(lc, coordinate));
           if (idx > -1) {
             line.splice(idx, 1);
           }
@@ -542,9 +542,9 @@ export class AlloyDrawInteraction {
         break;
       case 'Polygon':
         const polygon = geometry as OLPolygon;
-        const polygonCoordinates = _.slice(polygon.getCoordinates());
+        const polygonCoordinates = polygon.getCoordinates().slice();
         for (const coords of polygonCoordinates) {
-          const idx = _.findIndex(coords, (pc) => this.isCoordinateEqual(pc, coordinate));
+          const idx = coords.findIndex((pc) => this.isCoordinateEqual(pc, coordinate));
           if (idx > -1) {
             coords.splice(idx, 1);
             if (idx === 0) {
@@ -557,11 +557,11 @@ export class AlloyDrawInteraction {
         break;
       case 'MultiPolygon':
         const multiPolygon = geometry as OLMultiPolygon;
-        const multiPolygonCoordinates = _.slice(multiPolygon.getCoordinates());
+        const multiPolygonCoordinates = multiPolygon.getCoordinates().slice();
         for (const poly of multiPolygonCoordinates) {
           let removed = false;
           for (const coords of poly) {
-            const idx = _.findIndex(coords, (mpc) => this.isCoordinateEqual(mpc, coordinate));
+            const idx = coords.findIndex((mpc) => this.isCoordinateEqual(mpc, coordinate));
             if (idx > -1) {
               coords.splice(idx, 1);
               if (idx === 0) {

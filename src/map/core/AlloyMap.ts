@@ -111,6 +111,12 @@ export class AlloyMap {
   private readonly drawInteraction: AlloyDrawInteraction;
 
   /**
+   * the draw interaction manager.
+   * @ignore
+   */
+  private readonly drawInteraction: AlloyDrawInteraction;
+
+  /**
    * the currently active basemap or null if not se
    * @ignore
    */
@@ -236,6 +242,7 @@ export class AlloyMap {
     // setup draw interaction
     this.drawInteraction = new AlloyDrawInteraction(this);
 
+    // setup animation utils
     this.animationUtils = new AnimationUtils(this);
   }
 
