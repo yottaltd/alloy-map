@@ -6,7 +6,7 @@ import OLRenderEvent from 'ol/render/Event';
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
-import { PolyfillObservable } from '../../polyfills/PulyfillObservable';
+import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
 import { AlloyMap } from '../core/AlloyMap';
 
 /**

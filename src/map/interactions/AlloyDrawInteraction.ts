@@ -293,7 +293,7 @@ export class AlloyDrawInteraction {
 
     // add new select interaction for remove layer
     this.olSelect = new OLSelect({
-      layers: [this.removeLayer.olLayer],
+      layers: [this.removeLayer.olLayers[0]],
     });
 
     // handler to remove coordinates from draw features on selection of remove features

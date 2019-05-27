@@ -79,7 +79,7 @@ export abstract class AlloyIconUtils {
       image: new OLIcon({
         img: textCanvas,
         snapToPixel: false,
-        scale: size / textCanvas.width,
+        scale: 1,
         imgSize: [textCanvas.width, textCanvas.height],
       }),
       geometry: geometryFunction,

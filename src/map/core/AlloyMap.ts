@@ -36,6 +36,7 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
+import { AnimationUtils } from '../../utils/AnimationUtils';
 
 /**
  * minimum zoom level for the map
@@ -100,6 +101,8 @@ export class AlloyMap {
    * @ignore
    */
   public readonly selectionInteraction: AlloySelectionInteraction;
+
+  public readonly animationUtils: AnimationUtils;
 
   /**
    * the draw interaction manager.
@@ -217,12 +220,12 @@ export class AlloyMap {
     // setup hover layer, interaction and add it to the map
     this.hoverLayer = new AlloyHoverLayer({ map: this });
     this.hoverInteraction = new AlloyHoverInteraction(this);
-    this.olMap.addLayer(this.hoverLayer.olLayer);
+    this.hoverLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
 
     // setup selection layer, interaction and add it to the map
     this.selectionLayer = new AlloySelectionLayer({ map: this });
     this.selectionInteraction = new AlloySelectionInteraction(this);
-    this.olMap.addLayer(this.selectionLayer.olLayer);
+    this.selectionLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
 
     // setup ping interaction
     this.pingInteraction = new AlloyPingInteraction(this);
@@ -232,6 +235,8 @@ export class AlloyMap {
 
     // setup draw interaction
     this.drawInteraction = new AlloyDrawInteraction(this);
+
+    this.animationUtils = new AnimationUtils(this);
   }
 
   /**
@@ -375,7 +380,7 @@ export class AlloyMap {
     if (this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118465, 'layer already added to map');
     }
-    this.olMap.addLayer(layer.olLayer);
+    layer.olLayers.forEach((olLayer) => this.olMap.addLayer(olLayer));
     this.managedLayers.set(layer.id, layer);
 
     // dispatch layers change event
@@ -392,7 +397,7 @@ export class AlloyMap {
     if (!this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118768, 'layer does not exist in map');
     }
-    this.olMap.removeLayer(layer.olLayer);
+    layer.olLayers.forEach((olLayer) => this.olMap.removeLayer(olLayer));
     this.managedLayers.delete(layer.id);
 
     // get all the currently selected features

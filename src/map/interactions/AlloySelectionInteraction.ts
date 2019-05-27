@@ -11,6 +11,7 @@ import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionCh
 import { FeaturesUnderSelectionEvent } from '../events/FeaturesUnderSelectionEvent';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
+import * as _ from 'lodash';
 
 /**
  * adds selection interaction to an alloy map
@@ -492,7 +493,7 @@ export class AlloySelectionInteraction {
   private getFeaturesForPixel(pixel: [number, number]) {
     const layers = Array.from(this.map.layers.values());
     // map the openlayers layers one to one with ours so indices are the same
-    const olLayers = layers.map((l) => l.olLayer);
+    const olLayers = _.flatten(layers.map((l) => l.olLayers));
     // create a set for fast lookup
     const olLayersSet = new Set(olLayers);
     // the features we found when clicking

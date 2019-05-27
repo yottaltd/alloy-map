@@ -35,7 +35,7 @@ export class AlloyHoverLayer implements AlloyLayer {
    * @implements
    * @ignore
    */
-  public readonly olLayer: OLVectorLayer;
+  public readonly olLayers: OLVectorLayer[];
 
   /**
    * the openlayers source containing features for this layer
@@ -71,20 +71,22 @@ export class AlloyHoverLayer implements AlloyLayer {
     this.olSource = new OLVectorSource();
 
     // create a new vector layer instance to render our features
-    this.olLayer = new OLVectorLayer({
-      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-      renderMode: 'vector',
-      // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) =>
-        this.styleProcessor.onStyleProcess(
-          olFeature,
-          resolution,
-          // always hover state even though the processor ignores it
-          AlloyStyleBuilderBuildState.Hover,
-        ),
-      source: this.olSource,
-      zIndex: AlloyLayerZIndex.Hover,
-    });
+    this.olLayers = [
+      new OLVectorLayer({
+        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
+        renderMode: 'vector',
+        // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
+        style: (olFeature, resolution) =>
+          this.styleProcessor.onStyleProcess(
+            olFeature,
+            resolution,
+            // always hover state even though the processor ignores it
+            AlloyStyleBuilderBuildState.Hover,
+          ),
+        source: this.olSource,
+        zIndex: AlloyLayerZIndex.Hover,
+      }),
+    ];
   }
 
   /**

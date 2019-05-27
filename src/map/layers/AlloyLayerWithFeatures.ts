@@ -34,7 +34,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @implements
    * @ignore
    */
-  public readonly olLayer: OLVectorLayer;
+  public readonly olLayers: OLVectorLayer[];
 
   /**
    * the openlayers source containing features for this layer
@@ -65,25 +65,27 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
     this.id = id;
     this.map = map;
-    this.olLayer = new OLVectorLayer({
-      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-      renderMode: 'vector',
-      // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => {
-        if (this.currentStyleProcessor) {
-          return this.currentStyleProcessor.onStyleProcess(
-            olFeature,
-            resolution,
-            AlloyStyleBuilderBuildState.Default,
-          );
-        } else {
-          this.debugger('style processor called but not set');
-          return null;
-        }
-      },
-      source: this.olSource,
-      zIndex,
-    });
+    this.olLayers = [
+      new OLVectorLayer({
+        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
+        renderMode: 'vector',
+        // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
+        style: (olFeature, resolution) => {
+          if (this.currentStyleProcessor) {
+            return this.currentStyleProcessor.onStyleProcess(
+              olFeature,
+              resolution,
+              AlloyStyleBuilderBuildState.Default,
+            );
+          } else {
+            this.debugger('style processor called but not set');
+            return null;
+          }
+        },
+        source: this.olSource,
+        zIndex,
+      }),
+    ];
   }
 
   /**

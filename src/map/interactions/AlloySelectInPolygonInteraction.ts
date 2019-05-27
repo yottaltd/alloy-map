@@ -229,20 +229,22 @@ export class AlloySelectInPolygonInteraction {
     // iterate through layers to check
     this.map.layers.forEach((layer) => {
       // grab the source of the layer data and check its a valid source to search
-      const source = layer.olLayer.getSource();
-      if (source instanceof OLVectorSource) {
-        // get all features in the polygon extent (fast way to cull items)
-        source.forEachFeatureInExtent(extent, (f: OLFeature) => {
-          // now break apart each geometry into it's points and test it intersects
-          const points = AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(f.getGeometry());
-          if (points.getCoordinates().some((coord) => poly.intersectsCoordinate(coord))) {
-            // find the feature and add to the search results
-            const feature = layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(f));
-            if (feature && feature.allowsSelection) {
-              features.push(feature);
+      const sources = layer.olLayers.map((olLayer) => olLayer.getSource());
+      for (const source of sources) {
+        if (source instanceof OLVectorSource) {
+          // get all features in the polygon extent (fast way to cull items)
+          source.forEachFeatureInExtent(extent, (f: OLFeature) => {
+            // now break apart each geometry into it's points and test it intersects
+            const points = AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(f.getGeometry());
+            if (points.getCoordinates().some((coord) => poly.intersectsCoordinate(coord))) {
+              // find the feature and add to the search results
+              const feature = layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(f));
+              if (feature && feature.allowsSelection) {
+                features.push(feature);
+              }
             }
-          }
-        });
+          });
+        }
       }
     });
 

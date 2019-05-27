@@ -15,8 +15,6 @@
     "codegen": "node ./submodules/alloy-typescript-codegen/copyToLocal.js ./submodules/alloy-typescript-codegen/dist ./src/api"
   },
   "dependencies": {
-    "@types/geojson": "^7946.0.7",
-    "@types/lodash": "^4.14.123",
     "color": "^3.1.0",
     "debug": "^4.1.1",
     "geojson": "^0.5.0",
@@ -39,6 +37,8 @@
     "@types/proj4": "^2.5.0",
     "@types/uuid": "^3.4.4",
     "@types/webfontloader": "^1.6.29",
+    "@types/geojson": "^7946.0.7",
+    "@types/lodash": "^4.14.123",
     "chai": "^4.2.0",
     "cypress": "^3.2.0",
     "eslint": "^5.15.3",
