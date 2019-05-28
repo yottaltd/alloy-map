@@ -107,11 +107,11 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
   }
 
   /**
-   * Sets style of the alloy feature
-   * @param style styles to sets on feature
+   * Sets visibility of alloy feature
+   * @param visible whether feature is visible
    */
-  public setStyle(style: OLStyle | OLStyle[] | null) {
-    this.olFeature.setStyle(style);
+  public setVisible(visible: boolean) {
+    this.olFeature.setStyle(visible ? null : []);
   }
 }
 
