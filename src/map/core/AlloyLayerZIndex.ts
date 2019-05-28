@@ -3,7 +3,7 @@
  * @ignore
  */
 export enum AlloyLayerZIndex {
-  Top = 5,
+  Visualisation = 5,
   Selection = 4,
   Hover = 3,
   Drawing = 2,

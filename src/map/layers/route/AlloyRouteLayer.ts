@@ -81,7 +81,7 @@ export class AlloyRouteLayer implements AlloyLayer {
           }
         },
         source: this.olSourceWaypoints,
-        zIndex: AlloyLayerZIndex.Top,
+        zIndex: AlloyLayerZIndex.Visualisation,
       }),
     ];
   }
