@@ -4,25 +4,20 @@ import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
+import OLVectorLayer from 'ol/layer/Vector';
 import OLRenderCanvas from 'ol/render/canvas';
 import OLRenderEvent from 'ol/render/Event';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
-import OLVectorLayer from 'ol/layer/Vector';
 import { AlloyMap } from '../map/core/AlloyMap';
 import { AlloyFeature } from '../map/features/AlloyFeature';
-import { AlloyLayer } from '../map/layers/AlloyLayer';
 import { PolyfillObservable } from '../polyfills/PolyfillObservable';
 import { AnimationListener } from './AnimationListener';
 
 const DEG_90_IN_RAD: number = Math.PI / 2;
 const CHEVRON_COLOUR: [number, number, number] = [245, 245, 245];
 
-export class AnimationUtils {
-  private static readonly ANIMATION_KEYS: Readonly<Map<OLFeature, ol.EventsKey>> = new Map();
-  private static readonly ANIMATING_FEATURES_SET: Readonly<Set<OLFeature>> = new Set();
-  private static readonly LINE_OFFSET_MAP: Readonly<Map<OLLineString, number>> = new Map();
-
+export class AnimationManager {
   /**
    * Rotates a coordinate around the anchor
    * @param coordinate
@@ -43,18 +38,22 @@ export class AnimationUtils {
     return `rgba(${rgb.join(',')}, ${alpha})`;
   }
 
-  private map: AlloyMap;
+  private readonly ANIMATION_KEYS: Readonly<Map<OLFeature, ol.EventsKey>> = new Map();
+  private readonly ANIMATING_FEATURES_SET: Readonly<Set<OLFeature>> = new Set();
+  private readonly LINE_OFFSET_MAP: Readonly<Map<OLLineString, number>> = new Map();
+
+  private readonly map: AlloyMap;
 
   public constructor(map: AlloyMap) {
     this.map = map;
   }
 
   public clearAnimations() {
-    AnimationUtils.ANIMATING_FEATURES_SET.clear();
+    this.ANIMATING_FEATURES_SET.clear();
   }
 
   public stopFeatureAnimation(feature: AlloyFeature) {
-    AnimationUtils.ANIMATING_FEATURES_SET.delete(feature.olFeature);
+    this.ANIMATING_FEATURES_SET.delete(feature.olFeature);
   }
 
   public startRouteAnimation(route: AlloyFeature, precomposeLayer?: OLVectorLayer) {
@@ -83,12 +82,12 @@ export class AnimationUtils {
         // create style with opacity for current ratio
         const routingStyle = new OLStyle({
           fill: new OLFill({
-            color: AnimationUtils.rgbToRgba(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
+            color: AnimationManager.rgbToRgba(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
           }),
         });
 
-        const c1 = AnimationUtils.rotateCoordinate(nose, DEG_90_IN_RAD, centre);
-        const c2 = AnimationUtils.rotateCoordinate(nose, -DEG_90_IN_RAD, centre);
+        const c1 = AnimationManager.rotateCoordinate(nose, DEG_90_IN_RAD, centre);
+        const c2 = AnimationManager.rotateCoordinate(nose, -DEG_90_IN_RAD, centre);
         // vector coordinate - distance between centre coordinates
         const v = [nose[0] - centre[0], nose[1] - centre[1]];
 
@@ -120,23 +119,23 @@ export class AnimationUtils {
         let nose: ol.Coordinate;
         let back: ol.Coordinate;
         if (ratio > 1 - currentScaleRatio) {
-          back = AnimationUtils.rotateCoordinate(
+          back = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(ratio - currentScaleRatio),
             DEG_90_IN_RAD,
             centre,
           );
-          nose = AnimationUtils.rotateCoordinate(
+          nose = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(1),
             DEG_90_IN_RAD,
             centre,
           );
         } else {
-          back = AnimationUtils.rotateCoordinate(
+          back = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(ratio - currentScaleRatio),
             DEG_90_IN_RAD,
             centre,
           );
-          nose = AnimationUtils.rotateCoordinate(
+          nose = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(ratio + currentScaleRatio),
             DEG_90_IN_RAD,
             centre,
@@ -152,15 +151,23 @@ export class AnimationUtils {
         // create style with opacity for current ratio
         const cableStyle = new OLStyle({
           fill: new OLFill({
-            color: AnimationUtils.rgbToRgba(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
+            color: AnimationManager.rgbToRgba(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
           }),
         });
 
-        const b1: ol.Coordinate = AnimationUtils.rotateCoordinate(centre, DEG_90_IN_RAD / 3, nose);
-        const n1: ol.Coordinate = AnimationUtils.rotateCoordinate(centre, DEG_90_IN_RAD / 3, back);
+        const b1: ol.Coordinate = AnimationManager.rotateCoordinate(
+          centre,
+          DEG_90_IN_RAD / 3,
+          nose,
+        );
+        const n1: ol.Coordinate = AnimationManager.rotateCoordinate(
+          centre,
+          DEG_90_IN_RAD / 3,
+          back,
+        );
 
-        const b2: ol.Coordinate = AnimationUtils.rotateCoordinate(back, DEG_90_IN_RAD, b1);
-        const n2: ol.Coordinate = AnimationUtils.rotateCoordinate(nose, DEG_90_IN_RAD, n1);
+        const b2: ol.Coordinate = AnimationManager.rotateCoordinate(back, DEG_90_IN_RAD, b1);
+        const n2: ol.Coordinate = AnimationManager.rotateCoordinate(nose, DEG_90_IN_RAD, n1);
 
         const coordinates: ol.Coordinate[] = [];
         coordinates.push(nose);
@@ -183,15 +190,15 @@ export class AnimationUtils {
     timeMs: number,
     precomposeObject?: ol.Observable,
   ) {
-    if (AnimationUtils.ANIMATION_KEYS.has(feature)) {
-      PolyfillObservable.unByKey(AnimationUtils.ANIMATION_KEYS.get(feature)!);
-      AnimationUtils.ANIMATION_KEYS.delete(feature);
+    if (this.ANIMATION_KEYS.has(feature)) {
+      PolyfillObservable.unByKey(this.ANIMATION_KEYS.get(feature)!);
+      this.ANIMATION_KEYS.delete(feature);
     }
 
     animationListener.preAnimation();
 
     const start = new Date();
-    AnimationUtils.ANIMATION_KEYS.set(
+    this.ANIMATION_KEYS.set(
       feature,
       (precomposeObject || this.map.olMap).on(
         precomposeObject ? 'precompose' : 'postcompose',
@@ -206,11 +213,11 @@ export class AnimationUtils {
           );
 
           if (elapsed >= timeMs) {
-            const key = AnimationUtils.ANIMATION_KEYS.get(feature);
+            const key = this.ANIMATION_KEYS.get(feature);
             if (key) {
               PolyfillObservable.unByKey(key);
             }
-            AnimationUtils.ANIMATION_KEYS.delete(feature);
+            this.ANIMATION_KEYS.delete(feature);
             animationListener.postAnimation();
             return;
           }
@@ -231,10 +238,10 @@ export class AnimationUtils {
     ) => void,
     precomposeObject?: ol.Observable,
   ) {
-    if (AnimationUtils.ANIMATING_FEATURES_SET.has(route)) {
-      AnimationUtils.ANIMATING_FEATURES_SET.delete(route);
+    if (this.ANIMATING_FEATURES_SET.has(route)) {
+      this.ANIMATING_FEATURES_SET.delete(route);
     }
-    AnimationUtils.ANIMATING_FEATURES_SET.add(route);
+    this.ANIMATING_FEATURES_SET.add(route);
 
     const animateLineString = (lineString: OLLineString) => {
       const length = lineString.getLength();
@@ -294,7 +301,7 @@ export class AnimationUtils {
         PolyfillObservable.unByKey(resolutionChangeListener);
       }
     };
-    const offset = AnimationUtils.LINE_OFFSET_MAP.get(lineString) || 0;
+    const offset = this.LINE_OFFSET_MAP.get(lineString) || 0;
 
     this.setFeatureAnimation(
       lineStringFeature,
@@ -325,18 +332,18 @@ export class AnimationUtils {
             return;
           }
           ratio += offset;
-          if (AnimationUtils.ANIMATING_FEATURES_SET.has(feature)) {
+          if (this.ANIMATING_FEATURES_SET.has(feature)) {
             const ratioDiff = ratio % scale;
             let ratioC = ratioDiff;
             if (ratio >= 1) {
-              AnimationUtils.LINE_OFFSET_MAP.set(lineString, ratioDiff);
+              this.LINE_OFFSET_MAP.set(lineString, ratioDiff);
             }
             while (ratioC < 1) {
               renderStepDraw(renderer, ratioC);
               ratioC += scale;
             }
           } else {
-            const key = AnimationUtils.ANIMATION_KEYS.get(lineStringFeature);
+            const key = this.ANIMATION_KEYS.get(lineStringFeature);
             if (key) {
               PolyfillObservable.unByKey(key);
             }
@@ -344,7 +351,7 @@ export class AnimationUtils {
         },
         postAnimation: () => {
           // repeat animation if it wasn't removed
-          if (AnimationUtils.ANIMATING_FEATURES_SET.has(feature)) {
+          if (this.ANIMATING_FEATURES_SET.has(feature)) {
             const viewExtent = this.map.viewport.toMapExtent();
             if (!intersects(viewExtent, lineString.getExtent())) {
               paused = true;
@@ -361,7 +368,7 @@ export class AnimationUtils {
             );
           } else {
             removeListeners();
-            AnimationUtils.LINE_OFFSET_MAP.delete(lineString);
+            this.LINE_OFFSET_MAP.delete(lineString);
           }
         },
       },

@@ -92,12 +92,12 @@ export class AlloyRouteLayer implements AlloyLayer {
    */
   public setRouteFeature(route: AlloyFeature) {
     if (this.routeFeature !== null) {
-      this.map.animationUtils.stopFeatureAnimation(this.routeFeature);
+      this.map.animationManager.stopFeatureAnimation(this.routeFeature);
     }
     this.routeFeature = route;
     this.olSourceRoute.clear(false);
     this.olSourceRoute.addFeature(this.routeFeature.olFeature);
-    this.map.animationUtils.startRouteAnimation(this.routeFeature, this.olLayers[1]);
+    this.map.animationManager.startRouteAnimation(this.routeFeature, this.olLayers[1]);
   }
 
   /**
@@ -117,7 +117,7 @@ export class AlloyRouteLayer implements AlloyLayer {
    */
   public clear() {
     if (this.routeFeature) {
-      this.map.animationUtils.stopFeatureAnimation(this.routeFeature);
+      this.map.animationManager.stopFeatureAnimation(this.routeFeature);
     }
     this.olSourceRoute.clear(false);
     this.olSourceWaypoints.clear(false);

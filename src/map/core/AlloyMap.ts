@@ -1,14 +1,14 @@
 import { debug, Debugger } from 'debug';
 import * as _ from 'lodash';
-import { intersects as extentIntersects, containsExtent } from 'ol/extent.js';
-import { defaults as defaultInteractions } from 'ol/interaction.js';
 import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import { AlloyMapError } from '../../error/AlloyMapError';
+import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
+import { AnimationManager } from '../../utils/AnimationManager';
 import { FontUtils } from '../../utils/FontUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
@@ -36,7 +36,6 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { AnimationUtils } from '../../utils/AnimationUtils';
 
 /**
  * minimum zoom level for the map
@@ -103,10 +102,10 @@ export class AlloyMap {
   public readonly selectionInteraction: AlloySelectionInteraction;
 
   /**
-   * animation utils
+   * animation manager
    * @ignore
    */
-  public readonly animationUtils: AnimationUtils;
+  public readonly animationManager: AnimationManager;
 
   /**
    * the draw interaction manager.
@@ -189,7 +188,7 @@ export class AlloyMap {
           className: 'map__attributions',
         }),
       ],
-      interactions: options.interactable === false ? [] : defaultInteractions(),
+      interactions: options.interactable === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
     });
 
@@ -241,7 +240,7 @@ export class AlloyMap {
     this.drawInteraction = new AlloyDrawInteraction(this);
 
     // setup animation utils
-    this.animationUtils = new AnimationUtils(this);
+    this.animationManager = new AnimationManager(this);
   }
 
   /**
@@ -328,21 +327,6 @@ export class AlloyMap {
     this.olView.fit(bounds.toMapExtent(), {
       duration: animate ? 500 : undefined,
     });
-  }
-
-  /**
-   * Checks if bounds intersect the viewport bounds
-   * @param bounds the bounds to check against viewport
-   * @returns true if bounds intersect
-   */
-  public viewportIntersects(bounds: AlloyBounds): boolean {
-    const boundsExtent = bounds.toMapExtent();
-    const viewportExtent = this.viewport.toMapExtent();
-    return (
-      extentIntersects(boundsExtent, viewportExtent) ||
-      containsExtent(boundsExtent, viewportExtent) ||
-      containsExtent(viewportExtent, boundsExtent)
-    );
   }
 
   /**
