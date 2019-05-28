@@ -155,19 +155,23 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
     colour: string,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
-    const icon: string | null = feature.properties.icon;
-    let text: string | null = null;
-    if (icon === null && feature.properties.text) {
-      text = feature.properties.text;
-    }
-    if (icon === null && text === null) {
+    if (feature.properties.icon) {
+      return AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon,
+        colour,
+        geometryFunction,
+      );
+    } else if (feature.properties.text) {
+      return AlloyIconUtils.createAlloyTextIconStyle(
+        radius,
+        feature.properties.text,
+        colour,
+        geometryFunction,
+      );
+    } else {
       throw new AlloyMapError(1558441651, 'Custom style requires an icon or text');
     }
-
-    // the icon of the item
-    return icon !== null
-      ? AlloyIconUtils.createAlloyIconStyle(radius, icon, colour, geometryFunction)
-      : AlloyIconUtils.createAlloyTextIconStyle(radius, text!, colour, geometryFunction);
   }
 
   private createPointStyles(

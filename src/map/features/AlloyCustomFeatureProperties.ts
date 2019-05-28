@@ -10,10 +10,10 @@ export interface AlloyCustomFeatureProperties {
   /**
    * the icon of the feature
    */
-  readonly icon: string | null;
+  readonly icon?: string;
 
   /**
-   * Text to display instead of icon if icon is null
+   * text to display instead of icon, the icon must not be set
    */
   readonly text?: string;
 
