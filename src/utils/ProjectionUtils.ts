@@ -28,6 +28,9 @@ export abstract class ProjectionUtils {
    */
   public static readonly API_PROJECTION: OLProjection = ProjectionUtils.EPSG4326;
 
+  /**
+   * The GeoJson formatter to convert geometry from API projection to feature map projection
+   */
   public static readonly GEOJSON = new OLGeoJson({
     // the projection to convert the data into (should match the layer)
     featureProjection: ProjectionUtils.MAP_PROJECTION,
