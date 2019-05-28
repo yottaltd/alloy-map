@@ -58,8 +58,8 @@ export { AlloyDrawLayerOptions } from './map/layers/drawing/AlloyDrawLayerOption
 export { AlloyHoverLayer } from './map/layers/hover/AlloyHoverLayer';
 export { AlloyNetworkLayer } from './map/layers/network/AlloyNetworkLayer';
 export { AlloyNetworkLayerOptions } from './map/layers/network/AlloyNetworkLayerOptions';
-export { AlloySelectionLayer } from './map/layers/selection/AlloySelectionLayer';
 export { AlloyRouteLayer } from './map/layers/route/AlloyRouteLayer';
 export { AlloyRouteLayerOptions } from './map/layers/route/AlloyRouteLayerOptions';
+export { AlloySelectionLayer } from './map/layers/selection/AlloySelectionLayer';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
 export { FeatureUtils } from './utils/FeatureUtils';
