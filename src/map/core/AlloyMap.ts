@@ -188,7 +188,7 @@ export class AlloyMap {
           className: 'map__attributions',
         }),
       ],
-      interactions: options.interactable === false ? [] : PolyfillInteractions.defaults(),
+      interactions: options.interactive === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
     });
 
@@ -437,7 +437,7 @@ export class AlloyMap {
   }
 
   /**
-   * Starts interaction to draw a polygon and select all features inside of it
+   * starts interaction to draw a polygon and select all features inside of it
    * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
@@ -446,7 +446,7 @@ export class AlloyMap {
   }
 
   /**
-   * Cancels interaction for selecting features in a drawn polygon
+   * cancels interaction for selecting features in a drawn polygon
    */
   public cancelPolygonSelect(): void {
     this.selectInPolygonInteraction.stopPolygonSelect();
@@ -543,7 +543,7 @@ export class AlloyMap {
   }
 
   /**
-   * Sets the size of the map
+   * sets the size of the map
    * @param width DOM width in pixels
    * @param height DOM height in pixels
    */

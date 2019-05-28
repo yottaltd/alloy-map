@@ -26,8 +26,8 @@ export class AlloyDrawEvent {
   }
 
   /**
-   * Combine all draw features' geometries into a single openlayers geometry
-   * @return single GeoJSON of draw features
+   * combine all draw features' geometries into a single geometry
+   * @return single `GeoJSON` of draw features
    */
   public getDrawGeometry(): Geometry {
     return this.drawLayer.getAllFeaturesGeometry();
