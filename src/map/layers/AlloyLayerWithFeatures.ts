@@ -69,7 +69,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
       new OLVectorLayer({
         // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
         renderMode: 'vector',
-        // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
+        // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
         style: (olFeature, resolution) => {
           if (this.currentStyleProcessor) {
             return this.currentStyleProcessor.onStyleProcess(
@@ -130,7 +130,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * Removes a feature from the layer
+   * removes a feature from the layer
    * @param feature the feature to remove from the layer
    * @returns a flag indicating if the underlying sources were modified
    * @ignore

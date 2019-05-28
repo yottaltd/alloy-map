@@ -61,13 +61,21 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     const geometries: OLGeometry[] = this.olSource
       .getFeatures()
       .map((feature) => feature.getGeometry());
-    let geom: OLGeometry | undefined;
-    if (geometries.length === 1) {
-      geom = geometries[0];
-    } else if (geometries.length > 1) {
-      // check if all the same type and create a Multi-geoemtry
-      if (geometries.every((g) => g.getType() === geometries[0].getType())) {
-        switch (geometries[0].getType()) {
+
+    // special case for no geometry
+    if (geometries.length === 0) {
+      throw new AlloyMapError(1556196189, 'No geometries found in draw layer');
+    }
+
+    // collect the geometry
+    let geom: OLGeometry = geometries[0]; // assign the first geometry
+
+    // if we have multiple, we need some processing
+    if (geometries.length > 1) {
+      // check if all the same type and create a Multi-geometry
+      const firstType = geometries[0].getType();
+      if (geometries.every((g) => g.getType() === firstType)) {
+        switch (firstType) {
           case AlloyDrawInteractionGeometryType.Point:
             geom = new OLMultiPoint((geometries as OLPoint[]).map((g) => g.getCoordinates()));
             break;
@@ -85,15 +93,12 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
               `Unhandled geometry type ${geometries[0].getType()} in drawing layer`,
             );
         }
+      } else {
+        // otherwise wrap all in multi-collection
+        geom = new OLGeometryCollection(geometries);
       }
-      // otherwise wrap all in multi-collection
-      geom = new OLGeometryCollection(geometries);
     }
 
-    if (geom) {
-      return ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
-    }
-
-    throw new AlloyMapError(1556196189, 'No geometries found in draw layer');
+    return ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
   }
 }

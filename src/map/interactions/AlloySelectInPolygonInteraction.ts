@@ -14,6 +14,7 @@ import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * the line colour of the drawn polygon
@@ -188,21 +189,24 @@ export class AlloySelectInPolygonInteraction {
       return;
     }
 
-    if (this.onInteractionEnd !== null) {
-      this.onInteractionEnd();
+    try {
+      // try this code (external user logic, could be demons!)
+      if (this.onInteractionEnd !== null) {
+        this.onInteractionEnd();
+      }
+    } finally {
+      // deactivate draw interaction
+      this.olDraw.setActive(false);
+
+      // remove the interaction from the map
+      this.map.olMap.removeInteraction(this.olDraw);
+
+      // re-enable double-click zoom and selection on deferred
+      setTimeout(() => {
+        this.setDoubleClickZoomEnabled(true);
+        this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
+      });
     }
-
-    // deactivate draw interaction
-    this.olDraw.setActive(false);
-
-    // remove the interaction from the map
-    this.map.olMap.removeInteraction(this.olDraw);
-
-    // re-enable double-click zoom and selection on deferred
-    setTimeout(() => {
-      this.setDoubleClickZoomEnabled(true);
-      this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
-    });
   }
 
   /**

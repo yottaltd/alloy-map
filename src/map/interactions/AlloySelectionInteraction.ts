@@ -1,4 +1,5 @@
 import { Debugger } from 'debug';
+import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { SimpleEventDispatcher } from 'ste-simple-events';
@@ -11,7 +12,6 @@ import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionCh
 import { FeaturesUnderSelectionEvent } from '../events/FeaturesUnderSelectionEvent';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
-import * as _ from 'lodash';
 
 /**
  * adds selection interaction to an alloy map
@@ -95,7 +95,7 @@ export class AlloySelectionInteraction {
   }
 
   /**
-   * Deselects a feature, this will retain any other existing selected feature(s)
+   * deselects a feature, this will retain any other existing selected feature(s)
    * and trigger the `FeatureSelectionChangeEvent` if selected features were modified.
    * @param feature the feature to deselect
    */
@@ -104,7 +104,7 @@ export class AlloySelectionInteraction {
       throw new AlloyMapError(1556804618, 'feature is not selectable');
     }
 
-    // only attempt to add the feature and track modified
+    // only attempt to remove the feature and track modified
     this.debugger('remove feature: ', feature.id);
     const modified = this.map.selectionLayer.removeFeature(feature);
 

@@ -60,20 +60,18 @@ export abstract class AlloyIconUtils {
   }
 
   /**
-   * creates an alloy text style, specifically for any text
-   * @param size the size of the icon
-   * @param alloyIconText text to use as an icon for style
+   * creates an alloy text style, for any text based features
+   * @param text text to use as an icon for style
    * @param colour the colour of the icon
-   * @param geometryFunction the geometry or function to transform the style
+   * @param geometryFunction the geometry or function to transform the feature geometry
    */
-  public static createAlloyTextIconStyle(
-    size: number,
-    alloyIconText: string,
+  public static createTextIconStyle(
+    text: string,
     colour: string,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // generate the text canvas
-    const textCanvas = AlloyTextUtils.createTextCanvas(alloyIconText, colour);
+    const textCanvas = AlloyTextUtils.createTextCanvas(text, colour);
 
     return new OLStyle({
       image: new OLIcon({

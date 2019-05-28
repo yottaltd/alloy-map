@@ -20,7 +20,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeature>
    */
   constructor(options: AlloyCustomLayerOptions) {
     super(
-      options.id ? options.id : AlloyCustomLayer.name + ':' + uuid.v1(),
+      options.id || AlloyCustomLayer.name + ':' + uuid.v1(),
       options.map,
       AlloyLayerZIndex.Drawing,
     );
