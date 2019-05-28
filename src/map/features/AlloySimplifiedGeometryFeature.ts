@@ -1,3 +1,4 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLLineString from 'ol/geom/LineString';
@@ -6,14 +7,12 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 // tslint:disable-next-line: max-line-length
 import { AlloySimplifiedGeometryFeatureProperties } from './AlloySimplifiedGeometryFeatureProperties';
-import { Geometry } from 'geojson';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
 
 /**
  * an alloy simplified geometry feature which represents geometry or geometries that have been
@@ -99,16 +98,14 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
   }
 
   /**
-   * Sets geometry of the underlying alloy feature
-   * @param geometry geometry to set for feature
+   * @implements
    */
   public setGeometry(geometry: Geometry) {
     this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
   }
 
   /**
-   * Sets visibility of alloy feature
-   * @param visible whether feature is visible
+   * @implements
    */
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);

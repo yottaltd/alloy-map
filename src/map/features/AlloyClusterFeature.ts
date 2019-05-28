@@ -1,7 +1,6 @@
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
-import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyBounds } from '../core/AlloyBounds';
@@ -101,16 +100,14 @@ export class AlloyClusterFeature implements AlloyFeature {
   }
 
   /**
-   * Sets geometry of the underlying alloy feature
-   * @param geometry geometry to set for feature
+   * @implements
    */
   public setGeometry(geometry: Geometry) {
     this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
   }
 
   /**
-   * Sets visibility of alloy feature
-   * @param visible whether feature is visible
+   * @implements
    */
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);

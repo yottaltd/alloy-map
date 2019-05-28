@@ -53,13 +53,13 @@ export interface AlloyFeature {
   onSelectionInteraction?(map: AlloyMap): void;
 
   /**
-   * Sets visibility of alloy feature
+   * sets visibility of alloy feature
    * @param visible whether feature is visible
    */
   setVisible(visible: boolean): void;
 
   /**
-   * Sets geometry of alloy feature
+   * sets geometry of alloy feature
    * @param geometry new geometry to set for this feature
    */
   setGeometry(geometry: Geometry): void;
