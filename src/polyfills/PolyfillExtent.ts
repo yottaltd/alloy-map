@@ -1,4 +1,4 @@
-import { intersects, containsExtent } from 'ol/extent.js';
+import { intersects, containsExtent, containsCoordinate } from 'ol/extent.js';
 
 /**
  * wraps the openlayers ol/extent module due to typing issues.
@@ -28,5 +28,18 @@ export abstract class PolyfillExtent {
     extent2: [number, number, number, number],
   ): boolean {
     return containsExtent(extent1, extent2);
+  }
+
+  /**
+   * determine whether an extent contains coordinate
+   * @param extent the extent
+   * @param coordinate the coordinate to check whether it's inside of the extent
+   * @returns true if coordinate is inside the extent
+   */
+  public static containsCoordinate(
+    extent: [number, number, number, number],
+    coordinate: [number, number],
+  ) {
+    return containsCoordinate(extent, coordinate);
   }
 }

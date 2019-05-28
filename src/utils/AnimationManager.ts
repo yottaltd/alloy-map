@@ -1,4 +1,3 @@
-import { containsCoordinate, intersects } from 'ol/extent.js';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
@@ -11,6 +10,7 @@ import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { AlloyMap } from '../map/core/AlloyMap';
 import { AlloyFeature } from '../map/features/AlloyFeature';
+import { PolyfillExtent } from '../polyfills/PolyfillExtent';
 import { PolyfillObservable } from '../polyfills/PolyfillObservable';
 import { AnimationListener } from './AnimationListener';
 
@@ -76,7 +76,10 @@ export class AnimationManager {
         }
         // don't draw if coordinates are not in the view extent
         const viewExtent = this.map.viewport.toMapExtent();
-        if (!containsCoordinate(viewExtent, centre) && !containsCoordinate(viewExtent, nose)) {
+        if (
+          !PolyfillExtent.containsCoordinate(viewExtent, centre) &&
+          !PolyfillExtent.containsCoordinate(viewExtent, nose)
+        ) {
           return;
         }
         // create style with opacity for current ratio
@@ -144,7 +147,10 @@ export class AnimationManager {
 
         // don't draw if coordinates are not in the view extent
         const viewExtent = this.map.viewport.toMapExtent();
-        if (!containsCoordinate(viewExtent, centre) && !containsCoordinate(viewExtent, nose)) {
+        if (
+          !PolyfillExtent.containsCoordinate(viewExtent, centre) &&
+          !PolyfillExtent.containsCoordinate(viewExtent, nose)
+        ) {
           return;
         }
 
@@ -312,7 +318,7 @@ export class AnimationManager {
               return;
             }
             const viewExtent = this.map.viewport.toMapExtent();
-            if (intersects(viewExtent, lineString.getExtent())) {
+            if (PolyfillExtent.intersects(viewExtent, lineString.getExtent())) {
               removeListeners();
               this.animateAlongLineString(
                 feature,
@@ -353,7 +359,7 @@ export class AnimationManager {
           // repeat animation if it wasn't removed
           if (this.ANIMATING_FEATURES_SET.has(feature)) {
             const viewExtent = this.map.viewport.toMapExtent();
-            if (!intersects(viewExtent, lineString.getExtent())) {
+            if (!PolyfillExtent.intersects(viewExtent, lineString.getExtent())) {
               paused = true;
               return;
             }
