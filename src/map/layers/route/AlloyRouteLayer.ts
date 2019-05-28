@@ -21,16 +21,56 @@ export class AlloyRouteLayer implements AlloyLayer {
    * @ignore
    */
   public readonly debugger: Debugger;
-
+  /**
+   * @implements
+   */
   public readonly id: string;
+
+  /**
+   * @implements
+   */
   public readonly map: AlloyMap;
+
+  /**
+   * @implements
+   * @ignore
+   */
   public readonly olLayers: Readonly<OLVectorLayer[]>;
+
+  /**
+   * @implements
+   * @ignore
+   */
   public readonly styleProcessor: AlloyStyleProcessor | null;
 
-  public readonly olSourceRoute: OLVectorSource = new OLVectorSource();
-  public readonly olSourceWaypoints: OLVectorSource = new OLVectorSource();
+  /**
+   * source to hold the openlayers route features
+   */
+  private readonly olSourceRoute: OLVectorSource = new OLVectorSource();
 
+  /**
+   * openlayers layer for route
+   */
+  private readonly olLayerRoute: OLVectorLayer;
+
+  /**
+   * source to hold the openlayers waypoint features
+   */
+  private readonly olSourceWaypoints: OLVectorSource = new OLVectorSource();
+
+  /**
+   * openlayers layer for waypoints
+   */
+  private readonly olLayerWaypoints: OLVectorLayer;
+
+  /**
+   * the route feature being displayed
+   */
   private routeFeature: AlloyFeature | null = null;
+
+  /**
+   * the waypoint features being displayed
+   */
   private waypointFeatures: Map<string, AlloyFeature> = new Map();
 
   /**
@@ -44,46 +84,47 @@ export class AlloyRouteLayer implements AlloyLayer {
 
     this.styleProcessor = new AlloyRouteStyleProcessor(this);
 
-    this.olLayers = [
-      new OLVectorLayer({
-        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-        renderMode: 'vector',
-        // set the styling for the layer, we use an arrow function here else "this" resolves wrong
-        style: (olFeature, resolution) => {
-          if (this.styleProcessor) {
-            return this.styleProcessor.onStyleProcess(
-              olFeature,
-              resolution,
-              AlloyStyleBuilderBuildState.Hover,
-            );
-          } else {
-            this.debugger('style processor called but not set');
-            return null;
-          }
-        },
-        source: this.olSourceRoute,
-        zIndex: AlloyLayerZIndex.Layers,
-      }),
-      new OLVectorLayer({
-        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-        renderMode: 'vector',
-        // set the styling for the layer, we use an arrow function here else "this" resolves wrong
-        style: (olFeature, resolution) => {
-          if (this.styleProcessor) {
-            return this.styleProcessor.onStyleProcess(
-              olFeature,
-              resolution,
-              AlloyStyleBuilderBuildState.Default,
-            );
-          } else {
-            this.debugger('style processor called but not set');
-            return null;
-          }
-        },
-        source: this.olSourceWaypoints,
-        zIndex: AlloyLayerZIndex.Visualisation,
-      }),
-    ];
+    this.olLayerRoute = new OLVectorLayer({
+      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
+      renderMode: 'vector',
+      // set the styling for the layer, we use an arrow function here else "this" resolves wrong
+      style: (olFeature, resolution) => {
+        if (this.styleProcessor) {
+          return this.styleProcessor.onStyleProcess(
+            olFeature,
+            resolution,
+            AlloyStyleBuilderBuildState.Hover,
+          );
+        } else {
+          this.debugger('style processor called but not set');
+          return null;
+        }
+      },
+      source: this.olSourceRoute,
+      zIndex: AlloyLayerZIndex.Layers,
+    });
+
+    this.olLayerWaypoints = new OLVectorLayer({
+      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
+      renderMode: 'vector',
+      // set the styling for the layer, we use an arrow function here else "this" resolves wrong
+      style: (olFeature, resolution) => {
+        if (this.styleProcessor) {
+          return this.styleProcessor.onStyleProcess(
+            olFeature,
+            resolution,
+            AlloyStyleBuilderBuildState.Default,
+          );
+        } else {
+          this.debugger('style processor called but not set');
+          return null;
+        }
+      },
+      source: this.olSourceWaypoints,
+      zIndex: AlloyLayerZIndex.Visualisation,
+    });
+
+    this.olLayers = [this.olLayerRoute, this.olLayerWaypoints];
   }
 
   /**
@@ -97,7 +138,7 @@ export class AlloyRouteLayer implements AlloyLayer {
     this.routeFeature = route;
     this.olSourceRoute.clear(false);
     this.olSourceRoute.addFeature(this.routeFeature.olFeature);
-    this.map.animationManager.startRouteAnimation(this.routeFeature, this.olLayers[1]);
+    this.map.animationManager.startRouteAnimation(this.routeFeature, this.olLayerWaypoints);
   }
 
   /**
@@ -124,13 +165,16 @@ export class AlloyRouteLayer implements AlloyLayer {
   }
 
   /**
-   * Gets a route or waypoint feature by id
-   * @param id id of waypoint or route feature
+   * @implements
+   * @ignore
    */
   public getFeatureById(id: string): AlloyFeature | null {
+    // see if we match the only route feature first
     if (this.routeFeature && this.routeFeature.id === id) {
       return this.routeFeature;
     }
+
+    // then try waypoints
     return this.waypointFeatures.get(id) || null;
   }
 }

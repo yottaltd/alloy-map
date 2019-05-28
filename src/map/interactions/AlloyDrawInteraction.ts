@@ -265,11 +265,13 @@ export class AlloyDrawInteraction {
   }
 
   /**
-   * Returns an array of current feature geometry types in the draw layer.
+   * returns a unique array of all the GeoJSON types in the draw layer.
    * @returns array of `GeoJSONObjectType`
    */
   public getDrawTypes(): GeoJSONObjectType[] {
-    return this.drawLayer.olSource.getFeatures().map((f) => f.getGeometry().getType() as any);
+    return _.uniq(
+      this.drawLayer.olSource.getFeatures().map((f) => f.getGeometry().getType() as any),
+    );
   }
 
   /**
