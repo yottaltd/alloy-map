@@ -12,7 +12,6 @@ import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildSta
  * base implementation for alloy layers with features
  * @template T the feature types the loader is expected to load
  * @ignore
- * @internal
  */
 export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements AlloyLayer {
   /**
@@ -122,8 +121,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * adds a feature to the layer
    * @param feature the feature to add to the layer
    * @returns a flag indicating if the underlying sources were modified
-   * @ignore
-   * @internal
    */
   public addFeature(feature: T): boolean {
     // check to see if we already have the feature
@@ -142,8 +139,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * removes a feature from the layer
    * @param feature the feature to remove from the layer
    * @returns a flag indicating if the underlying sources were modified
-   * @ignore
-   * @internal
    */
   public removeFeature(feature: T): boolean {
     // check to see if we already have the feature
@@ -163,8 +158,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * individually where possible
    * @param features the features to add to the layer
    * @returns a flag indicating if the underlying sources were modified
-   * @ignore
-   * @internal
    */
   public addFeatures(features: T[]): boolean {
     const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
@@ -191,8 +184,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   /**
    * clear all features from the layer
    * @returns a flag indicating if the underlying sources were modified
-   * @ignore
-   * @internal
    */
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;
@@ -209,6 +200,8 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   /**
    * sets the style processor
    * @param processor the processor for styles
+   * @ignore
+   * @internal
    */
   protected setStyleProcessor(processor: AlloyStyleProcessor) {
     this.currentStyleProcessor = processor;

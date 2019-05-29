@@ -38,6 +38,7 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
+import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 
 /**
  * minimum zoom level for the map
@@ -626,6 +627,15 @@ export class AlloyMap {
   }
 
   /**
+   * deselects a feature, this will retain any other existing selected feature(s)
+   * and trigger the `FeatureSelectionChangeEvent` if selected features were modified.
+   * @param feature the feature to deselect
+   */
+  public deselectFeature(feature: AlloyFeature): void {
+    this.selectionInteraction.deselectFeature(feature);
+  }
+
+  /**
    * adds an event handler to listen for the `FeatureSelectionChangeEvent` event
    * @param handler the handler to call when the event is raised
    */
@@ -655,5 +665,12 @@ export class AlloyMap {
    */
   public removeFeaturesUnderSelectionListener(handler: FeaturesUnderSelectionEventHandler): void {
     this.selectionInteraction.removeFeaturesUnderSelectionListener(handler);
+  }
+
+  /**
+   * takes a screenshot and returns the blob data that can be saved as a png
+   */
+  public screenshot(): Promise<Blob> {
+    return ScreenshotUtils.screenshot(this);
   }
 }

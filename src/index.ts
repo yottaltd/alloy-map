@@ -1,8 +1,6 @@
 export { AlloyMapError } from './error/AlloyMapError';
 export { AlloyBasemap } from './map/basemaps/AlloyBasemap';
 export { AlloyBasemapFactory } from './map/basemaps/AlloyBasemapFactory';
-export { AlloyBingBasemap } from './map/basemaps/AlloyBingBasemap';
-export { AlloyTileBasemap } from './map/basemaps/AlloyTileBasemap';
 export { AlloyBounds } from './map/core/AlloyBounds';
 export { AlloyCoordinate } from './map/core/AlloyCoordinate';
 export { AlloyMap } from './map/core/AlloyMap';
@@ -40,26 +38,19 @@ export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGe
 export {
   AlloySimplifiedGeometryFeatureProperties,
 } from './map/features/AlloySimplifiedGeometryFeatureProperties';
-export { AlloyDrawInteraction } from './map/interactions/AlloyDrawInteraction';
 export {
   AlloyDrawInteractionGeometryType,
 } from './map/interactions/AlloyDrawInteractionGeometryType';
-export { AlloySelectionInteraction } from './map/interactions/AlloySelectionInteraction';
 export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
-export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';
 export { AlloyClusterLayerOptions } from './map/layers/cluster/AlloyClusterLayerOptions';
 export { AlloyCustomLayer } from './map/layers/custom/AlloyCustomLayer';
 export { AlloyCustomLayerOptions } from './map/layers/custom/AlloyCustomLayerOptions';
-export { AlloyDrawLayer } from './map/layers/drawing/AlloyDrawLayer';
 export { AlloyDrawLayerOptions } from './map/layers/drawing/AlloyDrawLayerOptions';
-export { AlloyHoverLayer } from './map/layers/hover/AlloyHoverLayer';
 export { AlloyNetworkLayer } from './map/layers/network/AlloyNetworkLayer';
 export { AlloyNetworkLayerOptions } from './map/layers/network/AlloyNetworkLayerOptions';
 export { AlloyRouteLayer } from './map/layers/route/AlloyRouteLayer';
 export { AlloyRouteLayerOptions } from './map/layers/route/AlloyRouteLayerOptions';
-export { AlloySelectionLayer } from './map/layers/selection/AlloySelectionLayer';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
-export { FeatureUtils } from './utils/FeatureUtils';
