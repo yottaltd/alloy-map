@@ -1,6 +1,6 @@
 {
   "name": "@yotta/alloy-map",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/yottaltd/alloy-map.git"
@@ -14,6 +14,10 @@
   "license": "GNU GPLv3",
   "main": "dist/alloy-map.js",
   "types": "types/index.d.ts",
+  "files": [
+    "types/**/*",
+    "dist/**/*"
+  ],
   "scripts": {
     "test:start-server": "http-server ./ -p 8888 -c-1 --silent",
     "test:cypress-ci": "cypress run --record --key d23922fd-ccda-44fe-8857-2b0206885367",
