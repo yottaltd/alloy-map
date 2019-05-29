@@ -80,8 +80,6 @@ export class AlloyRouteLayer implements AlloyLayer {
   /**
    * creates a new instance
    * @param options the options for the layer
-   * @ignore
-   * @internal
    */
   constructor(options: AlloyRouteLayerOptions) {
     this.id = options.id ? options.id : AlloyRouteLayer.name + ':' + uuid.v1();
@@ -172,8 +170,6 @@ export class AlloyRouteLayer implements AlloyLayer {
 
   /**
    * @implements
-   * @ignore
-   * @internal
    */
   public getFeatureById(id: string): AlloyFeature | null {
     // see if we match the only route feature first

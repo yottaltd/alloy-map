@@ -39,6 +39,7 @@ import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
+import { GeometryUtils } from '../../utils/GeometryUtils';
 
 /**
  * minimum zoom level for the map
@@ -62,6 +63,11 @@ const DEBOUNCED_EVENT_TIMEOUT: number = 100;
  * the alloy map manages basemaps, layers and drawing
  */
 export class AlloyMap {
+  /**
+   * public geometry utils
+   */
+  public static readonly geometry: GeometryUtils;
+
   /**
    * debugger instance
    * @ignore
@@ -582,6 +588,13 @@ export class AlloyMap {
    */
   public setSize(width: number, height: number) {
     this.olMap.setSize([width, height]);
+  }
+
+  /**
+   * Request a map rendering (at the next animation frame).
+   */
+  public render() {
+    this.olMap.render();
   }
 
   /**

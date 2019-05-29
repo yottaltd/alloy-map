@@ -65,7 +65,7 @@ export interface AlloyFeature {
 
   /**
    * sets geometry of alloy feature
-   * @param geometry new geometry to set for this feature
+   * @param geometry new geometry to set for this feature or null
    */
-  setGeometry(geometry: Geometry): void;
+  setGeometry(geometry: Geometry | null): void;
 }
