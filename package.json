@@ -13,7 +13,7 @@
   "private": false,
   "license": "GNU GPLv3",
   "main": "dist/alloy-map.js",
-  "typings": "lib/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "test:start-server": "http-server ./ -p 8888 -c-1 --silent",
     "test:cypress-ci": "cypress run --record --key d23922fd-ccda-44fe-8857-2b0206885367",
@@ -25,9 +25,9 @@
     "codegen": "node ./submodules/alloy-typescript-codegen/copyToLocal.js ./submodules/alloy-typescript-codegen/dist ./src/api"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.123",
     "color": "^3.1.0",
     "debug": "^4.1.1",
+    "geojson": "^0.5.0",
     "lodash": "^4.17.11",
     "ol": "^5.3.1",
     "portable-fetch": "^3.0.0",
@@ -47,6 +47,8 @@
     "@types/proj4": "^2.5.0",
     "@types/uuid": "^3.4.4",
     "@types/webfontloader": "^1.6.29",
+    "@types/geojson": "^7946.0.7",
+    "@types/lodash": "^4.14.123",
     "chai": "^4.2.0",
     "cypress": "^3.2.0",
     "eslint": "^5.15.3",

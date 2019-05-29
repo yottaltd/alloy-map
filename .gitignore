@@ -2,7 +2,7 @@
 .DS_Store
 node_modules
 /dist
-/lib
+/types
 /docs
 
 # cypress io

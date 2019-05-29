@@ -5,9 +5,11 @@ import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import { AlloyMapError } from '../../error/AlloyMapError';
+import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
+import { AnimationManager } from '../animations/AnimationManager';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
@@ -100,6 +102,12 @@ export class AlloyMap {
   public readonly selectionInteraction: AlloySelectionInteraction;
 
   /**
+   * animation manager
+   * @ignore
+   */
+  public readonly animationManager: AnimationManager;
+
+  /**
    * the draw interaction manager.
    * @ignore
    */
@@ -180,6 +188,7 @@ export class AlloyMap {
           className: 'map__attributions',
         }),
       ],
+      interactions: options.interactive === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
     });
 
@@ -214,12 +223,12 @@ export class AlloyMap {
     // setup hover layer, interaction and add it to the map
     this.hoverLayer = new AlloyHoverLayer({ map: this });
     this.hoverInteraction = new AlloyHoverInteraction(this);
-    this.olMap.addLayer(this.hoverLayer.olLayer);
+    this.hoverLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
 
     // setup selection layer, interaction and add it to the map
     this.selectionLayer = new AlloySelectionLayer({ map: this });
     this.selectionInteraction = new AlloySelectionInteraction(this);
-    this.olMap.addLayer(this.selectionLayer.olLayer);
+    this.selectionLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
 
     // setup ping interaction
     this.pingInteraction = new AlloyPingInteraction(this);
@@ -229,6 +238,9 @@ export class AlloyMap {
 
     // setup draw interaction
     this.drawInteraction = new AlloyDrawInteraction(this);
+
+    // setup animation utils
+    this.animationManager = new AnimationManager(this);
   }
 
   /**
@@ -357,7 +369,7 @@ export class AlloyMap {
     if (this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118465, 'layer already added to map');
     }
-    this.olMap.addLayer(layer.olLayer);
+    layer.olLayers.forEach((olLayer) => this.olMap.addLayer(olLayer));
     this.managedLayers.set(layer.id, layer);
 
     // dispatch layers change event
@@ -374,7 +386,7 @@ export class AlloyMap {
     if (!this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118768, 'layer does not exist in map');
     }
-    this.olMap.removeLayer(layer.olLayer);
+    layer.olLayers.forEach((olLayer) => this.olMap.removeLayer(olLayer));
     this.managedLayers.delete(layer.id);
 
     // get all the currently selected features
@@ -425,15 +437,16 @@ export class AlloyMap {
   }
 
   /**
-   * Starts interaction to draw a polygon and select all features inside of it
+   * starts interaction to draw a polygon and select all features inside of it
+   * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(appendToSelection: boolean = false): void {
-    this.selectInPolygonInteraction.startPolygonSelect(appendToSelection);
+  public startPolygonSelect(onEnd?: () => void, appendToSelection: boolean = false): void {
+    this.selectInPolygonInteraction.startPolygonSelect(onEnd, appendToSelection);
   }
 
   /**
-   * Cancels interaction for selecting features in a drawn polygon
+   * cancels interaction for selecting features in a drawn polygon
    */
   public cancelPolygonSelect(): void {
     this.selectInPolygonInteraction.stopPolygonSelect();
@@ -527,6 +540,15 @@ export class AlloyMap {
 
     // update internal basemap reference
     this.currentBasemap = basemap;
+  }
+
+  /**
+   * sets the size of the map
+   * @param width DOM width in pixels
+   * @param height DOM height in pixels
+   */
+  public setSize(width: number, height: number) {
+    this.olMap.setSize([width, height]);
   }
 
   /**

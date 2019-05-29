@@ -1,3 +1,6 @@
+import OLGeometry from 'ol/geom/Geometry';
+import OLFeature from 'ol/Feature';
+import OLRenderFeature from 'ol/render/Feature';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
@@ -22,6 +25,8 @@ import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineS
 import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
 import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
+import { AlloyTextUtils } from '../utils/AlloyTextUtils';
+import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 
 /**
  * the icon colour in the balls
@@ -62,6 +67,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       // fixed max size all the time
       feature.properties.scale === undefined || feature.properties.scale ? resolution : 1,
       feature.id, // each custom feature is unique (expensive)
+      feature.olFeature.getRevision(),
     );
   }
 
@@ -143,6 +149,33 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
     }
   }
 
+  /**
+   * creates the icon style for a feature that may have an icon or text
+   * @param radius the size of the style
+   * @param feature the feature to style
+   * @param colour the colour to apply
+   * @param geometryFunction the geometry function to apply
+   */
+  private createIconOrTextStyle(
+    radius: number,
+    feature: AlloyCustomFeature,
+    colour: string,
+    geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
+  ): OLStyle {
+    if (feature.properties.icon) {
+      return AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon,
+        colour,
+        geometryFunction,
+      );
+    } else if (feature.properties.text) {
+      return AlloyIconUtils.createTextIconStyle(feature.properties.text, colour, geometryFunction);
+    } else {
+      throw new AlloyMapError(1558441651, 'Custom style requires an icon or text');
+    }
+  }
+
   private createPointStyles(
     resolution: number,
     feature: AlloyCustomFeature,
@@ -160,9 +193,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : undefined,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
@@ -188,9 +221,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : undefined,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
@@ -275,13 +308,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
+      this.createIconOrTextStyle(iconSize, feature, ICON_COLOUR, midPoint),
     ];
   }
 
@@ -331,13 +358,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
+      this.createIconOrTextStyle(iconSize, feature, ICON_COLOUR, midPoint),
     ];
   }
 
@@ -384,9 +405,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : undefined,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
@@ -422,9 +443,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : undefined,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
@@ -540,13 +561,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
+      this.createIconOrTextStyle(iconSize, feature, ICON_COLOUR, midPoint),
     ];
   }
 
@@ -603,13 +618,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
+      this.createIconOrTextStyle(iconSize, feature, ICON_COLOUR, midPoint),
     ];
   }
 
@@ -654,9 +663,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : undefined,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
@@ -690,9 +699,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : undefined,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
@@ -751,9 +760,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
@@ -817,9 +826,9 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
       ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
+      this.createIconOrTextStyle(
         radius,
-        feature.properties.icon,
+        feature,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
@@ -881,13 +890,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
+      this.createIconOrTextStyle(iconSize, feature, ICON_COLOUR, midPoint),
     ];
   }
 
@@ -941,13 +944,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
+      this.createIconOrTextStyle(iconSize, feature, ICON_COLOUR, midPoint),
     ];
   }
 

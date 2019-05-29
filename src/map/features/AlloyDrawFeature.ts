@@ -1,6 +1,8 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import * as uuid from 'uuid';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
@@ -94,6 +96,20 @@ export class AlloyDrawFeature implements AlloyFeature {
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
+  }
+
+  /**
+   * @implements
+   */
+  public setGeometry(geometry: Geometry) {
+    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  }
+
+  /**
+   * @implements
+   */
+  public setVisible(visible: boolean) {
+    this.olFeature.setStyle(visible ? null : []);
   }
 }
 

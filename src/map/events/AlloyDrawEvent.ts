@@ -1,4 +1,4 @@
-import OLGeometry from 'ol/geom/Geometry';
+import { Geometry } from 'geojson';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 
@@ -27,9 +27,9 @@ export class AlloyDrawEvent {
 
   /**
    * combine all draw features' geometries into a single geometry
-   * @return single geometry of draw features
+   * @return single `GeoJSON` of draw features
    */
-  public getDrawGeometry(): OLGeometry {
+  public getDrawGeometry(): Geometry {
     return this.drawLayer.getAllFeaturesGeometry();
   }
 

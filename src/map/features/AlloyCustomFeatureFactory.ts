@@ -1,5 +1,4 @@
 import OLFeature from 'ol/Feature';
-import OLGeoJson from 'ol/format/GeoJSON';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
@@ -11,17 +10,6 @@ import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyCustomFeature } from './AlloyCustomFeature';
 import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
-
-/**
- * the geo json formatter to convert geometry
- * @ignore
- */
-const GEOJSON = new OLGeoJson({
-  // the projection to convert the data into (should match the layer)
-  featureProjection: ProjectionUtils.MAP_PROJECTION,
-  // the projection the data is expected to be in
-  defaultDataProjection: ProjectionUtils.API_PROJECTION,
-});
 
 /**
  * factory for creating custom features
@@ -172,7 +160,7 @@ export abstract class AlloyCustomFeatureFactory {
   ): AlloyCustomFeature {
     return new AlloyCustomFeature(
       id,
-      new OLFeature(GEOJSON.readGeometry(geoJson)),
+      new OLFeature(ProjectionUtils.GEOJSON.readGeometry(geoJson)),
       properties,
       customLayerId,
     );

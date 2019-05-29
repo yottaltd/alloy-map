@@ -1,4 +1,5 @@
 import { Debugger } from 'debug';
+import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { SimpleEventDispatcher } from 'ste-simple-events';
@@ -91,6 +92,27 @@ export class AlloySelectionInteraction {
    */
   public setEnabled(value: boolean): void {
     this.enabled = value;
+  }
+
+  /**
+   * deselects a feature, this will retain any other existing selected feature(s)
+   * and trigger the `FeatureSelectionChangeEvent` if selected features were modified.
+   * @param feature the feature to deselect
+   */
+  public deselectFeature(feature: AlloyFeature): void {
+    if (!feature.allowsSelection) {
+      throw new AlloyMapError(1556804618, 'feature is not selectable');
+    }
+
+    // only attempt to remove the feature and track modified
+    this.debugger('remove feature: ', feature.id);
+    const modified = this.map.selectionLayer.removeFeature(feature);
+
+    // only trigger event on modified
+    if (modified) {
+      this.debugger('layer modified, dispatching selection change event');
+      this.dispatchFeatureSelectionChangeEvent();
+    }
   }
 
   /**
@@ -471,7 +493,7 @@ export class AlloySelectionInteraction {
   private getFeaturesForPixel(pixel: [number, number]) {
     const layers = Array.from(this.map.layers.values());
     // map the openlayers layers one to one with ours so indices are the same
-    const olLayers = layers.map((l) => l.olLayer);
+    const olLayers = _.flatten(layers.map((l) => l.olLayers));
     // create a set for fast lookup
     const olLayersSet = new Set(olLayers);
     // the features we found when clicking

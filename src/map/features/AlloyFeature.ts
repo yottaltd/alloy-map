@@ -1,6 +1,7 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
-import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyMap } from '../core/AlloyMap';
+import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy feature is used to display objects on the map
@@ -50,4 +51,16 @@ export interface AlloyFeature {
    * @ignore
    */
   onSelectionInteraction?(map: AlloyMap): void;
+
+  /**
+   * sets visibility of alloy feature
+   * @param visible whether feature is visible
+   */
+  setVisible(visible: boolean): void;
+
+  /**
+   * sets geometry of alloy feature
+   * @param geometry new geometry to set for this feature
+   */
+  setGeometry(geometry: Geometry): void;
 }

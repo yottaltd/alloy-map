@@ -1,6 +1,8 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyBounds } from '../core/AlloyBounds';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyMap } from '../core/AlloyMap';
@@ -95,6 +97,20 @@ export class AlloyClusterFeature implements AlloyFeature {
   public getExpectedGeometry(): OLPoint {
     // naughty cast here but we are expecting the geometry to always be a Point
     return this.olFeature.getGeometry() as OLPoint;
+  }
+
+  /**
+   * @implements
+   */
+  public setGeometry(geometry: Geometry) {
+    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  }
+
+  /**
+   * @implements
+   */
+  public setVisible(visible: boolean) {
+    this.olFeature.setStyle(visible ? null : []);
   }
 }
 

@@ -34,7 +34,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @implements
    * @ignore
    */
-  public readonly olLayer: OLVectorLayer;
+  public readonly olLayers: OLVectorLayer[];
 
   /**
    * the openlayers source containing features for this layer
@@ -65,25 +65,27 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
     this.id = id;
     this.map = map;
-    this.olLayer = new OLVectorLayer({
-      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-      renderMode: 'vector',
-      // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => {
-        if (this.currentStyleProcessor) {
-          return this.currentStyleProcessor.onStyleProcess(
-            olFeature,
-            resolution,
-            AlloyStyleBuilderBuildState.Default,
-          );
-        } else {
-          this.debugger('style processor called but not set');
-          return null;
-        }
-      },
-      source: this.olSource,
-      zIndex,
-    });
+    this.olLayers = [
+      new OLVectorLayer({
+        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
+        renderMode: 'vector',
+        // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
+        style: (olFeature, resolution) => {
+          if (this.currentStyleProcessor) {
+            return this.currentStyleProcessor.onStyleProcess(
+              olFeature,
+              resolution,
+              AlloyStyleBuilderBuildState.Default,
+            );
+          } else {
+            this.debugger('style processor called but not set');
+            return null;
+          }
+        },
+        source: this.olSource,
+        zIndex,
+      }),
+    ];
   }
 
   /**
@@ -124,6 +126,25 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
+    return true;
+  }
+
+  /**
+   * removes a feature from the layer
+   * @param feature the feature to remove from the layer
+   * @returns a flag indicating if the underlying sources were modified
+   * @ignore
+   */
+  public removeFeature(feature: T): boolean {
+    // check to see if we already have the feature
+    if (!this.currentFeatures.has(feature.id)) {
+      this.debugger("feature: %s doesn't exists in layer", feature.id);
+      return false;
+    }
+
+    this.debugger('removing feature: %s', feature.id);
+    this.olSource.removeFeature(feature.olFeature);
+    this.currentFeatures.delete(feature.id);
     return true;
   }
 
@@ -171,23 +192,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
       this.debugger('no features to clear');
     }
     return hasFeatures;
-  }
-
-  /**
-   * removes a feature from the layer
-   * @param feature the feature to be removed
-   */
-  public removeFeature(feature: T): boolean {
-    // check to see if we already have the feature
-    if (!this.currentFeatures.has(feature.id)) {
-      this.debugger('feature: %s does not exists in layer', feature.id);
-      return false;
-    }
-
-    this.debugger('removing feature: %s', feature.id);
-    this.olSource.removeFeature(feature.olFeature);
-    this.currentFeatures.delete(feature.id);
-    return true;
   }
 
   /**

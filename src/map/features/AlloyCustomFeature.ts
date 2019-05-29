@@ -1,3 +1,4 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLLineString from 'ol/geom/LineString';
@@ -7,6 +8,7 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
@@ -95,6 +97,20 @@ export class AlloyCustomFeature implements AlloyFeature {
     // naughty cast here but we are expecting the geometry to always be of one of the above types
     // the reason we don't check is down to performance
     return this.olFeature.getGeometry() as any;
+  }
+
+  /**
+   * @implements
+   */
+  public setGeometry(geometry: Geometry) {
+    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  }
+
+  /**
+   * @implements
+   */
+  public setVisible(visible: boolean) {
+    this.olFeature.setStyle(visible ? null : []);
   }
 }
 

@@ -1,4 +1,5 @@
 import { Debugger } from 'debug';
+import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
@@ -18,6 +19,7 @@ import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
+import { GeoJSONObjectType } from '../../api';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
@@ -183,6 +185,7 @@ export class AlloyDrawInteraction {
     this.cancelRemoval();
     this.onDrawEnd(null);
     this.drawLayer.clearFeatures();
+    this.initModify();
   }
 
   /**
@@ -246,7 +249,33 @@ export class AlloyDrawInteraction {
   }
 
   /**
-   * starts vertices removal interaction
+   * Gets all features in the draw layer
+   * @returns an array of `AlloyDrawFeature`
+   */
+  public getDrawFeatures(): AlloyDrawFeature[] {
+    return Array.from(this.drawLayer.features.values());
+  }
+
+  /**
+   * Gets all features geometries in the draw layer as a single geometry
+   * @returns a merged geometry GeoJSON of all draw features
+   */
+  public getDrawGeometry(): Geometry {
+    return this.drawLayer.getAllFeaturesGeometry();
+  }
+
+  /**
+   * returns a unique array of all the GeoJSON types in the draw layer.
+   * @returns array of `GeoJSONObjectType`
+   */
+  public getDrawTypes(): GeoJSONObjectType[] {
+    return _.uniq(
+      this.drawLayer.olSource.getFeatures().map((f) => f.getGeometry().getType() as any),
+    );
+  }
+
+  /**
+   * Starts vertices removal interaction
    */
   public startRemoval() {
     // cancel existing removal if available
@@ -266,7 +295,7 @@ export class AlloyDrawInteraction {
 
     // add new select interaction for remove layer
     this.olSelect = new OLSelect({
-      layers: [this.removeLayer.olLayer],
+      layers: [this.removeLayer.olLayers[0]],
     });
 
     // handler to remove coordinates from draw features on selection of remove features
@@ -400,6 +429,7 @@ export class AlloyDrawInteraction {
    * initialise modify interaction
    */
   private initModify() {
+    this.removeModifyInteraction();
     // create new modify interaction for all features in draw layer with default draw styles
     this.olModify = new OLModify({
       source: this.drawLayer.olSource,

@@ -3,7 +3,6 @@ import OLFeature from 'ol/Feature';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import OLDraw from 'ol/interaction/Draw';
-import OLVectorLayer from 'ol/layer/Vector';
 import OLRenderFeature from 'ol/render/Feature';
 import OLVectorSource from 'ol/source/Vector';
 import OLCircle from 'ol/style/Circle';
@@ -11,11 +10,11 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * the line colour of the drawn polygon
@@ -71,6 +70,11 @@ export class AlloySelectInPolygonInteraction {
    * whether to append the final selection to the existing selection or replace it
    */
   private appendToSelection: boolean = false;
+
+  /**
+   * Custom function to call on interaction end (e.g. to control button state)
+   */
+  private onInteractionEnd: (() => void) | null = null;
 
   /**
    * creates a new instance
@@ -147,13 +151,16 @@ export class AlloySelectInPolygonInteraction {
 
   /**
    * Starts draw interaction for polygon to select features inside of it
+   * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(appendToSelection: boolean = false): void {
+  public startPolygonSelect(onEnd?: () => void, appendToSelection: boolean = false): void {
     // if it's active, then no need to do anything
     if (this.olDraw.getActive()) {
       return;
     }
+
+    this.onInteractionEnd = onEnd || null;
 
     // remember the selection mode
     this.appendToSelection = appendToSelection;
@@ -182,17 +189,24 @@ export class AlloySelectInPolygonInteraction {
       return;
     }
 
-    // deactivate draw interaction
-    this.olDraw.setActive(false);
+    try {
+      // try this code (external user logic, could be demons!)
+      if (this.onInteractionEnd !== null) {
+        this.onInteractionEnd();
+      }
+    } finally {
+      // deactivate draw interaction
+      this.olDraw.setActive(false);
 
-    // remove the interaction from the map
-    this.map.olMap.removeInteraction(this.olDraw);
+      // remove the interaction from the map
+      this.map.olMap.removeInteraction(this.olDraw);
 
-    // re-enable double-click zoom and selection on deferred
-    setTimeout(() => {
-      this.setDoubleClickZoomEnabled(true);
-      this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
-    });
+      // re-enable double-click zoom and selection on deferred
+      setTimeout(() => {
+        this.setDoubleClickZoomEnabled(true);
+        this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
+      });
+    }
   }
 
   /**
@@ -219,20 +233,22 @@ export class AlloySelectInPolygonInteraction {
     // iterate through layers to check
     this.map.layers.forEach((layer) => {
       // grab the source of the layer data and check its a valid source to search
-      const source = layer.olLayer.getSource();
-      if (source instanceof OLVectorSource) {
-        // get all features in the polygon extent (fast way to cull items)
-        source.forEachFeatureInExtent(extent, (f: OLFeature) => {
-          // now break apart each geometry into it's points and test it intersects
-          const points = AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(f.getGeometry());
-          if (points.getCoordinates().some((coord) => poly.intersectsCoordinate(coord))) {
-            // find the feature and add to the search results
-            const feature = layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(f));
-            if (feature && feature.allowsSelection) {
-              features.push(feature);
+      const sources = layer.olLayers.map((olLayer) => olLayer.getSource());
+      for (const source of sources) {
+        if (source instanceof OLVectorSource) {
+          // get all features in the polygon extent (fast way to cull items)
+          source.forEachFeatureInExtent(extent, (f: OLFeature) => {
+            // now break apart each geometry into it's points and test it intersects
+            const points = AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(f.getGeometry());
+            if (points.getCoordinates().some((coord) => poly.intersectsCoordinate(coord))) {
+              // find the feature and add to the search results
+              const feature = layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(f));
+              if (feature && feature.allowsSelection) {
+                features.push(feature);
+              }
             }
-          }
-        });
+          });
+        }
       }
     });
 

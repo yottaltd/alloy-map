@@ -1,0 +1,17 @@
+import { defaults } from 'ol/interaction.js';
+import OLCollection from 'ol/Collection';
+import OLInteraction from 'ol/interaction/Interaction';
+
+/**
+ * wraps the openlayers ol/interaction module due to typing issues.
+ * see: https://openlayers.org/en/latest/apidoc/module-ol_interaction.html
+ * @ignore
+ */
+export abstract class PolyfillInteractions {
+  /**
+   * @returns collection of default map interactions
+   */
+  public static defaults(): OLCollection<OLInteraction> {
+    return defaults();
+  }
+}

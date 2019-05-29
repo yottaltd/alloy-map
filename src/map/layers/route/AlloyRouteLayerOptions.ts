@@ -1,16 +1,16 @@
 import { AlloyMap } from '../../core/AlloyMap';
 
 /**
- * options for the alloy custom layer
+ * options for the alloy route layer
  */
-export interface AlloyCustomLayerOptions {
+export interface AlloyRouteLayerOptions {
   /**
    * the alloy map to associate tha layer with
    */
   map: AlloyMap;
 
   /**
-   * optional id for custom layer
+   * Optional id for route layer
    */
   id?: string;
 }

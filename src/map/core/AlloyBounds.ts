@@ -1,4 +1,5 @@
 import { AlloyCoordinate } from './AlloyCoordinate';
+import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
 
 /**
  * an alloy bounds represents a bounding box on the map using south west and north east corner
@@ -58,5 +59,20 @@ export class AlloyBounds {
     const minLat = Math.min(this.ne.lat, this.sw.lat);
     const maxLat = Math.max(this.ne.lat, this.sw.lat);
     return new AlloyCoordinate(minLon + (maxLon - minLon) / 2, minLat + (maxLat - minLat) / 2);
+  }
+
+  /**
+   * Checks if this bounds intersect provided bounds
+   * @param bounds the bounds to check against
+   * @returns true if bounds intersect
+   */
+  public intersects(bounds: AlloyBounds): boolean {
+    const boundsExtent = bounds.toMapExtent();
+    const viewportExtent = this.toMapExtent();
+    return (
+      PolyfillExtent.intersects(boundsExtent, viewportExtent) ||
+      PolyfillExtent.contains(boundsExtent, viewportExtent) ||
+      PolyfillExtent.contains(viewportExtent, boundsExtent)
+    );
   }
 }
