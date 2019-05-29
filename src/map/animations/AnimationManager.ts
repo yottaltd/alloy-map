@@ -8,54 +8,94 @@ import OLRenderCanvas from 'ol/render/canvas';
 import OLRenderEvent from 'ol/render/Event';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
-import { AlloyMap } from '../map/core/AlloyMap';
-import { AlloyFeature } from '../map/features/AlloyFeature';
-import { PolyfillExtent } from '../polyfills/PolyfillExtent';
-import { PolyfillObservable } from '../polyfills/PolyfillObservable';
+import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
+import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
+import { ColourUtils } from '../../utils/ColourUtils';
+import { AlloyMap } from '../core/AlloyMap';
+import { AlloyFeature } from '../features/AlloyFeature';
 import { AnimationListener } from './AnimationListener';
 
-const DEG_90_IN_RAD: number = Math.PI / 2;
-const CHEVRON_COLOUR: [number, number, number] = [245, 245, 245];
+/**
+ * 90 degrees in radians
+ * @ignore
+ */
+const DEGREES_90_IN_RADIANS: number = Math.PI / 2;
 
+/**
+ * the colour of chevrons in rgb
+ * @ignore
+ */
+const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
+
+/**
+ * animation manager handles common animation utilities
+ * @ignore
+ */
 export class AnimationManager {
   /**
-   * Rotates a coordinate around the anchor
+   * rotates a coordinate around the anchor
    * @param coordinate
    * @param angleRad
    * @param anchor
    */
   private static rotateCoordinate(
-    coordinate: ol.Coordinate,
+    coordinate: [number, number],
     angleRad: number,
-    anchor: ol.Coordinate,
-  ): ol.Coordinate {
+    anchor: [number, number],
+  ): [number, number] {
     const p = new OLPoint(coordinate);
     p.rotate(angleRad, anchor);
     return p.getCoordinates();
   }
 
-  private static rgbToRgba(rgb: [number, number, number], alpha: number): string {
-    return `rgba(${rgb.join(',')}, ${alpha})`;
-  }
+  /**
+   * a lookup of features with active animating events keys
+   */
+  private readonly animationKeys: Map<OLFeature, ol.EventsKey> = new Map();
 
-  private readonly ANIMATION_KEYS: Readonly<Map<OLFeature, ol.EventsKey>> = new Map();
-  private readonly ANIMATING_FEATURES_SET: Readonly<Set<OLFeature>> = new Set();
-  private readonly LINE_OFFSET_MAP: Readonly<Map<OLLineString, number>> = new Map();
+  /**
+   * the features that are currently animating
+   */
+  private readonly animatingFeatures: Set<OLFeature> = new Set();
 
+  /**
+   * a map of linestrings to their ratio offsets (OLEG I HAVE NO IDEA WHAT THIS DOES XD)
+   */
+  private readonly lineOffsets: Map<OLLineString, number> = new Map();
+
+  /**
+   * a reference to the alloy map being animated
+   */
   private readonly map: AlloyMap;
 
+  /**
+   * creates a new instance
+   * @param map the alloy map to animate
+   */
   public constructor(map: AlloyMap) {
     this.map = map;
   }
 
+  /**
+   * clears all running animations
+   */
   public clearAnimations() {
-    this.ANIMATING_FEATURES_SET.clear();
+    this.animatingFeatures.clear();
   }
 
+  /**
+   * stops animation a single feature
+   * @param feature the feature to stop animations for
+   */
   public stopFeatureAnimation(feature: AlloyFeature) {
-    this.ANIMATING_FEATURES_SET.delete(feature.olFeature);
+    this.animatingFeatures.delete(feature.olFeature);
   }
 
+  /**
+   * starts the routing animation for a feature
+   * @param route the route feature to animate
+   * @param precomposeLayer the layer being drawn to for animations
+   */
   public startRouteAnimation(route: AlloyFeature, precomposeLayer?: OLVectorLayer) {
     this.startFeatureAnimation(
       route.olFeature,
@@ -65,15 +105,12 @@ export class AnimationManager {
         renderer: OLRenderCanvas.Immediate,
         ratio: number,
       ) => {
-        let centre: ol.Coordinate;
-        let nose: ol.Coordinate;
-        if (ratio > 1 - currentScaleRatio) {
-          centre = lineString.getCoordinateAt(ratio);
-          nose = lineString.getCoordinateAt(1);
-        } else {
-          centre = lineString.getCoordinateAt(ratio);
-          nose = lineString.getCoordinateAt(ratio + currentScaleRatio);
-        }
+        const centre: [number, number] = lineString.getCoordinateAt(ratio);
+        const nose: [number, number] =
+          ratio > 1 - currentScaleRatio
+            ? lineString.getCoordinateAt(1)
+            : lineString.getCoordinateAt(ratio + currentScaleRatio);
+
         // don't draw if coordinates are not in the view extent
         const viewExtent = this.map.viewport.toMapExtent();
         if (
@@ -82,25 +119,42 @@ export class AnimationManager {
         ) {
           return;
         }
+
         // create style with opacity for current ratio
         const routingStyle = new OLStyle({
           fill: new OLFill({
-            color: AnimationManager.rgbToRgba(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
+            color: ColourUtils.opacity(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
           }),
         });
 
-        const c1 = AnimationManager.rotateCoordinate(nose, DEG_90_IN_RAD, centre);
-        const c2 = AnimationManager.rotateCoordinate(nose, -DEG_90_IN_RAD, centre);
-        // vector coordinate - distance between centre coordinates
-        const v = [nose[0] - centre[0], nose[1] - centre[1]];
+        const noseClockwise90Degrees = AnimationManager.rotateCoordinate(
+          nose,
+          DEGREES_90_IN_RADIANS,
+          centre,
+        );
+        const noseCounterClockwise90Degrees = AnimationManager.rotateCoordinate(
+          nose,
+          -DEGREES_90_IN_RADIANS,
+          centre,
+        );
 
-        const coordinates: ol.Coordinate[] = [];
+        // vector coordinate - distance between centre coordinates
+        const vector = [nose[0] - centre[0], nose[1] - centre[1]];
+
+        // construct the path
+        const coordinates: Array<[number, number]> = [];
         coordinates.push(nose);
-        coordinates.push(c1);
-        coordinates.push([c1[0] - v[0], c1[1] - v[1]]);
+        coordinates.push(noseClockwise90Degrees);
+        coordinates.push([
+          noseClockwise90Degrees[0] - vector[0],
+          noseClockwise90Degrees[1] - vector[1],
+        ]);
         coordinates.push(centre);
-        coordinates.push([c2[0] - v[0], c2[1] - v[1]]);
-        coordinates.push(c2);
+        coordinates.push([
+          noseCounterClockwise90Degrees[0] - vector[0],
+          noseCounterClockwise90Degrees[1] - vector[1],
+        ]);
+        coordinates.push(noseCounterClockwise90Degrees);
         coordinates.push(nose);
 
         renderer.drawFeature(new OLFeature(new OLPolygon([coordinates])), routingStyle);
@@ -109,6 +163,11 @@ export class AnimationManager {
     );
   }
 
+  /**
+   * starts the cable animation for a feature
+   * @param cable the cable feature
+   * @param precomposeLayer the layer being drawn to for animations
+   */
   public startCableAnimation(cable: AlloyFeature, precomposeLayer?: OLVectorLayer) {
     this.startFeatureAnimation(
       cable.olFeature,
@@ -118,29 +177,31 @@ export class AnimationManager {
         renderer: OLRenderCanvas.Immediate,
         ratio: number,
       ) => {
-        const centre: ol.Coordinate = lineString.getCoordinateAt(ratio);
+        // calculate coordinates for positioning
+        const centre: [number, number] = lineString.getCoordinateAt(ratio);
         let nose: ol.Coordinate;
         let back: ol.Coordinate;
+
         if (ratio > 1 - currentScaleRatio) {
           back = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(ratio - currentScaleRatio),
-            DEG_90_IN_RAD,
+            DEGREES_90_IN_RADIANS,
             centre,
           );
           nose = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(1),
-            DEG_90_IN_RAD,
+            DEGREES_90_IN_RADIANS,
             centre,
           );
         } else {
           back = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(ratio - currentScaleRatio),
-            DEG_90_IN_RAD,
+            DEGREES_90_IN_RADIANS,
             centre,
           );
           nose = AnimationManager.rotateCoordinate(
             lineString.getCoordinateAt(ratio + currentScaleRatio),
-            DEG_90_IN_RAD,
+            DEGREES_90_IN_RADIANS,
             centre,
           );
         }
@@ -157,23 +218,31 @@ export class AnimationManager {
         // create style with opacity for current ratio
         const cableStyle = new OLStyle({
           fill: new OLFill({
-            color: AnimationManager.rgbToRgba(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
+            color: ColourUtils.opacity(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
           }),
         });
 
         const b1: ol.Coordinate = AnimationManager.rotateCoordinate(
           centre,
-          DEG_90_IN_RAD / 3,
+          DEGREES_90_IN_RADIANS / 3,
           nose,
         );
         const n1: ol.Coordinate = AnimationManager.rotateCoordinate(
           centre,
-          DEG_90_IN_RAD / 3,
+          DEGREES_90_IN_RADIANS / 3,
           back,
         );
 
-        const b2: ol.Coordinate = AnimationManager.rotateCoordinate(back, DEG_90_IN_RAD, b1);
-        const n2: ol.Coordinate = AnimationManager.rotateCoordinate(nose, DEG_90_IN_RAD, n1);
+        const b2: ol.Coordinate = AnimationManager.rotateCoordinate(
+          back,
+          DEGREES_90_IN_RADIANS,
+          b1,
+        );
+        const n2: ol.Coordinate = AnimationManager.rotateCoordinate(
+          nose,
+          DEGREES_90_IN_RADIANS,
+          n1,
+        );
 
         const coordinates: ol.Coordinate[] = [];
         coordinates.push(nose);
@@ -190,50 +259,76 @@ export class AnimationManager {
     );
   }
 
+  /**
+   * sets the animation for a feature
+   * @param feature the feature to animate
+   * @param animationListener the animation listener used to provide callbacks and drawing
+   * @param duration the time of the animation in milliseconds
+   * @param precomposeObject the precomposable object being animated e.g. openlayers layer
+   */
   private setFeatureAnimation(
     feature: OLFeature,
     animationListener: AnimationListener,
-    timeMs: number,
+    duration: number,
     precomposeObject?: ol.Observable,
   ) {
-    if (this.ANIMATION_KEYS.has(feature)) {
-      PolyfillObservable.unByKey(this.ANIMATION_KEYS.get(feature)!);
-      this.ANIMATION_KEYS.delete(feature);
+    // remove existing animation for feature if already setup
+    if (this.animationKeys.has(feature)) {
+      PolyfillObservable.unByKey(this.animationKeys.get(feature)!);
+      this.animationKeys.delete(feature);
     }
 
+    // call pre animation handler
     animationListener.preAnimation();
 
-    const start = new Date();
-    this.ANIMATION_KEYS.set(
+    // remember the start time
+    const start = new Date().getTime();
+
+    // set the animation going
+    this.animationKeys.set(
       feature,
       (precomposeObject || this.map.olMap).on(
         precomposeObject ? 'precompose' : 'postcompose',
         (e) => {
           const event: OLRenderEvent = e as OLRenderEvent;
-          const elapsed: number = event.frameState.time - start.getTime();
-          const elapsedRatio: number = Math.min(elapsed / timeMs, 1.0);
+          const elapsed: number = event.frameState.time - start;
+          const elapsedRatio: number = Math.min(elapsed / duration, 1.0);
 
+          // call the handler for composing the animation (this does the work per type of animation)
           animationListener.compose(
             event.vectorContext as OLRenderCanvas.Immediate,
             elapsedRatio,
           );
 
-          if (elapsed >= timeMs) {
-            const key = this.ANIMATION_KEYS.get(feature);
+          // cleanup the animation if its finished
+          if (elapsed >= duration) {
+            const key = this.animationKeys.get(feature);
             if (key) {
               PolyfillObservable.unByKey(key);
             }
-            this.ANIMATION_KEYS.delete(feature);
+            this.animationKeys.delete(feature);
+
+            // call post animation handler
             animationListener.postAnimation();
             return;
           }
+
+          // re-render the map
           this.map.olMap.render();
         },
       ),
     );
+
+    // force a re-render
     this.map.olMap.render();
   }
 
+  /**
+   * starts an animation for a feature
+   * @param route
+   * @param stepRenderer
+   * @param precomposeObject
+   */
   private startFeatureAnimation(
     route: OLFeature,
     stepRenderer: (
@@ -244,10 +339,10 @@ export class AnimationManager {
     ) => void,
     precomposeObject?: ol.Observable,
   ) {
-    if (this.ANIMATING_FEATURES_SET.has(route)) {
-      this.ANIMATING_FEATURES_SET.delete(route);
+    if (this.animatingFeatures.has(route)) {
+      this.animatingFeatures.delete(route);
     }
-    this.ANIMATING_FEATURES_SET.add(route);
+    this.animatingFeatures.add(route);
 
     const animateLineString = (lineString: OLLineString) => {
       const length = lineString.getLength();
@@ -307,7 +402,7 @@ export class AnimationManager {
         PolyfillObservable.unByKey(resolutionChangeListener);
       }
     };
-    const offset = this.LINE_OFFSET_MAP.get(lineString) || 0;
+    const offset = this.lineOffsets.get(lineString) || 0;
 
     this.setFeatureAnimation(
       lineStringFeature,
@@ -338,18 +433,18 @@ export class AnimationManager {
             return;
           }
           ratio += offset;
-          if (this.ANIMATING_FEATURES_SET.has(feature)) {
+          if (this.animatingFeatures.has(feature)) {
             const ratioDiff = ratio % scale;
             let ratioC = ratioDiff;
             if (ratio >= 1) {
-              this.LINE_OFFSET_MAP.set(lineString, ratioDiff);
+              this.lineOffsets.set(lineString, ratioDiff);
             }
             while (ratioC < 1) {
               renderStepDraw(renderer, ratioC);
               ratioC += scale;
             }
           } else {
-            const key = this.ANIMATION_KEYS.get(lineStringFeature);
+            const key = this.animationKeys.get(lineStringFeature);
             if (key) {
               PolyfillObservable.unByKey(key);
             }
@@ -357,7 +452,7 @@ export class AnimationManager {
         },
         postAnimation: () => {
           // repeat animation if it wasn't removed
-          if (this.ANIMATING_FEATURES_SET.has(feature)) {
+          if (this.animatingFeatures.has(feature)) {
             const viewExtent = this.map.viewport.toMapExtent();
             if (!PolyfillExtent.intersects(viewExtent, lineString.getExtent())) {
               paused = true;
@@ -374,7 +469,7 @@ export class AnimationManager {
             );
           } else {
             removeListeners();
-            this.LINE_OFFSET_MAP.delete(lineString);
+            this.lineOffsets.delete(lineString);
           }
         },
       },

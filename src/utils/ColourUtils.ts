@@ -42,8 +42,7 @@ export abstract class ColourUtils {
    * @param colour
    */
   public static semiTransparent(colour: string): [number, number, number, number] {
-    const rgb = color(colour);
-    return [rgb.red(), rgb.green(), rgb.blue(), 0.33];
+    return ColourUtils.opacity(colour, 0.33);
   }
 
   /**
@@ -53,5 +52,15 @@ export abstract class ColourUtils {
   public static lightenHalo(colour: string): [number, number, number, number] {
     const rgb = color(colour).lighten(LIGHTEN_AMOUNT);
     return [rgb.red(), rgb.green(), rgb.blue(), 0.5];
+  }
+
+  /**
+   * sets the opacity on a colour
+   * @param colour the colour to set the opacity value for
+   * @param opacity the opacity 0-1
+   */
+  public static opacity(colour: string, opacity: number): [number, number, number, number] {
+    const rgb = color(colour);
+    return [rgb.red(), rgb.green(), rgb.blue(), opacity];
   }
 }
