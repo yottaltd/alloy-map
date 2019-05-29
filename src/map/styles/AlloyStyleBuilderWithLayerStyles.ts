@@ -5,6 +5,7 @@ import { AlloyStyleBuilder } from './AlloyStyleBuilder';
 /**
  * extends the alloy style builder to add layer styles caching
  * @ignore
+ * @internal
  */
 export abstract class AlloyStyleBuilderWithLayerStyles<
   T extends AlloyFeature

@@ -14,6 +14,7 @@ import { AlloyMapError } from '../../../../error/AlloyMapError';
 /**
  * utility for geometry functions
  * @ignore
+ * @internal
  */
 export abstract class AlloyGeometryFunctionUtils {
   /**

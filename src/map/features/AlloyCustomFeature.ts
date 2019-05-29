@@ -41,12 +41,14 @@ export class AlloyCustomFeature implements AlloyFeature {
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly olFeature: OLFeature;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly originatingLayerId?: string;
 
@@ -61,6 +63,8 @@ export class AlloyCustomFeature implements AlloyFeature {
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
    * @param originatingLayerId the layer id that the item originated from
+   * @ignore
+   * @internal
    */
   constructor(
     id: string,
@@ -85,6 +89,7 @@ export class AlloyCustomFeature implements AlloyFeature {
   /**
    * get the "expected" geometry of the alloy custom feature, this is assumed based on its type
    * @ignore
+   * @internal
    */
   public getExpectedGeometry():
     | OLPoint

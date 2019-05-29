@@ -4,6 +4,7 @@ import OLProjection from 'ol/proj/Projection';
  * interface for feature loaders, these load information from a service to make it available in
  * a layers source for rendering
  * @ignore
+ * @internal
  */
 export interface AlloyFeatureLoader {
   /**

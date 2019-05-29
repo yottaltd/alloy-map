@@ -20,6 +20,7 @@ const SCALE_MULTIPLIER = 0.5 / (SCALE_RESOLUTION_MAX - SCALE_RESOLUTION_MIN);
 /**
  * utility for scaling values according to the map
  * @ignore
+ * @internal
  */
 export abstract class AlloyScaleUtils {
   /**

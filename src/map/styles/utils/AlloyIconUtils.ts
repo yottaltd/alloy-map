@@ -16,6 +16,7 @@ const ICON_CANVAS_SIZE = 256;
 /**
  * utility for icons being rendered
  * @ignore
+ * @internal
  */
 export abstract class AlloyIconUtils {
   /**

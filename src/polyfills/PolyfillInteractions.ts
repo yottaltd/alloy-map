@@ -6,6 +6,7 @@ import OLInteraction from 'ol/interaction/Interaction';
  * wraps the openlayers ol/interaction module due to typing issues.
  * see: https://openlayers.org/en/latest/apidoc/module-ol_interaction.html
  * @ignore
+ * @internal
  */
 export abstract class PolyfillInteractions {
   /**

@@ -8,6 +8,7 @@ export class MapChangeCentreEvent {
   /**
    * the current map resolution
    * @ignore
+   * @internal
    */
   public readonly olResolution: number;
 
@@ -26,6 +27,8 @@ export class MapChangeCentreEvent {
    * @param centre the centre of the map
    * @param olResolution the resolution of the map
    * @param olExtent the map view extents
+   * @ignore
+   * @internal
    */
   constructor(
     centre: AlloyCoordinate,
@@ -47,6 +50,7 @@ export class MapChangeCentreEvent {
   /**
    * the current map extents
    * @ignore
+   * @internal
    */
   public get olExtent(): [number, number, number, number] {
     return this.originalOlExtent.slice(0) as /* cast as ts dont like */ [

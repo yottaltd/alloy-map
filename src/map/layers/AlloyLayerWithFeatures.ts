@@ -12,11 +12,13 @@ import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildSta
  * base implementation for alloy layers with features
  * @template T the feature types the loader is expected to load
  * @ignore
+ * @internal
  */
 export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements AlloyLayer {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -33,18 +35,21 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly olLayers: OLVectorLayer[];
 
   /**
    * the openlayers source containing features for this layer
    * @ignore
+   * @internal
    */
   public readonly olSource: OLVectorSource = new OLVectorSource();
 
   /**
    * the features currently in the source for this layer
    * @ignore
+   * @internal
    */
   protected readonly currentFeatures = new Map<string, T>();
 
@@ -58,6 +63,8 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param id the id of the layer
    * @param map the map the layer is a member of
    * @param zIndex the z-index of the layer
+   * @ignore
+   * @internal
    */
   constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
     // set the debugger instance
@@ -91,6 +98,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public get styleProcessor(): AlloyStyleProcessor | null {
     return this.currentStyleProcessor;
@@ -115,6 +123,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param feature the feature to add to the layer
    * @returns a flag indicating if the underlying sources were modified
    * @ignore
+   * @internal
    */
   public addFeature(feature: T): boolean {
     // check to see if we already have the feature
@@ -134,6 +143,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param feature the feature to remove from the layer
    * @returns a flag indicating if the underlying sources were modified
    * @ignore
+   * @internal
    */
   public removeFeature(feature: T): boolean {
     // check to see if we already have the feature
@@ -154,6 +164,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param features the features to add to the layer
    * @returns a flag indicating if the underlying sources were modified
    * @ignore
+   * @internal
    */
   public addFeatures(features: T[]): boolean {
     const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
@@ -181,6 +192,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * clear all features from the layer
    * @returns a flag indicating if the underlying sources were modified
    * @ignore
+   * @internal
    */
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;

@@ -6,6 +6,7 @@ import { AlloyBasemap } from './AlloyBasemap';
 /**
  * an alloy tile basemap using an XYZ tiled service
  * @ignore
+ * @internal
  */
 export class AlloyTileBasemap implements AlloyBasemap {
   /**

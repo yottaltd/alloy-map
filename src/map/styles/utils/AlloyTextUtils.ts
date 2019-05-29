@@ -16,6 +16,7 @@ const TEXT_FONT = '700 18px/50px Open Sans, Arial, sans-serif';
 /**
  * utility for rendering text
  * @ignore
+ * @internal
  */
 export abstract class AlloyTextUtils {
   /**

@@ -3,6 +3,7 @@ import * as webfontloader from 'webfontloader';
 /**
  * utility for web fonts
  * @ignore
+ * @internal
  */
 export abstract class FontUtils {
   /**

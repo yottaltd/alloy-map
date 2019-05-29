@@ -5,6 +5,7 @@ import OLTileGrid from 'ol/tilegrid/TileGrid';
  * wraps the openlayers ol/loadingstrategy functions due to bad type definitions.
  * see: https://openlayers.org/en/latest/apidoc/module-ol_loadingstrategy.html
  * @ignore
+ * @internal
  */
 export abstract class PolyfillLoadingStrategy {
   /**

@@ -3,6 +3,7 @@ import { AlloyMap } from '../../core/AlloyMap';
 /**
  * options for the alloy hover layer
  * @ignore
+ * @internal
  */
 export interface AlloyHoverLayerOptions {
   /**

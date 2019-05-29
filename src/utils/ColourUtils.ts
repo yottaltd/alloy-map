@@ -15,6 +15,7 @@ const LIGHTEN_AMOUNT = 0.16;
 /**
  * utility for colours
  * @ignore
+ * @internal
  */
 export abstract class ColourUtils {
   /**

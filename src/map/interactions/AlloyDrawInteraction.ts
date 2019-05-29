@@ -59,11 +59,13 @@ const DRAW_RADIUS = 10;
 /**
  * adds draw interaction to an alloy map
  * @ignore
+ * @internal
  */
 export class AlloyDrawInteraction {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -139,6 +141,8 @@ export class AlloyDrawInteraction {
   /**
    * creates a new instance
    * @param map the map to add hover interaction to
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap) {
     this.map = map;

@@ -10,6 +10,7 @@ import { AlloyNetworkLayer } from './AlloyNetworkLayer';
 /**
  * processes the network styled feature items
  * @ignore
+ * @internal
  */
 export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
   /**

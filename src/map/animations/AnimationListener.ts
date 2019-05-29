@@ -3,6 +3,7 @@ import RenderCanvas from 'ol/render/canvas';
 /**
  * listener interface for animation lifecycle, allows bespoke drawing for animations
  * @ignore
+ * @internal
  */
 export interface AnimationListener {
   /**

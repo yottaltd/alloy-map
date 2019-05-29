@@ -10,6 +10,7 @@ import { AlloyScaleUtils } from './AlloyScaleUtils';
 /**
  * utility for creating polygon styles
  * @ignore
+ * @internal
  */
 export abstract class AlloyPolygonUtils {
   /**

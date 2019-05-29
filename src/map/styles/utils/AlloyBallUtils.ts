@@ -10,6 +10,7 @@ import { ColourUtils } from '../../../utils/ColourUtils';
 /**
  * utility for ball styles
  * @ignore
+ * @internal
  */
 export abstract class AlloyBallUtils {
   /**

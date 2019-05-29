@@ -19,8 +19,10 @@ export class AlloyRouteLayer implements AlloyLayer {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
+
   /**
    * @implements
    */
@@ -34,12 +36,14 @@ export class AlloyRouteLayer implements AlloyLayer {
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly olLayers: Readonly<OLVectorLayer[]>;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly styleProcessor: AlloyStyleProcessor | null;
 
@@ -76,6 +80,8 @@ export class AlloyRouteLayer implements AlloyLayer {
   /**
    * creates a new instance
    * @param options the options for the layer
+   * @ignore
+   * @internal
    */
   constructor(options: AlloyRouteLayerOptions) {
     this.id = options.id ? options.id : AlloyRouteLayer.name + ':' + uuid.v1();
@@ -167,6 +173,7 @@ export class AlloyRouteLayer implements AlloyLayer {
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public getFeatureById(id: string): AlloyFeature | null {
     // see if we match the only route feature first

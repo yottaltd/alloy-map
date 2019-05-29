@@ -17,11 +17,13 @@ const POINTER_MOVE_THROTTLE = 50;
 /**
  * adds hover interaction to an alloy map
  * @ignore
+ * @internal
  */
 export class AlloyHoverInteraction {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -42,6 +44,8 @@ export class AlloyHoverInteraction {
   /**
    * creates a new instance
    * @param map the map to add hover interaction to
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap) {
     this.map = map;
@@ -161,6 +165,7 @@ export class AlloyHoverInteraction {
 /**
  * interface to hold data for the hover interaction
  * @ignore
+ * @internal
  */
 interface PointerMoveLayerPayload {
   layers: AlloyLayer[];

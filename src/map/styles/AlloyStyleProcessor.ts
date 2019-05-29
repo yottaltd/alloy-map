@@ -7,6 +7,7 @@ import { AlloyStyleBuilderBuildState } from './AlloyStyleBuilderBuildState';
 /**
  * base class for processing a layers styles
  * @ignore
+ * @internal
  */
 export abstract class AlloyStyleProcessor {
   /**

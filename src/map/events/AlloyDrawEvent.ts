@@ -13,12 +13,14 @@ export class AlloyDrawEvent {
   public feature: AlloyDrawFeature | null;
 
   /**
-   * @ignore
+   * the draw layer that triggered the event
    */
   private drawLayer: AlloyDrawLayer;
 
   /**
    * creates a new event instance
+   * @ignore
+   * @internal
    */
   constructor(feature: AlloyDrawFeature | null, drawLayer: AlloyDrawLayer) {
     this.feature = feature;

@@ -11,6 +11,7 @@ import { AlloyRouteLayer } from './AlloyRouteLayer';
 /**
  * processes the route styled feature items
  * @ignore
+ * @internal
  */
 export class AlloyRouteStyleProcessor extends AlloyStyleProcessor {
   /**

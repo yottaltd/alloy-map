@@ -7,6 +7,7 @@ import { AlloySelectionStyleProcessor } from './AlloySelectionStyleProcessor';
 /**
  * a special interaction layer for selected features
  * @ignore
+ * @internal
  */
 export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   /**

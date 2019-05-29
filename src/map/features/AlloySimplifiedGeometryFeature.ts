@@ -32,24 +32,28 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public allowsSelection!: false; // see end of file for prototype
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public allowsHover!: false; // see end of file for prototype
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly olFeature: OLFeature;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly originatingLayerId?: string;
 
@@ -64,6 +68,8 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
    * @param originatingLayerId the layer id that the item originated from
+   * @ignore
+   * @internal
    */
   constructor(
     id: string,
@@ -84,6 +90,7 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
    * get the "expected" geometry of the alloy simplified geometry feature, this is assumed based on
    * its type
    * @ignore
+   * @internal
    */
   public getExpectedGeometry():
     | OLPoint

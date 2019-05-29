@@ -11,6 +11,7 @@ export class MapChangeZoomEvent {
   /**
    * the current map resolution
    * @ignore
+   * @internal
    */
   public readonly olResolution: number;
 
@@ -18,6 +19,8 @@ export class MapChangeZoomEvent {
    * creates a new event instance
    * @param zoom the zoom level of the map
    * @param olResolution the current map resolution
+   * @ignore
+   * @internal
    */
   constructor(zoom: number, olResolution: number) {
     this.zoom = zoom;

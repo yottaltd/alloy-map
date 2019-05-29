@@ -41,6 +41,7 @@ const NETWORK_LINE_COLOUR = '#ffffff';
 /**
  * builds styles for network features, this can be any type of geometry
  * @ignore
+ * @internal
  */
 export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   AlloyItemFeature | AlloySimplifiedGeometryFeature
@@ -54,6 +55,8 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
    * creates a new instance
    * @param map the map instance for calculations
    * @param styles the styles to build
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap, styles: Readonly<AlloyLayerStyle[]>) {
     super(styles);

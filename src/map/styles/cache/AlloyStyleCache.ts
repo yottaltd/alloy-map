@@ -3,6 +3,7 @@ import OLStyle from 'ol/style/Style';
 /**
  * cache implementation for alloy styles
  * @ignore
+ * @internal
  */
 export class AlloyStyleCache {
   /**

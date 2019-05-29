@@ -3,6 +3,7 @@ import { AlloyTileCacheItem } from './AlloyTileCacheItem';
 /**
  * represents a FIFO style cache for tiles
  * @ignore
+ * @internal
  */
 export class AlloyTileCache<T> {
   /**

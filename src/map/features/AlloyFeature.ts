@@ -22,24 +22,28 @@ export interface AlloyFeature {
   /**
    * whether the feature allows selection
    * @ignore
+   * @internal
    */
   readonly allowsSelection: boolean;
 
   /**
    * whether the feature allows hover interaction
    * @ignore
+   * @internal
    */
   readonly allowsHover: boolean;
 
   /**
    * the underlying openlayers geojson feature
    * @ignore
+   * @internal
    */
   readonly olFeature: OLFeature;
 
   /**
    * the layer that loaded the feature
    * @ignore
+   * @internal
    */
   readonly originatingLayerId?: string;
 
@@ -49,6 +53,7 @@ export interface AlloyFeature {
    * when a feature is programatically selected**
    * @param map the map instance the feature is a member of
    * @ignore
+   * @internal
    */
   onSelectionInteraction?(map: AlloyMap): void;
 

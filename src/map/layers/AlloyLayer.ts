@@ -20,12 +20,14 @@ export interface AlloyLayer {
   /**
    * the openlayers layer instance for the alloy layer
    * @ignore
+   * @internal
    */
   readonly olLayers: Readonly<OLLayer[]>;
 
   /**
    * the processor for styles on the layer, null until initialised
    * @ignore
+   * @internal
    */
   readonly styleProcessor: AlloyStyleProcessor | null;
 
