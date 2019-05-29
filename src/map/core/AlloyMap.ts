@@ -1,9 +1,11 @@
 import { debug, Debugger } from 'debug';
+import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+import { GeoJSONObjectType } from '../../api';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { Api } from '../../svr/Api';
@@ -522,6 +524,30 @@ export class AlloyMap {
    */
   public addDrawFeature(feature: AlloyDrawFeature): void {
     this.drawInteraction.addDrawFeature(feature);
+  }
+
+  /**
+   * Returns an array of current feature geometry types in the draw layer.
+   * @returns array of `GeoJSONObjectType`
+   */
+  public getDrawTypes(): GeoJSONObjectType[] {
+    return this.drawInteraction.getDrawTypes();
+  }
+
+  /**
+   * Gets all features in the draw layer
+   * @returns an array of `AlloyDrawFeature`
+   */
+  public getDrawFeatures(): AlloyDrawFeature[] {
+    return this.drawInteraction.getDrawFeatures();
+  }
+
+  /**
+   * Gets all features geometries in the draw layer as a single geometry
+   * @returns a merged geometry GeoJSON of all draw features
+   */
+  public getDrawGeometry(): Geometry {
+    return this.drawInteraction.getDrawGeometry();
   }
 
   /**
