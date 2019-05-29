@@ -37,6 +37,7 @@ const ICON_COLOUR = '#ffffff';
 /**
  * builds styles for custom features, this can be any type of geometry
  * @ignore
+ * @internal
  */
 export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature> {
   /**

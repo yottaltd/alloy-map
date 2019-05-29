@@ -11,6 +11,7 @@ export class AlloyBounds {
    * @param extent the extent from the map assumed to be in `[swX,swY,neX,neY]` and
    *               [EPSG:3857](https://epsg.io/3857) projection
    * @ignore
+   * @internal
    */
   public static fromMapExtent(extent: [number, number, number, number]): AlloyBounds {
     return new AlloyBounds(
@@ -43,6 +44,7 @@ export class AlloyBounds {
    * creates an extent to be used on the map, this function will convert the values into
    * [EPSG:3857](https://epsg.io/3857)
    * @ignore
+   * @internal
    */
   public toMapExtent(): [number, number, number, number] {
     const swMapCoordinate = this.sw.toMapCoordinate();

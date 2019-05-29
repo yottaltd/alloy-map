@@ -10,6 +10,7 @@ import { ColourUtils } from '../../../utils/ColourUtils';
 /**
  * utility for line style
  * @ignore
+ * @internal
  */
 export abstract class AlloyLineUtils {
   /**

@@ -5,6 +5,7 @@ import { responseInterceptor } from './responseInterceptor';
 /**
  * factory class for creating api instances
  * @ignore
+ * @internal
  */
 export abstract class ApiFactory {
   /**

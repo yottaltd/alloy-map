@@ -4,6 +4,7 @@ import { intersects, containsExtent, containsCoordinate } from 'ol/extent.js';
  * wraps the openlayers ol/extent module due to typing issues.
  * see: https://openlayers.org/en/latest/apidoc/module-ol_extent.html
  * @ignore
+ * @internal
  */
 export abstract class PolyfillExtent {
   /**

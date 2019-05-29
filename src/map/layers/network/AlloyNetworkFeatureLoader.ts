@@ -18,6 +18,7 @@ const TILE_GRID_MAX_ZOOM = 18;
 /**
  * loads network layer features from the alloy api
  * @ignore
+ * @internal
  */
 export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
   AlloySimplifiedGeometryFeature | AlloyItemFeature

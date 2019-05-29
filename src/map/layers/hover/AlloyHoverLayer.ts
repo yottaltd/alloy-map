@@ -12,11 +12,13 @@ import { AlloyHoverStyleProcessor } from './AlloyHoverStyleProcessor';
 /**
  * a special interaction layer for hovering features
  * @ignore
+ * @internal
  */
 export class AlloyHoverLayer implements AlloyLayer {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -34,18 +36,21 @@ export class AlloyHoverLayer implements AlloyLayer {
    * the openlayers layer to render on
    * @implements
    * @ignore
+   * @internal
    */
   public readonly olLayers: OLVectorLayer[];
 
   /**
    * the openlayers source containing features for this layer
    * @ignore
+   * @internal
    */
   public readonly olSource: OLVectorSource;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly styleProcessor: AlloyHoverStyleProcessor;
 
@@ -57,6 +62,8 @@ export class AlloyHoverLayer implements AlloyLayer {
   /**
    * creates a new instance
    * @param options the options for the layer
+   * @ignore
+   * @internal
    */
   constructor(options: AlloyHoverLayerOptions) {
     this.map = options.map;
@@ -75,7 +82,7 @@ export class AlloyHoverLayer implements AlloyLayer {
       new OLVectorLayer({
         // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
         renderMode: 'vector',
-        // set the styling for the layer, we use a fat arrow function here else "this" resolves wrong
+        // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
         style: (olFeature, resolution) =>
           this.styleProcessor.onStyleProcess(
             olFeature,
@@ -111,6 +118,7 @@ export class AlloyHoverLayer implements AlloyLayer {
    * sets the currently hovered feature
    * @param feature the feature to hover
    * @ignore
+   * @internal
    */
   public setHoveredFeature(feature: AlloyFeature | null) {
     // no-op

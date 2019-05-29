@@ -4,6 +4,7 @@ import OLPolygon from 'ol/geom/Polygon';
 /**
  * geometry functions for openlayers styles, modifies multi polygon geometry for styling
  * @ignore
+ * @internal
  */
 export abstract class AlloyMultiPolygonFunctions {
   /**

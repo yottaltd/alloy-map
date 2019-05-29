@@ -16,11 +16,13 @@ import { AlloyFeature } from '../features/AlloyFeature';
 /**
  * adds selection interaction to an alloy map
  * @ignore
+ * @internal
  */
 export class AlloySelectionInteraction {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -56,6 +58,8 @@ export class AlloySelectionInteraction {
   /**
    * creates a new instance
    * @param map the map to add selection interaction to
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap) {
     this.map = map;

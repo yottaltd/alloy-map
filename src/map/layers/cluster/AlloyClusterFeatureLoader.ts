@@ -18,6 +18,7 @@ const TILE_GRID_MAX_ZOOM = 18;
 /**
  * loads cluster layer features from the alloy api
  * @ignore
+ * @internal
  */
 export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
   AlloyClusterFeature | AlloyItemFeature
@@ -45,6 +46,8 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
   /**
    * creates a new instance
    * @param layer the layer to load features for
+   * @ignore
+   * @internal
    */
   constructor(layer: AlloyClusterLayer) {
     super(

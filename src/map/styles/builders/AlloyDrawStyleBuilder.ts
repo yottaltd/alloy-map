@@ -24,6 +24,7 @@ const ICON_COLOUR = '#ffffff';
 /**
  * builds styles for draw features, this can be point, line and polygon geometry
  * @ignore
+ * @internal
  */
 export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
   /**
@@ -34,6 +35,8 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
   /**
    * creates a new instance
    * @param map the map instance for calculations
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap) {
     super();

@@ -23,6 +23,7 @@ const TILE_CACHE_MINUTES = 1;
  * base implementation which loads features from a source by tile coordinates
  * @template T the feature types the loader is expected to load
  * @ignore
+ * @internal
  */
 export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements AlloyFeatureLoader {
   /**

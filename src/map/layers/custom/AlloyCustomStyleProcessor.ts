@@ -11,6 +11,7 @@ import { AlloyCustomLayer } from './AlloyCustomLayer';
 /**
  * processes the custom styled feature items
  * @ignore
+ * @internal
  */
 export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
   /**

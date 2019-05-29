@@ -33,6 +33,7 @@ const ICON_COLOUR = '#ffffff';
 /**
  * builds styles for item features, this can be any type of geometry
  * @ignore
+ * @internal
  */
 export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<AlloyItemFeature> {
   /**
@@ -44,6 +45,8 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
    * creates a new instance
    * @param map the map instance for calculations
    * @param styles the styles to build
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap, styles: Readonly<AlloyLayerStyle[]>) {
     super(styles);

@@ -4,6 +4,7 @@ import { LayerApi } from '../api/LayerApi';
 /**
  * the api acts as a service for exposing the individual controllers in the web api
  * @ignore
+ * @internal
  */
 export class Api {
   /**

@@ -56,24 +56,28 @@ export class AlloyDrawFeature implements AlloyFeature {
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly olFeature: OLFeature;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly allowsSelection: boolean = false;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly allowsHover: boolean = true;
 
   /**
    * @implements
    * @ignore
+   * @internal
    */
   public readonly originatingLayerId?: string;
 
@@ -87,6 +91,8 @@ export class AlloyDrawFeature implements AlloyFeature {
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties of the feature
+   * @ignore
+   * @internal
    */
   constructor(id: string, olFeature: OLFeature, properties: AlloyDrawFeatureProperties) {
     this.id = id;

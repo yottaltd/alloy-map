@@ -64,60 +64,66 @@ export class AlloyMap {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger = debug('alloymaps');
 
   /**
    * the api service to use for making calls to the alloy web api
    * @ignore
+   * @internal
    */
   public readonly api: Api;
 
   /**
    * open layers maps instance
    * @ignore
+   * @internal
    */
   public readonly olMap: OLMap;
 
   /**
    * open layers view instance
    * @ignore
+   * @internal
    */
   public readonly olView: OLView;
 
   /**
    * the hover layer instance managing hover rendering
    * @ignore
+   * @internal
    */
   public readonly hoverLayer: AlloyHoverLayer;
 
   /**
    * the selection layer instance managing selection rendering
    * @ignore
+   * @internal
    */
   public readonly selectionLayer: AlloySelectionLayer;
 
   /**
    * the selection interaction manager, determines when clicks occur etc.
    * @ignore
+   * @internal
    */
   public readonly selectionInteraction: AlloySelectionInteraction;
 
   /**
    * animation manager
    * @ignore
+   * @internal
    */
   public readonly animationManager: AnimationManager;
 
   /**
    * the draw interaction manager.
-   * @ignore
    */
   private readonly drawInteraction: AlloyDrawInteraction;
 
   /**
    * the currently active basemap or null if not se
-   * @ignore
    */
   private currentBasemap: AlloyBasemap | null = null;
 

@@ -11,6 +11,7 @@ const OL_FEATURE_TO_FEATURE_ID = '__AlloyFeatureId__';
 /**
  * utils for features
  * @ignore
+ * @internal
  */
 export abstract class FeatureUtils {
   /**

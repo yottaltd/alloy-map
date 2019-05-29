@@ -4,6 +4,7 @@ import { AlloyMapError } from '../error/AlloyMapError';
  * function to intercept service calls and check for common error codes
  * @param response the response to intercept
  * @ignore
+ * @internal
  */
 export function responseInterceptor(response: Response): PromiseLike<Response> {
   // Short circuit for statuses with no body

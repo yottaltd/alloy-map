@@ -39,6 +39,7 @@ const TEXT_COLOUR = '#ffffff';
  * builds styles for cluster features, we only expect point features in this builder because
  * clusters can't be anything else
  * @ignore
+ * @internal
  */
 export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   AlloyClusterFeature

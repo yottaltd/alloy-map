@@ -6,6 +6,7 @@ import { AlloyBasemap } from './AlloyBasemap';
 /**
  * a bing tiled basemap
  * @ignore
+ * @internal
  */
 export class AlloyBingBasemap implements AlloyBasemap {
   /**

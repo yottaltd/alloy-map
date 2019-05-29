@@ -24,11 +24,13 @@ const PING_ANIMATION_MAX_RADIUS = 25;
 /**
  * adds a nice click animation to the map
  * @ignore
+ * @internal
  */
 export class AlloyPingInteraction {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -40,6 +42,8 @@ export class AlloyPingInteraction {
   /**
    * creates a new instance
    * @param map the map to add selection interaction to
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap) {
     this.map = map;

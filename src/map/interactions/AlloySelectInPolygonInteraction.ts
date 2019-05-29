@@ -14,7 +14,6 @@ import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
-import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * the line colour of the drawn polygon
@@ -37,11 +36,13 @@ const POINT_LINE_COLOUR = '#ffffff';
 /**
  * adds selection interaction to an alloy map
  * @ignore
+ * @internal
  */
 export class AlloySelectInPolygonInteraction {
   /**
    * debugger instance
    * @ignore
+   * @internal
    */
   public readonly debugger: Debugger;
 
@@ -79,6 +80,8 @@ export class AlloySelectInPolygonInteraction {
   /**
    * creates a new instance
    * @param map the map to add selection interaction to
+   * @ignore
+   * @internal
    */
   constructor(map: AlloyMap) {
     this.map = map;

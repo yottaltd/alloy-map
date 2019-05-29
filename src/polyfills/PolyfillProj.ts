@@ -5,6 +5,7 @@ import OLProjection from 'ol/proj/Projection';
  * utility class for accessing ol/proj functions due to typing issues.
  * see: https://openlayers.org/en/latest/apidoc/module-ol_proj.html
  * @ignore
+ * @internal
  */
 export abstract class PolyfillProj {
   /**

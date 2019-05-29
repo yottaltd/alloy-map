@@ -22,6 +22,7 @@ import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
  * add draw features onto the map and manage them from draw interaction
  * @ignore
+ * @internal
  */
 export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**

@@ -14,6 +14,7 @@ import { AlloyMapError } from '../../../../error/AlloyMapError';
 /**
  * geometry functions for openlayers styles, this allows us to work with multigeom instances
  * @ignore
+ * @internal
  */
 export abstract class AlloyGeometryCollectionFunctions {
   /**
@@ -364,6 +365,7 @@ export abstract class AlloyGeometryCollectionFunctions {
 /**
  * data container for traversing a geometry collection to get its sub geometries
  * @ignore
+ * @internal
  */
 interface GeomtryCollectionGeometries {
   points: OLPoint[];
@@ -377,6 +379,7 @@ interface GeomtryCollectionGeometries {
 /**
  * a geometry collection flattened into multiple multi geoms (one for each supported type)
  * @ignore
+ * @internal
  */
 interface FlattenedGeometryCollection {
   /**

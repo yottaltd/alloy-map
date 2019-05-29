@@ -6,6 +6,7 @@ import { PolyfillProj } from '../polyfills/PolyfillProj';
 /**
  * utility class for playing with projections
  * @ignore
+ * @internal
  */
 export abstract class ProjectionUtils {
   /**

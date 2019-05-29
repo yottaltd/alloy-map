@@ -9,6 +9,7 @@ import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
  * processes the selection styled feature items, this reuses the style processors set up for the
  * features originating layers, this way we don't have try and decipher how to draw it again
  * @ignore
+ * @internal
  */
 export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
   /**

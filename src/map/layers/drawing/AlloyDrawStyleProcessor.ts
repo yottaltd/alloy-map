@@ -11,6 +11,7 @@ import { AlloyDrawLayer } from './AlloyDrawLayer';
 /**
  * processes the draw styled feature items
  * @ignore
+ * @internal
  */
 export class AlloyDrawStyleProcessor extends AlloyStyleProcessor {
   /**

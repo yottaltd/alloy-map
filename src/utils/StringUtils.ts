@@ -1,6 +1,7 @@
 /**
  * utility for strings
  * @ignore
+ * @internal
  */
 export abstract class StringUtils {
   /**

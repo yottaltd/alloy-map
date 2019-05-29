@@ -9,6 +9,7 @@ import { AlloyMapError } from '../../../../error/AlloyMapError';
 /**
  * geometry functions for openlayers styles, modifies linestring geometry for styling
  * @ignore
+ * @internal
  */
 export abstract class AlloyLineStringFunctions {
   /**

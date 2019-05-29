@@ -1,6 +1,7 @@
 /**
  * the style builder build state for making styles
  * @ignore
+ * @internal
  */
 export enum AlloyStyleBuilderBuildState {
   Hover = 'Hover',

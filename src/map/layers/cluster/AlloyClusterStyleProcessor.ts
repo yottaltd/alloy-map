@@ -13,6 +13,7 @@ import { AlloyClusterLayer } from './AlloyClusterLayer';
 /**
  * processes the cluster styled feature items
  * @ignore
+ * @internal
  */
 export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
   /**
@@ -28,6 +29,8 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
   /**
    * creates a new instance
    * @param layer the cluster layer to style
+   * @ignore
+   * @internal
    */
   constructor(layer: AlloyClusterLayer) {
     super(layer);

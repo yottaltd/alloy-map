@@ -6,6 +6,7 @@ export class AlloyMapError extends Error {
    * attempts to parse an alloy map error either from json or another error instance
    * @param potentialAlloyError the potential alloy map error to parse
    * @ignore
+   * @internal
    */
   public static parse(potentialAlloyError: any): AlloyMapError | undefined {
     if (potentialAlloyError instanceof AlloyMapError) {

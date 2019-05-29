@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 /**
  * geometry functions for openlayers styles, modifies multi linestring geometry for styling
  * @ignore
+ * @internal
  */
 export abstract class AlloyMultiLineStringFunctions {
   /**

@@ -25,10 +25,13 @@ const ICON_COLOUR = '#ffffff';
  * builds styles for route features,
  * this has to be points (for waypoints) or linestrings (for route)
  * @ignore
+ * @internal
  */
 export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature> {
   /**
    * creates a new instance
+   * @ignore
+   * @internal
    */
   constructor() {
     super();

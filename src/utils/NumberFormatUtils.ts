@@ -1,6 +1,7 @@
 /**
  * utility for formatting numbers
  * @ignore
+ * @internal
  */
 export abstract class NumberFormatUtils {
   /**

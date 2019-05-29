@@ -34,6 +34,7 @@ const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
 /**
  * animation manager handles common animation utilities
  * @ignore
+ * @internal
  */
 export class AnimationManager {
   /**

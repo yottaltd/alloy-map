@@ -10,6 +10,7 @@ import { AlloyMapError } from '../../error/AlloyMapError';
  * decrease performance.
  * @template T the feature type the style builder will build for
  * @ignore
+ * @internal
  */
 export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
   /**

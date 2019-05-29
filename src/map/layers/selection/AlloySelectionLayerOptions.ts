@@ -3,6 +3,7 @@ import { AlloyMap } from '../../core/AlloyMap';
 /**
  * options for the alloy selection layer
  * @ignore
+ * @internal
  */
 export interface AlloySelectionLayerOptions {
   /**
