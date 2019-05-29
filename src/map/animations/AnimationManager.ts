@@ -15,6 +15,10 @@ import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AnimationListener } from './AnimationListener';
 
+// TODO refactor
+// I started commenting this class but the whole start/set feels like spaghetti with 2 maps managing
+// feature animations etc. oleg wants to split this class up anyway so will review again later.
+
 /**
  * 90 degrees in radians
  * @ignore
