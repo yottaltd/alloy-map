@@ -45,7 +45,7 @@ export class AlloyRouteLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  public readonly styleProcessor: AlloyStyleProcessor | null;
+  public readonly styleProcessor: AlloyRouteStyleProcessor;
 
   /**
    * source to hold the openlayers route features
@@ -137,12 +137,12 @@ export class AlloyRouteLayer implements AlloyLayer {
    */
   public setRouteFeature(route: AlloyFeature) {
     if (this.routeFeature !== null) {
-      this.map.animationManager.stopFeatureAnimation(this.routeFeature);
+      this.styleProcessor.animationManager.stopFeatureAnimation(this.routeFeature);
     }
     this.routeFeature = route;
     this.olSourceRoute.clear(false);
     this.olSourceRoute.addFeature(this.routeFeature.olFeature);
-    this.map.animationManager.startRouteAnimation(this.routeFeature, this.olLayerWaypoints);
+    this.styleProcessor.animationManager.startAnimation(this.routeFeature, this.olLayerWaypoints);
   }
 
   /**
@@ -162,7 +162,7 @@ export class AlloyRouteLayer implements AlloyLayer {
    */
   public clear() {
     if (this.routeFeature) {
-      this.map.animationManager.stopFeatureAnimation(this.routeFeature);
+      this.styleProcessor.animationManager.stopFeatureAnimation(this.routeFeature);
     }
     this.olSourceRoute.clear(false);
     this.olSourceWaypoints.clear(false);

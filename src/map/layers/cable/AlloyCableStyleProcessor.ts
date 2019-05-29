@@ -5,34 +5,34 @@ import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyRouteStyleBuilder } from '../../styles/builders/AlloyRouteStyleBuilder';
-import { AlloyRouteLayer } from './AlloyRouteLayer';
-import { RouteAnimationManager } from './RouteAnimationManager';
+import { AlloyCableStyleBuilder } from '../../styles/builders/AlloyCableStyleBuilder';
+import { AlloyCableLayer } from './AlloyCableLayer';
+import { CableAnimationManager } from './CableAnimationManager';
 
 /**
- * processes the route styled feature items
+ * processes the cable styled feature items
  * @ignore
  * @internal
  */
-export class AlloyRouteStyleProcessor extends AlloyStyleProcessor {
+export class AlloyCableStyleProcessor extends AlloyStyleProcessor {
   /**
-   * Animation manager for routes
+   * Animation manager for cables
    */
-  public readonly animationManager: RouteAnimationManager;
+  public readonly animationManager: CableAnimationManager;
   /**
-   * route feature style builder
+   * cable feature style builder
    */
-  private readonly routeStyleBuilder: AlloyRouteStyleBuilder;
+  private readonly cableStyleBuilder: AlloyCableStyleBuilder;
 
   /**
    * creates a new instance
-   * @param layer the route layer to style
+   * @param layer the cable layer to style
    */
-  constructor(layer: AlloyRouteLayer) {
+  constructor(layer: AlloyCableLayer) {
     super(layer);
 
-    this.routeStyleBuilder = new AlloyRouteStyleBuilder();
-    this.animationManager = new RouteAnimationManager(layer.map);
+    this.cableStyleBuilder = new AlloyCableStyleBuilder();
+    this.animationManager = new CableAnimationManager(layer.map);
   }
 
   /**
@@ -53,7 +53,7 @@ export class AlloyRouteStyleProcessor extends AlloyStyleProcessor {
     }
 
     if (feature instanceof AlloyCustomFeature) {
-      return this.routeStyleBuilder.build(feature, resolution, state);
+      return this.cableStyleBuilder.build(feature, resolution, state);
     } else {
       return [];
     }

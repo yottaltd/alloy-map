@@ -118,13 +118,6 @@ export class AlloyMap {
   public readonly selectionInteraction: AlloySelectionInteraction;
 
   /**
-   * animation manager
-   * @ignore
-   * @internal
-   */
-  public readonly animationManager: AnimationManager;
-
-  /**
    * the draw interaction manager.
    */
   private readonly drawInteraction: AlloyDrawInteraction;
@@ -253,9 +246,6 @@ export class AlloyMap {
 
     // setup draw interaction
     this.drawInteraction = new AlloyDrawInteraction(this);
-
-    // setup animation utils
-    this.animationManager = new AnimationManager(this);
   }
 
   /**

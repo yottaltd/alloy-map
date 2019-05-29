@@ -46,6 +46,8 @@ export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
 export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
+export { AlloyCableLayer } from './map/layers/cable/AlloyCableLayer';
+export { AlloyCableLayerOptions } from './map/layers/cable/AlloyCableLayerOptions';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';
 export { AlloyClusterLayerOptions } from './map/layers/cluster/AlloyClusterLayerOptions';
 export { AlloyCustomLayer } from './map/layers/custom/AlloyCustomLayer';
