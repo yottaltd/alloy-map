@@ -7,7 +7,6 @@ import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuild
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyCableStyleBuilder } from '../../styles/builders/AlloyCableStyleBuilder';
 import { AlloyCableLayer } from './AlloyCableLayer';
-import { CableAnimationManager } from './CableAnimationManager';
 
 /**
  * processes the cable styled feature items
@@ -15,10 +14,6 @@ import { CableAnimationManager } from './CableAnimationManager';
  * @internal
  */
 export class AlloyCableStyleProcessor extends AlloyStyleProcessor {
-  /**
-   * Animation manager for cables
-   */
-  public readonly animationManager: CableAnimationManager;
   /**
    * cable feature style builder
    */
@@ -32,7 +27,6 @@ export class AlloyCableStyleProcessor extends AlloyStyleProcessor {
     super(layer);
 
     this.cableStyleBuilder = new AlloyCableStyleBuilder();
-    this.animationManager = new CableAnimationManager(layer.map);
   }
 
   /**

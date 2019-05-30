@@ -7,6 +7,7 @@ import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyLayer } from '../AlloyLayer';
+import { AlloyCableAnimationManager } from './AlloyCableAnimationManager';
 import { AlloyCableLayerOptions } from './AlloyCableLayerOptions';
 import { AlloyCableStyleProcessor } from './AlloyCableStyleProcessor';
 
@@ -45,6 +46,11 @@ export class AlloyCableLayer implements AlloyLayer {
    * @internal
    */
   public readonly styleProcessor: AlloyCableStyleProcessor;
+
+  /**
+   * animation manager for cables
+   */
+  private readonly animationManager: AlloyCableAnimationManager;
 
   /**
    * source to hold the openlayers cable features
@@ -86,6 +92,7 @@ export class AlloyCableLayer implements AlloyLayer {
     this.debugger = this.map.debugger.extend(AlloyCableLayer.name + ':' + this.id);
 
     this.styleProcessor = new AlloyCableStyleProcessor(this);
+    this.animationManager = new AlloyCableAnimationManager(this.map);
 
     this.olLayerCables = new OLVectorLayer({
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
@@ -135,15 +142,21 @@ export class AlloyCableLayer implements AlloyLayer {
    * @param cable cable feature
    */
   public setCableFeatures(cables: AlloyFeature[]) {
-    for (const cable of Array.from(this.cableFeatures.values())) {
-      this.styleProcessor.animationManager.stopFeatureAnimation(cable);
-    }
+    // clear any animations
+    Array.from(this.cableFeatures.values()).forEach((cable) =>
+      this.animationManager.stopFeatureAnimation(cable),
+    );
+
+    // remove features from source and internal dictionary
     this.olSourceCables.clear(false);
+    this.cableFeatures.clear();
+
+    // start add the features to the dictionary and start the animation
     this.olSourceCables.addFeatures(cables.map((f) => f.olFeature));
-    for (const cable of cables) {
+    cables.forEach((cable) => {
       this.cableFeatures.set(cable.id, cable);
-      this.styleProcessor.animationManager.startAnimation(cable, this.olLayerFeeds);
-    }
+      this.animationManager.startAnimation(cable, this.olLayerFeeds);
+    });
   }
 
   /**
@@ -162,11 +175,16 @@ export class AlloyCableLayer implements AlloyLayer {
    * Clears the layer and stops cable animation
    */
   public clear() {
-    for (const cable of Array.from(this.cableFeatures.values())) {
-      this.styleProcessor.animationManager.stopFeatureAnimation(cable);
-    }
+    // clear animations
+    Array.from(this.cableFeatures.values()).forEach((cable) =>
+      this.animationManager.stopFeatureAnimation(cable),
+    );
+
+    // remove from sources and internal dictionary
     this.olSourceCables.clear(false);
+    this.cableFeatures.clear();
     this.olSourceFeeds.clear(false);
+    this.feedFeatures.clear();
   }
 
   /**

@@ -7,9 +7,10 @@ import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
 import { ColourUtils } from '../../../utils/ColourUtils';
+import { GeometryUtils } from '../../../utils/GeometryUtils';
+import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
-import { AnimationManager } from '../../animations/AnimationManager';
 
 /**
  * 90 degrees in radians
@@ -28,7 +29,7 @@ const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
  * @ignore
  * @internal
  */
-export class RouteAnimationManager extends AnimationManager {
+export class AlloyRouteAnimationManager extends AlloyAnimationManager {
   /**
    * creates a new instance
    * @param map the alloy map to animate
@@ -38,9 +39,6 @@ export class RouteAnimationManager extends AnimationManager {
   }
 
   /**
-   * starts the routing animation for a feature
-   * @param route the route feature to animate
-   * @param precomposeLayer the layer before which animatiosn are drawn
    * @implements
    */
   public startAnimation(route: AlloyFeature, precomposeLayer?: OLVectorLayer) {
@@ -74,12 +72,12 @@ export class RouteAnimationManager extends AnimationManager {
           }),
         });
 
-        const noseClockwise90Degrees = AnimationManager.rotateCoordinate(
+        const noseClockwise90Degrees = GeometryUtils.rotateCoordinate(
           nose,
           DEGREES_90_IN_RADIANS,
           centre,
         );
-        const noseCounterClockwise90Degrees = AnimationManager.rotateCoordinate(
+        const noseCounterClockwise90Degrees = GeometryUtils.rotateCoordinate(
           nose,
           -DEGREES_90_IN_RADIANS,
           centre,

@@ -7,9 +7,10 @@ import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
 import { ColourUtils } from '../../../utils/ColourUtils';
+import { GeometryUtils } from '../../../utils/GeometryUtils';
+import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
-import { AnimationManager } from '../../animations/AnimationManager';
 
 /**
  * 90 degrees in radians
@@ -24,11 +25,11 @@ const DEGREES_90_IN_RADIANS: number = Math.PI / 2;
 const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
 
 /**
- * animation manager handles common animation utilities
+ * animation manager for cables
  * @ignore
  * @internal
  */
-export class CableAnimationManager extends AnimationManager {
+export class AlloyCableAnimationManager extends AlloyAnimationManager {
   /**
    * creates a new instance
    * @param map the alloy map to animate
@@ -38,9 +39,6 @@ export class CableAnimationManager extends AnimationManager {
   }
 
   /**
-   * starts the cable animation for a feature
-   * @param cable the cable feature
-   * @param precomposeLayer the layer being drawn to for animations
    * @implements
    */
   public startAnimation(cable: AlloyFeature, precomposeLayer?: OLVectorLayer) {
@@ -54,27 +52,27 @@ export class CableAnimationManager extends AnimationManager {
       ) => {
         // calculate coordinates for positioning
         const centre: [number, number] = lineString.getCoordinateAt(ratio);
-        let nose: ol.Coordinate;
-        let back: ol.Coordinate;
+        let nose: [number, number];
+        let back: [number, number];
 
         if (ratio > 1 - currentScaleRatio) {
-          back = AnimationManager.rotateCoordinate(
+          back = GeometryUtils.rotateCoordinate(
             lineString.getCoordinateAt(ratio - currentScaleRatio),
             DEGREES_90_IN_RADIANS,
             centre,
           );
-          nose = AnimationManager.rotateCoordinate(
+          nose = GeometryUtils.rotateCoordinate(
             lineString.getCoordinateAt(1),
             DEGREES_90_IN_RADIANS,
             centre,
           );
         } else {
-          back = AnimationManager.rotateCoordinate(
+          back = GeometryUtils.rotateCoordinate(
             lineString.getCoordinateAt(ratio - currentScaleRatio),
             DEGREES_90_IN_RADIANS,
             centre,
           );
-          nose = AnimationManager.rotateCoordinate(
+          nose = GeometryUtils.rotateCoordinate(
             lineString.getCoordinateAt(ratio + currentScaleRatio),
             DEGREES_90_IN_RADIANS,
             centre,
@@ -97,29 +95,29 @@ export class CableAnimationManager extends AnimationManager {
           }),
         });
 
-        const b1: ol.Coordinate = AnimationManager.rotateCoordinate(
+        const b1: [number, number] = GeometryUtils.rotateCoordinate(
           centre,
           DEGREES_90_IN_RADIANS / 3,
           nose,
         );
-        const n1: ol.Coordinate = AnimationManager.rotateCoordinate(
+        const n1: [number, number] = GeometryUtils.rotateCoordinate(
           centre,
           DEGREES_90_IN_RADIANS / 3,
           back,
         );
 
-        const b2: ol.Coordinate = AnimationManager.rotateCoordinate(
+        const b2: [number, number] = GeometryUtils.rotateCoordinate(
           back,
           DEGREES_90_IN_RADIANS,
           b1,
         );
-        const n2: ol.Coordinate = AnimationManager.rotateCoordinate(
+        const n2: [number, number] = GeometryUtils.rotateCoordinate(
           nose,
           DEGREES_90_IN_RADIANS,
           n1,
         );
 
-        const coordinates: ol.Coordinate[] = [];
+        const coordinates: Array<[number, number]> = [];
         coordinates.push(nose);
         coordinates.push(n1);
         coordinates.push(n2);

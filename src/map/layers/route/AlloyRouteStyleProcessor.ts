@@ -7,7 +7,6 @@ import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuild
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyRouteStyleBuilder } from '../../styles/builders/AlloyRouteStyleBuilder';
 import { AlloyRouteLayer } from './AlloyRouteLayer';
-import { RouteAnimationManager } from './RouteAnimationManager';
 
 /**
  * processes the route styled feature items
@@ -15,10 +14,6 @@ import { RouteAnimationManager } from './RouteAnimationManager';
  * @internal
  */
 export class AlloyRouteStyleProcessor extends AlloyStyleProcessor {
-  /**
-   * Animation manager for routes
-   */
-  public readonly animationManager: RouteAnimationManager;
   /**
    * route feature style builder
    */
@@ -32,7 +27,6 @@ export class AlloyRouteStyleProcessor extends AlloyStyleProcessor {
     super(layer);
 
     this.routeStyleBuilder = new AlloyRouteStyleBuilder();
-    this.animationManager = new RouteAnimationManager(layer.map);
   }
 
   /**

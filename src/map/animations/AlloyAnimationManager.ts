@@ -1,58 +1,21 @@
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
-import OLPoint from 'ol/geom/Point';
-import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLRenderCanvas from 'ol/render/canvas';
 import OLRenderEvent from 'ol/render/Event';
-import OLFill from 'ol/style/Fill';
-import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
 import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
-import { ColourUtils } from '../../utils/ColourUtils';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
-import { AnimationListener } from './AnimationListener';
-
-// TODO refactor
-// I started commenting this class but the whole start/set feels like spaghetti with 2 maps managing
-// feature animations etc. oleg wants to split this class up anyway so will review again later.
-
-/**
- * 90 degrees in radians
- * @ignore
- */
-const DEGREES_90_IN_RADIANS: number = Math.PI / 2;
-
-/**
- * the colour of chevrons in rgb
- * @ignore
- */
-const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
+import { AlloyAnimationListener } from './AlloyAnimationListener';
 
 /**
  * animation manager handles common animation utilities
  * @ignore
  * @internal
  */
-export abstract class AnimationManager {
-  /**
-   * rotates a coordinate around the anchor
-   * @param coordinate
-   * @param angleRad
-   * @param anchor
-   */
-  protected static rotateCoordinate(
-    coordinate: [number, number],
-    angleRad: number,
-    anchor: [number, number],
-  ): [number, number] {
-    const p = new OLPoint(coordinate);
-    p.rotate(angleRad, anchor);
-    return p.getCoordinates();
-  }
-
+export abstract class AlloyAnimationManager {
   /**
    * a reference to the alloy map being animated
    */
@@ -76,8 +39,6 @@ export abstract class AnimationManager {
   /**
    * creates a new instance
    * @param map the alloy map to animate
-   * @ignore
-   * @internal
    */
   public constructor(map: AlloyMap) {
     this.map = map;
@@ -87,15 +48,11 @@ export abstract class AnimationManager {
    * starts the animation for a feature
    * @param cable the feature
    * @param precomposeLayer the layer before which animatiosn are drawn
-   * @ignore
-   * @internal
    */
   public abstract startAnimation(cable: AlloyFeature, precomposeLayer?: OLVectorLayer): void;
 
   /**
    * clears all running animations
-   * @ignore
-   * @internal
    */
   public clearAnimations() {
     this.animatingFeatures.clear();
@@ -104,8 +61,6 @@ export abstract class AnimationManager {
   /**
    * stops animation a single feature
    * @param feature the feature to stop animations for
-   * @ignore
-   * @internal
    */
   public stopFeatureAnimation(feature: AlloyFeature) {
     this.animatingFeatures.delete(feature.olFeature);
@@ -178,7 +133,7 @@ export abstract class AnimationManager {
    */
   private setFeatureAnimation(
     feature: OLFeature,
-    animationListener: AnimationListener,
+    animationListener: AlloyAnimationListener,
     duration: number,
     precomposeObject?: ol.Observable,
   ) {

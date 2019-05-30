@@ -6,8 +6,8 @@ import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyLayer } from '../AlloyLayer';
+import { AlloyRouteAnimationManager } from './AlloyRouteAnimationManager';
 import { AlloyRouteLayerOptions } from './AlloyRouteLayerOptions';
 import { AlloyRouteStyleProcessor } from './AlloyRouteStyleProcessor';
 
@@ -46,6 +46,11 @@ export class AlloyRouteLayer implements AlloyLayer {
    * @internal
    */
   public readonly styleProcessor: AlloyRouteStyleProcessor;
+
+  /**
+   * animation manager for routes
+   */
+  private readonly animationManager: AlloyRouteAnimationManager;
 
   /**
    * source to hold the openlayers route features
@@ -87,6 +92,7 @@ export class AlloyRouteLayer implements AlloyLayer {
     this.debugger = this.map.debugger.extend(AlloyRouteLayer.name + ':' + this.id);
 
     this.styleProcessor = new AlloyRouteStyleProcessor(this);
+    this.animationManager = new AlloyRouteAnimationManager(this.map);
 
     this.olLayerRoute = new OLVectorLayer({
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
@@ -136,13 +142,16 @@ export class AlloyRouteLayer implements AlloyLayer {
    * @param route route feature
    */
   public setRouteFeature(route: AlloyFeature) {
+    // clear existing feature animation if applicable
     if (this.routeFeature !== null) {
-      this.styleProcessor.animationManager.stopFeatureAnimation(this.routeFeature);
+      this.animationManager.stopFeatureAnimation(this.routeFeature);
     }
+
+    // setup the new route feature and animate
     this.routeFeature = route;
     this.olSourceRoute.clear(false);
     this.olSourceRoute.addFeature(this.routeFeature.olFeature);
-    this.styleProcessor.animationManager.startAnimation(this.routeFeature, this.olLayerWaypoints);
+    this.animationManager.startAnimation(this.routeFeature, this.olLayerWaypoints);
   }
 
   /**
@@ -153,17 +162,20 @@ export class AlloyRouteLayer implements AlloyLayer {
     this.waypointFeatures.clear();
     this.olSourceWaypoints.clear(false);
 
-    waypoints.forEach((w) => this.waypointFeatures.set(w.id, w));
     this.olSourceWaypoints.addFeatures(waypoints.map((w) => w.olFeature));
+    waypoints.forEach((w) => this.waypointFeatures.set(w.id, w));
   }
 
   /**
    * Clears the layer and stops route animation
    */
   public clear() {
+    // remove any animating feature
     if (this.routeFeature) {
-      this.styleProcessor.animationManager.stopFeatureAnimation(this.routeFeature);
+      this.animationManager.stopFeatureAnimation(this.routeFeature);
     }
+
+    this.routeFeature = null;
     this.olSourceRoute.clear(false);
     this.olSourceWaypoints.clear(false);
   }

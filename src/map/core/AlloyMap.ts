@@ -11,7 +11,8 @@ import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
-import { AnimationManager } from '../animations/AnimationManager';
+import { GeometryUtils } from '../../utils/GeometryUtils';
+import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
@@ -38,8 +39,6 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
-import { GeometryUtils } from '../../utils/GeometryUtils';
 
 /**
  * minimum zoom level for the map

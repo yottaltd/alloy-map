@@ -5,7 +5,7 @@ import RenderCanvas from 'ol/render/canvas';
  * @ignore
  * @internal
  */
-export interface AnimationListener {
+export interface AlloyAnimationListener {
   /**
    * called pre animation cycle
    */
