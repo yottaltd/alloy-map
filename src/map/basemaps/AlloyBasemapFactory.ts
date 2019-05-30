@@ -55,4 +55,13 @@ export abstract class AlloyBasemapFactory {
     const tileSize = 512;
     return new AlloyTileBasemap(url, tileSize);
   }
+
+  /**
+   * creates a custom xyz basemap
+   * @param url /{z}/{x}/{y} format url
+   * @param tileSize tile dimensions returned by tile server
+   */
+  public static createXyz(url: string, tileSize: number) {
+    return new AlloyTileBasemap(url, tileSize);
+  }
 }

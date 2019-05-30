@@ -1,8 +1,8 @@
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyBounds } from '../core/AlloyBounds';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyMap } from '../core/AlloyMap';
@@ -110,8 +110,8 @@ export class AlloyClusterFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setGeometry(geometry: Geometry) {
-    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  public setGeometry(geometry: Geometry | null) {
+    throw new AlloyMapError(1559223891, 'modifying geometry of cluster features is not allowed');
   }
 
   /**

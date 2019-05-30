@@ -11,7 +11,8 @@ import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
-import { AnimationManager } from '../animations/AnimationManager';
+import { GeometryUtils } from '../../utils/GeometryUtils';
+import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
@@ -38,7 +39,6 @@ import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 
 /**
  * minimum zoom level for the map
@@ -110,13 +110,6 @@ export class AlloyMap {
    * @internal
    */
   public readonly selectionInteraction: AlloySelectionInteraction;
-
-  /**
-   * animation manager
-   * @ignore
-   * @internal
-   */
-  public readonly animationManager: AnimationManager;
 
   /**
    * the draw interaction manager.
@@ -247,9 +240,6 @@ export class AlloyMap {
 
     // setup draw interaction
     this.drawInteraction = new AlloyDrawInteraction(this);
-
-    // setup animation utils
-    this.animationManager = new AnimationManager(this);
   }
 
   /**
@@ -582,6 +572,13 @@ export class AlloyMap {
    */
   public setSize(width: number, height: number) {
     this.olMap.setSize([width, height]);
+  }
+
+  /**
+   * Request a map rendering (at the next animation frame).
+   */
+  public render() {
+    this.olMap.render();
   }
 
   /**

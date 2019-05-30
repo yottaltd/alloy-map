@@ -8,6 +8,7 @@ import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/A
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * an alloy draw feature which represents something being drawn on the map by a user or
@@ -107,8 +108,28 @@ export class AlloyDrawFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setGeometry(geometry: Geometry) {
-    this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+  public setGeometry(geometry: Geometry | null) {
+    if (geometry === null) {
+      this.olFeature.setGeometry(undefined as any);
+    } else {
+      const olGeometry = ProjectionUtils.GEOJSON.readGeometry(geometry);
+      const geometryType = olGeometry.getType();
+      if (
+        geometryType === 'Point' ||
+        geometryType === 'LineString' ||
+        geometryType === 'Polygon' ||
+        geometryType === 'MultiPoint' ||
+        geometryType === 'MultiLineString' ||
+        geometryType === 'MultiPolygon'
+      ) {
+        throw new AlloyMapError(
+          1559224174,
+          'alloy draw feature must be a simple geometry type e.g. Point, LineString, Polygon, ' +
+            'MultiPoint, MultiLineString or MultiPolygon',
+        );
+      }
+      this.olFeature.setGeometry(olGeometry);
+    }
   }
 
   /**
