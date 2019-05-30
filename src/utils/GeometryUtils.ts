@@ -1,4 +1,5 @@
 import { Geometry } from 'geojson';
+import * as _ from 'lodash';
 import OLPoint from 'ol/geom/Point';
 import { AlloyBounds } from '../map/core/AlloyBounds';
 import { ProjectionUtils } from './ProjectionUtils';
