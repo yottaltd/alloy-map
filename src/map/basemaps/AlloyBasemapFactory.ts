@@ -61,7 +61,7 @@ export abstract class AlloyBasemapFactory {
    * @param url /{z}/{x}/{y} format url
    * @param tileSize tile dimensions returned by tile server
    */
-  public static createXyz(url: string, tileSize: number) {
+  public static createXyz(url: string, tileSize: number): AlloyBasemap {
     return new AlloyTileBasemap(url, tileSize);
   }
 }
