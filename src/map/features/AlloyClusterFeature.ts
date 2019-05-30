@@ -9,6 +9,7 @@ import { AlloyMap } from '../core/AlloyMap';
 import { AlloyClusterFeatureProperties } from './AlloyClusterFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyMapError } from '../../../types';
 
 /**
  * an alloy cluster feature which represents several items "clustered" together based on proximity
@@ -111,11 +112,7 @@ export class AlloyClusterFeature implements AlloyFeature {
    * @implements
    */
   public setGeometry(geometry: Geometry | null) {
-    if (geometry === null) {
-      this.olFeature.setGeometry(undefined as any);
-    } else {
-      this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
-    }
+    throw new AlloyMapError(1559223891, 'modifying geometry of cluster features is not allowed');
   }
 
   /**

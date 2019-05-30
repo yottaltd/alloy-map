@@ -111,6 +111,7 @@ export class AlloyCustomFeature implements AlloyFeature {
     if (geometry === null) {
       this.olFeature.setGeometry(undefined as any);
     } else {
+      // allows any type
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
     }
   }
