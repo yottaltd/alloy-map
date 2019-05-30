@@ -1,15 +1,14 @@
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyBounds } from '../core/AlloyBounds';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyClusterFeatureProperties } from './AlloyClusterFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyMapError } from '../../../types';
 
 /**
  * an alloy cluster feature which represents several items "clustered" together based on proximity
