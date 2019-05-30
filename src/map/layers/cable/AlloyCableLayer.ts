@@ -160,15 +160,15 @@ export class AlloyCableLayer implements AlloyLayer {
   }
 
   /**
-   * Sets waypoint features for cable
-   * @param waypoints array of waypoint features
+   * Sets feed features for cable
+   * @param feeds array of feed features
    */
-  public setFeedFeatures(waypoints: AlloyFeature[]) {
+  public setFeedFeatures(feeds: AlloyFeature[]) {
     this.feedFeatures.clear();
     this.olSourceFeeds.clear(false);
 
-    waypoints.forEach((w) => this.feedFeatures.set(w.id, w));
-    this.olSourceFeeds.addFeatures(waypoints.map((w) => w.olFeature));
+    feeds.forEach((w) => this.feedFeatures.set(w.id, w));
+    this.olSourceFeeds.addFeatures(feeds.map((w) => w.olFeature));
   }
 
   /**
