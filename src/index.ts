@@ -1,7 +1,6 @@
 export { AlloyMapError } from './error/AlloyMapError';
 export { AlloyBasemap } from './map/basemaps/AlloyBasemap';
 export { AlloyBasemapFactory } from './map/basemaps/AlloyBasemapFactory';
-export { AlloyTileBasemap } from './map/basemaps/AlloyTileBasemap';
 export { AlloyBounds } from './map/core/AlloyBounds';
 export { AlloyCoordinate } from './map/core/AlloyCoordinate';
 export { AlloyMap } from './map/core/AlloyMap';
