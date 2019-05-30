@@ -57,3 +57,4 @@ export { AlloyNetworkLayerOptions } from './map/layers/network/AlloyNetworkLayer
 export { AlloyRouteLayer } from './map/layers/route/AlloyRouteLayer';
 export { AlloyRouteLayerOptions } from './map/layers/route/AlloyRouteLayerOptions';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
+export { GeometryUtils } from './utils/GeometryUtils';

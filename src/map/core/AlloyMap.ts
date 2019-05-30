@@ -63,11 +63,6 @@ const DEBOUNCED_EVENT_TIMEOUT: number = 100;
  */
 export class AlloyMap {
   /**
-   * public geometry utils
-   */
-  public static readonly geometry: GeometryUtils;
-
-  /**
    * debugger instance
    * @ignore
    * @internal
