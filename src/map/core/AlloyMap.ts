@@ -11,7 +11,6 @@ import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { Api } from '../../svr/Api';
 import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
-import { GeometryUtils } from '../../utils/GeometryUtils';
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';

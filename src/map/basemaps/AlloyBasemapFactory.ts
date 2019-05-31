@@ -1,6 +1,8 @@
+import { AlloyWMSParameters } from '../../wms/AlloyWMSParameters';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
 import { AlloyTileBasemap } from './AlloyTileBasemap';
+import { AlloyWMSBasemap } from './AlloyWMSBasemap';
 
 /**
  * factory for creating standard alloy basemaps
@@ -63,5 +65,13 @@ export abstract class AlloyBasemapFactory {
    */
   public static createXyz(url: string, tileSize: number): AlloyBasemap {
     return new AlloyTileBasemap(url, tileSize);
+  }
+
+  /**
+   * creates a custom WMS basemap
+   * @param options WMS url and layer options
+   */
+  public static createWMS(options: AlloyWMSParameters): AlloyBasemap {
+    return new AlloyWMSBasemap(options);
   }
 }
