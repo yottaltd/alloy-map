@@ -1,5 +1,11 @@
-import { fromLonLat, toLonLat, get } from 'ol/proj.js';
+import { fromLonLat, toLonLat, get, transformExtent } from 'ol/proj.js';
 import OLProjection from 'ol/proj/Projection';
+import { register } from 'ol/proj/proj4.js';
+
+// ugly hack to allow building taken from here
+// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663
+import * as proj4x from 'proj4';
+const proj4 = (proj4x as any).default;
 
 /**
  * utility class for accessing ol/proj functions due to typing issues.
@@ -32,5 +38,28 @@ export abstract class PolyfillProj {
    */
   public static get(projection: string): OLProjection | null {
     return get(projection) || null;
+  }
+
+  /**
+   * Registers proj4 with openlayers
+   * @param proj proj4 object to register with openlayers
+   */
+  public static register(code: string, def: string | proj4x.ProjectionDefinition) {
+    proj4.defs(code, def);
+    register(proj4);
+  }
+
+  /**
+   * Transforms an extent from one projection to another
+   * @param extent extent to transform
+   * @param from source projection
+   * @param to destination projection
+   */
+  public static transformExtent(
+    extent: [number, number, number, number],
+    from: OLProjection,
+    to: OLProjection,
+  ): [number, number, number, number] {
+    return transformExtent(extent, from, to);
   }
 }

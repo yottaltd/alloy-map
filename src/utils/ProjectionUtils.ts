@@ -1,7 +1,8 @@
-import OLProjection from 'ol/proj/Projection';
 import OLGeoJson from 'ol/format/GeoJSON';
+import OLProjection from 'ol/proj/Projection';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
+import { EpsgIo } from './epsg-io/EpsgIo';
 
 /**
  * utility class for playing with projections
@@ -49,5 +50,25 @@ export abstract class ProjectionUtils {
       throw new AlloyMapError(1553794154, 'failed to get projection with code: ' + projection);
     }
     return proj;
+  }
+
+  /**
+   * Rgisters a projection
+   * @param epsg espg number to register projection for
+   */
+  public static async register(epsg: number): Promise<void> {
+    const code = 'EPSG:' + epsg;
+    try {
+      const proj = ProjectionUtils.getProjectionOrThrow(code);
+      if (proj) {
+        return;
+      }
+    } catch (e) {
+      const epsgResponse = await EpsgIo.search(epsg.toString());
+      if (epsgResponse.results.length === 0) {
+        throw new AlloyMapError(1559555257, 'Could not find projection ' + code + ' on epsg.io');
+      }
+      PolyfillProj.register(code, epsgResponse.results[0].proj4);
+    }
   }
 }

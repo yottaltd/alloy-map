@@ -1,4 +1,4 @@
-import { tile } from 'ol/loadingstrategy.js';
+import { tile, bbox as bboxStrategy } from 'ol/loadingstrategy.js';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 
 /**
@@ -14,5 +14,9 @@ export abstract class PolyfillLoadingStrategy {
    */
   public static tile(tileGrid: OLTileGrid): () => any {
     return tile(tileGrid);
+  }
+
+  public static bbox(): () => any {
+    return bboxStrategy;
   }
 }

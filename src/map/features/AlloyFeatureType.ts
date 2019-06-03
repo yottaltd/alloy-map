@@ -26,4 +26,9 @@ export enum AlloyFeatureType {
    * an alloy draw feature
    */
   Draw = 'Draw',
+
+  /**
+   * an alloy wfs feature
+   */
+  Wfs = 'Wfs',
 }

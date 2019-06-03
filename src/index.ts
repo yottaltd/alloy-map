@@ -38,6 +38,9 @@ export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGe
 export {
   AlloySimplifiedGeometryFeatureProperties,
 } from './map/features/AlloySimplifiedGeometryFeatureProperties';
+export { AlloyWfsFeature } from './map/features/AlloyWfsFeature';
+export { AlloyWfsFeatureProperties } from './map/features/AlloyWfsFeatureProperties';
+export { AlloyWfsFeatureWfsProperties } from './map/features/AlloyWfsFeatureWfsProperties';
 export {
   AlloyDrawInteractionGeometryType,
 } from './map/interactions/AlloyDrawInteractionGeometryType';
@@ -56,5 +59,12 @@ export { AlloyNetworkLayer } from './map/layers/network/AlloyNetworkLayer';
 export { AlloyNetworkLayerOptions } from './map/layers/network/AlloyNetworkLayerOptions';
 export { AlloyRouteLayer } from './map/layers/route/AlloyRouteLayer';
 export { AlloyRouteLayerOptions } from './map/layers/route/AlloyRouteLayerOptions';
+export { AlloyWfsLayer } from './map/layers/wfs/AlloyWfsLayer';
+export { AlloyWfsLayerOptions } from './map/layers/wfs/AlloyWfsLayerOptions';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
 export { GeometryUtils } from './utils/GeometryUtils';
+export { AlloyWfsCapabilities } from './wfs/AlloyWfsCapabilities';
+export { AlloyWfsFeatureType } from './wfs/AlloyWfsFeatureType';
+export { AlloyWfsFeatureTypeDescription } from './wfs/AlloyWfsFeatureTypeDescription';
+export { AlloyWfsLayerStyle } from './map/styles/AlloyWfsLayerStyle';
+export { WfsUtils } from './wfs/WfsUtils';
