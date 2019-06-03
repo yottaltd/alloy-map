@@ -230,7 +230,7 @@ export class AlloyDrawInteraction {
 
       // wrap created draw event feature into AlloyDrawFeature and save to draw layer
       const feature = new AlloyDrawFeature(uuid.v1(), event.feature, properties);
-      this.drawLayer.addFeature(feature);
+      this.drawLayer.addDrawFeatureWrapper(feature);
 
       this.onDrawEnd(feature);
     });
@@ -502,7 +502,7 @@ export class AlloyDrawInteraction {
         colour: DRAW_COLOUR,
       });
       this.removeLayer.addFeature(feature);
-      this.removeLayer.olSource.addFeature(feature.olFeature);
+      // this.removeLayer.olSource.addFeature(feature.olFeature);
     });
   }
 

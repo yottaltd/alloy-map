@@ -1,4 +1,13 @@
-import { Geometry } from 'geojson';
+import {
+  Geometry,
+  GeometryCollection,
+  Point,
+  MultiPoint,
+  LineString,
+  MultiLineString,
+  Polygon,
+  MultiPolygon,
+} from 'geojson';
 import * as _ from 'lodash';
 import OLPoint from 'ol/geom/Point';
 import { AlloyBounds } from '../map/core/AlloyBounds';
@@ -39,7 +48,62 @@ export abstract class GeometryUtils {
   }
 
   /**
+   * Rounds all coordinates in the geometry to 6dp
+   * @param geometry geometry to round coordinates for
+   * @ignore
+   * @internal
+   */
+  public static roundCoordinates(geometry: Geometry): void {
+    switch (geometry.type) {
+      case 'Point':
+        const point = geometry as Point;
+        point.coordinates = this.roundCoordinate(point.coordinates);
+        break;
+      case 'MultiPoint':
+        const multiPoint = geometry as MultiPoint;
+        multiPoint.coordinates = multiPoint.coordinates.map((coordinate) =>
+          this.roundCoordinate(coordinate),
+        );
+        break;
+      case 'LineString':
+        const lineString = geometry as LineString;
+        lineString.coordinates = lineString.coordinates.map((coordinate) =>
+          this.roundCoordinate(coordinate),
+        );
+        break;
+      case 'MultiLineString':
+        const multiLineString = geometry as MultiLineString;
+        multiLineString.coordinates = multiLineString.coordinates.map((lineCoordinates) =>
+          lineCoordinates.map((coordinate) => this.roundCoordinate(coordinate)),
+        );
+        break;
+      case 'Polygon':
+        const polygon = geometry as Polygon;
+        polygon.coordinates = polygon.coordinates.map((ringCoordinates) =>
+          ringCoordinates.map((coordinate) => this.roundCoordinate(coordinate)),
+        );
+        break;
+      case 'MultiPolygon':
+        const multiPolygon = geometry as MultiPolygon;
+        multiPolygon.coordinates = multiPolygon.coordinates.map((polygonCoordinates) =>
+          polygonCoordinates.map((ringCoordinates) =>
+            ringCoordinates.map((coordinate) => this.roundCoordinate(coordinate)),
+          ),
+        );
+        break;
+      case 'GeometryCollection':
+        const geometryCollection = geometry as GeometryCollection;
+        geometryCollection.geometries.forEach((subGeometry: Geometry) =>
+          this.roundCoordinates(subGeometry),
+        );
+        break;
+    }
+  }
+
+  /**
    * memoized version of `createIconCanvasImplementation`
+   * @ignore
+   * @internal
    */
   private static readonly memoizedRotateCoordinate = _.memoize(
     GeometryUtils.rotateCoordinateImplementation,
@@ -49,7 +113,20 @@ export abstract class GeometryUtils {
   );
 
   /**
+   * rounds all elements in the coordinate array to 6dp
+   * @param coordinate number array
+   * @returns `number[]` rounded coordinates
+   * @ignore
+   * @internal
+   */
+  private static roundCoordinate(coordinate: number[]): number[] {
+    return coordinate.map((c) => parseFloat(c.toFixed(6)));
+  }
+
+  /**
    * the memoized implementation of `rotateCoordinate`
+   * @ignore
+   * @internal
    */
   private static rotateCoordinateImplementation(
     coordinate: [number, number],
