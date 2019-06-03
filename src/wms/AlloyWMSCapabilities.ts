@@ -1,6 +1,9 @@
-import { AlloyWMSCapabilitiesLayer } from './AlloyWMSCapabilitiesLayer';
+import { AlloyWmsCapabilitiesLayer } from './AlloyWmsCapabilitiesLayer';
 
-export interface AlloyWMSCapabilities {
+/**
+ * Parsed WMS Capabilties parameters
+ */
+export interface AlloyWmsCapabilities {
   /**
    * Title of the WMS service
    */
@@ -12,5 +15,5 @@ export interface AlloyWMSCapabilities {
   /**
    * Main layer of the WMS service
    */
-  layer: AlloyWMSCapabilitiesLayer;
+  layer: AlloyWmsCapabilitiesLayer;
 }

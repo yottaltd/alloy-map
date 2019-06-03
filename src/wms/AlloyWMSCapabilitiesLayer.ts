@@ -1,18 +1,44 @@
-export interface AlloyWMSCapabilitiesLayer {
+import { AlloyBounds } from '../map/core/AlloyBounds';
+import { AlloyWmsCapabilitiesLayerStyle } from './AlloyWmsCapabilitiesLayerStyle';
+
+/**
+ * WMS Capabilties layer parameters
+ */
+export interface AlloyWmsCapabilitiesLayer {
   /**
    * Title of the layer (displayed to user)
    */
   title: string;
   /**
-   * Available child layers
+   * Name for layer request, if Wms parent layer acts as a wrapper then it's undefined
    */
-  layers: AlloyWMSCapabilitiesLayer[];
+  name?: string;
+  /**
+   * Available styles for layer
+   */
+  styles: AlloyWmsCapabilitiesLayerStyle[];
   /**
    * Whether layer is provided as opaque
    */
   opaque: boolean;
   /**
-   * Name for layer request, if WMS parent layer acts as a wrapper then it's undefined
+   * Bounds of this WMS layer
    */
-  name?: string;
+  boundingBox: AlloyBounds;
+  /**
+   * Fixed width for tile requests
+   */
+  fixedWidth?: number;
+  /**
+   * Fixed height for tile requests
+   */
+  fixedHeight?: number;
+  /**
+   * CRS that should be use for tile requests
+   */
+  crs?: string;
+  /**
+   * Available child layers
+   */
+  layers: AlloyWmsCapabilitiesLayer[];
 }

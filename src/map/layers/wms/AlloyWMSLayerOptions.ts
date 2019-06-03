@@ -1,10 +1,10 @@
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyWMSParameters } from '../../../wms/AlloyWMSParameters';
+import { AlloyWmsParameters } from '../../../wms/AlloyWmsParameters';
 
 /**
  * options for the alloy WMS layer
  */
-export interface AlloyWMSLayerOptions {
+export interface AlloyWmsLayerOptions {
   /**
    * the alloy map to associate tha layer with
    */
@@ -13,7 +13,7 @@ export interface AlloyWMSLayerOptions {
   /**
    * parameters of the WMS service
    */
-  options: AlloyWMSParameters;
+  options: AlloyWmsParameters;
 
   /**
    * optional id for custom layer

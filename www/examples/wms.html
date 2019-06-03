@@ -1,75 +1,81 @@
 <!DOCTYPE html>
 
 <html>
+  <head>
+    <title>Alloy Map Sandbox - Wms</title>
+    <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
 
-<head>
-  <title>Alloy Map Sandbox - WMS</title>
-  <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
 
-    #wrapper {
-      background-color: #ccc;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
 
-<body>
-  <!-- dom elements for test setup -->
-  <div id="wrapper">
-    <div id="map" style="width: 100%; height: 800px;"></div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
-  <script src="../../dist/alloy-map.js"></script>
+    <script>
+      localStorage.debug = 'alloymaps:*';
 
-  <script>
-    localStorage.debug = 'alloymaps:*';
-
-    const map = new alloymap.AlloyMap({
-      api: 'https://api.labs.alloyapp.io/',
-      token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
-      element: document.getElementById('map'),
-      centre: new alloymap.AlloyCoordinate(-2, 52),
-      zoom: 6,
-    });
-
-    // Add WMS basemap
-    const basemapUrl = 'http://geo.vliz.be:80/geoserver/ows?';
-    alloymap.WMSUtils.getCapabilities(basemapUrl).then((capabilities) => {
-      console.log('basemap caps', capabilities);
-      const basemap = alloymap.AlloyBasemapFactory.createWMS({
-        url: capabilities.url,
-        layers: [capabilities.layer.name ? capabilities.layer : capabilities.layer.layers[0]],
+      const map = new alloymap.AlloyMap({
+        api: 'https://api.labs.alloyapp.io/',
+        token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(-2, 52),
+        zoom: 6,
       });
-      map.setBasemap(basemap);
-    }).catch((error) => {
-      const basemap = alloymap.AlloyBasemapFactory.createSatellite();
-      map.setBasemap(basemap);
-    });
 
-    // Add WMS layer
-    const layerUrl =
-      'https://gisservices.spatialni.gov.uk/arcgisc/services/OpenData/OSNIOpenData_LargescaleBoundaries/MapServer/WmsServer?';
-    alloymap.WMSUtils.getCapabilities(layerUrl).then((capabilities) => {
-      console.log('layer caps', capabilities);
-      const layer = new alloymap.AlloyWMSLayer({
-        id: capabilities.title,
-        map,
-        options: {
-          url: capabilities.url,
-          layers: [capabilities.layer.name ? capabilities.layer : capabilities.layer.layers[0]],
-        },
+      // Add WMS basemap
+      const basemapUrl = 'http://geo.vliz.be:80/geoserver/ows?';
+      alloymap.WmsUtils.getCapabilities(basemapUrl)
+        .then((capabilities) => {
+          const basemap = alloymap.AlloyBasemapFactory.createWms({
+            url: capabilities.url,
+            layers: [capabilities.layer.name ? capabilities.layer : capabilities.layer.layers[0]],
+            width: capabilities.layer.width,
+            height: capabilities.layer.height,
+            crs: capabilities.layer.crs,
+            bbox: capabilities.layer.boundingBox,
+          });
+          map.setBasemap(basemap);
+        })
+        .catch((error) => {
+          const basemap = alloymap.AlloyBasemapFactory.createSatellite();
+          map.setBasemap(basemap);
+        });
+
+      // Add WMS layer
+      const layerUrl =
+        'https://gisservices.spatialni.gov.uk/arcgisc/services/OpenData/OSNIOpenData_LargescaleBoundaries/MapServer/WmsServer?';
+      alloymap.WmsUtils.getCapabilities(layerUrl).then((capabilities) => {
+        const layer = new alloymap.AlloyWmsLayer({
+          id: capabilities.title,
+          map,
+          options: {
+            url: capabilities.url,
+            layers: [capabilities.layer.name ? capabilities.layer : capabilities.layer.layers[0]],
+            width: capabilities.layer.width,
+            height: capabilities.layer.height,
+            crs: capabilities.layer.crs,
+            bbox: capabilities.layer.boundingBox,
+          },
+        });
+        map.addLayer(layer);
       });
-      map.addLayer(layer);
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
