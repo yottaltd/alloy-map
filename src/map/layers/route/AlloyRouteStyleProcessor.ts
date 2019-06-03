@@ -1,55 +1,31 @@
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
-import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
+import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
+import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
 import { AlloyRouteStyleBuilder } from '../../styles/builders/AlloyRouteStyleBuilder';
+import { AlloyAnimationStyleProcessor } from '../animation/AlloyAnimationStyleProcessor';
 import { AlloyRouteLayer } from './AlloyRouteLayer';
 
 /**
- * processes the route styled feature items
+ * processes the cable styled feature items
  * @ignore
  * @internal
  */
-export class AlloyRouteStyleProcessor extends AlloyStyleProcessor {
-  /**
-   * route feature style builder
-   */
-  private readonly routeStyleBuilder: AlloyRouteStyleBuilder;
-
+export class AlloyRouteStyleProcessor extends AlloyAnimationStyleProcessor<
+  AlloyRouteFeature | AlloyRouteWaypointFeature
+> {
   /**
    * creates a new instance
-   * @param layer the route layer to style
+   * @param layer the cable layer to style
    */
   constructor(layer: AlloyRouteLayer) {
     super(layer);
-
-    this.routeStyleBuilder = new AlloyRouteStyleBuilder();
   }
 
   /**
-   * @override
+   * @implements
+   * @ignore
+   * @internal
    */
-  public onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
-    resolution: number,
-    state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-
-    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
-    if (!feature) {
-      return [];
-    }
-
-    if (feature instanceof AlloyCustomFeature) {
-      return this.routeStyleBuilder.build(feature, resolution, state);
-    } else {
-      return [];
-    }
+  protected createStyleBuilder(): AlloyRouteStyleBuilder {
+    return new AlloyRouteStyleBuilder();
   }
 }

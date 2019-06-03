@@ -22,8 +22,16 @@ export { MapChangeCentreEvent } from './map/events/MapChangeCentreEvent';
 export { MapChangeCentreEventHandler } from './map/events/MapChangeCentreEventHandler';
 export { MapChangeZoomEvent } from './map/events/MapChangeZoomEvent';
 export { MapChangeZoomEventHandler } from './map/events/MapChangeZoomEventHandler';
+export { AlloyAnimatedFeature } from './map/features/AlloyAnimatedFeature';
+export { AlloyAnimatedFeatureProperties } from './map/features/AlloyAnimatedFeatureProperties';
+export { AlloyCableFeature } from './map/features/AlloyCableFeature';
+export { AlloyCableFeatureProperties } from './map/features/AlloyCableFeatureProperties';
+export { AlloyCableUnitFeature } from './map/features/AlloyCableUnitFeature';
+export { AlloyCableUnitFeatureProperties } from './map/features/AlloyCableUnitFeatureProperties';
 export { AlloyClusterFeature } from './map/features/AlloyClusterFeature';
 export { AlloyClusterFeatureProperties } from './map/features/AlloyClusterFeatureProperties';
+export { AlloyConnectedFeature } from './map/features/AlloyConnectedFeature';
+export { AlloyConnectedFeatureProperties } from './map/features/AlloyConnectedFeatureProperties';
 export { AlloyCustomFeature } from './map/features/AlloyCustomFeature';
 export { AlloyCustomFeatureFactory } from './map/features/AlloyCustomFeatureFactory';
 export { AlloyCustomFeatureProperties } from './map/features/AlloyCustomFeatureProperties';
@@ -34,6 +42,12 @@ export { AlloyFeature } from './map/features/AlloyFeature';
 export { AlloyFeatureType } from './map/features/AlloyFeatureType';
 export { AlloyItemFeature } from './map/features/AlloyItemFeature';
 export { AlloyItemFeatureProperties } from './map/features/AlloyItemFeatureProperties';
+export { AlloyRouteFeature } from './map/features/AlloyRouteFeature';
+export { AlloyRouteFeatureProperties } from './map/features/AlloyRouteFeatureProperties';
+export { AlloyRouteWaypointFeature } from './map/features/AlloyRouteWaypointFeature';
+export {
+  AlloyRouteWaypointFeatureProperties,
+} from './map/features/AlloyRouteWaypointFeatureProperties';
 export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGeometryFeature';
 export {
   AlloySimplifiedGeometryFeatureProperties,
@@ -45,6 +59,8 @@ export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
 export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
+export { AlloyAnimationLayer } from './map/layers/animation/AlloyAnimationLayer';
+export { AlloyAnimationLayerOptions } from './map/layers/animation/AlloyAnimationLayerOptions';
 export { AlloyCableLayer } from './map/layers/cable/AlloyCableLayer';
 export { AlloyCableLayerOptions } from './map/layers/cable/AlloyCableLayerOptions';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';

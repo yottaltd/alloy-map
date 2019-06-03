@@ -5,7 +5,8 @@ import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
+import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
+import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -27,7 +28,9 @@ const ICON_COLOUR = '#ffffff';
  * @ignore
  * @internal
  */
-export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature> {
+export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
+  AlloyRouteFeature | AlloyRouteWaypointFeature
+> {
   /**
    * creates a new instance
    * @ignore
@@ -41,82 +44,52 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature
    * @override
    */
   protected getKey(
-    feature: AlloyCustomFeature,
+    feature: AlloyRouteFeature | AlloyRouteWaypointFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): string {
-    return StringUtils.cacheKeyConcat(
-      state,
-      // scaling is undefined or true then we allow the feature to scale normally, if false it is a
-      // fixed max size all the time
-      feature.properties.scale === undefined || feature.properties.scale ? resolution : 1,
-      feature.id, // each custom feature is unique (expensive)
-    );
+    return StringUtils.cacheKeyConcat(state, feature.id);
   }
 
   /**
    * @override
    */
-  protected createStyles(feature: AlloyCustomFeature, resolution: number): OLStyle | OLStyle[] {
-    switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
-        return this.createPointStyles(resolution, feature);
-      case 'LineString':
-        return this.createLineStringStyles(resolution, feature);
-      case 'MultiPoint':
-        return this.createMultiPointStyles(resolution, feature);
-      case 'MultiLineString':
-        return this.createMultiLineStringStyles(resolution, feature);
-      default:
-        throw new AlloyMapError(1558971942, 'unsupported geometry type');
+  protected createStyles(
+    feature: AlloyRouteFeature | AlloyRouteWaypointFeature,
+    resolution: number,
+  ): OLStyle | OLStyle[] {
+    const geometryType = feature.olFeature.getGeometry().getType();
+    if (geometryType === 'Point' && feature instanceof AlloyRouteWaypointFeature) {
+      return this.createRouteWaypointStyles(resolution, feature);
+    } else if (geometryType === 'LineString' && feature instanceof AlloyRouteFeature) {
+      return this.createRouteStyles(resolution, feature);
     }
+    throw new AlloyMapError(1559453941, 'unsupported geometry type');
   }
 
   /**
    * @override
    */
   protected createHoverStyles(
-    feature: AlloyCustomFeature,
+    feature: AlloyRouteFeature | AlloyRouteWaypointFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
-    switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
-        return this.createPointHoverStyles(resolution, feature);
-      case 'LineString':
-        return this.createLineStringHoverStyles(resolution, feature);
-      case 'MultiPoint':
-        return this.createMultiPointHoverStyles(resolution, feature);
-      case 'MultiLineString':
-        return this.createMultiLineStringHoverStyles(resolution, feature);
-      default:
-        throw new AlloyMapError(1558971947, 'unsupported geometry type');
-    }
+    return this.createStyles(feature, resolution);
   }
 
   /**
    * @override
    */
   protected createSelectedStyles(
-    feature: AlloyCustomFeature,
+    feature: AlloyRouteFeature | AlloyRouteWaypointFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
-    switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
-        return this.createPointSelectedStyles(resolution, feature);
-      case 'LineString':
-        return this.createLineStringSelectedStyles(resolution, feature);
-      case 'MultiPoint':
-        return this.createMultiPointSelectedStyles(resolution, feature);
-      case 'MultiLineString':
-        return this.createMultiLineStringSelectedStyles(resolution, feature);
-      default:
-        throw new AlloyMapError(1558971954, 'unsupported geometry type');
-    }
+    return this.createStyles(feature, resolution);
   }
 
   private createIconStyle(
     radius: number,
-    feature: AlloyCustomFeature,
+    feature: AlloyRouteWaypointFeature,
     colour: string,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
@@ -134,100 +107,12 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature
     }
   }
 
-  private createPointStyles(
+  private createRouteWaypointStyles(
     resolution: number,
-    feature: AlloyCustomFeature,
+    feature: AlloyRouteWaypointFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    return [
-      // the background coloured circle
-      AlloyBallUtils.createBallStyle(
-        radius,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      this.createIconStyle(
-        radius,
-        feature,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-    ];
-  }
-
-  private createMultiPointStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    return [
-      // the background coloured circle
-      AlloyBallUtils.createBallStyle(
-        radius,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      this.createIconStyle(
-        radius,
-        feature,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-    ];
-  }
-
-  private createLineStringStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    return [
-      AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution, feature.properties.scale),
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
-          : undefined,
-      ),
-    ];
-  }
-
-  private createMultiLineStringStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    return [
-      AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution, feature.properties.scale),
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
-          : undefined,
-      ),
-    ];
-  }
-
-  private createPointHoverStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
@@ -260,50 +145,12 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature
     ];
   }
 
-  private createMultiPointHoverStyles(
+  private createRouteStyles(
     resolution: number,
-    feature: AlloyCustomFeature,
+    feature: AlloyRouteFeature,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
-    return [
-      // the halo circle
-      AlloyBallUtils.createBallHaloStyle(
-        radius,
-        hoverColour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the background coloured circle
-      AlloyBallUtils.createBallStyle(
-        radius,
-        hoverColour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      this.createIconStyle(
-        radius,
-        feature,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-    ];
-  }
-
-  private createLineStringHoverStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
+    const width = this.getLineWidth(resolution);
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
@@ -321,158 +168,6 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeature
         hoverColour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
-          : undefined,
-      ),
-    ];
-  }
-
-  private createMultiLineStringHoverStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
-
-    // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
-
-    return [
-      AlloyLineUtils.createLineHaloStyle(
-        width,
-        hoverColour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
-          : undefined,
-      ),
-      AlloyLineUtils.createLineStyle(
-        width,
-        hoverColour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
-          : undefined,
-      ),
-    ];
-  }
-
-  private createPointSelectedStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    return [
-      // the halo circle
-      AlloyBallUtils.createBallHaloStyle(
-        radius,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-      // the background coloured circle
-      AlloyBallUtils.createBallStyle(
-        radius,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      this.createIconStyle(
-        radius,
-        feature,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-    ];
-  }
-
-  private createMultiPointSelectedStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    return [
-      // the halo circle
-      AlloyBallUtils.createBallHaloStyle(
-        radius,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the background coloured circle
-      AlloyBallUtils.createBallStyle(
-        radius,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      this.createIconStyle(
-        radius,
-        feature,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-    ];
-  }
-
-  private createLineStringSelectedStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    return [
-      AlloyLineUtils.createLineHaloStyle(
-        width,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
-          : undefined,
-      ),
-      AlloyLineUtils.createLineStyle(
-        width,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
-          : undefined,
-      ),
-    ];
-  }
-
-  private createMultiLineStringSelectedStyles(
-    resolution: number,
-    feature: AlloyCustomFeature,
-    processGeometryCollection?: boolean,
-  ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
-
-    return [
-      AlloyLineUtils.createLineHaloStyle(
-        width,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
-          : undefined,
-      ),
-      AlloyLineUtils.createLineStyle(
-        width,
-        feature.properties.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
     ];
