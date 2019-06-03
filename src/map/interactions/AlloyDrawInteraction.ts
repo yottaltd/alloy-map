@@ -502,7 +502,6 @@ export class AlloyDrawInteraction {
         colour: DRAW_COLOUR,
       });
       this.removeLayer.addFeature(feature);
-      // this.removeLayer.olSource.addFeature(feature.olFeature);
     });
   }
 
