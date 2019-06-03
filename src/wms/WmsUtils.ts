@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import OLTileWMS from 'ol/source/TileWMS';
-import OLTileGrid from 'ol/tilegrid/tileGrid';
+import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { AlloyBounds } from '../map/core/AlloyBounds';
 import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
 import { PolyfillTileGrid } from '../polyfills/PolyfillTileGrid';
