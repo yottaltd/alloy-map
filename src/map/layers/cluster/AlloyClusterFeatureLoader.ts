@@ -31,14 +31,14 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
    * @ignore
    * @internal
    */
-  public readonly layer: AlloyClusterLayer;
+  private readonly layer: AlloyClusterLayer;
 
   /**
    * the computed style ids for the current layer to loader
    * @ignore
    * @internal
    */
-  public readonly styleIds: string[];
+  private readonly styleIds: string[];
 
   /**
    * the format to load features in
