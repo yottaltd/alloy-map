@@ -7,6 +7,7 @@ import { AlloyTileCache } from '../cache/AlloyTileCache';
 import { AlloyTileRequestCache } from '../cache/AlloyTileRequestCache';
 import { AlloyFeatureLoader } from './AlloyFeatureLoader';
 import { AlloyTileFeatureRequest } from './AlloyTileFeatureRequest';
+import { AlloyTileCoordinate } from './AlloyTileCoordinate';
 
 /**
  * the number of tile requests to cache in memory
@@ -95,61 +96,38 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     // calculate the zoom level for the current resolution
     const zoom = this.olTileGrid.getZForResolution(resolution);
 
-    // get all the tile coordinates that we are going to request, we make two arrays because
-    // openlayers has negative y's and we need to offset them
-    const olTileCoordinates: Array<[number, number, number]> = [];
-    const normalisedTileCoordinates: Array<[number, number, number]> = [];
-
-    this.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: [number, number, number]) => {
-      // calculate the normalised tile coordinates, for some reason openlayers like negative y
-      // values and we need to offset them anyway
-      const x = coordinate[1];
-      const y = Math.abs(coordinate[2] + 1);
-      const z = coordinate[0];
-
-      olTileCoordinates.push(coordinate);
-      normalisedTileCoordinates.push([z, x, y]);
-    });
+    // get all the tile coordinates that we are going to request
+    const tileCoordinates: AlloyTileCoordinate[] = [];
+    this.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: [number, number, number]) =>
+      tileCoordinates.push(new AlloyTileCoordinate(coordinate)),
+    );
 
     // cancel any ongoing calls outside zoom and tiles that are going to be requested
-    this.requestCache.clearOutsideTiles(normalisedTileCoordinates);
+    this.requestCache.clearOutsideTiles(tileCoordinates);
 
     // iterate through tile coords for the current extent and zoom
-    for (let i = 0, s = normalisedTileCoordinates.length; i < s; i++) {
-      const normalisedTileCoordinate = normalisedTileCoordinates[i];
-      const olTileCoordinate = olTileCoordinates[i];
-
-      this.debugger('features requested for tile, %o', normalisedTileCoordinate);
+    tileCoordinates.forEach((coordinate) => {
+      this.debugger('features requested for tile, %o', coordinate.olTileCoordinate);
 
       // check the tile cache first, if we have results then use them
-      const tileCacheKey = AlloyTileCache.createTimeBasedKey(
-        normalisedTileCoordinate,
-        TILE_CACHE_MINUTES,
-      );
+      const tileCacheKey = AlloyTileCache.createTimeBasedKey(coordinate, TILE_CACHE_MINUTES);
       const tileCacheItem = this.tileCache.get(tileCacheKey);
       if (tileCacheItem) {
-        this.debugger('request cached, reusing tile, %o', normalisedTileCoordinate);
+        this.debugger('request cached, reusing tile, %o', coordinate.olTileCoordinate);
         requests.push(tileCacheItem.result);
         return;
       }
 
       // short circuit if the tile is out of bounds
-      const olTileCoordExtent = this.olTileGrid.getTileCoordExtent(olTileCoordinate);
+      const olTileCoordExtent = this.olTileGrid.getTileCoordExtent(coordinate.olTileCoordinate);
       if (!PolyfillExtent.intersects(this.olLayerExtent, olTileCoordExtent)) {
         this.debugger('tile is out of bounds');
         return;
       }
 
       // load the tile
-      requests.push(
-        this.loadTile(
-          normalisedTileCoordinate[1],
-          normalisedTileCoordinate[2],
-          normalisedTileCoordinate[0],
-          tileCacheKey,
-        ),
-      );
-    }
+      requests.push(this.loadTile(coordinate, tileCacheKey));
+    });
 
     if (requests.length > 0) {
       // wait for all the results to finish loading
@@ -181,23 +159,24 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
   /**
    * should make a request for a tile to obtain its features
-   * @param x the world tile x coordinate
-   * @param y the world tile y coordinate
-   * @param z the zoom level
+   * @param coordinate the tile coordinate to request
    */
-  protected abstract requestTile(x: number, y: number, z: number): AlloyTileFeatureRequest<T>;
+  protected abstract requestTile(coordinate: AlloyTileCoordinate): AlloyTileFeatureRequest<T>;
 
   /**
    * requests a single tile of features from the api
-   * @param x the x tile coordinate normalised
-   * @param y the y tile coordinate normalised
-   * @param z the z tile coordinate normalised
+   * @param coordinate the tile coordinate to load
    * @param tileCacheKey the cache key for the tile
    */
-  private async loadTile(x: number, y: number, z: number, tileCacheKey: string): Promise<T[]> {
+  private async loadTile(coordinate: AlloyTileCoordinate, tileCacheKey: string): Promise<T[]> {
     // make the request for data
-    this.debugger('requesting tile data for x: %d, y: %d, z: %d', x, y, z);
-    const request: AlloyTileFeatureRequest<T> = this.requestTile(x, y, z);
+    this.debugger(
+      'requesting tile data for x: %d, y: %d, z: %d',
+      coordinate.x,
+      coordinate.y,
+      coordinate.z,
+    );
+    const request: AlloyTileFeatureRequest<T> = this.requestTile(coordinate);
 
     // add the request to the tile cache early
     this.tileCache.set(tileCacheKey, request);
@@ -210,7 +189,13 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     try {
       features = await request.result;
     } catch (e) {
-      this.debugger('failed to get tile data for x: %d, y: %d, z: %d, error: %o', x, y, z, e);
+      this.debugger(
+        'failed to get tile data for x: %d, y: %d, z: %d, error: %o',
+        coordinate.x,
+        coordinate.y,
+        coordinate.z,
+        e,
+      );
       return []; // we specifically are not caching failed api calls
     } finally {
       // always remove the request when it completes or fails
@@ -222,9 +207,9 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
       this.debugger(
         '%d results added to cache for tile x: %d, y: %d, z: %d',
         features.length,
-        x,
-        y,
-        z,
+        coordinate.x,
+        coordinate.y,
+        coordinate.z,
       );
     }
 

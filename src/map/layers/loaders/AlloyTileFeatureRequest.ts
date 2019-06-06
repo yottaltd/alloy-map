@@ -1,5 +1,6 @@
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyTileRequestCacheItem } from '../cache/AlloyTileRequestCacheItem';
+import { AlloyTileCoordinate } from './AlloyTileCoordinate';
 
 /**
  * represents a tile feature request that can be cached and is cancellable if the tile leaves the
@@ -12,7 +13,7 @@ export class AlloyTileFeatureRequest<T extends AlloyFeature>
   /**
    * @implements
    */
-  public readonly tileCoordinate: [number, number, number];
+  public readonly tileCoordinate: AlloyTileCoordinate;
 
   /**
    * @implements
@@ -33,7 +34,7 @@ export class AlloyTileFeatureRequest<T extends AlloyFeature>
    * creates a new instance
    * @param tileCoordinate the tile coordinate to request
    */
-  constructor(tileCoordinate: [number, number, number]) {
+  constructor(tileCoordinate: AlloyTileCoordinate) {
     this.tileCoordinate = tileCoordinate;
   }
 

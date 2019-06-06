@@ -1,5 +1,6 @@
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyTileRequestCacheItem } from './AlloyTileRequestCacheItem';
+import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 
 /**
  * an in memory cache of tile requests that supports cancellation for offscreen tiles
@@ -17,13 +18,12 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
    * @param request the request to add to the cache
    */
   public set(request: AlloyTileRequestCacheItem<T>): void {
-    const zoom = request.tileCoordinate[0];
-    let requestsAtZoom = this.requests.get(zoom);
+    let requestsAtZoom = this.requests.get(request.tileCoordinate.z);
     if (!requestsAtZoom) {
       requestsAtZoom = new Map<string, AlloyTileRequestCacheItem<T>>();
-      this.requests.set(zoom, requestsAtZoom);
+      this.requests.set(request.tileCoordinate.z, requestsAtZoom);
     }
-    requestsAtZoom.set(this.getCacheItemKey(request.tileCoordinate), request);
+    requestsAtZoom.set(request.tileCoordinate.requestKey, request);
   }
 
   /**
@@ -36,9 +36,9 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
     if (cancel) {
       request.cancel();
     }
-    const requestsAtZoom = this.requests.get(request.tileCoordinate[0]);
+    const requestsAtZoom = this.requests.get(request.tileCoordinate.z);
     if (requestsAtZoom) {
-      requestsAtZoom.delete(this.getCacheItemKey(request.tileCoordinate));
+      requestsAtZoom.delete(request.tileCoordinate.requestKey);
     }
   }
 
@@ -75,7 +75,7 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
    * level
    * @param tiles the tiles to keep the requests active for (if any)
    */
-  public clearOutsideTiles(tiles: Array<[number, number, number]>): void {
+  public clearOutsideTiles(tiles: AlloyTileCoordinate[]): void {
     // special case, wipe all if tiles are empty
     if (tiles.length === 0) {
       this.clear();
@@ -83,7 +83,7 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
     }
 
     // get first zoom level
-    const zoom = tiles[0][0];
+    const zoom = tiles[0].z;
 
     // clear everything outside these tile zoom levels
     this.clearOutsideZoom(zoom);
@@ -92,23 +92,15 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
     const requestsAtZoom = this.requests.get(zoom);
     if (requestsAtZoom) {
       // generate tile keys
-      const tileKeysToKeep = new Set(tiles.map((tile) => this.getCacheItemKey(tile)));
+      const tileKeysToKeep = new Set(tiles.map((tile) => tile.requestKey));
 
       // cancel and remove any requests outside the tiles
       [...requestsAtZoom.values()]
-        .filter((request) => !tileKeysToKeep.has(this.getCacheItemKey(request.tileCoordinate)))
+        .filter((request) => !tileKeysToKeep.has(request.tileCoordinate.requestKey))
         .forEach((request) => {
           request.cancel();
-          requestsAtZoom.delete(this.getCacheItemKey(request.tileCoordinate));
+          requestsAtZoom.delete(request.tileCoordinate.requestKey);
         });
     }
-  }
-
-  /**
-   * gets a cache key for a coordinate
-   * @param coordinate the coordinate to generate a cache key for
-   */
-  private getCacheItemKey(coordinate: [number, number, number]): string {
-    return Math.abs(coordinate[0]) + ':' + Math.abs(coordinate[1]) + ':' + Math.abs(coordinate[2]);
   }
 }

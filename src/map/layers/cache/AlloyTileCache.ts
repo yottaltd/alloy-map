@@ -1,3 +1,4 @@
+import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 import { AlloyTileCacheItem } from './AlloyTileCacheItem';
 
 /**
@@ -10,8 +11,8 @@ export class AlloyTileCache<T> {
    * generates a consistent tile cache key
    * @param coordinate the coordinate to generate a key for
    */
-  public static createKey(coordinate: [number, number, number]): string {
-    return coordinate.join(':');
+  public static createKey(coordinate: AlloyTileCoordinate): string {
+    return coordinate.x + ':' + coordinate.y + ':' + coordinate.z;
   }
 
   /**
@@ -23,16 +24,16 @@ export class AlloyTileCache<T> {
    *                        earlier than the value specified
    */
   public static createTimeBasedKey(
-    coordinate: [number, number, number],
+    coordinate: AlloyTileCoordinate,
     cacheForMinutes: number,
   ): string {
     const now = new Date();
     return (
-      Math.abs(coordinate[0]) +
+      coordinate.x +
       ':' +
-      Math.abs(coordinate[1]) +
+      coordinate.y +
       ':' +
-      Math.abs(coordinate[2]) +
+      coordinate.z +
       ':' +
       now.getHours() +
       '-' +

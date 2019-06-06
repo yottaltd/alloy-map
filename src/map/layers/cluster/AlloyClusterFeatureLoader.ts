@@ -11,6 +11,7 @@ import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
 import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
 import { AlloyClusterLayer } from './AlloyClusterLayer';
+import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 
 /**
  * max zoom level supported for the tile grid (won't make requests beyond this point)
@@ -97,11 +98,9 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
    * @override
    */
   protected requestTile(
-    x: number,
-    y: number,
-    z: number,
+    coordinate: AlloyTileCoordinate,
   ): AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature> {
-    const request = new AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature>([z, x, y]);
+    const request = new AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature>(coordinate);
 
     // start the http request (promisified), make sure this is setup before we return because others
     // will be listening for this to finish
@@ -114,9 +113,9 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
           const fetchCreator = LayerApiFetchParamCreator(configuration);
           const fetchArgs = fetchCreator.layerGetClusterLayerTile(
             this.layer.layerCode,
-            x, // x
-            y, // y
-            z, // z
+            coordinate.x, // x
+            coordinate.y, // y
+            coordinate.z, // z
             this.styleIds,
           );
 

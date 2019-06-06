@@ -1,4 +1,5 @@
 import { AlloyFeature } from '../../features/AlloyFeature';
+import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 
 /**
  * a cacheable request item that allows cancellation
@@ -7,9 +8,9 @@ import { AlloyFeature } from '../../features/AlloyFeature';
  */
 export interface AlloyTileRequestCacheItem<T extends AlloyFeature> {
   /**
-   * the tile coordinate in `z, x, y` format
+   * the tile coordinate requested
    */
-  readonly tileCoordinate: [number, number, number];
+  readonly tileCoordinate: AlloyTileCoordinate;
 
   /**
    * the promisable result of the tile request

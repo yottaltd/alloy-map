@@ -8,6 +8,7 @@ import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloySimplifiedGeometryFeature } from '../../features/AlloySimplifiedGeometryFeature';
+import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
 import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
@@ -94,15 +95,11 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
    * @override
    */
   protected requestTile(
-    x: number,
-    y: number,
-    z: number,
+    coordinate: AlloyTileCoordinate,
   ): AlloyTileFeatureRequest<AlloySimplifiedGeometryFeature | AlloyItemFeature> {
-    const request = new AlloyTileFeatureRequest<AlloySimplifiedGeometryFeature | AlloyItemFeature>([
-      z,
-      x,
-      y,
-    ]);
+    const request = new AlloyTileFeatureRequest<AlloySimplifiedGeometryFeature | AlloyItemFeature>(
+      coordinate,
+    );
 
     // start the http request (promisified), make sure this is setup before we return because others
     // will be listening for this to finish
@@ -115,9 +112,9 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
           const fetchCreator = LayerApiFetchParamCreator(configuration);
           const fetchArgs = fetchCreator.layerGetClusterLayerTile(
             this.layer.layerCode,
-            x, // x
-            y, // y
-            z, // z
+            coordinate.x, // x
+            coordinate.y, // y
+            coordinate.z, // z
             this.styleIds,
           );
 
