@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import OLTileWMS from 'ol/source/TileWMS';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { AlloyBounds } from '../map/core/AlloyBounds';

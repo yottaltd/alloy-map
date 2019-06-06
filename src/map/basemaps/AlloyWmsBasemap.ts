@@ -3,6 +3,7 @@ import OLTileLayer from 'ol/layer/Tile';
 import OLTileWMS from 'ol/source/TileWMS';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
 import { WmsUtils } from '../../wms/WmsUtils';
+import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyBasemap } from './AlloyBasemap';
 
 /**
@@ -29,7 +30,7 @@ export class AlloyWmsBasemap implements AlloyBasemap {
     this.source = WmsUtils.createTileWmsSourceFromParameters(options, false);
     this.tileLayer = new OLTileLayer({
       source: this.source,
-      zIndex: 0,
+      zIndex: AlloyLayerZIndex.Basemap,
     });
   }
 
