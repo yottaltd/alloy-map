@@ -1,4 +1,5 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
+import { LayerApiFetchParamCreator, LayerGetClusterTileWebResponseModel } from '../../../api';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
@@ -7,6 +8,8 @@ import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
+import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
+import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
 import { AlloyClusterLayer } from './AlloyClusterLayer';
 
 /**
@@ -25,13 +28,17 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
 > {
   /**
    * the layer we are loading features for
+   * @ignore
+   * @internal
    */
-  private readonly layer: AlloyClusterLayer;
+  public readonly layer: AlloyClusterLayer;
 
   /**
    * the computed style ids for the current layer to loader
+   * @ignore
+   * @internal
    */
-  private readonly styleIds: string[];
+  public readonly styleIds: string[];
 
   /**
    * the format to load features in
@@ -89,19 +96,55 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
   /**
    * @override
    */
-  protected async requestTile(
+  protected requestTile(
     x: number,
     y: number,
     z: number,
-  ): Promise<Array<AlloyClusterFeature | AlloyItemFeature>> {
-    const response = await this.layer.map.api.layer.layerGetClusterLayerTile(
-      this.layer.layerCode,
-      x,
-      y,
-      z,
-      this.styleIds,
+  ): AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature> {
+    const request = new AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature>([z, x, y]);
+
+    // start the http request (promisified), make sure this is setup before we return because others
+    // will be listening for this to finish
+    request.result = new Promise<Array<AlloyClusterFeature | AlloyItemFeature>>(
+      (resolve, reject) => {
+        try {
+          const signal = request.controller.signal;
+
+          const configuration = this.layer.map.apiConfiguration;
+          const fetchCreator = LayerApiFetchParamCreator(configuration);
+          const fetchArgs = fetchCreator.layerGetClusterLayerTile(
+            this.layer.layerCode,
+            x, // x
+            y, // y
+            z, // z
+            this.styleIds,
+          );
+
+          fetch(configuration.basePath + fetchArgs.url, {
+            ...fetchArgs.options,
+            signal,
+          })
+            .then((response) =>
+              tileResponseInterceptor<LayerGetClusterTileWebResponseModel>(response),
+            )
+            .then((response) => resolve(this.parseResults(response)))
+            .catch((error) => reject(error));
+        } catch (e) {
+          reject(e);
+        }
+      },
     );
 
+    return request;
+  }
+
+  /**
+   * parses a tile response into its features
+   * @param response the response model to parse
+   */
+  private parseResults(
+    response: LayerGetClusterTileWebResponseModel,
+  ): Array<AlloyClusterFeature | AlloyItemFeature> {
     // return early if no results
     if (response.results.length === 0) {
       return [];

@@ -28,7 +28,11 @@ export class AlloyTileCache<T> {
   ): string {
     const now = new Date();
     return (
-      coordinate.join(':') +
+      Math.abs(coordinate[0]) +
+      ':' +
+      Math.abs(coordinate[1]) +
+      ':' +
+      Math.abs(coordinate[2]) +
       ':' +
       now.getHours() +
       '-' +
