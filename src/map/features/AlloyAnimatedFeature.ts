@@ -62,7 +62,7 @@ export abstract class AlloyAnimatedFeature implements AlloyFeature {
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
-   * @param originatingLayerId the layer id that the item originated from
+   * @param layer the layer that the item is added to
    * @ignore
    * @internal
    */
