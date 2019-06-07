@@ -57,7 +57,7 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
   public clearZoom(zoom: number): void {
     const requestsAtZoom = this.requests.get(zoom);
     if (requestsAtZoom) {
-      [...requestsAtZoom.values()].forEach((request) => request.cancel());
+      Array.from(requestsAtZoom.values()).forEach((request) => request.cancel());
       this.requests.delete(zoom);
     }
   }
@@ -67,7 +67,7 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
    * @param zoom the zoom level to maintain the cache for
    */
   public clearOutsideZoom(zoom: number): void {
-    [...this.requests.keys()].filter((key) => key !== zoom).forEach((key) => this.clearZoom(key));
+    Array.from(this.requests.keys()).filter((key) => key !== zoom).forEach((key) => this.clearZoom(key));
   }
 
   /**
@@ -95,7 +95,7 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
       const tileKeysToKeep = new Set(tiles.map((tile) => tile.requestKey));
 
       // cancel and remove any requests outside the tiles
-      [...requestsAtZoom.values()]
+      Array.from(requestsAtZoom.values())
         .filter((request) => !tileKeysToKeep.has(request.tileCoordinate.requestKey))
         .forEach((request) => {
           request.cancel();
