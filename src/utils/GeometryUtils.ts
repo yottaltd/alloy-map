@@ -1,15 +1,16 @@
 import {
   Geometry,
   GeometryCollection,
-  Point,
-  MultiPoint,
   LineString,
   MultiLineString,
-  Polygon,
+  MultiPoint,
   MultiPolygon,
+  Point,
+  Polygon,
 } from 'geojson';
 import * as _ from 'lodash';
 import OLPoint from 'ol/geom/Point';
+import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyBounds } from '../map/core/AlloyBounds';
 import { ProjectionUtils } from './ProjectionUtils';
 
@@ -57,46 +58,48 @@ export abstract class GeometryUtils {
     switch (geometry.type) {
       case 'Point':
         const point = geometry as Point;
-        point.coordinates = this.roundCoordinate(point.coordinates);
+        point.coordinates = GeometryUtils.memoizedRoundCoordinate(point.coordinates);
         break;
       case 'MultiPoint':
         const multiPoint = geometry as MultiPoint;
         multiPoint.coordinates = multiPoint.coordinates.map((coordinate) =>
-          this.roundCoordinate(coordinate),
+          GeometryUtils.memoizedRoundCoordinate(coordinate),
         );
         break;
       case 'LineString':
         const lineString = geometry as LineString;
         lineString.coordinates = lineString.coordinates.map((coordinate) =>
-          this.roundCoordinate(coordinate),
+          GeometryUtils.memoizedRoundCoordinate(coordinate),
         );
         break;
       case 'MultiLineString':
         const multiLineString = geometry as MultiLineString;
         multiLineString.coordinates = multiLineString.coordinates.map((lineCoordinates) =>
-          lineCoordinates.map((coordinate) => this.roundCoordinate(coordinate)),
+          lineCoordinates.map((coordinate) => GeometryUtils.memoizedRoundCoordinate(coordinate)),
         );
         break;
       case 'Polygon':
         const polygon = geometry as Polygon;
         polygon.coordinates = polygon.coordinates.map((ringCoordinates) =>
-          ringCoordinates.map((coordinate) => this.roundCoordinate(coordinate)),
+          ringCoordinates.map((coordinate) => GeometryUtils.memoizedRoundCoordinate(coordinate)),
         );
         break;
       case 'MultiPolygon':
         const multiPolygon = geometry as MultiPolygon;
         multiPolygon.coordinates = multiPolygon.coordinates.map((polygonCoordinates) =>
           polygonCoordinates.map((ringCoordinates) =>
-            ringCoordinates.map((coordinate) => this.roundCoordinate(coordinate)),
+            ringCoordinates.map((coordinate) => GeometryUtils.memoizedRoundCoordinate(coordinate)),
           ),
         );
         break;
       case 'GeometryCollection':
         const geometryCollection = geometry as GeometryCollection;
         geometryCollection.geometries.forEach((subGeometry: Geometry) =>
-          this.roundCoordinates(subGeometry),
+          GeometryUtils.roundCoordinates(subGeometry),
         );
         break;
+      default:
+        throw new AlloyMapError(1559909581, 'Unsupported geometry type');
     }
   }
 
@@ -110,6 +113,16 @@ export abstract class GeometryUtils {
     // custom resolver because lodash only keys on the first argument
     (coordinate: [number, number], angleRadians: number, anchor: [number, number]) =>
       coordinate.join(',') + ':' + angleRadians + ':' + anchor.join(','),
+  );
+
+  /**
+   * memoized version of `roundCoordinate`
+   * @ignore
+   * @internal
+   */
+  private static readonly memoizedRoundCoordinate = _.memoize(
+    GeometryUtils.roundCoordinate,
+    (coordinate: [number, number]) => coordinate.join(','),
   );
 
   /**
