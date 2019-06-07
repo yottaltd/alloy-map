@@ -4,7 +4,10 @@ import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyTileCache } from '../cache/AlloyTileCache';
+import { AlloyTileRequestCache } from '../cache/AlloyTileRequestCache';
 import { AlloyFeatureLoader } from './AlloyFeatureLoader';
+import { AlloyTileFeatureRequest } from './AlloyTileFeatureRequest';
+import { AlloyTileCoordinate } from './AlloyTileCoordinate';
 
 /**
  * the number of tile requests to cache in memory
@@ -20,7 +23,9 @@ const TILE_CACHE_SIZE = 256;
 const TILE_CACHE_MINUTES = 1;
 
 /**
- * base implementation which loads features from a source by tile coordinates
+ * base implementation which loads features from a source by tile coordinates, it supports
+ * cancellation of ongoing requests if they move outside the viewport or zoom levels change for
+ * efficiency
  * @template T the feature types the loader is expected to load
  * @ignore
  * @internal
@@ -44,7 +49,12 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
   /**
    * a cache of tiles requested by this loader
    */
-  private readonly tileCache = new AlloyTileCache<T[]>(TILE_CACHE_SIZE);
+  private readonly tileCache = new AlloyTileCache<AlloyTileFeatureRequest<T>>(TILE_CACHE_SIZE);
+
+  /**
+   * a cache of ongoing requests only
+   */
+  private readonly requestCache = new AlloyTileRequestCache<T>();
 
   /**
    * creates a new instance
@@ -75,32 +85,42 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
     // short circuit if the view is out of bounds
     if (!PolyfillExtent.intersects(this.olLayerExtent, extent)) {
+      this.requestCache.clear(); // clear all requests if we're outside the bounds
       this.debugger('view is out of bounds');
       return;
     }
 
-    // calculate the zoom level for the current resolution
-    const zoom = this.olTileGrid.getZForResolution(resolution);
-
     // array of requests for tiles, each result is the loaded features for a given tile
     const requests: Array<Promise<T[]>> = [];
 
+    // calculate the zoom level for the current resolution
+    const zoom = this.olTileGrid.getZForResolution(resolution);
+
+    // get all the tile coordinates that we are going to request
+    const tileCoordinates: AlloyTileCoordinate[] = [];
+    this.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: [number, number, number]) =>
+      tileCoordinates.push(new AlloyTileCoordinate(coordinate)),
+    );
+
+    // cancel any ongoing calls outside zoom and tiles that are going to be requested
+    this.requestCache.clearOutsideTiles(tileCoordinates);
+
     // iterate through tile coords for the current extent and zoom
-    this.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: [number, number, number]) => {
-      this.debugger('features requested for tile, %o', coordinate);
+    tileCoordinates.forEach((coordinate) => {
+      this.debugger('features requested for tile, %o', coordinate.olTileCoordinate);
 
       // check the tile cache first, if we have results then use them
       const tileCacheKey = AlloyTileCache.createTimeBasedKey(coordinate, TILE_CACHE_MINUTES);
       const tileCacheItem = this.tileCache.get(tileCacheKey);
       if (tileCacheItem) {
-        this.debugger('data cached, reusing tile, %o', coordinate);
-        requests.push(Promise.resolve(tileCacheItem));
+        this.debugger('request cached, reusing tile, %o', coordinate.olTileCoordinate);
+        requests.push(tileCacheItem.result);
         return;
       }
 
       // short circuit if the tile is out of bounds
-      const tileCoordExtent = this.olTileGrid.getTileCoordExtent(coordinate);
-      if (!PolyfillExtent.intersects(this.olLayerExtent, tileCoordExtent)) {
+      const olTileCoordExtent = this.olTileGrid.getTileCoordExtent(coordinate.olTileCoordinate);
+      if (!PolyfillExtent.intersects(this.olLayerExtent, olTileCoordExtent)) {
         this.debugger('tile is out of bounds');
         return;
       }
@@ -139,44 +159,57 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
   /**
    * should make a request for a tile to obtain its features
-   * @param x the world tile x coordinate
-   * @param y the world tile y coordinate
-   * @param z the zoom level
+   * @param coordinate the tile coordinate to request
    */
-  protected abstract async requestTile(x: number, y: number, z: number): Promise<T[]>;
+  protected abstract requestTile(coordinate: AlloyTileCoordinate): AlloyTileFeatureRequest<T>;
 
   /**
    * requests a single tile of features from the api
-   * @param coordinate the tile coordinate in z, x, y
+   * @param coordinate the tile coordinate to load
    * @param tileCacheKey the cache key for the tile
    */
-  private async loadTile(coordinate: [number, number, number], tileCacheKey: string): Promise<T[]> {
-    // calculate x, y and z
-    const x: number = coordinate[1];
-    const y: number = Math.abs(coordinate[2] + 1);
-    const z: number = coordinate[0];
-
+  private async loadTile(coordinate: AlloyTileCoordinate, tileCacheKey: string): Promise<T[]> {
     // make the request for data
-    this.debugger('requesting tile data for x: %d, y: %d, z: %d', x, y, z);
+    this.debugger(
+      'requesting tile data for x: %d, y: %d, z: %d',
+      coordinate.x,
+      coordinate.y,
+      coordinate.z,
+    );
+    const request: AlloyTileFeatureRequest<T> = this.requestTile(coordinate);
+
+    // add the request to the tile cache early
+    this.tileCache.set(tileCacheKey, request);
+
+    // add the request to ongoing requests
+    this.requestCache.set(request);
+
+    // now wait for the features to arrive
     let features: T[];
     try {
-      features = await this.requestTile(x, y, z);
+      features = await request.result;
     } catch (e) {
-      this.debugger('failed to get tile data for x: %d, y: %d, z: %d, error: %o', x, y, z, e);
+      this.debugger(
+        'failed to get tile data for x: %d, y: %d, z: %d, error: %o',
+        coordinate.x,
+        coordinate.y,
+        coordinate.z,
+        e,
+      );
       return []; // we specifically are not caching failed api calls
+    } finally {
+      // always remove the request when it completes or fails
+      this.requestCache.delete(request, false);
     }
-
-    // add the results to the tile cache
-    this.tileCache.set(tileCacheKey, features);
 
     // debug message is behind guard because we evaluate length of variable
     if (this.debugger.enabled) {
       this.debugger(
         '%d results added to cache for tile x: %d, y: %d, z: %d',
         features.length,
-        x,
-        y,
-        z,
+        coordinate.x,
+        coordinate.y,
+        coordinate.z,
       );
     }
 
