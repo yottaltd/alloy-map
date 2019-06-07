@@ -38,24 +38,25 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   }
 
   /**
-   * Adds AlloyDrawFeature wrapper to this layer
-   * when olFeature addition to source has been handled somewhere else
-   * @ignore
-   * @internal
+   * @override
    */
-  public addDrawFeatureWrapper(feature: AlloyDrawFeature): boolean {
-    // this is the copy of the super.addFeature
-    // minus the adding feature to source,
-    // since that will be handled by draw interaction once it's ready (shitty timeouts)
+  public addFeature(feature: AlloyDrawFeature, addToSource: boolean = true): boolean {
+    // overrides implementation of super.addFeature to support adding features but not to source as
+    // this is handled by the openlayers draw interaction and causes exceptions if we add it
+    // manually
+    if (addToSource) {
+      return super.addFeature(feature);
+    } else {
+      // this is the copy of the super.addFeature
+      if (this.currentFeatures.has(feature.id)) {
+        this.debugger('feature: %s already exists in layer', feature.id);
+        return false;
+      }
 
-    if (this.currentFeatures.has(feature.id)) {
-      this.debugger('feature: %s already exists in layer', feature.id);
-      return false;
+      this.debugger('adding feature: %s', feature.id);
+      this.currentFeatures.set(feature.id, feature);
+      return true;
     }
-
-    this.debugger('adding feature: %s', feature.id);
-    this.currentFeatures.set(feature.id, feature);
-    return true;
   }
 
   /**

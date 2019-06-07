@@ -230,7 +230,7 @@ export class AlloyDrawInteraction {
 
       // wrap created draw event feature into AlloyDrawFeature and save to draw layer
       const feature = new AlloyDrawFeature(uuid.v1(), event.feature, properties);
-      this.drawLayer.addDrawFeatureWrapper(feature);
+      this.drawLayer.addFeature(feature, false);
 
       this.onDrawEnd(feature);
     });
