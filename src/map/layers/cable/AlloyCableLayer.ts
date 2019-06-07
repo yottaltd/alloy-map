@@ -1,14 +1,14 @@
+import { LineString, Point } from 'geojson';
 import { AlloyCableFeature } from '../../features/AlloyCableFeature';
+import { AlloyCableFeatureFactory } from '../../features/AlloyCableFeatureFactory';
+import { AlloyCableFeatureProperties } from '../../features/AlloyCableFeatureProperties';
 import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
+import { AlloyCableUnitFeatureProperties } from '../../features/AlloyCableUnitFeatureProperties';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyAnimationLayer } from '../animation/AlloyAnimationLayer';
 import { AlloyCableAnimationManager } from './AlloyCableAnimationManager';
 import { AlloyCableLayerOptions } from './AlloyCableLayerOptions';
 import { AlloyCableStyleProcessor } from './AlloyCableStyleProcessor';
-import { AlloyCableFeatureProperties } from '../../features/AlloyCableFeatureProperties';
-import { AlloyCableUnitFeatureProperties } from '../../features/AlloyCableUnitFeatureProperties';
-import { LineString, Point } from 'geojson';
-import { AlloyCableFeatureFactory } from '../../features/AlloyCableFeatureFactory';
 
 /**
  * an alloy cable layer for rendering cable and feeds features provided externally on the map,

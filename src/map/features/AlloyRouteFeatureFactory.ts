@@ -1,11 +1,11 @@
 import { LineString, Point } from 'geojson';
 import OLFeature from 'ol/Feature';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
+import { AlloyRouteLayer } from '../layers/route/AlloyRouteLayer';
 import { AlloyRouteFeature } from './AlloyRouteFeature';
 import { AlloyRouteFeatureProperties } from './AlloyRouteFeatureProperties';
 import { AlloyRouteWaypointFeature } from './AlloyRouteWaypointFeature';
 import { AlloyRouteWaypointFeatureProperties } from './AlloyRouteWaypointFeatureProperties';
-import { AlloyRouteLayer } from '../layers/route/AlloyRouteLayer';
 
 /**
  * factory for creating route features

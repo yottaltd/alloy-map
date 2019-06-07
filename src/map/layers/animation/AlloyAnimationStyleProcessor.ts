@@ -65,6 +65,7 @@ export abstract class AlloyAnimationStyleProcessor<
       return [];
     }
   }
+
   /**
    * Custom styler for AlloyConnectorFeature
    * @param olFeature olFeature associated with AlloyConnectorFeature

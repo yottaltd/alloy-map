@@ -1,6 +1,6 @@
 import { AlloyAnimatedFeature } from './AlloyAnimatedFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyCableFeatureProperties } from './AlloyCableFeatureProperties';
+import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy cable feature which represents a cable with single line string geometry

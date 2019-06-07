@@ -4,6 +4,7 @@ import OLLineString from 'ol/geom/LineString';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import * as uuid from 'uuid';
+import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyAnimatedFeature } from '../../features/AlloyAnimatedFeature';
@@ -14,7 +15,6 @@ import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuild
 import { AlloyLayer } from '../AlloyLayer';
 import { AlloyAnimationLayerOptions } from './AlloyAnimationLayerOptions';
 import { AlloyAnimationStyleProcessor } from './AlloyAnimationStyleProcessor';
-import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 
 /**
  * @ignore
