@@ -5,12 +5,12 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyCustomFeature } from './AlloyCustomFeature';
 import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
-import { AlloyMapError } from '../../../types';
 
 /**
  * factory for creating custom features

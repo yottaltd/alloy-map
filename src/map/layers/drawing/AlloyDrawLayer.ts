@@ -17,6 +17,7 @@ import { AlloyDrawInteractionGeometryType } from '../../interactions/AlloyDrawIn
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
+import { GeometryUtils } from '../../../utils/GeometryUtils';
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -39,29 +40,33 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**
    * @override
    */
-  public addFeature(feature: AlloyDrawFeature): boolean {
-    // this is the copy of the super.addFeature
-    // minus the adding feature to source,
-    // since that will be handled by draw interaction once it's ready (shitty timeouts)
+  public addFeature(feature: AlloyDrawFeature, addToSource: boolean = true): boolean {
+    // overrides implementation of super.addFeature to support adding features but not to source as
+    // this is handled by the openlayers draw interaction and causes exceptions if we add it
+    // manually
+    if (addToSource) {
+      return super.addFeature(feature);
+    } else {
+      // this is the copy of the super.addFeature
+      if (this.currentFeatures.has(feature.id)) {
+        this.debugger('feature: %s already exists in layer', feature.id);
+        return false;
+      }
 
-    if (this.currentFeatures.has(feature.id)) {
-      this.debugger('feature: %s already exists in layer', feature.id);
-      return false;
+      this.debugger('adding feature: %s', feature.id);
+      this.currentFeatures.set(feature.id, feature);
+      return true;
     }
-
-    this.debugger('adding feature: %s', feature.id);
-    this.currentFeatures.set(feature.id, feature);
-    return true;
   }
 
   /**
    * Combine all features' geometries in this layer into a single geometry
-   * @return single openlayers geometry of all features in the layer
+   * @return single GeoJSON geometry of all features in the layer
    */
   public getAllFeaturesGeometry(): Geometry {
-    const geometries: OLGeometry[] = this.olSource
-      .getFeatures()
-      .map((feature) => feature.getGeometry());
+    const geometries: OLGeometry[] = Array.from(this.currentFeatures.values()).map((feature) =>
+      feature.olFeature.getGeometry(),
+    );
 
     // special case for no geometry
     if (geometries.length === 0) {
@@ -100,6 +105,8 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
       }
     }
 
-    return ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
+    const geometry: Geometry = ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
+    GeometryUtils.roundCoordinates(geometry);
+    return geometry;
   }
 }
