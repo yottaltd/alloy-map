@@ -5,7 +5,7 @@ import { AlloyAnimationStyleProcessor } from '../animation/AlloyAnimationStylePr
 import { AlloyRouteLayer } from './AlloyRouteLayer';
 
 /**
- * processes the cable styled feature items
+ * processes the route styled feature items
  * @ignore
  * @internal
  */
@@ -14,7 +14,7 @@ export class AlloyRouteStyleProcessor extends AlloyAnimationStyleProcessor<
 > {
   /**
    * creates a new instance
-   * @param layer the cable layer to style
+   * @param layer the route layer to style
    */
   constructor(layer: AlloyRouteLayer) {
     super(layer);
