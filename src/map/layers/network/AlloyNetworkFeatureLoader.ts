@@ -110,7 +110,7 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
 
           const configuration = this.layer.map.apiConfiguration;
           const fetchCreator = LayerApiFetchParamCreator(configuration);
-          const fetchArgs = fetchCreator.layerGetClusterLayerTile(
+          const fetchArgs = fetchCreator.layerGetNetworkLayerTile(
             this.layer.layerCode,
             coordinate.x, // x
             coordinate.y, // y
