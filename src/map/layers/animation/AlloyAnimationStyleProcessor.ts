@@ -31,7 +31,7 @@ export abstract class AlloyAnimationStyleProcessor<
 
   /**
    * creates a new instance
-   * @param layer the cable layer to style
+   * @param layer the cable or route layer to style
    */
   constructor(layer: AlloyAnimationLayer) {
     super(layer);
