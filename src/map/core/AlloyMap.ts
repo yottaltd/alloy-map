@@ -5,13 +5,10 @@ import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { GeoJSONObjectType } from '../../api';
+import { Configuration, GeoJSONObjectType } from '../../api';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
-import { Api } from '../../svr/Api';
-import { ApiFactory } from '../../svr/ApiFactory';
 import { FontUtils } from '../../utils/FontUtils';
-import { GeometryUtils } from '../../utils/GeometryUtils';
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
@@ -74,7 +71,7 @@ export class AlloyMap {
    * @ignore
    * @internal
    */
-  public readonly api: Api;
+  public readonly apiConfiguration: Configuration;
 
   /**
    * open layers maps instance
@@ -162,7 +159,10 @@ export class AlloyMap {
    */
   constructor(options: AlloyMapOptions) {
     // create a new api instance
-    this.api = ApiFactory.api(options.api, options.token);
+    this.apiConfiguration = new Configuration({
+      basePath: options.api,
+      apiKey: options.token,
+    });
 
     // if we have fonts, try to set them up
     FontUtils.load([

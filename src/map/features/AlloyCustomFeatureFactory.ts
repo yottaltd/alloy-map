@@ -10,6 +10,7 @@ import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyCustomFeature } from './AlloyCustomFeature';
 import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
+import { AlloyMapError } from '../../../types';
 
 /**
  * factory for creating custom features
@@ -158,6 +159,10 @@ export abstract class AlloyCustomFeatureFactory {
     customLayerId: string,
     geoJson: any,
   ): AlloyCustomFeature {
+    if (!geoJson) {
+      throw new AlloyMapError(1559559645, 'geo json parameter must be defined');
+    }
+
     return new AlloyCustomFeature(
       id,
       new OLFeature(ProjectionUtils.GEOJSON.readGeometry(geoJson)),
