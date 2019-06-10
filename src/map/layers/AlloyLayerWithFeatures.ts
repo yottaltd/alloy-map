@@ -198,6 +198,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
+   * @implements
+   */
+  public abstract dispose(): void;
+
+  /**
    * sets the style processor
    * @param processor the processor for styles
    * @ignore
