@@ -4,9 +4,9 @@ import OLVectorSource from 'ol/source/Vector';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
 import { AlloyLayer } from './AlloyLayer';
-import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 
 /**
  * base implementation for alloy layers with features
@@ -196,6 +196,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
     return hasFeatures;
   }
+
+  /**
+   * @implements
+   */
+  public abstract dispose(): void;
 
   /**
    * sets the style processor

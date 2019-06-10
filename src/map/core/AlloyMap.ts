@@ -387,6 +387,7 @@ export class AlloyMap {
     }
     layer.olLayers.forEach((olLayer) => this.olMap.removeLayer(olLayer));
     this.managedLayers.delete(layer.id);
+    layer.dispose(); // dispose of the layer
 
     // get all the currently selected features
     const currentlySelectedFeatures = this.selectionLayer.features;

@@ -20,4 +20,11 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
     // initialised here because style processor need some of the above internal properties
     this.setStyleProcessor(new AlloySelectionStyleProcessor(this));
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    // nothing
+  }
 }

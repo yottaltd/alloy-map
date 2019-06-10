@@ -9,6 +9,7 @@ import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import * as uuid from 'uuid';
 import { AlloyMapError } from '../../../error/AlloyMapError';
+import { GeometryUtils } from '../../../utils/GeometryUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
@@ -17,7 +18,6 @@ import { AlloyDrawInteractionGeometryType } from '../../interactions/AlloyDrawIn
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
-import { GeometryUtils } from '../../../utils/GeometryUtils';
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -108,5 +108,12 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     const geometry: Geometry = ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
     GeometryUtils.roundCoordinates(geometry);
     return geometry;
+  }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    // nothing
   }
 }
