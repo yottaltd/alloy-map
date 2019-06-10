@@ -139,4 +139,11 @@ export class AlloyHoverLayer implements AlloyLayer {
       this.olSource.addFeature(feature.olFeature);
     }
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    // nothing
+  }
 }
