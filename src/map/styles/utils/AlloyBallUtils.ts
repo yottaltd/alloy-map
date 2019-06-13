@@ -36,6 +36,7 @@ export abstract class AlloyBallUtils {
         }),
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 
@@ -59,6 +60,7 @@ export abstract class AlloyBallUtils {
         }),
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 }

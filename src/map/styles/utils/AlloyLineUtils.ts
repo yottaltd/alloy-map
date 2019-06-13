@@ -32,6 +32,7 @@ export abstract class AlloyLineUtils {
         lineJoin: 'round',
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 
@@ -55,6 +56,7 @@ export abstract class AlloyLineUtils {
         lineJoin: 'round',
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
   /**
@@ -77,6 +79,7 @@ export abstract class AlloyLineUtils {
         lineCap: 'square',
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
   /**
@@ -98,6 +101,7 @@ export abstract class AlloyLineUtils {
         snapToPixel: false,
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 }
