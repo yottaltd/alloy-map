@@ -96,10 +96,12 @@ export abstract class AlloyAnimatedFeature implements AlloyFeature {
    * @implements
    */
   public setGeometry(geometry: LineString | null) {
+    this.layer.animateFeature(this, false);
     if (geometry === null) {
       this.olFeature.setGeometry(undefined as any);
     } else {
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
+      this.layer.animateFeature(this, true);
     }
   }
 
