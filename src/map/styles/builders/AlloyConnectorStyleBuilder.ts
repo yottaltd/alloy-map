@@ -23,14 +23,14 @@ export class AlloyConnectorStyleBuilder extends AlloyStyleBuilder<AlloyConnector
   /**
    * @override
    */
-  protected getKey(feature: AlloyConnectorFeature, resolution: number): string {
+  protected getKey(feature: AlloyConnectorFeature): string {
     return StringUtils.cacheKeyConcat(feature.properties.colour);
   }
 
   /**
    * @override
    */
-  protected createStyles(feature: AlloyConnectorFeature, resolution: number): OLStyle | OLStyle[] {
+  protected createStyles(feature: AlloyConnectorFeature): OLStyle | OLStyle[] {
     if (feature.olFeature.getGeometry().getType() === 'LineString') {
       return new OLStyle({
         stroke: new OLStroke({
@@ -41,26 +41,20 @@ export class AlloyConnectorStyleBuilder extends AlloyStyleBuilder<AlloyConnector
         }),
       });
     }
-    throw new AlloyMapError(1559408789, 'unsupported geometry type');
+    throw new AlloyMapError(1560774555, 'unsupported geometry type');
   }
 
   /**
    * @override
    */
-  protected createHoverStyles(
-    feature: AlloyConnectorFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] {
-    return this.createStyles(feature, resolution);
+  protected createHoverStyles(feature: AlloyConnectorFeature): OLStyle | OLStyle[] {
+    return this.createStyles(feature);
   }
 
   /**
    * @override
    */
-  protected createSelectedStyles(
-    feature: AlloyConnectorFeature,
-    resolution: number,
-  ): OLStyle | OLStyle[] {
-    return this.createStyles(feature, resolution);
+  protected createSelectedStyles(feature: AlloyConnectorFeature): OLStyle | OLStyle[] {
+    return this.createStyles(feature);
   }
 }

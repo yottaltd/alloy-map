@@ -151,7 +151,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
    * calculates the line width on screen given the resolution
    * @param resolution the current resolution
    */
-  private getLineWidth(resolution: number, scale?: boolean): number {
+  private getLineWidth(resolution: number): number {
     return (
       AlloyScaleUtils.LINE_WIDTH_MAX * AlloyScaleUtils.getScaleMultiplierForResolution(resolution)
     );

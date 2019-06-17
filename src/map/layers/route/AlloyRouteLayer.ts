@@ -153,11 +153,4 @@ export class AlloyRouteLayer extends AlloyAnimationLayer {
       this.addConnectorLine(waypointFeature, this.routeFeature);
     }
   }
-
-  /**
-   * @implements
-   */
-  public dispose() {
-    this.animationManager.clearAnimations();
-  }
 }

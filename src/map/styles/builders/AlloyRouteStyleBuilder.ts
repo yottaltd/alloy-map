@@ -48,7 +48,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): string {
-    return StringUtils.cacheKeyConcat(state, feature.id);
+    return StringUtils.cacheKeyConcat(state, resolution, feature.id);
   }
 
   /**

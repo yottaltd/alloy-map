@@ -209,6 +209,13 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
   }
 
   /**
+   * @implements
+   */
+  public dispose() {
+    this.animationManager.clearAnimations();
+  }
+
+  /**
    * Creates style processor for given sub-class
    * @ignore
    * @internal
