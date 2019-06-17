@@ -149,4 +149,11 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
   public getFeatureById(id: string): AlloyWfsFeature | null {
     return this.currentFeatures.get(id) || null;
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    // nothing
+  }
 }
