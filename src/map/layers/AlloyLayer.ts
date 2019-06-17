@@ -36,4 +36,11 @@ export interface AlloyLayer {
    * @param id the feature id
    */
   getFeatureById(id: string): AlloyFeature | null;
+
+  /**
+   * disposes of the alloy layer, should clear up any resources
+   * @ignore
+   * @internal
+   */
+  dispose();
 }

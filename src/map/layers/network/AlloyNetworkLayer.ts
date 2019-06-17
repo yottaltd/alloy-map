@@ -1,6 +1,8 @@
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
+import { MapChangeCentreEventHandler } from '../../events/MapChangeCentreEventHandler';
+import { MapChangeZoomEventHandler } from '../../events/MapChangeZoomEventHandler';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloySimplifiedGeometryFeature } from '../../features/AlloySimplifiedGeometryFeature';
 import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
@@ -54,32 +56,60 @@ export class AlloyNetworkLayer
     this.setStyleProcessor(new AlloyNetworkStyleProcessor(this));
 
     // listen for zoom changes so we can manage what is on screen
-    this.map.addMapChangeZoomListener((e) => {
-      this.debugger('map zoomed, clearing features');
-
-      // tells the feature loader to clear the source next time tiles complete. this leaves the
-      // tiles on screen until we have data
-      this.featureLoader.clearSourceOnNextLoad();
-
-      // begin loading features for the new level of detail
-      this.featureLoader.loadFeatures(
-        this.map.olView.calculateExtent(),
-        e.olResolution,
-        ProjectionUtils.MAP_PROJECTION,
-      );
-    });
+    this.map.addMapChangeZoomListener(this.onMapChangeZoom);
 
     // when the map moves begin loading features
-    this.map.addMapChangeCentreListener((e) =>
-      this.featureLoader.loadFeatures(e.olExtent, e.olResolution, ProjectionUtils.MAP_PROJECTION),
-    );
+    this.map.addMapChangeCentreListener(this.onMapChangeCentre);
 
     // load initial features
-    // TODO load when the layer is added to the map
+    if (this.styles.length > 0) {
+      // TODO load when the layer is added to the map
+      this.featureLoader.loadFeatures(
+        this.map.olView.calculateExtent(),
+        this.map.olView.getResolution(),
+        ProjectionUtils.MAP_PROJECTION,
+      );
+    }
+  }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    this.map.removeMapChangeZoomListener(this.onMapChangeZoom);
+    this.map.removeMapChangeCentreListener(this.onMapChangeCentre);
+  }
+
+  /**
+   * handler for the map change zoom event
+   */
+  private readonly onMapChangeZoom: MapChangeZoomEventHandler = (e) => {
+    // short circuit if we have no styles
+    if (this.styles.length === 0) {
+      this.debugger('map zoomed, but no styles present, skipping feature loading');
+      return;
+    }
+    this.debugger('map zoomed, clearing features');
+    // tells the feature loader to clear the source next time tiles complete. this leaves the
+    // tiles on screen until we have data
+    this.featureLoader.clearSourceOnNextLoad();
+    // begin loading features for the new level of detail
     this.featureLoader.loadFeatures(
       this.map.olView.calculateExtent(),
-      this.map.olView.getResolution(),
+      e.olResolution,
       ProjectionUtils.MAP_PROJECTION,
     );
-  }
+  };
+
+  /**
+   * handler for the map change centre event
+   */
+  private readonly onMapChangeCentre: MapChangeCentreEventHandler = (e) => {
+    // short circuit if we have no styles
+    if (this.styles.length === 0) {
+      this.debugger('map centre changed, but no styles present, skipping feature loading');
+      return;
+    }
+    this.featureLoader.loadFeatures(e.olExtent, e.olResolution, ProjectionUtils.MAP_PROJECTION);
+  };
 }

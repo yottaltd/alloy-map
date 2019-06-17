@@ -230,4 +230,11 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
       this.addConnectorLine(connectedUnitFeature, this.cableFeature);
     }
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    this.animationManager.clearAnimations();
+  }
 }

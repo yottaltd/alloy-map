@@ -1,16 +1,15 @@
-import { AlloyMapError } from '../error/AlloyMapError';
+import { AlloyMapError } from '../../../error/AlloyMapError';
 
 /**
- * function to intercept service calls and check for common error codes
- * @param response the response to intercept
- * @ignore
- * @internal
+ * function for intercepting tile responses and casting to the correct model
+ * @param response
  */
-export function responseInterceptor(response: Response): PromiseLike<Response> {
+export async function tileResponseInterceptor<T>(response: Response): Promise<T> {
   // Short circuit for statuses with no body
   if (response.status === 204) {
-    return Promise.resolve({} as Response);
+    return Promise.resolve({} as T);
   }
+
   return response
     .json()
     .then((json) => {
@@ -19,18 +18,16 @@ export function responseInterceptor(response: Response): PromiseLike<Response> {
         // in the next if condition.
         const potentialAlloyError = AlloyMapError.parse(json);
         if (potentialAlloyError) {
-          throw potentialAlloyError;
+          return Promise.reject(potentialAlloyError);
         }
       } else if (response.status < 200 || response.status >= 300) {
-        throw new AlloyMapError(
-          1549368024,
-          `Unexpected status code for api call: ${response.status}`,
-          {
+        return Promise.reject(
+          new AlloyMapError(1549368024, `Unexpected status code for api call: ${response.status}`, {
             data: {
               statusCode: response.status,
               statusText: response.statusText,
             },
-          },
+          }),
         );
       }
       return json;

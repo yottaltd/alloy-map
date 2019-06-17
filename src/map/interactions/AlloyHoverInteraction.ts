@@ -104,8 +104,8 @@ export class AlloyHoverInteraction {
       (olFeature, olLayer) => {
         // potentially a render feature
         if (olFeature instanceof OLFeature) {
-          // find the open layers layer index in our layers (reverse mapping)
-          const index = payload.olLayers.indexOf(olLayer);
+          // find our layer index for the openlayers layers
+          const index = payload.layers.findIndex((layer) => layer.olLayers.indexOf(olLayer) !== -1);
           if (index >= 0) {
             // get the alloy layer and find the feature by id
             const feature = payload.layers[index].getFeatureById(
