@@ -192,4 +192,11 @@ export class AlloyRouteLayer implements AlloyLayer {
     // then try waypoints
     return this.waypointFeatures.get(id) || null;
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    this.animationManager.clearAnimations();
+  }
 }

@@ -180,4 +180,11 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeature>
     this.addFeature(newFeature);
     return newFeature;
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    // nothing to clean up
+  }
 }
