@@ -193,4 +193,11 @@ export class AlloyCableLayer implements AlloyLayer {
   public getFeatureById(id: string): AlloyFeature | null {
     return this.cableFeatures.get(id) || this.feedFeatures.get(id) || null;
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    this.animationManager.clearAnimations();
+  }
 }
