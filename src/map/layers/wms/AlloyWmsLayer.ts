@@ -60,4 +60,11 @@ export class AlloyWmsLayer implements AlloyLayer {
   public getFeatureById(id: string): AlloyFeature | null {
     return null;
   }
+
+  /**
+   * @implements
+   */
+  public dispose() {
+    // do nothing
+  }
 }
