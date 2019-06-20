@@ -46,9 +46,12 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
   protected getKey(
     feature: AlloyRouteFeature | AlloyRouteWaypointFeature,
     resolution: number,
-    state: AlloyStyleBuilderBuildState,
   ): string {
-    return StringUtils.cacheKeyConcat(state, resolution, feature.id);
+    return StringUtils.cacheKeyConcat(
+      resolution,
+      feature.id, // each route feature is unique (expensive)
+      feature.olFeature.getRevision(),
+    );
   }
 
   /**

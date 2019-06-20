@@ -39,7 +39,11 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
    * @override
    */
   protected getKey(feature: AlloyCableFeature | AlloyCableUnitFeature, resolution: number): string {
-    return StringUtils.cacheKeyConcat(resolution, feature.properties.colour);
+    return StringUtils.cacheKeyConcat(
+      resolution,
+      feature.id, // each cable feature is unique (expensive)
+      feature.olFeature.getRevision(),
+    );
   }
 
   /**
