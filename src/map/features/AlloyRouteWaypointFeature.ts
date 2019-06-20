@@ -14,6 +14,15 @@ export class AlloyRouteWaypointFeature extends AlloyConnectedFeature {
   /**
    * @implements
    */
+  public allowsHover!: false;
+  /**
+   * @implements
+   */
+  public allowsSelection!: false;
+
+  /**
+   * @implements
+   */
   public readonly properties!: Readonly<AlloyRouteWaypointFeatureProperties>;
 }
 /**
@@ -23,3 +32,5 @@ export class AlloyRouteWaypointFeature extends AlloyConnectedFeature {
  * really need every small optimisation we can get with regard to features
  */
 AlloyRouteWaypointFeature.prototype.type = AlloyFeatureType.RouteWaypoint;
+AlloyRouteWaypointFeature.prototype.allowsSelection = false;
+AlloyRouteWaypointFeature.prototype.allowsHover = false;

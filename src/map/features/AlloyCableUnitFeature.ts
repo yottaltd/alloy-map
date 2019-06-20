@@ -14,7 +14,18 @@ export class AlloyCableUnitFeature extends AlloyConnectedFeature {
   /**
    * @implements
    */
+  public allowsHover!: true;
+  /**
+   * @implements
+   */
+  public allowsSelection!: true;
+
+  /**
+   * @implements
+   */
   public readonly properties!: Readonly<AlloyCableUnitFeatureProperties>;
 }
 
 AlloyCableUnitFeature.prototype.type = AlloyFeatureType.CableUnit;
+AlloyCableUnitFeature.prototype.allowsSelection = true;
+AlloyCableUnitFeature.prototype.allowsHover = true;

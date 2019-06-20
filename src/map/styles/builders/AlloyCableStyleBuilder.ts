@@ -5,6 +5,7 @@ import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyCableFeature } from '../../features/AlloyCableFeature';
 import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
+import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
@@ -38,9 +39,14 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
   /**
    * @override
    */
-  protected getKey(feature: AlloyCableFeature | AlloyCableUnitFeature, resolution: number): string {
+  protected getKey(
+    feature: AlloyCableFeature | AlloyCableUnitFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ): string {
     return StringUtils.cacheKeyConcat(
       resolution,
+      state,
       feature.id, // each cable feature is unique (expensive)
       feature.olFeature.getRevision(),
     );
@@ -69,7 +75,13 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     feature: AlloyCableFeature | AlloyCableUnitFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
-    return this.createStyles(feature, resolution);
+    const geometryType = feature.olFeature.getGeometry().getType();
+    if (geometryType === 'Point' && feature instanceof AlloyCableUnitFeature) {
+      return this.createCableUnitHoverStyles(resolution, feature);
+    } else if (geometryType === 'LineString' && feature instanceof AlloyCableFeature) {
+      return this.createCableHoverStyles(resolution, feature);
+    }
+    throw new AlloyMapError(1561046423, 'unsupported geometry type');
   }
 
   /**
@@ -79,10 +91,55 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     feature: AlloyCableFeature | AlloyCableUnitFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
-    return this.createStyles(feature, resolution);
+    const geometryType = feature.olFeature.getGeometry().getType();
+    if (geometryType === 'Point' && feature instanceof AlloyCableUnitFeature) {
+      return this.createCableUnitSelectedStyles(resolution, feature);
+    } else if (geometryType === 'LineString' && feature instanceof AlloyCableFeature) {
+      return this.createCableSelectedStyles(resolution, feature);
+    }
+    throw new AlloyMapError(1561046431, 'unsupported geometry type');
   }
 
   private createCableUnitStyles(
+    resolution: number,
+    feature: AlloyCableUnitFeature,
+    processGeometryCollection?: boolean,
+  ): OLStyle[] {
+    const radius = this.getBallRadius(resolution);
+
+    return [
+      // the background coloured circle
+      AlloyBallUtils.createBallStyle(
+        radius,
+        feature.properties.colour,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
+      ),
+      // the icon of the item
+      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+    ];
+  }
+
+  private createCableStyles(
+    resolution: number,
+    feature: AlloyCableFeature,
+    processGeometryCollection?: boolean,
+  ): OLStyle[] {
+    const width = this.getLineWidth(resolution);
+
+    return [
+      AlloyLineUtils.createLineStyle(
+        width,
+        feature.properties.colour,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
+          : undefined,
+      ),
+    ];
+  }
+
+  private createCableUnitHoverStyles(
     resolution: number,
     feature: AlloyCableUnitFeature,
     processGeometryCollection?: boolean,
@@ -113,7 +170,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     ];
   }
 
-  private createCableStyles(
+  private createCableHoverStyles(
     resolution: number,
     feature: AlloyCableFeature,
     processGeometryCollection?: boolean,
@@ -134,6 +191,60 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
+          : undefined,
+      ),
+    ];
+  }
+
+  private createCableUnitSelectedStyles(
+    resolution: number,
+    feature: AlloyCableUnitFeature,
+    processGeometryCollection?: boolean,
+  ): OLStyle[] {
+    const radius = this.getBallRadius(resolution);
+
+    return [
+      // the halo circle
+      AlloyBallUtils.createBallHaloStyle(
+        radius,
+        feature.properties.colour,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
+      ),
+      // the background coloured circle
+      AlloyBallUtils.createBallStyle(
+        radius,
+        feature.properties.colour,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
+      ),
+      // the icon of the item
+      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+    ];
+  }
+
+  private createCableSelectedStyles(
+    resolution: number,
+    feature: AlloyCableFeature,
+    processGeometryCollection?: boolean,
+  ): OLStyle[] {
+    const width = this.getLineWidth(resolution);
+
+    return [
+      AlloyLineUtils.createLineHaloStyle(
+        width,
+        feature.properties.colour,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
+          : undefined,
+      ),
+      AlloyLineUtils.createLineStyle(
+        width,
+        feature.properties.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,

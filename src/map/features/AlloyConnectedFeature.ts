@@ -26,14 +26,14 @@ export abstract class AlloyConnectedFeature implements AlloyFeature {
    * @ignore
    * @internal
    */
-  public allowsSelection!: false; // see end of file for prototype
+  public abstract allowsSelection: boolean;
 
   /**
    * @implements
    * @ignore
    * @internal
    */
-  public allowsHover!: false; // see end of file for prototype
+  public abstract allowsHover: boolean;
 
   /**
    * @implements
@@ -106,6 +106,3 @@ export abstract class AlloyConnectedFeature implements AlloyFeature {
     this.olFeature.setStyle(visible ? null : []);
   }
 }
-
-AlloyConnectedFeature.prototype.allowsSelection = false;
-AlloyConnectedFeature.prototype.allowsHover = false;
