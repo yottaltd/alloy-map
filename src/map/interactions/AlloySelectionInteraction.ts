@@ -12,6 +12,7 @@ import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionCh
 import { FeaturesUnderSelectionEvent } from '../events/FeaturesUnderSelectionEvent';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyItemFeature } from '../features/AlloyItemFeature';
 
 /**
  * adds selection interaction to an alloy map
@@ -380,88 +381,141 @@ export class AlloySelectionInteraction {
       );
     }
 
-    // TODO possible z-index issue
-    const firstFeature = features[0];
-    this.debugger('first feature: %s for pixel: %o', firstFeature.id, event.pixel);
+    if (this.selectionMode === AlloySelectionMode.Single) {
+      const firstFeature = features[0];
+      this.debugger('first feature: %s for pixel: %o', firstFeature.id, event.pixel);
 
-    // if we don't allow selection, deselect and run any custom processing
-    if (!firstFeature.allowsSelection) {
-      this.debugger('first feature: %s does not allow selection', firstFeature.id);
-      this.setSelectedFeatures([]);
-      this.callFeatureOnSelectionInteraction(firstFeature);
-      return;
-    }
+      const fireUnderSelectionEvent = () => {
+        // if we had multiple potential features then suggest alternatives
+        if (features.length > 1) {
+          const featuresStack = new Map<string, AlloyFeature>();
+          features.slice(1).forEach((f) => featuresStack.set(f.id, f));
+          this.onFeaturesUnderSelection.dispatch(
+            new FeaturesUnderSelectionEvent(firstFeature, featuresStack),
+          );
+        }
+      };
 
-    // if it is already the only thing selected then deselect
-    const featureAlreadySelected: boolean = !!this.map.selectionLayer.getFeatureById(
-      firstFeature.id,
-    );
-    if (this.map.selectionLayer.features.size === 1 && featureAlreadySelected) {
-      this.debugger(
-        'first feature: %s is the only feature selected, deselecting...',
+      // if we don't allow selection, deselect and run any custom processing
+      if (!firstFeature.allowsSelection) {
+        this.debugger('first feature: %s does not allow selection', firstFeature.id);
+        this.setSelectedFeatures([]);
+        this.callFeatureOnSelectionInteraction(firstFeature);
+        fireUnderSelectionEvent();
+        return;
+      }
+
+      // if it is already the only thing selected then deselect
+      const featureAlreadySelected: boolean = !!this.map.selectionLayer.getFeatureById(
         firstFeature.id,
       );
-      this.setSelectedFeatures([]);
+      if (this.map.selectionLayer.features.size === 1 && featureAlreadySelected) {
+        this.debugger(
+          'first feature: %s is the only feature selected, deselecting...',
+          firstFeature.id,
+        );
+        this.setSelectedFeatures([]);
 
-      // set the hovered feature because we are over it but it doesn't trigger a pointer move
-      // and deselecting means we are hovered over it
-      this.map.hoverLayer.setHoveredFeature(firstFeature);
-      return;
-    }
+        // set the hovered feature because we are over it but it doesn't trigger a pointer move
+        // and deselecting means we are hovered over it
+        this.map.hoverLayer.setHoveredFeature(firstFeature);
+        fireUnderSelectionEvent();
+        return;
+      }
 
-    if (this.selectionMode === AlloySelectionMode.Multi) {
+      this.onClickSelectSingleFeature(firstFeature);
+    } else if (this.selectionMode === AlloySelectionMode.Multi) {
       // work out if we are shift/ctrl clicking
       const isCtrlOrShiftClicking =
         event.originalEvent instanceof PointerEvent &&
         (event.originalEvent.shiftKey || event.originalEvent.ctrlKey);
       if (isCtrlOrShiftClicking) {
-        if (featureAlreadySelected) {
-          // if its already selected then we are deselecting the feature, modify the currently
-          // selected features map (this is already a new reference via the getter) and set selected
-          const selectedFeatures = this.map.selectionLayer.features;
-          selectedFeatures.delete(firstFeature.id);
+        const selectedFeatures = this.map.selectionLayer.features;
+        let updateSelection = true;
 
-          // behind guard because we are performing operations for a log
-          if (this.debugger.enabled) {
-            this.debugger(
-              'first feature: %s was shift/ctrl clicked and already selected, ' +
-                'removing from selection.\nprevious: %o\nnew: %o',
-              firstFeature.id,
-              Array.from(this.map.selectionLayer.features.keys()),
-              Array.from(selectedFeatures.keys()),
-            );
-          }
-          this.setSelectedFeatures(Array.from(selectedFeatures.values()));
-          // we are specifically not calling "onFeatureClicked" when deselecting, think its right?
+        const [selected, notSelected] = _.partition(
+          features,
+          (f) =>
+            !!selectedFeatures.has(f.id) ||
+            Array.from(selectedFeatures.values()).some(
+              (feature) =>
+                feature instanceof AlloyItemFeature && feature.properties.itemId === f.id,
+            ),
+        );
 
-          // set the hovered feature because we are over it but it doesn't trigger a pointer move
-          // and deselecting means we are hovered over it
-          this.map.hoverLayer.setHoveredFeature(firstFeature);
-        } else {
-          this.debugger(
-            'first feature: %s was shift/ctrl clicked and not already selected, selecting',
-            firstFeature.id,
+        if (notSelected.length > 0) {
+          // add not-selected to selection
+          const allowedNotSelectedFeatures = notSelected.filter(
+            (feature) => feature.allowsSelection,
           );
-          this.selectFeature(firstFeature);
-          this.callFeatureOnSelectionInteraction(firstFeature);
-
-          // unset the hovered feature because we are over it but it doesn't trigger a pointer move
-          this.map.hoverLayer.setHoveredFeature(null);
+          if (allowedNotSelectedFeatures.length > 0) {
+            for (const notSelectedFeature of allowedNotSelectedFeatures) {
+              selectedFeatures.set(notSelectedFeature.id, notSelectedFeature);
+              this.callFeatureOnSelectionInteraction(notSelectedFeature);
+              this.debugger(
+                'selected feature: %s was shift/ctrl clicked and not already selected, selecting',
+                notSelectedFeature.id,
+              );
+            }
+            // unset the hovered feature
+            this.map.hoverLayer.setHoveredFeature(null);
+          } else {
+            updateSelection = false;
+          }
+        } else {
+          // all selected - remove from selection
+          for (const selectedFeature of selected) {
+            selectedFeatures.delete(selectedFeature.id);
+            // behind guard because we are performing operations for a log
+            if (this.debugger.enabled) {
+              this.debugger(
+                'selected feature: %s was shift/ctrl clicked and already selected, ' +
+                  'removing from selection.\nprevious: %o\nnew: %o',
+                selectedFeature.id,
+                Array.from(this.map.selectionLayer.features.keys()),
+                Array.from(selectedFeatures.keys()),
+              );
+            }
+          }
+        }
+        if (updateSelection) {
+          this.setSelectedFeatures(Array.from(selectedFeatures.values()));
         }
       } else {
-        this.onClickSelectSingleFeature(firstFeature);
-      }
-    } else {
-      this.onClickSelectSingleFeature(firstFeature);
-    }
+        if (features.length > 1) {
+          this.setSelectedFeatures(features);
+        } else {
+          const firstFeature = features[0];
+          this.debugger('first feature: %s for pixel: %o', firstFeature.id, event.pixel);
 
-    // if we had multiple potential features then suggest alternatives
-    if (features.length > 1) {
-      const featuresStack = new Map<string, AlloyFeature>();
-      features.slice(1).forEach((f) => featuresStack.set(f.id, f));
-      this.onFeaturesUnderSelection.dispatch(
-        new FeaturesUnderSelectionEvent(firstFeature, featuresStack),
-      );
+          // if we don't allow selection, deselect and run any custom processing
+          if (!firstFeature.allowsSelection) {
+            this.debugger('first feature: %s does not allow selection', firstFeature.id);
+            this.setSelectedFeatures([]);
+            this.callFeatureOnSelectionInteraction(firstFeature);
+            return;
+          }
+
+          // if it is already the only thing selected then deselect
+          const featureAlreadySelected: boolean = !!this.map.selectionLayer.getFeatureById(
+            firstFeature.id,
+          );
+          if (this.map.selectionLayer.features.size === 1 && featureAlreadySelected) {
+            this.debugger(
+              'first feature: %s is the only feature selected, deselecting...',
+              firstFeature.id,
+            );
+            this.setSelectedFeatures([]);
+
+            // set the hovered feature because we are over it but it doesn't trigger a pointer move
+            // and deselecting means we are hovered over it
+            this.map.hoverLayer.setHoveredFeature(firstFeature);
+            return;
+          }
+
+          this.onClickSelectSingleFeature(firstFeature);
+        }
+      }
     }
   }
 
