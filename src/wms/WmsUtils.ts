@@ -23,12 +23,7 @@ export abstract class WmsUtils {
   public static async getCapabilities(url: string): Promise<AlloyWmsCapabilities> {
     let capabilities: AlloyWmsCapabilities;
     try {
-      const capsText = await (await fetch(url + '&REQUEST=GetCapabilities&SERVICE=WMS'))
-        .text()
-        .catch((error) => {
-          throw new AlloyMapError(1561547364, 'Failed to fetch WMS capabilties');
-        });
-
+      const capsText = await (await fetch(url + '&REQUEST=GetCapabilities&SERVICE=WMS')).text();
       const parsedCaps = PolyfillWms.read(capsText);
 
       capabilities = {
