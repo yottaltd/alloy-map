@@ -14,7 +14,7 @@ export abstract class AlloyConnectedFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType; // see end of file for prototype
+  public type!: AlloyFeatureType; // overwridden in implemented class
 
   /**
    * @implements

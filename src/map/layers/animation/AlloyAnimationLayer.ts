@@ -191,7 +191,12 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
    * @implements
    */
   public getFeatureById(id: string): AlloyFeature | null {
-    return Array.from(this.connectorLineFeatures.values()).find((f) => f.id === id) || null;
+    for (const feature of Array.from(this.connectorLineFeatures.values())) {
+      if (feature.id === id) {
+        return feature;
+      }
+    }
+    return null;
   }
 
   /**
