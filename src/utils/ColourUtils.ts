@@ -71,7 +71,7 @@ export abstract class ColourUtils {
    * @returns whether colour is a valid hex
    */
   public static isValidFullHex(colour: string): boolean {
-    const regex = /#([A-Fa-f0-9]{6})/g.exec(colour);
+    const regex = /^#([A-Fa-f0-9]{6})$/g.exec(colour);
     return regex !== null && regex.length >= 0;
   }
 }
