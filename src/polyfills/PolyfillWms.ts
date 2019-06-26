@@ -1,6 +1,5 @@
 import WMSCapabilities from 'ol/format/WMSCapabilities.js';
-import { GlobalObject } from 'openlayers';
-
+import { WmsCapabilities } from '../wms/WmsCapabilities';
 /**
  * utility class for accessing Wms functions due to typing issues.
  * @ignore
@@ -12,8 +11,12 @@ export abstract class PolyfillWms {
    * @param input WMS capabilities input to parse
    * @returns WMS capabilities as JSON object
    */
-  public static read(input: string | Document | Node): GlobalObject {
-    return PolyfillWms.caps.read(input);
+  public static read(input: string | Document | Node): WmsCapabilities {
+    const parsed = PolyfillWms.caps.read(input);
+    return {
+      Title: parsed.Service.Title,
+      Layer: parsed.Capability.Layer,
+    };
   }
   /**
    * Private singleton instance of Wms capabilities reader
