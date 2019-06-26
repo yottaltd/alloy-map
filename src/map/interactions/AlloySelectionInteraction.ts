@@ -12,7 +12,6 @@ import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionCh
 import { FeaturesUnderSelectionEvent } from '../events/FeaturesUnderSelectionEvent';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyItemFeature } from '../features/AlloyItemFeature';
 
 /**
  * adds selection interaction to an alloy map
@@ -433,15 +432,7 @@ export class AlloySelectionInteraction {
         const selectedFeatures = this.map.selectionLayer.features;
         let updateSelection = true;
 
-        const [selected, notSelected] = _.partition(
-          features,
-          (f) =>
-            !!selectedFeatures.has(f.id) ||
-            Array.from(selectedFeatures.values()).some(
-              (feature) =>
-                feature instanceof AlloyItemFeature && feature.properties.itemId === f.id,
-            ),
-        );
+        const [selected, notSelected] = _.partition(features, (f) => !!selectedFeatures.has(f.id));
 
         if (notSelected.length > 0) {
           // add not-selected to selection
