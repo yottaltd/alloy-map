@@ -10,8 +10,7 @@ import { AlloyLayer } from '../AlloyLayer';
 import { AlloyWmsLayerOptions } from './AlloyWmsLayerOptions';
 
 /**
- * an alloy custom layer for rendering custom features provided externally on the map, use this to
- * add custom features onto the map and manage them manually
+ * an alloy wms layer for rendering external wms tiles on the map
  */
 export class AlloyWmsLayer implements AlloyLayer {
   /**
