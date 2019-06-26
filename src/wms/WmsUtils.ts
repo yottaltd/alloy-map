@@ -97,7 +97,7 @@ export abstract class WmsUtils {
       }
     }
 
-    return {
+    const layerCapabilities: AlloyWmsCapabilitiesLayer = {
       name: layer.Name,
       title: layer.Title,
       layers: (layer.Layer || []).map((l: any) => this.parseWmsLayer(l)),
@@ -108,6 +108,7 @@ export abstract class WmsUtils {
       fixedHeight: layer.fixedHeight,
       crs,
     };
+    return layerCapabilities;
   }
 
   /**
@@ -117,13 +118,14 @@ export abstract class WmsUtils {
    * @internal
    */
   private static parseWmsStyle(style: any): AlloyWmsCapabilitiesLayerStyle {
-    return {
+    const layerStyleCapabilities: AlloyWmsCapabilitiesLayerStyle = {
       name: style.Name,
       title: style.Title,
       legends: (style.LegendURL || [])
         .map((l: any) => this.parseWmsLegend(l))
         .filter((l: AlloyWmsCapabilitiesLayerStyleLegend | null) => l !== null),
     };
+    return layerStyleCapabilities;
   }
 
   /**
@@ -134,10 +136,11 @@ export abstract class WmsUtils {
    */
   private static parseWmsLegend(legend: any): AlloyWmsCapabilitiesLayerStyleLegend | null {
     if (legend.Format && legend.Format.startsWith('image/')) {
-      return {
+      const layerStyleLegendCapabilities: AlloyWmsCapabilitiesLayerStyleLegend = {
         url: legend.OnlineResource,
         size: legend.size,
       };
+      return layerStyleLegendCapabilities;
     }
     return null;
   }

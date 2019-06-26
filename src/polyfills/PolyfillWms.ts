@@ -8,7 +8,7 @@ import { GlobalObject } from 'openlayers';
  */
 export abstract class PolyfillWms {
   /**
-   * Prases WMS capabilties into a JSON object.
+   * Parses WMS capabilties into a JSON object.
    * @param input WMS capabilities input to parse
    * @returns WMS capabilities as JSON object
    */
