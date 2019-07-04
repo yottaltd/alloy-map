@@ -18,7 +18,7 @@ import { AlloyNetworkLayer } from './AlloyNetworkLayer';
  * max zoom level supported for the tile grid (won't make requests beyond this point)
  * @ignore
  */
-const TILE_GRID_MAX_ZOOM = 18;
+const TILE_GRID_MAX_ZOOM = 17;
 
 /**
  * loads network layer features from the alloy api

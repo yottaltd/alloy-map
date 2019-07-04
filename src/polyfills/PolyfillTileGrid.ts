@@ -16,7 +16,7 @@ export abstract class PolyfillTileGrid {
     extent?: [number, number, number, number];
     maxZoom: number;
     minZoom?: number;
-    tileSize?: number;
+    tileSize?: number | [number, number];
   }): OLTileGrid {
     return createXYZ(options);
   }
