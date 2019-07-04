@@ -135,6 +135,12 @@ export abstract class WfsVersionParser {
       min = [Number.parseFloat(minxAttribute), Number.parseFloat(minyAttribute)];
       max = [Number.parseFloat(maxxAttribute), Number.parseFloat(maxyAttribute)];
     }
+    if (min.length !== 2 || max.length !== 2) {
+      throw new AlloyMapError(
+        1562249914,
+        `Incorrect number of coordinates for bbox ${min} ; ${max}`,
+      );
+    }
     const bboxValue: [number, number, number, number] = [min[0], min[1], max[0], max[1]];
     bboxValue.forEach((n) => {
       if (typeof n !== 'number' || isNaN(n)) {
