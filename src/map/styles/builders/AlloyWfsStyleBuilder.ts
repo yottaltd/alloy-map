@@ -1,17 +1,16 @@
-import OLGeometry from 'ol/geom/Geometry';
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
 import OLStyle from 'ol/style/Style';
+import { AlloyLayerStyle } from '../../../../types';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
-import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
+import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
+import { AlloyWfsLayerStyle } from '../AlloyWfsLayerStyle';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
@@ -25,8 +24,6 @@ import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineS
 import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
 import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
-import { AlloyTextUtils } from '../utils/AlloyTextUtils';
-import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 
 /**
  * the icon colour in the balls
@@ -39,7 +36,7 @@ const ICON_COLOUR = '#ffffff';
  * @ignore
  * @internal
  */
-export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
+export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<AlloyWfsFeature> {
   /**
    * shame we need a reference to the map :( but its for calculating coord to pixel coord transforms
    */
@@ -49,8 +46,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
    * creates a new instance
    * @param map the map instance for calculations
    */
-  constructor(map: AlloyMap) {
-    super();
+  constructor(map: AlloyMap, styles: Readonly<AlloyWfsLayerStyle[]>) {
+    super(styles);
     this.map = map;
   }
 
@@ -62,36 +59,37 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): string {
-    return StringUtils.cacheKeyConcat(
-      state,
-      // scaling is undefined or true then we allow the feature to scale normally, if false it is a
-      // fixed max size all the time
-      feature.properties.scale === undefined || feature.properties.scale ? resolution : 1,
-      feature.properties.colour,
-      feature.properties.icon,
-      feature.olFeature.getRevision(),
-    );
+    const layerStyle = this.layerStyles.get(feature.styleId);
+    if (!layerStyle) {
+      throw new AlloyMapError(1562245691, 'missing layer style: ' + feature.styleId);
+    }
+    return StringUtils.cacheKeyConcat(state, resolution, layerStyle.colour, layerStyle.icon);
   }
 
   /**
    * @override
    */
   protected createStyles(feature: AlloyWfsFeature, resolution: number): OLStyle | OLStyle[] {
+    const layerStyle = this.layerStyles.get(feature.styleId);
+    if (!layerStyle) {
+      throw new AlloyMapError(1562245633, 'missing layer style: ' + feature.styleId);
+    }
+
     switch (feature.olFeature.getGeometry().getType()) {
       case 'Point':
-        return this.createPointStyles(resolution, feature);
+        return this.createPointStyles(resolution, feature, layerStyle);
       case 'LineString':
-        return this.createLineStringStyles(resolution, feature);
+        return this.createLineStringStyles(resolution, feature, layerStyle);
       case 'Polygon':
-        return this.createPolygonStyles(resolution, feature);
+        return this.createPolygonStyles(resolution, feature, layerStyle);
       case 'MultiPoint':
-        return this.createMultiPointStyles(resolution, feature);
+        return this.createMultiPointStyles(resolution, feature, layerStyle);
       case 'MultiLineString':
-        return this.createMultiLineStringStyles(resolution, feature);
+        return this.createMultiLineStringStyles(resolution, feature, layerStyle);
       case 'MultiPolygon':
-        return this.createMultiPolygonStyles(resolution, feature);
+        return this.createMultiPolygonStyles(resolution, feature, layerStyle);
       case 'GeometryCollection':
-        return this.createGeometryCollectionStyles(resolution, feature);
+        return this.createGeometryCollectionStyles(resolution, feature, layerStyle);
       default:
         throw new AlloyMapError(1556117088, 'unsupported geometry type');
     }
@@ -101,21 +99,26 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
    * @override
    */
   protected createHoverStyles(feature: AlloyWfsFeature, resolution: number): OLStyle | OLStyle[] {
+    const layerStyle = this.layerStyles.get(feature.styleId);
+    if (!layerStyle) {
+      throw new AlloyMapError(1562245628, 'missing layer style: ' + feature.styleId);
+    }
+
     switch (feature.olFeature.getGeometry().getType()) {
       case 'Point':
-        return this.createPointHoverStyles(resolution, feature);
+        return this.createPointHoverStyles(resolution, feature, layerStyle);
       case 'LineString':
-        return this.createLineStringHoverStyles(resolution, feature);
+        return this.createLineStringHoverStyles(resolution, feature, layerStyle);
       case 'Polygon':
-        return this.createPolygonHoverStyles(resolution, feature);
+        return this.createPolygonHoverStyles(resolution, feature, layerStyle);
       case 'MultiPoint':
-        return this.createMultiPointHoverStyles(resolution, feature);
+        return this.createMultiPointHoverStyles(resolution, feature, layerStyle);
       case 'MultiLineString':
-        return this.createMultiLineStringHoverStyles(resolution, feature);
+        return this.createMultiLineStringHoverStyles(resolution, feature, layerStyle);
       case 'MultiPolygon':
-        return this.createMultiPolygonHoverStyles(resolution, feature);
+        return this.createMultiPolygonHoverStyles(resolution, feature, layerStyle);
       case 'GeometryCollection':
-        return this.createGeometryCollectionHoverStyles(resolution, feature);
+        return this.createGeometryCollectionHoverStyles(resolution, feature, layerStyle);
       default:
         throw new AlloyMapError(1556117120, 'unsupported geometry type');
     }
@@ -128,21 +131,26 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
     feature: AlloyWfsFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
+    const layerStyle = this.layerStyles.get(feature.styleId);
+    if (!layerStyle) {
+      throw new AlloyMapError(1562245706, 'missing layer style: ' + feature.styleId);
+    }
+
     switch (feature.olFeature.getGeometry().getType()) {
       case 'Point':
-        return this.createPointSelectedStyles(resolution, feature);
+        return this.createPointSelectedStyles(resolution, feature, layerStyle);
       case 'LineString':
-        return this.createLineStringSelectedStyles(resolution, feature);
+        return this.createLineStringSelectedStyles(resolution, feature, layerStyle);
       case 'Polygon':
-        return this.createPolygonSelectedStyles(resolution, feature);
+        return this.createPolygonSelectedStyles(resolution, feature, layerStyle);
       case 'MultiPoint':
-        return this.createMultiPointSelectedStyles(resolution, feature);
+        return this.createMultiPointSelectedStyles(resolution, feature, layerStyle);
       case 'MultiLineString':
-        return this.createMultiLineStringSelectedStyles(resolution, feature);
+        return this.createMultiLineStringSelectedStyles(resolution, feature, layerStyle);
       case 'MultiPolygon':
-        return this.createMultiPolygonSelectedStyles(resolution, feature);
+        return this.createMultiPolygonSelectedStyles(resolution, feature, layerStyle);
       case 'GeometryCollection':
-        return this.createGeometryCollectionSelectedStyles(resolution, feature);
+        return this.createGeometryCollectionSelectedStyles(resolution, feature, layerStyle);
       default:
         throw new AlloyMapError(1556117154, 'unsupported geometry type');
     }
@@ -151,15 +159,16 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createPointStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     return [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -167,7 +176,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
@@ -179,15 +188,16 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createMultiPointStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     return [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -195,7 +205,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
@@ -207,12 +217,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createLineStringStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     return [
       AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution, feature.properties.scale),
-        feature.properties.colour,
+        this.getLineWidth(resolution),
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -223,12 +234,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createMultiLineStringStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     return [
       AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution, feature.properties.scale),
-        feature.properties.colour,
+        this.getLineWidth(resolution),
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -239,9 +251,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createPolygonStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const semiTransparentColour = ColourUtils.semiTransparent(feature.properties.colour);
+    const semiTransparentColour = ColourUtils.semiTransparent(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -280,16 +293,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, feature.properties.icon, ICON_COLOUR, midPoint),
+      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
   }
 
   private createMultiPolygonStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const semiTransparentColour = ColourUtils.semiTransparent(feature.properties.colour);
+    const semiTransparentColour = ColourUtils.semiTransparent(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -330,32 +344,37 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, feature.properties.icon, ICON_COLOUR, midPoint),
+      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
   }
 
-  private createGeometryCollectionStyles(resolution: number, feature: AlloyWfsFeature): OLStyle[] {
+  private createGeometryCollectionStyles(
+    resolution: number,
+    feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
+  ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointStyles(resolution, feature, true),
-      ...this.createMultiPointStyles(resolution, feature, true),
-      ...this.createLineStringStyles(resolution, feature, true),
-      ...this.createMultiLineStringStyles(resolution, feature, true),
-      ...this.createPolygonStyles(resolution, feature, true),
-      ...this.createMultiPolygonStyles(resolution, feature, true),
+      ...this.createPointStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiPointStyles(resolution, feature, layerStyle, true),
+      ...this.createLineStringStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiLineStringStyles(resolution, feature, layerStyle, true),
+      ...this.createPolygonStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiPolygonStyles(resolution, feature, layerStyle, true),
     ];
   }
 
   private createPointHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
     return [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
@@ -376,7 +395,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
@@ -388,12 +407,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createMultiPointHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
     return [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
@@ -414,7 +434,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
@@ -426,12 +446,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createLineStringHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
+    const width = this.getLineWidth(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
@@ -454,12 +475,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createMultiLineStringHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
+    const width = this.getLineWidth(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
@@ -482,10 +504,11 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createPolygonHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -530,17 +553,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, feature.properties.icon, ICON_COLOUR, midPoint),
+      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
   }
 
   private createMultiPolygonHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -587,38 +611,40 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, feature.properties.icon, ICON_COLOUR, midPoint),
+      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
   }
 
   private createGeometryCollectionHoverStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointHoverStyles(resolution, feature, true),
-      ...this.createMultiPointHoverStyles(resolution, feature, true),
-      ...this.createLineStringHoverStyles(resolution, feature, true),
-      ...this.createMultiLineStringHoverStyles(resolution, feature, true),
-      ...this.createPolygonHoverStyles(resolution, feature, true),
-      ...this.createMultiPolygonHoverStyles(resolution, feature, true),
+      ...this.createPointHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiPointHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createLineStringHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiLineStringHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createPolygonHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiPolygonHoverStyles(resolution, feature, layerStyle, true),
     ];
   }
 
   private createPointSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     return [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -626,7 +652,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -634,7 +660,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
@@ -646,15 +672,16 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createMultiPointSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const radius = this.getBallRadius(resolution);
 
     return [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -662,7 +689,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -670,7 +697,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
@@ -682,22 +709,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createLineStringSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const width = this.getLineWidth(resolution);
+    const radius = this.getBallRadius(resolution);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
         width,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -705,7 +733,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -718,7 +746,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -731,7 +759,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
@@ -748,22 +776,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createMultiLineStringSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, feature.properties.scale);
-    const radius = this.getBallRadius(resolution, feature.properties.scale);
+    const width = this.getLineWidth(resolution);
+    const radius = this.getBallRadius(resolution);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
         width,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -771,7 +800,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -784,7 +813,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -797,7 +826,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
       // the icon of the item
       AlloyIconUtils.createAlloyIconStyle(
         radius,
-        feature.properties.icon,
+        layerStyle.icon,
         ICON_COLOUR,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
@@ -814,6 +843,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
   private createPolygonSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // we need to calculate the icon size on a feature by feature basis
@@ -848,24 +878,25 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
 
     return [
       AlloyPolygonUtils.createPolygonHaloStyle(
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, feature.properties.icon, ICON_COLOUR, midPoint),
+      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
   }
 
   private createMultiPolygonSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // we need to calculate the icon size on a feature by feature basis
@@ -902,34 +933,35 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
 
     return [
       AlloyPolygonUtils.createPolygonHaloStyle(
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
-        feature.properties.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, feature.properties.icon, ICON_COLOUR, midPoint),
+      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
   }
 
   private createGeometryCollectionSelectedStyles(
     resolution: number,
     feature: AlloyWfsFeature,
+    layerStyle: AlloyLayerStyle,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointSelectedStyles(resolution, feature, true),
-      ...this.createMultiPointSelectedStyles(resolution, feature, true),
-      ...this.createLineStringSelectedStyles(resolution, feature, true),
-      ...this.createMultiLineStringSelectedStyles(resolution, feature, true),
-      ...this.createPolygonSelectedStyles(resolution, feature, true),
-      ...this.createMultiPolygonSelectedStyles(resolution, feature, true),
+      ...this.createPointSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiPointSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createLineStringSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiLineStringSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createPolygonSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createMultiPolygonSelectedStyles(resolution, feature, layerStyle, true),
     ];
   }
 
@@ -938,11 +970,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
    * @param resolution the current resolution
    * @param scale whether to scale the radius based on resolution or not
    */
-  private getBallRadius(resolution: number, scale?: boolean): number {
-    if (scale === false) {
-      return AlloyScaleUtils.POINT_RADIUS_MAX;
-    }
-
+  private getBallRadius(resolution: number): number {
     return (
       AlloyScaleUtils.POINT_RADIUS_MAX * AlloyScaleUtils.getScaleMultiplierForResolution(resolution)
     );
@@ -953,11 +981,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilder<AlloyWfsFeature> {
    * @param resolution the current resolution
    * @param scale whether to scale the width based on resolution or not
    */
-  private getLineWidth(resolution: number, scale?: boolean): number {
-    if (scale === false) {
-      return AlloyScaleUtils.LINE_WIDTH_MAX;
-    }
-
+  private getLineWidth(resolution: number): number {
     return (
       AlloyScaleUtils.LINE_WIDTH_MAX * AlloyScaleUtils.getScaleMultiplierForResolution(resolution)
     );

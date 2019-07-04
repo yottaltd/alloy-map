@@ -1,5 +1,3 @@
-import { JToken } from '../../api';
-
 /**
  * the properties of an external WFS feature
  */
@@ -11,5 +9,5 @@ export interface AlloyWfsFeatureWfsProperties {
   /**
    * WFS feature property value
    */
-  value?: JToken;
+  value?: any;
 }

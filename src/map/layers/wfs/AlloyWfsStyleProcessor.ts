@@ -26,7 +26,7 @@ export class AlloyWfsStyleProcessor extends AlloyStyleProcessor {
   constructor(layer: AlloyWfsLayer) {
     super(layer);
 
-    this.wfsStyleBuilder = new AlloyWfsStyleBuilder(layer.map);
+    this.wfsStyleBuilder = new AlloyWfsStyleBuilder(layer.map, layer.styles);
   }
 
   /**

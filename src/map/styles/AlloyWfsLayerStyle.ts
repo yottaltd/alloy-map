@@ -5,21 +5,25 @@ import { AlloyLayerStyle } from './AlloyLayerStyle';
  */
 export class AlloyWfsLayerStyle extends AlloyLayerStyle {
   /**
+   * WFS service url
    * @ignore
    * @internal
    */
   public readonly url: string;
   /**
+   * WFS service feature set / layer name
    * @ignore
    * @internal
    */
   public readonly featureName: string;
   /**
+   * EPSG code numeric id to use for style
    * @ignore
    * @internal
    */
   public readonly epsg: number;
   /**
+   * WFS service version
    * @ignore
    * @internal
    */

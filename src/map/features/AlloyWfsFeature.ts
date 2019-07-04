@@ -26,6 +26,16 @@ export class AlloyWfsFeature implements AlloyFeature {
   /**
    * @implements
    */
+  public allowsSelection!: true; // see end of file for prototype
+
+  /**
+   * @implements
+   */
+  public allowsHover!: true; // see end of file for prototype
+
+  /**
+   * @implements
+   */
   public readonly id: string;
 
   /**
@@ -33,16 +43,6 @@ export class AlloyWfsFeature implements AlloyFeature {
    * @internal
    */
   public readonly styleId: string;
-
-  /**
-   * @implements
-   */
-  public readonly allowsSelection: boolean;
-
-  /**
-   * @implements
-   */
-  public readonly allowsHover: boolean;
 
   /**
    * @implements
@@ -85,11 +85,6 @@ export class AlloyWfsFeature implements AlloyFeature {
     this.properties = properties;
     this.originatingLayerId = originatingLayerId;
     this.styleId = styleId;
-
-    // set the selection and hover mode
-    this.allowsSelection =
-      properties.allowsSelection !== undefined ? properties.allowsSelection : true;
-    this.allowsHover = properties.allowsHover !== undefined ? properties.allowsHover : true;
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
@@ -156,3 +151,5 @@ export class AlloyWfsFeature implements AlloyFeature {
  * really need every small optimisation we can get with regard to features
  */
 AlloyWfsFeature.prototype.type = AlloyFeatureType.Wfs;
+AlloyWfsFeature.prototype.allowsSelection = true;
+AlloyWfsFeature.prototype.allowsHover = true;

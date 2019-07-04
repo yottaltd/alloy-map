@@ -1,5 +1,7 @@
-import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
+import { debug, Debugger } from 'debug';
+import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyBounds } from '../map/core/AlloyBounds';
+import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
 
 /**
  * tag names used in WFS GetCapabilties response FeatureType that are used to get info
@@ -24,10 +26,22 @@ export abstract class WfsVersionParser {
    * @param version version of WFS service
    */
   public static parseFeatureTypeNode(node: Element, version: string): AlloyWfsFeatureType {
-    const nameValue = node.querySelector(featureTypeName)!.innerHTML;
-    const titleValue = node.querySelector(featureTypeTitle)!.innerHTML;
+    WfsVersionParser.debugger('parsing feature type node');
+
+    const nameNode = node.querySelector(featureTypeName);
+    if (!nameNode) {
+      throw new AlloyMapError(1562248616, 'Failed to get feature type name node');
+    }
+    const nameValue = nameNode.innerHTML;
+    const titleNode = node.querySelector(featureTypeTitle);
+    if (!titleNode) {
+      throw new AlloyMapError(1562248648, 'Failed to get feature type title node');
+    }
+    const titleValue = titleNode.innerHTML;
     const wgs84bboxValue = WfsVersionParser.parseFeatureTypeBbox(node, version);
     const epsgValue = WfsVersionParser.parseFeatureTypeEpsg(node, version);
+
+    WfsVersionParser.debugger(`finished parsing feature type node ${titleValue}`);
 
     return {
       name: nameValue,
@@ -36,6 +50,12 @@ export abstract class WfsVersionParser {
       epsg: epsgValue,
     };
   }
+  /**
+   * debugger instance
+   * @ignore
+   * @internal
+   */
+  private static readonly debugger: Debugger = debug('alloymaps').extend(WfsVersionParser.name);
 
   /**
    * Gets epsg code for WFS Feature type
@@ -45,6 +65,7 @@ export abstract class WfsVersionParser {
    * @internal
    */
   private static parseFeatureTypeEpsg(node: Element, version: string): number {
+    WfsVersionParser.debugger('parsing feature type epsg');
     let srsTag: string;
     switch (version) {
       case '1.0.0':
@@ -57,8 +78,20 @@ export abstract class WfsVersionParser {
         srsTag = featureTypeEpsg200;
         break;
     }
-    const srsValue = WfsVersionParser.getChildByTagName(node, srsTag)!.innerHTML;
-    return Number.parseInt(srsValue.split(':').pop()!, 10);
+    const srsNode = WfsVersionParser.getChildByTagName(node, srsTag);
+    if (!srsNode) {
+      throw new AlloyMapError(1562248514, 'Failed to get srs node for feature type');
+    }
+    const srsValue = srsNode.innerHTML.split(':').pop();
+    if (!srsValue) {
+      throw new AlloyMapError(1562248587, 'Failed to get srs node value for feature type');
+    }
+    const srsNumber = Number.parseInt(srsValue, 10);
+    if (typeof srsNumber !== 'number' || isNaN(srsNumber)) {
+      throw new AlloyMapError(1562249473, 'Failed to parse srs node value for feature type');
+    }
+    WfsVersionParser.debugger(`finished parsing feature type epsg ${srsNumber}`);
+    return srsNumber;
   }
 
   /**
@@ -72,6 +105,7 @@ export abstract class WfsVersionParser {
     node: Element,
     version: string,
   ): [number, number, number, number] {
+    WfsVersionParser.debugger('parsing feature type bbox');
     const isNew = version !== '1.0.0';
     const bbox: Element = WfsVersionParser.getChildByTagName(
       node,
@@ -82,24 +116,36 @@ export abstract class WfsVersionParser {
     let max: number[];
     if (isNew) {
       // ows:LowerCorner, ows:UpperCorner
-      min = WfsVersionParser.getChildByTagName(bbox, 'ows:LowerCorner')!
-        .innerHTML.split(' ')
-        .map((s) => Number.parseFloat(s));
-      max = WfsVersionParser.getChildByTagName(bbox, 'ows:UpperCorner')!
-        .innerHTML.split(' ')
-        .map((s) => Number.parseFloat(s));
+      const lowerCornerNode = WfsVersionParser.getChildByTagName(bbox, 'ows:LowerCorner');
+      const upperCornerNode = WfsVersionParser.getChildByTagName(bbox, 'ows:UpperCorner');
+      if (!lowerCornerNode || !upperCornerNode) {
+        throw new AlloyMapError(1562248808, 'Failed to get bbox nodes for feature type');
+      }
+      min = lowerCornerNode.innerHTML.split(' ').map((s) => Number.parseFloat(s));
+      max = upperCornerNode.innerHTML.split(' ').map((s) => Number.parseFloat(s));
     } else {
+      const minxAttribute = bbox.getAttribute('minx');
+      const minyAttribute = bbox.getAttribute('miny');
+      const maxxAttribute = bbox.getAttribute('maxx');
+      const maxyAttribute = bbox.getAttribute('maxy');
+      if (!minxAttribute || !minyAttribute || !maxxAttribute || !maxyAttribute) {
+        throw new AlloyMapError(1562248987, 'Failed to parse bbox attributes for feature type');
+      }
       // minx, miny, maxx, maxy
-      min = [
-        Number.parseFloat(bbox.getAttribute('minx')!),
-        Number.parseFloat(bbox.getAttribute('miny')!),
-      ];
-      max = [
-        Number.parseFloat(bbox.getAttribute('maxx')!),
-        Number.parseFloat(bbox.getAttribute('maxy')!),
-      ];
+      min = [Number.parseFloat(minxAttribute), Number.parseFloat(minyAttribute)];
+      max = [Number.parseFloat(maxxAttribute), Number.parseFloat(maxyAttribute)];
     }
-    return [min[0], min[1], max[0], max[1]];
+    const bboxValue: [number, number, number, number] = [min[0], min[1], max[0], max[1]];
+    bboxValue.forEach((n) => {
+      if (typeof n !== 'number' || isNaN(n)) {
+        throw new AlloyMapError(
+          1562248880,
+          `Failed to parse bbox min value for feature type - ${bboxValue.join(',')}`,
+        );
+      }
+    });
+    WfsVersionParser.debugger('finished parsing feature type bbox');
+    return bboxValue;
   }
 
   /**

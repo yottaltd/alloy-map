@@ -97,16 +97,11 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
         style.epsg,
         AlloyLayerZIndex.Layers,
         (olFeature, resolution) => {
-          if (this.styleProcessor) {
-            const styles = this.styleProcessor.onStyleProcess(
-              olFeature,
-              resolution,
-              AlloyStyleBuilderBuildState.Default,
-            );
-            return Array.isArray(styles) ? styles : [styles];
-          } else {
-            return [];
-          }
+          return this.styleProcessor.onStyleProcess(
+            olFeature,
+            resolution,
+            AlloyStyleBuilderBuildState.Default,
+          );
         },
         (olFeatures) => {
           for (const olFeature of olFeatures) {
@@ -114,14 +109,10 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
               this.debugger('feature: %s already exists in layer', olFeature.getId());
               continue;
             }
-            // wrap created draw event feature into AlloyDrawFeature and save to draw layer
             const feature = new AlloyWfsFeature(
               olFeature.getId().toString(),
               olFeature,
-              {
-                colour: style.colour,
-                icon: style.icon,
-              },
+              {},
               this.id,
               style.styleId,
             );
