@@ -53,7 +53,7 @@ export abstract class ProjectionUtils {
   }
 
   /**
-   * Rgisters a projection
+   * Registers a projection
    * @param epsg espg number to register projection for
    */
   public static async register(epsg: number): Promise<void> {
