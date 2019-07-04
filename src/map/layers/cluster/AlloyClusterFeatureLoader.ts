@@ -17,7 +17,7 @@ import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
  * max zoom level supported for the tile grid (won't make requests beyond this point)
  * @ignore
  */
-const TILE_GRID_MAX_ZOOM = 18;
+const TILE_GRID_MAX_ZOOM = 17;
 
 /**
  * loads cluster layer features from the alloy api
