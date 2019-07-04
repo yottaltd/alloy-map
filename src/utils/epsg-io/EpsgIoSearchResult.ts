@@ -1,8 +1,4 @@
 // example request can be seen: http://epsg.io/?q=27700&format=json
-/**
- * @ignore
- * @internal
- */
 export interface EpsgIoSearchResult {
   code: string;
   kind: string;

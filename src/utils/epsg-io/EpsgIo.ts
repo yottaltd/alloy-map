@@ -2,11 +2,13 @@ import { AlloyMapError } from '../../error/AlloyMapError';
 import { EpsgIoSearchResponse } from './EpsgIoSearchResponse';
 
 /**
- * @ignore
- * @internal
+ * Utils for seaching https://epsg.io for EPSG definitions
  */
 export abstract class EpsgIo {
-  // search the public database on https://epsg.io/
+  /**
+   * Requests an EPSG defintion from the public database on https://epsg.io/
+   * @param query epsg code to query for
+   */
   public static async search(query: string): Promise<EpsgIoSearchResponse> {
     let response: Response;
     try {
