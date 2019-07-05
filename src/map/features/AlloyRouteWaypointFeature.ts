@@ -14,7 +14,7 @@ export class AlloyRouteWaypointFeature extends AlloyConnectedFeature {
   /**
    * @implements
    */
-  public allowsHover!: false;
+  public allowsHover!: false; // see end of file for prototype
   /**
    * @implements
    */
