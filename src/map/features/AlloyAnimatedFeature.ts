@@ -15,7 +15,7 @@ export abstract class AlloyAnimatedFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType; // overwridden in implemented class
+  public type!: AlloyFeatureType; // overridden in implemented class
 
   /**
    * @implements
