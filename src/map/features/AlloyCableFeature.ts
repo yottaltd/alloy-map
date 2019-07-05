@@ -7,7 +7,7 @@ import { AlloyFeatureType } from './AlloyFeatureType';
  */
 export class AlloyCableFeature extends AlloyAnimatedFeature {
   /**
-   * @implements
+   * @override
    */
   public type!: AlloyFeatureType.Cable; // see end of file for prototype
 
