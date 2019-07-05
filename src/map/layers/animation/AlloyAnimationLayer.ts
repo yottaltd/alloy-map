@@ -17,6 +17,7 @@ import { AlloyAnimationLayerOptions } from './AlloyAnimationLayerOptions';
 import { AlloyAnimationStyleProcessor } from './AlloyAnimationStyleProcessor';
 
 /**
+ * prefix for connector feature ids
  * @ignore
  * @internal
  */
