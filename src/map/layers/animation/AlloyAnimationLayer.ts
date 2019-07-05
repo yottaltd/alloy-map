@@ -62,7 +62,7 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
   >;
 
   /**
-   * source to hold the openlayers cable features
+   * source to hold the linestring features being animated
    * @ignore
    * @internal
    */
