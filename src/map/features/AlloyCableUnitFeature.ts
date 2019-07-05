@@ -12,7 +12,7 @@ export class AlloyCableUnitFeature extends AlloyConnectedFeature {
   public type!: AlloyFeatureType.CableUnit; // see end of file for prototype
 
   /**
-   * @implements
+   * @override
    */
   public allowsHover!: true;
   /**
