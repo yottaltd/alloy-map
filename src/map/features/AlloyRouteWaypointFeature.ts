@@ -18,7 +18,7 @@ export class AlloyRouteWaypointFeature extends AlloyConnectedFeature {
   /**
    * @implements
    */
-  public allowsSelection!: false;
+  public allowsSelection!: false; // see end of file for prototype
 
   /**
    * @implements
