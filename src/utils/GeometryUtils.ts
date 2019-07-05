@@ -9,9 +9,16 @@ import {
   Polygon,
 } from 'geojson';
 import * as _ from 'lodash';
+import OLGeometry from 'ol/geom/Geometry';
+import OLLineString from 'ol/geom/LineString';
+import OLMultiLineString from 'ol/geom/MultiLineString';
+import OLMultiPoint from 'ol/geom/MultiPoint';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
+import OLPolygon from 'ol/geom/Polygon';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyBounds } from '../map/core/AlloyBounds';
+import { MathUtils } from './MathUtils';
 import { ProjectionUtils } from './ProjectionUtils';
 
 /**
@@ -46,6 +53,88 @@ export abstract class GeometryUtils {
       number,
       number
     ];
+  }
+
+  /**
+   * Removes a coordinate from simple geometry
+   * @param geometry parent geometry from which to remove coordinate
+   * @param coordinate coordinate to remove from geometry
+   */
+  public static removeCoordinate(geometry: OLGeometry, coordinate: [number, number]) {
+    switch (geometry.getType()) {
+      case 'MultiPoint':
+        const multiPoint = geometry as OLMultiPoint;
+        const multiPointCoordinates = multiPoint.getCoordinates().slice();
+        const pointIdx = multiPointCoordinates.findIndex((mpc) =>
+          GeometryUtils.isCoordinateEqual(mpc, coordinate),
+        );
+        if (pointIdx > -1) {
+          multiPointCoordinates.splice(pointIdx, 1);
+        }
+        multiPoint.setCoordinates(multiPointCoordinates);
+        break;
+      case 'LineString':
+        const lineString = geometry as OLLineString;
+        const lineStringCoordinates = lineString.getCoordinates().slice();
+        const lineIdx = lineStringCoordinates.findIndex((lsc) =>
+          GeometryUtils.isCoordinateEqual(lsc, coordinate),
+        );
+        if (lineIdx > -1) {
+          lineStringCoordinates.splice(lineIdx, 1);
+        }
+        lineString.setCoordinates(lineStringCoordinates);
+        break;
+      case 'MultiLineString':
+        const multiLineString = geometry as OLMultiLineString;
+        const multiLineStringCoordinates = multiLineString.getCoordinates().slice();
+        for (const line of multiLineStringCoordinates) {
+          const idx = line.findIndex((lc) => GeometryUtils.isCoordinateEqual(lc, coordinate));
+          if (idx > -1) {
+            line.splice(idx, 1);
+          }
+        }
+        multiLineString.setCoordinates(multiLineStringCoordinates);
+        break;
+      case 'Polygon':
+        const polygon = geometry as OLPolygon;
+        const polygonCoordinates = polygon.getCoordinates().slice();
+        for (const coords of polygonCoordinates) {
+          const idx = coords.findIndex((pc) => GeometryUtils.isCoordinateEqual(pc, coordinate));
+          if (idx > -1) {
+            coords.splice(idx, 1);
+            if (idx === 0) {
+              coords.splice(-1, 1, coords[0].slice() as [number, number]);
+            }
+            break;
+          }
+        }
+        polygon.setCoordinates(polygonCoordinates);
+        break;
+      case 'MultiPolygon':
+        const multiPolygon = geometry as OLMultiPolygon;
+        const multiPolygonCoordinates = multiPolygon.getCoordinates().slice();
+        for (const poly of multiPolygonCoordinates) {
+          let removed = false;
+          for (const coords of poly) {
+            const idx = coords.findIndex((mpc) => GeometryUtils.isCoordinateEqual(mpc, coordinate));
+            if (idx > -1) {
+              coords.splice(idx, 1);
+              if (idx === 0) {
+                coords.splice(-1, 1, coords[0].slice() as [number, number]);
+              }
+              removed = true;
+              break;
+            }
+          }
+          if (removed) {
+            break;
+          }
+        }
+        multiPolygon.setCoordinates(multiPolygonCoordinates);
+        break;
+      default:
+        break;
+    }
   }
 
   /**
@@ -101,6 +190,19 @@ export abstract class GeometryUtils {
       default:
         throw new AlloyMapError(1559909581, 'Unsupported geometry type');
     }
+  }
+
+  /**
+   * checks if two coordinates are "equal"
+   * @param first first coordinate
+   * @param second second coordinate
+   * @return true if coordinates are equals to 6dp
+   */
+  public static isCoordinateEqual(first: [number, number], second: [number, number]): boolean {
+    return (
+      MathUtils.approximateEquals(first[0], second[0], 0.000001) &&
+      MathUtils.approximateEquals(first[1], second[1], 0.000001)
+    );
   }
 
   /**

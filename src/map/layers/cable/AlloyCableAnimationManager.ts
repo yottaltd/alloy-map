@@ -1,7 +1,6 @@
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLPolygon from 'ol/geom/Polygon';
-import OLVectorLayer from 'ol/layer/Vector';
 import OLRenderCanvas from 'ol/render/canvas';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
@@ -9,7 +8,6 @@ import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { GeometryUtils } from '../../../utils/GeometryUtils';
 import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
-import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyFeature } from '../../features/AlloyFeature';
 
 /**
@@ -31,17 +29,9 @@ const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
  */
 export class AlloyCableAnimationManager extends AlloyAnimationManager {
   /**
-   * creates a new instance
-   * @param map the alloy map to animate
-   */
-  public constructor(map: AlloyMap) {
-    super(map);
-  }
-
-  /**
    * @implements
    */
-  public startAnimation(cable: AlloyFeature, precomposeLayer?: OLVectorLayer) {
+  public startAnimation(cable: AlloyFeature) {
     this.startFeatureAnimation(
       cable.olFeature,
       (
@@ -128,7 +118,6 @@ export class AlloyCableAnimationManager extends AlloyAnimationManager {
 
         renderer.drawFeature(new OLFeature(new OLPolygon([coordinates])), cableStyle);
       },
-      precomposeLayer,
     );
   }
 }
