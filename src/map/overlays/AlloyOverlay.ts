@@ -1,4 +1,4 @@
-import OLOverlay from 'ol/overlay';
+import OLOverlay from 'ol/Overlay';
 
 /**
  * an alloy overlay which can add native html elements to the map

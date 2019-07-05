@@ -1,6 +1,6 @@
 import { AlloyOverlay } from '../AlloyOverlay';
 import { AlloyCustomOverlayOptions } from './AlloyCustomOverlayOptions';
-import OLOverlay from 'ol/overlay';
+import OLOverlay from 'ol/Overlay';
 
 /**
  * an alloy custom overlay allows us to put html elements on top of the map
