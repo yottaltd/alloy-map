@@ -57,6 +57,7 @@ export abstract class AlloyIconUtils {
         imgSize: [iconCanvas.width, iconCanvas.height],
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 
@@ -82,6 +83,7 @@ export abstract class AlloyIconUtils {
         imgSize: [textCanvas.width, textCanvas.height],
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 
