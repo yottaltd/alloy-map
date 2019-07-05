@@ -58,7 +58,6 @@ export {
 } from './map/features/AlloySimplifiedGeometryFeatureProperties';
 export { AlloyWfsFeature } from './map/features/AlloyWfsFeature';
 export { AlloyWfsFeatureProperties } from './map/features/AlloyWfsFeatureProperties';
-export { AlloyWfsFeatureWfsProperties } from './map/features/AlloyWfsFeatureWfsProperties';
 export {
   AlloyDrawInteractionGeometryType,
 } from './map/interactions/AlloyDrawInteractionGeometryType';
@@ -93,7 +92,8 @@ export { EpsgIoSearchResult } from './utils/epsg-io/EpsgIoSearchResult';
 export { GeometryUtils } from './utils/GeometryUtils';
 export { AlloyWfsCapabilities } from './wfs/AlloyWfsCapabilities';
 export { AlloyWfsFeatureType } from './wfs/AlloyWfsFeatureType';
-export { AlloyWfsFeatureTypeDescription } from './wfs/AlloyWfsFeatureTypeDescription';
+export { WfsFeatureDescription } from './wfs/WfsFeatureDescription';
+export { WfsFeatureProperty } from './wfs/WfsFeatureProperty';
 export { WfsUtils } from './wfs/WfsUtils';
 export { AlloyWmsCapabilities } from './wms/AlloyWmsCapabilities';
 export { AlloyWmsCapabilitiesLayer } from './wms/AlloyWmsCapabilitiesLayer';

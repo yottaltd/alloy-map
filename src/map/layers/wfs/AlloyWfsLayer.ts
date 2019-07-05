@@ -1,7 +1,7 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import * as uuid from 'uuid';
-import { AlloyWfsFeatureTypeDescription } from '../../../wfs/AlloyWfsFeatureTypeDescription';
+import { WfsFeatureDescription } from '../../../wfs/WfsFeatureDescription';
 import { WfsLayerUtils } from '../../../wfs/WfsLayerUtils';
 import { WfsUtils } from '../../../wfs/WfsUtils';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
@@ -66,7 +66,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
    */
   private readonly wfsFeatureTypeDescriptions: Map<
     string,
-    Map<string, AlloyWfsFeatureTypeDescription>
+    Map<string, WfsFeatureDescription>
   > = new Map();
 
   /**
@@ -128,9 +128,9 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
    * @param feature WFS feature for which to get parameters
    * @returns map of feature type descriptions keyed on name, or null if descriptions are not loaded
    */
-  public getDescrptionsForFeature(
+  public getWfsDescriptionForFeature(
     feature: AlloyWfsFeature,
-  ): Map<string, AlloyWfsFeatureTypeDescription> | null {
+  ): Map<string, WfsFeatureDescription> | null {
     return this.wfsFeatureTypeDescriptions.get(feature.styleId) || null;
   }
 

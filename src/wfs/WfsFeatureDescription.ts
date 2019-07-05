@@ -1,7 +1,7 @@
 /**
  * Description for WFS feature parameter
  */
-export interface AlloyWfsFeatureTypeDescription {
+export interface WfsFeatureDescription {
   /**
    * name of WFS feature property
    */

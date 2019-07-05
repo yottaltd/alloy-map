@@ -2,7 +2,7 @@ import { debug, Debugger } from 'debug';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyWfsCapabilities } from './AlloyWfsCapabilities';
 import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
-import { AlloyWfsFeatureTypeDescription } from './AlloyWfsFeatureTypeDescription';
+import { WfsFeatureDescription } from './WfsFeatureDescription';
 import { WfsVersionParser } from './WfsVersionParser';
 
 /**
@@ -91,14 +91,14 @@ export abstract class WfsUtils {
    */
   public static async getFeatureTypeDescription(
     url: string,
-  ): Promise<Map<string, AlloyWfsFeatureTypeDescription>> {
+  ): Promise<Map<string, WfsFeatureDescription>> {
     const featureTypeUrl = new URL(url.trim());
     featureTypeUrl.searchParams.set('service', 'WFS');
     featureTypeUrl.searchParams.set('request', 'DescribeFeatureType');
 
-    const descriptions: Map<string, AlloyWfsFeatureTypeDescription> = new Map();
+    const descriptions: Map<string, WfsFeatureDescription> = new Map();
     try {
-      WfsUtils.debugger(`requesting WFS feature type desictptions for ${featureTypeUrl.href}`);
+      WfsUtils.debugger(`requesting WFS feature type descriptions for ${featureTypeUrl.href}`);
       const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
 
       WfsUtils.debugger('parsing xml');
