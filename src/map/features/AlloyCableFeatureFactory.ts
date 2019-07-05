@@ -9,8 +9,6 @@ import { AlloyCableUnitFeatureProperties } from './AlloyCableUnitFeatureProperti
 
 /**
  * factory for creating cable features
- * @ignore
- * @internal
  */
 export abstract class AlloyCableFeatureFactory {
   /**
@@ -19,8 +17,6 @@ export abstract class AlloyCableFeatureFactory {
    * @param properties the properties of the custom feature
    * @param geometry the geojson LineString object
    * @param customLayerId the custom layer this feature was created for
-   * @ignore
-   * @internal
    */
   public static createCable(
     id: string,
@@ -42,8 +38,6 @@ export abstract class AlloyCableFeatureFactory {
    * @param id the id of the feature, must be unique in the layer
    * @param properties the properties of the custom feature
    * @param geometry the geojson Point object
-   * @ignore
-   * @internal
    */
   public static createCableUnit(
     id: string,

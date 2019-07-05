@@ -27,6 +27,7 @@ export {
   AlloyAnimatedPathFeatureProperties,
 } from './map/features/AlloyAnimatedPathFeatureProperties';
 export { AlloyCableFeature } from './map/features/AlloyCableFeature';
+export { AlloyCableFeatureFactory } from './map/features/AlloyCableFeatureFactory';
 export { AlloyCableFeatureProperties } from './map/features/AlloyCableFeatureProperties';
 export { AlloyCableUnitFeature } from './map/features/AlloyCableUnitFeature';
 export { AlloyCableUnitFeatureProperties } from './map/features/AlloyCableUnitFeatureProperties';
@@ -45,6 +46,7 @@ export { AlloyItemFeatureProperties } from './map/features/AlloyItemFeaturePrope
 export { AlloyPathNodeFeature } from './map/features/AlloyPathNodeFeature';
 export { AlloyPathNodeFeatureProperties } from './map/features/AlloyPathNodeFeatureProperties';
 export { AlloyRouteFeature } from './map/features/AlloyRouteFeature';
+export { AlloyRouteFeatureFactory } from './map/features/AlloyRouteFeatureFactory';
 export { AlloyRouteFeatureProperties } from './map/features/AlloyRouteFeatureProperties';
 export { AlloyRouteWaypointFeature } from './map/features/AlloyRouteWaypointFeature';
 export {

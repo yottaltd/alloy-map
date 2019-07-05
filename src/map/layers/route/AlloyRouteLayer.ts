@@ -42,32 +42,6 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer {
     super(options);
     this.animationManager = new AlloyRouteAnimationManager(this.map, this.olLayerPathNodes);
   }
-  /**
-   * creates a new route waypoint instance from a point geoemtry
-   * @param id the id of the feature, must be unique in the layer
-   * @param properties the properties of the custom feature
-   * @param geometry the geojson Point object
-   */
-  public createRouteWaypoint(
-    id: string,
-    properties: AlloyRouteWaypointFeatureProperties,
-    geometry: Point,
-  ): AlloyRouteWaypointFeature {
-    return AlloyRouteFeatureFactory.createRouteWaypoint(id, properties, geometry);
-  }
-  /**
-   * creates a new route instance from a line geoemtry
-   * @param id the id of the feature, must be unique in the layer
-   * @param properties the properties of the custom feature
-   * @param geometry the geojson LineString object
-   */
-  public createRoute(
-    id: string,
-    properties: AlloyRouteFeatureProperties,
-    geometry: LineString,
-  ): AlloyRouteFeature {
-    return AlloyRouteFeatureFactory.createRoute(id, properties, geometry, this);
-  }
 
   /**
    * Sets route feature and starts animation

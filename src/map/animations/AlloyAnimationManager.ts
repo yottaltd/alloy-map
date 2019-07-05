@@ -22,9 +22,9 @@ export abstract class AlloyAnimationManager {
   protected readonly map: AlloyMap;
 
   /**
-   * Precompose layer for animation to animate "under"
+   * Openlayers layer for animations to animate "under"
    */
-  private readonly precomposeLayer?: OLVectorLayer;
+  private readonly olPrecomposeLayer?: OLVectorLayer;
 
   /**
    * a lookup of features with active animating events keys
@@ -37,18 +37,21 @@ export abstract class AlloyAnimationManager {
   private readonly animatingFeatures: Set<OLFeature> = new Set();
 
   /**
-   * a map of linestrings to their ratio offsets (OLEG I HAVE NO IDEA WHAT THIS DOES XD)
+   * a map of linestrings to their ratio offsets
+   * This is a ration offset for current animation frame for a line string
+   * that animated geometries are offset by inside of theirs animation partitions
    */
   private readonly lineOffsets: Map<OLLineString, number> = new Map();
 
   /**
    * creates a new instance
    * @param map the alloy map to animate
-   * @param precomposeLayer optional layer under which animations will be drawn otherwise they will post composed
+   * @param olPrecomposeLayer optional layer under which animations will be drawn
+   * otherwise they will be drawn on top of everything
    */
-  public constructor(map: AlloyMap, precomposeLayer?: OLVectorLayer) {
+  public constructor(map: AlloyMap, olPrecomposeLayer?: OLVectorLayer) {
     this.map = map;
-    this.precomposeLayer = precomposeLayer;
+    this.olPrecomposeLayer = olPrecomposeLayer;
   }
 
   /**
@@ -153,8 +156,8 @@ export abstract class AlloyAnimationManager {
     // set the animation going
     this.animationKeys.set(
       feature,
-      (this.precomposeLayer || this.map.olMap).on(
-        this.precomposeLayer ? 'precompose' : 'postcompose',
+      (this.olPrecomposeLayer || this.map.olMap).on(
+        this.olPrecomposeLayer ? 'precompose' : 'postcompose',
         (e) => {
           const event: OLRenderEvent = e as OLRenderEvent;
           const elapsed: number = event.frameState.time - start;

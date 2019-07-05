@@ -50,33 +50,6 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
     super(options);
     this.animationManager = new AlloyCableAnimationManager(this.map, this.olLayerPathNodes);
   }
-  /**
-   * creates a new cable unit instance from a point geoemtry
-   * @param id the id of the feature, must be unique in the layer
-   * @param properties the properties of the custom feature
-   * @param geometry the geojson Point object
-   */
-  public createCableUnit(
-    id: string,
-    properties: AlloyCableUnitFeatureProperties,
-    geometry: Point,
-  ): AlloyCableUnitFeature {
-    return AlloyCableFeatureFactory.createCableUnit(id, properties, geometry);
-  }
-
-  /**
-   * creates a new cable instance from a line geoemtry
-   * @param id the id of the feature, must be unique in the layer
-   * @param properties the properties of the custom feature
-   * @param geometry the geojson LineString object
-   */
-  public createCable(
-    id: string,
-    properties: AlloyCableFeatureProperties,
-    geometry: LineString,
-  ): AlloyCableFeature {
-    return AlloyCableFeatureFactory.createCable(id, properties, geometry, this);
-  }
 
   /**
    * Sets cable feature and starts animation
