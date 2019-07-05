@@ -16,7 +16,7 @@ export class AlloyCableUnitFeature extends AlloyConnectedFeature {
    */
   public allowsHover!: true;
   /**
-   * @implements
+   * @override
    */
   public allowsSelection!: true;
 
