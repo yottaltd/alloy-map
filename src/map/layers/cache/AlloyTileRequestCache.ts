@@ -67,7 +67,9 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
    * @param zoom the zoom level to maintain the cache for
    */
   public clearOutsideZoom(zoom: number): void {
-    Array.from(this.requests.keys()).filter((key) => key !== zoom).forEach((key) => this.clearZoom(key));
+    Array.from(this.requests.keys())
+      .filter((key) => key !== zoom)
+      .forEach((key) => this.clearZoom(key));
   }
 
   /**
