@@ -14,6 +14,7 @@ import { AlloyWmsParameters } from './AlloyWmsParameters';
 import { WmsLayer } from './WmsLayer';
 import { WmsStyle } from './WmsStyle';
 import { WmsStyleLegend } from './WmsStyleLegend';
+import * as color from 'color';
 
 /**
  * Public WMS utils class for getting and processing capabilties
@@ -50,10 +51,12 @@ export abstract class WmsUtils {
           .map((l) => (l.styleName === 'default' ? '' : l.styleName || ''))
           .join(','),
         TRANSPARENT: transparent,
-        BGCOLOR:
-          options.colour && ColourUtils.isValidFullHex(options.colour)
-            ? options.colour.toUpperCase().replace('#', '0x')
-            : undefined,
+        BGCOLOR: options.colour
+          ? color(options.colour)
+              .hex()
+              .toUpperCase()
+              .replace('#', '0x')
+          : undefined,
       },
     });
   }

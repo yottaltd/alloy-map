@@ -1,4 +1,4 @@
-import WMSCapabilities from 'ol/format/WMSCapabilities.js';
+import OLWmsCapabilities from 'ol/format/WMSCapabilities.js';
 import { WmsCapabilities } from '../wms/WmsCapabilities';
 /**
  * utility class for accessing Wms functions due to typing issues.
@@ -21,5 +21,5 @@ export abstract class PolyfillWms {
   /**
    * Private singleton instance of Wms capabilities reader
    */
-  private static caps = new WMSCapabilities();
+  private static caps = new OLWmsCapabilities();
 }

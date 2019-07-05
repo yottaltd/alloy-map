@@ -64,13 +64,4 @@ export abstract class ColourUtils {
     const rgb = color(colour);
     return [rgb.red(), rgb.green(), rgb.blue(), opacity];
   }
-
-  /**
-   * Validates that string is a valid full hex colour in the format `{#RRGGBB}`
-   * @param colour the hex colour string to validate
-   * @returns whether colour is a valid hex
-   */
-  public static isValidFullHex(colour: string): boolean {
-    return /^#[A-Fa-f0-9]{6}$/.test(colour);
-  }
 }
