@@ -12,7 +12,7 @@ export class AlloyCableFeature extends AlloyAnimatedFeature {
   public type!: AlloyFeatureType.Cable; // see end of file for prototype
 
   /**
-   * @implements
+   * @override
    */
   public readonly properties!: Readonly<AlloyCableFeatureProperties>;
 }
