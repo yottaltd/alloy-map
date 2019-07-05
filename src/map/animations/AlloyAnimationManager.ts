@@ -74,7 +74,7 @@ export abstract class AlloyAnimationManager {
 
   /**
    * starts an animation for a feature
-   * @param feature
+   * @param feature the feature to animate
    * @param stepRenderer callback function for each "step" during an animation
    */
   protected startFeatureAnimation(
