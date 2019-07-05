@@ -27,6 +27,7 @@ export abstract class AlloyPolygonUtils {
         color: colour,
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 
@@ -46,6 +47,7 @@ export abstract class AlloyPolygonUtils {
         lineJoin: 'miter',
       }),
       geometry: geometryFunction,
+      zIndex: 0,
     });
   }
 }

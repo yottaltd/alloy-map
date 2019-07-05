@@ -671,4 +671,11 @@ export class AlloyMap {
   public screenshot(): Promise<Blob> {
     return ScreenshotUtils.screenshot(this);
   }
+
+  /**
+   * Unsets the map from DOM
+   */
+  public remove(): void {
+    this.olMap.setTarget(null as any);
+  }
 }

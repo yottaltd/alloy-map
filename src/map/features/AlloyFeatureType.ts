@@ -28,6 +28,31 @@ export enum AlloyFeatureType {
   Draw = 'Draw',
 
   /**
+   * an alloy cable feature
+   */
+  Cable = 'Cable',
+
+  /**
+   * an alloy cable unit feature
+   */
+  CableUnit = 'CableUnit',
+
+  /**
+   * an alloy route feature
+   */
+  Route = 'Route',
+
+  /**
+   * an alloy route waypoint feature
+   */
+  RouteWaypoint = 'RouteWaypoint',
+
+  /**
+   * an alloy connector feature
+   */
+  Connector = 'Connector',
+
+  /**
    * an alloy wfs feature
    */
   Wfs = 'Wfs',

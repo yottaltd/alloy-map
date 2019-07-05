@@ -4,9 +4,6 @@ import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLLineString from 'ol/geom/LineString';
-import OLMultiLineString from 'ol/geom/MultiLineString';
-import OLMultiPoint from 'ol/geom/MultiPoint';
-import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
@@ -21,6 +18,7 @@ import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
 import { GeoJSONObjectType } from '../../api';
 import { FeatureUtils } from '../../utils/FeatureUtils';
+import { GeometryUtils } from '../../utils/GeometryUtils';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
@@ -30,7 +28,6 @@ import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyDrawInteractionGeometryType } from './AlloyDrawInteractionGeometryType';
-import { MathUtils } from '../../utils/MathUtils';
 
 /**
  * default colour for draw and modify interactions
@@ -323,7 +320,7 @@ export class AlloyDrawInteraction {
           sourceGeometry,
         ).getCoordinates();
         // check if this geometry has a coordinate that matches remove point
-        if (flatCoords.findIndex((c) => this.isCoordinateEqual(c, coord)) === -1) {
+        if (flatCoords.findIndex((c) => GeometryUtils.isCoordinateEqual(c, coord)) === -1) {
           continue;
         }
 
@@ -356,7 +353,7 @@ export class AlloyDrawInteraction {
         if (featureRemove) {
           this.drawLayer.removeFeature(sourceFeature);
         } else {
-          this.removeCoordinate(sourceGeometry, coord);
+          GeometryUtils.removeCoordinate(sourceGeometry, coord);
         }
 
         // fire change event
@@ -503,101 +500,6 @@ export class AlloyDrawInteraction {
       });
       this.removeLayer.addFeature(feature);
     });
-  }
-
-  /**
-   * Removes a coordinate from simple geometry
-   * @param geometry parent geometry from which to remove coordinate
-   * @param coordinate coordinate to remove from geometry
-   */
-  private removeCoordinate(geometry: OLGeometry, coordinate: [number, number]) {
-    switch (geometry.getType()) {
-      case 'MultiPoint':
-        const multiPoint = geometry as OLMultiPoint;
-        const multiPointCoordinates = multiPoint.getCoordinates().slice();
-        const pointIdx = multiPointCoordinates.findIndex((mpc) =>
-          this.isCoordinateEqual(mpc, coordinate),
-        );
-        if (pointIdx > -1) {
-          multiPointCoordinates.splice(pointIdx, 1);
-        }
-        multiPoint.setCoordinates(multiPointCoordinates);
-        break;
-      case 'LineString':
-        const lineString = geometry as OLLineString;
-        const lineStringCoordinates = lineString.getCoordinates().slice();
-        const lineIdx = lineStringCoordinates.findIndex((lsc) =>
-          this.isCoordinateEqual(lsc, coordinate),
-        );
-        if (lineIdx > -1) {
-          lineStringCoordinates.splice(lineIdx, 1);
-        }
-        lineString.setCoordinates(lineStringCoordinates);
-        break;
-      case 'MultiLineString':
-        const multiLineString = geometry as OLMultiLineString;
-        const multiLineStringCoordinates = multiLineString.getCoordinates().slice();
-        for (const line of multiLineStringCoordinates) {
-          const idx = line.findIndex((lc) => this.isCoordinateEqual(lc, coordinate));
-          if (idx > -1) {
-            line.splice(idx, 1);
-          }
-        }
-        multiLineString.setCoordinates(multiLineStringCoordinates);
-        break;
-      case 'Polygon':
-        const polygon = geometry as OLPolygon;
-        const polygonCoordinates = polygon.getCoordinates().slice();
-        for (const coords of polygonCoordinates) {
-          const idx = coords.findIndex((pc) => this.isCoordinateEqual(pc, coordinate));
-          if (idx > -1) {
-            coords.splice(idx, 1);
-            if (idx === 0) {
-              coords.splice(-1, 1, coords[0].slice() as [number, number]);
-            }
-            break;
-          }
-        }
-        polygon.setCoordinates(polygonCoordinates);
-        break;
-      case 'MultiPolygon':
-        const multiPolygon = geometry as OLMultiPolygon;
-        const multiPolygonCoordinates = multiPolygon.getCoordinates().slice();
-        for (const poly of multiPolygonCoordinates) {
-          let removed = false;
-          for (const coords of poly) {
-            const idx = coords.findIndex((mpc) => this.isCoordinateEqual(mpc, coordinate));
-            if (idx > -1) {
-              coords.splice(idx, 1);
-              if (idx === 0) {
-                coords.splice(-1, 1, coords[0].slice() as [number, number]);
-              }
-              removed = true;
-              break;
-            }
-          }
-          if (removed) {
-            break;
-          }
-        }
-        multiPolygon.setCoordinates(multiPolygonCoordinates);
-        break;
-      default:
-        break;
-    }
-  }
-
-  /**
-   * checks if two coordinates are "equal"
-   * @param first first coordinate
-   * @param second second coordinate
-   * @return true if coordinates are equals to 6dp
-   */
-  private isCoordinateEqual(first: [number, number], second: [number, number]): boolean {
-    return (
-      MathUtils.approximateEquals(first[0], second[0], 0.000001) &&
-      MathUtils.approximateEquals(first[1], second[1], 0.000001)
-    );
   }
 
   /**
