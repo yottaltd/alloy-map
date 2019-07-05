@@ -1,16 +1,6 @@
-import { AlloyMap } from '../../core/AlloyMap';
+import { AlloyAnimatedPathLayerOptions } from '../animation/AlloyAnimatedPathLayerOptions';
 
 /**
  * options for the alloy cable layer
  */
-export interface AlloyCableLayerOptions {
-  /**
-   * the alloy map to associate tha layer with
-   */
-  map: AlloyMap;
-
-  /**
-   * Optional id for cable layer
-   */
-  id?: string;
-}
+export interface AlloyCableLayerOptions extends AlloyAnimatedPathLayerOptions {}

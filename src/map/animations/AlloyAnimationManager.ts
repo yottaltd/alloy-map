@@ -22,6 +22,11 @@ export abstract class AlloyAnimationManager {
   protected readonly map: AlloyMap;
 
   /**
+   * Openlayers layer for animations to animate "under"
+   */
+  private readonly olPrecomposeLayer?: OLVectorLayer;
+
+  /**
    * a lookup of features with active animating events keys
    */
   private readonly animationKeys: Map<OLFeature, ol.EventsKey> = new Map();
@@ -32,24 +37,28 @@ export abstract class AlloyAnimationManager {
   private readonly animatingFeatures: Set<OLFeature> = new Set();
 
   /**
-   * a map of linestrings to their ratio offsets (OLEG I HAVE NO IDEA WHAT THIS DOES XD)
+   * a map of linestrings to their ratio offsets
+   * This is a ration offset for current animation frame for a line string
+   * that animated geometries are offset by inside of theirs animation partitions
    */
   private readonly lineOffsets: Map<OLLineString, number> = new Map();
 
   /**
    * creates a new instance
    * @param map the alloy map to animate
+   * @param olPrecomposeLayer optional layer under which animations will be drawn
+   * otherwise they will be drawn on top of everything
    */
-  public constructor(map: AlloyMap) {
+  public constructor(map: AlloyMap, olPrecomposeLayer?: OLVectorLayer) {
     this.map = map;
+    this.olPrecomposeLayer = olPrecomposeLayer;
   }
 
   /**
    * starts the animation for a feature
-   * @param cable the feature
-   * @param precomposeLayer the layer before which animatiosn are drawn
+   * @param path the feature
    */
-  public abstract startAnimation(cable: AlloyFeature, precomposeLayer?: OLVectorLayer): void;
+  public abstract startAnimation(path: AlloyFeature): void;
 
   /**
    * clears all running animations
@@ -62,30 +71,28 @@ export abstract class AlloyAnimationManager {
    * stops animation a single feature
    * @param feature the feature to stop animations for
    */
-  public stopFeatureAnimation(feature: AlloyFeature) {
+  public stopAnimation(feature: AlloyFeature) {
     this.animatingFeatures.delete(feature.olFeature);
   }
 
   /**
    * starts an animation for a feature
-   * @param route
-   * @param stepRenderer
-   * @param precomposeObject
+   * @param feature the feature to animate
+   * @param stepRenderer callback function for each "step" during an animation
    */
   protected startFeatureAnimation(
-    route: OLFeature,
+    feature: OLFeature,
     stepRenderer: (
       lineString: OLLineString,
       currentScaleRatio: number,
       renderer: OLRenderCanvas.Immediate,
       ratio: number,
     ) => void,
-    precomposeObject?: ol.Observable,
   ) {
-    if (this.animatingFeatures.has(route)) {
-      this.animatingFeatures.delete(route);
+    if (this.animatingFeatures.has(feature)) {
+      this.animatingFeatures.delete(feature);
     }
-    this.animatingFeatures.add(route);
+    this.animatingFeatures.add(feature);
 
     const animateLineString = (lineString: OLLineString) => {
       const length = lineString.getLength();
@@ -94,7 +101,7 @@ export abstract class AlloyAnimationManager {
       const scale1m = 1 / length;
 
       this.animateAlongLineString(
-        route,
+        feature,
         lineString,
         length * 25,
         scale,
@@ -113,14 +120,13 @@ export abstract class AlloyAnimationManager {
           }
           stepRenderer(lineString, cs1m, renderer, ratio);
         },
-        precomposeObject,
       );
     };
 
-    if (route.getGeometry().getType() === 'LineString') {
-      animateLineString(route.getGeometry() as OLLineString);
-    } else if (route.getGeometry().getType() === 'MultiLineString') {
-      (route.getGeometry() as OLMultiLineString).getLineStrings().forEach(animateLineString);
+    if (feature.getGeometry().getType() === 'LineString') {
+      animateLineString(feature.getGeometry() as OLLineString);
+    } else if (feature.getGeometry().getType() === 'MultiLineString') {
+      (feature.getGeometry() as OLMultiLineString).getLineStrings().forEach(animateLineString);
     }
   }
 
@@ -129,13 +135,11 @@ export abstract class AlloyAnimationManager {
    * @param feature the feature to animate
    * @param animationListener the animation listener used to provide callbacks and drawing
    * @param duration the time of the animation in milliseconds
-   * @param precomposeObject the precomposable object being animated e.g. openlayers layer
    */
   private setFeatureAnimation(
     feature: OLFeature,
     animationListener: AlloyAnimationListener,
     duration: number,
-    precomposeObject?: ol.Observable,
   ) {
     // remove existing animation for feature if already setup
     if (this.animationKeys.has(feature)) {
@@ -152,8 +156,8 @@ export abstract class AlloyAnimationManager {
     // set the animation going
     this.animationKeys.set(
       feature,
-      (precomposeObject || this.map.olMap).on(
-        precomposeObject ? 'precompose' : 'postcompose',
+      (this.olPrecomposeLayer || this.map.olMap).on(
+        this.olPrecomposeLayer ? 'precompose' : 'postcompose',
         (e) => {
           const event: OLRenderEvent = e as OLRenderEvent;
           const elapsed: number = event.frameState.time - start;
@@ -194,7 +198,6 @@ export abstract class AlloyAnimationManager {
     timerMs: number,
     scale: number,
     renderStepDraw: (renderer: OLRenderCanvas.Immediate, ratio: number) => void,
-    precomposeObject?: ol.Observable,
   ): void {
     const lineStringFeature = new OLFeature(lineString);
 
@@ -222,14 +225,7 @@ export abstract class AlloyAnimationManager {
             const viewExtent = this.map.viewport.toMapExtent();
             if (PolyfillExtent.intersects(viewExtent, lineString.getExtent())) {
               removeListeners();
-              this.animateAlongLineString(
-                feature,
-                lineString,
-                timerMs,
-                scale,
-                renderStepDraw,
-                precomposeObject,
-              );
+              this.animateAlongLineString(feature, lineString, timerMs, scale, renderStepDraw);
             }
           };
           centreChangeListener = this.map.olMap.on('change:center', el);
@@ -266,14 +262,7 @@ export abstract class AlloyAnimationManager {
               return;
             }
             removeListeners();
-            this.animateAlongLineString(
-              feature,
-              lineString,
-              timerMs,
-              scale,
-              renderStepDraw,
-              precomposeObject,
-            );
+            this.animateAlongLineString(feature, lineString, timerMs, scale, renderStepDraw);
           } else {
             removeListeners();
             this.lineOffsets.delete(lineString);
@@ -281,7 +270,6 @@ export abstract class AlloyAnimationManager {
         },
       },
       timerMs,
-      precomposeObject,
     );
   }
 }
