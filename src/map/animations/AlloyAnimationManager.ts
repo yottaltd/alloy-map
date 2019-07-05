@@ -22,7 +22,7 @@ export abstract class AlloyAnimationManager {
   protected readonly map: AlloyMap;
 
   /**
-   * Precompose layer for nimation to animate "under"
+   * Precompose layer for animation to animate "under"
    */
   private readonly precomposeLayer?: OLVectorLayer;
 
