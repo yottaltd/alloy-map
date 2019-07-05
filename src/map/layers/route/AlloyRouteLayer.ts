@@ -6,7 +6,7 @@ import { AlloyRouteFeatureProperties } from '../../features/AlloyRouteFeaturePro
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
 // tslint:disable-next-line:max-line-length
 import { AlloyRouteWaypointFeatureProperties } from '../../features/AlloyRouteWaypointFeatureProperties';
-import { AlloyAnimationLayer } from '../animation/AlloyAnimationLayer';
+import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
 import { AlloyRouteAnimationManager } from './AlloyRouteAnimationManager';
 import { AlloyRouteLayerOptions } from './AlloyRouteLayerOptions';
 import { AlloyRouteStyleProcessor } from './AlloyRouteStyleProcessor';
@@ -15,14 +15,14 @@ import { AlloyRouteStyleProcessor } from './AlloyRouteStyleProcessor';
  * an alloy route layer for rendering route and waypoint features provided externally on the map,
  * use this to add route features onto the map and animate them automatically
  */
-export class AlloyRouteLayer extends AlloyAnimationLayer {
+export class AlloyRouteLayer extends AlloyAnimatedPathLayer {
   /**
    * animation manager for routes
    * @override
    * @ignore
    * @internal
    */
-  protected readonly animationManager: AlloyRouteAnimationManager;
+  public readonly animationManager: AlloyRouteAnimationManager;
 
   /**
    * the route feature being displayed
@@ -40,7 +40,7 @@ export class AlloyRouteLayer extends AlloyAnimationLayer {
    */
   constructor(options: AlloyRouteLayerOptions) {
     super(options);
-    this.animationManager = new AlloyRouteAnimationManager(this.map);
+    this.animationManager = new AlloyRouteAnimationManager(this.map, this.olLayerPathNodes);
   }
   /**
    * creates a new route waypoint instance from a point geoemtry
@@ -76,14 +76,14 @@ export class AlloyRouteLayer extends AlloyAnimationLayer {
   public setRouteFeature(route: AlloyRouteFeature) {
     // clear existing feature animation if applicable
     if (this.routeFeature !== null) {
-      this.animationManager.stopFeatureAnimation(this.routeFeature);
+      this.animationManager.stopAnimation(this.routeFeature);
     }
 
     // setup the new route feature and animate
     this.routeFeature = route;
-    this.olSourceAnimatedLines.clear(false);
-    this.olSourceAnimatedLines.addFeature(this.routeFeature.olFeature);
-    this.animationManager.startAnimation(this.routeFeature, this.olLayerConnectedUnits);
+    this.olSourceAnimatedPaths.clear(false);
+    this.olSourceAnimatedPaths.addFeature(this.routeFeature.olFeature);
+    this.animationManager.startAnimation(this.routeFeature);
     this.addAllConnectorLines();
   }
 
@@ -93,9 +93,9 @@ export class AlloyRouteLayer extends AlloyAnimationLayer {
    */
   public setWaypointFeatures(waypoints: AlloyRouteWaypointFeature[]) {
     this.waypointFeatures.clear();
-    this.olSourceConnectedUnits.clear(false);
+    this.olSourcePathNodes.clear(false);
 
-    this.olSourceConnectedUnits.addFeatures(waypoints.map((w) => w.olFeature));
+    this.olSourcePathNodes.addFeatures(waypoints.map((w) => w.olFeature));
     waypoints.forEach((w) => this.waypointFeatures.set(w.id, w));
     this.addAllConnectorLines();
   }
@@ -106,12 +106,12 @@ export class AlloyRouteLayer extends AlloyAnimationLayer {
   public clear() {
     // remove any animating feature
     if (this.routeFeature) {
-      this.animationManager.stopFeatureAnimation(this.routeFeature);
+      this.animationManager.stopAnimation(this.routeFeature);
     }
 
     this.routeFeature = null;
-    this.olSourceAnimatedLines.clear(false);
-    this.olSourceConnectedUnits.clear(false);
+    this.olSourceAnimatedPaths.clear(false);
+    this.olSourcePathNodes.clear(false);
 
     this.clearConnectorLines();
   }

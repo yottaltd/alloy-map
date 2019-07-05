@@ -3,7 +3,7 @@ import { AlloyMap } from '../../core/AlloyMap';
 /**
  * options for the alloy animation layer
  */
-export interface AlloyAnimationLayerOptions {
+export interface AlloyAnimatedPathLayerOptions {
   /**
    * the alloy map to associate tha layer with
    */

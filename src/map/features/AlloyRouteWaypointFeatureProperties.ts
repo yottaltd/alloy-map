@@ -1,9 +1,9 @@
-import { AlloyConnectedFeatureProperties } from './AlloyConnectedFeatureProperties';
+import { AlloyPathNodeFeatureProperties } from './AlloyPathNodeFeatureProperties';
 
 /**
  * the properties for an alloy route waypoint feature
  */
-export interface AlloyRouteWaypointFeatureProperties extends AlloyConnectedFeatureProperties {
+export interface AlloyRouteWaypointFeatureProperties extends AlloyPathNodeFeatureProperties {
   /**
    * the icon of the feature
    */

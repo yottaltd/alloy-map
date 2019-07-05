@@ -1,11 +1,11 @@
 import { AlloyCableUnitFeatureProperties } from './AlloyCableUnitFeatureProperties';
-import { AlloyConnectedFeature } from './AlloyConnectedFeature';
+import { AlloyPathNodeFeature } from './AlloyPathNodeFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy cable unit feature which represents a cable unit with point geometry
  */
-export class AlloyCableUnitFeature extends AlloyConnectedFeature {
+export class AlloyCableUnitFeature extends AlloyPathNodeFeature {
   /**
    * @implements
    */

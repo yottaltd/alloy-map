@@ -2,7 +2,7 @@ import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyConnectorFeature } from '../../features/AlloyConnectorFeature';
+import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 
 /**
@@ -10,7 +10,9 @@ import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
  * @ignore
  * @internal
  */
-export class AlloyConnectorStyleBuilder extends AlloyStyleBuilder<AlloyConnectorFeature> {
+export class AlloyPathNodeConnectorStyleBuilder extends AlloyStyleBuilder<
+  AlloyPathNodeConnectorFeature
+> {
   /**
    * creates a new instance
    * @ignore
@@ -23,14 +25,14 @@ export class AlloyConnectorStyleBuilder extends AlloyStyleBuilder<AlloyConnector
   /**
    * @override
    */
-  protected getKey(feature: AlloyConnectorFeature): string {
+  protected getKey(feature: AlloyPathNodeConnectorFeature): string {
     return StringUtils.cacheKeyConcat(feature.properties.colour);
   }
 
   /**
    * @override
    */
-  protected createStyles(feature: AlloyConnectorFeature): OLStyle | OLStyle[] {
+  protected createStyles(feature: AlloyPathNodeConnectorFeature): OLStyle | OLStyle[] {
     if (feature.olFeature.getGeometry().getType() === 'LineString') {
       return new OLStyle({
         stroke: new OLStroke({
@@ -47,14 +49,14 @@ export class AlloyConnectorStyleBuilder extends AlloyStyleBuilder<AlloyConnector
   /**
    * @override
    */
-  protected createHoverStyles(feature: AlloyConnectorFeature): OLStyle | OLStyle[] {
+  protected createHoverStyles(feature: AlloyPathNodeConnectorFeature): OLStyle | OLStyle[] {
     return this.createStyles(feature);
   }
 
   /**
    * @override
    */
-  protected createSelectedStyles(feature: AlloyConnectorFeature): OLStyle | OLStyle[] {
+  protected createSelectedStyles(feature: AlloyPathNodeConnectorFeature): OLStyle | OLStyle[] {
     return this.createStyles(feature);
   }
 }

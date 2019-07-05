@@ -1,6 +1,6 @@
-import { AlloyAnimationLayerOptions } from '../animation/AlloyAnimationLayerOptions';
+import { AlloyAnimatedPathLayerOptions } from '../animation/AlloyAnimatedPathLayerOptions';
 
 /**
  * options for the alloy route layer
  */
-export interface AlloyRouteLayerOptions extends AlloyAnimationLayerOptions {}
+export interface AlloyRouteLayerOptions extends AlloyAnimatedPathLayerOptions {}

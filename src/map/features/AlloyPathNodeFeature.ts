@@ -1,22 +1,20 @@
-import { LineString } from 'geojson';
+import { Point } from 'geojson';
 import OLFeature from 'ol/Feature';
-import OLLineString from 'ol/geom/LineString';
+import OLPoint from 'ol/geom/Point';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyConnectorFeatureProperties } from './AlloyConnectorFeatureProperties';
+import { AlloyPathNodeFeatureProperties } from './AlloyPathNodeFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
- * an alloy connector feature which represents a connector with single line string geometry
- * @ignore
- * @internal
+ * an alloy path node feature which represents a connected unit with point geometry
  */
-export class AlloyConnectorFeature implements AlloyFeature {
+export abstract class AlloyPathNodeFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType.Connector; // see end of file for prototype
+  public type!: AlloyFeatureType; // overridden in implemented class
 
   /**
    * @implements
@@ -28,14 +26,14 @@ export class AlloyConnectorFeature implements AlloyFeature {
    * @ignore
    * @internal
    */
-  public allowsSelection!: false; // see end of file for prototype
+  public abstract allowsSelection: boolean;
 
   /**
    * @implements
    * @ignore
    * @internal
    */
-  public allowsHover!: false; // see end of file for prototype
+  public abstract allowsHover: boolean;
 
   /**
    * @implements
@@ -52,22 +50,29 @@ export class AlloyConnectorFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
-   * the cached properties of the alloy cable feature
+   * the cached properties of the alloy path node feature
    */
-  public readonly properties: Readonly<AlloyConnectorFeatureProperties>;
+  public readonly properties: Readonly<AlloyPathNodeFeatureProperties>;
 
   /**
    * creates a new instance
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
+   * @param originatingLayerId the layer id that the item originated from
    * @ignore
    * @internal
    */
-  constructor(id: string, olFeature: OLFeature, properties: AlloyConnectorFeatureProperties) {
+  constructor(
+    id: string,
+    olFeature: OLFeature,
+    properties: AlloyPathNodeFeatureProperties,
+    originatingLayerId?: string,
+  ) {
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
+    this.originatingLayerId = originatingLayerId;
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
@@ -78,15 +83,15 @@ export class AlloyConnectorFeature implements AlloyFeature {
    * @ignore
    * @internal
    */
-  public getExpectedGeometry(): OLLineString {
-    // naughty cast here but we are expecting the geometry to always be a LineString
-    return this.olFeature.getGeometry() as OLLineString;
+  public getExpectedGeometry(): OLPoint {
+    // naughty cast here but we are expecting the geometry to always be a Point
+    return this.olFeature.getGeometry() as OLPoint;
   }
 
   /**
    * @implements
    */
-  public setGeometry(geometry: LineString | null) {
+  public setGeometry(geometry: Point | null) {
     if (geometry === null) {
       this.olFeature.setGeometry(undefined as any);
     } else {
@@ -101,13 +106,3 @@ export class AlloyConnectorFeature implements AlloyFeature {
     this.olFeature.setStyle(visible ? null : []);
   }
 }
-
-/**
- * we are prototyping this property because it is the same on every single instance of this class.
- * there is no built in typescript way to define this without it being turned into an initialised
- * property (set on each constructor) and due to the frequency that these objects are created we
- * really need every small optimisation we can get with regard to features
- */
-AlloyConnectorFeature.prototype.type = AlloyFeatureType.Connector;
-AlloyConnectorFeature.prototype.allowsSelection = false;
-AlloyConnectorFeature.prototype.allowsHover = false;

@@ -32,7 +32,8 @@ export abstract class AlloyCableFeatureFactory {
       id,
       new OLFeature(ProjectionUtils.GEOJSON.readGeometry(geometry)),
       properties,
-      layer,
+      layer.animationManager,
+      layer.id,
     );
   }
 

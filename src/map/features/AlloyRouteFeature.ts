@@ -1,11 +1,11 @@
-import { AlloyAnimatedFeature } from './AlloyAnimatedFeature';
+import { AlloyAnimatedPathFeature } from './AlloyAnimatedPathFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyRouteFeatureProperties } from './AlloyRouteFeatureProperties';
 
 /**
  * an alloy Route feature which represents a Route with single line string geometry
  */
-export class AlloyRouteFeature extends AlloyAnimatedFeature {
+export class AlloyRouteFeature extends AlloyAnimatedPathFeature {
   /**
    * @implements
    */

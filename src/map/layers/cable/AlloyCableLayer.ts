@@ -5,7 +5,7 @@ import { AlloyCableFeatureProperties } from '../../features/AlloyCableFeaturePro
 import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
 import { AlloyCableUnitFeatureProperties } from '../../features/AlloyCableUnitFeatureProperties';
 import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyAnimationLayer } from '../animation/AlloyAnimationLayer';
+import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
 import { AlloyCableAnimationManager } from './AlloyCableAnimationManager';
 import { AlloyCableLayerOptions } from './AlloyCableLayerOptions';
 import { AlloyCableStyleProcessor } from './AlloyCableStyleProcessor';
@@ -14,14 +14,14 @@ import { AlloyCableStyleProcessor } from './AlloyCableStyleProcessor';
  * an alloy cable layer for rendering cable and feeds features provided externally on the map,
  * use this to add cable features onto the map and animate them automatically
  */
-export class AlloyCableLayer extends AlloyAnimationLayer {
+export class AlloyCableLayer extends AlloyAnimatedPathLayer {
   /**
    * animation manager for cables
    * @override
    * @ignore
    * @internal
    */
-  protected animationManager: AlloyCableAnimationManager;
+  public animationManager: AlloyCableAnimationManager;
   /**
    * the cable feature being displayed
    */
@@ -48,7 +48,7 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
    */
   constructor(options: AlloyCableLayerOptions) {
     super(options);
-    this.animationManager = new AlloyCableAnimationManager(this.map);
+    this.animationManager = new AlloyCableAnimationManager(this.map, this.olLayerPathNodes);
   }
   /**
    * creates a new cable unit instance from a point geoemtry
@@ -85,17 +85,17 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
   public setCableFeature(cable: AlloyCableFeature) {
     // clear any animations
     if (this.cableFeature) {
-      this.animationManager.stopFeatureAnimation(this.cableFeature);
+      this.animationManager.stopAnimation(this.cableFeature);
       this.clearConnectorLines();
     }
 
     // remove features from source and internal dictionary
-    this.olSourceAnimatedLines.clear(false);
+    this.olSourceAnimatedPaths.clear(false);
 
     // start add the features to the dictionary and start the animation
-    this.olSourceAnimatedLines.addFeature(cable.olFeature);
+    this.olSourceAnimatedPaths.addFeature(cable.olFeature);
     this.cableFeature = cable;
-    this.animationManager.startAnimation(cable, this.olLayerConnectedUnits);
+    this.animationManager.startAnimation(cable);
     this.addAllConnectorLines();
   }
 
@@ -106,14 +106,14 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
   public setMainFeed(feed: AlloyCableUnitFeature | null) {
     // first remove old main feed if available
     if (this.mainFeedFeature) {
-      this.olSourceConnectedUnits.removeFeature(this.mainFeedFeature.olFeature);
+      this.olSourcePathNodes.removeFeature(this.mainFeedFeature.olFeature);
       this.removeConnectorLine(this.mainFeedFeature);
     }
 
     // set new main feed
     this.mainFeedFeature = feed;
     if (this.mainFeedFeature) {
-      this.olSourceConnectedUnits.addFeature(this.mainFeedFeature.olFeature);
+      this.olSourcePathNodes.addFeature(this.mainFeedFeature.olFeature);
       if (this.cableFeature) {
         this.addConnectorLine(this.mainFeedFeature, this.cableFeature);
       }
@@ -127,14 +127,14 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
   public setSubFeed(feed: AlloyCableUnitFeature | null) {
     // first remove old sub feed if available
     if (this.subFeedFeature) {
-      this.olSourceConnectedUnits.removeFeature(this.subFeedFeature.olFeature);
+      this.olSourcePathNodes.removeFeature(this.subFeedFeature.olFeature);
       this.removeConnectorLine(this.subFeedFeature);
     }
 
     // set new sub feed
     this.subFeedFeature = feed;
     if (this.subFeedFeature) {
-      this.olSourceConnectedUnits.addFeature(this.subFeedFeature.olFeature);
+      this.olSourcePathNodes.addFeature(this.subFeedFeature.olFeature);
       if (this.cableFeature) {
         this.addConnectorLine(this.subFeedFeature, this.cableFeature);
       }
@@ -148,7 +148,7 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
   public setConnectedUnits(units: AlloyCableUnitFeature[]) {
     // first remove all old connected units
     for (const unit of Array.from(this.connectedUnitsFeatures.values())) {
-      this.olSourceConnectedUnits.removeFeature(unit.olFeature);
+      this.olSourcePathNodes.removeFeature(unit.olFeature);
       this.removeConnectorLine(unit);
     }
     this.connectedUnitsFeatures.clear();
@@ -160,7 +160,7 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
         this.addConnectorLine(unit, this.cableFeature);
       }
     });
-    this.olSourceConnectedUnits.addFeatures(units.map((w) => w.olFeature));
+    this.olSourcePathNodes.addFeatures(units.map((w) => w.olFeature));
   }
 
   /**
@@ -169,15 +169,15 @@ export class AlloyCableLayer extends AlloyAnimationLayer {
   public clear() {
     // clear cable
     if (this.cableFeature) {
-      this.animationManager.stopFeatureAnimation(this.cableFeature);
+      this.animationManager.stopAnimation(this.cableFeature);
     }
     this.cableFeature = null;
-    this.olSourceAnimatedLines.clear(false);
+    this.olSourceAnimatedPaths.clear(false);
 
     this.mainFeedFeature = null;
     this.subFeedFeature = null;
     this.connectedUnitsFeatures.clear();
-    this.olSourceConnectedUnits.clear(false);
+    this.olSourcePathNodes.clear(false);
 
     this.clearConnectorLines();
   }

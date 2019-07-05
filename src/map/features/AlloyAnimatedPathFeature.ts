@@ -3,15 +3,15 @@ import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyAnimationLayer } from '../layers/animation/AlloyAnimationLayer';
-import { AlloyAnimatedFeatureProperties } from './AlloyAnimatedFeatureProperties';
+import { AlloyAnimationManager } from '../animations/AlloyAnimationManager';
+import { AlloyAnimatedPathFeatureProperties } from './AlloyAnimatedPathFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
- * an alloy animated feature which represents an animated feature with single line string geometry
+ * an alloy animated path feature which represents an animated path with single line string geometry
  */
-export abstract class AlloyAnimatedFeature implements AlloyFeature {
+export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
   /**
    * @implements
    */
@@ -51,32 +51,37 @@ export abstract class AlloyAnimatedFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
-   * the cached properties of the alloy Animated feature
+   * the cached properties of the alloy animated path feature
    */
-  public readonly properties: Readonly<AlloyAnimatedFeatureProperties>;
+  public readonly properties: Readonly<AlloyAnimatedPathFeatureProperties>;
 
-  private readonly layer: AlloyAnimationLayer;
+  /**
+   * Animation manager used to animate this feature
+   */
+  private readonly animationManager: AlloyAnimationManager;
 
   /**
    * creates a new instance
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
    * @param properties the properties bundled with the service call
-   * @param layer the layer that the item is added to
+   * @param animationManager the animation manager used for this feature
+   * @param layerId the id of layer that the item is added to
    * @ignore
    * @internal
    */
   constructor(
     id: string,
     olFeature: OLFeature,
-    properties: AlloyAnimatedFeatureProperties,
-    layer: AlloyAnimationLayer,
+    properties: AlloyAnimatedPathFeatureProperties,
+    animationManager: AlloyAnimationManager,
+    layerId: string,
   ) {
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
-    this.layer = layer;
-    this.originatingLayerId = this.layer.id;
+    this.animationManager = animationManager;
+    this.originatingLayerId = layerId;
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
@@ -96,12 +101,12 @@ export abstract class AlloyAnimatedFeature implements AlloyFeature {
    * @implements
    */
   public setGeometry(geometry: LineString | null) {
-    this.layer.animateFeature(this, false);
+    this.animationManager.stopAnimation(this);
     if (geometry === null) {
       this.olFeature.setGeometry(undefined as any);
     } else {
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
-      this.layer.animateFeature(this, true);
+      this.animationManager.startAnimation(this);
     }
   }
 
@@ -110,9 +115,13 @@ export abstract class AlloyAnimatedFeature implements AlloyFeature {
    */
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);
-    this.layer.animateFeature(this, visible);
+    if (visible) {
+      this.animationManager.startAnimation(this);
+    } else {
+      this.animationManager.stopAnimation(this);
+    }
   }
 }
 
-AlloyAnimatedFeature.prototype.allowsSelection = true;
-AlloyAnimatedFeature.prototype.allowsHover = false;
+AlloyAnimatedPathFeature.prototype.allowsSelection = true;
+AlloyAnimatedPathFeature.prototype.allowsHover = false;

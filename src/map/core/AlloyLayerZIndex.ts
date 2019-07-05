@@ -8,6 +8,6 @@ export enum AlloyLayerZIndex {
   Hover = 4,
   Drawing = 3,
   Layers = 2,
-  Connectors = 1,
+  SubLayers = 1,
   Basemap = 0,
 }

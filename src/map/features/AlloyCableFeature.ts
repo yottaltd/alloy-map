@@ -1,11 +1,11 @@
-import { AlloyAnimatedFeature } from './AlloyAnimatedFeature';
+import { AlloyAnimatedPathFeature } from './AlloyAnimatedPathFeature';
 import { AlloyCableFeatureProperties } from './AlloyCableFeatureProperties';
 import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy cable feature which represents a cable with single line string geometry
  */
-export class AlloyCableFeature extends AlloyAnimatedFeature {
+export class AlloyCableFeature extends AlloyAnimatedPathFeature {
   /**
    * @override
    */

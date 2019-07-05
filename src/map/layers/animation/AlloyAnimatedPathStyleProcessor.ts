@@ -2,22 +2,23 @@ import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
-import { AlloyAnimatedFeature } from '../../features/AlloyAnimatedFeature';
-import { AlloyConnectedFeature } from '../../features/AlloyConnectedFeature';
-import { AlloyConnectorFeature } from '../../features/AlloyConnectorFeature';
+import { AlloyAnimatedPathFeature } from '../../features/AlloyAnimatedPathFeature';
+import { AlloyPathNodeFeature } from '../../features/AlloyPathNodeFeature';
+import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
 import { AlloyStyleBuilder } from '../../styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyConnectorStyleBuilder } from '../../styles/builders/AlloyConnectorStyleBuilder';
-import { AlloyAnimationLayer } from './AlloyAnimationLayer';
+// tslint:disable-next-line:max-line-length
+import { AlloyPathNodeConnectorStyleBuilder } from '../../styles/builders/AlloyPathNodeConnectorStyleBuilder';
+import { AlloyAnimatedPathLayer } from './AlloyAnimatedPathLayer';
 
 /**
  * abstract class for animation layer style processors
  * @ignore
  * @internal
  */
-export abstract class AlloyAnimationStyleProcessor<
-  F extends AlloyAnimatedFeature | AlloyConnectedFeature
+export abstract class AlloyAnimatedPathStyleProcessor<
+  F extends AlloyAnimatedPathFeature | AlloyPathNodeFeature | AlloyPathNodeConnectorFeature
 > extends AlloyStyleProcessor {
   /**
    * animated and connected feature style builder
@@ -27,17 +28,17 @@ export abstract class AlloyAnimationStyleProcessor<
   /**
    * connector feature style builder
    */
-  private readonly connectorStyleBuilder: AlloyConnectorStyleBuilder;
+  private readonly connectorStyleBuilder: AlloyPathNodeConnectorStyleBuilder;
 
   /**
    * creates a new instance
    * @param layer the cable or route layer to style
    */
-  constructor(layer: AlloyAnimationLayer) {
+  constructor(layer: AlloyAnimatedPathLayer) {
     super(layer);
 
     this.styleBuilder = this.createStyleBuilder();
-    this.connectorStyleBuilder = new AlloyConnectorStyleBuilder();
+    this.connectorStyleBuilder = new AlloyPathNodeConnectorStyleBuilder();
   }
 
   /**
@@ -59,36 +60,13 @@ export abstract class AlloyAnimationStyleProcessor<
       return [];
     }
 
-    if (feature instanceof AlloyAnimatedFeature || feature instanceof AlloyConnectedFeature) {
+    if (feature instanceof AlloyAnimatedPathFeature || feature instanceof AlloyPathNodeFeature) {
       return this.styleBuilder.build(feature as F, resolution, state);
+    } else if (feature instanceof AlloyPathNodeConnectorFeature) {
+      return this.connectorStyleBuilder.build(feature, resolution, state);
     } else {
       return [];
     }
-  }
-
-  /**
-   * Custom styler for AlloyConnectorFeature
-   * @param olFeature olFeature associated with AlloyConnectorFeature
-   * @param resolution the resolution of the view
-   * @param state the state to generate styles for
-   * @ignore
-   * @internal
-   */
-  public onStyleConnectorProcess(
-    olFeature: OLFeature | OLRenderFeature,
-    resolution: number,
-    state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-    const connectorFeature = this.layer.getFeatureById(
-      FeatureUtils.getFeatureIdFromOlFeature(olFeature),
-    );
-    if (connectorFeature && connectorFeature instanceof AlloyConnectorFeature) {
-      return this.connectorStyleBuilder.build(connectorFeature, resolution, state);
-    }
-    return [];
   }
 
   /**

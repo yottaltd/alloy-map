@@ -8,7 +8,6 @@ import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
-import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';

@@ -7,14 +7,14 @@ import * as uuid from 'uuid';
 import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyAnimatedFeature } from '../../features/AlloyAnimatedFeature';
-import { AlloyConnectedFeature } from '../../features/AlloyConnectedFeature';
-import { AlloyConnectorFeature } from '../../features/AlloyConnectorFeature';
+import { AlloyAnimatedPathFeature } from '../../features/AlloyAnimatedPathFeature';
 import { AlloyFeature } from '../../features/AlloyFeature';
+import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
+import { AlloyPathNodeFeature } from '../../features/AlloyPathNodeFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyLayer } from '../AlloyLayer';
-import { AlloyAnimationLayerOptions } from './AlloyAnimationLayerOptions';
-import { AlloyAnimationStyleProcessor } from './AlloyAnimationStyleProcessor';
+import { AlloyAnimatedPathLayerOptions } from './AlloyAnimatedPathLayerOptions';
+import { AlloyAnimatedPathStyleProcessor } from './AlloyAnimatedPathStyleProcessor';
 
 /**
  * prefix for connector feature ids
@@ -23,11 +23,11 @@ import { AlloyAnimationStyleProcessor } from './AlloyAnimationStyleProcessor';
  */
 const CONNECTOR_ID = 'connector:';
 /**
- * abstract class for alloy animation layer
+ * abstract class for alloy animated path layer
  * that holds an animated feature (line string) and connected units (points)
  * and draws connector lines between these
  */
-export abstract class AlloyAnimationLayer implements AlloyLayer {
+export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
   /**
    * debugger instance
    * @ignore
@@ -57,74 +57,76 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  public readonly styleProcessor: AlloyAnimationStyleProcessor<
-    AlloyAnimatedFeature | AlloyConnectedFeature
+  public readonly styleProcessor: AlloyAnimatedPathStyleProcessor<
+    AlloyAnimatedPathFeature | AlloyPathNodeFeature
   >;
-
-  /**
-   * source to hold the linestring features being animated
-   * @ignore
-   * @internal
-   */
-  protected readonly olSourceAnimatedLines: OLVectorSource = new OLVectorSource();
-
-  /**
-   * source to hold the openlayers waypoint features
-   * @ignore
-   * @internal
-   */
-  protected readonly olSourceConnectedUnits: OLVectorSource = new OLVectorSource();
-
-  /**
-   * source to hold the openlayers connector line features
-   * @ignore
-   * @internal
-   */
-  protected readonly olSourceConnectorLines: OLVectorSource = new OLVectorSource();
-  /**
-   * internal map for
-   * @ignore
-   * @internal
-   */
-  protected connectorLineFeatures: Map<string, AlloyConnectorFeature> = new Map();
-
-  /**
-   * openlayers layer for waypoints
-   * @ignore
-   * @internal
-   */
-  protected readonly olLayerConnectedUnits: OLVectorLayer;
-
-  /**
-   * openlayers layer for connector lines
-   * @ignore
-   * @internal
-   */
-  protected readonly olLayerConnectorLines: OLVectorLayer;
 
   /**
    * abstract animation manager should be set in derived class
    * @ignore
    * @internal
    */
-  protected readonly animationManager!: AlloyAnimationManager;
+  public abstract readonly animationManager: AlloyAnimationManager;
 
   /**
-   * openlayers layer for cable
+   * source to hold the animated linestring features
+   * @ignore
+   * @internal
    */
-  private readonly olLayerAnimatedLines: OLVectorLayer;
+  protected readonly olSourceAnimatedPaths: OLVectorSource = new OLVectorSource();
+
+  /**
+   * source to hold the point path nodes features
+   * @ignore
+   * @internal
+   */
+  protected readonly olSourcePathNodes: OLVectorSource = new OLVectorSource();
+
+  /**
+   * source to hold the linestring connector line features that connect paths to nodes
+   * @ignore
+   * @internal
+   */
+  protected readonly olSourcePathNodeConnectors: OLVectorSource = new OLVectorSource();
+  /**
+   * internal map for
+   * @ignore
+   * @internal
+   */
+  protected connectorLineFeatures: Map<string, AlloyPathNodeConnectorFeature> = new Map();
+
+  /**
+   * openlayers layer for path nodes
+   * @ignore
+   * @internal
+   */
+  protected readonly olLayerPathNodes: OLVectorLayer;
+
+  /**
+   * openlayers layer for path node connectors
+   * @ignore
+   * @internal
+   */
+  protected readonly olLayerPathNodeConnectors: OLVectorLayer;
+
+  /**
+   * openlayers layer for annimated path
+   * @ignore
+   * @internal
+   */
+  private readonly olLayerAnimatedPaths: OLVectorLayer;
 
   /**
    * creates a new instance
    * @param options the options for the layer
    */
-  constructor(options: AlloyAnimationLayerOptions) {
-    this.id = options.id ? options.id : AlloyAnimationLayer.name + ':' + uuid.v1();
+  constructor(options: AlloyAnimatedPathLayerOptions) {
+    this.id = options.id ? options.id : AlloyAnimatedPathLayer.name + ':' + uuid.v1();
     this.map = options.map;
-    this.debugger = this.map.debugger.extend(AlloyAnimationLayer.name + ':' + this.id);
+    this.debugger = this.map.debugger.extend(AlloyAnimatedPathLayer.name + ':' + this.id);
     this.styleProcessor = this.createStyleProcessor();
 
-    this.olLayerAnimatedLines = new OLVectorLayer({
+    this.olLayerAnimatedPaths = new OLVectorLayer({
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
@@ -139,11 +141,11 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
           return null;
         }
       },
-      source: this.olSourceAnimatedLines,
+      source: this.olSourceAnimatedPaths,
       zIndex: AlloyLayerZIndex.Layers,
     });
 
-    this.olLayerConnectedUnits = new OLVectorLayer({
+    this.olLayerPathNodes = new OLVectorLayer({
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
@@ -158,17 +160,17 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
           return null;
         }
       },
-      source: this.olSourceConnectedUnits,
+      source: this.olSourcePathNodes,
       zIndex: AlloyLayerZIndex.Visualisation,
     });
 
-    this.olLayerConnectorLines = new OLVectorLayer({
+    this.olLayerPathNodeConnectors = new OLVectorLayer({
       // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
       renderMode: 'vector',
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
       style: (olFeature, resolution) => {
         if (this.styleProcessor) {
-          return this.styleProcessor.onStyleConnectorProcess(
+          return this.styleProcessor.onStyleProcess(
             olFeature,
             resolution,
             AlloyStyleBuilderBuildState.Default,
@@ -177,14 +179,14 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
           return null;
         }
       },
-      source: this.olSourceConnectorLines,
-      zIndex: AlloyLayerZIndex.Connectors,
+      source: this.olSourcePathNodeConnectors,
+      zIndex: AlloyLayerZIndex.SubLayers,
     });
 
     this.olLayers = [
-      this.olLayerAnimatedLines,
-      this.olLayerConnectedUnits,
-      this.olLayerConnectorLines,
+      this.olLayerAnimatedPaths,
+      this.olLayerPathNodes,
+      this.olLayerPathNodeConnectors,
     ];
   }
 
@@ -201,20 +203,6 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
   }
 
   /**
-   * Toggles feature animation
-   * @param feature feature to animate
-   * @ignore
-   * @internal
-   */
-  public animateFeature(feature: AlloyAnimatedFeature, animate: boolean) {
-    if (animate) {
-      this.animationManager.startAnimation(feature);
-    } else {
-      this.animationManager.stopFeatureAnimation(feature);
-    }
-  }
-
-  /**
    * @implements
    */
   public dispose() {
@@ -226,8 +214,8 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  protected abstract createStyleProcessor(): AlloyAnimationStyleProcessor<
-    AlloyAnimatedFeature | AlloyConnectedFeature
+  protected abstract createStyleProcessor(): AlloyAnimatedPathStyleProcessor<
+    AlloyAnimatedPathFeature | AlloyPathNodeFeature
   >;
 
   /**
@@ -237,7 +225,7 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
    */
   protected clearConnectorLines() {
     this.connectorLineFeatures.clear();
-    this.olSourceConnectorLines.clear();
+    this.olSourcePathNodeConnectors.clear();
   }
 
   /**
@@ -246,10 +234,10 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  protected removeConnectorLine(feature: AlloyConnectedFeature) {
+  protected removeConnectorLine(feature: AlloyPathNodeFeature) {
     const lineFeature = this.connectorLineFeatures.get(feature.id);
     if (lineFeature) {
-      this.olSourceConnectorLines.removeFeature(lineFeature.olFeature);
+      this.olSourcePathNodeConnectors.removeFeature(lineFeature.olFeature);
     }
     this.connectorLineFeatures.delete(feature.id);
   }
@@ -261,12 +249,12 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  protected addConnectorLine(feature: AlloyConnectedFeature, animated: AlloyAnimatedFeature) {
+  protected addConnectorLine(feature: AlloyPathNodeFeature, animated: AlloyAnimatedPathFeature) {
     this.removeConnectorLine(feature);
 
     const unitCoordinate = feature.getExpectedGeometry().getCoordinates();
     const closestCablePoint = animated.olFeature.getGeometry().getClosestPoint(unitCoordinate);
-    const connectorFeature = new AlloyConnectorFeature(
+    const connectorFeature = new AlloyPathNodeConnectorFeature(
       CONNECTOR_ID + feature.id,
       new OLFeature(new OLLineString([unitCoordinate, closestCablePoint])),
       {
@@ -275,6 +263,6 @@ export abstract class AlloyAnimationLayer implements AlloyLayer {
     );
 
     this.connectorLineFeatures.set(feature.id, connectorFeature);
-    this.olSourceConnectorLines.addFeature(connectorFeature.olFeature);
+    this.olSourcePathNodeConnectors.addFeature(connectorFeature.olFeature);
   }
 }

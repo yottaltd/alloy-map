@@ -1,7 +1,7 @@
 import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
 import { AlloyRouteStyleBuilder } from '../../styles/builders/AlloyRouteStyleBuilder';
-import { AlloyAnimationStyleProcessor } from '../animation/AlloyAnimationStyleProcessor';
+import { AlloyAnimatedPathStyleProcessor } from '../animation/AlloyAnimatedPathStyleProcessor';
 import { AlloyRouteLayer } from './AlloyRouteLayer';
 
 /**
@@ -9,7 +9,7 @@ import { AlloyRouteLayer } from './AlloyRouteLayer';
  * @ignore
  * @internal
  */
-export class AlloyRouteStyleProcessor extends AlloyAnimationStyleProcessor<
+export class AlloyRouteStyleProcessor extends AlloyAnimatedPathStyleProcessor<
   AlloyRouteFeature | AlloyRouteWaypointFeature
 > {
   /**

@@ -1,11 +1,11 @@
-import { AlloyConnectedFeature } from './AlloyConnectedFeature';
+import { AlloyPathNodeFeature } from './AlloyPathNodeFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyRouteWaypointFeatureProperties } from './AlloyRouteWaypointFeatureProperties';
 
 /**
  * an alloy Route waypoint feature which represents a Route waypoint with point geometry
  */
-export class AlloyRouteWaypointFeature extends AlloyConnectedFeature {
+export class AlloyRouteWaypointFeature extends AlloyPathNodeFeature {
   /**
    * @implements
    */

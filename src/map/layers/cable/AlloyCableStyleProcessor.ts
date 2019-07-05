@@ -1,7 +1,7 @@
 import { AlloyCableFeature } from '../../features/AlloyCableFeature';
 import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
 import { AlloyCableStyleBuilder } from '../../styles/builders/AlloyCableStyleBuilder';
-import { AlloyAnimationStyleProcessor } from '../animation/AlloyAnimationStyleProcessor';
+import { AlloyAnimatedPathStyleProcessor } from '../animation/AlloyAnimatedPathStyleProcessor';
 import { AlloyCableLayer } from './AlloyCableLayer';
 
 /**
@@ -9,7 +9,7 @@ import { AlloyCableLayer } from './AlloyCableLayer';
  * @ignore
  * @internal
  */
-export class AlloyCableStyleProcessor extends AlloyAnimationStyleProcessor<
+export class AlloyCableStyleProcessor extends AlloyAnimatedPathStyleProcessor<
   AlloyCableFeature | AlloyCableUnitFeature
 > {
   /**
