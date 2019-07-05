@@ -44,7 +44,7 @@ export abstract class AlloyAnimationManager {
   /**
    * creates a new instance
    * @param map the alloy map to animate
-   * @param precomponseLayer optional layer under which animations will be drawn
+   * @param precomposeLayer optional layer under which animations will be drawn otherwise they will post composed
    */
   public constructor(map: AlloyMap, precomposeLayer?: OLVectorLayer) {
     this.map = map;
