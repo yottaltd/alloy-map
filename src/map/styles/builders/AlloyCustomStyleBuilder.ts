@@ -1,9 +1,9 @@
-import OLGeometry from 'ol/geom/Geometry';
 import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
+import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
+import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
@@ -25,8 +25,6 @@ import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineS
 import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
 import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
-import { AlloyTextUtils } from '../utils/AlloyTextUtils';
-import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 
 /**
  * the icon colour in the balls

@@ -22,6 +22,15 @@ export { MapChangeCentreEvent } from './map/events/MapChangeCentreEvent';
 export { MapChangeCentreEventHandler } from './map/events/MapChangeCentreEventHandler';
 export { MapChangeZoomEvent } from './map/events/MapChangeZoomEvent';
 export { MapChangeZoomEventHandler } from './map/events/MapChangeZoomEventHandler';
+export { AlloyAnimatedPathFeature } from './map/features/AlloyAnimatedPathFeature';
+export {
+  AlloyAnimatedPathFeatureProperties,
+} from './map/features/AlloyAnimatedPathFeatureProperties';
+export { AlloyCableFeature } from './map/features/AlloyCableFeature';
+export { AlloyCableFeatureFactory } from './map/features/AlloyCableFeatureFactory';
+export { AlloyCableFeatureProperties } from './map/features/AlloyCableFeatureProperties';
+export { AlloyCableUnitFeature } from './map/features/AlloyCableUnitFeature';
+export { AlloyCableUnitFeatureProperties } from './map/features/AlloyCableUnitFeatureProperties';
 export { AlloyClusterFeature } from './map/features/AlloyClusterFeature';
 export { AlloyClusterFeatureProperties } from './map/features/AlloyClusterFeatureProperties';
 export { AlloyCustomFeature } from './map/features/AlloyCustomFeature';
@@ -34,6 +43,15 @@ export { AlloyFeature } from './map/features/AlloyFeature';
 export { AlloyFeatureType } from './map/features/AlloyFeatureType';
 export { AlloyItemFeature } from './map/features/AlloyItemFeature';
 export { AlloyItemFeatureProperties } from './map/features/AlloyItemFeatureProperties';
+export { AlloyPathNodeFeature } from './map/features/AlloyPathNodeFeature';
+export { AlloyPathNodeFeatureProperties } from './map/features/AlloyPathNodeFeatureProperties';
+export { AlloyRouteFeature } from './map/features/AlloyRouteFeature';
+export { AlloyRouteFeatureFactory } from './map/features/AlloyRouteFeatureFactory';
+export { AlloyRouteFeatureProperties } from './map/features/AlloyRouteFeatureProperties';
+export { AlloyRouteWaypointFeature } from './map/features/AlloyRouteWaypointFeature';
+export {
+  AlloyRouteWaypointFeatureProperties,
+} from './map/features/AlloyRouteWaypointFeatureProperties';
 export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGeometryFeature';
 export {
   AlloySimplifiedGeometryFeatureProperties,
@@ -45,6 +63,10 @@ export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
 export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
+export { AlloyAnimatedPathLayer } from './map/layers/animation/AlloyAnimatedPathLayer';
+export {
+  AlloyAnimatedPathLayerOptions,
+} from './map/layers/animation/AlloyAnimatedPathLayerOptions';
 export { AlloyCableLayer } from './map/layers/cable/AlloyCableLayer';
 export { AlloyCableLayerOptions } from './map/layers/cable/AlloyCableLayerOptions';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';
@@ -56,5 +78,14 @@ export { AlloyNetworkLayer } from './map/layers/network/AlloyNetworkLayer';
 export { AlloyNetworkLayerOptions } from './map/layers/network/AlloyNetworkLayerOptions';
 export { AlloyRouteLayer } from './map/layers/route/AlloyRouteLayer';
 export { AlloyRouteLayerOptions } from './map/layers/route/AlloyRouteLayerOptions';
+export { AlloyWmsLayer } from './map/layers/wms/AlloyWmsLayer';
+export { AlloyWmsLayerOptions } from './map/layers/wms/AlloyWmsLayerOptions';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
 export { GeometryUtils } from './utils/GeometryUtils';
+export { AlloyWmsCapabilities } from './wms/AlloyWmsCapabilities';
+export { AlloyWmsCapabilitiesLayer } from './wms/AlloyWmsCapabilitiesLayer';
+export { AlloyWmsCapabilitiesLayerStyle } from './wms/AlloyWmsCapabilitiesLayerStyle';
+export { AlloyWmsCapabilitiesLayerStyleLegend } from './wms/AlloyWmsCapabilitiesLayerStyleLegend';
+export { AlloyWmsParameters } from './wms/AlloyWmsParameters';
+export { AlloyWmsParametersLayer } from './wms/AlloyWmsParametersLayer';
+export { WmsUtils } from './wms/WmsUtils';
