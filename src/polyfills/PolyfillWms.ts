@@ -21,5 +21,5 @@ export abstract class PolyfillWms {
   /**
    * Private singleton instance of Wms capabilities reader
    */
-  private static caps = new OLWmsCapabilities();
+  private static readonly caps = new OLWmsCapabilities();
 }
