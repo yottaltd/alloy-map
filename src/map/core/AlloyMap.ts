@@ -32,11 +32,11 @@ import { AlloySelectionInteraction } from '../interactions/AlloySelectionInterac
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
 import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
+import { AlloyOverlay } from '../overlays/AlloyOverlay';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
-import { AlloyOverlay } from '../overlays/AlloyOverlay';
 
 /**
  * minimum zoom level for the map
@@ -668,17 +668,6 @@ export class AlloyMap {
    */
   public deselectFeature(feature: AlloyFeature): void {
     this.selectionInteraction.deselectFeature(feature);
-  }
-
-  /**
-   * sets the hover state for a feature, only one feature can be hovered at a time
-   * @param feature the feature to hover or null to remove hover
-   */
-  public hoverFeature(feature: AlloyFeature | null): void {
-    if (feature && !feature.allowsHover) {
-      throw new AlloyMapError(1562783186, 'feature does not allow hovering');
-    }
-    this.hoverLayer.setHoveredFeature(feature);
   }
 
   /**
