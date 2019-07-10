@@ -12,6 +12,7 @@ import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionCh
 import { FeaturesUnderSelectionEvent } from '../events/FeaturesUnderSelectionEvent';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyCoordinate } from '../core/AlloyCoordinate';
 
 /**
  * adds selection interaction to an alloy map
@@ -460,7 +461,11 @@ export class AlloySelectionInteraction {
       const featuresStack = new Map<string, AlloyFeature>();
       features.slice(1).forEach((f) => featuresStack.set(f.id, f));
       this.onFeaturesUnderSelection.dispatch(
-        new FeaturesUnderSelectionEvent(firstFeature, featuresStack),
+        new FeaturesUnderSelectionEvent(
+          firstFeature,
+          featuresStack,
+          AlloyCoordinate.fromMapCoordinate(event.coordinate),
+        ),
       );
     }
   }
