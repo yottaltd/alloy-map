@@ -21,9 +21,9 @@ export interface AlloyCustomOverlayOptions {
   readonly offset?: [number, number];
 
   /**
-   * the coordinate on the map to place the element
+   * the coordinate on the map to place the element or if undefined it wont be displayed
    */
-  readonly position: AlloyCoordinate;
+  readonly position?: AlloyCoordinate;
 
   /**
    * the positioning of the element relative to the position
