@@ -1,6 +1,7 @@
 import { AlloyOverlay } from '../AlloyOverlay';
 import { AlloyCustomOverlayOptions } from './AlloyCustomOverlayOptions';
 import OLOverlay from 'ol/Overlay';
+import { AlloyCoordinate } from '../../core/AlloyCoordinate';
 
 /**
  * an alloy custom overlay allows us to put html elements on top of the map
@@ -37,5 +38,12 @@ export class AlloyCustomOverlay implements AlloyOverlay {
       stopEvent: true, // event propogation to the map viewport is stopped
       insertFirst: false, // append to end to last is always on top
     });
+  }
+
+  /**
+   * @implements
+   */
+  public setPosition(coordinate: AlloyCoordinate | null) {
+    this.olOverlay.setPosition(coordinate !== null ? coordinate.toMapCoordinate() : undefined);
   }
 }
