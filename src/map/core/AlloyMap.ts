@@ -671,6 +671,14 @@ export class AlloyMap {
   }
 
   /**
+   * sets the hover state for a feature, only one feature can be hovered at a time
+   * @param feature the feature to hover or null to remove hover
+   */
+  public hoverFeature(feature: AlloyFeature | null): void {
+    this.hoverLayer.setHoveredFeature(feature);
+  }
+
+  /**
    * adds an event handler to listen for the `FeatureSelectionChangeEvent` event
    * @param handler the handler to call when the event is raised
    */
