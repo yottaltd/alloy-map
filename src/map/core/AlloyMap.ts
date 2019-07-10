@@ -675,6 +675,9 @@ export class AlloyMap {
    * @param feature the feature to hover or null to remove hover
    */
   public hoverFeature(feature: AlloyFeature | null): void {
+    if (feature && !feature.allowsHover) {
+      throw new AlloyMapError(1562783186, 'feature does not allow hovering');
+    }
     this.hoverLayer.setHoveredFeature(feature);
   }
 
