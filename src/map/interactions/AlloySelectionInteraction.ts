@@ -456,10 +456,13 @@ export class AlloySelectionInteraction {
       this.onClickSelectSingleFeature(firstFeature);
     }
 
-    // if we had multiple potential features then suggest alternatives
+    // if we had multiple potential features then suggest alternatives that can be selected
     if (features.length > 1) {
       const featuresStack = new Map<string, AlloyFeature>();
-      features.slice(1).forEach((f) => featuresStack.set(f.id, f));
+      features
+        .slice(1)
+        .filter((f) => f.allowsSelection)
+        .forEach((f) => featuresStack.set(f.id, f));
       this.onFeaturesUnderSelection.dispatch(
         new FeaturesUnderSelectionEvent(
           firstFeature,
