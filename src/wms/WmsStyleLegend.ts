@@ -1,17 +1,19 @@
 /**
- * Parsed WMS Capabilties layer style legend
+ * wms layer style legend object describing the layer style legend from a wms service
  */
 export interface WmsStyleLegend {
   /**
    * Format of the style legend
    */
-  Format: string;
+  readonly Format: string;
+
   /**
    * URL for style legend resource
    */
-  OnlineResource: string;
+  readonly OnlineResource: string;
+
   /**
    * Dimensions of style legend resource
    */
-  size: [number, number];
+  readonly size: [number, number];
 }

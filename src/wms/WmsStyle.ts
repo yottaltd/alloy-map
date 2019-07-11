@@ -1,19 +1,22 @@
 import { WmsStyleLegend } from './WmsStyleLegend';
 
 /**
- * Parsed WMS Capabilties layer style
+ * wms layer style object describing the layer style from a wms service
  */
 export interface WmsStyle {
   /**
    * WMS Name of the style
    */
-  Name: string;
+  readonly Name: string;
+
   /**
    * Human readable title of the style
+   *
    */
-  Title?: string;
+  readonly Title?: string;
+
   /**
    * Image legends associated with this style
    */
-  LegendURL?: WmsStyleLegend[];
+  readonly LegendURL?: WmsStyleLegend[];
 }

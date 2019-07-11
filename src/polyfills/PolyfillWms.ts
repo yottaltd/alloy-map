@@ -1,5 +1,13 @@
 import OLWmsCapabilities from 'ol/format/WMSCapabilities.js';
 import { WmsCapabilities } from '../wms/WmsCapabilities';
+
+/**
+ * reader for wms capabilties
+ * @ignore
+ * @internal
+ */
+const OL_WMS_CAPABILITIES = new OLWmsCapabilities();
+
 /**
  * utility class for accessing Wms functions due to typing issues.
  * @ignore
@@ -12,14 +20,10 @@ export abstract class PolyfillWms {
    * @returns WMS capabilities as JSON object
    */
   public static read(input: string | Document | Node): WmsCapabilities {
-    const parsed = PolyfillWms.caps.read(input);
+    const parsed = OL_WMS_CAPABILITIES.read(input);
     return {
       Title: parsed.Service.Title,
       Layer: parsed.Capability.Layer,
     };
   }
-  /**
-   * Private singleton instance of Wms capabilities reader
-   */
-  private static readonly caps = new OLWmsCapabilities();
 }

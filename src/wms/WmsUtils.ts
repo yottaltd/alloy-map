@@ -1,3 +1,4 @@
+import * as color from 'color';
 import OLTileWMS from 'ol/source/TileWMS';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { AlloyMapError } from '../error/AlloyMapError';
@@ -5,7 +6,6 @@ import { AlloyBounds } from '../map/core/AlloyBounds';
 import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
 import { PolyfillTileGrid } from '../polyfills/PolyfillTileGrid';
 import { PolyfillWms } from '../polyfills/PolyfillWms';
-import { ColourUtils } from '../utils/ColourUtils';
 import { AlloyWmsCapabilities } from './AlloyWmsCapabilities';
 import { AlloyWmsCapabilitiesLayer } from './AlloyWmsCapabilitiesLayer';
 import { AlloyWmsCapabilitiesLayerStyle } from './AlloyWmsCapabilitiesLayerStyle';
@@ -14,7 +14,6 @@ import { AlloyWmsParameters } from './AlloyWmsParameters';
 import { WmsLayer } from './WmsLayer';
 import { WmsStyle } from './WmsStyle';
 import { WmsStyleLegend } from './WmsStyleLegend';
-import * as color from 'color';
 
 /**
  * Public WMS utils class for getting and processing capabilties
@@ -31,6 +30,7 @@ export abstract class WmsUtils {
     options: AlloyWmsParameters,
     transparent: boolean,
   ): OLTileWMS {
+    // generate tile grid if we have size information
     let tileGrid: OLTileGrid | undefined;
     if (options.width && options.height) {
       tileGrid = PolyfillTileGrid.createXYZ({
@@ -52,7 +52,8 @@ export abstract class WmsUtils {
           .join(','),
         TRANSPARENT: transparent,
         BGCOLOR: options.colour
-          ? color(options.colour)
+          ? // special colour format for WMS
+            color(options.colour)
               .hex()
               .toUpperCase()
               .replace('#', '0x')
@@ -66,12 +67,44 @@ export abstract class WmsUtils {
    * @param url url for WMS server without any query parameters
    */
   public static async getCapabilities(url: string): Promise<AlloyWmsCapabilities> {
-    let capabilities: AlloyWmsCapabilities;
+    // first get the web response
+    let capabilitiesResponse: Response;
     try {
-      const capsText = await (await fetch(url + '&REQUEST=GetCapabilities&SERVICE=WMS')).text();
-      const parsedCaps = PolyfillWms.read(capsText);
+      capabilitiesResponse = await fetch(url + '&REQUEST=GetCapabilities&SERVICE=WMS');
+    } catch (error) {
+      if (error instanceof AlloyMapError) {
+        throw error;
+      }
+      throw new AlloyMapError(1562880533, 'Request for wms capabilities failed', {
+        data: {
+          error,
+        },
+      });
+    }
 
-      capabilities = {
+    // then get the text from the response
+    let capabilitiesText: string;
+    try {
+      capabilitiesText = await capabilitiesResponse.text();
+    } catch (error) {
+      if (error instanceof AlloyMapError) {
+        throw error;
+      }
+      throw new AlloyMapError(
+        1562880596,
+        'Failed to obtain text body from wms capabilities request',
+        {
+          data: {
+            error,
+          },
+        },
+      );
+    }
+
+    // finally parse the data
+    try {
+      const parsedCaps = PolyfillWms.read(capabilitiesText);
+      return {
         title: parsedCaps.Title,
         url,
         layer: WmsUtils.parseWmsLayer(parsedCaps.Layer),
@@ -80,9 +113,12 @@ export abstract class WmsUtils {
       if (error instanceof AlloyMapError) {
         throw error;
       }
-      throw new AlloyMapError(1561559624, 'Failed to parse WMS Capabilities');
+      throw new AlloyMapError(1561559624, 'Failed to parse WMS Capabilities', {
+        data: {
+          error,
+        },
+      });
     }
-    return capabilities;
   }
 
   /**
@@ -92,6 +128,7 @@ export abstract class WmsUtils {
    * @internal
    */
   private static parseWmsLayer(layer: WmsLayer): AlloyWmsCapabilitiesLayer {
+    // special case for wms layer response data
     if (typeof layer.Title !== 'string') {
       throw new AlloyMapError(1561548097, 'Failed to parse WMS layer Title');
     }
@@ -128,18 +165,18 @@ export abstract class WmsUtils {
         crs = 'ESPG:900913';
       }
     }
-    const layerCapabilities: AlloyWmsCapabilitiesLayer = {
+
+    return {
       name: layer.Name,
       title: layer.Title,
-      layers: (layer.Layer || []).map((l) => this.parseWmsLayer(l)),
+      layers: (layer.Layer || []).map((l) => WmsUtils.parseWmsLayer(l)),
       boundingBox,
-      styles: (layer.Style || []).map((s) => this.parseWmsStyle(s)),
+      styles: (layer.Style || []).map((s) => WmsUtils.parseWmsStyle(s)),
       opaque: layer.opaque || false,
       fixedWidth: layer.fixedWidth,
       fixedHeight: layer.fixedHeight,
       crs,
     };
-    return layerCapabilities;
   }
 
   /**
@@ -152,16 +189,23 @@ export abstract class WmsUtils {
     if (!style.Name || typeof style.Name !== 'string') {
       throw new AlloyMapError(1561547914, 'Failed to parse WMS layer style Name');
     }
-    const layerStyleCapabilities: AlloyWmsCapabilitiesLayerStyle = {
+
+    // populate the legends model
+    const legends: AlloyWmsCapabilitiesLayerStyleLegend[] = [];
+    if (style.LegendURL) {
+      style.LegendURL.forEach((l) => {
+        const parsed = WmsUtils.parseWmsLegend(l);
+        if (parsed) {
+          legends.push(parsed);
+        }
+      });
+    }
+
+    return {
       name: style.Name,
       title: style.Title || style.Name,
-      legends: (style.LegendURL || [])
-        .map((l) => this.parseWmsLegend(l))
-        .filter(
-          (l: AlloyWmsCapabilitiesLayerStyleLegend | null) => l !== null,
-        ) as AlloyWmsCapabilitiesLayerStyleLegend[],
+      legends,
     };
-    return layerStyleCapabilities;
   }
 
   /**
@@ -173,9 +217,11 @@ export abstract class WmsUtils {
   private static parseWmsLegend(
     legend: WmsStyleLegend,
   ): AlloyWmsCapabilitiesLayerStyleLegend | null {
+    // special case for wms layer response data
     if (!legend.Format || typeof legend.Format !== 'string') {
       throw new AlloyMapError(1561557730, 'Failed to parse WMS layer style legend Format');
     }
+
     if (legend.Format.startsWith('image/')) {
       if (!legend.OnlineResource || typeof legend.OnlineResource !== 'string') {
         throw new AlloyMapError(1561547980, 'Failed to parse WMS style legend url');
@@ -187,11 +233,11 @@ export abstract class WmsUtils {
       ) {
         throw new AlloyMapError(1561548041, 'Failed to parse WMS style legend size');
       }
-      const layerStyleLegendCapabilities: AlloyWmsCapabilitiesLayerStyleLegend = {
+
+      return {
         url: legend.OnlineResource,
         size: legend.size,
       };
-      return layerStyleLegendCapabilities;
     }
     return null;
   }

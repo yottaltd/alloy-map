@@ -1,15 +1,16 @@
 import { WmsLayer } from './WmsLayer';
 
 /**
- * Parsed WMS Capabilties
+ * wms capabilities object describing the capabilities of a wms service
  */
 export interface WmsCapabilities {
   /**
    * Human readable title of the WMS service
    */
-  Title: string;
+  readonly Title: string;
+
   /**
    * Wrapping layer for this WMS service
    */
-  Layer: WmsLayer;
+  readonly Layer: WmsLayer;
 }
