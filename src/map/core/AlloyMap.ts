@@ -32,6 +32,7 @@ import { AlloySelectionInteraction } from '../interactions/AlloySelectionInterac
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
 import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
+import { AlloyOverlay } from '../overlays/AlloyOverlay';
 import { AlloyBounds } from './AlloyBounds';
 import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
@@ -122,6 +123,11 @@ export class AlloyMap {
    * the layers currently managed by the map
    */
   private readonly managedLayers = new Map<string, AlloyLayer>();
+
+  /**
+   * the overlays managed by the map
+   */
+  private readonly managedOverlays = new Map<string, AlloyOverlay>();
 
   /**
    * the hover interaction manager, determines when mouseovers occur etc.
@@ -247,6 +253,13 @@ export class AlloyMap {
    */
   public get layers(): Map<string, AlloyLayer> {
     return new Map(this.managedLayers);
+  }
+
+  /**
+   * overlays currently on display in the map
+   */
+  public get overlays(): Map<string, AlloyOverlay> {
+    return new Map(this.managedOverlays);
   }
 
   /**
@@ -418,6 +431,30 @@ export class AlloyMap {
     this.onChangeLayers.dispatch(
       new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
     );
+  }
+
+  /**
+   * adds an overlay to the map
+   * @param overlay the overlay to add to the map
+   */
+  public addOverlay(overlay: AlloyOverlay): void {
+    if (this.managedOverlays.has(overlay.id)) {
+      throw new AlloyMapError(1562340532, 'overlay already added to map');
+    }
+    this.olMap.addOverlay(overlay.olOverlay);
+    this.managedOverlays.set(overlay.id, overlay);
+  }
+
+  /**
+   * removes an overlay from the map
+   * @param overlay the overlay to remove
+   */
+  public removeOverlay(overlay: AlloyOverlay): void {
+    if (!this.managedOverlays.has(overlay.id)) {
+      throw new AlloyMapError(1562340674, 'overlay does not exist in map');
+    }
+    this.olMap.removeOverlay(overlay.olOverlay);
+    this.managedOverlays.delete(overlay.id);
   }
 
   /**
