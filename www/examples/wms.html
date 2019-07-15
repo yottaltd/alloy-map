@@ -45,7 +45,13 @@
         .then((capabilities) => {
           const basemap = alloymap.AlloyBasemapFactory.createWms({
             url: capabilities.url,
-            layers: [capabilities.layer.name ? capabilities.layer : capabilities.layer.layers[0]],
+            layers: [
+              {
+                layerName: capabilities.layer.name
+                  ? capabilities.layer.name
+                  : capabilities.layer.layers[0].name,
+              },
+            ],
             width: capabilities.layer.width,
             height: capabilities.layer.height,
             crs: capabilities.layer.crs,
@@ -67,7 +73,13 @@
           map,
           options: {
             url: capabilities.url,
-            layers: [capabilities.layer.name ? capabilities.layer : capabilities.layer.layers[0]],
+            layers: [
+              {
+                layerName: capabilities.layer.name
+                  ? capabilities.layer.name
+                  : capabilities.layer.layers[0].name,
+              },
+            ],
             width: capabilities.layer.width,
             height: capabilities.layer.height,
             crs: capabilities.layer.crs,
