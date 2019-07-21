@@ -4,7 +4,7 @@ import OLGeoJSON from 'ol/format/GeoJSON';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import OLStyle from 'ol/style/Style';
-import { AlloyLayerZIndex } from '../../types/map/core/AlloyLayerZIndex';
+import { AlloyLayerZIndex } from '../map/core/AlloyLayerZIndex';
 import { PolyfillLoadingStrategy } from '../polyfills/PolyfillLoadingStrategy';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
 import { ProjectionUtils } from '../utils/ProjectionUtils';
