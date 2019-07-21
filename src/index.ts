@@ -56,6 +56,8 @@ export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGe
 export {
   AlloySimplifiedGeometryFeatureProperties,
 } from './map/features/AlloySimplifiedGeometryFeatureProperties';
+export { AlloyWfsFeature } from './map/features/AlloyWfsFeature';
+export { AlloyWfsFeatureProperties } from './map/features/AlloyWfsFeatureProperties';
 export {
   AlloyDrawInteractionGeometryType,
 } from './map/interactions/AlloyDrawInteractionGeometryType';
@@ -78,6 +80,8 @@ export { AlloyNetworkLayer } from './map/layers/network/AlloyNetworkLayer';
 export { AlloyNetworkLayerOptions } from './map/layers/network/AlloyNetworkLayerOptions';
 export { AlloyRouteLayer } from './map/layers/route/AlloyRouteLayer';
 export { AlloyRouteLayerOptions } from './map/layers/route/AlloyRouteLayerOptions';
+export { AlloyWfsLayer } from './map/layers/wfs/AlloyWfsLayer';
+export { AlloyWfsLayerOptions } from './map/layers/wfs/AlloyWfsLayerOptions';
 export { AlloyWmsLayer } from './map/layers/wms/AlloyWmsLayer';
 export { AlloyWmsLayerOptions } from './map/layers/wms/AlloyWmsLayerOptions';
 export { AlloyOverlay } from './map/overlays/AlloyOverlay';
@@ -85,7 +89,16 @@ export { AlloyOverlayPositioning } from './map/overlays/AlloyOverlayPositioning'
 export { AlloyCustomOverlay } from './map/overlays/custom/AlloyCustomOverlay';
 export { AlloyCustomOverlayOptions } from './map/overlays/custom/AlloyCustomOverlayOptions';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
+export { AlloyWfsLayerStyle } from './map/styles/AlloyWfsLayerStyle';
+export { EpsgIo } from './utils/epsg-io/EpsgIo';
+export { EpsgIoSearchResponse } from './utils/epsg-io/EpsgIoSearchResponse';
+export { EpsgIoSearchResult } from './utils/epsg-io/EpsgIoSearchResult';
 export { GeometryUtils } from './utils/GeometryUtils';
+export { AlloyWfsCapabilities } from './wfs/AlloyWfsCapabilities';
+export { AlloyWfsFeatureType } from './wfs/AlloyWfsFeatureType';
+export { WfsFeatureDescription } from './wfs/WfsFeatureDescription';
+export { WfsFeatureProperty } from './wfs/WfsFeatureProperty';
+export { WfsUtils } from './wfs/WfsUtils';
 export { AlloyWmsCapabilities } from './wms/AlloyWmsCapabilities';
 export { AlloyWmsCapabilitiesLayer } from './wms/AlloyWmsCapabilitiesLayer';
 export { AlloyWmsCapabilitiesLayerStyle } from './wms/AlloyWmsCapabilitiesLayerStyle';

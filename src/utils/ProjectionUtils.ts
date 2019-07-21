@@ -1,7 +1,9 @@
-import OLProjection from 'ol/proj/Projection';
 import OLGeoJson from 'ol/format/GeoJSON';
+import OLProjection from 'ol/proj/Projection';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
+import { EpsgIo } from './epsg-io/EpsgIo';
+import { EpsgIoSearchResponse } from './epsg-io/EpsgIoSearchResponse';
 
 /**
  * utility class for playing with projections
@@ -49,5 +51,39 @@ export abstract class ProjectionUtils {
       throw new AlloyMapError(1553794154, 'failed to get projection with code: ' + projection);
     }
     return proj;
+  }
+
+  /**
+   * Registers a projection
+   * @param epsg espg number to register projection for
+   */
+  public static async register(epsg: number): Promise<void> {
+    const code = 'EPSG:' + epsg;
+    try {
+      ProjectionUtils.getProjectionOrThrow(code);
+    } catch (e) {
+      const epsgDef: string = await this.requestEpsgDefinition(epsg);
+      PolyfillProj.register(code, epsgDef);
+    }
+  }
+
+  /**
+   * Internal method to request epsg defintion from epsg.io
+   * @param epsg epsg number to find defintion for
+   * @ignore
+   * @internal
+   */
+  private static async requestEpsgDefinition(epsg: number): Promise<string> {
+    const code = 'EPSG:' + epsg;
+    let epsgResponse: EpsgIoSearchResponse;
+    try {
+      epsgResponse = await EpsgIo.search(epsg.toString());
+      if (epsgResponse.results.length === 0) {
+        throw new AlloyMapError(1559555257, `Could not find projection ${code} on epsg.io`);
+      }
+    } catch (e) {
+      throw new AlloyMapError(1562246276, `Failed to get projection for ${code}`);
+    }
+    return epsgResponse.results[0].proj4;
   }
 }

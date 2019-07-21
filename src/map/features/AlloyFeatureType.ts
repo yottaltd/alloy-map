@@ -51,4 +51,9 @@ export enum AlloyFeatureType {
    * an alloy connector feature
    */
   Connector = 'Connector',
+
+  /**
+   * an alloy wfs feature
+   */
+  Wfs = 'Wfs',
 }
