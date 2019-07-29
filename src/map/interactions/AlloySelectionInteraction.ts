@@ -457,20 +457,18 @@ export class AlloySelectionInteraction {
     }
 
     // if we had multiple potential features then suggest alternatives that can be selected
-    if (features.length > 1) {
-      const featuresStack = new Map<string, AlloyFeature>();
-      features
-        .slice(1)
-        .filter((f) => f.allowsSelection)
-        .forEach((f) => featuresStack.set(f.id, f));
-      this.onFeaturesUnderSelection.dispatch(
-        new FeaturesUnderSelectionEvent(
-          firstFeature,
-          featuresStack,
-          AlloyCoordinate.fromMapCoordinate(event.coordinate),
-        ),
-      );
-    }
+    const featuresStack = new Map<string, AlloyFeature>();
+    features
+      .slice(1)
+      .filter((f) => f.allowsSelection)
+      .forEach((f) => featuresStack.set(f.id, f));
+    this.onFeaturesUnderSelection.dispatch(
+      new FeaturesUnderSelectionEvent(
+        firstFeature,
+        featuresStack,
+        AlloyCoordinate.fromMapCoordinate(event.coordinate),
+      ),
+    );
   }
 
   /**
