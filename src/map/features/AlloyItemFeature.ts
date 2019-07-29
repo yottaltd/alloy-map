@@ -9,14 +9,14 @@ import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyFeatureWithItemId } from './AlloyFeatureWithItemId';
 import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
 
 /**
  * an alloy item feature which represents a basic item feature on the map
  */
-export class AlloyItemFeature implements AlloyFeature {
+export class AlloyItemFeature extends AlloyFeatureWithItemId {
   /**
    * @implements
    */
@@ -75,6 +75,7 @@ export class AlloyItemFeature implements AlloyFeature {
     properties: AlloyItemFeatureProperties,
     originatingLayerId?: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
@@ -118,6 +119,13 @@ export class AlloyItemFeature implements AlloyFeature {
    */
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);
+  }
+
+  /**
+   * @implements
+   */
+  public getItemId(): string | null {
+    return this.properties.itemId;
   }
 }
 

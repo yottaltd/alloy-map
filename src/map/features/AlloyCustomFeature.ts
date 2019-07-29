@@ -10,14 +10,14 @@ import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
-import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyFeatureWithItemId } from './AlloyFeatureWithItemId';
 
 /**
  * an alloy custom feature which represents something being added to the map by a user or
  * programatically, it can represent anything
  */
-export class AlloyCustomFeature implements AlloyFeature {
+export class AlloyCustomFeature extends AlloyFeatureWithItemId {
   /**
    * @implements
    */
@@ -72,6 +72,7 @@ export class AlloyCustomFeature implements AlloyFeature {
     properties: AlloyCustomFeatureProperties,
     originatingLayerId: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
@@ -121,6 +122,13 @@ export class AlloyCustomFeature implements AlloyFeature {
    */
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);
+  }
+
+  /**
+   * @implements
+   */
+  public getItemId(): string | null {
+    return this.id;
   }
 }
 
