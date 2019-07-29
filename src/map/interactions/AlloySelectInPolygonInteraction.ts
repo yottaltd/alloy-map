@@ -78,6 +78,11 @@ export class AlloySelectInPolygonInteraction {
   private onInteractionEnd: (() => void) | null = null;
 
   /**
+   * Filter function that checks whether feature selection is allowed
+   */
+  private filter: ((feature: AlloyFeature) => boolean) | null = null;
+
+  /**
    * creates a new instance
    * @param map the map to add selection interaction to
    * @ignore
@@ -133,7 +138,10 @@ export class AlloySelectInPolygonInteraction {
       const poly: OLPolygon = event.feature.getGeometry() as OLPolygon;
 
       // find all the features in the polygon area and select them
-      const features = this.getFeaturesInPolygon(poly);
+      let features = this.getFeaturesInPolygon(poly);
+      if (this.filter !== null) {
+        features = features.filter((f) => this.filter!(f));
+      }
 
       if (features.length > 0) {
         // decide how to select the features
@@ -154,10 +162,17 @@ export class AlloySelectInPolygonInteraction {
 
   /**
    * Starts draw interaction for polygon to select features inside of it
+   * @param filter custom filter function to be called with alloy feature
+   *  to check whether selection is allowed
    * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
-  public startPolygonSelect(onEnd?: () => void, appendToSelection: boolean = false): void {
+  public startPolygonSelect(
+    filter?: (feature: AlloyFeature) => boolean,
+    onEnd?: () => void,
+    appendToSelection: boolean = false,
+  ): void {
+    this.filter = filter ? filter : null;
     // if it's active, then no need to do anything
     if (this.olDraw.getActive()) {
       return;
@@ -203,6 +218,9 @@ export class AlloySelectInPolygonInteraction {
 
       // remove the interaction from the map
       this.map.olMap.removeInteraction(this.olDraw);
+
+      // reset feature filter
+      this.filter = null;
 
       // re-enable double-click zoom and selection on deferred
       setTimeout(() => {
