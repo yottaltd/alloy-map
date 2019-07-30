@@ -21,7 +21,7 @@ export abstract class WfsUtils {
     try {
       const capsUrl = new URL(url.trim());
       capsUrl.searchParams.set('service', 'WFS');
-      capsUrl.searchParams.set('request', 'GetCapabilties');
+      capsUrl.searchParams.set('request', 'GetCapabilities');
 
       // Specifying a version is optional.
       if (version) {
