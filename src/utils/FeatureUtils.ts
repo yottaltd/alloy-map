@@ -1,5 +1,16 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
+import OLLineString from 'ol/geom/LineString';
 import { AlloyMapError } from '../error/AlloyMapError';
+import { AlloyBounds } from '../map/core/AlloyBounds';
+import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
+import { AlloyFeature } from '../map/features/AlloyFeature';
+import { GeometryGuards } from '../map/guards/GeometryGuards';
+import { AlloyLayer } from '../map/layers/AlloyLayer';
+import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
+import { GeometryUtils } from './GeometryUtils';
+import { FindFeaturesWithinResult } from './models/FindFeaturesWithinResult';
+import { ProjectionUtils } from './ProjectionUtils';
 
 /**
  * the property name of the feature id stored on an openlayers feature (so we can go from openlayers
@@ -21,6 +32,105 @@ export abstract class FeatureUtils {
    */
   public static createFeatureId(layerCode: string, olFeature: OLFeature): string {
     return layerCode + ':' + olFeature.getId();
+  }
+
+  /**
+   * finds features close to provided source
+   * @param layers the alloy layers to search in
+   * @param source `AlloyCoordinate`, `AlloyFeature` or `Geometry` source to measure distance of
+   * features from
+   * @param delta distance (in metres) from source for which to return features
+   * @returns an array of results ordered by closest first
+   */
+  public static findFeaturesWithin(
+    layers: AlloyLayer[],
+    source: AlloyCoordinate | AlloyFeature | Geometry,
+    delta: number,
+  ): FindFeaturesWithinResult[] {
+    const features: FindFeaturesWithinResult[] = [];
+
+    // calculate the coordinate and bounds of source to use
+    let sourceCoord: [number, number];
+    let sourceBounds: [number, number, number, number];
+
+    if (source instanceof AlloyCoordinate) {
+      // if source is AlloyCoordinate then get map coordinate for it
+      sourceCoord = source.toMapCoordinate();
+
+      // inflate the source coordinate by the requested delta (metres) to make a first pass at
+      // grabbing features within delta distance
+      sourceBounds = [
+        sourceCoord[0] - delta,
+        sourceCoord[1] - delta,
+        sourceCoord[0] + delta,
+        sourceCoord[1] + delta,
+      ];
+    } else {
+      // get the bounds of the geometry or feature
+      let bounds: AlloyBounds;
+      if (GeometryGuards.isGeometry(source)) {
+        bounds = GeometryUtils.getGeometryBounds(source);
+      } else {
+        bounds = GeometryUtils.getGeometryBounds(
+          JSON.parse(ProjectionUtils.GEOJSON.writeGeometry(source.olFeature.getGeometry())),
+        );
+      }
+
+      // get centre for source
+      sourceCoord = bounds.getCentre().toMapCoordinate();
+
+      // get the bounds of the feature/geom and add the delta as padding
+      sourceBounds = bounds.toMapExtent();
+      sourceBounds[0] -= delta;
+      sourceBounds[1] -= delta;
+      sourceBounds[2] += delta;
+      sourceBounds[3] += delta;
+    }
+
+    layers.forEach((layer) => {
+      // iterating over all map layers with features
+      if (layer instanceof AlloyLayerWithFeatures) {
+        // getting all features in current map extent
+        layer.olSource.getFeaturesInExtent(sourceBounds).forEach((olFeature) => {
+          // get closest point to source coordinate
+          const closest = olFeature.getGeometry().getClosestPoint(sourceCoord);
+
+          // set coordinate to use for length measurement from source
+          let coord: [number, number];
+          if (source instanceof AlloyCoordinate) {
+            // if source is a coordinate then re-use source coordinate
+            coord = sourceCoord;
+          } else if (GeometryGuards.isGeometry(source)) {
+            // if source is a geometry the read it and get closest point to feature we are checking
+            coord = ProjectionUtils.GEOJSON.readGeometry(source).getClosestPoint(closest);
+          } else {
+            // if source is a feature then get closest point to feature we are checking
+            coord = source.olFeature.getGeometry().getClosestPoint(closest);
+          }
+
+          // create line from coordinate and calculate length
+          const line = new OLLineString([coord, closest]);
+          const length = line.getLength();
+
+          // add alloy feature to map if length is equals to or smaller than delta
+          if (length <= delta) {
+            const feature = layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
+            if (!feature) {
+              throw new AlloyMapError(1565622486, 'Could not get alloy feature for map feature');
+            }
+            features.push({
+              feature,
+              distance: line.getLength(),
+            });
+          }
+        });
+      }
+    });
+
+    // sort by distance
+    features.sort((a, b) => a.distance - b.distance);
+
+    return features;
   }
 
   /**

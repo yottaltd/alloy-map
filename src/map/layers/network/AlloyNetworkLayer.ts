@@ -7,7 +7,7 @@ import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloySimplifiedGeometryFeature } from '../../features/AlloySimplifiedGeometryFeature';
 import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
 import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
-import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
+import { AlloyLayerWithFeaturesWithItemId } from '../AlloyLayerWithFeaturesWithItemId';
 import { AlloyStyledLayer } from '../AlloyStyledLayer';
 import { AlloyNetworkFeatureLoader } from './AlloyNetworkFeatureLoader';
 import { AlloyNetworkLayerOptions } from './AlloyNetworkLayerOptions';
@@ -18,7 +18,7 @@ import { AlloyNetworkStyleProcessor } from './AlloyNetworkStyleProcessor';
  * display features. it will not cluster items and will heavily simplify low lod geometry
  */
 export class AlloyNetworkLayer
-  extends AlloyLayerWithFeatures<AlloyItemFeature | AlloySimplifiedGeometryFeature>
+  extends AlloyLayerWithFeaturesWithItemId<AlloyItemFeature | AlloySimplifiedGeometryFeature>
   implements AlloyBoundedLayer, AlloyStyledLayer {
   /**
    * @implements

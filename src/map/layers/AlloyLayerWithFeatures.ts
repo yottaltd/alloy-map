@@ -1,6 +1,10 @@
 import { Debugger } from 'debug';
+import { Geometry } from 'geojson';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import { FeatureUtils } from '../../utils/FeatureUtils';
+import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
+import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
@@ -201,6 +205,20 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @implements
    */
   public abstract dispose(): void;
+
+  /**
+   * finds features close to provided source
+   * @param source `AlloyCoordinate`, `AlloyFeature` or `Geometry` source to measure distance of
+   * features from
+   * @param delta distance (in metres) from source for which to return features
+   * @returns an array of results ordered by closest first
+   */
+  public findFeaturesWithin(
+    source: AlloyCoordinate | AlloyFeature | Geometry,
+    delta: number,
+  ): FindFeaturesWithinResult[] {
+    return FeatureUtils.findFeaturesWithin([this], source, delta);
+  }
 
   /**
    * sets the style processor

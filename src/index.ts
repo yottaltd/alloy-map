@@ -96,6 +96,7 @@ export { EpsgIo } from './utils/epsg-io/EpsgIo';
 export { EpsgIoSearchResponse } from './utils/epsg-io/EpsgIoSearchResponse';
 export { EpsgIoSearchResult } from './utils/epsg-io/EpsgIoSearchResult';
 export { GeometryUtils } from './utils/GeometryUtils';
+export { FindFeaturesWithinResult } from './utils/models/FindFeaturesWithinResult';
 export { AlloyWfsCapabilities } from './wfs/AlloyWfsCapabilities';
 export { AlloyWfsFeatureType } from './wfs/AlloyWfsFeatureType';
 export { WfsFeatureDescription } from './wfs/WfsFeatureDescription';
