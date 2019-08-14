@@ -8,6 +8,7 @@ import { SimpleEventDispatcher } from 'ste-simple-events';
 import { Configuration, GeoJSONObjectType } from '../../api';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
+import { FeatureUtils } from '../../utils/FeatureUtils';
 import { FontUtils } from '../../utils/FontUtils';
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
@@ -589,6 +590,19 @@ export class AlloyMap {
    */
   public getDrawGeometry(): Geometry {
     return this.drawInteraction.getDrawGeometry();
+  }
+
+  /**
+   * Finds features close to provided source
+   * @param source `AlloyCoordinate` or `AlloyFeature` source to measure distance of features from
+   * @param delta distance in metres from source for which to return features
+   * @returns `Map<AlloyFeature, number>` where values are distances in metres to provided source
+   */
+  public findFeatures(
+    source: AlloyCoordinate | AlloyFeature,
+    delta: number,
+  ): Map<AlloyFeature, number> {
+    return FeatureUtils.findFeatures(this, source, delta);
   }
 
   /**
