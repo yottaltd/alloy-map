@@ -19,4 +19,10 @@ export interface WorkflowLogNodeWebModelBase {
    * @memberof WorkflowLogNodeWebModelBase
    */
   output?: WorkflowNodeRunDataWebModel;
+  /**
+   * 
+   * @type {string}
+   * @memberof WorkflowLogNodeWebModelBase
+   */
+  discriminator: string;
 }

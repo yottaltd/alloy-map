@@ -21,18 +21,6 @@ export interface AqsJoinWebResponse {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof AqsJoinWebResponse
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof AqsJoinWebResponse
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<ItemWebModel>}
    * @memberof AqsJoinWebResponse
    */

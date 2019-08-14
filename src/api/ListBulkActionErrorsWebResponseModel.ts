@@ -20,6 +20,12 @@ export interface ListBulkActionErrorsWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<BulkActionErrorWebModel>}
+   * @memberof ListBulkActionErrorsWebResponseModel
+   */
+  results: Array<BulkActionErrorWebModel>;
+  /**
+   * 
    * @type {number}
    * @memberof ListBulkActionErrorsWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface ListBulkActionErrorsWebResponseModel {
    * @memberof ListBulkActionErrorsWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<BulkActionErrorWebModel>}
-   * @memberof ListBulkActionErrorsWebResponseModel
-   */
-  results: Array<BulkActionErrorWebModel>;
 }

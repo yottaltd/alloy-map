@@ -21,18 +21,6 @@ export interface PaginatedWebResponseModelBaseOfDodiWebModelContainer {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfDodiWebModelContainer
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfDodiWebModelContainer
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<DodiWebModelContainer>}
    * @memberof PaginatedWebResponseModelBaseOfDodiWebModelContainer
    */

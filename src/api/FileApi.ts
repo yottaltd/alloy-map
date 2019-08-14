@@ -1,5 +1,6 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
+import { FileMoveWebRequestModel } from './FileMoveWebRequestModel';
 import { FileApiFp } from './FileApiFp';
 /**
  * FileApi - object-oriented interface
@@ -47,6 +48,19 @@ export class FileApi extends BaseAPI {
    */
   public fileDownloadThumbnail(id: string, width: number, height: number, mode: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any) {
     return FileApiFp(this.configuration).fileDownloadThumbnail(id, width, height, mode, applyContentDispositionHeader, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * 
+   * @summary Moves a file to a folder with a given id
+   * @param {string} id The AId of the file to move
+   * @param {FileMoveWebRequestModel} model The move file model
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof FileApi
+   */
+  public fileMove(id: string, model: FileMoveWebRequestModel, options?: any) {
+    return FileApiFp(this.configuration).fileMove(id, model, options)(this.fetch, this.basePath);
   }
 
 }

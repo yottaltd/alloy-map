@@ -1,27 +1,14 @@
 // tslint:disable
-import { ImportSettingsAttributeWebModel } from './ImportSettingsAttributeWebModel';
+import { ImportSettingsBaseWebModel } from './ImportSettingsBaseWebModel';
 import { ImportSettingsGeometryWebModel } from './ImportSettingsGeometryWebModel';
 import { ImportSettingsNetworkReferenceWebModel } from './ImportSettingsNetworkReferenceWebModel';
 import { ImportSettingsParentWebModel } from './ImportSettingsParentWebModel';
-import { ImportType } from './ImportType';
 /**
  * Web model for data import settings
  * @export
  * @interface ImportSettingsDataWebModel
  */
-export interface ImportSettingsDataWebModel {
-  /**
-   * Import type helps us know how to deserialise the input settings class via Discriminator
-   * @type {ImportType}
-   * @memberof ImportSettingsDataWebModel
-   */
-  type: ImportType;
-  /**
-   * The attribute mapping between import and destination design
-   * @type {Array<ImportSettingsAttributeWebModel>}
-   * @memberof ImportSettingsDataWebModel
-   */
-  attributes: Array<ImportSettingsAttributeWebModel>;
+export interface ImportSettingsDataWebModel extends ImportSettingsBaseWebModel {
   /**
    * Optional geometry setting for imported items, if null we assume that imported have no geometry
    * @type {ImportSettingsGeometryWebModel}

@@ -1,5 +1,5 @@
 // tslint:disable
-
+import { LayerStyleEditWebModel } from './LayerStyleEditWebModel';
 /**
  * The web request model used to edit a layer
  * @export
@@ -18,6 +18,12 @@ export interface LayerEditWebRequestModel {
    * @memberof LayerEditWebRequestModel
    */
   tags?: Array<string>;
+  /**
+   * The layer style that will replace any previous styles on this layer
+   * @type {Array<LayerStyleEditWebModel>}
+   * @memberof LayerEditWebRequestModel
+   */
+  layerStyles: Array<LayerStyleEditWebModel>;
   /**
    * The signature is used to ensure that the layer being edited is actually the one provided to the system. This is enforced in order to avoid applying possibly invalid edits after another user has edited the same layer
    * @type {string}

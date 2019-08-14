@@ -20,6 +20,12 @@ export interface ImportListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<ImportGetWebResponseModel>}
+   * @memberof ImportListWebResponseModel
+   */
+  results: Array<ImportGetWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof ImportListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface ImportListWebResponseModel {
    * @memberof ImportListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<ImportGetWebResponseModel>}
-   * @memberof ImportListWebResponseModel
-   */
-  results: Array<ImportGetWebResponseModel>;
 }

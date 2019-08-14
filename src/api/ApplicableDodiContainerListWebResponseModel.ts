@@ -21,6 +21,12 @@ export interface ApplicableDodiContainerListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<DodiWebModelContainer>}
+   * @memberof ApplicableDodiContainerListWebResponseModel
+   */
+  results: Array<DodiWebModelContainer>;
+  /**
+   * 
    * @type {number}
    * @memberof ApplicableDodiContainerListWebResponseModel
    */
@@ -31,10 +37,4 @@ export interface ApplicableDodiContainerListWebResponseModel {
    * @memberof ApplicableDodiContainerListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<DodiWebModelContainer>}
-   * @memberof ApplicableDodiContainerListWebResponseModel
-   */
-  results: Array<DodiWebModelContainer>;
 }

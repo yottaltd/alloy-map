@@ -19,12 +19,6 @@ export interface CardEditWebRequestModel {
    */
   icon: string;
   /**
-   * The cache interval in seconds, i.e. the amount of time the card should be cached for before being refreshed
-   * @type {number}
-   * @memberof CardEditWebRequestModel
-   */
-  cacheInterval: number;
-  /**
    * The dodi codes related to the card
    * @type {Array<string>}
    * @memberof CardEditWebRequestModel

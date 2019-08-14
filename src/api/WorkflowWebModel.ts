@@ -1,6 +1,7 @@
 // tslint:disable
 import { MetadataWebModel } from './MetadataWebModel';
 import { WorkflowActionWebModel } from './WorkflowActionWebModel';
+import { WorkflowNodeInfoWebModel } from './WorkflowNodeInfoWebModel';
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
  * Web model for a Workflow
@@ -26,6 +27,12 @@ export interface WorkflowWebModel {
    * @memberof WorkflowWebModel
    */
   trigger: WorkflowTriggerWebModelBase;
+  /**
+   * Information about this workflow node
+   * @type {WorkflowNodeInfoWebModel}
+   * @memberof WorkflowWebModel
+   */
+  triggerNodeInfo: WorkflowNodeInfoWebModel;
   /**
    * The id of the trigger
    * @type {string}

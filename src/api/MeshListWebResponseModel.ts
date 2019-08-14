@@ -1,5 +1,5 @@
 // tslint:disable
-import { MeshGetWebResponseModel } from './MeshGetWebResponseModel';
+import { MeshWithOperationsSummaryWebResponseModel } from './MeshWithOperationsSummaryWebResponseModel';
 /**
  * Web response model for a list meshes operation
  * @export
@@ -20,6 +20,12 @@ export interface MeshListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<MeshWithOperationsSummaryWebResponseModel>}
+   * @memberof MeshListWebResponseModel
+   */
+  results: Array<MeshWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof MeshListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface MeshListWebResponseModel {
    * @memberof MeshListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<MeshGetWebResponseModel>}
-   * @memberof MeshListWebResponseModel
-   */
-  results: Array<MeshGetWebResponseModel>;
 }

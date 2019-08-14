@@ -20,18 +20,6 @@ export interface AqsQueryWebResponse {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof AqsQueryWebResponse
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof AqsQueryWebResponse
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<ItemWebModel>}
    * @memberof AqsQueryWebResponse
    */

@@ -12,4 +12,10 @@ export interface WorkflowNodeRunDataWebModel {
    * @memberof WorkflowNodeRunDataWebModel
    */
   itemIds?: Array<string>;
+  /**
+   * If true, this action stopped the workflow actions chain it was on and no sequent action on that chain was thus executed
+   * @type {boolean}
+   * @memberof WorkflowNodeRunDataWebModel
+   */
+  stopChain: boolean;
 }

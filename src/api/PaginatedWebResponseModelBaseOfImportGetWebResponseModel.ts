@@ -20,18 +20,6 @@ export interface PaginatedWebResponseModelBaseOfImportGetWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfImportGetWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfImportGetWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<ImportGetWebResponseModel>}
    * @memberof PaginatedWebResponseModelBaseOfImportGetWebResponseModel
    */

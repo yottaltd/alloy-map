@@ -25,7 +25,7 @@ export interface ImportSettingsParentWebModel {
    */
   matchHeader: string;
   /**
-   * The attribute code on the dodiCode parent to search on via the matchHeader to help locate the parent item
+   * The attribute code on the parent dodi to search on via the matchHeader to help locate the parent item
    * @type {string}
    * @memberof ImportSettingsParentWebModel
    */

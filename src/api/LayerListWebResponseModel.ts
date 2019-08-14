@@ -1,5 +1,5 @@
 // tslint:disable
-import { LayerGetWebResponseModel } from './LayerGetWebResponseModel';
+import { LayerWithOperationsSummaryWebResponseModel } from './LayerWithOperationsSummaryWebResponseModel';
 /**
  * Web response model for a list layers operation
  * @export
@@ -20,6 +20,12 @@ export interface LayerListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<LayerWithOperationsSummaryWebResponseModel>}
+   * @memberof LayerListWebResponseModel
+   */
+  results: Array<LayerWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof LayerListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface LayerListWebResponseModel {
    * @memberof LayerListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<LayerGetWebResponseModel>}
-   * @memberof LayerListWebResponseModel
-   */
-  results: Array<LayerGetWebResponseModel>;
 }

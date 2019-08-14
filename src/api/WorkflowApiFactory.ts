@@ -138,18 +138,19 @@ export const WorkflowApiFactory = function (configuration?: Configuration, fetch
      * 
      * @summary List workflows
      * @param {string} [name] The optional workflow name (full or partial) to filter on
+     * @param {string} [userGroup] Optional Guc to filter workflows by. If specified, only the workflows that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowList(name?: string, page?: number, pageSize?: number, options?: any) {
-      return WorkflowApiFp(configuration).workflowList(name, page, pageSize, options)(fetch, basePath);
+    workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
+      return WorkflowApiFp(configuration).workflowList(name, userGroup, page, pageSize, options)(fetch, basePath);
     },
     /**
      * 
      * @summary List the workflows that are applicable to a dodi
-     * @param {string} code 
+     * @param {string} code The dodi code to find workflows applicable to
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
@@ -157,6 +158,18 @@ export const WorkflowApiFactory = function (configuration?: Configuration, fetch
      */
     workflowListApplicableWorkflows(code: string, page?: number, pageSize?: number, options?: any) {
       return WorkflowApiFp(configuration).workflowListApplicableWorkflows(code, page, pageSize, options)(fetch, basePath);
+    },
+    /**
+     * 
+     * @summary List the workflows that will clone a specific item
+     * @param {string} itemId The id of the item that will be cloned
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowListCloningItemWorkflows(itemId: string, page?: number, pageSize?: number, options?: any) {
+      return WorkflowApiFp(configuration).workflowListCloningItemWorkflows(itemId, page, pageSize, options)(fetch, basePath);
     },
     /**
      * 

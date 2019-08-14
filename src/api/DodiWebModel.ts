@@ -2,6 +2,7 @@
 import { Context } from './Context';
 import { DodiAttributeWebModel } from './DodiAttributeWebModel';
 import { DodiImplementsWebModel } from './DodiImplementsWebModel';
+import { DodiStencilWebModel } from './DodiStencilWebModel';
 import { MetadataWebModel } from './MetadataWebModel';
 /**
  * 
@@ -41,8 +42,32 @@ export interface DodiWebModel {
   attributes: Array<DodiAttributeWebModel>;
   /**
    * 
+   * @type {string}
+   * @memberof DodiWebModel
+   */
+  title?: string;
+  /**
+   * 
+   * @type {string}
+   * @memberof DodiWebModel
+   */
+  subtitle?: string;
+  /**
+   * 
    * @type {MetadataWebModel}
    * @memberof DodiWebModel
    */
   metadata: MetadataWebModel;
+  /**
+   * 
+   * @type {DodiStencilWebModel}
+   * @memberof DodiWebModel
+   */
+  stencil?: DodiStencilWebModel;
+  /**
+   * 
+   * @type {string}
+   * @memberof DodiWebModel
+   */
+  discriminator: string;
 }

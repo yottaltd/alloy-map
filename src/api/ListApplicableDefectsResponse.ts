@@ -20,6 +20,12 @@ export interface ListApplicableDefectsResponse {
   pageSize: number;
   /**
    * 
+   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
+   * @memberof ListApplicableDefectsResponse
+   */
+  results: Array<DesignWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof ListApplicableDefectsResponse
    */
@@ -30,10 +36,4 @@ export interface ListApplicableDefectsResponse {
    * @memberof ListApplicableDefectsResponse
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
-   * @memberof ListApplicableDefectsResponse
-   */
-  results: Array<DesignWithOperationsSummaryWebResponseModel>;
 }

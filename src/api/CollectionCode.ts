@@ -8,5 +8,6 @@
 export enum CollectionCode {
   Live = 'Live',
   Inventory = 'Inventory',
-  Archive = 'Archive'
+  Archive = 'Archive',
+  Template = 'Template'
 }

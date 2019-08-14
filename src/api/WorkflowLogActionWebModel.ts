@@ -1,26 +1,14 @@
 // tslint:disable
 import { LogAction } from './LogAction';
 import { WorkflowActionParameterValueWebModelBase } from './WorkflowActionParameterValueWebModelBase';
-import { WorkflowLogNodeInfoWebModel } from './WorkflowLogNodeInfoWebModel';
+import { WorkflowLogNodeWebModelBase } from './WorkflowLogNodeWebModelBase';
 import { WorkflowNodeRunDataWebModel } from './WorkflowNodeRunDataWebModel';
 /**
  * Model representing the log of an action node
  * @export
  * @interface WorkflowLogActionWebModel
  */
-export interface WorkflowLogActionWebModel {
-  /**
-   * The identity of the step taken in the workflow
-   * @type {WorkflowLogNodeInfoWebModel}
-   * @memberof WorkflowLogActionWebModel
-   */
-  info: WorkflowLogNodeInfoWebModel;
-  /**
-   * The output of this step
-   * @type {WorkflowNodeRunDataWebModel}
-   * @memberof WorkflowLogActionWebModel
-   */
-  output?: WorkflowNodeRunDataWebModel;
+export interface WorkflowLogActionWebModel extends WorkflowLogNodeWebModelBase {
   /**
    * The parameters the action was created with
    * @type {Array<WorkflowActionParameterValueWebModelBase>}

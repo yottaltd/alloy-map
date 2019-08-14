@@ -20,18 +20,6 @@ export interface PaginatedWebResponseModelBaseOfDesignWithOperationsSummaryWebRe
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfDesignWithOperationsSummaryWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfDesignWithOperationsSummaryWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
    * @memberof PaginatedWebResponseModelBaseOfDesignWithOperationsSummaryWebResponseModel
    */

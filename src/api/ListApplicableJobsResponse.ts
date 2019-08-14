@@ -20,6 +20,12 @@ export interface ListApplicableJobsResponse {
   pageSize: number;
   /**
    * 
+   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
+   * @memberof ListApplicableJobsResponse
+   */
+  results: Array<DesignWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof ListApplicableJobsResponse
    */
@@ -30,10 +36,4 @@ export interface ListApplicableJobsResponse {
    * @memberof ListApplicableJobsResponse
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
-   * @memberof ListApplicableJobsResponse
-   */
-  results: Array<DesignWithOperationsSummaryWebResponseModel>;
 }

@@ -6,4 +6,10 @@
  * @interface ItemChangeCauseWebModelBase
  */
 export interface ItemChangeCauseWebModelBase {
+  /**
+   * 
+   * @type {string}
+   * @memberof ItemChangeCauseWebModelBase
+   */
+  discriminator: string;
 }

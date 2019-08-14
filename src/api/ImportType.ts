@@ -7,5 +7,6 @@
  */
 export enum ImportType {
   Data = 'Data',
-  Nsg = 'Nsg'
+  Nsg = 'Nsg',
+  Nlpg = 'Nlpg'
 }

@@ -5,17 +5,12 @@ import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { CardComputedGetWebResponseModel } from './CardComputedGetWebResponseModel';
 import { CardCreateWebRequestModel } from './CardCreateWebRequestModel';
-import { CardCreateWebResponseModel } from './CardCreateWebResponseModel';
 import { CardEditWebRequestModel } from './CardEditWebRequestModel';
-import { CardEditWebResponseModel } from './CardEditWebResponseModel';
-import { CardGetWebResponseModel } from './CardGetWebResponseModel';
 import { CardPermissionsEditWebRequestModel } from './CardPermissionsEditWebRequestModel';
-import { CardPermissionsEditWebResponseModel } from './CardPermissionsEditWebResponseModel';
 import { CardPermissionsGetWebResponseModel } from './CardPermissionsGetWebResponseModel';
 import { CardQueryCreateWebModel } from './CardQueryCreateWebModel';
-import { CardQueryCreateWebResponseModel } from './CardQueryCreateWebResponseModel';
 import { CardQueryDeleteWebRequestModel } from './CardQueryDeleteWebRequestModel';
-import { CardQueryDeleteWebResponseModel } from './CardQueryDeleteWebResponseModel';
+import { CardWithOperationsSummaryWebResponseModel } from './CardWithOperationsSummaryWebResponseModel';
 import { CardListWebResponseModel } from './CardListWebResponseModel';
 import { CardApiFetchParamCreator } from './CardApiFetchParamCreator';
 import { CardApi } from './CardApi';
@@ -32,7 +27,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardCreate(model: CardCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardCreateWebResponseModel> {
+    cardCreate(model: CardCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCreate(model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -54,7 +49,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardCreateQuery(code: string, model: CardQueryCreateWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardQueryCreateWebResponseModel> {
+    cardCreateQuery(code: string, model: CardQueryCreateWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCreateQuery(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -98,7 +93,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardDeleteQuery(code: string, id: string, model: CardQueryDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardQueryDeleteWebResponseModel> {
+    cardDeleteQuery(code: string, id: string, model: CardQueryDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardDeleteQuery(code, id, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -120,7 +115,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardEdit(code: string, model: CardEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardEditWebResponseModel> {
+    cardEdit(code: string, model: CardEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardEdit(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -142,7 +137,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardEditPermissions(code: string, model: CardPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardPermissionsEditWebResponseModel> {
+    cardEditPermissions(code: string, model: CardPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardEditPermissions(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -163,7 +158,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardGetWebResponseModel> {
+    cardGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGet(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -222,13 +217,15 @@ export const CardApiFp = function(configuration?: Configuration) {
     /**
      * Fetches a list of cards optionally specifying page and the number of results to return per page.
      * @summary Get a list of cards
+     * @param {string} [query] Optional query to filter the cards by
+     * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardList(page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardListWebResponseModel> {
-      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardList(page, pageSize, options);
+    cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardListWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardList(query, userGroup, page, pageSize, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {

@@ -1,11 +1,11 @@
 // tslint:disable
-
+import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
  * 
  * @export
  * @interface DodiAttributeOptionsSeasonalWebModel
  */
-export interface DodiAttributeOptionsSeasonalWebModel {
+export interface DodiAttributeOptionsSeasonalWebModel extends DodiAttributeOptionsWebModelBase {
   /**
    * 
    * @type {string}
@@ -24,10 +24,4 @@ export interface DodiAttributeOptionsSeasonalWebModel {
    * @memberof DodiAttributeOptionsSeasonalWebModel
    */
   defaultValue?: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof DodiAttributeOptionsSeasonalWebModel
-   */
-  attributeType: string;
 }

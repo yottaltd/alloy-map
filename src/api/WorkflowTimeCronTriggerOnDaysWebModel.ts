@@ -1,5 +1,6 @@
 // tslint:disable
 import { CalendarOfUnit } from './CalendarOfUnit';
+import { TimeCronTrigger } from './TimeCronTrigger';
 /**
  * Model representing the optional conditions on the days to repeat on
  * @export

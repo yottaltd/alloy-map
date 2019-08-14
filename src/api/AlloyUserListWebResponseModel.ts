@@ -20,6 +20,12 @@ export interface AlloyUserListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<AlloyUserGetWebResponseModel>}
+   * @memberof AlloyUserListWebResponseModel
+   */
+  results: Array<AlloyUserGetWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof AlloyUserListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface AlloyUserListWebResponseModel {
    * @memberof AlloyUserListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<AlloyUserGetWebResponseModel>}
-   * @memberof AlloyUserListWebResponseModel
-   */
-  results: Array<AlloyUserGetWebResponseModel>;
 }

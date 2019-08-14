@@ -1,14 +1,13 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { DesignAddDesignInterfaceWebRequestModel } from './DesignAddDesignInterfaceWebRequestModel';
-import { DesignAttributePermissionsEditWebRequestModel } from './DesignAttributePermissionsEditWebRequestModel';
 import { DesignCreateWebRequestModel } from './DesignCreateWebRequestModel';
 import { DesignEditWebRequestModel } from './DesignEditWebRequestModel';
-import { DesignPermissionsEditWebRequestModel } from './DesignPermissionsEditWebRequestModel';
 import { DesignRemoveDesignInterfaceWebRequestModel } from './DesignRemoveDesignInterfaceWebRequestModel';
 import { DodiAttributeCreateWebRequestModel } from './DodiAttributeCreateWebRequestModel';
 import { DodiAttributeDeleteWebRequestModel } from './DodiAttributeDeleteWebRequestModel';
 import { DodiAttributeEditWebRequestModel } from './DodiAttributeEditWebRequestModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DesignApiFp } from './DesignApiFp';
 /**
  * DesignApi - object-oriented interface
@@ -95,20 +94,6 @@ export class DesignApi extends BaseAPI {
   }
 
   /**
-   * Edit the permissions on the design attribute with the specified code
-   * @summary Edit permissions for a design attribute
-   * @param {string} code The Guc of the design with the attribute to edit the permissions of
-   * @param {string} attributeCode The Guc of the design attribute to edit the permissions of
-   * @param {DesignAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof DesignApi
-   */
-  public designEditAttributePermissions(code: string, attributeCode: string, model: DesignAttributePermissionsEditWebRequestModel, options?: any) {
-    return DesignApiFp(this.configuration).designEditAttributePermissions(code, attributeCode, model, options)(this.fetch, this.basePath);
-  }
-
-  /**
    * Edits a design attribute using the information provided in the model
    * @summary Edit a design attribute
    * @param {string} code The Guc of the design to edit the attribute
@@ -123,15 +108,15 @@ export class DesignApi extends BaseAPI {
   }
 
   /**
-   * Edit the permissions on the design with the specified code
-   * @summary Edit permissions for a design
+   * Edit the permissions on the design with the specified code. New permissions will replace any existing permissions on both design and its attributes
+   * @summary Edit permissions for a design and its attributes
    * @param {string} code The Guc of the design to edit the permissions of
-   * @param {DesignPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+   * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof DesignApi
    */
-  public designEditPermissions(code: string, model: DesignPermissionsEditWebRequestModel, options?: any) {
+  public designEditPermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any) {
     return DesignApiFp(this.configuration).designEditPermissions(code, model, options)(this.fetch, this.basePath);
   }
 

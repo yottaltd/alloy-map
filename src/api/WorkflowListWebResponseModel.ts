@@ -1,5 +1,5 @@
 // tslint:disable
-import { WorkflowGetWebResponseModel } from './WorkflowGetWebResponseModel';
+import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
 /**
  * Web response model for a Workflow list operation
  * @export
@@ -20,6 +20,12 @@ export interface WorkflowListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<WorkflowWithOperationsSummaryWebResponseModel>}
+   * @memberof WorkflowListWebResponseModel
+   */
+  results: Array<WorkflowWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof WorkflowListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface WorkflowListWebResponseModel {
    * @memberof WorkflowListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<WorkflowGetWebResponseModel>}
-   * @memberof WorkflowListWebResponseModel
-   */
-  results: Array<WorkflowGetWebResponseModel>;
 }

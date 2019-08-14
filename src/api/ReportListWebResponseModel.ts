@@ -20,18 +20,6 @@ export interface ReportListWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof ReportListWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof ReportListWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<DesignWebModel>}
    * @memberof ReportListWebResponseModel
    */

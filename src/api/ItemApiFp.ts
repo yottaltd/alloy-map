@@ -3,12 +3,15 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { ItemCloneWebRequestModel } from './ItemCloneWebRequestModel';
+import { ItemCloneWebResponseModel } from './ItemCloneWebResponseModel';
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';
 import { ItemCreateWebResponseModel } from './ItemCreateWebResponseModel';
 import { ItemEditWebRequestModel } from './ItemEditWebRequestModel';
 import { ItemEditWebResponseModel } from './ItemEditWebResponseModel';
 import { ItemGetWebResponseModel } from './ItemGetWebResponseModel';
 import { ItemGraphGetWebResponseModel } from './ItemGraphGetWebResponseModel';
+import { ItemTouchWebResponseModel } from './ItemTouchWebResponseModel';
 import { ItemParentsGetWebResponseModel } from './ItemParentsGetWebResponseModel';
 import { ItemApiFetchParamCreator } from './ItemApiFetchParamCreator';
 import { ItemApi } from './ItemApi';
@@ -18,6 +21,28 @@ import { ItemApi } from './ItemApi';
  */
 export const ItemApiFp = function(configuration?: Configuration) {
   return {
+    /**
+     * Create a copy of an existing item.  If the item is in the template collection, then template logic will be used to deep copy any child items that are also in the template collection, as well as maintaining any existing links to parent items.
+     * @summary Clones an item
+     * @param {string} id The AId item id of the item to clone
+     * @param {ItemCloneWebRequestModel} model The models containing the info about the item to be cloned
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    itemClone(id: string, model: ItemCloneWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemCloneWebResponseModel> {
+      const localVarFetchArgs = ItemApiFetchParamCreator(configuration).itemClone(id, model, options);
+      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+          if (configuration && configuration.responseInterceptor) {
+            return configuration.responseInterceptor(response);
+          } else if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
     /**
      * Creates a new item in the provided design and collection using the current date and time as its start date and leaving the end date open. For more control over the start and end date, the design needs to be versioned and the item version api has to be used
      * @summary Creates an item
@@ -131,11 +156,34 @@ export const ItemApiFp = function(configuration?: Configuration) {
      * @param {string} id The AId of the item to retrieve parents for
      * @param {string} [attributeCode] Optional attribute code to filter parents on
      * @param {string} [graphCode] Optional graph code to filter parents on
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    itemGetItemParents(id: string, attributeCode?: string, graphCode?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemParentsGetWebResponseModel> {
-      const localVarFetchArgs = ItemApiFetchParamCreator(configuration).itemGetItemParents(id, attributeCode, graphCode, options);
+    itemGetItemParents(id: string, attributeCode?: string, graphCode?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemParentsGetWebResponseModel> {
+      const localVarFetchArgs = ItemApiFetchParamCreator(configuration).itemGetItemParents(id, attributeCode, graphCode, page, pageSize, options);
+      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+          if (configuration && configuration.responseInterceptor) {
+            return configuration.responseInterceptor(response);
+          } else if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * Refreshes any out of date computed data on the item that has no been updated automatically
+     * @summary Touches the item by id
+     * @param {string} id The AId of the item to touch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    itemTouch(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemTouchWebResponseModel> {
+      const localVarFetchArgs = ItemApiFetchParamCreator(configuration).itemTouch(id, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {

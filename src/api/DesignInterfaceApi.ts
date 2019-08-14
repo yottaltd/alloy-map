@@ -1,6 +1,6 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
-import { DesignInterfaceAttributePermissionsEditWebRequestModel } from './DesignInterfaceAttributePermissionsEditWebRequestModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DesignInterfaceApiFp } from './DesignInterfaceApiFp';
 /**
  * DesignInterfaceApi - object-oriented interface
@@ -10,17 +10,16 @@ import { DesignInterfaceApiFp } from './DesignInterfaceApiFp';
  */
 export class DesignInterfaceApi extends BaseAPI {
   /**
-   * Edit the permissions on the design interface attribute with the specified code
-   * @summary Edit permissions for a design interface attribute
+   * Edit the permissions on the design interface attributes
+   * @summary Edit permissions for a design interface attributes, interface permissions cannot be edited by the user
    * @param {string} code The Guc of the design interface with the attribute to edit the permissions of
-   * @param {string} attributeCode The Guc of the design interface attribute to edit the permissions of
-   * @param {DesignInterfaceAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+   * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof DesignInterfaceApi
    */
-  public designInterfaceEditAttributePermissions(code: string, attributeCode: string, model: DesignInterfaceAttributePermissionsEditWebRequestModel, options?: any) {
-    return DesignInterfaceApiFp(this.configuration).designInterfaceEditAttributePermissions(code, attributeCode, model, options)(this.fetch, this.basePath);
+  public designInterfaceEditAttributePermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any) {
+    return DesignInterfaceApiFp(this.configuration).designInterfaceEditAttributePermissions(code, model, options)(this.fetch, this.basePath);
   }
 
   /**

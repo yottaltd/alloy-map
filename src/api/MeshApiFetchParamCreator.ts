@@ -181,12 +181,14 @@ export const MeshApiFetchParamCreator = function (configuration?: Configuration)
     /**
      * Fetches a list of meshes optionally specifying page and the number of results to return per page.
      * @summary Get a list of meshes
+     * @param {string} [query] The optional mesh query string to filter on
+     * @param {string} [userGroup] Optional Guc to filter meshes by. If specified, only the meshes that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshList(page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    meshList(query?: string, userGroup?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/mesh`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -199,6 +201,14 @@ export const MeshApiFetchParamCreator = function (configuration?: Configuration)
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+      }
+
+      if (userGroup !== undefined) {
+        localVarQueryParameter['userGroup'] = userGroup;
       }
 
       if (page !== undefined) {

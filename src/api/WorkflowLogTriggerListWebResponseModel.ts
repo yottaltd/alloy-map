@@ -20,6 +20,12 @@ export interface WorkflowLogTriggerListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<WorkflowLogWebModel>}
+   * @memberof WorkflowLogTriggerListWebResponseModel
+   */
+  results: Array<WorkflowLogWebModel>;
+  /**
+   * 
    * @type {number}
    * @memberof WorkflowLogTriggerListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface WorkflowLogTriggerListWebResponseModel {
    * @memberof WorkflowLogTriggerListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<WorkflowLogWebModel>}
-   * @memberof WorkflowLogTriggerListWebResponseModel
-   */
-  results: Array<WorkflowLogWebModel>;
 }

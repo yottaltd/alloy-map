@@ -1,7 +1,9 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
+import { ItemBulkWebRequestModel } from './ItemBulkWebRequestModel';
 import { SetAttributesBulkActionWebRequestModel } from './SetAttributesBulkActionWebRequestModel';
+import { TouchItemsBulkActionWebRequestModel } from './TouchItemsBulkActionWebRequestModel';
 import { BulkApiFp } from './BulkApiFp';
 /**
  * BulkApi - object-oriented interface
@@ -20,6 +22,18 @@ export class BulkApi extends BaseAPI {
    */
   public bulkDeleteItems(model: DeleteItemsBulkActionWebRequestModel, options?: any) {
     return BulkApiFp(this.configuration).bulkDeleteItems(model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Accepts a list of Create, Edit and Delete operations, using the same models as the respective item APIs, performing bulked operations. Any errors will be returned in the response model. This endpoint is NOT meant to replace the import process and does not guarantee transactional integrity. Moreover the endpoint does not accept more than 1000 requests.
+   * @summary Performs many item CUD operations
+   * @param {ItemBulkWebRequestModel} model 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BulkApi
+   */
+  public bulkGeneric(model: ItemBulkWebRequestModel, options?: any) {
+    return BulkApiFp(this.configuration).bulkGeneric(model, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -58,6 +72,18 @@ export class BulkApi extends BaseAPI {
    */
   public bulkSetAttributes(model: SetAttributesBulkActionWebRequestModel, options?: any) {
     return BulkApiFp(this.configuration).bulkSetAttributes(model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * This operation allows to touch the items matching the specified Aqs query
+   * @summary Submit a bulk touch item action
+   * @param {TouchItemsBulkActionWebRequestModel} model The model containing the info needed for the touch items bulk operation
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BulkApi
+   */
+  public bulkTouchItems(model: TouchItemsBulkActionWebRequestModel, options?: any) {
+    return BulkApiFp(this.configuration).bulkTouchItems(model, options)(this.fetch, this.basePath);
   }
 
 }

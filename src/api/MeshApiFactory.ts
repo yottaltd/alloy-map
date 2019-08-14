@@ -56,13 +56,15 @@ export const MeshApiFactory = function (configuration?: Configuration, fetch?: F
     /**
      * Fetches a list of meshes optionally specifying page and the number of results to return per page.
      * @summary Get a list of meshes
+     * @param {string} [query] The optional mesh query string to filter on
+     * @param {string} [userGroup] Optional Guc to filter meshes by. If specified, only the meshes that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshList(page?: number, pageSize?: number, options?: any) {
-      return MeshApiFp(configuration).meshList(page, pageSize, options)(fetch, basePath);
+    meshList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
+      return MeshApiFp(configuration).meshList(query, userGroup, page, pageSize, options)(fetch, basePath);
     },
   };
 };

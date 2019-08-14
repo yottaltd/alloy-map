@@ -1,11 +1,11 @@
 // tslint:disable
-
+import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
  * 
  * @export
  * @interface DodiAttributeOptionsLinkWebModel
  */
-export interface DodiAttributeOptionsLinkWebModel {
+export interface DodiAttributeOptionsLinkWebModel extends DodiAttributeOptionsWebModelBase {
   /**
    * 
    * @type {string}
@@ -36,10 +36,4 @@ export interface DodiAttributeOptionsLinkWebModel {
    * @memberof DodiAttributeOptionsLinkWebModel
    */
   defaultValue?: Array<string>;
-  /**
-   * 
-   * @type {string}
-   * @memberof DodiAttributeOptionsLinkWebModel
-   */
-  attributeType: string;
 }

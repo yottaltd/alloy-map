@@ -1,4 +1,5 @@
 // tslint:disable
+import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 import { GeoJSONObjectType } from './GeoJSONObjectType';
 import { IGeometryObject } from './IGeometryObject';
 /**
@@ -6,7 +7,7 @@ import { IGeometryObject } from './IGeometryObject';
  * @export
  * @interface DodiAttributeOptionsGeoJsonWebModel
  */
-export interface DodiAttributeOptionsGeoJsonWebModel {
+export interface DodiAttributeOptionsGeoJsonWebModel extends DodiAttributeOptionsWebModelBase {
   /**
    * 
    * @type {Array<GeoJSONObjectType>}
@@ -19,10 +20,4 @@ export interface DodiAttributeOptionsGeoJsonWebModel {
    * @memberof DodiAttributeOptionsGeoJsonWebModel
    */
   defaultValue?: IGeometryObject;
-  /**
-   * 
-   * @type {string}
-   * @memberof DodiAttributeOptionsGeoJsonWebModel
-   */
-  attributeType: string;
 }

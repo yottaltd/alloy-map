@@ -3,10 +3,9 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
-import { DesignInterfaceAttributePermissionsEditWebRequestModel } from './DesignInterfaceAttributePermissionsEditWebRequestModel';
-import { DesignInterfaceGetWebResponseModel } from './DesignInterfaceGetWebResponseModel';
-import { DesignInterfacePermissionsGetWebResponseModel } from './DesignInterfacePermissionsGetWebResponseModel';
 import { DesignInterfaceWithOperationsSummaryWebResponseModel } from './DesignInterfaceWithOperationsSummaryWebResponseModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
+import { DodiPermissionsGetWebResponseModel } from './DodiPermissionsGetWebResponseModel';
 import { DesignInterfaceListWebResponseModel } from './DesignInterfaceListWebResponseModel';
 import { DesignInterfaceApiFetchParamCreator } from './DesignInterfaceApiFetchParamCreator';
 import { DesignInterfaceApi } from './DesignInterfaceApi';
@@ -17,16 +16,15 @@ import { DesignInterfaceApi } from './DesignInterfaceApi';
 export const DesignInterfaceApiFp = function(configuration?: Configuration) {
   return {
     /**
-     * Edit the permissions on the design interface attribute with the specified code
-     * @summary Edit permissions for a design interface attribute
+     * Edit the permissions on the design interface attributes
+     * @summary Edit permissions for a design interface attributes, interface permissions cannot be edited by the user
      * @param {string} code The Guc of the design interface with the attribute to edit the permissions of
-     * @param {string} attributeCode The Guc of the design interface attribute to edit the permissions of
-     * @param {DesignInterfaceAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+     * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceEditAttributePermissions(code: string, attributeCode: string, model: DesignInterfaceAttributePermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignInterfaceWithOperationsSummaryWebResponseModel> {
-      const localVarFetchArgs = DesignInterfaceApiFetchParamCreator(configuration).designInterfaceEditAttributePermissions(code, attributeCode, model, options);
+    designInterfaceEditAttributePermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignInterfaceWithOperationsSummaryWebResponseModel> {
+      const localVarFetchArgs = DesignInterfaceApiFetchParamCreator(configuration).designInterfaceEditAttributePermissions(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {
@@ -46,7 +44,7 @@ export const DesignInterfaceApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignInterfaceGetWebResponseModel> {
+    designInterfaceGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignInterfaceWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignInterfaceApiFetchParamCreator(configuration).designInterfaceGet(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -67,7 +65,7 @@ export const DesignInterfaceApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignInterfacePermissionsGetWebResponseModel> {
+    designInterfaceGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiPermissionsGetWebResponseModel> {
       const localVarFetchArgs = DesignInterfaceApiFetchParamCreator(configuration).designInterfaceGetPermissions(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

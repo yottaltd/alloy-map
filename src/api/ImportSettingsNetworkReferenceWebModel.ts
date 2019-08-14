@@ -25,12 +25,6 @@ export interface ImportSettingsNetworkReferenceWebModel {
    */
   endChainageHeader?: string;
   /**
-   * The header name on the import that contains the xsp value
-   * @type {string}
-   * @memberof ImportSettingsNetworkReferenceWebModel
-   */
-  xspHeader?: string;
-  /**
    * The design code of the network that contains sections to reference against, the design should be network referenceable
    * @type {string}
    * @memberof ImportSettingsNetworkReferenceWebModel

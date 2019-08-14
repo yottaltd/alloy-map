@@ -1,5 +1,5 @@
 // tslint:disable
-import { DesignInterfaceGetWebResponseModel } from './DesignInterfaceGetWebResponseModel';
+import { DesignInterfaceWithOperationsSummaryWebResponseModel } from './DesignInterfaceWithOperationsSummaryWebResponseModel';
 /**
  * Web response model for a design interface list operation
  * @export
@@ -20,6 +20,12 @@ export interface DesignInterfaceListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<DesignInterfaceWithOperationsSummaryWebResponseModel>}
+   * @memberof DesignInterfaceListWebResponseModel
+   */
+  results: Array<DesignInterfaceWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof DesignInterfaceListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface DesignInterfaceListWebResponseModel {
    * @memberof DesignInterfaceListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<DesignInterfaceGetWebResponseModel>}
-   * @memberof DesignInterfaceListWebResponseModel
-   */
-  results: Array<DesignInterfaceGetWebResponseModel>;
 }

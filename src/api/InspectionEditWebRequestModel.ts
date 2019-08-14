@@ -13,7 +13,7 @@ export interface InspectionEditWebRequestModel {
    */
   itemEditWebRequestModel: ItemEditWebRequestModel;
   /**
-   * Optional parent links for edited inspection item. Key is the link attribute code, value is the list of parent item id that are linked via the attribute code. If parents already exist for given attribute code they will be removed and replaced with new values.
+   * Optional parent links for edited inspection item. Key is the link attribute code, value is the list of parent item id that are linked via the attribute code. Any existing special parents (asset, related inspection, job or defect) will be replaced with new special parent. All other parents are just added to the item.
    * @type {{ [key: string]: Array<string>; }}
    * @memberof InspectionEditWebRequestModel
    */

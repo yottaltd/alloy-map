@@ -6,23 +6,19 @@ import { FetchArgs } from './FetchArgs';
 import { WorkflowAddActionWebRequestModel } from './WorkflowAddActionWebRequestModel';
 import { WorkflowAddActionWebResponseModel } from './WorkflowAddActionWebResponseModel';
 import { WorkflowCreateWebRequestModel } from './WorkflowCreateWebRequestModel';
-import { WorkflowCreateWebResponseModel } from './WorkflowCreateWebResponseModel';
 import { WorkflowEditActionWebRequestModel } from './WorkflowEditActionWebRequestModel';
-import { WorkflowEditActionWebResponseModel } from './WorkflowEditActionWebResponseModel';
 import { WorkflowEditWebRequestModel } from './WorkflowEditWebRequestModel';
-import { WorkflowEditWebResponseModel } from './WorkflowEditWebResponseModel';
 import { WorkflowGetActionParametersWebRequestModel } from './WorkflowGetActionParametersWebRequestModel';
 import { WorkflowGetActionParametersWebResponseModel } from './WorkflowGetActionParametersWebResponseModel';
 import { WorkflowGetAllowedActionsWebRequestModel } from './WorkflowGetAllowedActionsWebRequestModel';
 import { WorkflowGetAllowedActionsWebResponseModel } from './WorkflowGetAllowedActionsWebResponseModel';
-import { WorkflowGetWebResponseModel } from './WorkflowGetWebResponseModel';
 import { WorkflowLogsGetWebResponseModel } from './WorkflowLogsGetWebResponseModel';
 import { WorkflowPermissionsEditWebRequestModel } from './WorkflowPermissionsEditWebRequestModel';
-import { WorkflowPermissionsEditWebResponseModel } from './WorkflowPermissionsEditWebResponseModel';
 import { WorkflowPermissionsGetWebResponseModel } from './WorkflowPermissionsGetWebResponseModel';
 import { WorkflowRemoveActionWebRequestModel } from './WorkflowRemoveActionWebRequestModel';
-import { WorkflowRemoveActionWebResponseModel } from './WorkflowRemoveActionWebResponseModel';
+import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
 import { WorkflowListApplicableWebResponseModel } from './WorkflowListApplicableWebResponseModel';
+import { WorkflowListCloningItemWebResponseModel } from './WorkflowListCloningItemWebResponseModel';
 import { WorkflowListWebResponseModel } from './WorkflowListWebResponseModel';
 import { WorkflowLogTriggerListWebResponseModel } from './WorkflowLogTriggerListWebResponseModel';
 import { WorkflowApiFetchParamCreator } from './WorkflowApiFetchParamCreator';
@@ -62,7 +58,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowCreate(model: WorkflowCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowCreateWebResponseModel> {
+    workflowCreate(model: WorkflowCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowCreate(model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -105,7 +101,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowEdit(code: string, model: WorkflowEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowEditWebResponseModel> {
+    workflowEdit(code: string, model: WorkflowEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEdit(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -128,7 +124,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowEditAction(code: string, id: string, model: WorkflowEditActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowEditActionWebResponseModel> {
+    workflowEditAction(code: string, id: string, model: WorkflowEditActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEditAction(code, id, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -150,7 +146,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowEditPermissions(code: string, model: WorkflowPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowPermissionsEditWebResponseModel> {
+    workflowEditPermissions(code: string, model: WorkflowPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEditPermissions(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -171,7 +167,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowGetWebResponseModel> {
+    workflowGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGet(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -275,13 +271,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * 
      * @summary List workflows
      * @param {string} [name] The optional workflow name (full or partial) to filter on
+     * @param {string} [userGroup] Optional Guc to filter workflows by. If specified, only the workflows that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowList(name?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListWebResponseModel> {
-      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowList(name, page, pageSize, options);
+    workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowList(name, userGroup, page, pageSize, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {
@@ -297,7 +294,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary List the workflows that are applicable to a dodi
-     * @param {string} code 
+     * @param {string} code The dodi code to find workflows applicable to
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
@@ -305,6 +302,29 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowListApplicableWorkflows(code: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListApplicableWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowListApplicableWorkflows(code, page, pageSize, options);
+      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+          if (configuration && configuration.responseInterceptor) {
+            return configuration.responseInterceptor(response);
+          } else if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * 
+     * @summary List the workflows that will clone a specific item
+     * @param {string} itemId The id of the item that will be cloned
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowListCloningItemWorkflows(itemId: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListCloningItemWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowListCloningItemWorkflows(itemId, page, pageSize, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {
@@ -349,7 +369,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowRemoveAction(code: string, id: string, model: WorkflowRemoveActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowRemoveActionWebResponseModel> {
+    workflowRemoveAction(code: string, id: string, model: WorkflowRemoveActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowRemoveAction(code, id, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

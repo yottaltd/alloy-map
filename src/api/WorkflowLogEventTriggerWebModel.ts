@@ -1,26 +1,14 @@
 // tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { ItemChangeType } from './ItemChangeType';
-import { WorkflowLogNodeInfoWebModel } from './WorkflowLogNodeInfoWebModel';
-import { WorkflowNodeRunDataWebModel } from './WorkflowNodeRunDataWebModel';
+import { WorkflowLogNodeWebModelBase } from './WorkflowLogNodeWebModelBase';
+import { EventTrigger } from './EventTrigger';
 /**
  * Model representing the log of an event based trigger
  * @export
  * @interface WorkflowLogEventTriggerWebModel
  */
-export interface WorkflowLogEventTriggerWebModel {
-  /**
-   * The identity of the step taken in the workflow
-   * @type {WorkflowLogNodeInfoWebModel}
-   * @memberof WorkflowLogEventTriggerWebModel
-   */
-  info: WorkflowLogNodeInfoWebModel;
-  /**
-   * The output of this step
-   * @type {WorkflowNodeRunDataWebModel}
-   * @memberof WorkflowLogEventTriggerWebModel
-   */
-  output?: WorkflowNodeRunDataWebModel;
+export interface WorkflowLogEventTriggerWebModel extends WorkflowLogNodeWebModelBase {
   /**
    * The collection of the item that caused the trigger
    * @type {CollectionCode}

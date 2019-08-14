@@ -7,9 +7,21 @@ import { ItemWebModel } from './ItemWebModel';
  */
 export interface ItemParentsGetWebResponseModel {
   /**
-   * The parent items
+   * 
+   * @type {number}
+   * @memberof ItemParentsGetWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ItemParentsGetWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<ItemWebModel>}
    * @memberof ItemParentsGetWebResponseModel
    */
-  parentItems: Array<ItemWebModel>;
+  results: Array<ItemWebModel>;
 }

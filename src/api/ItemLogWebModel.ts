@@ -1,7 +1,6 @@
 // tslint:disable
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
 import { ItemChangeType } from './ItemChangeType';
-import { JObject } from './JObject';
 /**
  * Web response model for an item log
  * @export
@@ -28,10 +27,10 @@ export interface ItemLogWebModel {
   action: ItemChangeType;
   /**
    * If present, it highlights any special cause of this item log
-   * @type {ItemChangeCauseWebModelBase}
+   * @type {Array<ItemChangeCauseWebModelBase>}
    * @memberof ItemLogWebModel
    */
-  cause?: ItemChangeCauseWebModelBase;
+  causes: Array<ItemChangeCauseWebModelBase>;
   /**
    * The date time at which the action happened
    * @type {string}
@@ -50,16 +49,4 @@ export interface ItemLogWebModel {
    * @memberof ItemLogWebModel
    */
   note?: string;
-  /**
-   * The state of the item before the operation, null if it is a create operation
-   * @type {JObject}
-   * @memberof ItemLogWebModel
-   */
-  before?: JObject;
-  /**
-   * The state of the item after the operation, null if it is a delete operation
-   * @type {JObject}
-   * @memberof ItemLogWebModel
-   */
-  after?: JObject;
 }

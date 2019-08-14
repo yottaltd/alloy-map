@@ -1,5 +1,7 @@
 // tslint:disable
+import { CollectionCode } from './CollectionCode';
 import { DesignGeometryWebModel } from './DesignGeometryWebModel';
+import { DodiStencilCreateWebModel } from './DodiStencilCreateWebModel';
 /**
  * Web request model for a design create operation
  * @export
@@ -35,13 +37,13 @@ export interface DesignCreateWebRequestModel {
    * @type {string}
    * @memberof DesignCreateWebRequestModel
    */
-  title: string;
+  title?: string;
   /**
    * The optional subtitle template to use to generate the subtitle for an item at runtime. Mustache notation can be used in this template with attribute codes within the curly braces. For example \"Light {{attributes_unitNumber}}\" will evaluate to \"Light 007\"
    * @type {string}
    * @memberof DesignCreateWebRequestModel
    */
-  subtitle: string;
+  subtitle?: string;
   /**
    * The design geometry details
    * @type {DesignGeometryWebModel}
@@ -53,5 +55,17 @@ export interface DesignCreateWebRequestModel {
    * @type {boolean}
    * @memberof DesignCreateWebRequestModel
    */
-  includeInventory: boolean;
+  includeInventory?: boolean;
+  /**
+   * The collections for the design that items will be allowed to be created in. For now not required and a null will be treated as old code (adding Archive, Live and Inventory when IncludeInventory flag is set). In time this property will become required and null will mean no collections.
+   * @type {Array<CollectionCode>}
+   * @memberof DesignCreateWebRequestModel
+   */
+  collections?: Array<CollectionCode>;
+  /**
+   * The optional stencil configuration to use for layout of the item forms generated for this design.
+   * @type {DodiStencilCreateWebModel}
+   * @memberof DesignCreateWebRequestModel
+   */
+  stencil?: DodiStencilCreateWebModel;
 }

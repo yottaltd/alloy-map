@@ -129,14 +129,16 @@ export class CardApi extends BaseAPI {
   /**
    * Fetches a list of cards optionally specifying page and the number of results to return per page.
    * @summary Get a list of cards
+   * @param {string} [query] Optional query to filter the cards by
+   * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CardApi
    */
-  public cardList(page?: number, pageSize?: number, options?: any) {
-    return CardApiFp(this.configuration).cardList(page, pageSize, options)(this.fetch, this.basePath);
+  public cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
+    return CardApiFp(this.configuration).cardList(query, userGroup, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

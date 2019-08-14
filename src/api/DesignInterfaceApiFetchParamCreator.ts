@@ -3,7 +3,7 @@ import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
-import { DesignInterfaceAttributePermissionsEditWebRequestModel } from './DesignInterfaceAttributePermissionsEditWebRequestModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DesignInterfaceApi } from './DesignInterfaceApi';
 /**
  * DesignInterfaceApi - fetch parameter creator
@@ -12,30 +12,24 @@ import { DesignInterfaceApi } from './DesignInterfaceApi';
 export const DesignInterfaceApiFetchParamCreator = function (configuration?: Configuration) {
   return {
     /**
-     * Edit the permissions on the design interface attribute with the specified code
-     * @summary Edit permissions for a design interface attribute
+     * Edit the permissions on the design interface attributes
+     * @summary Edit permissions for a design interface attributes, interface permissions cannot be edited by the user
      * @param {string} code The Guc of the design interface with the attribute to edit the permissions of
-     * @param {string} attributeCode The Guc of the design interface attribute to edit the permissions of
-     * @param {DesignInterfaceAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+     * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceEditAttributePermissions(code: string, attributeCode: string, model: DesignInterfaceAttributePermissionsEditWebRequestModel, options: any = {}): FetchArgs {
+    designInterfaceEditAttributePermissions(code: string, model: DodiPermissionsEditWebRequestModel, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling designInterfaceEditAttributePermissions.');
-      }
-      // verify required parameter 'attributeCode' is not null or undefined
-      if (attributeCode === null || attributeCode === undefined) {
-        throw new RequiredError('attributeCode','Required parameter attributeCode was null or undefined when calling designInterfaceEditAttributePermissions.');
       }
       // verify required parameter 'model' is not null or undefined
       if (model === null || model === undefined) {
         throw new RequiredError('model','Required parameter model was null or undefined when calling designInterfaceEditAttributePermissions.');
       }
-      const localVarPath = `/api/design-interface/{code}/attribute/{attributeCode}/permissions`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"attributeCode"}}`, encodeURIComponent(String(attributeCode)));
+      const localVarPath = `/api/design-interface/{code}/permissions`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
@@ -55,7 +49,7 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"DesignInterfaceAttributePermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      const needsSerialization = (<any>"DodiPermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {

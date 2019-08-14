@@ -4,24 +4,18 @@ import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { LayerCreateWebRequestModel } from './LayerCreateWebRequestModel';
-import { LayerCreateWebResponseModel } from './LayerCreateWebResponseModel';
 import { LayerEditWebRequestModel } from './LayerEditWebRequestModel';
-import { LayerEditWebResponseModel } from './LayerEditWebResponseModel';
 import { LayerGetClusterTileWebResponseModel } from './LayerGetClusterTileWebResponseModel';
 import { LayerGetNetworkTileWebResponseModel } from './LayerGetNetworkTileWebResponseModel';
-import { LayerGetWebResponseModel } from './LayerGetWebResponseModel';
 import { LayerPermissionsEditWebRequestModel } from './LayerPermissionsEditWebRequestModel';
-import { LayerPermissionsEditWebResponseModel } from './LayerPermissionsEditWebResponseModel';
 import { LayerPermissionsGetWebResponseModel } from './LayerPermissionsGetWebResponseModel';
 import { LayerReorderStylesWebRequestModel } from './LayerReorderStylesWebRequestModel';
 import { LayerReorderStylesWebResponseModel } from './LayerReorderStylesWebResponseModel';
-import { LayerStyleAddWebResponseModel } from './LayerStyleAddWebResponseModel';
 import { LayerStyleCreateRequestWebModel } from './LayerStyleCreateRequestWebModel';
 import { LayerStyleDeleteWebRequestModel } from './LayerStyleDeleteWebRequestModel';
-import { LayerStyleDeleteWebResponseModel } from './LayerStyleDeleteWebResponseModel';
 import { LayerStyleEditRequestWebModel } from './LayerStyleEditRequestWebModel';
-import { LayerStyleEditWebResponseModel } from './LayerStyleEditWebResponseModel';
 import { LayerTagsListWebResponseModel } from './LayerTagsListWebResponseModel';
+import { LayerWithOperationsSummaryWebResponseModel } from './LayerWithOperationsSummaryWebResponseModel';
 import { LayerListWebResponseModel } from './LayerListWebResponseModel';
 import { LayerApiFetchParamCreator } from './LayerApiFetchParamCreator';
 import { LayerApi } from './LayerApi';
@@ -38,7 +32,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerCreate(model: LayerCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerCreateWebResponseModel> {
+    layerCreate(model: LayerCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerCreate(model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -60,7 +54,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerCreateStyle(code: string, model: LayerStyleCreateRequestWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerStyleAddWebResponseModel> {
+    layerCreateStyle(code: string, model: LayerStyleCreateRequestWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerCreateStyle(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -104,7 +98,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerDeleteStyle(code: string, id: string, model: LayerStyleDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerStyleDeleteWebResponseModel> {
+    layerDeleteStyle(code: string, id: string, model: LayerStyleDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerDeleteStyle(code, id, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -126,7 +120,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerEdit(code: string, model: LayerEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerEditWebResponseModel> {
+    layerEdit(code: string, model: LayerEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerEdit(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -148,7 +142,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerEditPermissions(code: string, model: LayerPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerPermissionsEditWebResponseModel> {
+    layerEditPermissions(code: string, model: LayerPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerEditPermissions(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -171,7 +165,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerEditStyle(code: string, id: string, model: LayerStyleEditRequestWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerStyleEditWebResponseModel> {
+    layerEditStyle(code: string, id: string, model: LayerStyleEditRequestWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerEditStyle(code, id, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -192,7 +186,7 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerGetWebResponseModel> {
+    layerGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerGet(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -285,13 +279,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      * @param {Array<string>} [andTags] If this parameter is passed, only the layers with ALL of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
      * @param {Array<string>} [orTags] If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
      * @param {Array<string>} [notTags] If this parameter is passed, only the layers with NONE of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
+     * @param {string} [userGroup] Optional Guc to filter layers by. If specified, only the layers that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerListWebResponseModel> {
-      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerList(name, context, andTags, orTags, notTags, page, pageSize, options);
+    layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerListWebResponseModel> {
+      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerList(name, context, andTags, orTags, notTags, userGroup, page, pageSize, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {
