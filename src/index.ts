@@ -59,6 +59,7 @@ export {
 } from './map/features/AlloySimplifiedGeometryFeatureProperties';
 export { AlloyWfsFeature } from './map/features/AlloyWfsFeature';
 export { AlloyWfsFeatureProperties } from './map/features/AlloyWfsFeatureProperties';
+export { FeatureGuards } from './map/guards/FeatureGuards';
 export {
   AlloyDrawInteractionGeometryType,
 } from './map/interactions/AlloyDrawInteractionGeometryType';
