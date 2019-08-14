@@ -601,7 +601,7 @@ export class AlloyMap {
    * @returns an array of results ordered by closest first
    */
   public findFeaturesWithin(
-    source: AlloyCoordinate | AlloyFeature,
+    source: AlloyCoordinate | AlloyFeature | Geometry,
     delta: number,
   ): FindFeaturesWithinResult[] {
     return FeatureUtils.findFeaturesWithin(Array.from(this.managedLayers.values()), source, delta);
