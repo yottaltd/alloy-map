@@ -10,6 +10,7 @@ import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { FontUtils } from '../../utils/FontUtils';
+import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
@@ -593,16 +594,17 @@ export class AlloyMap {
   }
 
   /**
-   * Finds features close to provided source
-   * @param source `AlloyCoordinate` or `AlloyFeature` source to measure distance of features from
-   * @param delta distance in metres from source for which to return features
-   * @returns `Map<AlloyFeature, number>` where values are distances in metres to provided source
+   * finds features close to provided source across all layers
+   * @param source `AlloyCoordinate`, `AlloyFeature` or `Geometry` source to measure distance of
+   * features from
+   * @param delta distance (in metres) from source for which to return features
+   * @returns an array of results ordered by closest first
    */
-  public findFeatures(
+  public findFeaturesWithin(
     source: AlloyCoordinate | AlloyFeature,
     delta: number,
-  ): Map<AlloyFeature, number> {
-    return FeatureUtils.findFeatures(this, source, delta);
+  ): FindFeaturesWithinResult[] {
+    return FeatureUtils.findFeaturesWithin(Array.from(this.managedLayers.values()), source, delta);
   }
 
   /**

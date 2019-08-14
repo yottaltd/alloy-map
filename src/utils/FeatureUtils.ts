@@ -2,14 +2,15 @@ import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import { AlloyMapError } from '../error/AlloyMapError';
+import { AlloyBounds } from '../map/core/AlloyBounds';
 import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
-import { AlloyMap } from '../map/core/AlloyMap';
 import { AlloyFeature } from '../map/features/AlloyFeature';
 import { GeometryGuards } from '../map/guards/GeometryGuards';
+import { AlloyLayer } from '../map/layers/AlloyLayer';
 import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
 import { GeometryUtils } from './GeometryUtils';
+import { FindFeaturesWithinResult } from './models/FindFeaturesWithinResult';
 import { ProjectionUtils } from './ProjectionUtils';
-import { AlloyLayer } from '../map/layers/AlloyLayer';
 
 /**
  * the property name of the feature id stored on an openlayers feature (so we can go from openlayers
@@ -36,27 +37,25 @@ export abstract class FeatureUtils {
   /**
    * finds features close to provided source
    * @param layers the alloy layers to search in
-   * @param source `AlloyCoordinate` or `AlloyFeature` source to measure distance of features from
+   * @param source `AlloyCoordinate`, `AlloyFeature` or `Geometry` source to measure distance of
+   * features from
    * @param delta distance (in metres) from source for which to return features
-   * @returns `Map<AlloyFeature, number>` where values are distances in metres to provided source
+   * @returns an array of results ordered by closest first
    */
   public static findFeaturesWithin(
     layers: AlloyLayer[],
+    source: AlloyCoordinate | AlloyFeature | Geometry,
     delta: number,
-  ): Map<AlloyFeature, number> {
-    const features: Map<AlloyFeature, number> = new Map();
+  ): FindFeaturesWithinResult[] {
+    const features: FindFeaturesWithinResult[] = [];
 
-    // calculate the coordinate of source to use
+    // calculate the coordinate and bounds of source to use
     let sourceCoord: [number, number];
     let sourceBounds: [number, number, number, number];
+
     if (source instanceof AlloyCoordinate) {
       // if source is AlloyCoordinate then get map coordinate for it
       sourceCoord = source.toMapCoordinate();
-    } else if (GeometryGuards.isGeometry(source)) {
-      // if source is a Geometry then get centre map coordinate of it's bounds
-      sourceCoord = GeometryUtils.getGeometryBounds(source)
-        .getCentre()
-        .toMapCoordinate();
 
       // inflate the source coordinate by the requested delta (metres) to make a first pass at
       // grabbing features within delta distance
@@ -67,14 +66,21 @@ export abstract class FeatureUtils {
         sourceCoord[1] + delta,
       ];
     } else {
-      // if source is an AlloyFeature then get centre map coordinate of it's bounds
-      const featureBounds = GeometryUtils.getGeometryBounds(
-        JSON.parse(ProjectionUtils.GEOJSON.writeGeometry(source.olFeature.getGeometry())),
-      );
-      sourceCoord = featureBounds.getCentre().toMapCoordinate();
+      // get the bounds of the geometry or feature
+      let bounds: AlloyBounds;
+      if (GeometryGuards.isGeometry(source)) {
+        bounds = GeometryUtils.getGeometryBounds(source);
+      } else {
+        bounds = GeometryUtils.getGeometryBounds(
+          JSON.parse(ProjectionUtils.GEOJSON.writeGeometry(source.olFeature.getGeometry())),
+        );
+      }
 
-      // get the bounds of the feature and add the delta as padding
-      sourceBounds = featureBounds.toMapExtent();
+      // get centre for source
+      sourceCoord = bounds.getCentre().toMapCoordinate();
+
+      // get the bounds of the feature/geom and add the delta as padding
+      sourceBounds = bounds.toMapExtent();
       sourceBounds[0] -= delta;
       sourceBounds[1] -= delta;
       sourceBounds[2] += delta;
@@ -112,11 +118,17 @@ export abstract class FeatureUtils {
             if (!feature) {
               throw new AlloyMapError(1565622486, 'Could not get alloy feature for map feature');
             }
-            features.set(feature, line.getLength());
+            features.push({
+              feature,
+              distance: line.getLength(),
+            });
           }
         });
       }
     });
+
+    // sort by distance
+    features.sort((a, b) => a.distance - b.distance);
 
     return features;
   }
