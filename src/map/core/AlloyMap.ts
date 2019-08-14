@@ -475,8 +475,8 @@ export class AlloyMap {
 
   /**
    * starts interaction to draw a polygon and select all features inside of it
-   * @param filter custom filter function to be called with alloy feature
-   *  to check whether selection is allowed
+   * @param filter custom filter function to be called with alloy feature to check whether selection
+   * is allowed
    * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */

@@ -78,7 +78,7 @@ export class AlloySelectInPolygonInteraction {
   private onInteractionEnd: (() => void) | null = null;
 
   /**
-   * Filter function that checks whether feature selection is allowed
+   * filter function that checks whether feature selection is allowed
    */
   private filter: ((feature: AlloyFeature) => boolean) | null = null;
 
@@ -139,8 +139,9 @@ export class AlloySelectInPolygonInteraction {
 
       // find all the features in the polygon area and select them
       let features = this.getFeaturesInPolygon(poly);
-      if (this.filter !== null) {
-        features = features.filter((f) => this.filter!(f));
+      const filter = this.filter;
+      if (filter !== null) {
+        features = features.filter((f) => filter(f));
       }
 
       if (features.length > 0) {
@@ -162,8 +163,8 @@ export class AlloySelectInPolygonInteraction {
 
   /**
    * Starts draw interaction for polygon to select features inside of it
-   * @param filter custom filter function to be called with alloy feature
-   *  to check whether selection is allowed
+   * @param filter custom filter function to be called with alloy feature to check whether selection
+   * is allowed
    * @param onEnd custom function to be called when interaction is finished
    * @param appendToSelection whether to append the final selection to the existing selection
    */
@@ -172,7 +173,9 @@ export class AlloySelectInPolygonInteraction {
     onEnd?: () => void,
     appendToSelection: boolean = false,
   ): void {
-    this.filter = filter ? filter : null;
+    // save the filter if specified
+    this.filter = filter || null;
+
     // if it's active, then no need to do anything
     if (this.olDraw.getActive()) {
       return;
