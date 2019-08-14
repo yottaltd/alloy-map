@@ -11,6 +11,6 @@
     "types": ["node"],
     "stripInternal": true
   },
-  "include": ["src/**/*.ts", "types/**/*"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
