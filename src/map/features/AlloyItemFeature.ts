@@ -11,12 +11,13 @@ import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyFeatureWithItemId } from './AlloyFeatureWithItemId';
 import { AlloyItemFeatureProperties } from './AlloyItemFeatureProperties';
 
 /**
  * an alloy item feature which represents a basic item feature on the map
  */
-export class AlloyItemFeature implements AlloyFeature {
+export class AlloyItemFeature implements AlloyFeature, AlloyFeatureWithItemId {
   /**
    * @implements
    */
@@ -56,6 +57,11 @@ export class AlloyItemFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   */
+  public readonly itemId: string;
+
+  /**
    * the cached properties of the alloy item feature
    */
   public readonly properties: Readonly<AlloyItemFeatureProperties>;
@@ -79,6 +85,7 @@ export class AlloyItemFeature implements AlloyFeature {
     this.olFeature = olFeature;
     this.properties = properties;
     this.originatingLayerId = originatingLayerId;
+    this.itemId = properties.itemId;
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);

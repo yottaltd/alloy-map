@@ -41,6 +41,7 @@ export { AlloyDrawFeatureFactory } from './map/features/AlloyDrawFeatureFactory'
 export { AlloyDrawFeatureProperties } from './map/features/AlloyDrawFeatureProperties';
 export { AlloyFeature } from './map/features/AlloyFeature';
 export { AlloyFeatureType } from './map/features/AlloyFeatureType';
+export { AlloyFeatureWithItemId } from './map/features/AlloyFeatureWithItemId';
 export { AlloyItemFeature } from './map/features/AlloyItemFeature';
 export { AlloyItemFeatureProperties } from './map/features/AlloyItemFeatureProperties';
 export { AlloyPathNodeFeature } from './map/features/AlloyPathNodeFeature';
@@ -64,6 +65,7 @@ export {
 export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
 export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
+export { AlloyLayerWithFeaturesWithItemId } from './map/layers/AlloyLayerWithFeaturesWithItemId';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
 export { AlloyAnimatedPathLayer } from './map/layers/animation/AlloyAnimatedPathLayer';
 export {
