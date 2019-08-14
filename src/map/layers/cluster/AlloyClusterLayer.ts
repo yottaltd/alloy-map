@@ -7,7 +7,7 @@ import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
 import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
-import { AlloyLayerWithFeaturesWithItemIds } from '../AlloyLayerWithFeaturesWithItemIds';
+import { AlloyLayerWithFeaturesWithItemId } from '../AlloyLayerWithFeaturesWithItemId';
 import { AlloyStyledLayer } from '../AlloyStyledLayer';
 import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
@@ -19,7 +19,7 @@ import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
  * dispersed or at a required zoom level then they will become individual items.
  */
 export class AlloyClusterLayer
-  extends AlloyLayerWithFeaturesWithItemIds<AlloyItemFeature | AlloyClusterFeature>
+  extends AlloyLayerWithFeaturesWithItemId<AlloyItemFeature | AlloyClusterFeature>
   implements AlloyBoundedLayer, AlloyStyledLayer {
   /**
    * @implements

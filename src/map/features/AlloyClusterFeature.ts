@@ -7,13 +7,13 @@ import { AlloyBounds } from '../core/AlloyBounds';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyClusterFeatureProperties } from './AlloyClusterFeatureProperties';
+import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyFeatureWithItemId } from './AlloyFeatureWithItemId';
 
 /**
  * an alloy cluster feature which represents several items "clustered" together based on proximity
  */
-export class AlloyClusterFeature extends AlloyFeatureWithItemId {
+export class AlloyClusterFeature implements AlloyFeature {
   /**
    * @implements
    */
@@ -72,7 +72,6 @@ export class AlloyClusterFeature extends AlloyFeatureWithItemId {
     properties: AlloyClusterFeatureProperties,
     originatingLayerId?: string,
   ) {
-    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
@@ -120,13 +119,6 @@ export class AlloyClusterFeature extends AlloyFeatureWithItemId {
    */
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);
-  }
-
-  /**
-   * @implements
-   */
-  public getItemId(): string | null {
-    return null;
   }
 }
 

@@ -65,7 +65,7 @@ export {
 export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
 export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
-export { AlloyLayerWithFeaturesWithItemIds } from './map/layers/AlloyLayerWithFeaturesWithItemIds';
+export { AlloyLayerWithFeaturesWithItemId } from './map/layers/AlloyLayerWithFeaturesWithItemId';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
 export { AlloyAnimatedPathLayer } from './map/layers/animation/AlloyAnimatedPathLayer';
 export {
