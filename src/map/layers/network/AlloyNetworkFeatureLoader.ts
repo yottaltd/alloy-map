@@ -1,6 +1,6 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
-import { LayerGetNetworkTileWebResponseModel } from '../../../api';
 import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
+import { LayerGetNetworkTileWebResponseModel } from '../../../api/LayerGetNetworkTileWebResponseModel';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
