@@ -1,9 +1,11 @@
+import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
 import { AlloyMap } from '../map/core/AlloyMap';
 import { AlloyFeature } from '../map/features/AlloyFeature';
+import { GeometryGuards } from '../map/guards/GeometryGuards';
 import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
 import { GeometryUtils } from './GeometryUtils';
 import { ProjectionUtils } from './ProjectionUtils';
@@ -39,7 +41,7 @@ export abstract class FeatureUtils {
    */
   public static findFeatures(
     map: AlloyMap,
-    source: AlloyCoordinate | AlloyFeature,
+    source: AlloyCoordinate | AlloyFeature | Geometry,
     delta: number,
   ): Map<AlloyFeature, number> {
     const features: Map<AlloyFeature, number> = new Map();
@@ -49,6 +51,11 @@ export abstract class FeatureUtils {
     if (source instanceof AlloyCoordinate) {
       // if source is AlloyCoordinate then get map coordinate for it
       sourceCoord = source.toMapCoordinate();
+    } else if (GeometryGuards.isGeometry(source)) {
+      // if source is a Geometry then get centre map coordinate of it's bounds
+      sourceCoord = GeometryUtils.getGeometryBounds(source)
+        .getCentre()
+        .toMapCoordinate();
     } else {
       // if source is an AlloyFeature then get centre map coordinate of it's bounds
       sourceCoord = GeometryUtils.getGeometryBounds(
@@ -71,6 +78,9 @@ export abstract class FeatureUtils {
           if (source instanceof AlloyCoordinate) {
             // if source is a coordinate then re-use source coordinate
             coord = sourceCoord;
+          } else if (GeometryGuards.isGeometry(source)) {
+            // if source is a geometry the read it and get closest point to feature we are checking
+            coord = ProjectionUtils.GEOJSON.readGeometry(source).getClosestPoint(closest);
           } else {
             // if source is a feature then get closest point to feature we are checking
             coord = source.olFeature.getGeometry().getClosestPoint(closest);
