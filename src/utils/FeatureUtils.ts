@@ -9,6 +9,7 @@ import { GeometryGuards } from '../map/guards/GeometryGuards';
 import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
 import { GeometryUtils } from './GeometryUtils';
 import { ProjectionUtils } from './ProjectionUtils';
+import { AlloyLayer } from '../map/layers/AlloyLayer';
 
 /**
  * the property name of the feature id stored on an openlayers feature (so we can go from openlayers
@@ -33,14 +34,14 @@ export abstract class FeatureUtils {
   }
 
   /**
-   * Finds features close to provided source
-   * @param map `AlloyMap` from which features in viewport relative to source will be returned
+   * finds features close to provided source
+   * @param layers the alloy layers to search in
    * @param source `AlloyCoordinate` or `AlloyFeature` source to measure distance of features from
    * @param delta distance (in metres) from source for which to return features
    * @returns `Map<AlloyFeature, number>` where values are distances in metres to provided source
    */
-  public static findFeatures(
-    map: AlloyMap,
+  public static findFeaturesWithin(
+    layers: AlloyLayer[],
     source: AlloyCoordinate | AlloyFeature | Geometry,
     delta: number,
   ): Map<AlloyFeature, number> {
@@ -48,6 +49,7 @@ export abstract class FeatureUtils {
 
     // calculate the coordinate of source to use
     let sourceCoord: [number, number];
+    let sourceBounds: [number, number, number, number];
     if (source instanceof AlloyCoordinate) {
       // if source is AlloyCoordinate then get map coordinate for it
       sourceCoord = source.toMapCoordinate();
@@ -56,20 +58,35 @@ export abstract class FeatureUtils {
       sourceCoord = GeometryUtils.getGeometryBounds(source)
         .getCentre()
         .toMapCoordinate();
+
+      // inflate the source coordinate by the requested delta (metres) to make a first pass at
+      // grabbing features within delta distance
+      sourceBounds = [
+        sourceCoord[0] - delta,
+        sourceCoord[1] - delta,
+        sourceCoord[0] + delta,
+        sourceCoord[1] + delta,
+      ];
     } else {
       // if source is an AlloyFeature then get centre map coordinate of it's bounds
-      sourceCoord = GeometryUtils.getGeometryBounds(
+      const featureBounds = GeometryUtils.getGeometryBounds(
         JSON.parse(ProjectionUtils.GEOJSON.writeGeometry(source.olFeature.getGeometry())),
-      )
-        .getCentre()
-        .toMapCoordinate();
+      );
+      sourceCoord = featureBounds.getCentre().toMapCoordinate();
+
+      // get the bounds of the feature and add the delta as padding
+      sourceBounds = featureBounds.toMapExtent();
+      sourceBounds[0] -= delta;
+      sourceBounds[1] -= delta;
+      sourceBounds[2] += delta;
+      sourceBounds[3] += delta;
     }
 
-    Array.from(map.layers.values()).forEach((layer) => {
+    layers.forEach((layer) => {
       // iterating over all map layers with features
       if (layer instanceof AlloyLayerWithFeatures) {
         // getting all features in current map extent
-        layer.olSource.getFeaturesInExtent(map.viewport.toMapExtent()).forEach((olFeature) => {
+        layer.olSource.getFeaturesInExtent(sourceBounds).forEach((olFeature) => {
           // get closest point to source coordinate
           const closest = olFeature.getGeometry().getClosestPoint(sourceCoord);
 
