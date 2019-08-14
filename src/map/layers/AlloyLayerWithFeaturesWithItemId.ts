@@ -61,10 +61,10 @@ export abstract class AlloyLayerWithFeaturesWithItemId<
    */
   public addFeatures(features: T[]): boolean {
     const result = super.addFeatures(features);
-    // intercept and remove all features from lookup
+    // intercept and add all features to lookup
     features.forEach((f) => {
       if (FeatureGuards.isAlloyFeatureWithItemId(f)) {
-        this.featureIdsForItemIds.delete(f.itemId);
+        this.featureIdsForItemIds.set(f.itemId, f.id);
       }
     });
     return result;
