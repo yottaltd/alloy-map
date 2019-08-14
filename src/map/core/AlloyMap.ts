@@ -594,12 +594,13 @@ export class AlloyMap {
 
   /**
    * Finds features close to provided source
-   * @param source `AlloyCoordinate` or `AlloyFeature` source to measure distance of features from
+   * @param source `AlloyCoordinate`, `AlloyFeature` or `Geometry` source to measure distance of
+   * features from
    * @param delta distance in metres from source for which to return features
    * @returns `Map<AlloyFeature, number>` where values are distances in metres to provided source
    */
   public findFeatures(
-    source: AlloyCoordinate | AlloyFeature,
+    source: AlloyCoordinate | AlloyFeature | Geometry,
     delta: number,
   ): Map<AlloyFeature, number> {
     return FeatureUtils.findFeatures(this, source, delta);
