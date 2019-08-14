@@ -20,18 +20,6 @@ export interface PaginatedWebResponseModelBaseOfAlloyUserGroupGetWebResponseMode
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfAlloyUserGroupGetWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfAlloyUserGroupGetWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<AlloyUserGroupGetWebResponseModel>}
    * @memberof PaginatedWebResponseModelBaseOfAlloyUserGroupGetWebResponseModel
    */

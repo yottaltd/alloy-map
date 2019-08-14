@@ -16,7 +16,7 @@ import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
-import { GeoJSONObjectType } from '../../api';
+import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { GeometryUtils } from '../../utils/GeometryUtils';
 import { AlloyMap } from '../core/AlloyMap';

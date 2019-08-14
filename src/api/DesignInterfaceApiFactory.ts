@@ -1,7 +1,7 @@
 // tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
-import { DesignInterfaceAttributePermissionsEditWebRequestModel } from './DesignInterfaceAttributePermissionsEditWebRequestModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DesignInterfaceApiFp } from './DesignInterfaceApiFp';
 import { DesignInterfaceApi } from './DesignInterfaceApi';
 /**
@@ -11,16 +11,15 @@ import { DesignInterfaceApi } from './DesignInterfaceApi';
 export const DesignInterfaceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
   return {
     /**
-     * Edit the permissions on the design interface attribute with the specified code
-     * @summary Edit permissions for a design interface attribute
+     * Edit the permissions on the design interface attributes
+     * @summary Edit permissions for a design interface attributes, interface permissions cannot be edited by the user
      * @param {string} code The Guc of the design interface with the attribute to edit the permissions of
-     * @param {string} attributeCode The Guc of the design interface attribute to edit the permissions of
-     * @param {DesignInterfaceAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+     * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceEditAttributePermissions(code: string, attributeCode: string, model: DesignInterfaceAttributePermissionsEditWebRequestModel, options?: any) {
-      return DesignInterfaceApiFp(configuration).designInterfaceEditAttributePermissions(code, attributeCode, model, options)(fetch, basePath);
+    designInterfaceEditAttributePermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any) {
+      return DesignInterfaceApiFp(configuration).designInterfaceEditAttributePermissions(code, model, options)(fetch, basePath);
     },
     /**
      * Finds the design interface with the specified code

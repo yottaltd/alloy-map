@@ -3,6 +3,8 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { FileMoveWebRequestModel } from './FileMoveWebRequestModel';
+import { FileMoveWebResponseModel } from './FileMoveWebResponseModel';
 import { FileApiFetchParamCreator } from './FileApiFetchParamCreator';
 import { FileApi } from './FileApi';
 /**
@@ -67,6 +69,28 @@ export const FileApiFp = function(configuration?: Configuration) {
      */
     fileDownloadThumbnail(id: string, width: number, height: number, mode: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
       const localVarFetchArgs = FileApiFetchParamCreator(configuration).fileDownloadThumbnail(id, width, height, mode, applyContentDispositionHeader, options);
+      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+          if (configuration && configuration.responseInterceptor) {
+            return configuration.responseInterceptor(response);
+          } else if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * 
+     * @summary Moves a file to a folder with a given id
+     * @param {string} id The AId of the file to move
+     * @param {FileMoveWebRequestModel} model The move file model
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    fileMove(id: string, model: FileMoveWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<FileMoveWebResponseModel> {
+      const localVarFetchArgs = FileApiFetchParamCreator(configuration).fileMove(id, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {

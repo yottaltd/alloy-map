@@ -170,14 +170,15 @@ export class LayerApi extends BaseAPI {
    * @param {Array<string>} [andTags] If this parameter is passed, only the layers with ALL of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
    * @param {Array<string>} [orTags] If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
    * @param {Array<string>} [notTags] If this parameter is passed, only the layers with NONE of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
+   * @param {string} [userGroup] Optional Guc to filter layers by. If specified, only the layers that have this user group code within their permissions are returned
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof LayerApi
    */
-  public layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, page?: number, pageSize?: number, options?: any) {
-    return LayerApiFp(this.configuration).layerList(name, context, andTags, orTags, notTags, page, pageSize, options)(this.fetch, this.basePath);
+  public layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, userGroup?: string, page?: number, pageSize?: number, options?: any) {
+    return LayerApiFp(this.configuration).layerList(name, context, andTags, orTags, notTags, userGroup, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

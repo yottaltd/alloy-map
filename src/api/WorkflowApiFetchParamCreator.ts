@@ -495,12 +495,13 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
      * 
      * @summary List workflows
      * @param {string} [name] The optional workflow name (full or partial) to filter on
+     * @param {string} [userGroup] Optional Guc to filter workflows by. If specified, only the workflows that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowList(name?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/workflow`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -517,6 +518,10 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
 
       if (name !== undefined) {
         localVarQueryParameter['name'] = name;
+      }
+
+      if (userGroup !== undefined) {
+        localVarQueryParameter['userGroup'] = userGroup;
       }
 
       if (page !== undefined) {
@@ -540,7 +545,7 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
     /**
      * 
      * @summary List the workflows that are applicable to a dodi
-     * @param {string} code 
+     * @param {string} code The dodi code to find workflows applicable to
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
@@ -553,6 +558,53 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
       }
       const localVarPath = `/api/workflow/applicable/{code}`
         .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
+     * @summary List the workflows that will clone a specific item
+     * @param {string} itemId The id of the item that will be cloned
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowListCloningItemWorkflows(itemId: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'itemId' is not null or undefined
+      if (itemId === null || itemId === undefined) {
+        throw new RequiredError('itemId','Required parameter itemId was null or undefined when calling workflowListCloningItemWorkflows.');
+      }
+      const localVarPath = `/api/workflow/clone-item/{itemId}`
+        .replace(`{${"itemId"}}`, encodeURIComponent(String(itemId)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;

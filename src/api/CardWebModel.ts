@@ -33,12 +33,6 @@ export interface CardWebModel {
    */
   code: string;
   /**
-   * The number of milliseconds to cache the card contents
-   * @type {number}
-   * @memberof CardWebModel
-   */
-  cacheInterval: number;
-  /**
    * A list of design or design interface codes to give access to inside the card
    * @type {Array<string>}
    * @memberof CardWebModel

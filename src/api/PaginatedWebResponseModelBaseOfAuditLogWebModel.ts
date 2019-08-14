@@ -20,18 +20,6 @@ export interface PaginatedWebResponseModelBaseOfAuditLogWebModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfAuditLogWebModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfAuditLogWebModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<AuditLogWebModel>}
    * @memberof PaginatedWebResponseModelBaseOfAuditLogWebModel
    */

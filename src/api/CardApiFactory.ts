@@ -112,13 +112,15 @@ export const CardApiFactory = function (configuration?: Configuration, fetch?: F
     /**
      * Fetches a list of cards optionally specifying page and the number of results to return per page.
      * @summary Get a list of cards
+     * @param {string} [query] Optional query to filter the cards by
+     * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardList(page?: number, pageSize?: number, options?: any) {
-      return CardApiFp(configuration).cardList(page, pageSize, options)(fetch, basePath);
+    cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
+      return CardApiFp(configuration).cardList(query, userGroup, page, pageSize, options)(fetch, basePath);
     },
   };
 };

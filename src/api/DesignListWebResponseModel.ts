@@ -20,6 +20,12 @@ export interface DesignListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
+   * @memberof DesignListWebResponseModel
+   */
+  results: Array<DesignWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof DesignListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface DesignListWebResponseModel {
    * @memberof DesignListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
-   * @memberof DesignListWebResponseModel
-   */
-  results: Array<DesignWithOperationsSummaryWebResponseModel>;
 }

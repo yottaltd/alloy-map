@@ -20,6 +20,12 @@ export interface ApplicableWorkItemListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<ItemWebModel>}
+   * @memberof ApplicableWorkItemListWebResponseModel
+   */
+  results: Array<ItemWebModel>;
+  /**
+   * 
    * @type {number}
    * @memberof ApplicableWorkItemListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface ApplicableWorkItemListWebResponseModel {
    * @memberof ApplicableWorkItemListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<ItemWebModel>}
-   * @memberof ApplicableWorkItemListWebResponseModel
-   */
-  results: Array<ItemWebModel>;
 }

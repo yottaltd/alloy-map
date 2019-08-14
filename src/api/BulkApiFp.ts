@@ -6,7 +6,10 @@ import { FetchArgs } from './FetchArgs';
 import { BulkActionSubmittedWebResponseModel } from './BulkActionSubmittedWebResponseModel';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
 import { GetBulkActionWebResponseModel } from './GetBulkActionWebResponseModel';
+import { ItemBulkWebRequestModel } from './ItemBulkWebRequestModel';
+import { ItemBulkWebResponseModel } from './ItemBulkWebResponseModel';
 import { SetAttributesBulkActionWebRequestModel } from './SetAttributesBulkActionWebRequestModel';
+import { TouchItemsBulkActionWebRequestModel } from './TouchItemsBulkActionWebRequestModel';
 import { ListBulkActionErrorsWebResponseModel } from './ListBulkActionErrorsWebResponseModel';
 import { BulkApiFetchParamCreator } from './BulkApiFetchParamCreator';
 import { BulkApi } from './BulkApi';
@@ -25,6 +28,27 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkDeleteItems(model: DeleteItemsBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkDeleteItems(model, options);
+      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+          if (configuration && configuration.responseInterceptor) {
+            return configuration.responseInterceptor(response);
+          } else if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * Accepts a list of Create, Edit and Delete operations, using the same models as the respective item APIs, performing bulked operations. Any errors will be returned in the response model. This endpoint is NOT meant to replace the import process and does not guarantee transactional integrity. Moreover the endpoint does not accept more than 1000 requests.
+     * @summary Performs many item CUD operations
+     * @param {ItemBulkWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bulkGeneric(model: ItemBulkWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemBulkWebResponseModel> {
+      const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkGeneric(model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {
@@ -90,6 +114,27 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkSetAttributes(model: SetAttributesBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkSetAttributes(model, options);
+      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+          if (configuration && configuration.responseInterceptor) {
+            return configuration.responseInterceptor(response);
+          } else if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * This operation allows to touch the items matching the specified Aqs query
+     * @summary Submit a bulk touch item action
+     * @param {TouchItemsBulkActionWebRequestModel} model The model containing the info needed for the touch items bulk operation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bulkTouchItems(model: TouchItemsBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
+      const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkTouchItems(model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {

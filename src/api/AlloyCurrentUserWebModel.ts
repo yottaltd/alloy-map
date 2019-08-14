@@ -31,6 +31,12 @@ export interface AlloyCurrentUserWebModel {
    */
   lastName: string;
   /**
+   * The tags for the user
+   * @type {Array<string>}
+   * @memberof AlloyCurrentUserWebModel
+   */
+  tags?: Array<string>;
+  /**
    * If false, the user is disabled and cannot be used
    * @type {boolean}
    * @memberof AlloyCurrentUserWebModel

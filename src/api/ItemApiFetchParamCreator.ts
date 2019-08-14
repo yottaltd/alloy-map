@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { ItemCloneWebRequestModel } from './ItemCloneWebRequestModel';
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';
 import { ItemEditWebRequestModel } from './ItemEditWebRequestModel';
 import { ItemApi } from './ItemApi';
@@ -12,6 +13,52 @@ import { ItemApi } from './ItemApi';
  */
 export const ItemApiFetchParamCreator = function (configuration?: Configuration) {
   return {
+    /**
+     * Create a copy of an existing item.  If the item is in the template collection, then template logic will be used to deep copy any child items that are also in the template collection, as well as maintaining any existing links to parent items.
+     * @summary Clones an item
+     * @param {string} id The AId item id of the item to clone
+     * @param {ItemCloneWebRequestModel} model The models containing the info about the item to be cloned
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    itemClone(id: string, model: ItemCloneWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id','Required parameter id was null or undefined when calling itemClone.');
+      }
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling itemClone.');
+      }
+      const localVarPath = `/api/item/{id}/clone`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"ItemCloneWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
     /**
      * Creates a new item in the provided design and collection using the current date and time as its start date and leaving the end date open. For more control over the start and end date, the design needs to be versioned and the item version api has to be used
      * @summary Creates an item
@@ -221,10 +268,12 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
      * @param {string} id The AId of the item to retrieve parents for
      * @param {string} [attributeCode] Optional attribute code to filter parents on
      * @param {string} [graphCode] Optional graph code to filter parents on
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    itemGetItemParents(id: string, attributeCode?: string, graphCode?: string, options: any = {}): FetchArgs {
+    itemGetItemParents(id: string, attributeCode?: string, graphCode?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'id' is not null or undefined
       if (id === null || id === undefined) {
         throw new RequiredError('id','Required parameter id was null or undefined when calling itemGetItemParents.');
@@ -250,6 +299,51 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
 
       if (graphCode !== undefined) {
         localVarQueryParameter['graphCode'] = graphCode;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Refreshes any out of date computed data on the item that has no been updated automatically
+     * @summary Touches the item by id
+     * @param {string} id The AId of the item to touch
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    itemTouch(id: string, options: any = {}): FetchArgs {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id','Required parameter id was null or undefined when calling itemTouch.');
+      }
+      const localVarPath = `/api/item/{id}/touch`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

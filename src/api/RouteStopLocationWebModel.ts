@@ -1,11 +1,11 @@
 // tslint:disable
-
+import { RouteStopWebModelBase } from './RouteStopWebModelBase';
 /**
  * Web model for a route stop location object
  * @export
  * @interface RouteStopLocationWebModel
  */
-export interface RouteStopLocationWebModel {
+export interface RouteStopLocationWebModel extends RouteStopWebModelBase {
   /**
    * Longitude in degrees to route along
    * @type {number}

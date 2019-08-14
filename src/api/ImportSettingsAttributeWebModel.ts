@@ -25,11 +25,11 @@ export interface ImportSettingsAttributeWebModel {
    */
   matchCode?: string;
   /**
-   * Optional attribute link header, represents link attribute to an item AId. Note this header is mutually exclusive with MatchCode
-   * @type {string}
+   * Optional flag for LINK attributes, represents link attribute to an item AId. Note this flag is mutually exclusive with MatchCode string
+   * @type {boolean}
    * @memberof ImportSettingsAttributeWebModel
    */
-  linkToItemIdsHeader?: string;
+  matchByItemId?: boolean;
   /**
    * This value indicates the projection of the geometry attribute, must be a valid proj4 string
    * @type {string}

@@ -4,23 +4,16 @@ import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { DesignAddDesignInterfaceWebRequestModel } from './DesignAddDesignInterfaceWebRequestModel';
-import { DesignAddDesignInterfaceWebResponseModel } from './DesignAddDesignInterfaceWebResponseModel';
-import { DesignAttributePermissionsEditWebRequestModel } from './DesignAttributePermissionsEditWebRequestModel';
 import { DesignCreateWebRequestModel } from './DesignCreateWebRequestModel';
-import { DesignCreateWebResponseModel } from './DesignCreateWebResponseModel';
 import { DesignEditWebRequestModel } from './DesignEditWebRequestModel';
-import { DesignEditWebResponseModel } from './DesignEditWebResponseModel';
-import { DesignPermissionsEditWebRequestModel } from './DesignPermissionsEditWebRequestModel';
-import { DesignPermissionsGetWebResponseModel } from './DesignPermissionsGetWebResponseModel';
 import { DesignRemoveDesignInterfaceWebRequestModel } from './DesignRemoveDesignInterfaceWebRequestModel';
-import { DesignRemoveDesignInterfaceWebResponseModel } from './DesignRemoveDesignInterfaceWebResponseModel';
 import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
 import { DodiAttributeCreateWebRequestModel } from './DodiAttributeCreateWebRequestModel';
 import { DodiAttributeCreateWebResponseModel } from './DodiAttributeCreateWebResponseModel';
 import { DodiAttributeDeleteWebRequestModel } from './DodiAttributeDeleteWebRequestModel';
-import { DodiAttributeDeleteWebResponseModel } from './DodiAttributeDeleteWebResponseModel';
 import { DodiAttributeEditWebRequestModel } from './DodiAttributeEditWebRequestModel';
-import { DodiAttributeEditWebResponseModel } from './DodiAttributeEditWebResponseModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
+import { DodiPermissionsGetWebResponseModel } from './DodiPermissionsGetWebResponseModel';
 import { DesignListWebResponseModel } from './DesignListWebResponseModel';
 import { DesignApiFetchParamCreator } from './DesignApiFetchParamCreator';
 import { DesignApi } from './DesignApi';
@@ -38,7 +31,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designAddDesignInterface(code: string, model: DesignAddDesignInterfaceWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignAddDesignInterfaceWebResponseModel> {
+    designAddDesignInterface(code: string, model: DesignAddDesignInterfaceWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designAddDesignInterface(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -59,7 +52,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designCreate(model: DesignCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignCreateWebResponseModel> {
+    designCreate(model: DesignCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designCreate(model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -125,7 +118,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designDeleteDesignAttribute(code: string, attributeCode: string, model: DodiAttributeDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAttributeDeleteWebResponseModel> {
+    designDeleteDesignAttribute(code: string, attributeCode: string, model: DodiAttributeDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDeleteDesignAttribute(code, attributeCode, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -147,31 +140,8 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designEdit(code: string, model: DesignEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignEditWebResponseModel> {
+    designEdit(code: string, model: DesignEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEdit(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * Edit the permissions on the design attribute with the specified code
-     * @summary Edit permissions for a design attribute
-     * @param {string} code The Guc of the design with the attribute to edit the permissions of
-     * @param {string} attributeCode The Guc of the design attribute to edit the permissions of
-     * @param {DesignAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    designEditAttributePermissions(code: string, attributeCode: string, model: DesignAttributePermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
-      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEditAttributePermissions(code, attributeCode, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {
@@ -193,7 +163,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designEditDesignAttribute(code: string, attributeCode: string, model: DodiAttributeEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAttributeEditWebResponseModel> {
+    designEditDesignAttribute(code: string, attributeCode: string, model: DodiAttributeEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEditDesignAttribute(code, attributeCode, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -208,14 +178,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * Edit the permissions on the design with the specified code
-     * @summary Edit permissions for a design
+     * Edit the permissions on the design with the specified code. New permissions will replace any existing permissions on both design and its attributes
+     * @summary Edit permissions for a design and its attributes
      * @param {string} code The Guc of the design to edit the permissions of
-     * @param {DesignPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+     * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designEditPermissions(code: string, model: DesignPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
+    designEditPermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEditPermissions(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -257,7 +227,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignPermissionsGetWebResponseModel> {
+    designGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiPermissionsGetWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designGetPermissions(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -307,7 +277,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designRemoveDesignInterface(code: string, interfaceCode: string, model: DesignRemoveDesignInterfaceWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignRemoveDesignInterfaceWebResponseModel> {
+    designRemoveDesignInterface(code: string, interfaceCode: string, model: DesignRemoveDesignInterfaceWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designRemoveDesignInterface(code, interfaceCode, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

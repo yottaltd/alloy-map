@@ -33,13 +33,13 @@ export interface LayerStyleWebModel {
    * @type {string}
    * @memberof LayerStyleWebModel
    */
-  colour?: string;
+  colour: string;
   /**
    * The layer style icon
    * @type {string}
    * @memberof LayerStyleWebModel
    */
-  icon?: string;
+  icon: string;
   /**
    * The layer style config object containing different information depending on the layer type
    * @type {LayerStyleConfigWebModelBase}
@@ -58,4 +58,10 @@ export interface LayerStyleWebModel {
    * @memberof LayerStyleWebModel
    */
   error?: AlloyException;
+  /**
+   * This is the number of items hit byt the style. If non specified the style has not been processed yet
+   * @type {number}
+   * @memberof LayerStyleWebModel
+   */
+  count?: number;
 }

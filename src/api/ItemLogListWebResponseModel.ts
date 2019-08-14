@@ -20,18 +20,6 @@ export interface ItemLogListWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof ItemLogListWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof ItemLogListWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<ItemLogWebModel>}
    * @memberof ItemLogListWebResponseModel
    */

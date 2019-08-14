@@ -20,18 +20,6 @@ export interface ItemVersionsListByItemWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof ItemVersionsListByItemWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof ItemVersionsListByItemWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<ItemVersionGetWebResponseModel>}
    * @memberof ItemVersionsListByItemWebResponseModel
    */

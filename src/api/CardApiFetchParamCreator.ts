@@ -396,12 +396,14 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
     /**
      * Fetches a list of cards optionally specifying page and the number of results to return per page.
      * @summary Get a list of cards
+     * @param {string} [query] Optional query to filter the cards by
+     * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardList(page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/card`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -414,6 +416,14 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+      }
+
+      if (userGroup !== undefined) {
+        localVarQueryParameter['userGroup'] = userGroup;
       }
 
       if (page !== undefined) {

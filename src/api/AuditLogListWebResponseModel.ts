@@ -20,18 +20,6 @@ export interface AuditLogListWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof AuditLogListWebResponseModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof AuditLogListWebResponseModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<AuditLogWebModel>}
    * @memberof AuditLogListWebResponseModel
    */

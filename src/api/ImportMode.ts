@@ -6,8 +6,8 @@
  * @enum {string}
  */
 export enum ImportMode {
-  Create = 'Create',
-  Append = 'Append',
+  Insert = 'Insert',
   Replace = 'Replace',
-  Merge = 'Merge'
+  Update = 'Update',
+  Upsert = 'Upsert'
 }

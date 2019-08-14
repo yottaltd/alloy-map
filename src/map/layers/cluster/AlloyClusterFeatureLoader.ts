@@ -1,5 +1,6 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
-import { LayerApiFetchParamCreator, LayerGetClusterTileWebResponseModel } from '../../../api';
+import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
+import { LayerGetClusterTileWebResponseModel } from '../../../api/LayerGetClusterTileWebResponseModel';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
@@ -7,11 +8,11 @@ import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
 import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
 import { AlloyClusterLayer } from './AlloyClusterLayer';
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 
 /**
  * max zoom level supported for the tile grid (won't make requests beyond this point)

@@ -1,5 +1,7 @@
 // tslint:disable
+import { CollectionCode } from './CollectionCode';
 import { DesignGeometryWebModel } from './DesignGeometryWebModel';
+import { DodiStencilEditWebModel } from './DodiStencilEditWebModel';
 /**
  * Web request model for a design edit operation
  * @export
@@ -29,13 +31,13 @@ export interface DesignEditWebRequestModel {
    * @type {string}
    * @memberof DesignEditWebRequestModel
    */
-  title: string;
+  title?: string;
   /**
    * The optional subtitle template to use to generate the subtitle for an item at runtime. Mustache notation can be used in this template with attribute codes within the curly braces. For example \"Light {{attributes_unitNumber}}\" will evaluate to \"Light 007\"
    * @type {string}
    * @memberof DesignEditWebRequestModel
    */
-  subtitle: string;
+  subtitle?: string;
   /**
    * The design geometry details
    * @type {DesignGeometryWebModel}
@@ -48,4 +50,16 @@ export interface DesignEditWebRequestModel {
    * @memberof DesignEditWebRequestModel
    */
   signature: string;
+  /**
+   * The collections for the design that items will be allowed to be created in. For now, a null will be treated as no change, and the property will not be required. In time, it will become required, and null would mean no collections.
+   * @type {Array<CollectionCode>}
+   * @memberof DesignEditWebRequestModel
+   */
+  collections?: Array<CollectionCode>;
+  /**
+   * The stencil used to render the item form
+   * @type {DodiStencilEditWebModel}
+   * @memberof DesignEditWebRequestModel
+   */
+  stencil?: DodiStencilEditWebModel;
 }

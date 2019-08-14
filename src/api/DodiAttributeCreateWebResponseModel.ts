@@ -1,5 +1,5 @@
 // tslint:disable
-import { DesignWebModel } from './DesignWebModel';
+import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
 /**
  * Web model for a dodi attribute
  * @export
@@ -14,8 +14,8 @@ export interface DodiAttributeCreateWebResponseModel {
   attributeCode: string;
   /**
    * The design model into which new attribute is added
-   * @type {DesignWebModel}
+   * @type {DesignWithOperationsSummaryWebResponseModel}
    * @memberof DodiAttributeCreateWebResponseModel
    */
-  design: DesignWebModel;
+  designWithOperationsSummary: DesignWithOperationsSummaryWebResponseModel;
 }

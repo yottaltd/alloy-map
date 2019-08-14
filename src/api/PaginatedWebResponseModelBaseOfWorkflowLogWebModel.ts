@@ -20,18 +20,6 @@ export interface PaginatedWebResponseModelBaseOfWorkflowLogWebModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfWorkflowLogWebModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfWorkflowLogWebModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<WorkflowLogWebModel>}
    * @memberof PaginatedWebResponseModelBaseOfWorkflowLogWebModel
    */

@@ -538,12 +538,13 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
      * @param {Array<string>} [andTags] If this parameter is passed, only the layers with ALL of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
      * @param {Array<string>} [orTags] If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
      * @param {Array<string>} [notTags] If this parameter is passed, only the layers with NONE of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
+     * @param {string} [userGroup] Optional Guc to filter layers by. If specified, only the layers that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, userGroup?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/layer`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -576,6 +577,10 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
 
       if (notTags) {
         localVarQueryParameter['notTags'] = notTags;
+      }
+
+      if (userGroup !== undefined) {
+        localVarQueryParameter['userGroup'] = userGroup;
       }
 
       if (page !== undefined) {

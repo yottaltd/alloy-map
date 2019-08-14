@@ -6,4 +6,10 @@
  * @interface RouteStopWebModelBase
  */
 export interface RouteStopWebModelBase {
+  /**
+   * 
+   * @type {string}
+   * @memberof RouteStopWebModelBase
+   */
+  discriminator: string;
 }

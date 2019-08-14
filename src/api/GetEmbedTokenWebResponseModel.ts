@@ -17,11 +17,11 @@ export interface GetEmbedTokenWebResponseModel {
    * @type {string}
    * @memberof GetEmbedTokenWebResponseModel
    */
-  token?: string;
+  token: string;
   /**
    * Token Id
    * @type {string}
    * @memberof GetEmbedTokenWebResponseModel
    */
-  tokenId?: string;
+  tokenId: string;
 }

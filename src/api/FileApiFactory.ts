@@ -1,6 +1,7 @@
 // tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
+import { FileMoveWebRequestModel } from './FileMoveWebRequestModel';
 import { FileApiFp } from './FileApiFp';
 import { FileApi } from './FileApi';
 /**
@@ -43,6 +44,17 @@ export const FileApiFactory = function (configuration?: Configuration, fetch?: F
      */
     fileDownloadThumbnail(id: string, width: number, height: number, mode: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any) {
       return FileApiFp(configuration).fileDownloadThumbnail(id, width, height, mode, applyContentDispositionHeader, options)(fetch, basePath);
+    },
+    /**
+     * 
+     * @summary Moves a file to a folder with a given id
+     * @param {string} id The AId of the file to move
+     * @param {FileMoveWebRequestModel} model The move file model
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    fileMove(id: string, model: FileMoveWebRequestModel, options?: any) {
+      return FileApiFp(configuration).fileMove(id, model, options)(fetch, basePath);
     },
   };
 };

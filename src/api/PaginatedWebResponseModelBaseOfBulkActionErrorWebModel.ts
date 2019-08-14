@@ -20,18 +20,6 @@ export interface PaginatedWebResponseModelBaseOfBulkActionErrorWebModel {
   pageSize: number;
   /**
    * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfBulkActionErrorWebModel
-   */
-  totalPages: number;
-  /**
-   * 
-   * @type {number}
-   * @memberof PaginatedWebResponseModelBaseOfBulkActionErrorWebModel
-   */
-  totalResults: number;
-  /**
-   * 
    * @type {Array<BulkActionErrorWebModel>}
    * @memberof PaginatedWebResponseModelBaseOfBulkActionErrorWebModel
    */

@@ -1,5 +1,5 @@
 // tslint:disable
-import { WorkflowWebModel } from './WorkflowWebModel';
+import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
 /**
  * Web model for a workflow action related response
  * @export
@@ -8,10 +8,10 @@ import { WorkflowWebModel } from './WorkflowWebModel';
 export interface WorkflowAddActionWebResponseModel {
   /**
    * The Workflow action
-   * @type {WorkflowWebModel}
+   * @type {WorkflowWithOperationsSummaryWebResponseModel}
    * @memberof WorkflowAddActionWebResponseModel
    */
-  workflow: WorkflowWebModel;
+  workflowWithOperationsSummary: WorkflowWithOperationsSummaryWebResponseModel;
   /**
    * The id of the action that was added
    * @type {string}

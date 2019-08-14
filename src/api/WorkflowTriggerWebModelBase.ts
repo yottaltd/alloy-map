@@ -6,4 +6,10 @@
  * @interface WorkflowTriggerWebModelBase
  */
 export interface WorkflowTriggerWebModelBase {
+  /**
+   * 
+   * @type {string}
+   * @memberof WorkflowTriggerWebModelBase
+   */
+  discriminator: string;
 }

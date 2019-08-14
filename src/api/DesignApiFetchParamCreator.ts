@@ -4,14 +4,13 @@ import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
 import { DesignAddDesignInterfaceWebRequestModel } from './DesignAddDesignInterfaceWebRequestModel';
-import { DesignAttributePermissionsEditWebRequestModel } from './DesignAttributePermissionsEditWebRequestModel';
 import { DesignCreateWebRequestModel } from './DesignCreateWebRequestModel';
 import { DesignEditWebRequestModel } from './DesignEditWebRequestModel';
-import { DesignPermissionsEditWebRequestModel } from './DesignPermissionsEditWebRequestModel';
 import { DesignRemoveDesignInterfaceWebRequestModel } from './DesignRemoveDesignInterfaceWebRequestModel';
 import { DodiAttributeCreateWebRequestModel } from './DodiAttributeCreateWebRequestModel';
 import { DodiAttributeDeleteWebRequestModel } from './DodiAttributeDeleteWebRequestModel';
 import { DodiAttributeEditWebRequestModel } from './DodiAttributeEditWebRequestModel';
+import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DesignApi } from './DesignApi';
 /**
  * DesignApi - fetch parameter creator
@@ -287,58 +286,6 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
       };
     },
     /**
-     * Edit the permissions on the design attribute with the specified code
-     * @summary Edit permissions for a design attribute
-     * @param {string} code The Guc of the design with the attribute to edit the permissions of
-     * @param {string} attributeCode The Guc of the design attribute to edit the permissions of
-     * @param {DesignAttributePermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    designEditAttributePermissions(code: string, attributeCode: string, model: DesignAttributePermissionsEditWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling designEditAttributePermissions.');
-      }
-      // verify required parameter 'attributeCode' is not null or undefined
-      if (attributeCode === null || attributeCode === undefined) {
-        throw new RequiredError('attributeCode','Required parameter attributeCode was null or undefined when calling designEditAttributePermissions.');
-      }
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling designEditAttributePermissions.');
-      }
-      const localVarPath = `/api/design/{code}/attribute/{attributeCode}/permissions`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"attributeCode"}}`, encodeURIComponent(String(attributeCode)));
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"DesignAttributePermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
      * Edits a design attribute using the information provided in the model
      * @summary Edit a design attribute
      * @param {string} code The Guc of the design to edit the attribute
@@ -391,14 +338,14 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
       };
     },
     /**
-     * Edit the permissions on the design with the specified code
-     * @summary Edit permissions for a design
+     * Edit the permissions on the design with the specified code. New permissions will replace any existing permissions on both design and its attributes
+     * @summary Edit permissions for a design and its attributes
      * @param {string} code The Guc of the design to edit the permissions of
-     * @param {DesignPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
+     * @param {DodiPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designEditPermissions(code: string, model: DesignPermissionsEditWebRequestModel, options: any = {}): FetchArgs {
+    designEditPermissions(code: string, model: DodiPermissionsEditWebRequestModel, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling designEditPermissions.');
@@ -428,7 +375,7 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"DesignPermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      const needsSerialization = (<any>"DodiPermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {

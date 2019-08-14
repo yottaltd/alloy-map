@@ -6,4 +6,10 @@
  * @interface LayerStyleConfigWebModelBase
  */
 export interface LayerStyleConfigWebModelBase {
+  /**
+   * 
+   * @type {string}
+   * @memberof LayerStyleConfigWebModelBase
+   */
+  discriminator: string;
 }

@@ -1,11 +1,12 @@
 // tslint:disable
 import { DateTimePrecision } from './DateTimePrecision';
+import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
  * 
  * @export
  * @interface DodiAttributeOptionsDateTimeWebModel
  */
-export interface DodiAttributeOptionsDateTimeWebModel {
+export interface DodiAttributeOptionsDateTimeWebModel extends DodiAttributeOptionsWebModelBase {
   /**
    * 
    * @type {DateTimePrecision}
@@ -30,10 +31,4 @@ export interface DodiAttributeOptionsDateTimeWebModel {
    * @memberof DodiAttributeOptionsDateTimeWebModel
    */
   defaultValue?: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof DodiAttributeOptionsDateTimeWebModel
-   */
-  attributeType: string;
 }

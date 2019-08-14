@@ -11,5 +11,5 @@ export interface ListPowerBiReportsWebResponseModel {
    * @type {Array<PowerBiReportWebModel>}
    * @memberof ListPowerBiReportsWebResponseModel
    */
-  reports?: Array<PowerBiReportWebModel>;
+  reports: Array<PowerBiReportWebModel>;
 }

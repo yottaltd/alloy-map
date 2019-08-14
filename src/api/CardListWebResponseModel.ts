@@ -1,5 +1,5 @@
 // tslint:disable
-import { CardGetWebResponseModel } from './CardGetWebResponseModel';
+import { CardWithOperationsSummaryWebResponseModel } from './CardWithOperationsSummaryWebResponseModel';
 /**
  * Web response model for a list cards operation
  * @export
@@ -20,6 +20,12 @@ export interface CardListWebResponseModel {
   pageSize: number;
   /**
    * 
+   * @type {Array<CardWithOperationsSummaryWebResponseModel>}
+   * @memberof CardListWebResponseModel
+   */
+  results: Array<CardWithOperationsSummaryWebResponseModel>;
+  /**
+   * 
    * @type {number}
    * @memberof CardListWebResponseModel
    */
@@ -30,10 +36,4 @@ export interface CardListWebResponseModel {
    * @memberof CardListWebResponseModel
    */
   totalResults: number;
-  /**
-   * 
-   * @type {Array<CardGetWebResponseModel>}
-   * @memberof CardListWebResponseModel
-   */
-  results: Array<CardGetWebResponseModel>;
 }

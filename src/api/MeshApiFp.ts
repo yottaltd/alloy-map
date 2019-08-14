@@ -4,11 +4,9 @@ import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { MeshEditWebRequestModel } from './MeshEditWebRequestModel';
-import { MeshEditWebResponseModel } from './MeshEditWebResponseModel';
-import { MeshGetWebResponseModel } from './MeshGetWebResponseModel';
 import { MeshPermissionsEditWebRequestModel } from './MeshPermissionsEditWebRequestModel';
-import { MeshPermissionsEditWebResponseModel } from './MeshPermissionsEditWebResponseModel';
 import { MeshPermissionsGetWebResponseModel } from './MeshPermissionsGetWebResponseModel';
+import { MeshWithOperationsSummaryWebResponseModel } from './MeshWithOperationsSummaryWebResponseModel';
 import { MeshListWebResponseModel } from './MeshListWebResponseModel';
 import { MeshApiFetchParamCreator } from './MeshApiFetchParamCreator';
 import { MeshApi } from './MeshApi';
@@ -26,7 +24,7 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshEdit(code: string, model: MeshEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshEditWebResponseModel> {
+    meshEdit(code: string, model: MeshEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshEdit(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -48,7 +46,7 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshEditPermissions(code: string, model: MeshPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshPermissionsEditWebResponseModel> {
+    meshEditPermissions(code: string, model: MeshPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshEditPermissions(code, model, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -69,7 +67,7 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshGetWebResponseModel> {
+    meshGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshGet(code, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -107,13 +105,15 @@ export const MeshApiFp = function(configuration?: Configuration) {
     /**
      * Fetches a list of meshes optionally specifying page and the number of results to return per page.
      * @summary Get a list of meshes
+     * @param {string} [query] The optional mesh query string to filter on
+     * @param {string} [userGroup] Optional Guc to filter meshes by. If specified, only the meshes that have this user group code within their permissions are returned
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshList(page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshListWebResponseModel> {
-      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshList(page, pageSize, options);
+    meshList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshListWebResponseModel> {
+      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshList(query, userGroup, page, pageSize, options);
       return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
           if (configuration && configuration.responseInterceptor) {

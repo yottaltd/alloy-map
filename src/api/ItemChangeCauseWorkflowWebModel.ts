@@ -1,16 +1,16 @@
 // tslint:disable
-import { AId } from './AId';
+import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
 import { WorkflowWebModel } from './WorkflowWebModel';
 /**
  * Item Change cause workflow web model
  * @export
  * @interface ItemChangeCauseWorkflowWebModel
  */
-export interface ItemChangeCauseWorkflowWebModel {
+export interface ItemChangeCauseWorkflowWebModel extends ItemChangeCauseWebModelBase {
   /**
-   * Item change cause workflow web model constructor
-   * @type {AId}
+   * The id of the workflow run that caused this change
+   * @type {string}
    * @memberof ItemChangeCauseWorkflowWebModel
    */
-  workflowRunId: AId;
+  workflowRunId: string;
 }

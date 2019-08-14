@@ -2,7 +2,9 @@
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
+import { ItemBulkWebRequestModel } from './ItemBulkWebRequestModel';
 import { SetAttributesBulkActionWebRequestModel } from './SetAttributesBulkActionWebRequestModel';
+import { TouchItemsBulkActionWebRequestModel } from './TouchItemsBulkActionWebRequestModel';
 import { BulkApiFp } from './BulkApiFp';
 import { BulkApi } from './BulkApi';
 /**
@@ -20,6 +22,16 @@ export const BulkApiFactory = function (configuration?: Configuration, fetch?: F
      */
     bulkDeleteItems(model: DeleteItemsBulkActionWebRequestModel, options?: any) {
       return BulkApiFp(configuration).bulkDeleteItems(model, options)(fetch, basePath);
+    },
+    /**
+     * Accepts a list of Create, Edit and Delete operations, using the same models as the respective item APIs, performing bulked operations. Any errors will be returned in the response model. This endpoint is NOT meant to replace the import process and does not guarantee transactional integrity. Moreover the endpoint does not accept more than 1000 requests.
+     * @summary Performs many item CUD operations
+     * @param {ItemBulkWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bulkGeneric(model: ItemBulkWebRequestModel, options?: any) {
+      return BulkApiFp(configuration).bulkGeneric(model, options)(fetch, basePath);
     },
     /**
      * Fetches a bulk action by its Alloy Id (AId)
@@ -52,6 +64,16 @@ export const BulkApiFactory = function (configuration?: Configuration, fetch?: F
      */
     bulkSetAttributes(model: SetAttributesBulkActionWebRequestModel, options?: any) {
       return BulkApiFp(configuration).bulkSetAttributes(model, options)(fetch, basePath);
+    },
+    /**
+     * This operation allows to touch the items matching the specified Aqs query
+     * @summary Submit a bulk touch item action
+     * @param {TouchItemsBulkActionWebRequestModel} model The model containing the info needed for the touch items bulk operation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bulkTouchItems(model: TouchItemsBulkActionWebRequestModel, options?: any) {
+      return BulkApiFp(configuration).bulkTouchItems(model, options)(fetch, basePath);
     },
   };
 };

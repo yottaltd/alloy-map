@@ -159,20 +159,21 @@ export class WorkflowApi extends BaseAPI {
    * 
    * @summary List workflows
    * @param {string} [name] The optional workflow name (full or partial) to filter on
+   * @param {string} [userGroup] Optional Guc to filter workflows by. If specified, only the workflows that have this user group code within their permissions are returned
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
    */
-  public workflowList(name?: string, page?: number, pageSize?: number, options?: any) {
-    return WorkflowApiFp(this.configuration).workflowList(name, page, pageSize, options)(this.fetch, this.basePath);
+  public workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowList(name, userGroup, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary List the workflows that are applicable to a dodi
-   * @param {string} code 
+   * @param {string} code The dodi code to find workflows applicable to
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
@@ -181,6 +182,20 @@ export class WorkflowApi extends BaseAPI {
    */
   public workflowListApplicableWorkflows(code: string, page?: number, pageSize?: number, options?: any) {
     return WorkflowApiFp(this.configuration).workflowListApplicableWorkflows(code, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * 
+   * @summary List the workflows that will clone a specific item
+   * @param {string} itemId The id of the item that will be cloned
+   * @param {number} [page] 
+   * @param {number} [pageSize] 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowListCloningItemWorkflows(itemId: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowListCloningItemWorkflows(itemId, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
