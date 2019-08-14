@@ -5,7 +5,7 @@ import OLAttribution from 'ol/control/Attribution';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { Configuration } from '../../api/Configuration';
+import { Configuration } from '../../api/configuration';
 import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';

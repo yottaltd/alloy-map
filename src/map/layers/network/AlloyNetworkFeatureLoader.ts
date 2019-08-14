@@ -1,5 +1,6 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
 import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
+// tslint:disable-next-line: max-line-length
 import { LayerGetNetworkTileWebResponseModel } from '../../../api/LayerGetNetworkTileWebResponseModel';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
