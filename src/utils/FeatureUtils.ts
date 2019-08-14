@@ -42,7 +42,6 @@ export abstract class FeatureUtils {
    */
   public static findFeaturesWithin(
     layers: AlloyLayer[],
-    source: AlloyCoordinate | AlloyFeature | Geometry,
     delta: number,
   ): Map<AlloyFeature, number> {
     const features: Map<AlloyFeature, number> = new Map();
