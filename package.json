@@ -37,7 +37,6 @@
     "portable-fetch": "^3.0.0",
     "proj4": "^2.5.0",
     "ste-simple-events": "^1.4.10",
-    "typescript": "^3.3.3333",
     "uuid": "^3.3.2",
     "webfontloader": "^1.6.28"
   },
@@ -64,6 +63,7 @@
     "tslint": "^5.14.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typedoc": "^0.14.2",
+    "typescript": "^3.3.3333",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
   },
