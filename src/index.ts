@@ -96,6 +96,7 @@ export { AlloyOverlayPositioning } from './map/overlays/AlloyOverlayPositioning'
 export { AlloyCustomOverlay } from './map/overlays/custom/AlloyCustomOverlay';
 export { AlloyCustomOverlayOptions } from './map/overlays/custom/AlloyCustomOverlayOptions';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
+export { AlloyStyleBuilderBuildState } from './map/styles/AlloyStyleBuilderBuildState';
 export { AlloyWfsLayerStyle } from './map/styles/AlloyWfsLayerStyle';
 export { EpsgIo } from './utils/epsg-io/EpsgIo';
 export { EpsgIoSearchResponse } from './utils/epsg-io/EpsgIoSearchResponse';
