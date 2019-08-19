@@ -1,17 +1,24 @@
 import OLFeature from 'ol/Feature';
 import { AlloyCustomFeatureBase } from './AlloyCustomFeatureBase';
-import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
+import { AlloyCustomItemFeatureProperties } from './AlloyCustomItemFeatureProperties';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyFeatureWithItemId } from './AlloyFeatureWithItemId';
 
 /**
- * an alloy custom feature which represents something being added to the map by a user or
- * programatically, it can represent anything
+ * an alloy custom feature with item id which represents something being added to the map by a user
+ * or programatically, it can represent any item
  */
-export class AlloyCustomFeature extends AlloyCustomFeatureBase {
+export class AlloyCustomItemFeature extends AlloyCustomFeatureBase
+  implements AlloyFeatureWithItemId {
   /**
    * @implements
    */
-  public type!: AlloyFeatureType.Custom; // see end of file for prototype
+  public type!: AlloyFeatureType.CustomItem; // see end of file for prototype
+
+  /**
+   * @implements
+   */
+  public readonly itemId: string;
 
   /**
    * creates a new instance
@@ -25,10 +32,11 @@ export class AlloyCustomFeature extends AlloyCustomFeatureBase {
   constructor(
     id: string,
     olFeature: OLFeature,
-    properties: AlloyCustomFeatureProperties,
+    properties: AlloyCustomItemFeatureProperties,
     originatingLayerId: string,
   ) {
     super(id, olFeature, properties, originatingLayerId);
+    this.itemId = properties.itemId;
   }
 }
 /**
@@ -37,4 +45,4 @@ export class AlloyCustomFeature extends AlloyCustomFeatureBase {
  * property (set on each constructor) and due to the frequency that these objects are created we
  * really need every small optimisation we can get with regard to features
  */
-AlloyCustomFeature.prototype.type = AlloyFeatureType.Custom;
+AlloyCustomItemFeature.prototype.type = AlloyFeatureType.CustomItem;

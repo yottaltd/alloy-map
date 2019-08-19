@@ -34,8 +34,12 @@ export { AlloyCableUnitFeatureProperties } from './map/features/AlloyCableUnitFe
 export { AlloyClusterFeature } from './map/features/AlloyClusterFeature';
 export { AlloyClusterFeatureProperties } from './map/features/AlloyClusterFeatureProperties';
 export { AlloyCustomFeature } from './map/features/AlloyCustomFeature';
+export { AlloyCustomFeatureBase } from './map/features/AlloyCustomFeatureBase';
 export { AlloyCustomFeatureFactory } from './map/features/AlloyCustomFeatureFactory';
 export { AlloyCustomFeatureProperties } from './map/features/AlloyCustomFeatureProperties';
+export { AlloyCustomItemFeature } from './map/features/AlloyCustomItemFeature';
+export { AlloyCustomItemFeatureFactory } from './map/features/AlloyCustomItemFeatureFactory';
+export { AlloyCustomItemFeatureProperties } from './map/features/AlloyCustomItemFeatureProperties';
 export { AlloyDrawFeature } from './map/features/AlloyDrawFeature';
 export { AlloyDrawFeatureFactory } from './map/features/AlloyDrawFeatureFactory';
 export { AlloyDrawFeatureProperties } from './map/features/AlloyDrawFeatureProperties';
