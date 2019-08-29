@@ -192,13 +192,16 @@ export class AlloyMap {
     // construct the map instance
     this.olMap = new OLMap({
       target: options.element,
-      controls: [
-        new OLAttribution({
-          collapsed: false,
-          collapsible: false,
-          className: 'map__attributions',
-        }),
-      ],
+      controls:
+        options.attributions === false
+          ? []
+          : [
+              new OLAttribution({
+                collapsed: false,
+                collapsible: false,
+                className: 'map__attributions',
+              }),
+            ],
       interactions: options.interactive === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
     });

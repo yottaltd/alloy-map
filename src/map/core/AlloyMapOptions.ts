@@ -35,6 +35,11 @@ export interface AlloyMapOptions {
   interactive?: boolean;
 
   /**
+   * whether basemap attributions should be displayed on the map, defaults to true
+   */
+  attributions?: boolean;
+
+  /**
    * the webfont family names to load into the map. "alloyicons" are attempted to be loaded by
    * default
    */
