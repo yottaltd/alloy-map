@@ -47,7 +47,11 @@ export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
     }
 
     if (feature instanceof AlloyCustomFeatureBase) {
-      return this.customStyleBuilder.build(feature, resolution, state);
+      return this.customStyleBuilder.build(
+        feature,
+        resolution,
+        feature.properties.forceState !== undefined ? feature.properties.forceState : state,
+      );
     } else {
       return [];
     }

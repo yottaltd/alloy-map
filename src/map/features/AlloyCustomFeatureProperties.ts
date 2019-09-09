@@ -1,3 +1,5 @@
+import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
+
 /**
  * the properties for an alloy custom feature
  */
@@ -41,4 +43,9 @@ export interface AlloyCustomFeatureProperties {
    * whether the feature scales based on zoom level, if set to false it is always the fixed max size
    */
   readonly scale?: boolean;
+
+  /**
+   * State to force when styling this feature
+   */
+  readonly forceState?: AlloyStyleBuilderBuildState;
 }

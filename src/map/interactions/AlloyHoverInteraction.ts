@@ -5,8 +5,10 @@ import OLLayer from 'ol/layer/Layer';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyMap } from '../core/AlloyMap';
+import { AlloyCustomFeatureBase } from '../features/AlloyCustomFeatureBase';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyLayer } from '../layers/AlloyLayer';
+import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 
 /**
  * the number of milliseconds to throttle the pointer move event by
@@ -134,9 +136,16 @@ export class AlloyHoverInteraction {
 
     // update selected or not
     if (topMostFeature) {
+      // Special case for custom features with forced state to override any hover interaction
+      const customFeatureForceSelected =
+        topMostFeature instanceof AlloyCustomFeatureBase &&
+        topMostFeature.properties.forceState === AlloyStyleBuilderBuildState.Selected;
+
       // hovered is set based on whether the feature being "hovered" is already selected, we still
       // want a cursor indicator but we don't want another halo etc.
-      this.map.hoverLayer.setHoveredFeature(topMostFeatureSelected ? null : topMostFeature);
+      this.map.hoverLayer.setHoveredFeature(
+        topMostFeatureSelected || customFeatureForceSelected ? null : topMostFeature,
+      );
       // set the cursor to show it has moused over
       (this.map.olMap.getViewport() as HTMLElement).style.cursor = 'pointer';
     } else {
