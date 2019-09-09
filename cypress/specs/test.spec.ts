@@ -1,3 +1,4 @@
+import { assert } from 'chai';
 import { AlloyBasemapFactory } from '../../src/map/basemaps/AlloyBasemapFactory';
 import { AlloyBounds } from '../../src/map/core/AlloyBounds';
 import { AlloyCoordinate } from '../../src/map/core/AlloyCoordinate';
@@ -6,6 +7,7 @@ import { LayersChangeEvent } from '../../src/map/events/LayersChangeEvent';
 import { MapChangeCentreEvent } from '../../src/map/events/MapChangeCentreEvent';
 import { MapChangeZoomEvent } from '../../src/map/events/MapChangeZoomEvent';
 import { AlloyClusterLayer } from '../../src/map/layers/cluster/AlloyClusterLayer';
+import { AlloyCustomLayer } from '../../src/map/layers/custom/AlloyCustomLayer';
 import { AlloyNetworkLayer } from '../../src/map/layers/network/AlloyNetworkLayer';
 import { AlloyLayerStyle } from '../../src/map/styles/AlloyLayerStyle';
 
@@ -416,5 +418,83 @@ describe('map', () => {
     it('should not select non-selectable feature', () => {});
     it('should run interaction processing on selected feature', () => {});
     it('should check custom feature styles with forced selection state', () => {});
+  });
+
+  describe('search', () => {
+    it('should find features within', () => {
+      // Test data.
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'featuresWithin',
+      });
+      const findWithinCoordinate1 = new AlloyCoordinate(-1.320698, 54.51974);
+      const findWithinCoordinate2 = new AlloyCoordinate(-1.300971, 54.500017);
+      const delta: number = 30;
+
+      // Add features to the layer.
+      const featureWithinCoordinate1 = layer.addPointFeature(
+        {
+          title: 'First Point',
+          subtitle: 'Feature Within',
+          colour: '#FF0000',
+          icon: 'icon-system-success',
+        },
+        new AlloyCoordinate(-1.3207, 54.5198),
+      );
+      const featureWithinCoordinate2 = layer.addPointFeature(
+        {
+          title: 'Second Point',
+          subtitle: 'Feature Within',
+          colour: '#FFA500',
+          icon: 'icon-system-404',
+        },
+        new AlloyCoordinate(-1.30098, 54.500025),
+      );
+
+      // Add layer to the map.
+      map.addLayer(layer);
+
+      // Assert the first coordinate is within the first feature, with that delta.
+      const featuresWithinFirstFeature = map.findFeaturesWithin(findWithinCoordinate1, delta);
+      assert.exists(
+        featuresWithinFirstFeature.find(
+          (featureResult) => featureResult.feature.id === featureWithinCoordinate1.id,
+        ),
+      );
+
+      // Assert the second coordinate is within the second feature, with that delta.
+      const featuresWithinSecondFeature = map.findFeaturesWithin(findWithinCoordinate2, delta);
+      assert.exists(
+        featuresWithinSecondFeature.find(
+          (featureResult) => featureResult.feature.id === featureWithinCoordinate2.id,
+        ),
+      );
+    });
+    it('should not find features within', () => {
+      // Test data.
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'featuresWithin',
+      });
+      const coordinateNotWithin = new AlloyCoordinate(-1.320698, 54.51974);
+      const delta: number = 30;
+
+      // Add features to the layer.
+      layer.addPointFeature(
+        {
+          title: 'First Point',
+          subtitle: 'Feature Within',
+          colour: '#FF0000',
+          icon: 'icon-system-success',
+        },
+        new AlloyCoordinate(-1.4, 54.6),
+      );
+
+      // Add layer to the map.
+      map.addLayer(layer);
+
+      // Assert the first coordinate is within the first feature, with that delta.
+      assert.isEmpty(map.findFeaturesWithin(coordinateNotWithin, delta));
+    });
   });
 });
