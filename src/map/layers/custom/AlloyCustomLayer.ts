@@ -2,6 +2,7 @@ import * as uuid from 'uuid';
 import { AlloyCoordinate } from '../../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
+import { AlloyCustomFeatureBase } from '../../features/AlloyCustomFeatureBase';
 import { AlloyCustomFeatureFactory } from '../../features/AlloyCustomFeatureFactory';
 import { AlloyCustomFeatureProperties } from '../../features/AlloyCustomFeatureProperties';
 import { AlloyFeature } from '../../features/AlloyFeature';
@@ -13,7 +14,7 @@ import { AlloyCustomStyleProcessor } from './AlloyCustomStyleProcessor';
  * an alloy custom layer for rendering custom features provided externally on the map, use this to
  * add custom features onto the map and manage them manually
  */
-export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeature> {
+export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureBase> {
   /**
    * creates a new instance
    * @param options the options for the layer
