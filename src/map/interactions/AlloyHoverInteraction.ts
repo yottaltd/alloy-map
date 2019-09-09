@@ -136,14 +136,15 @@ export class AlloyHoverInteraction {
 
     // update selected or not
     if (topMostFeature) {
-      // Special case for custom features with forced state
-      const customFeatureSelected =
+      // Special case for custom features with forced state to override any hover interaction
+      const customFeatureForceSelected =
         topMostFeature instanceof AlloyCustomFeatureBase &&
         topMostFeature.properties.forceState === AlloyStyleBuilderBuildState.Selected;
+
       // hovered is set based on whether the feature being "hovered" is already selected, we still
       // want a cursor indicator but we don't want another halo etc.
       this.map.hoverLayer.setHoveredFeature(
-        topMostFeatureSelected || customFeatureSelected ? null : topMostFeature,
+        topMostFeatureSelected || customFeatureForceSelected ? null : topMostFeature,
       );
       // set the cursor to show it has moused over
       (this.map.olMap.getViewport() as HTMLElement).style.cursor = 'pointer';
