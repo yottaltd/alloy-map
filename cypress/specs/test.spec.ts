@@ -415,5 +415,6 @@ describe('map', () => {
     it('should multi select features on map programatically', () => {});
     it('should not select non-selectable feature', () => {});
     it('should run interaction processing on selected feature', () => {});
+    it('should check custom feature styles with forced selection state', () => {});
   });
 });
