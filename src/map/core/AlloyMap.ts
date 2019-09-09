@@ -192,13 +192,16 @@ export class AlloyMap {
     // construct the map instance
     this.olMap = new OLMap({
       target: options.element,
-      controls: [
-        new OLAttribution({
-          collapsed: false,
-          collapsible: false,
-          className: 'map__attributions',
-        }),
-      ],
+      controls:
+        options.attributions === false
+          ? []
+          : [
+              new OLAttribution({
+                collapsed: false,
+                collapsible: false,
+                className: 'map__attributions',
+              }),
+            ],
       interactions: options.interactive === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
     });
@@ -737,5 +740,13 @@ export class AlloyMap {
    */
   public remove(): void {
     this.olMap.setTarget(null as any);
+  }
+
+  /**
+   * Fits viewport around provided features
+   * @param features `AlloyFeature` array to fit in veiwport
+   */
+  public fitFeaturesViewport(features: AlloyFeature[]) {
+    this.setViewport(FeatureUtils.calculateFeaturesBounds(features));
   }
 }
