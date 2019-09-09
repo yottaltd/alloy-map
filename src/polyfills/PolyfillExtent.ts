@@ -1,4 +1,4 @@
-import { intersects, containsExtent, containsCoordinate } from 'ol/extent.js';
+import { boundingExtent, containsCoordinate, containsExtent, intersects } from 'ol/extent.js';
 
 /**
  * wraps the openlayers ol/extent module due to typing issues.
@@ -40,7 +40,17 @@ export abstract class PolyfillExtent {
   public static containsCoordinate(
     extent: [number, number, number, number],
     coordinate: [number, number],
-  ) {
+  ): boolean {
     return containsCoordinate(extent, coordinate);
+  }
+
+  /**
+   * creates a bounding extent that wraps all of provided coordinates
+   * @param coordinates coordinate to calculate extent for
+   */
+  public static boundingExtent(
+    coordinates: Array<[number, number]>,
+  ): [number, number, number, number] {
+    return boundingExtent(coordinates);
   }
 }

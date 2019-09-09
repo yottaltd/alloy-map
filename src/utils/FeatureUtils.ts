@@ -1,4 +1,5 @@
 import { Geometry } from 'geojson';
+import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import { AlloyMapError } from '../error/AlloyMapError';
@@ -8,6 +9,9 @@ import { AlloyFeature } from '../map/features/AlloyFeature';
 import { GeometryGuards } from '../map/guards/GeometryGuards';
 import { AlloyLayer } from '../map/layers/AlloyLayer';
 import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
+// tslint:disable-next-line:max-line-length
+import { AlloyGeometryFunctionUtils } from '../map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { PolyfillExtent } from '../polyfills/PolyfillExtent';
 import { GeometryUtils } from './GeometryUtils';
 import { FindFeaturesWithinResult } from './models/FindFeaturesWithinResult';
 import { ProjectionUtils } from './ProjectionUtils';
@@ -131,6 +135,31 @@ export abstract class FeatureUtils {
     features.sort((a, b) => a.distance - b.distance);
 
     return features;
+  }
+
+  /**
+   * Calculates `AlloyBounds` that wraps all provided features
+   * @param features `AlloyFeature` array to calculate bounds for
+   * @returns `AlloyBounds` that wraps all provided features
+   */
+  public static calculateFeaturesBounds(features: AlloyFeature[]): AlloyBounds {
+    // flatten coordinates of features
+    const coordinates: Array<[number, number]> = _.flatten(
+      features.map((feature) =>
+        AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
+          feature.olFeature.getGeometry(),
+        ).getCoordinates(),
+      ),
+    );
+
+    // calculate bounding extent for coordinates
+    const extent = PolyfillExtent.boundingExtent(coordinates);
+
+    // convert extent to alloy bounds
+    return new AlloyBounds(
+      AlloyCoordinate.fromMapCoordinate([extent[0], extent[1]]),
+      AlloyCoordinate.fromMapCoordinate([extent[2], extent[3]]),
+    );
   }
 
   /**
