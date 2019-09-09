@@ -51,7 +51,7 @@ export class AlloyMapError extends Error {
   /**
    * the optional error category
    */
-  public readonly category?: number;
+  public readonly category?: string;
 
   /**
    * creates a new instance
@@ -65,7 +65,7 @@ export class AlloyMapError extends Error {
     options?: {
       httpStatusCode?: number;
       data?: any;
-      category?: number;
+      category?: string;
     },
   ) {
     super(`E${code} - ${message}`);
