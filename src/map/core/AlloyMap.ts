@@ -738,4 +738,12 @@ export class AlloyMap {
   public remove(): void {
     this.olMap.setTarget(null as any);
   }
+
+  /**
+   * Fits viewport around provided features
+   * @param features `AlloyFeature` array to fit in veiwport
+   */
+  public fitFeaturesViewport(features: AlloyFeature[]) {
+    this.setViewport(FeatureUtils.calculateFeaturesBounds(features));
+  }
 }

@@ -1,5 +1,5 @@
-import { AlloyCoordinate } from './AlloyCoordinate';
 import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
+import { AlloyCoordinate } from './AlloyCoordinate';
 
 /**
  * an alloy bounds represents a bounding box on the map using south west and north east corner
