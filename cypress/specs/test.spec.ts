@@ -159,22 +159,6 @@ describe('map', () => {
       });
     });
 
-    it('should set ordnance survey basemap', () => {
-      // test data
-      const basemap = AlloyBasemapFactory.createOrdnanceSurvey();
-
-      // set a basemap
-      map.setBasemap(basemap);
-
-      // check the property is updated
-      assert.equal(map.basemap, basemap);
-
-      // screenshot the map for debugging
-      cy.wait(500).screenshot({
-        capture: 'runner',
-      });
-    });
-
     it('should set satellite basemap', () => {
       // test data
       const basemap = AlloyBasemapFactory.createSatellite();
