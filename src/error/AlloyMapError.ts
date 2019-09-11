@@ -36,7 +36,7 @@ export class AlloyMapError extends Error {
   /**
    * the error code
    */
-  public readonly code: number;
+  public readonly code: string;
 
   /**
    * the optional http status code, usually from a tile request
@@ -60,7 +60,7 @@ export class AlloyMapError extends Error {
    * @param options the optional options for the error
    */
   constructor(
-    code: number,
+    code: string | number,
     message: string,
     options?: {
       httpStatusCode?: number;
@@ -70,7 +70,7 @@ export class AlloyMapError extends Error {
   ) {
     super(`E${code} - ${message}`);
 
-    this.code = code;
+    this.code = typeof code === 'number' ? 'E' + code : code;
     if (options) {
       this.category = options.category;
       this.httpStatusCode = options.httpStatusCode;
