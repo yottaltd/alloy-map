@@ -58,17 +58,6 @@ export abstract class AlloyBasemapFactory {
   }
 
   /**
-   * creates the ordnance survey basemap
-   */
-  public static createOrdnanceSurvey(): AlloyBasemap {
-    const url =
-      // tslint:disable-next-line: max-line-length
-      'https://api2.ordnancesurvey.co.uk/mapping_api/v1/service/zxy/EPSG%3A3857/Outdoor 3857/{z}/{x}/{y}.png?key=KClxAC5fo36e8FYszmTfSrWxhm7sM4Zx';
-    const tileSize = 256;
-    return new AlloyTileBasemap(url, tileSize);
-  }
-
-  /**
    * creates the open streetmap basemap
    */
   public static createOpenStreetmap(): AlloyBasemap {
