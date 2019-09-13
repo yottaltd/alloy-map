@@ -59,6 +59,7 @@ export abstract class WmsUtils {
               .replace('#', '0x')
           : undefined,
       },
+      attributions: options.watermark,
     });
   }
 

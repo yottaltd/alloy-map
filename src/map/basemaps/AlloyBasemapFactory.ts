@@ -3,6 +3,7 @@ import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
 import { AlloyTileBasemap } from './AlloyTileBasemap';
 import { AlloyWmsBasemap } from './AlloyWmsBasemap';
+import { AlloyTileParameters } from '../../tile/AlloyTileParameters';
 
 /**
  * the mapbox user account we use
@@ -37,7 +38,7 @@ export abstract class AlloyBasemapFactory {
   public static createSkyward(): AlloyBasemap {
     const url = mapboxUrl('cjypjvqqv021j1cuhzwgudzw7');
     const tileSize = 512;
-    return new AlloyTileBasemap(url, tileSize);
+    return new AlloyTileBasemap({ url, tileSize });
   }
 
   /**
@@ -46,7 +47,7 @@ export abstract class AlloyBasemapFactory {
   public static createNightscape(): AlloyBasemap {
     const url = mapboxUrl('cjypkiuvo028g1coyt63evhhy');
     const tileSize = 512;
-    return new AlloyTileBasemap(url, tileSize);
+    return new AlloyTileBasemap({ url, tileSize });
   }
 
   /**
@@ -63,7 +64,7 @@ export abstract class AlloyBasemapFactory {
   public static createOpenStreetmap(): AlloyBasemap {
     const url = 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSize = 512;
-    return new AlloyTileBasemap(url, tileSize);
+    return new AlloyTileBasemap({ url, tileSize });
   }
 
   /**
@@ -71,8 +72,8 @@ export abstract class AlloyBasemapFactory {
    * @param url /{z}/{x}/{y} format url
    * @param tileSize tile dimensions returned by tile server
    */
-  public static createXyz(url: string, tileSize: number): AlloyBasemap {
-    return new AlloyTileBasemap(url, tileSize);
+  public static createXyz(options: AlloyTileParameters): AlloyBasemap {
+    return new AlloyTileBasemap(options);
   }
 
   /**
