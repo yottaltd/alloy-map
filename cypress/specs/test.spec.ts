@@ -175,6 +175,29 @@ describe('map', () => {
       });
     });
 
+    it('should set xyz basemap', () => {
+      // test data
+      const basemap = AlloyBasemapFactory.createXyz({
+        url: 'https://example.com/{x}/{y}/{z}',
+        watermark:
+          '<div class="find-me" style="position: fixed; right: 0; bottom: 0;">Find Me</div>',
+      });
+
+      // set a basemap
+      map.setBasemap(basemap);
+
+      // check the property is updated
+      assert.equal(map.basemap, basemap);
+
+      // check watermark was added to screen
+      cy.get('.find-me').should('be.visible');
+
+      // screenshot the map for debugging
+      cy.wait(500).screenshot({
+        capture: 'runner',
+      });
+    });
+
     it('should change basemap', () => {
       // test data
       const basemap1 = AlloyBasemapFactory.createSkyward();
