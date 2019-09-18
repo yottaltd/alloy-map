@@ -34,4 +34,8 @@ export interface AlloyWmsParameters {
    * bbox for tile requests
    */
   bbox?: AlloyBounds;
+  /**
+   * optional watermark
+   */
+  watermark?: string;
 }

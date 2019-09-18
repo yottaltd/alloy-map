@@ -2,6 +2,7 @@ import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
 import { AlloyTileBasemap } from './AlloyTileBasemap';
+import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 import { AlloyWmsBasemap } from './AlloyWmsBasemap';
 
 /**
@@ -37,7 +38,7 @@ export abstract class AlloyBasemapFactory {
   public static createSkyward(): AlloyBasemap {
     const url = mapboxUrl('cjypjvqqv021j1cuhzwgudzw7');
     const tileSize = 512;
-    return new AlloyTileBasemap(url, tileSize);
+    return new AlloyTileBasemap({ url, tileSize });
   }
 
   /**
@@ -46,7 +47,7 @@ export abstract class AlloyBasemapFactory {
   public static createNightscape(): AlloyBasemap {
     const url = mapboxUrl('cjypkiuvo028g1coyt63evhhy');
     const tileSize = 512;
-    return new AlloyTileBasemap(url, tileSize);
+    return new AlloyTileBasemap({ url, tileSize });
   }
 
   /**
@@ -63,16 +64,15 @@ export abstract class AlloyBasemapFactory {
   public static createOpenStreetmap(): AlloyBasemap {
     const url = 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSize = 512;
-    return new AlloyTileBasemap(url, tileSize);
+    return new AlloyTileBasemap({ url, tileSize });
   }
 
   /**
    * creates a custom xyz basemap
-   * @param url /{z}/{x}/{y} format url
-   * @param tileSize tile dimensions returned by tile server
+   * @param options the options to apply to the basemap
    */
-  public static createXyz(url: string, tileSize: number): AlloyBasemap {
-    return new AlloyTileBasemap(url, tileSize);
+  public static createXyz(options: AlloyTileBasemapOptions): AlloyBasemap {
+    return new AlloyTileBasemap(options);
   }
 
   /**

@@ -2,6 +2,7 @@ import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
 import { AlloyBasemap } from './AlloyBasemap';
+import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 
 /**
  * an alloy tile basemap using an XYZ tiled service
@@ -20,15 +21,15 @@ export class AlloyTileBasemap implements AlloyBasemap {
   private readonly source: OLXYZ;
 
   /**
-   *
-   * @param url the url of the tile basemap service
-   * @param tileSize the tile size from the service
+   * creates a new tile basemap instance
+   * @param options the options to apply to the basemap
    */
-  constructor(url: string, tileSize: number = 512) {
+  constructor(options: AlloyTileBasemapOptions) {
     this.source = new OLXYZ({
-      url,
+      url: options.url,
       crossOrigin: 'anonymous',
-      tileSize,
+      tileSize: options.tileSize === undefined ? 512 : options.tileSize,
+      attributions: options.watermark,
     });
     this.tileLayer = new OLTileLayer({
       source: this.source,
