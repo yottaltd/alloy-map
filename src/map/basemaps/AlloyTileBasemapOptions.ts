@@ -1,7 +1,7 @@
 /**
- * Parameters for tile layer requests
+ * options for alloy tile basemaps
  */
-export interface AlloyTileParameters {
+export interface AlloyTileBasemapOptions {
   /**
    * base url for Tile service
    */

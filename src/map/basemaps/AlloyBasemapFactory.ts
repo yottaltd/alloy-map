@@ -2,8 +2,8 @@ import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
 import { AlloyTileBasemap } from './AlloyTileBasemap';
+import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 import { AlloyWmsBasemap } from './AlloyWmsBasemap';
-import { AlloyTileParameters } from '../../tile/AlloyTileParameters';
 
 /**
  * the mapbox user account we use
@@ -69,10 +69,9 @@ export abstract class AlloyBasemapFactory {
 
   /**
    * creates a custom xyz basemap
-   * @param url /{z}/{x}/{y} format url
-   * @param tileSize tile dimensions returned by tile server
+   * @param options the options to apply to the basemap
    */
-  public static createXyz(options: AlloyTileParameters): AlloyBasemap {
+  public static createXyz(options: AlloyTileBasemapOptions): AlloyBasemap {
     return new AlloyTileBasemap(options);
   }
 
