@@ -1,3 +1,4 @@
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
@@ -79,7 +80,17 @@ export abstract class AlloyBasemapFactory {
    * creates a custom WMS basemap
    * @param options WMS url and layer options
    */
-  public static createWms(options: AlloyWmsParameters): AlloyBasemap {
+  public static async createWms(options: AlloyWmsParameters): Promise<AlloyBasemap> {
+    // register projection
+    if (options.crs) {
+      try {
+        await ProjectionUtils.register(parseInt(options.crs.split(':')[1], 10));
+      } catch (e) {
+        // do not throw if failed to register projection
+        // tslint:disable-next-line:no-console
+        console.error('failed to register projection ' + options.crs);
+      }
+    }
     return new AlloyWmsBasemap(options);
   }
 }
