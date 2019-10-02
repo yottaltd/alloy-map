@@ -98,34 +98,82 @@ export abstract class WfsUtils {
 
     const descriptions: Map<string, WfsFeatureDescription> = new Map();
     try {
+      // TODO: https://teamyotta.atlassian.net/browse/AL-4636 need to fix this to use imports from
+      // correct namespace and elements that reference complexTypes
       WfsUtils.debugger(`requesting WFS feature type descriptions for ${featureTypeUrl.href}`);
-      const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
+      // const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
 
       WfsUtils.debugger('parsing xml');
-      const domparser = new DOMParser();
-      const domdoc = domparser.parseFromString(featureTypeDescription, 'text/xml');
-      const schemaRoot = domdoc.getElementsByTagName('xsd:schema')[0];
+      // await WfsUtils.parseFeatureTypeDescrption(featureTypeDescription, descriptions);
+    } catch (error) {
+      throw error instanceof AlloyMapError
+        ? error
+        : new AlloyMapError(1562248443, 'Failed to parse WFS feature type descriptions');
+    }
+    return descriptions;
+  }
 
-      const complexType = schemaRoot.querySelector('xsd:complexType');
-      if (!complexType) {
-        throw new AlloyMapError(1562248333, 'Failed to find complex type node in schema');
+  /**
+   * debugger instance
+   * @ignore
+   * @internal
+   */
+  private static readonly debugger: Debugger = debug('alloymaps').extend(WfsUtils.name);
+
+  /**
+   * parses features type descriptions into a map
+   * @param featureTypeDescription xml response of DescribeFeatureType request
+   * @param descriptions map to where store descriptions
+   * @ignore
+   * @internal
+   */
+  private static async parseFeatureTypeDescrption(
+    featureTypeDescription: string,
+    descriptions: Map<string, WfsFeatureDescription>,
+  ) {
+    const domparser = new DOMParser();
+    const domdoc = domparser.parseFromString(featureTypeDescription, 'text/xml');
+    const schemaRoot = domdoc.getElementsByTagName('xsd:schema').item(0);
+    if (!schemaRoot) {
+      return;
+    }
+
+    const schemaNamespace = schemaRoot.getAttribute('targetNamespace');
+
+    const complexTypes = schemaRoot.getElementsByTagName('xsd:complexType');
+    if (complexTypes.length === 0) {
+      const imports = schemaRoot.getElementsByTagName('xsd:import');
+      for (const imp0rt of imports) {
+        if (imp0rt.getAttribute('namespace') !== schemaNamespace) {
+          continue;
+        }
+        const href = imp0rt.getAttribute('schemaLocation');
+        if (!href) {
+          throw new AlloyMapError(1569847815, 'Could not get description import schema location');
+        }
+        const importTypeDescription = await (await fetch(href)).text();
+        await WfsUtils.parseFeatureTypeDescrption(importTypeDescription, descriptions);
       }
-      const complexContent = complexType.querySelector('xsd:complexContent');
+      return;
+    }
+
+    for (const complexType of complexTypes) {
+      const complexContent = complexType.getElementsByTagName('xsd:complexContent').item(0);
       if (!complexContent) {
         throw new AlloyMapError(1562248352, 'Failed to find complex content node in schema');
       }
-      const extension = complexContent.querySelector('xsd:extension');
+      const extension = complexContent.getElementsByTagName('xsd:extension').item(0);
       if (!extension) {
         throw new AlloyMapError(1562248368, 'Failed to find extension node in schema');
       }
-      const sequence = extension.querySelector('xsd:sequence');
+      const sequence = extension.getElementsByTagName('xsd:sequence').item(0);
       if (!sequence) {
         throw new AlloyMapError(1562248383, 'Failed to find sequence node in schema');
       }
 
-      const featureTypeElements = sequence.querySelectorAll('xsd:element');
-      if (featureTypeElements) {
-        Array.from(featureTypeElements.values()).forEach((element) => {
+      const featureTypeElements = sequence.getElementsByTagName('xsd:element');
+      if (featureTypeElements.length > 0) {
+        for (const element of featureTypeElements) {
           const name: string | null = element.getAttribute('name');
           if (name) {
             WfsUtils.debugger(`Parsing description for parameter ${name}`);
@@ -160,19 +208,8 @@ export abstract class WfsUtils {
               type: type || 'xsd:string', // xsd:string, xsd:double, gml:PointPropertyType....
             });
           }
-        });
+        }
       }
-    } catch (error) {
-      throw error instanceof AlloyMapError
-        ? error
-        : new AlloyMapError(1562248443, 'Failed to parse WFS feature type descriptions');
     }
-    return descriptions;
   }
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  private static readonly debugger: Debugger = debug('alloymaps').extend(WfsUtils.name);
 }
