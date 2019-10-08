@@ -1,4 +1,5 @@
 import * as color from 'color';
+import OLImageWMS from 'ol/source/ImageWMS';
 import OLTileWMS from 'ol/source/TileWMS';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { AlloyMapError } from '../error/AlloyMapError';
@@ -59,6 +60,40 @@ export abstract class WmsUtils {
               .replace('#', '0x')
           : undefined,
       },
+      attributions: options.watermark,
+    });
+  }
+
+  /**
+   * Creates OLImageWMS source from AlloyWmsParameters
+   * @param options AlloyWMSParameters to build options for OLTileWms
+   * @param transparent whether to request transparent tiles
+   * @internal
+   * @ignore
+   */
+  public static createImageWmsSourceFromParameters(
+    options: AlloyWmsParameters,
+    transparent: boolean,
+  ): OLImageWMS {
+    return new OLImageWMS({
+      url: options.url,
+      crossOrigin: 'anonymous',
+      projection: options.crs,
+      params: {
+        LAYERS: options.layers.map((l) => l.layerName).join(','),
+        STYLES: options.layers
+          .map((l) => (l.styleName === 'default' ? '' : l.styleName || ''))
+          .join(','),
+        TRANSPARENT: transparent,
+        BGCOLOR: options.colour
+          ? // special colour format for WMS
+            color(options.colour)
+              .hex()
+              .toUpperCase()
+              .replace('#', '0x')
+          : undefined,
+      },
+      // TODO: add watermark sanitisation
       attributions: options.watermark,
     });
   }
