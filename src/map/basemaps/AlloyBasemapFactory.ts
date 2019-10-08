@@ -1,3 +1,4 @@
+import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
