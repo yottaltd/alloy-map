@@ -387,13 +387,15 @@ export class AlloyMap {
     if (this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118465, 'layer already added to map');
     }
+
+    // keep copy of old layers for event
+    const oldLayers = new Map(this.managedLayers);
+
     layer.olLayers.forEach((olLayer) => this.olMap.addLayer(olLayer));
     this.managedLayers.set(layer.id, layer);
 
     // dispatch layers change event
-    this.onChangeLayers.dispatch(
-      new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
-    );
+    this.onChangeLayers.dispatch(new LayersChangeEvent(new Map(this.managedLayers), oldLayers));
   }
 
   /**
@@ -404,6 +406,10 @@ export class AlloyMap {
     if (!this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118768, 'layer does not exist in map');
     }
+
+    // keep copy of old layers for event
+    const oldLayers = new Map(this.managedLayers);
+
     layer.olLayers.forEach((olLayer) => this.olMap.removeLayer(olLayer));
     this.managedLayers.delete(layer.id);
     layer.dispose(); // dispose of the layer
@@ -434,9 +440,7 @@ export class AlloyMap {
     }
 
     // dispatch layers change event
-    this.onChangeLayers.dispatch(
-      new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
-    );
+    this.onChangeLayers.dispatch(new LayersChangeEvent(new Map(this.managedLayers), oldLayers));
   }
 
   /**
