@@ -243,7 +243,7 @@ describe('map', () => {
         map,
         styles,
       });
-      let event: LayersChangeEvent = new LayersChangeEvent(new Map());
+      let event: LayersChangeEvent = new LayersChangeEvent(new Map(), new Map());
 
       // listen to change event
       map.addLayersChangeListener((e) => {
@@ -278,7 +278,7 @@ describe('map', () => {
         map,
         styles,
       });
-      let event: LayersChangeEvent = new LayersChangeEvent(new Map());
+      let event: LayersChangeEvent = new LayersChangeEvent(new Map(), new Map());
 
       // listen to change event
       map.addLayersChangeListener((e) => {
@@ -313,7 +313,7 @@ describe('map', () => {
         map,
         styles,
       });
-      let event: LayersChangeEvent = new LayersChangeEvent(new Map());
+      let event: LayersChangeEvent = new LayersChangeEvent(new Map(), new Map());
 
       // listen to change event
       map.addLayersChangeListener((e) => {
