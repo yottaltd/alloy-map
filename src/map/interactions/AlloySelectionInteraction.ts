@@ -109,6 +109,9 @@ export class AlloySelectionInteraction {
       throw new AlloyMapError(1556804618, 'feature is not selectable');
     }
 
+    // keep copy of old features (already a new map instance)
+    const oldFeatures = this.map.selectionLayer.features;
+
     // only attempt to remove the feature and track modified
     this.debugger('remove feature: ', feature.id);
     const modified = this.map.selectionLayer.removeFeature(feature);
@@ -116,7 +119,7 @@ export class AlloySelectionInteraction {
     // only trigger event on modified
     if (modified) {
       this.debugger('layer modified, dispatching selection change event');
-      this.dispatchFeatureSelectionChangeEvent();
+      this.dispatchFeatureSelectionChangeEvent(oldFeatures);
     }
   }
 
@@ -156,8 +159,8 @@ export class AlloySelectionInteraction {
     this.debugger('setting selected feature: %s', feature.id);
 
     // check if the feature is already selected
-    const currentSelection = this.map.selectionLayer.features;
-    if (currentSelection.size === 1 && currentSelection.has(feature.id)) {
+    const oldSelection = this.map.selectionLayer.features;
+    if (oldSelection.size === 1 && oldSelection.has(feature.id)) {
       this.debugger('feature: %s is already selected', feature.id);
       return; // no-op
     }
@@ -169,7 +172,7 @@ export class AlloySelectionInteraction {
 
     // we know we need to trigger the event if we got this far
     this.debugger('dispatching selection change event');
-    this.dispatchFeatureSelectionChangeEvent();
+    this.dispatchFeatureSelectionChangeEvent(oldSelection);
   }
 
   /**
@@ -203,12 +206,12 @@ export class AlloySelectionInteraction {
     }
 
     // check if the features are already selected
-    const currentSelection = this.map.selectionLayer.features;
-    if (currentSelection.size === features.length) {
+    const oldSelection = this.map.selectionLayer.features;
+    if (oldSelection.size === features.length) {
       // iterate through each provided feature and check if it exists in the current selection
       let hasDifferentFeatures = false;
       for (let i = 0, s = features.length; i < s; i++) {
-        if (!currentSelection.has(features[i].id)) {
+        if (!oldSelection.has(features[i].id)) {
           hasDifferentFeatures = true;
           break;
         }
@@ -238,7 +241,7 @@ export class AlloySelectionInteraction {
 
     // we know we need to trigger the event if we got this far
     this.debugger('dispatching selection change event');
-    this.dispatchFeatureSelectionChangeEvent();
+    this.dispatchFeatureSelectionChangeEvent(oldSelection);
   }
 
   /**
@@ -261,6 +264,9 @@ export class AlloySelectionInteraction {
       throw new AlloyMapError(1554049505, 'feature is not selectable');
     }
 
+    // keep copy of old features (already a new map instance)
+    const oldFeatures = this.map.selectionLayer.features;
+
     // only attempt to add the feature and track modified
     this.debugger('adding feature: ', feature.id);
     const modified = this.map.selectionLayer.addFeature(feature);
@@ -268,7 +274,7 @@ export class AlloySelectionInteraction {
     // only trigger event on modified
     if (modified) {
       this.debugger('layer modified, dispatching selection change event');
-      this.dispatchFeatureSelectionChangeEvent();
+      this.dispatchFeatureSelectionChangeEvent(oldFeatures);
     }
   }
 
@@ -304,6 +310,9 @@ export class AlloySelectionInteraction {
       return;
     }
 
+    // keep copy of old features (already a new map instance)
+    const oldFeatures = this.map.selectionLayer.features;
+
     // behind guard because we are performing operations for a log
     if (this.debugger.enabled) {
       this.debugger('adding %d features: %s', features.length, features.map((f) => f.id));
@@ -314,7 +323,7 @@ export class AlloySelectionInteraction {
     // only trigger event on modified
     if (modified) {
       this.debugger('layer modified, dispatching selection change event');
-      this.dispatchFeatureSelectionChangeEvent();
+      this.dispatchFeatureSelectionChangeEvent(oldFeatures);
     }
   }
 
@@ -562,9 +571,10 @@ export class AlloySelectionInteraction {
   /**
    * dispatches the feature selection change event with latest selected features
    */
-  private dispatchFeatureSelectionChangeEvent() {
+  private dispatchFeatureSelectionChangeEvent(oldFeatures: Map<string, AlloyFeature>) {
     this.onFeatureSelectionChange.dispatch(
-      new FeatureSelectionChangeEvent(this.map.selectionLayer.features),
+      // features getter already makes a new map instance
+      new FeatureSelectionChangeEvent(this.map.selectionLayer.features, oldFeatures),
     );
   }
 }
