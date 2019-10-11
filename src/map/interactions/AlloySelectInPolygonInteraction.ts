@@ -147,9 +147,9 @@ export class AlloySelectInPolygonInteraction {
       if (features.length > 0) {
         // decide how to select the features
         if (this.appendToSelection) {
-          this.map.selectFeatures(features);
+          this.map.selectionInteraction.selectFeatures(features, true);
         } else {
-          this.map.setSelectedFeatures(features);
+          this.map.selectionInteraction.setSelectedFeatures(features, true);
         }
       }
 

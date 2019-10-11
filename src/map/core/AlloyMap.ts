@@ -427,7 +427,7 @@ export class AlloyMap {
       // if the filtered list is not the same size as the original selected features then change
       // what is selected to omit the features that were in the removed layer
       if (selectedFeaturesNotInRemovedLayer.length !== currentlySelectedFeatures.size) {
-        this.selectionInteraction.setSelectedFeatures(selectedFeaturesNotInRemovedLayer);
+        this.selectionInteraction.setSelectedFeatures(selectedFeaturesNotInRemovedLayer, false);
       }
     }
 
@@ -656,9 +656,9 @@ export class AlloyMap {
    */
   public setSelectedFeature(feature: AlloyFeature | null): void {
     if (feature === null) {
-      this.selectionInteraction.setSelectedFeatures([]);
+      this.selectionInteraction.setSelectedFeatures([], false);
     } else {
-      this.selectionInteraction.setSelectedFeature(feature);
+      this.selectionInteraction.setSelectedFeature(feature, false);
     }
   }
 
@@ -668,7 +668,7 @@ export class AlloyMap {
    * @param features the features to select, passing an empty array will deselect all features
    */
   public setSelectedFeatures(features: AlloyFeature[]): void {
-    this.selectionInteraction.setSelectedFeatures(features);
+    this.selectionInteraction.setSelectedFeatures(features, false);
   }
 
   /**
@@ -678,7 +678,7 @@ export class AlloyMap {
    * @param feature the feature to select
    */
   public selectFeature(feature: AlloyFeature): void {
-    this.selectionInteraction.selectFeature(feature);
+    this.selectionInteraction.selectFeature(feature, false);
   }
 
   /**
@@ -688,7 +688,7 @@ export class AlloyMap {
    * @param features the features to select
    */
   public selectFeatures(features: AlloyFeature[]): void {
-    this.selectionInteraction.selectFeatures(features);
+    this.selectionInteraction.selectFeatures(features, false);
   }
 
   /**
@@ -697,7 +697,7 @@ export class AlloyMap {
    * @param feature the feature to deselect
    */
   public deselectFeature(feature: AlloyFeature): void {
-    this.selectionInteraction.deselectFeature(feature);
+    this.selectionInteraction.deselectFeature(feature, false);
   }
 
   /**
