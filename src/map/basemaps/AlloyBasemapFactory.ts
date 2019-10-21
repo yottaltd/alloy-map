@@ -88,7 +88,7 @@ export abstract class AlloyBasemapFactory {
       } catch (e) {
         // do not throw if failed to register projection
         // tslint:disable-next-line:no-console
-        console.error('failed to register projection ' + options.crs);
+        console.error('failed to register projection ' + options.crs, e);
       }
     }
     return new AlloyWmsBasemap(options);
