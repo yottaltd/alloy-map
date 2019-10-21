@@ -103,11 +103,15 @@ export class AlloySelectionInteraction {
    * deselects a feature, this will retain any other existing selected feature(s)
    * and trigger the `FeatureSelectionChangeEvent` if selected features were modified.
    * @param feature the feature to deselect
+   * @param userEvent whether the selection was triggered by a user event
    */
-  public deselectFeature(feature: AlloyFeature): void {
+  public deselectFeature(feature: AlloyFeature, userEvent: boolean): void {
     if (!feature.allowsSelection) {
       throw new AlloyMapError(1556804618, 'feature is not selectable');
     }
+
+    // keep copy of old features (already a new map instance)
+    const oldFeatures = this.map.selectionLayer.features;
 
     // only attempt to remove the feature and track modified
     this.debugger('remove feature: ', feature.id);
@@ -116,7 +120,7 @@ export class AlloySelectionInteraction {
     // only trigger event on modified
     if (modified) {
       this.debugger('layer modified, dispatching selection change event');
-      this.dispatchFeatureSelectionChangeEvent();
+      this.dispatchFeatureSelectionChangeEvent(oldFeatures, userEvent);
     }
   }
 
@@ -127,9 +131,9 @@ export class AlloySelectionInteraction {
   public setSelectionMode(mode: AlloySelectionMode): void {
     // remove or trim selection based on certain modes
     if (mode === AlloySelectionMode.Off) {
-      this.setSelectedFeatures([]);
+      this.setSelectedFeatures([], false);
     } else if (mode === AlloySelectionMode.Single) {
-      this.setSelectedFeatures(Array.from(this.map.selectedFeatures.values()).slice(0, 1));
+      this.setSelectedFeatures(Array.from(this.map.selectedFeatures.values()).slice(0, 1), false);
     }
     this.currentSelectionMode = mode;
   }
@@ -138,8 +142,9 @@ export class AlloySelectionInteraction {
    * sets the currently selected feature, this will remove any existing selected feature(s) and
    * trigger the `FeatureSelectionChangeEvent` if selected features were modified.
    * @param feature the feature to select
+   * @param userEvent whether the selection was triggered by a user event
    */
-  public setSelectedFeature(feature: AlloyFeature): void {
+  public setSelectedFeature(feature: AlloyFeature, userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single
@@ -156,8 +161,8 @@ export class AlloySelectionInteraction {
     this.debugger('setting selected feature: %s', feature.id);
 
     // check if the feature is already selected
-    const currentSelection = this.map.selectionLayer.features;
-    if (currentSelection.size === 1 && currentSelection.has(feature.id)) {
+    const oldSelection = this.map.selectionLayer.features;
+    if (oldSelection.size === 1 && oldSelection.has(feature.id)) {
       this.debugger('feature: %s is already selected', feature.id);
       return; // no-op
     }
@@ -169,15 +174,16 @@ export class AlloySelectionInteraction {
 
     // we know we need to trigger the event if we got this far
     this.debugger('dispatching selection change event');
-    this.dispatchFeatureSelectionChangeEvent();
+    this.dispatchFeatureSelectionChangeEvent(oldSelection, userEvent);
   }
 
   /**
    * sets the currently selected features, this will remove any existing selected feature(s) and
    * trigger the `FeatureSelectionChangeEvent` if selected features were modified.
    * @param features the features to select, passing an empty array will deselect all features
+   * @param userEvent whether the selection was triggered by a user event
    */
-  public setSelectedFeatures(features: AlloyFeature[]): void {
+  public setSelectedFeatures(features: AlloyFeature[], userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single
@@ -203,12 +209,12 @@ export class AlloySelectionInteraction {
     }
 
     // check if the features are already selected
-    const currentSelection = this.map.selectionLayer.features;
-    if (currentSelection.size === features.length) {
+    const oldSelection = this.map.selectionLayer.features;
+    if (oldSelection.size === features.length) {
       // iterate through each provided feature and check if it exists in the current selection
       let hasDifferentFeatures = false;
       for (let i = 0, s = features.length; i < s; i++) {
-        if (!currentSelection.has(features[i].id)) {
+        if (!oldSelection.has(features[i].id)) {
           hasDifferentFeatures = true;
           break;
         }
@@ -238,7 +244,7 @@ export class AlloySelectionInteraction {
 
     // we know we need to trigger the event if we got this far
     this.debugger('dispatching selection change event');
-    this.dispatchFeatureSelectionChangeEvent();
+    this.dispatchFeatureSelectionChangeEvent(oldSelection, userEvent);
   }
 
   /**
@@ -246,8 +252,9 @@ export class AlloySelectionInteraction {
    * selected feature(s) and trigger the `FeatureSelectionChangeEvent` if selected features were
    * modified.
    * @param feature the feature to select
+   * @param userEvent whether the selection was triggered by a user event
    */
-  public selectFeature(feature: AlloyFeature): void {
+  public selectFeature(feature: AlloyFeature, userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single
@@ -261,6 +268,9 @@ export class AlloySelectionInteraction {
       throw new AlloyMapError(1554049505, 'feature is not selectable');
     }
 
+    // keep copy of old features (already a new map instance)
+    const oldFeatures = this.map.selectionLayer.features;
+
     // only attempt to add the feature and track modified
     this.debugger('adding feature: ', feature.id);
     const modified = this.map.selectionLayer.addFeature(feature);
@@ -268,7 +278,7 @@ export class AlloySelectionInteraction {
     // only trigger event on modified
     if (modified) {
       this.debugger('layer modified, dispatching selection change event');
-      this.dispatchFeatureSelectionChangeEvent();
+      this.dispatchFeatureSelectionChangeEvent(oldFeatures, userEvent);
     }
   }
 
@@ -277,8 +287,9 @@ export class AlloySelectionInteraction {
    * selected feature(s) and trigger the `FeatureSelectionChangeEvent` if selected features were
    * modified.
    * @param features the features to select
+   * @param userEvent whether the selection was triggered by a user event
    */
-  public selectFeatures(features: AlloyFeature[]): void {
+  public selectFeatures(features: AlloyFeature[], userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single
@@ -304,6 +315,9 @@ export class AlloySelectionInteraction {
       return;
     }
 
+    // keep copy of old features (already a new map instance)
+    const oldFeatures = this.map.selectionLayer.features;
+
     // behind guard because we are performing operations for a log
     if (this.debugger.enabled) {
       this.debugger('adding %d features: %s', features.length, features.map((f) => f.id));
@@ -314,7 +328,7 @@ export class AlloySelectionInteraction {
     // only trigger event on modified
     if (modified) {
       this.debugger('layer modified, dispatching selection change event');
-      this.dispatchFeatureSelectionChangeEvent();
+      this.dispatchFeatureSelectionChangeEvent(oldFeatures, userEvent);
     }
   }
 
@@ -367,7 +381,7 @@ export class AlloySelectionInteraction {
     // if no features were found, deselect
     if (features.length === 0) {
       this.debugger('no features found for pixel: %o', event.pixel);
-      this.setSelectedFeatures([]);
+      this.setSelectedFeatures([], true);
       return;
     }
 
@@ -388,7 +402,7 @@ export class AlloySelectionInteraction {
     // if we don't allow selection, deselect and run any custom processing
     if (!firstFeature.allowsSelection) {
       this.debugger('first feature: %s does not allow selection', firstFeature.id);
-      this.setSelectedFeatures([]);
+      this.setSelectedFeatures([], true);
       this.callFeatureOnSelectionInteraction(firstFeature);
       return;
     }
@@ -402,7 +416,7 @@ export class AlloySelectionInteraction {
         'first feature: %s is the only feature selected, deselecting...',
         firstFeature.id,
       );
-      this.setSelectedFeatures([]);
+      this.setSelectedFeatures([], true);
 
       // set the hovered feature because we are over it but it doesn't trigger a pointer move
       // and deselecting means we are hovered over it
@@ -432,7 +446,7 @@ export class AlloySelectionInteraction {
               Array.from(selectedFeatures.keys()),
             );
           }
-          this.setSelectedFeatures(Array.from(selectedFeatures.values()));
+          this.setSelectedFeatures(Array.from(selectedFeatures.values()), true);
           // we are specifically not calling "onFeatureClicked" when deselecting, think its right?
 
           // set the hovered feature because we are over it but it doesn't trigger a pointer move
@@ -443,7 +457,7 @@ export class AlloySelectionInteraction {
             'first feature: %s was shift/ctrl clicked and not already selected, selecting',
             firstFeature.id,
           );
-          this.selectFeature(firstFeature);
+          this.selectFeature(firstFeature, true);
           this.callFeatureOnSelectionInteraction(firstFeature);
 
           // unset the hovered feature because we are over it but it doesn't trigger a pointer move
@@ -477,7 +491,7 @@ export class AlloySelectionInteraction {
    */
   private onClickSelectSingleFeature(feature: AlloyFeature) {
     this.debugger('first feature: %s was clicked and not already selected, selecting', feature.id);
-    this.setSelectedFeature(feature);
+    this.setSelectedFeature(feature, true);
     this.callFeatureOnSelectionInteraction(feature);
 
     // clear the hovered feature, because this doesn't involve a pointer move and it will still have
@@ -561,10 +575,16 @@ export class AlloySelectionInteraction {
 
   /**
    * dispatches the feature selection change event with latest selected features
+   * @param oldFeatures the old features that were selected
+   * @param userEvent whether the event was trigger from user interaction
    */
-  private dispatchFeatureSelectionChangeEvent() {
+  private dispatchFeatureSelectionChangeEvent(
+    oldFeatures: Map<string, AlloyFeature>,
+    userEvent: boolean,
+  ) {
     this.onFeatureSelectionChange.dispatch(
-      new FeatureSelectionChangeEvent(this.map.selectionLayer.features),
+      // features getter already makes a new map instance
+      new FeatureSelectionChangeEvent(this.map.selectionLayer.features, oldFeatures, userEvent),
     );
   }
 }
