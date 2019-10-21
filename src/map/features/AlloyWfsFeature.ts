@@ -9,7 +9,6 @@ import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyWfsLayer } from '../layers/wfs/AlloyWfsLayer';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyWfsFeatureProperties } from './AlloyWfsFeatureProperties';
