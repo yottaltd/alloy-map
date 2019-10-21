@@ -44,7 +44,7 @@ export abstract class WmsUtils {
     return new OLTileWMS({
       url: options.url,
       crossOrigin: 'anonymous',
-      projection: options.crs,
+      projection: options.crs ? options.crs.toUpperCase() : undefined,
       tileGrid,
       params: {
         LAYERS: options.layers.map((l) => l.layerName).join(','),
@@ -199,6 +199,8 @@ export abstract class WmsUtils {
         crs = 'EPSG:3857';
       } else if (layer.CRS.indexOf('EPSG:900913') >= 0) {
         crs = 'ESPG:900913';
+      } else if (layer.CRS.length > 0) {
+        crs = layer.CRS[0];
       }
     }
 
