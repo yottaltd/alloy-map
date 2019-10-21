@@ -61,42 +61,37 @@ export abstract class WfsLayerUtils {
         const onError = (e: any) =>
           // tslint:disable-next-line:no-console
           console.error('failed to fetch WFS features for extent', extent, e);
-        const fetchPromise = () =>
-          fetch(extentUrl.href)
-            .then((response) => {
-              if (response.status === 200) {
-                response
-                  .text()
-                  .then((text) => {
-                    let readFeaturesOptions:
-                      | { dataProjection: OLProjection; featureProjection: OLProjection }
-                      | undefined;
-                    if (epsg === 3857) {
-                      readFeaturesOptions = undefined;
-                    } else {
-                      readFeaturesOptions = {
-                        dataProjection:
-                          PolyfillProj.get(epsgCode) || ProjectionUtils.API_PROJECTION,
-                        featureProjection: ProjectionUtils.MAP_PROJECTION,
-                      };
-                    }
-
-                    const features = format.readFeatures(text, readFeaturesOptions);
-                    if (features && features.length > 0) {
-                      if (featureSetter) {
-                        featureSetter(features);
-                      }
-                      vectorSource.addFeatures(features);
-                    }
-                  })
-                  .catch((e) => {
-                    onError(`failed to get wfs tile response text`);
-                  });
+        const fetchPromise = async () => {
+          try {
+            const response = await fetch(extentUrl.href);
+            if (response.status === 200) {
+              const text = await response.text();
+              let readFeaturesOptions:
+                | { dataProjection: OLProjection; featureProjection: OLProjection }
+                | undefined;
+              if (epsg === 3857) {
+                readFeaturesOptions = undefined;
               } else {
-                onError(`failed, status code: ${response.status}, message: ${response.statusText}`);
+                readFeaturesOptions = {
+                  dataProjection: PolyfillProj.get(epsgCode) || ProjectionUtils.API_PROJECTION,
+                  featureProjection: ProjectionUtils.MAP_PROJECTION,
+                };
               }
-            })
-            .catch((e) => onError(e.toString()));
+
+              const features = format.readFeatures(text, readFeaturesOptions);
+              if (features && features.length > 0) {
+                if (featureSetter) {
+                  featureSetter(features);
+                }
+                vectorSource.addFeatures(features);
+              }
+            } else {
+              onError(`failed, status code: ${response.status}, message: ${response.statusText}`);
+            }
+          } catch (e) {
+            onError(e.toString());
+          }
+        };
 
         if (epsgCode !== ProjectionUtils.MAP_PROJECTION.getCode()) {
           ProjectionUtils.register(epsg).then(fetchPromise);
