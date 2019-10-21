@@ -21,7 +21,7 @@ import { ProjectionUtils } from './ProjectionUtils';
  * feature back to an alloy feature in rare circumstances)
  * @ignore
  */
-const OL_FEATURE_TO_FEATURE_ID = '__AlloyFeatureId__';
+export const OL_FEATURE_TO_FEATURE_ID = '__AlloyFeatureId__';
 
 /**
  * utils for features

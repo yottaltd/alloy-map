@@ -7,9 +7,10 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import { FeatureUtils } from '../../utils/FeatureUtils';
+import { FeatureUtils, OL_FEATURE_TO_FEATURE_ID } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { WfsFeatureProperty } from '../../wfs/WfsFeatureProperty';
+import { AlloyWfsLayer } from '../layers/wfs/AlloyWfsLayer';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyWfsFeatureProperties } from './AlloyWfsFeatureProperties';
@@ -64,6 +65,12 @@ export class AlloyWfsFeature implements AlloyFeature {
   public readonly properties: Readonly<AlloyWfsFeatureProperties>;
 
   /**
+   * @ignore
+   * @internal
+   */
+  private readonly originatingLayer: AlloyWfsLayer;
+
+  /**
    * creates a new instance
    * @param id the id of the feature
    * @param olFeature the underlying openlayers feature
@@ -77,13 +84,14 @@ export class AlloyWfsFeature implements AlloyFeature {
     id: string,
     olFeature: OLFeature,
     properties: AlloyWfsFeatureProperties,
-    originatingLayerId: string,
+    originatingLayer: AlloyWfsLayer,
     styleId: string,
   ) {
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
-    this.originatingLayerId = originatingLayerId;
+    this.originatingLayer = originatingLayer;
+    this.originatingLayerId = originatingLayer.id;
     this.styleId = styleId;
 
     // set the id of the feature on the ol feature
@@ -96,12 +104,33 @@ export class AlloyWfsFeature implements AlloyFeature {
    */
   public getWfsProperties(): WfsFeatureProperty[] {
     const wfsProperties: WfsFeatureProperty[] = [];
+    const descriptions = this.originatingLayer.getWfsDescriptionForFeature(this);
     const olFeatureProperties = this.olFeature.getProperties();
-    for (const key of Object.keys(olFeatureProperties)) {
-      wfsProperties.push({
-        name: key,
-        value: olFeatureProperties[key],
-      });
+    const olFeaturePropertiesKeys = Object.keys(olFeatureProperties);
+    for (const key of olFeaturePropertiesKeys) {
+      if (key === OL_FEATURE_TO_FEATURE_ID || key === 'geometry') {
+        continue;
+      }
+      if (descriptions === null || descriptions.size === 0 || descriptions.has(key)) {
+        wfsProperties.push({
+          name: key,
+          value: olFeatureProperties[key],
+          description: descriptions ? descriptions.get(key) : undefined,
+        });
+      }
+    }
+    if (descriptions) {
+      for (const descriptionKey of Array.from(descriptions.keys())) {
+        if (olFeaturePropertiesKeys.indexOf(descriptionKey) < 0) {
+          const description = descriptions.get(descriptionKey);
+          if (description && description.nillable) {
+            wfsProperties.push({
+              name: descriptionKey,
+              description,
+            });
+          }
+        }
+      }
     }
     return wfsProperties;
   }
