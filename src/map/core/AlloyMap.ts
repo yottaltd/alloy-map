@@ -387,13 +387,15 @@ export class AlloyMap {
     if (this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118465, 'layer already added to map');
     }
+
+    // keep copy of old layers for event
+    const oldLayers = new Map(this.managedLayers);
+
     layer.olLayers.forEach((olLayer) => this.olMap.addLayer(olLayer));
     this.managedLayers.set(layer.id, layer);
 
     // dispatch layers change event
-    this.onChangeLayers.dispatch(
-      new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
-    );
+    this.onChangeLayers.dispatch(new LayersChangeEvent(new Map(this.managedLayers), oldLayers));
   }
 
   /**
@@ -404,6 +406,10 @@ export class AlloyMap {
     if (!this.managedLayers.has(layer.id)) {
       throw new AlloyMapError(1554118768, 'layer does not exist in map');
     }
+
+    // keep copy of old layers for event
+    const oldLayers = new Map(this.managedLayers);
+
     layer.olLayers.forEach((olLayer) => this.olMap.removeLayer(olLayer));
     this.managedLayers.delete(layer.id);
     layer.dispose(); // dispose of the layer
@@ -421,7 +427,7 @@ export class AlloyMap {
       // if the filtered list is not the same size as the original selected features then change
       // what is selected to omit the features that were in the removed layer
       if (selectedFeaturesNotInRemovedLayer.length !== currentlySelectedFeatures.size) {
-        this.selectionInteraction.setSelectedFeatures(selectedFeaturesNotInRemovedLayer);
+        this.selectionInteraction.setSelectedFeatures(selectedFeaturesNotInRemovedLayer, false);
       }
     }
 
@@ -434,9 +440,7 @@ export class AlloyMap {
     }
 
     // dispatch layers change event
-    this.onChangeLayers.dispatch(
-      new LayersChangeEvent(this.managedLayers /* constructor clones the layers */),
-    );
+    this.onChangeLayers.dispatch(new LayersChangeEvent(new Map(this.managedLayers), oldLayers));
   }
 
   /**
@@ -652,9 +656,9 @@ export class AlloyMap {
    */
   public setSelectedFeature(feature: AlloyFeature | null): void {
     if (feature === null) {
-      this.selectionInteraction.setSelectedFeatures([]);
+      this.selectionInteraction.setSelectedFeatures([], false);
     } else {
-      this.selectionInteraction.setSelectedFeature(feature);
+      this.selectionInteraction.setSelectedFeature(feature, false);
     }
   }
 
@@ -664,7 +668,7 @@ export class AlloyMap {
    * @param features the features to select, passing an empty array will deselect all features
    */
   public setSelectedFeatures(features: AlloyFeature[]): void {
-    this.selectionInteraction.setSelectedFeatures(features);
+    this.selectionInteraction.setSelectedFeatures(features, false);
   }
 
   /**
@@ -674,7 +678,7 @@ export class AlloyMap {
    * @param feature the feature to select
    */
   public selectFeature(feature: AlloyFeature): void {
-    this.selectionInteraction.selectFeature(feature);
+    this.selectionInteraction.selectFeature(feature, false);
   }
 
   /**
@@ -684,7 +688,7 @@ export class AlloyMap {
    * @param features the features to select
    */
   public selectFeatures(features: AlloyFeature[]): void {
-    this.selectionInteraction.selectFeatures(features);
+    this.selectionInteraction.selectFeatures(features, false);
   }
 
   /**
@@ -693,7 +697,7 @@ export class AlloyMap {
    * @param feature the feature to deselect
    */
   public deselectFeature(feature: AlloyFeature): void {
-    this.selectionInteraction.deselectFeature(feature);
+    this.selectionInteraction.deselectFeature(feature, false);
   }
 
   /**
