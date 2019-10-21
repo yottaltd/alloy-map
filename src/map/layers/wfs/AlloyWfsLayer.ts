@@ -112,7 +112,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
               olFeature.getId().toString(),
               olFeature,
               {},
-              this,
+              this.id,
               style.styleId,
             );
             this.currentFeatures.set(feature.id, feature);

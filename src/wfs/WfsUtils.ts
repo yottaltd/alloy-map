@@ -1,9 +1,14 @@
 import { debug, Debugger } from 'debug';
 import { AlloyMapError } from '../error/AlloyMapError';
+import { AlloyMap } from '../map/core/AlloyMap';
+import { AlloyWfsFeature } from '../map/features/AlloyWfsFeature';
+import { AlloyWfsLayer } from '../map/layers/wfs/AlloyWfsLayer';
 import { AlloyWfsLayerStyle } from '../map/styles/AlloyWfsLayerStyle';
+import { OL_FEATURE_TO_FEATURE_ID } from '../utils/FeatureUtils';
 import { AlloyWfsCapabilities } from './AlloyWfsCapabilities';
 import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
 import { WfsFeatureDescription } from './WfsFeatureDescription';
+import { WfsFeatureProperty } from './WfsFeatureProperty';
 import { WfsVersionParser } from './WfsVersionParser';
 
 /**
@@ -82,6 +87,57 @@ export abstract class WfsUtils {
     } catch (e) {
       throw new AlloyMapError(1562247485, 'Failed to parse WFS Capabilities');
     }
+  }
+
+  /**
+   * Gets all property values for this WFS feature
+   * @param map `AlloyMap` that contains WFS layer with provided feature
+   * @param feature `AlloyWfsFeature` for which we are getting properties
+   * @returns array of `WfsFeatureProperty`
+   */
+  public static getWfsFeatureProperties(
+    map: AlloyMap,
+    feature: AlloyWfsFeature,
+  ): WfsFeatureProperty[] {
+    const wfsProperties: WfsFeatureProperty[] = [];
+    if (!feature.originatingLayerId) {
+      return wfsProperties;
+    }
+
+    const layer = map.layers.get(feature.originatingLayerId);
+    if (!(layer instanceof AlloyWfsLayer)) {
+      throw new AlloyMapError(1571669799, 'wfs feature is not assigned to a wfs layer');
+    }
+
+    const descriptions = layer.getWfsDescriptionForFeature(feature);
+    const olFeatureProperties = feature.olFeature.getProperties();
+    const olFeaturePropertiesKeys = Object.keys(olFeatureProperties);
+    for (const key of olFeaturePropertiesKeys) {
+      if (key === OL_FEATURE_TO_FEATURE_ID || key === 'geometry') {
+        continue;
+      }
+      if (descriptions === null || descriptions.size === 0 || descriptions.has(key)) {
+        wfsProperties.push({
+          name: key,
+          value: olFeatureProperties[key],
+          description: descriptions ? descriptions.get(key) : undefined,
+        });
+      }
+    }
+    if (descriptions) {
+      for (const descriptionKey of Array.from(descriptions.keys())) {
+        if (olFeaturePropertiesKeys.indexOf(descriptionKey) < 0) {
+          const description = descriptions.get(descriptionKey);
+          if (description && description.nillable) {
+            wfsProperties.push({
+              name: descriptionKey,
+              description,
+            });
+          }
+        }
+      }
+    }
+    return wfsProperties;
   }
 
   /**
