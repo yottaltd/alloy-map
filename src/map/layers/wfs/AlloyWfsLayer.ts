@@ -83,7 +83,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
     this.styleProcessor = new AlloyWfsStyleProcessor(this);
 
     for (const style of this.styles) {
-      WfsUtils.getFeatureTypeDescription(style.url).then((description) => {
+      WfsUtils.getFeatureTypeDescription(style).then((description) => {
         this.wfsFeatureTypeDescriptions.set(style.styleId, description);
       });
     }

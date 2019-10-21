@@ -1,5 +1,6 @@
 import { debug, Debugger } from 'debug';
 import { AlloyMapError } from '../error/AlloyMapError';
+import { AlloyWfsLayerStyle } from '../map/styles/AlloyWfsLayerStyle';
 import { AlloyWfsCapabilities } from './AlloyWfsCapabilities';
 import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
 import { WfsFeatureDescription } from './WfsFeatureDescription';
@@ -90,21 +91,22 @@ export abstract class WfsUtils {
    * @internal
    */
   public static async getFeatureTypeDescription(
-    url: string,
+    style: AlloyWfsLayerStyle,
   ): Promise<Map<string, WfsFeatureDescription>> {
-    const featureTypeUrl = new URL(url.trim());
+    const featureTypeUrl = new URL(style.url.trim());
     featureTypeUrl.searchParams.set('service', 'WFS');
     featureTypeUrl.searchParams.set('request', 'DescribeFeatureType');
+    featureTypeUrl.searchParams.set('typename', style.featureName);
 
     const descriptions: Map<string, WfsFeatureDescription> = new Map();
     try {
       // TODO: https://teamyotta.atlassian.net/browse/AL-4636 need to fix this to use imports from
       // correct namespace and elements that reference complexTypes
       WfsUtils.debugger(`requesting WFS feature type descriptions for ${featureTypeUrl.href}`);
-      // const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
+      const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
 
       WfsUtils.debugger('parsing xml');
-      // await WfsUtils.parseFeatureTypeDescrption(featureTypeDescription, descriptions);
+      await WfsUtils.parseFeatureTypeDescrption(featureTypeDescription, descriptions);
     } catch (error) {
       throw error instanceof AlloyMapError
         ? error
@@ -138,25 +140,7 @@ export abstract class WfsUtils {
       return;
     }
 
-    const schemaNamespace = schemaRoot.getAttribute('targetNamespace');
-
     const complexTypes = schemaRoot.getElementsByTagName('xsd:complexType');
-    if (complexTypes.length === 0) {
-      const imports = schemaRoot.getElementsByTagName('xsd:import');
-      for (const imp0rt of imports) {
-        if (imp0rt.getAttribute('namespace') !== schemaNamespace) {
-          continue;
-        }
-        const href = imp0rt.getAttribute('schemaLocation');
-        if (!href) {
-          throw new AlloyMapError(1569847815, 'Could not get description import schema location');
-        }
-        const importTypeDescription = await (await fetch(href)).text();
-        await WfsUtils.parseFeatureTypeDescrption(importTypeDescription, descriptions);
-      }
-      return;
-    }
-
     for (const complexType of complexTypes) {
       const complexContent = complexType.getElementsByTagName('xsd:complexContent').item(0);
       if (!complexContent) {
