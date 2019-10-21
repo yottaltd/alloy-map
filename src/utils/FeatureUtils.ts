@@ -20,6 +20,7 @@ import { ProjectionUtils } from './ProjectionUtils';
  * the property name of the feature id stored on an openlayers feature (so we can go from openlayers
  * feature back to an alloy feature in rare circumstances)
  * @ignore
+ * @internal
  */
 export const OL_FEATURE_TO_FEATURE_ID = '__AlloyFeatureId__';
 
