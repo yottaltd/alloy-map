@@ -1,4 +1,5 @@
 import * as color from 'color';
+import * as DOMPurify from 'DOMPurify';
 import OLImageWMS from 'ol/source/ImageWMS';
 import OLTileWMS from 'ol/source/TileWMS';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
@@ -60,7 +61,7 @@ export abstract class WmsUtils {
               .replace('#', '0x')
           : undefined,
       },
-      attributions: options.watermark,
+      attributions: options.watermark ? DOMPurify.sanitize(options.watermark) : undefined,
     });
   }
 
