@@ -94,8 +94,7 @@ export abstract class WmsUtils {
               .replace('#', '0x')
           : undefined,
       },
-      // TODO: add watermark sanitisation
-      attributions: options.watermark,
+      attributions: options.watermark ? DOMPurify.sanitize(options.watermark) : undefined,
     });
   }
 
