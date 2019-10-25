@@ -9,7 +9,6 @@ import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { WfsFeatureProperty } from '../../wfs/WfsFeatureProperty';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
 import { AlloyWfsFeatureProperties } from './AlloyWfsFeatureProperties';
@@ -88,22 +87,6 @@ export class AlloyWfsFeature implements AlloyFeature {
 
     // set the id of the feature on the ol feature
     FeatureUtils.setFeatureIdForOlFeature(olFeature, id);
-  }
-
-  /**
-   * Gets all property values for this WFS feature
-   * @returns array of `WfsFeatureProperty`
-   */
-  public getWfsProperties(): WfsFeatureProperty[] {
-    const wfsProperties: WfsFeatureProperty[] = [];
-    const olFeatureProperties = this.olFeature.getProperties();
-    for (const key of Object.keys(olFeatureProperties)) {
-      wfsProperties.push({
-        name: key,
-        value: olFeatureProperties[key],
-      });
-    }
-    return wfsProperties;
   }
 
   /**

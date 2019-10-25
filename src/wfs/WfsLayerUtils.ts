@@ -4,6 +4,7 @@ import OLGeoJSON from 'ol/format/GeoJSON';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import OLStyle from 'ol/style/Style';
+import OLProjection from 'ol/proj/Projection';
 import { AlloyLayerZIndex } from '../map/core/AlloyLayerZIndex';
 import { PolyfillLoadingStrategy } from '../polyfills/PolyfillLoadingStrategy';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
@@ -37,9 +38,6 @@ export abstract class WfsLayerUtils {
     featureSetter?: (feature: OLFeature[]) => void,
   ): OLVectorLayer {
     const epsgCode = 'EPSG:' + epsg;
-    if (epsgCode !== ProjectionUtils.MAP_PROJECTION.getCode()) {
-      ProjectionUtils.register(epsg);
-    }
 
     const getFeatureUrl = new URL(url);
     getFeatureUrl.searchParams.set('service', 'WFS');
@@ -50,6 +48,7 @@ export abstract class WfsLayerUtils {
     getFeatureUrl.searchParams.set('outputFormat', 'json');
 
     const format = new OLGeoJSON();
+
     const vectorSource = new OLVectorSource({
       format,
       loader: (extent, resolution, projection) => {
@@ -62,31 +61,43 @@ export abstract class WfsLayerUtils {
         const onError = (e: any) =>
           // tslint:disable-next-line:no-console
           console.error('failed to fetch WFS features for extent', extent, e);
-        fetch(extentUrl.href)
-          .then((response) => {
+        const fetchPromise = async () => {
+          try {
+            const response = await fetch(extentUrl.href);
             if (response.status === 200) {
-              response
-                .text()
-                .then((text) => {
-                  const features = format.readFeatures(text, {
-                    dataProjection: PolyfillProj.get(epsgCode) || ProjectionUtils.API_PROJECTION,
-                    featureProjection: ProjectionUtils.MAP_PROJECTION,
-                  });
-                  if (features && features.length > 0) {
-                    if (featureSetter) {
-                      featureSetter(features);
-                    }
-                    vectorSource.addFeatures(features);
-                  }
-                })
-                .catch((e) => {
-                  onError(`failed to get wfs tile response text`);
-                });
+              const text = await response.text();
+              let readFeaturesOptions:
+                | { dataProjection: OLProjection; featureProjection: OLProjection }
+                | undefined;
+              if (epsg === 3857) {
+                readFeaturesOptions = undefined;
+              } else {
+                readFeaturesOptions = {
+                  dataProjection: PolyfillProj.get(epsgCode) || ProjectionUtils.API_PROJECTION,
+                  featureProjection: ProjectionUtils.MAP_PROJECTION,
+                };
+              }
+
+              const features = format.readFeatures(text, readFeaturesOptions);
+              if (features && features.length > 0) {
+                if (featureSetter) {
+                  featureSetter(features);
+                }
+                vectorSource.addFeatures(features);
+              }
             } else {
               onError(`failed, status code: ${response.status}, message: ${response.statusText}`);
             }
-          })
-          .catch((e) => onError(e.toString()));
+          } catch (e) {
+            onError(e.toString());
+          }
+        };
+
+        if (epsgCode !== ProjectionUtils.MAP_PROJECTION.getCode()) {
+          ProjectionUtils.register(epsg).then(fetchPromise);
+        } else {
+          fetchPromise();
+        }
       },
       strategy: PolyfillLoadingStrategy.bbox(),
       features: new OLCollection(),
