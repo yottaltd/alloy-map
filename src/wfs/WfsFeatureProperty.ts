@@ -1,3 +1,5 @@
+import { WfsFeatureDescription } from './WfsFeatureDescription';
+
 /**
  * the properties of an external WFS feature
  */
@@ -10,4 +12,8 @@ export interface WfsFeatureProperty {
    * WFS feature property value
    */
   value?: any;
+  /**
+   * Description of WFS feature property if available
+   */
+  description?: WfsFeatureDescription;
 }

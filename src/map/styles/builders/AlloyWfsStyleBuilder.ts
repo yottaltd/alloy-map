@@ -2,6 +2,7 @@ import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
 import OLStyle from 'ol/style/Style';
+import { GeoJSONObjectType } from '../../../api';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
@@ -62,6 +63,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const layerStyle = this.layerStyles.get(feature.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1562245691, 'missing layer style: ' + feature.styleId);
+    }
+    const type = feature.getExpectedGeometry().getType();
+    if (type === GeoJSONObjectType.Polygon || type === GeoJSONObjectType.MultiPolygon) {
+      // for polygons need to use ID so that centre icon is cached per geometry
+      return StringUtils.cacheKeyConcat(
+        state,
+        resolution,
+        feature.id,
+        layerStyle.colour,
+        layerStyle.icon,
+      );
     }
     return StringUtils.cacheKeyConcat(state, resolution, layerStyle.colour, layerStyle.icon);
   }
