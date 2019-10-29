@@ -1,4 +1,4 @@
-import * as DOMPurify from 'DOMPurify';
+import * as DOMPurify from 'dompurify';
 import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
