@@ -46,7 +46,7 @@ export abstract class PolyfillExtent {
    * creates a bounding extent that wraps all of provided coordinates
    * @param coordinates coordinate to calculate extent for
    */
-  public static boundingExtent(coordinates: Array<[number, number]>): OLExtent {
+  public static boundingExtent(coordinates: OLCoordinate[]): OLExtent {
     return boundingExtent(coordinates);
   }
 }

@@ -1,5 +1,6 @@
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLMap from 'ol/Map';
@@ -24,7 +25,7 @@ export abstract class AlloyPolygonFunctions {
    */
   public static convertGeometryToMidPoint(olGeometry: OLGeometry | OLRenderFeature): OLPoint {
     // MUST be a polygon, otherwise why are we running this?
-    if (olGeometry.getType() !== 'Polygon') {
+    if (olGeometry.getType() !== OLGeometryType.POLYGON) {
       throw new AlloyMapError(1554558865, 'cannot run geometry function for non-polygon');
     }
 

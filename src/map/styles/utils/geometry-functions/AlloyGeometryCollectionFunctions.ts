@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
@@ -36,7 +37,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiPoint {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (olGeometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== OLGeometryType.GEOMETRY_COLLECTION) {
       throw new AlloyMapError(
         1554478091,
         'cannot run geometry function for non-geometry collection',
@@ -68,7 +69,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiPoint {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (olGeometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== OLGeometryType.GEOMETRY_COLLECTION) {
       throw new AlloyMapError(
         1554479460,
         'cannot run geometry function for non-geometry collection',
@@ -100,7 +101,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiLineString {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (olGeometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== OLGeometryType.GEOMETRY_COLLECTION) {
       throw new AlloyMapError(
         1554479613,
         'cannot run geometry function for non-geometry collection',
@@ -133,7 +134,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiLineString {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (olGeometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== OLGeometryType.GEOMETRY_COLLECTION) {
       throw new AlloyMapError(
         1554479698,
         'cannot run geometry function for non-geometry collection',
@@ -165,7 +166,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiPolygon {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (olGeometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== OLGeometryType.GEOMETRY_COLLECTION) {
       throw new AlloyMapError(
         1554479633,
         'cannot run geometry function for non-geometry collection',
@@ -198,7 +199,7 @@ export abstract class AlloyGeometryCollectionFunctions {
     olGeometry: OLGeometry | OLRenderFeature,
   ): OLMultiPolygon {
     // MUST be a geometry collection, otherwise why are we running this?
-    if (olGeometry.getType() !== 'GeometryCollection') {
+    if (olGeometry.getType() !== OLGeometryType.GEOMETRY_COLLECTION) {
       throw new AlloyMapError(
         1554479729,
         'cannot run geometry function for non-geometry collection',
@@ -332,29 +333,29 @@ export abstract class AlloyGeometryCollectionFunctions {
   ): void {
     olGeometry.getGeometries().forEach((g) => {
       switch (g.getType()) {
-        case 'GeometryCollection':
+        case OLGeometryType.GEOMETRY_COLLECTION:
           // recursively work through the sub geometry collection
           AlloyGeometryCollectionFunctions.getAllGeometriesRecursively(
             g as OLGeometryCollection,
             geometries,
           );
           break;
-        case 'Point':
+        case OLGeometryType.POINT:
           geometries.points.push(g as OLPoint);
           break;
-        case 'MultiPoint':
+        case OLGeometryType.MULTI_POINT:
           geometries.multiPoints.push(g as OLMultiPoint);
           break;
-        case 'LineString':
+        case OLGeometryType.LINE_STRING:
           geometries.lineStrings.push(g as OLLineString);
           break;
-        case 'MultiLineString':
+        case OLGeometryType.MULTI_LINE_STRING:
           geometries.multiLineStrings.push(g as OLMultiLineString);
           break;
-        case 'Polygon':
+        case OLGeometryType.POLYGON:
           geometries.polygons.push(g as OLPolygon);
           break;
-        case 'MultiPolygon':
+        case OLGeometryType.MULTI_POLYGON:
           geometries.multiPolygons.push(g as OLMultiPolygon);
           break;
       }

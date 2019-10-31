@@ -11,6 +11,7 @@ import {
 import * as _ from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
@@ -60,7 +61,7 @@ export abstract class GeometryUtils {
    */
   public static removeCoordinate(geometry: OLGeometry, coordinate: OLCoordinate) {
     switch (geometry.getType()) {
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         const multiPoint = geometry as OLMultiPoint;
         const multiPointCoordinates = multiPoint.getCoordinates().slice();
         const pointIdx = multiPointCoordinates.findIndex((mpc) =>
@@ -71,7 +72,7 @@ export abstract class GeometryUtils {
         }
         multiPoint.setCoordinates(multiPointCoordinates);
         break;
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         const lineString = geometry as OLLineString;
         const lineStringCoordinates = lineString.getCoordinates().slice();
         const lineIdx = lineStringCoordinates.findIndex((lsc) =>
@@ -82,7 +83,7 @@ export abstract class GeometryUtils {
         }
         lineString.setCoordinates(lineStringCoordinates);
         break;
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         const multiLineString = geometry as OLMultiLineString;
         const multiLineStringCoordinates = multiLineString.getCoordinates().slice();
         for (const line of multiLineStringCoordinates) {
@@ -93,7 +94,7 @@ export abstract class GeometryUtils {
         }
         multiLineString.setCoordinates(multiLineStringCoordinates);
         break;
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         const polygon = geometry as OLPolygon;
         const polygonCoordinates = polygon.getCoordinates().slice();
         for (const coords of polygonCoordinates) {
@@ -108,7 +109,7 @@ export abstract class GeometryUtils {
         }
         polygon.setCoordinates(polygonCoordinates);
         break;
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         const multiPolygon = geometry as OLMultiPolygon;
         const multiPolygonCoordinates = multiPolygon.getCoordinates().slice();
         for (const poly of multiPolygonCoordinates) {

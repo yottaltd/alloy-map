@@ -1,6 +1,8 @@
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
+import OLGeometryType from 'ol/geom/GeometryType';
 import * as uuid from 'uuid';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 // tslint:disable-next-line: max-line-length
@@ -8,7 +10,6 @@ import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/A
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * an alloy draw feature which represents something being drawn on the map by a user or
@@ -115,12 +116,12 @@ export class AlloyDrawFeature implements AlloyFeature {
       const olGeometry = ProjectionUtils.GEOJSON.readGeometry(geometry);
       const geometryType = olGeometry.getType();
       if (
-        geometryType === 'Point' ||
-        geometryType === 'LineString' ||
-        geometryType === 'Polygon' ||
-        geometryType === 'MultiPoint' ||
-        geometryType === 'MultiLineString' ||
-        geometryType === 'MultiPolygon'
+        geometryType !== OLGeometryType.POINT &&
+        geometryType !== OLGeometryType.LINE_STRING &&
+        geometryType !== OLGeometryType.POLYGON &&
+        geometryType !== OLGeometryType.MULTI_POINT &&
+        geometryType !== OLGeometryType.MULTI_LINE_STRING &&
+        geometryType !== OLGeometryType.MULTI_POLYGON
       ) {
         throw new AlloyMapError(
           1559224174,

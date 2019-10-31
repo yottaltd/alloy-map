@@ -1,3 +1,4 @@
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLPolygon from 'ol/geom/Polygon';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
@@ -65,11 +66,11 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
    */
   protected createStyles(feature: AlloyDrawFeature, resolution: number): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
+      case OLGeometryType.POINT:
         return this.createPointStyles(resolution, feature);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return this.createLineStringStyles(resolution, feature);
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return this.createPolygonStyles(resolution, feature);
       default:
         throw new AlloyMapError(1556272877, 'unsupported geometry type');
@@ -81,11 +82,11 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
    */
   protected createHoverStyles(feature: AlloyDrawFeature, resolution: number): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
+      case OLGeometryType.POINT:
         return this.createPointHoverStyles(resolution, feature);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return this.createLineStringHoverStyles(resolution, feature);
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return this.createPolygonHoverStyles(resolution, feature);
       default:
         throw new AlloyMapError(1556272885, 'unsupported geometry type');
@@ -100,11 +101,11 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     resolution: number,
   ): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
+      case OLGeometryType.POINT:
         return this.createPointSelectedStyles(resolution, feature);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return this.createLineStringSelectedStyles(resolution, feature);
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return this.createPolygonSelectedStyles(resolution, feature);
       default:
         throw new AlloyMapError(1556272894, 'unsupported geometry type');

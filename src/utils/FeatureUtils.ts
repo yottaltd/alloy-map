@@ -147,7 +147,7 @@ export abstract class FeatureUtils {
    */
   public static calculateFeaturesBounds(features: AlloyFeature[]): AlloyBounds {
     // flatten coordinates of features
-    const coordinates: Array<[number, number]> = _.flatten(
+    const coordinates: OLCoordinate[] = _.flatten(
       features.map((feature) =>
         AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
           feature.olFeature.getGeometry(),

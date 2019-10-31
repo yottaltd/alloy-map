@@ -1,3 +1,4 @@
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
@@ -33,7 +34,7 @@ export class AlloyPathNodeConnectorStyleBuilder extends AlloyStyleBuilder<
    * @override
    */
   protected createStyles(feature: AlloyPathNodeConnectorFeature): OLStyle | OLStyle[] {
-    if (feature.olFeature.getGeometry().getType() === 'LineString') {
+    if (feature.olFeature.getGeometry().getType() === OLGeometryType.LINE_STRING) {
       return new OLStyle({
         stroke: new OLStroke({
           width: 2,

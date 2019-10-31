@@ -1,5 +1,6 @@
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLRenderFeature from 'ol/render/Feature';
@@ -26,7 +27,7 @@ export abstract class AlloyMultiLineStringFunctions {
    */
   public static convertGeometryToMidPoints(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
     // MUST be a multi linestring, otherwise why are we running this?
-    if (olGeometry.getType() !== 'MultiLineString') {
+    if (olGeometry.getType() !== OLGeometryType.MULTI_LINE_STRING) {
       throw new AlloyMapError(1554552431, 'cannot run geometry function for non-multi linestring');
     }
 
@@ -48,7 +49,7 @@ export abstract class AlloyMultiLineStringFunctions {
    */
   public static convertGeometryToEndPoints(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
     // MUST be a multilinestring, otherwise why are we running this?
-    if (olGeometry.getType() !== 'MultiLineString') {
+    if (olGeometry.getType() !== OLGeometryType.MULTI_LINE_STRING) {
       throw new AlloyMapError(1555066382, 'cannot run geometry function for non-multilinestring');
     }
 

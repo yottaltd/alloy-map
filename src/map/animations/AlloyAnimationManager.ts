@@ -1,5 +1,6 @@
 import { EventsKey as OLEventsKey } from 'ol/events';
 import OLFeature from 'ol/Feature';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLVectorLayer from 'ol/layer/Vector';
@@ -125,9 +126,9 @@ export abstract class AlloyAnimationManager {
       );
     };
 
-    if (feature.getGeometry().getType() === 'LineString') {
+    if (feature.getGeometry().getType() === OLGeometryType.LINE_STRING) {
       animateLineString(feature.getGeometry() as OLLineString);
-    } else if (feature.getGeometry().getType() === 'MultiLineString') {
+    } else if (feature.getGeometry().getType() === OLGeometryType.MULTI_LINE_STRING) {
       (feature.getGeometry() as OLMultiLineString).getLineStrings().forEach(animateLineString);
     }
   }
