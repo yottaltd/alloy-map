@@ -52,7 +52,6 @@ export abstract class AlloyIconUtils {
     return new OLStyle({
       image: new OLIcon({
         img: iconCanvas,
-        snapToPixel: false,
         scale: size / iconCanvas.width,
         imgSize: [iconCanvas.width, iconCanvas.height],
       }),
@@ -78,7 +77,6 @@ export abstract class AlloyIconUtils {
     return new OLStyle({
       image: new OLIcon({
         img: textCanvas,
-        snapToPixel: false,
         scale: 1,
         imgSize: [textCanvas.width, textCanvas.height],
       }),

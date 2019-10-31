@@ -3,6 +3,7 @@ import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
@@ -17,6 +18,7 @@ import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
 import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { GeometryUtils } from '../../utils/GeometryUtils';
 import { AlloyMap } from '../core/AlloyMap';
@@ -24,6 +26,7 @@ import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
+import { EnumGuards } from '../guards/EnumGuards';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
@@ -207,9 +210,13 @@ export class AlloyDrawInteraction {
     // cancels previous draw interaction
     this.removeDrawInteraction();
 
+    const olGeometryType = EnumGuards.alloyDrawGeometryToOpenlayersGeometryType(type);
+    if (!olGeometryType) {
+      throw new AlloyMapError(1572524091, 'incompatible draw geometry type');
+    }
     // initialise draw on draw layer source, with default draw styles
     this.olDraw = new OLDraw({
-      type,
+      type: olGeometryType,
       source: this.drawLayer.olSource,
       style: this.drawStyles,
     });
@@ -222,9 +229,7 @@ export class AlloyDrawInteraction {
     });
 
     // on draw end save feature and reset interactions
-    this.olDraw.on('drawend', (e) => {
-      const event = e as OLDraw.Event;
-
+    this.olDraw.on('drawend', (event) => {
       // wrap created draw event feature into AlloyDrawFeature and save to draw layer
       const feature = new AlloyDrawFeature(uuid.v1(), event.feature, properties);
       this.drawLayer.addFeature(feature, false);
@@ -271,7 +276,15 @@ export class AlloyDrawInteraction {
    */
   public getDrawTypes(): GeoJSONObjectType[] {
     return _.uniq(
-      this.drawLayer.olSource.getFeatures().map((f) => f.getGeometry().getType() as any),
+      this.drawLayer.olSource.getFeatures().map((f) => {
+        const geoJsonType = EnumGuards.openlayersGeometryToGeoJSONGeometryType(
+          f.getGeometry().getType(),
+        );
+        if (!geoJsonType) {
+          throw new AlloyMapError(1572524252, 'Geometry is incompatible with GeoJSONObjectType');
+        }
+        return geoJsonType;
+      }),
     );
   }
 
@@ -300,8 +313,7 @@ export class AlloyDrawInteraction {
     });
 
     // handler to remove coordinates from draw features on selection of remove features
-    this.olSelect.on('select', (e) => {
-      const event = e as OLSelect.Event;
+    this.olSelect.on('select', (event) => {
       // don't process if no features are selected
       if (event.selected.length === 0) {
         return;
@@ -333,15 +345,15 @@ export class AlloyDrawInteraction {
         const geometryType = sourceFeature.olFeature.getGeometry().getType();
         let featureRemove = false;
         switch (geometryType) {
-          case AlloyDrawInteractionGeometryType.Point:
+          case OLGeometryType.POINT:
             featureRemove = true;
             break;
-          case AlloyDrawInteractionGeometryType.LineString:
+          case OLGeometryType.LINE_STRING:
             if ((sourceGeometry as OLLineString).getCoordinates().length <= 2) {
               featureRemove = true;
             }
             break;
-          case AlloyDrawInteractionGeometryType.Polygon:
+          case OLGeometryType.POLYGON:
             if ((sourceGeometry as OLPolygon).getCoordinates()[0].length <= 4) {
               featureRemove = true;
             }
@@ -448,8 +460,7 @@ export class AlloyDrawInteraction {
       this.setDoubleClickZoomEnabled(false);
     });
 
-    this.olModify.on('modifyend', (e) => {
-      const event = e as OLModify.Event;
+    this.olModify.on('modifyend', (event) => {
       // find AlloyDrawFeature that was modified in the interaction
       const drawFeature = this.drawLayer.getFeatureById(
         FeatureUtils.getFeatureIdFromOlFeature(event.features.item(0)),

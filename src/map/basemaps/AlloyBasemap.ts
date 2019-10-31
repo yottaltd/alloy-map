@@ -10,4 +10,9 @@ export interface AlloyBasemap {
    * @internal
    */
   readonly layer: Readonly<OLLayer>;
+
+  /**
+   * Clone method to create a copy of a basemap
+   */
+  readonly clone: () => AlloyBasemap;
 }

@@ -1,4 +1,5 @@
-import { unByKey } from 'ol/Observable.js';
+import { unByKey } from 'ol/Observable';
+import { EventsKey as OLEventsKey } from 'ol/events';
 
 /**
  * utility class for accessing ol/observable functions due to typing issues.
@@ -11,7 +12,7 @@ export abstract class PolyfillObservable {
    * removes an event listener using the key returned by on() or once()
    * @param key the key to remove event listener for
    */
-  public static unByKey(key: ol.EventsKey | ol.EventsKey[]): void {
+  public static unByKey(key: OLEventsKey | OLEventsKey[]): void {
     return unByKey(key);
   }
 }

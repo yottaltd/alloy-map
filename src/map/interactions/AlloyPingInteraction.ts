@@ -1,12 +1,13 @@
 import { Debugger } from 'debug';
 import OLPoint from 'ol/geom/Point';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
-import OLCanvas from 'ol/render/canvas';
+import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLRenderEvent from 'ol/render/Event';
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
+import { PolyfillVectorContext } from '../../polyfills/PolyfillVectorContext';
 import { AlloyMap } from '../core/AlloyMap';
 
 /**
@@ -77,11 +78,16 @@ export class AlloyPingInteraction {
    * @param olPoint the point of origin
    */
   private ping(olPoint: OLPoint) {
+    const basemap = this.map.basemap;
+    if (!basemap) {
+      return;
+    }
+
     const start = new Date().getTime();
 
     const animate = (e: OLRenderEvent) => {
       // WARNING! There be demons ahead! if we change renderers e.g. webgl then this will fail
-      const immediate: OLCanvas.Immediate = e.vectorContext as OLCanvas.Immediate;
+      const immediate: OLCanvasImmediateRenderer = PolyfillVectorContext.get(e);
       const elapsed = e.frameState.time - start;
       const elapsedRatio = elapsed / PING_ANIMATION_LENGTH; // between 0-1
 
@@ -89,10 +95,14 @@ export class AlloyPingInteraction {
       const radius = easeOut(elapsedRatio) * PING_ANIMATION_MAX_RADIUS;
       const opacity = easeOut(1 - elapsedRatio) * 0.5;
 
+      if (radius < 0) {
+        PolyfillObservable.unByKey(listener);
+        return;
+      }
+
       const style = new OLStyle({
         image: new OLCircle({
           radius,
-          snapToPixel: false,
           fill: new OLFill({
             color: `rgba(255, 255, 255, ${opacity})`,
           }),
@@ -108,14 +118,14 @@ export class AlloyPingInteraction {
         return;
       }
 
-      // tell open layers to continue postcompose
+      // tell openlayers to continue postrender
       this.map.olMap.render();
     };
 
-    // setup the animation listener on postcompose and keep a reference so we can clean it up
-    const listener = this.map.olMap.on('postcompose', (e) => {
+    // setup the animation listener on postrender and keep a reference so we can clean it up
+    const listener = basemap.layer.on('postrender', (e) => {
       // needs to be called inside fat arrow function to retain "this"
-      animate(e as OLRenderEvent /* we know its this event type */);
+      animate(e);
     });
 
     // tell open layers to request rendering, without this the map freezes!

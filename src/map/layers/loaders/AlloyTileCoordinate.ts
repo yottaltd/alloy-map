@@ -8,7 +8,7 @@ export class AlloyTileCoordinate {
   /**
    * the openlayers tile coordinate
    */
-  public readonly olTileCoordinate: [number, number, number];
+  public readonly olTileCoordinate: number[];
 
   /**
    * the normalised x coordinate
@@ -34,7 +34,7 @@ export class AlloyTileCoordinate {
    * creates a new instance
    * @param olTileCoordinate the openlayers tile coordinate to parse
    */
-  constructor(olTileCoordinate: [number, number, number]) {
+  constructor(olTileCoordinate: number[]) {
     this.olTileCoordinate = olTileCoordinate;
     this.x = olTileCoordinate[1];
     // calculate the normalised tile coordinates, for some reason openlayers like negative y

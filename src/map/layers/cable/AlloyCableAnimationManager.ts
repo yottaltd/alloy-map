@@ -1,7 +1,8 @@
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLPolygon from 'ol/geom/Polygon';
-import OLRenderCanvas from 'ol/render/canvas';
+import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
@@ -37,13 +38,13 @@ export class AlloyCableAnimationManager extends AlloyAnimationManager {
       (
         lineString: OLLineString,
         currentScaleRatio: number,
-        renderer: OLRenderCanvas.Immediate,
+        renderer: OLCanvasImmediateRenderer,
         ratio: number,
       ) => {
         // calculate coordinates for positioning
-        const centre: [number, number] = lineString.getCoordinateAt(ratio);
-        let nose: [number, number];
-        let back: [number, number];
+        const centre: OLCoordinate = lineString.getCoordinateAt(ratio);
+        let nose: OLCoordinate;
+        let back: OLCoordinate;
 
         if (ratio > 1 - currentScaleRatio) {
           back = GeometryUtils.rotateCoordinate(
@@ -85,29 +86,21 @@ export class AlloyCableAnimationManager extends AlloyAnimationManager {
           }),
         });
 
-        const b1: [number, number] = GeometryUtils.rotateCoordinate(
+        const b1: OLCoordinate = GeometryUtils.rotateCoordinate(
           centre,
           DEGREES_90_IN_RADIANS / 3,
           nose,
         );
-        const n1: [number, number] = GeometryUtils.rotateCoordinate(
+        const n1: OLCoordinate = GeometryUtils.rotateCoordinate(
           centre,
           DEGREES_90_IN_RADIANS / 3,
           back,
         );
 
-        const b2: [number, number] = GeometryUtils.rotateCoordinate(
-          back,
-          DEGREES_90_IN_RADIANS,
-          b1,
-        );
-        const n2: [number, number] = GeometryUtils.rotateCoordinate(
-          nose,
-          DEGREES_90_IN_RADIANS,
-          n1,
-        );
+        const b2: OLCoordinate = GeometryUtils.rotateCoordinate(back, DEGREES_90_IN_RADIANS, b1);
+        const n2: OLCoordinate = GeometryUtils.rotateCoordinate(nose, DEGREES_90_IN_RADIANS, n1);
 
-        const coordinates: Array<[number, number]> = [];
+        const coordinates: OLCoordinate[] = [];
         coordinates.push(nose);
         coordinates.push(n1);
         coordinates.push(n2);

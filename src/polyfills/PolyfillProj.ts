@@ -1,6 +1,8 @@
-import { fromLonLat, toLonLat, get, transformExtent } from 'ol/proj.js';
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
+import { Extent as OLExtent } from 'ol/extent';
+import { fromLonLat, get, toLonLat, transformExtent } from 'ol/proj';
+import { register } from 'ol/proj/proj4';
 import OLProjection from 'ol/proj/Projection';
-import { register } from 'ol/proj/proj4.js';
 
 // ugly hack to allow building taken from here
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663
@@ -19,7 +21,7 @@ export abstract class PolyfillProj {
    * @param coordinate the coordinate to transform
    * @param projection the optional projection to use defaults to [EPSG:3857](https://epsg.io/3857)
    */
-  public static toLonLat(coordinate: [number, number], projection?: string): [number, number] {
+  public static toLonLat(coordinate: OLCoordinate, projection?: string): OLCoordinate {
     return toLonLat(coordinate, projection);
   }
 
@@ -28,7 +30,7 @@ export abstract class PolyfillProj {
    * @param coordinate the coordinate to transform
    * @param projection the optional projection to use defaults to [EPSG:4326](https://epsg.io/4326)
    */
-  public static fromLonLat(coordinate: [number, number], projection?: string): [number, number] {
+  public static fromLonLat(coordinate: OLCoordinate, projection?: string): OLCoordinate {
     return fromLonLat(coordinate, projection);
   }
 
@@ -55,11 +57,7 @@ export abstract class PolyfillProj {
    * @param from source projection
    * @param to destination projection
    */
-  public static transformExtent(
-    extent: [number, number, number, number],
-    from: OLProjection,
-    to: OLProjection,
-  ): [number, number, number, number] {
+  public static transformExtent(extent: OLExtent, from: OLProjection, to: OLProjection): OLExtent {
     return transformExtent(extent, from, to);
   }
 }

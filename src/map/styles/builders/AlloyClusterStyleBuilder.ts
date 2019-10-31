@@ -93,7 +93,6 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
-          snapToPixel: false,
           scale: 1,
           imgSize: [textCanvas.width, textCanvas.height],
         }),
@@ -132,7 +131,6 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
-          snapToPixel: false,
           scale: 1,
           imgSize: [textCanvas.width, textCanvas.height],
         }),

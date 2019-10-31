@@ -40,4 +40,11 @@ export class AlloyBingBasemap implements AlloyBasemap {
   public get layer(): Readonly<OLLayer> {
     return this.tileLayer;
   }
+
+  /**
+   * @implements
+   */
+  public clone(): AlloyBingBasemap {
+    return new AlloyBingBasemap(this.source.getApiKey());
+  }
 }

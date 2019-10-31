@@ -1,4 +1,5 @@
-import { createXYZ } from 'ol/tilegrid.js';
+import { Extent as OLExtent } from 'ol/extent';
+import { createXYZ } from 'ol/tilegrid';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 
 /**
@@ -13,7 +14,7 @@ export abstract class PolyfillTileGrid {
    * @param options the options to create the tile grid for
    */
   public static createXYZ(options: {
-    extent?: [number, number, number, number];
+    extent?: OLExtent;
     maxZoom: number;
     minZoom?: number;
     tileSize?: number | [number, number];

@@ -38,7 +38,7 @@ export abstract class ProjectionUtils {
     // the projection to convert the data into (should match the layer)
     featureProjection: ProjectionUtils.MAP_PROJECTION,
     // the projection the data is expected to be in
-    defaultDataProjection: ProjectionUtils.API_PROJECTION,
+    dataProjection: ProjectionUtils.API_PROJECTION,
   });
 
   /**

@@ -23,10 +23,16 @@ export class AlloyWmsBasemap implements AlloyBasemap {
   private readonly source: OLTileWMS;
 
   /**
+   * Wms options for basemap
+   */
+  private readonly options: AlloyWmsParameters;
+
+  /**
    * creates a new instance
    * @param options: options for Wms basemap layer
    */
   constructor(options: AlloyWmsParameters) {
+    this.options = options;
     this.source = WmsUtils.createTileWmsSourceFromParameters(options, false);
     this.tileLayer = new OLTileLayer({
       source: this.source,
@@ -39,5 +45,12 @@ export class AlloyWmsBasemap implements AlloyBasemap {
    */
   public get layer(): Readonly<OLLayer> {
     return this.tileLayer;
+  }
+
+  /**
+   * @implements
+   */
+  public clone(): AlloyWmsBasemap {
+    return new AlloyWmsBasemap(this.options);
   }
 }

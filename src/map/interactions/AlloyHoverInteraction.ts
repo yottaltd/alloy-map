@@ -117,6 +117,7 @@ export class AlloyHoverInteraction {
             // if we have a feature and it allows selection add it to the array
             if (feature && feature.allowsHover) {
               features.push(feature);
+              return true;
             }
           }
         }

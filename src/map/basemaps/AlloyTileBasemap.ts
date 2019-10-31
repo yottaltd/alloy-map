@@ -22,10 +22,16 @@ export class AlloyTileBasemap implements AlloyBasemap {
   private readonly source: OLXYZ;
 
   /**
+   * Tile options for basemap
+   */
+  private readonly options: AlloyTileBasemapOptions;
+
+  /**
    * creates a new tile basemap instance
    * @param options the options to apply to the basemap
    */
   constructor(options: AlloyTileBasemapOptions) {
+    this.options = options;
     this.source = new OLXYZ({
       url: options.url,
       crossOrigin: 'anonymous',
@@ -43,5 +49,12 @@ export class AlloyTileBasemap implements AlloyBasemap {
    */
   public get layer(): Readonly<OLLayer> {
     return this.tileLayer;
+  }
+
+  /**
+   * @implements
+   */
+  public clone(): AlloyTileBasemap {
+    return new AlloyTileBasemap(this.options);
   }
 }

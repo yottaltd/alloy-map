@@ -1,4 +1,5 @@
 import { Debugger } from 'debug';
+import { Extent as OLExtent } from 'ol/extent';
 import OLProjection from 'ol/proj/Projection';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
@@ -6,8 +7,8 @@ import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyTileCache } from '../cache/AlloyTileCache';
 import { AlloyTileRequestCache } from '../cache/AlloyTileRequestCache';
 import { AlloyFeatureLoader } from './AlloyFeatureLoader';
-import { AlloyTileFeatureRequest } from './AlloyTileFeatureRequest';
 import { AlloyTileCoordinate } from './AlloyTileCoordinate';
+import { AlloyTileFeatureRequest } from './AlloyTileFeatureRequest';
 
 /**
  * the number of tile requests to cache in memory
@@ -39,7 +40,7 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
   /**
    * the extent to load features within
    */
-  private readonly olLayerExtent: [number, number, number, number];
+  private readonly olLayerExtent: OLExtent;
 
   /**
    * the tilegrid to use when computing tile coordinates
@@ -61,11 +62,7 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
    * @param olTileGrid the openlayers tilegrid to use for calculating tile coordinates
    * @param parentDebugger the parent debugger to extend
    */
-  constructor(
-    olTileGrid: OLTileGrid,
-    olLayerExtent: [number, number, number, number],
-    parentDebugger: Debugger,
-  ) {
+  constructor(olTileGrid: OLTileGrid, olLayerExtent: OLExtent, parentDebugger: Debugger) {
     this.olTileGrid = olTileGrid;
     this.olLayerExtent = olLayerExtent;
 
@@ -77,7 +74,7 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
    * @implements
    */
   public async loadFeatures(
-    extent: [number, number, number, number],
+    extent: OLExtent,
     resolution: number,
     projection: OLProjection,
   ): Promise<void> {
@@ -98,7 +95,7 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
     // get all the tile coordinates that we are going to request
     const tileCoordinates: AlloyTileCoordinate[] = [];
-    this.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: [number, number, number]) =>
+    this.olTileGrid.forEachTileCoord(extent, zoom, (coordinate: number[]) =>
       tileCoordinates.push(new AlloyTileCoordinate(coordinate)),
     );
 

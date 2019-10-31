@@ -1,11 +1,13 @@
+import { EventsKey as OLEventsKey } from 'ol/events';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLVectorLayer from 'ol/layer/Vector';
-import OLRenderCanvas from 'ol/render/canvas';
+import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLRenderEvent from 'ol/render/Event';
 import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
 import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
+import { PolyfillVectorContext } from '../../polyfills/PolyfillVectorContext';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyAnimationListener } from './AlloyAnimationListener';
@@ -29,7 +31,7 @@ export abstract class AlloyAnimationManager {
   /**
    * a lookup of features with active animating events keys
    */
-  private readonly animationKeys: Map<OLFeature, ol.EventsKey> = new Map();
+  private readonly animationKeys: Map<OLFeature, OLEventsKey | OLEventsKey[]> = new Map();
 
   /**
    * the features that are currently animating
@@ -85,7 +87,7 @@ export abstract class AlloyAnimationManager {
     stepRenderer: (
       lineString: OLLineString,
       currentScaleRatio: number,
-      renderer: OLRenderCanvas.Immediate,
+      renderer: OLCanvasImmediateRenderer,
       ratio: number,
     ) => void,
   ) {
@@ -105,7 +107,7 @@ export abstract class AlloyAnimationManager {
         lineString,
         length * 25,
         scale,
-        (renderer: OLRenderCanvas.Immediate, ratio: number) => {
+        (renderer: OLCanvasImmediateRenderer, ratio: number) => {
           let cs1m = scale1m * 2;
           switch (Math.round(this.map.zoom)) {
             case 20:
@@ -157,7 +159,7 @@ export abstract class AlloyAnimationManager {
     this.animationKeys.set(
       feature,
       (this.olPrecomposeLayer || this.map.olMap).on(
-        this.olPrecomposeLayer ? 'precompose' : 'postcompose',
+        this.olPrecomposeLayer ? 'prerender' : 'postcompose',
         (e) => {
           const event: OLRenderEvent = e as OLRenderEvent;
           const elapsed: number = event.frameState.time - start;
@@ -165,7 +167,7 @@ export abstract class AlloyAnimationManager {
 
           // call the handler for composing the animation (this does the work per type of animation)
           animationListener.compose(
-            event.vectorContext as OLRenderCanvas.Immediate,
+            PolyfillVectorContext.get(event),
             elapsedRatio,
           );
 
@@ -197,12 +199,12 @@ export abstract class AlloyAnimationManager {
     lineString: OLLineString,
     timerMs: number,
     scale: number,
-    renderStepDraw: (renderer: OLRenderCanvas.Immediate, ratio: number) => void,
+    renderStepDraw: (renderer: OLCanvasImmediateRenderer, ratio: number) => void,
   ): void {
     const lineStringFeature = new OLFeature(lineString);
 
-    let centreChangeListener: ol.EventsKey | null = null;
-    let resolutionChangeListener: ol.EventsKey | null = null;
+    let centreChangeListener: OLEventsKey | OLEventsKey[] = [];
+    let resolutionChangeListener: OLEventsKey | OLEventsKey[] = [];
     let paused = false;
     const removeListeners = () => {
       if (centreChangeListener) {
@@ -231,7 +233,7 @@ export abstract class AlloyAnimationManager {
           centreChangeListener = this.map.olMap.on('change:center', el);
           resolutionChangeListener = this.map.olMap.on('change:resolution', el);
         },
-        compose: (renderer: OLRenderCanvas.Immediate, ratio: number) => {
+        compose: (renderer: OLCanvasImmediateRenderer, ratio: number) => {
           if (this.map.zoom < 18) {
             return;
           }

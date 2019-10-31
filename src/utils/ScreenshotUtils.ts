@@ -1,4 +1,3 @@
-import OLRenderEvent from 'ol/render/Event';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyMap } from '../map/core/AlloyMap';
 
@@ -14,10 +13,8 @@ export abstract class ScreenshotUtils {
    */
   public static async screenshot(map: AlloyMap): Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => {
-      map.olMap.once('postcompose', (e: any) => {
+      map.olMap.once('postcompose', (event) => {
         try {
-          const event: OLRenderEvent = e as OLRenderEvent;
-
           // get the canvas
           const canvas: HTMLCanvasElement = event.context.canvas;
           canvas.toBlob((blob: Blob | null) => {

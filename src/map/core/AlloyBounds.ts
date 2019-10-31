@@ -1,3 +1,4 @@
+import { Extent as OLExtent } from 'ol/extent';
 import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
 import { AlloyCoordinate } from './AlloyCoordinate';
 
@@ -13,7 +14,7 @@ export class AlloyBounds {
    * @ignore
    * @internal
    */
-  public static fromMapExtent(extent: [number, number, number, number]): AlloyBounds {
+  public static fromMapExtent(extent: OLExtent): AlloyBounds {
     return new AlloyBounds(
       AlloyCoordinate.fromMapCoordinate([extent[0], extent[1]]),
       AlloyCoordinate.fromMapCoordinate([extent[2], extent[3]]),
@@ -46,7 +47,7 @@ export class AlloyBounds {
    * @ignore
    * @internal
    */
-  public toMapExtent(): [number, number, number, number] {
+  public toMapExtent(): OLExtent {
     const swMapCoordinate = this.sw.toMapCoordinate();
     const neMapCoordinate = this.ne.toMapCoordinate();
     return [swMapCoordinate[0], swMapCoordinate[1], neMapCoordinate[0], neMapCoordinate[1]];
