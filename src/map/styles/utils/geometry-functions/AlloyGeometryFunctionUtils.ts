@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Coordinate as OLCoordinate } from 'ol/Coordinate';
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
