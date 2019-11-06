@@ -1,7 +1,7 @@
 import { AlloyMap } from '../../src/map/core/AlloyMap';
 import { AlloyCoordinate } from '../../src/map/core/AlloyCoordinate';
 
-const fixture = 'cypress/specs/all/_defaults.json';
+const fixture = 'cypress/specs/_defaults.json';
 
 export default class MapData {
   private mapObject: AlloyMap | undefined;

@@ -6,19 +6,13 @@ import { AlloyCustomLayer } from '../../../src/map/layers/custom/AlloyCustomLaye
 import { AlloyStyleBuilderBuildState } from '../../../src/map/styles/AlloyStyleBuilderBuildState';
 import MapData from '../MapData';
 
-const jsonData = '@data';
-const fixture = 'cypress/specs/all/_defaults.json';
-
 const mapElementId = '#map';
 
 let mapCentre: AlloyCoordinate;
 
 export default function(mapData: MapData) {
   describe('features', () => {
-    beforeEach(() => {
-      cy.readFile(fixture).as(jsonData.substring(1));
-      mapCentre = mapData.map.centre;
-    });
+    beforeEach(() => (mapCentre = mapData.map.centre));
 
     it('should add feature to map', () => {
       // Add layer
@@ -357,158 +351,152 @@ export default function(mapData: MapData) {
     });
 
     it('should multi select features on map on click', () => {
-      cy.get(jsonData).then((data: any) => {
-        const coordinate2 = new AlloyCoordinate(data.ukLon + 0.05, data.ukLat + 0.05);
+      const coordinate2 = new AlloyCoordinate(mapCentre.lon + 0.05, mapCentre.lat + 0.05);
 
-        // Add layer
-        const layer = new AlloyCustomLayer({
-          map: mapData.map,
-          id: 'multiSelectByClick',
-        });
-        mapData.map.addLayer(layer);
+      // Add layer
+      const layer = new AlloyCustomLayer({
+        map: mapData.map,
+        id: 'multiSelectByClick',
+      });
+      mapData.map.addLayer(layer);
 
-        // Add feature at centre
-        const feature1 = layer.addPointFeature(
-          {
-            title: 'Title',
-            subtitle: 'Subtitle',
-            colour: '#115599',
-            icon: 'icon-system-success',
-          },
-          mapCentre,
-        );
+      // Add feature at centre
+      const feature1 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        mapCentre,
+      );
 
-        // Add another feature at secondary coordinates
-        const feature2 = layer.addPointFeature(
-          {
-            title: 'Title',
-            subtitle: 'Subtitle',
-            colour: '#115599',
-            icon: 'icon-system-success',
-          },
-          coordinate2,
-        );
+      // Add another feature at secondary coordinates
+      const feature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        coordinate2,
+      );
 
-        // Wait for map to re-render
-        cy.wait(100).then(() => {
-          // Click centre of the map
-          const pixel1 = mapData.map.olMap
-            .getPixelFromCoordinate(mapCentre.toMapCoordinate())
-            .map((p) => Math.round(p));
-          mapClick(pixel1[0], pixel1[1]);
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Click centre of the map
+        const pixel1 = mapData.map.olMap
+          .getPixelFromCoordinate(mapCentre.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel1[0], pixel1[1]);
 
-          // Shift+click map at the secondary coordinates
-          const pixel2 = mapData.map.olMap
-            .getPixelFromCoordinate(coordinate2.toMapCoordinate())
-            .map((p) => Math.round(p));
-          mapClick(pixel2[0], pixel2[1], true);
-        });
-        // Wait for map to re-render
-        cy.wait(100).then(() => {
-          // Check that both features have been selected
-          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
-          cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
-          cy.wrap(mapData.map.selectedFeatures.has(feature2.id)).should('be.true');
-        });
+        // Shift+click map at the secondary coordinates
+        const pixel2 = mapData.map.olMap
+          .getPixelFromCoordinate(coordinate2.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel2[0], pixel2[1], true);
+      });
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Check that both features have been selected
+        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
+        cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
+        cy.wrap(mapData.map.selectedFeatures.has(feature2.id)).should('be.true');
       });
     });
 
     it('should multi select features on map programatically', () => {
-      cy.get(jsonData).then((data: any) => {
-        const coordinate2 = new AlloyCoordinate(data.ukLon + 0.05, data.ukLat + 0.05);
+      const coordinate2 = new AlloyCoordinate(mapCentre.lon + 0.05, mapCentre.lat + 0.05);
 
-        // Add layer
-        const layer = new AlloyCustomLayer({
-          map: mapData.map,
-          id: 'multiSelectProgramatically',
-        });
-        mapData.map.addLayer(layer);
+      // Add layer
+      const layer = new AlloyCustomLayer({
+        map: mapData.map,
+        id: 'multiSelectProgramatically',
+      });
+      mapData.map.addLayer(layer);
 
-        // Add feature at centre
-        const feature1 = layer.addPointFeature(
-          {
-            title: 'Title',
-            subtitle: 'Subtitle',
-            colour: '#115599',
-            icon: 'icon-system-success',
-          },
-          mapCentre,
-        );
+      // Add feature at centre
+      const feature1 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        mapCentre,
+      );
 
-        // Add another feature at secondary coordinates
-        const feature2 = layer.addPointFeature(
-          {
-            title: 'Title',
-            subtitle: 'Subtitle',
-            colour: '#115599',
-            icon: 'icon-system-success',
-          },
-          coordinate2,
-        );
+      // Add another feature at secondary coordinates
+      const feature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        coordinate2,
+      );
 
-        // Select both features
-        mapData.map.selectFeatures([feature1, feature2]);
+      // Select both features
+      mapData.map.selectFeatures([feature1, feature2]);
 
-        // Wait for map to re-render
-        cy.wait(100).then(() => {
-          // Check that both features have been selected
-          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
-          cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
-          cy.wrap(mapData.map.selectedFeatures.has(feature2.id)).should('be.true');
-        });
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Check that both features have been selected
+        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
+        cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
+        cy.wrap(mapData.map.selectedFeatures.has(feature2.id)).should('be.true');
       });
     });
 
     it('should remove feature from multi select features on map on click', () => {
-      cy.get(jsonData).then((data: any) => {
-        const coordinate2 = new AlloyCoordinate(data.ukLon + 0.05, data.ukLat + 0.05);
+      const coordinate2 = new AlloyCoordinate(mapCentre.lon + 0.05, mapCentre.lat + 0.05);
 
-        // Add layer
-        const layer = new AlloyCustomLayer({
-          map: mapData.map,
-          id: 'multiSelectByClick',
-        });
-        mapData.map.addLayer(layer);
+      // Add layer
+      const layer = new AlloyCustomLayer({
+        map: mapData.map,
+        id: 'multiSelectByClick',
+      });
+      mapData.map.addLayer(layer);
 
-        // Add feature at centre
-        const feature1 = layer.addPointFeature(
-          {
-            title: 'Title',
-            subtitle: 'Subtitle',
-            colour: '#115599',
-            icon: 'icon-system-success',
-          },
-          mapCentre,
-        );
+      // Add feature at centre
+      const feature1 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        mapCentre,
+      );
 
-        // Add another feature at secondary coordinates
-        const feature2 = layer.addPointFeature(
-          {
-            title: 'Title',
-            subtitle: 'Subtitle',
-            colour: '#115599',
-            icon: 'icon-system-success',
-          },
-          coordinate2,
-        );
+      // Add another feature at secondary coordinates
+      const feature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        coordinate2,
+      );
 
-        // Select both features
-        mapData.map.selectFeatures([feature1, feature2]);
+      // Select both features
+      mapData.map.selectFeatures([feature1, feature2]);
 
-        // Wait for map to re-render
-        cy.wait(100).then(() => {
-          // Shift+click map at the secondary coordinates
-          const pixel = mapData.map.olMap
-            .getPixelFromCoordinate(coordinate2.toMapCoordinate())
-            .map((p) => Math.round(p));
-          mapClick(pixel[0], pixel[1], true);
-        });
-        // Wait for map to re-render
-        cy.wait(100).then(() => {
-          // Check that second feature has been deselected
-          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
-          cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
-        });
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Shift+click map at the secondary coordinates
+        const pixel = mapData.map.olMap
+          .getPixelFromCoordinate(coordinate2.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel[0], pixel[1], true);
+      });
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Check that second feature has been deselected
+        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
+        cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
       });
     });
 
