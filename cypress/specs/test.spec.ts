@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { AlloyBasemapFactory } from '../../src/map/basemaps/AlloyBasemapFactory';
 import { AlloyBounds } from '../../src/map/core/AlloyBounds';
 import { AlloyCoordinate } from '../../src/map/core/AlloyCoordinate';
@@ -6,10 +7,14 @@ import { AlloyMap } from '../../src/map/core/AlloyMap';
 import { LayersChangeEvent } from '../../src/map/events/LayersChangeEvent';
 import { MapChangeCentreEvent } from '../../src/map/events/MapChangeCentreEvent';
 import { MapChangeZoomEvent } from '../../src/map/events/MapChangeZoomEvent';
+import { AlloyFeature } from '../../src/map/features/AlloyFeature';
 import { AlloyClusterLayer } from '../../src/map/layers/cluster/AlloyClusterLayer';
 import { AlloyCustomLayer } from '../../src/map/layers/custom/AlloyCustomLayer';
 import { AlloyNetworkLayer } from '../../src/map/layers/network/AlloyNetworkLayer';
 import { AlloyLayerStyle } from '../../src/map/styles/AlloyLayerStyle';
+import { AlloyStyleBuilderBuildState } from '../../src/map/styles/AlloyStyleBuilderBuildState';
+
+const mapElementId = '#map';
 
 describe('map', () => {
   const UK_LON = -2;
@@ -22,7 +27,8 @@ describe('map', () => {
 
   beforeEach(() => {
     cy.visit('/www/index.html');
-    cy.get('#map').then((el) => {
+
+    cy.get(mapElementId).then((el) => {
       map = new AlloyMap({
         api: API_URL,
         token: API_TOKEN,
@@ -411,20 +417,520 @@ describe('map', () => {
   });
 
   describe('features', () => {
-    it('should add feature to map', () => {});
-    it('should remove feature from map', () => {});
-    it('should select feature on map on click', () => {});
-    it('should select feature on map programatically', () => {});
-    it('should remove selection from feature on map on click', () => {});
-    it('should remove selection from feature on map when clicking basemap', () => {});
-    it('should remove selection from feature on map programatically', () => {});
-    it('should select feature on top of other features on click', () => {});
-    it('should suggest features underneath stack of features on click', () => {});
-    it('should multi select features on map on click', () => {});
-    it('should multi select features on map programatically', () => {});
-    it('should not select non-selectable feature', () => {});
-    it('should run interaction processing on selected feature', () => {});
-    it('should check custom feature styles with forced selection state', () => {});
+    it('should add feature to map', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'addFeature',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      cy.wait(100).then(() => {
+        const featuresAtPixel = map.olMap.getFeaturesAtPixel(
+          map.olMap.getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate()),
+        );
+        cy.wrap(featuresAtPixel).should('have.length', 1);
+        cy.wrap(featuresAtPixel![0]).should('equal', customFeature.olFeature);
+      });
+    });
+    it('should remove feature from map', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'removeFeature',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      cy.wait(100).then(() => {
+        const pixel = map.olMap.getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate());
+        cy.wrap(map.olMap.hasFeatureAtPixel(pixel)).should('be.true');
+        layer.removeFeature(customFeature);
+        cy.wait(100).then(() => {
+          cy.wrap(map.olMap.hasFeatureAtPixel(pixel)).should('be.false');
+        });
+      });
+    });
+    it('should select feature on map on click', () => {
+      const customLayer = new AlloyCustomLayer({
+        map,
+        id: 'selectFeatureByClick',
+      });
+      map.addLayer(customLayer);
+
+      const customFeature = customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      cy.wait(100).then(() => {
+        const pixel = map.olMap.getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate());
+        mapClick(pixel[0], pixel[1]);
+        cy.wait(100).then(() => {
+          cy.wrap(map.selectedFeatures.size).should('equal', 1);
+          cy.wrap(map.selectedFeatures.has(customFeature.id)).should('be.true');
+        });
+      });
+    });
+    it('should select feature on map programatically', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'selectFeatureProgramatically',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      map.setSelectedFeature(customFeature);
+      cy.wrap(map.selectedFeatures.size).should('equal', 1);
+      cy.wrap(map.selectedFeatures.has(customFeature.id)).should('be.true');
+    });
+    it('should remove selection from feature on map when clicking basemap', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'removeFeatureSelectionByClick',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      map.setSelectedFeature(customFeature);
+      cy.wrap(map.selectedFeatures.size).should('equal', 1);
+      cy.wrap(map.selectedFeatures.has(customFeature.id)).should('be.true');
+      cy.wait(100).then(() => {
+        const pixel = map.olMap.getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate());
+        mapClick(pixel[0] / 2, pixel[1] / 2);
+        cy.wrap(map.selectedFeatures).should('be.empty');
+      });
+    });
+    it('should remove selection from feature on map programatically', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'removeFeatureSelectionProgramatically',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      map.setSelectedFeature(customFeature);
+      cy.wrap(map.selectedFeatures.size).should('equal', 1);
+      cy.wrap(map.selectedFeatures.has(customFeature.id)).should('be.true');
+      map.deselectFeature(customFeature);
+      cy.wrap(map.selectedFeatures).should('be.empty');
+    });
+    it('should select feature on top of other features on click', () => {
+      const customLayer = new AlloyCustomLayer({
+        map,
+        id: 'selectTopOfStack',
+      });
+      map.addLayer(customLayer);
+
+      customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      const topFeature = customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      cy.wait(100).then(() => {
+        let selectedFeatures: Map<string, AlloyFeature> | null = null;
+        map.addFeatureSelectionChangeListener((event) => {
+          selectedFeatures = event.features;
+        });
+
+        const pixel = map.olMap
+          .getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel[0], pixel[1]);
+
+        cy.wait(100).then(() => {
+          if (!selectedFeatures) {
+            assert.fail('stack features are null');
+            return;
+          }
+          cy.wrap(selectedFeatures.size).should('equal', 1);
+          cy.wrap(selectedFeatures.has(topFeature.id)).should('be.true');
+        });
+      });
+    });
+    it('should suggest features underneath stack of features on click', () => {
+      const customLayer = new AlloyCustomLayer({
+        map,
+        id: 'underneathStack',
+      });
+      map.addLayer(customLayer);
+
+      const feature1 = customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      const feature2 = customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      const topFeature = customLayer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      cy.wait(100).then(() => {
+        let stack: Map<string, AlloyFeature> | null = null;
+        let selectedFeature: AlloyFeature | null = null;
+        map.addFeaturesUnderSelectionListener((event) => {
+          stack = event.stack;
+          selectedFeature = event.selectedFeature;
+        });
+
+        const pixel = map.olMap
+          .getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel[0], pixel[1]);
+
+        cy.wait(100).then(() => {
+          cy.wrap(selectedFeature).should('equal', topFeature);
+          if (!stack) {
+            assert.fail('stack features are null');
+            return;
+          }
+          cy.wrap(stack.size).should('equal', 2);
+          cy.wrap(stack.has(feature1.id)).should('be.true');
+          cy.wrap(stack.has(feature2.id)).should('be.true');
+        });
+      });
+    });
+    it('should multi select features on map on click', () => {
+      const coordinate2 = new AlloyCoordinate(UK_LON + 0.05, UK_LAT + 0.05);
+
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'multiSelectByClick',
+      });
+      map.addLayer(layer);
+
+      const feature1 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      const feature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        coordinate2,
+      );
+
+      cy.wait(100).then(() => {
+        const pixel1 = map.olMap
+          .getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel1[0], pixel1[1]);
+
+        const pixel2 = map.olMap
+          .getPixelFromCoordinate(coordinate2.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel2[0], pixel2[1], true);
+
+        cy.wait(100).then(() => {
+          cy.wrap(map.selectedFeatures.size).should('equal', 2);
+          cy.wrap(map.selectedFeatures.has(feature1.id)).should('be.true');
+          cy.wrap(map.selectedFeatures.has(feature2.id)).should('be.true');
+        });
+      });
+    });
+    it('should multi select features on map programatically', () => {
+      const coordinate2 = new AlloyCoordinate(UK_LON + 0.05, UK_LAT + 0.05);
+
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'multiSelectProgramatically',
+      });
+      const feature1 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      const feature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        coordinate2,
+      );
+      map.addLayer(layer);
+      map.selectFeatures([feature1, feature2]);
+
+      cy.wait(100).then(() => {
+        cy.wrap(map.selectedFeatures.size).should('equal', 2);
+        cy.wrap(map.selectedFeatures.has(feature1.id)).should('be.true');
+        cy.wrap(map.selectedFeatures.has(feature2.id)).should('be.true');
+      });
+    });
+    it('should remove feature from multi select features on map on click', () => {
+      const coordinate2 = new AlloyCoordinate(UK_LON + 0.05, UK_LAT + 0.05);
+
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'multiSelectByClick',
+      });
+      map.addLayer(layer);
+
+      const feature1 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+
+      const feature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        coordinate2,
+      );
+
+      map.selectFeatures([feature1, feature2]);
+
+      cy.wait(100).then(() => {
+        const pixel = map.olMap
+          .getPixelFromCoordinate(coordinate2.toMapCoordinate())
+          .map((p) => Math.round(p));
+        mapClick(pixel[0], pixel[1], true);
+
+        cy.wait(100).then(() => {
+          cy.wrap(map.selectedFeatures.size).should('equal', 1);
+          cy.wrap(map.selectedFeatures.has(feature1.id)).should('be.true');
+        });
+      });
+    });
+    it('should not select non-selectable feature', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'notSelectable',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+          allowsSelection: false,
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+      try {
+        map.setSelectedFeature(customFeature);
+      } catch (e) {
+        cy.wrap(map.selectedFeatures).should('be.empty');
+      }
+    });
+    it('should hover feature', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'hover',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      const pixel = map.olMap
+        .getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate())
+        .map((p) => Math.round(p));
+      cy.get(mapElementId)
+        .trigger('pointermove', pixel[0], pixel[1])
+        .then(() => {
+          cy.wrap(map.hoverLayer.hoveredFeature).should('equal', customFeature);
+        });
+    });
+    it('should not hover non-hoverable feature', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'notHoverable',
+      });
+      layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+          allowsHover: false,
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      const pixel = map.olMap
+        .getPixelFromCoordinate(MAP_CENTRE.toMapCoordinate())
+        .map((p) => Math.round(p));
+      cy.get(mapElementId)
+        .trigger('pointermove', pixel[0], pixel[1])
+        .then(() => {
+          cy.wrap(map.hoverLayer.hoveredFeature).should('equal', null);
+        });
+    });
+    it('should run interaction processing on selected feature', () => {
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'selectionCallback',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+      const selectedFeatures: AlloyFeature[] = [];
+      map.addFeatureSelectionChangeListener((event) => {
+        selectedFeatures.push(...Array.from(event.features.values()));
+      });
+      map.setSelectedFeature(customFeature);
+      cy.wrap(selectedFeatures).should('have.length', 1);
+      cy.wrap(selectedFeatures[0]).should('equal', customFeature);
+    });
+    it('should check custom feature styles with forced selection state', () => {
+      const forceState = AlloyStyleBuilderBuildState.Selected;
+
+      const layer = new AlloyCustomLayer({
+        map,
+        id: 'forcedStyle',
+      });
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+          forceState,
+        },
+        MAP_CENTRE,
+      );
+      map.addLayer(layer);
+
+      cy.wrap(customFeature.properties.forceState).should('equal', forceState);
+    });
   });
 
   describe('search', () => {
@@ -504,4 +1010,22 @@ describe('map', () => {
       assert.isEmpty(map.findFeaturesWithin(coordinateNotWithin, delta));
     });
   });
+
+  function mapClick(x: number, y: number, isShiftKey?: boolean) {
+    cy.get(mapElementId).then((el) => {
+      cy.log('Map click', { x, y });
+      const evt = new OLMapBrowserPointerEvent(
+        'click',
+        map.olMap,
+        new PointerEvent('click', {
+          clientX: x,
+          clientY: y,
+          relatedTarget: el[0],
+          shiftKey: isShiftKey,
+        }),
+        false,
+      );
+      map.olMap.dispatchEvent(evt);
+    });
+  }
 });
