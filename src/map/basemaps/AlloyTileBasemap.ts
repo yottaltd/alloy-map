@@ -2,6 +2,7 @@ import * as DOMPurify from 'dompurify';
 import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
+import { DEVICE_PIXEL_RATIO } from 'ol/has';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 
@@ -37,6 +38,7 @@ export class AlloyTileBasemap implements AlloyBasemap {
       crossOrigin: 'anonymous',
       tileSize: options.tileSize === undefined ? 512 : options.tileSize,
       attributions: options.watermark ? DOMPurify.sanitize(options.watermark) : undefined,
+      tilePixelRatio: DEVICE_PIXEL_RATIO > 1 ? 2 : 1,
     });
     this.tileLayer = new OLTileLayer({
       source: this.source,

@@ -115,3 +115,11 @@ export { AlloyWmsCapabilitiesLayerStyleLegend } from './wms/AlloyWmsCapabilities
 export { AlloyWmsParameters } from './wms/AlloyWmsParameters';
 export { AlloyWmsParametersLayer } from './wms/AlloyWmsParametersLayer';
 export { WmsUtils } from './wms/WmsUtils';
+export { AlloyWmtsCapabilities } from './wmts/AlloyWmtsCapabilities';
+export { AlloyWmtsCapabilitiesLayer } from './wmts/AlloyWmtsCapabilitiesLayer';
+export { AlloyWmtsCapabilitiesLayerStyle } from './wmts/AlloyWmtsCapabilitiesLayerStyle';
+export {
+  AlloyWmtsCapabilitiesLayerStyleLegend,
+} from './wmts/AlloyWmtsCapabilitiesLayerStyleLegend';
+export { AlloyWmtsParameters } from './wmts/AlloyWmtsParameters';
+export { WmtsUtils } from './wmts/WmtsUtils';

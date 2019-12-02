@@ -6,6 +6,11 @@ import { AlloyImageWmsBasemap } from './AlloyImageWmsBasemap';
 import { AlloyTileBasemap } from './AlloyTileBasemap';
 import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 import { AlloyWmsBasemap } from './AlloyWmsBasemap';
+import { AlloyWmtsBasemap } from './AlloyWmtsBasemap';
+import { AlloyWmtsCapabilities } from '../../wmts/AlloyWmtsCapabilities';
+import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
+import { WmtsUtils } from '../../wmts/WmtsUtils';
+import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * the mapbox user account we use
@@ -111,5 +116,32 @@ export abstract class AlloyBasemapFactory {
       }
     }
     return new AlloyImageWmsBasemap(options);
+  }
+
+  /**
+   * creates a custom WMTS basemap
+   * @param options WMTS url and layer options
+   */
+  public static async createWmts(options: AlloyWmtsParameters): Promise<AlloyBasemap> {
+    const capabilities = await WmtsUtils.getCapabilities(options.url);
+    const layer = capabilities.layers.find((l) => l.identifier === options.layer);
+    if (!layer) {
+      throw new AlloyMapError(1574876271, 'layer does not exist in WMTS capabilities');
+    }
+    const tileMatrixId = layer.tileMatrixIdentifier;
+    const tileMatrixSet = capabilities.capabilities.TileMatrixSet.find(
+      (tileMatrix) => tileMatrix.Identifier === tileMatrixId,
+    );
+    if (tileMatrixSet) {
+      try {
+        const split = tileMatrixSet.SupportedCRS.split(':');
+        await ProjectionUtils.register(parseInt(split[split.length - 1], 10));
+      } catch (e) {
+        // do not throw if failed to register projection
+        // tslint:disable-next-line:no-console
+        console.error('failed to register projection ' + tileMatrixSet.SupportedCRS);
+      }
+    }
+    return new AlloyWmtsBasemap(capabilities, options);
   }
 }
