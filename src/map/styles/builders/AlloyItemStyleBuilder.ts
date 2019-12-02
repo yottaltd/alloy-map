@@ -72,8 +72,8 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     return StringUtils.cacheKeyConcat(
       state,
       resolution,
-      feature.properties.icon || layerStyle.icon,
-      feature.properties.colour || layerStyle.colour,
+      layerStyle.icon,
+      layerStyle.colour,
       // need to key on geometry type as we support everything
       type,
       // polygons, multi polygons and geometry collections are also special due to icon sizing
@@ -97,15 +97,15 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     switch (feature.olFeature.getGeometry().getType()) {
       case OLGeometryType.POINT:
-        return this.createPointStyles(resolution, feature, layerStyle);
+        return this.createPointStyles(resolution, layerStyle);
       case OLGeometryType.LINE_STRING:
-        return this.createLineStringStyles(resolution, feature, layerStyle);
+        return this.createLineStringStyles(resolution, layerStyle);
       case OLGeometryType.POLYGON:
         return this.createPolygonStyles(resolution, feature, layerStyle);
       case OLGeometryType.MULTI_POINT:
-        return this.createMultiPointStyles(resolution, feature, layerStyle);
+        return this.createMultiPointStyles(resolution, layerStyle);
       case OLGeometryType.MULTI_LINE_STRING:
-        return this.createMultiLineStringStyles(resolution, feature, layerStyle);
+        return this.createMultiLineStringStyles(resolution, layerStyle);
       case OLGeometryType.MULTI_POLYGON:
         return this.createMultiPolygonStyles(resolution, feature, layerStyle);
       case OLGeometryType.GEOMETRY_COLLECTION:
@@ -126,15 +126,15 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     switch (feature.olFeature.getGeometry().getType()) {
       case OLGeometryType.POINT:
-        return this.createPointHoverStyles(resolution, feature, layerStyle);
+        return this.createPointHoverStyles(resolution, layerStyle);
       case OLGeometryType.LINE_STRING:
-        return this.createLineStringHoverStyles(resolution, feature, layerStyle);
+        return this.createLineStringHoverStyles(resolution, layerStyle);
       case OLGeometryType.POLYGON:
         return this.createPolygonHoverStyles(resolution, feature, layerStyle);
       case OLGeometryType.MULTI_POINT:
-        return this.createMultiPointHoverStyles(resolution, feature, layerStyle);
+        return this.createMultiPointHoverStyles(resolution, layerStyle);
       case OLGeometryType.MULTI_LINE_STRING:
-        return this.createMultiLineStringHoverStyles(resolution, feature, layerStyle);
+        return this.createMultiLineStringHoverStyles(resolution, layerStyle);
       case OLGeometryType.MULTI_POLYGON:
         return this.createMultiPolygonHoverStyles(resolution, feature, layerStyle);
       case OLGeometryType.GEOMETRY_COLLECTION:
@@ -158,15 +158,15 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     switch (feature.olFeature.getGeometry().getType()) {
       case OLGeometryType.POINT:
-        return this.createPointSelectedStyles(resolution, feature, layerStyle);
+        return this.createPointSelectedStyles(resolution, layerStyle);
       case OLGeometryType.LINE_STRING:
-        return this.createLineStringSelectedStyles(resolution, feature, layerStyle);
+        return this.createLineStringSelectedStyles(resolution, layerStyle);
       case OLGeometryType.POLYGON:
         return this.createPolygonSelectedStyles(resolution, feature, layerStyle);
       case OLGeometryType.MULTI_POINT:
-        return this.createMultiPointSelectedStyles(resolution, feature, layerStyle);
+        return this.createMultiPointSelectedStyles(resolution, layerStyle);
       case OLGeometryType.MULTI_LINE_STRING:
-        return this.createMultiLineStringSelectedStyles(resolution, feature, layerStyle);
+        return this.createMultiLineStringSelectedStyles(resolution, layerStyle);
       case OLGeometryType.MULTI_POLYGON:
         return this.createMultiPolygonSelectedStyles(resolution, feature, layerStyle);
       case OLGeometryType.GEOMETRY_COLLECTION:
@@ -178,72 +178,83 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
   private createPointStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPointStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createLineStringStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     return [
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -253,14 +264,13 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
   private createMultiLineStringStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     return [
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -274,9 +284,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const semiTransparentColour = ColourUtils.semiTransparent(
-      feature.properties.colour || layerStyle.colour,
-    );
+    const semiTransparentColour = ColourUtils.semiTransparent(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -308,21 +316,28 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPolygonStyles(
@@ -331,9 +346,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const semiTransparentColour = ColourUtils.semiTransparent(
-      feature.properties.colour || layerStyle.colour,
-    );
+    const semiTransparentColour = ColourUtils.semiTransparent(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -367,21 +380,28 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createGeometryCollectionStyles(
@@ -392,10 +412,10 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPointStyles(resolution, feature, layerStyle, true),
-      ...this.createLineStringStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiLineStringStyles(resolution, feature, layerStyle, true),
+      ...this.createPointStyles(resolution, layerStyle, true),
+      ...this.createMultiPointStyles(resolution, layerStyle, true),
+      ...this.createLineStringStyles(resolution, layerStyle, true),
+      ...this.createMultiLineStringStyles(resolution, layerStyle, true),
       ...this.createPolygonStyles(resolution, feature, layerStyle, true),
       ...this.createMultiPolygonStyles(resolution, feature, layerStyle, true),
     ];
@@ -403,17 +423,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
   private createPointHoverStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(
-      feature.properties.colour || layerStyle.colour,
-    );
-    return [
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -430,31 +447,35 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPointHoverStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(
-      feature.properties.colour || layerStyle.colour,
-    );
-    return [
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -471,30 +492,34 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createLineStringHoverStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(
-      feature.properties.colour || layerStyle.colour,
-    );
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
@@ -516,16 +541,13 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
   private createMultiLineStringHoverStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
 
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(
-      feature.properties.colour || layerStyle.colour,
-    );
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     return [
       AlloyLineUtils.createLineHaloStyle(
@@ -552,9 +574,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(
-      feature.properties.colour || layerStyle.colour,
-    );
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -586,7 +606,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
@@ -599,14 +619,21 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPolygonHoverStyles(
@@ -616,9 +643,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
-    const hoverColour = ColourUtils.lightenBackground(
-      feature.properties.colour || layerStyle.colour,
-    );
+    const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
     // we need to calculate the icon size on a feature by feature basis
     let largestPolygon: OLPolygon | null;
@@ -652,7 +677,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
@@ -665,14 +690,21 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createGeometryCollectionHoverStyles(
@@ -683,10 +715,10 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPointHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createLineStringHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiLineStringHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createPointHoverStyles(resolution, layerStyle, true),
+      ...this.createMultiPointHoverStyles(resolution, layerStyle, true),
+      ...this.createLineStringHoverStyles(resolution, layerStyle, true),
+      ...this.createMultiLineStringHoverStyles(resolution, layerStyle, true),
       ...this.createPolygonHoverStyles(resolution, feature, layerStyle, true),
       ...this.createMultiPolygonHoverStyles(resolution, feature, layerStyle, true),
     ];
@@ -694,17 +726,16 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
   private createPointSelectedStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -712,36 +743,42 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPointSelectedStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -749,43 +786,49 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createLineStringSelectedStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       AlloyLineUtils.createLineHaloStyle(
         width,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -793,7 +836,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -806,21 +849,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
-        processGeometryCollection
-          ? AlloyGeometryFunctionUtils.pipe(
-              // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-              // then convert to mid points
-              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
-            )
-          : AlloyLineStringFunctions.convertFeatureToMidPoint,
-      ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -831,28 +860,48 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           : AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiLineStringSelectedStyles(
     resolution: number,
-    feature: AlloyItemFeature,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       AlloyLineUtils.createLineHaloStyle(
         width,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
       AlloyLineUtils.createLineStyle(
         width,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -860,7 +909,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -873,21 +922,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
-        feature.properties.colour || layerStyle.colour,
-        processGeometryCollection
-          ? AlloyGeometryFunctionUtils.pipe(
-              // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-              // then convert to mid points
-              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
-            )
-          : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
-      ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -898,6 +933,27 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
       ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createPolygonSelectedStyles(
@@ -936,27 +992,34 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPolygonSelectedStyles(
@@ -997,27 +1060,34 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
-        feature.properties.colour || layerStyle.colour,
+        layerStyle.colour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(
-        iconSize,
-        feature.properties.icon || layerStyle.icon,
-        ICON_COLOUR,
-        // we already have the mid point so use it
-        midPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createGeometryCollectionSelectedStyles(
@@ -1028,10 +1098,10 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPointSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createLineStringSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiLineStringSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createPointSelectedStyles(resolution, layerStyle, true),
+      ...this.createMultiPointSelectedStyles(resolution, layerStyle, true),
+      ...this.createLineStringSelectedStyles(resolution, layerStyle, true),
+      ...this.createMultiLineStringSelectedStyles(resolution, layerStyle, true),
       ...this.createPolygonSelectedStyles(resolution, feature, layerStyle, true),
       ...this.createMultiPolygonSelectedStyles(resolution, feature, layerStyle, true),
     ];
