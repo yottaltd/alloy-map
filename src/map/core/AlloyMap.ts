@@ -753,4 +753,12 @@ export class AlloyMap {
   public fitFeaturesViewport(features: AlloyFeature[]) {
     this.setViewport(FeatureUtils.calculateFeaturesBounds(features));
   }
+
+  /**
+   * Force a recalculation of the map viewport size. This should be called when third-party code
+   * changes the size of the map viewport.
+   */
+  public updateSize() {
+    this.olMap.updateSize();
+  }
 }
