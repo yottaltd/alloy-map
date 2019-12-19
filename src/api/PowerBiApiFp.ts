@@ -22,16 +22,14 @@ export const PowerBiApiFp = function(configuration?: Configuration) {
      */
     powerBiDeleteReport(reportKey: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = PowerBiApiFetchParamCreator(configuration).powerBiDeleteReport(reportKey, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -42,16 +40,14 @@ export const PowerBiApiFp = function(configuration?: Configuration) {
      */
     powerBiGetEmbedTokenReportCreate(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetEmbedTokenWebResponseModel> {
       const localVarFetchArgs = PowerBiApiFetchParamCreator(configuration).powerBiGetEmbedTokenReportCreate(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -63,16 +59,14 @@ export const PowerBiApiFp = function(configuration?: Configuration) {
      */
     powerBiGetEmbedTokenReportEdit(reportKey: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetEmbedTokenWebResponseModel> {
       const localVarFetchArgs = PowerBiApiFetchParamCreator(configuration).powerBiGetEmbedTokenReportEdit(reportKey, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -84,16 +78,14 @@ export const PowerBiApiFp = function(configuration?: Configuration) {
      */
     powerBiGetEmbedTokenReportView(reportKey: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetEmbedTokenWebResponseModel> {
       const localVarFetchArgs = PowerBiApiFetchParamCreator(configuration).powerBiGetEmbedTokenReportView(reportKey, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -104,16 +96,14 @@ export const PowerBiApiFp = function(configuration?: Configuration) {
      */
     powerBiListReports(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListPowerBiReportsWebResponseModel> {
       const localVarFetchArgs = PowerBiApiFetchParamCreator(configuration).powerBiListReports(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

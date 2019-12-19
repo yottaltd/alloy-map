@@ -15,6 +15,7 @@ import { DodiAttributeEditWebRequestModel } from './DodiAttributeEditWebRequestM
 import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DodiPermissionsGetWebResponseModel } from './DodiPermissionsGetWebResponseModel';
 import { DesignListWebResponseModel } from './DesignListWebResponseModel';
+import { DodiAccessAdvisorListWebResponseModel } from './DodiAccessAdvisorListWebResponseModel';
 import { DesignApiFetchParamCreator } from './DesignApiFetchParamCreator';
 import { DesignApi } from './DesignApi';
 /**
@@ -33,16 +34,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designAddDesignInterface(code: string, model: DesignAddDesignInterfaceWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designAddDesignInterface(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -54,16 +53,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designCreate(model: DesignCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -76,16 +73,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designCreateDesignAttribute(code: string, model: DodiAttributeCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAttributeCreateWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designCreateDesignAttribute(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -97,16 +92,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designDelete(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDelete(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -120,16 +113,35 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designDeleteDesignAttribute(code: string, attributeCode: string, model: DodiAttributeDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDeleteDesignAttribute(code, attributeCode, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of design and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists design and its attributes with their winning permission
+     * @param {string} username The name of the user to get design with attributes access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designDesignAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAccessAdvisorListWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDesignAccessAdvisor(username, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -142,16 +154,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designEdit(code: string, model: DesignEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEdit(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -165,16 +175,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designEditDesignAttribute(code: string, attributeCode: string, model: DodiAttributeEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEditDesignAttribute(code, attributeCode, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -187,16 +195,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designEditPermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEditPermissions(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -208,37 +214,34 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designGet(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
-     * Finds the permissions of a design with the specified code
+     * Finds the permissions of a design with the specified code for optional user
      * @summary Get the design permissions
      * @param {string} code The Guc to use to fetch the required design permissions
+     * @param {string} [username] Optional username to get dodi permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designGetPermissions(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    designGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designGetPermissions(code, username, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -249,23 +252,22 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {string} [implementsInterface] The optional dodi code Guc, if specified, only the designs implementing that interface will be returned
      * @param {string} [userGroup] Optional Guc to filter designs by. If specified, only the designs that have this user group code within their permissions or the permissions of the attributes within them are returned
      * @param {string} [childDodi] Optional Guc to filter designs by. If specified, only the designs that have a link attribute pointing to the specified dodi are returned
+     * @param {string} [lastEditDate] The optional last edit date to return only designs created or edited after this date
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignListWebResponseModel> {
-      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designList(query, context, implementsInterface, userGroup, childDodi, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignListWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designList(query, context, implementsInterface, userGroup, childDodi, lastEditDate, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -279,16 +281,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      */
     designRemoveDesignInterface(code: string, interfaceCode: string, model: DesignRemoveDesignInterfaceWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designRemoveDesignInterface(code, interfaceCode, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

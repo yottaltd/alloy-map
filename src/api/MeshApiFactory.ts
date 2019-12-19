@@ -47,11 +47,12 @@ export const MeshApiFactory = function (configuration?: Configuration, fetch?: F
      * Fetches the permissions of a mesh by its Guc
      * @summary Get a mesh permissions by its code
      * @param {string} code The Guc for the mesh whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshGetPermissions(code: string, options?: any) {
-      return MeshApiFp(configuration).meshGetPermissions(code, options)(fetch, basePath);
+    meshGetPermissions(code: string, username?: string, options?: any) {
+      return MeshApiFp(configuration).meshGetPermissions(code, username, options)(fetch, basePath);
     },
     /**
      * Fetches a list of meshes optionally specifying page and the number of results to return per page.
@@ -65,6 +66,18 @@ export const MeshApiFactory = function (configuration?: Configuration, fetch?: F
      */
     meshList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
       return MeshApiFp(configuration).meshList(query, userGroup, page, pageSize, options)(fetch, basePath);
+    },
+    /**
+     * Fetches a list of meshes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user meshes with their winning permission
+     * @param {string} username The name of the user to get mesh access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    meshMeshAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+      return MeshApiFp(configuration).meshMeshAccessAdvisor(username, page, pageSize, options)(fetch, basePath);
     },
   };
 };

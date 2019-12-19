@@ -15,6 +15,18 @@ import { CardApi } from './CardApi';
 export const CardApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
   return {
     /**
+     * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user cards with their winning permission
+     * @param {string} username The name of the user to get card access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardCardAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+      return CardApiFp(configuration).cardCardAccessAdvisor(username, page, pageSize, options)(fetch, basePath);
+    },
+    /**
      * Creates a card based on the information sent in the model
      * @summary Create a card
      * @param {CardCreateWebRequestModel} model Model containing the new card details
@@ -103,11 +115,12 @@ export const CardApiFactory = function (configuration?: Configuration, fetch?: F
      * Fetches the permissions of a card by its Guc
      * @summary Get a card permissions by its code
      * @param {string} code The Guc for the card whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardGetPermissions(code: string, options?: any) {
-      return CardApiFp(configuration).cardGetPermissions(code, options)(fetch, basePath);
+    cardGetPermissions(code: string, username?: string, options?: any) {
+      return CardApiFp(configuration).cardGetPermissions(code, username, options)(fetch, basePath);
     },
     /**
      * Fetches a list of cards optionally specifying page and the number of results to return per page.

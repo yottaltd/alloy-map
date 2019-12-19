@@ -282,12 +282,13 @@ export const ExtendedInspectionApiFetchParamCreator = function (configuration?: 
      * Lists inspection designs applicable to ALL input job, defect, inspection or asset designs
      * @summary List applicable inspection designs for ALL given job, defect, inspection or asset designs
      * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item design Guc info
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    inspectionListApplicableInspectionDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    inspectionListApplicableInspectionDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'itemDesignsModel' is not null or undefined
       if (itemDesignsModel === null || itemDesignsModel === undefined) {
         throw new RequiredError('itemDesignsModel','Required parameter itemDesignsModel was null or undefined when calling inspectionListApplicableInspectionDesigns.');
@@ -304,6 +305,10 @@ export const ExtendedInspectionApiFetchParamCreator = function (configuration?: 
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
       }
 
       if (page !== undefined) {

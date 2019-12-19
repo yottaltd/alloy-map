@@ -87,7 +87,7 @@ export class AlloyPingInteraction {
 
     const animate = (e: OLRenderEvent) => {
       // WARNING! There be demons ahead! if we change renderers e.g. webgl then this will fail
-      const immediate: OLCanvasImmediateRenderer = PolyfillVectorContext.get(e);
+      const immediate: OLCanvasImmediateRenderer = PolyfillVectorContext.getVectorContext(e);
       const elapsed = e.frameState.time - start;
       const elapsedRatio = elapsed / PING_ANIMATION_LENGTH; // between 0-1
 

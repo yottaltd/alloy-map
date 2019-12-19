@@ -73,11 +73,11 @@ export interface ItemWebModel {
    * @type {string}
    * @memberof ItemWebModel
    */
-  title: string;
+  title?: string;
   /**
    * 
    * @type {string}
    * @memberof ItemWebModel
    */
-  subtitle: string;
+  subtitle?: string;
 }

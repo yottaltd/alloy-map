@@ -72,13 +72,14 @@ export const ExtendedDefectApiFactory = function (configuration?: Configuration,
      * Lists defect designs applicable to ALL input job, defect, inspection or asset designs
      * @summary List applicable defect designs for ALL given job, defect, inspection or asset designs
      * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item design Guc info
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    defectListApplicableDefectDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options?: any) {
-      return ExtendedDefectApiFp(configuration).defectListApplicableDefectDesigns(itemDesignsModel, page, pageSize, options)(fetch, basePath);
+    defectListApplicableDefectDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options?: any) {
+      return ExtendedDefectApiFp(configuration).defectListApplicableDefectDesigns(itemDesignsModel, query, page, pageSize, options)(fetch, basePath);
     },
     /**
      * Lists defectable dodis for this defect design, usually assets e.g. Broken Lamp defect applies to lamps but not bollards

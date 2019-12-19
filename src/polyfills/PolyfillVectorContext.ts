@@ -13,7 +13,7 @@ export abstract class PolyfillVectorContext {
    * Gets vector context for current render event
    * @param event ol render event
    */
-  public static get(event: OLRenderEvent): OLCanvasImmediateRenderer {
+  public static getVectorContext(event: OLRenderEvent): OLCanvasImmediateRenderer {
     return getVectorContext(event);
   }
 }

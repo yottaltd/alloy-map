@@ -7,9 +7,15 @@
  */
 export interface MeshOperationsSummaryWebModel {
   /**
-   * If true, the current user has permissions to edit or delete this mesh
+   * If true, the current user has permissions to edit this mesh
    * @type {boolean}
    * @memberof MeshOperationsSummaryWebModel
    */
   canWrite: boolean;
+  /**
+   * If true, the current user has permissions to delete this mesh
+   * @type {boolean}
+   * @memberof MeshOperationsSummaryWebModel
+   */
+  canDelete: boolean;
 }

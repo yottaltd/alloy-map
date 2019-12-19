@@ -3,6 +3,8 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { ItemLogQueryWebRequestModel } from './ItemLogQueryWebRequestModel';
+import { ItemQueryGetWebResponseModel } from './ItemQueryGetWebResponseModel';
 import { ItemLogListWebResponseModel } from './ItemLogListWebResponseModel';
 import { ItemLogApiFetchParamCreator } from './ItemLogApiFetchParamCreator';
 import { ItemLogApi } from './ItemLogApi';
@@ -23,16 +25,14 @@ export const ItemLogApiFp = function(configuration?: Configuration) {
      */
     itemLogListItemLogsByDesignCode(designCode: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemLogListWebResponseModel> {
       const localVarFetchArgs = ItemLogApiFetchParamCreator(configuration).itemLogListItemLogsByDesignCode(designCode, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -46,16 +46,34 @@ export const ItemLogApiFp = function(configuration?: Configuration) {
      */
     itemLogListItemLogsByItemId(itemId: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemLogListWebResponseModel> {
       const localVarFetchArgs = ItemLogApiFetchParamCreator(configuration).itemLogListItemLogsByItemId(itemId, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * 
+     * @summary Query the item logs The  of the item whose related logs need to be fetched The model containing the info for the operation
+     * @param {string} itemId 
+     * @param {ItemLogQueryWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    itemLogQueryItemLog(itemId: string, model: ItemLogQueryWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemQueryGetWebResponseModel> {
+      const localVarFetchArgs = ItemLogApiFetchParamCreator(configuration).itemLogQueryItemLog(itemId, model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

@@ -1,8 +1,8 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
+import { EditItemsBulkActionWebRequestModel } from './EditItemsBulkActionWebRequestModel';
 import { ItemBulkWebRequestModel } from './ItemBulkWebRequestModel';
-import { SetAttributesBulkActionWebRequestModel } from './SetAttributesBulkActionWebRequestModel';
 import { TouchItemsBulkActionWebRequestModel } from './TouchItemsBulkActionWebRequestModel';
 import { BulkApiFp } from './BulkApiFp';
 /**
@@ -22,6 +22,18 @@ export class BulkApi extends BaseAPI {
    */
   public bulkDeleteItems(model: DeleteItemsBulkActionWebRequestModel, options?: any) {
     return BulkApiFp(this.configuration).bulkDeleteItems(model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * This operation allows to edit a specific set of attributes and properties on the items matching the specified Aqs query
+   * @summary Submit a bulk item edit operation
+   * @param {EditItemsBulkActionWebRequestModel} model The model containing the info needed for the edit items bulk operation
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BulkApi
+   */
+  public bulkEditItems(model: EditItemsBulkActionWebRequestModel, options?: any) {
+    return BulkApiFp(this.configuration).bulkEditItems(model, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -60,18 +72,6 @@ export class BulkApi extends BaseAPI {
    */
   public bulkListErrors(id: string, page?: number, pageSize?: number, options?: any) {
     return BulkApiFp(this.configuration).bulkListErrors(id, page, pageSize, options)(this.fetch, this.basePath);
-  }
-
-  /**
-   * This operation allows to edit a specific set of attributes on the items matching the specified Aqs query
-   * @summary Submit a bulk set attributes
-   * @param {SetAttributesBulkActionWebRequestModel} model The model containing the info needed for the set attributes items bulk operation
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof BulkApi
-   */
-  public bulkSetAttributes(model: SetAttributesBulkActionWebRequestModel, options?: any) {
-    return BulkApiFp(this.configuration).bulkSetAttributes(model, options)(this.fetch, this.basePath);
   }
 
   /**

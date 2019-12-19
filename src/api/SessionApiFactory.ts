@@ -1,6 +1,7 @@
 // tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
+import { SessionCreateOAuthUrlWebRequest } from './SessionCreateOAuthUrlWebRequest';
 import { SessionMasterCreateWebRequestModel } from './SessionMasterCreateWebRequestModel';
 import { SessionApiFp } from './SessionApiFp';
 import { SessionApi } from './SessionApi';
@@ -29,6 +30,16 @@ export const SessionApiFactory = function (configuration?: Configuration, fetch?
      */
     sessionCreate2(customerCode: string, options?: any) {
       return SessionApiFp(configuration).sessionCreate2(customerCode, options)(fetch, basePath);
+    },
+    /**
+     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter, the user can be redirected to this url and will be faced with authentication provided by the service. A successful challenge will return to the redirect url specified as a parameter and the Alloy session token will be available as the Authorization header in this request.
+     * @summary Gets OAuth provider sign in urls
+     * @param {SessionCreateOAuthUrlWebRequest} model The model containing info about which provider and how to generate sign in urls
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sessionCreateOAuthUrl(model: SessionCreateOAuthUrlWebRequest, options?: any) {
+      return SessionApiFp(configuration).sessionCreateOAuthUrl(model, options)(fetch, basePath);
     },
     /**
      * Deletes a session, logging out the user

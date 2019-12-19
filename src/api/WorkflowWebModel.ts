@@ -1,7 +1,7 @@
 // tslint:disable
 import { MetadataWebModel } from './MetadataWebModel';
-import { WorkflowActionWebModel } from './WorkflowActionWebModel';
 import { WorkflowNodeInfoWebModel } from './WorkflowNodeInfoWebModel';
+import { WorkflowTimeConditionWebModel } from './WorkflowTimeConditionWebModel';
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
  * Web model for a Workflow
@@ -22,6 +22,12 @@ export interface WorkflowWebModel {
    */
   enabled: boolean;
   /**
+   * Optional precondition that places additional conditions on the triggering of the workflow.
+   * @type {WorkflowTimeConditionWebModel}
+   * @memberof WorkflowWebModel
+   */
+  preCondition?: WorkflowTimeConditionWebModel;
+  /**
    * The trigger for the workflow, see implementations for options.
    * @type {WorkflowTriggerWebModelBase}
    * @memberof WorkflowWebModel
@@ -33,18 +39,6 @@ export interface WorkflowWebModel {
    * @memberof WorkflowWebModel
    */
   triggerNodeInfo: WorkflowNodeInfoWebModel;
-  /**
-   * The id of the trigger
-   * @type {string}
-   * @memberof WorkflowWebModel
-   */
-  triggerId: string;
-  /**
-   * The first actions to follow the firing of the trigger on the workflow
-   * @type {Array<WorkflowActionWebModel>}
-   * @memberof WorkflowWebModel
-   */
-  actions: Array<WorkflowActionWebModel>;
   /**
    * The code of the workflow
    * @type {string}

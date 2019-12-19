@@ -1,6 +1,6 @@
 import OLOverlay from 'ol/Overlay';
+import { EnumUtils } from '../../../utils/EnumUtils';
 import { AlloyCoordinate } from '../../core/AlloyCoordinate';
-import { EnumGuards } from '../../guards/EnumGuards';
 import { AlloyOverlay } from '../AlloyOverlay';
 import { AlloyCustomOverlayOptions } from './AlloyCustomOverlayOptions';
 
@@ -35,7 +35,7 @@ export class AlloyCustomOverlay implements AlloyOverlay {
       element: options.element,
       offset: options.offset,
       position: !!options.position ? options.position.toMapCoordinate() : undefined,
-      positioning: EnumGuards.alloyToOpenlayersOverlayPositioning(options.positioning),
+      positioning: EnumUtils.alloyToOpenlayersOverlayPositioning(options.positioning),
       stopEvent: true, // event propogation to the map viewport is stopped
       insertFirst: false, // append to end to last is always on top
     });

@@ -84,13 +84,14 @@ export const ExtendedJobApiFactory = function (configuration?: Configuration, fe
      * Lists job designs applicable to ALL input job, defect, inspection or asset designs
      * @summary List applicable job designs for ALL given job, defect, inspection or asset designs
      * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item designs Guc info
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    jobListApplicableJobDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options?: any) {
-      return ExtendedJobApiFp(configuration).jobListApplicableJobDesigns(itemDesignsModel, page, pageSize, options)(fetch, basePath);
+    jobListApplicableJobDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options?: any) {
+      return ExtendedJobApiFp(configuration).jobListApplicableJobDesigns(itemDesignsModel, query, page, pageSize, options)(fetch, basePath);
     },
     /**
      * Removes applicable dodis from the job design filter. After the dodis has been removed the job design filter will include all the dodis that are part of that filter. This does not remove the dodis itself from the system or job design, just from its filter.

@@ -23,5 +23,11 @@ export interface DodiAttributeOperationsSummaryWebModel {
    * @type {boolean}
    * @memberof DodiAttributeOperationsSummaryWebModel
    */
+  canDeleteDodiAttribute: boolean;
+  /**
+   * 
+   * @type {boolean}
+   * @memberof DodiAttributeOperationsSummaryWebModel
+   */
   canWriteItemAttribute: boolean;
 }

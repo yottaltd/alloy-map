@@ -4,8 +4,8 @@ import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
+import { EditItemsBulkActionWebRequestModel } from './EditItemsBulkActionWebRequestModel';
 import { ItemBulkWebRequestModel } from './ItemBulkWebRequestModel';
-import { SetAttributesBulkActionWebRequestModel } from './SetAttributesBulkActionWebRequestModel';
 import { TouchItemsBulkActionWebRequestModel } from './TouchItemsBulkActionWebRequestModel';
 import { BulkApi } from './BulkApi';
 /**
@@ -47,6 +47,46 @@ export const BulkApiFetchParamCreator = function (configuration?: Configuration)
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
       const needsSerialization = (<any>"DeleteItemsBulkActionWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * This operation allows to edit a specific set of attributes and properties on the items matching the specified Aqs query
+     * @summary Submit a bulk item edit operation
+     * @param {EditItemsBulkActionWebRequestModel} model The model containing the info needed for the edit items bulk operation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bulkEditItems(model: EditItemsBulkActionWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling bulkEditItems.');
+      }
+      const localVarPath = `/api/bulk/bulk-edit`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"EditItemsBulkActionWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
@@ -172,46 +212,6 @@ export const BulkApiFetchParamCreator = function (configuration?: Configuration)
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
-     * This operation allows to edit a specific set of attributes on the items matching the specified Aqs query
-     * @summary Submit a bulk set attributes
-     * @param {SetAttributesBulkActionWebRequestModel} model The model containing the info needed for the set attributes items bulk operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    bulkSetAttributes(model: SetAttributesBulkActionWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling bulkSetAttributes.');
-      }
-      const localVarPath = `/api/bulk/setAttributes`;
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"SetAttributesBulkActionWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
         url: url.format(localVarUrlObj),

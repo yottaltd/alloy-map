@@ -4,11 +4,11 @@ import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { AqsJsonNode } from './AqsJsonNode';
-import { AqsMathAggregationWebResponse } from './AqsMathAggregationWebResponse';
 import { AqsPathInfoGetWebRequestModel } from './AqsPathInfoGetWebRequestModel';
 import { AqsPathInfoGetWebResponse } from './AqsPathInfoGetWebResponse';
 import { AqsJoinWebResponse } from './AqsJoinWebResponse';
 import { AqsQueryWebResponse } from './AqsQueryWebResponse';
+import { AqsStatisticsAggregationWebResponse } from './AqsStatisticsAggregationWebResponse';
 import { AqsApiFetchParamCreator } from './AqsApiFetchParamCreator';
 import { AqsApi } from './AqsApi';
 /**
@@ -26,16 +26,14 @@ export const AqsApiFp = function(configuration?: Configuration) {
      */
     aqsGetAqsPathInfo(model: AqsPathInfoGetWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AqsPathInfoGetWebResponse> {
       const localVarFetchArgs = AqsApiFetchParamCreator(configuration).aqsGetAqsPathInfo(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -49,37 +47,14 @@ export const AqsApiFp = function(configuration?: Configuration) {
      */
     aqsJoin(aqs: AqsJsonNode, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AqsJoinWebResponse> {
       const localVarFetchArgs = AqsApiFetchParamCreator(configuration).aqsJoin(aqs, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * This endpoint enacts an Aqs Math Aggregation operation. This operation is intended to be executed on an attribute belonging to the items matched by the specified query and return the result of an aggregation operation
-     * @summary Aqs Math Aggregation Endpoint
-     * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    aqsMathAggregation(aqs: AqsJsonNode, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AqsMathAggregationWebResponse> {
-      const localVarFetchArgs = AqsApiFetchParamCreator(configuration).aqsMathAggregation(aqs, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -93,16 +68,35 @@ export const AqsApiFp = function(configuration?: Configuration) {
      */
     aqsQuery(aqs: AqsJsonNode, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AqsQueryWebResponse> {
       const localVarFetchArgs = AqsApiFetchParamCreator(configuration).aqsQuery(aqs, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * This endpoint enacts an Aqs Statistics Aggregation operation. This operation is intended to be executed on an attribute belonging to the items matched by the specified query (i.e. the query subject) and returns the result of an aggregation operation. It is also able to group on an attribute on the query subject or on one of the parents. If the attribute to group on is specified, the aggregation will be executed on each of the \"buckets\" resulting from the group operation.
+     * @summary Aqs Statistics Aggregation Endpoint
+     * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    aqsStatisticsAggregation(aqs: AqsJsonNode, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AqsStatisticsAggregationWebResponse> {
+      const localVarFetchArgs = AqsApiFetchParamCreator(configuration).aqsStatisticsAggregation(aqs, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }
