@@ -1,6 +1,7 @@
 // tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
+import { ItemLogQueryWebRequestModel } from './ItemLogQueryWebRequestModel';
 import { ItemLogApiFp } from './ItemLogApiFp';
 import { ItemLogApi } from './ItemLogApi';
 /**
@@ -32,6 +33,17 @@ export const ItemLogApiFactory = function (configuration?: Configuration, fetch?
      */
     itemLogListItemLogsByItemId(itemId: string, page?: number, pageSize?: number, options?: any) {
       return ItemLogApiFp(configuration).itemLogListItemLogsByItemId(itemId, page, pageSize, options)(fetch, basePath);
+    },
+    /**
+     * 
+     * @summary Query the item logs The  of the item whose related logs need to be fetched The model containing the info for the operation
+     * @param {string} itemId 
+     * @param {ItemLogQueryWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    itemLogQueryItemLog(itemId: string, model: ItemLogQueryWebRequestModel, options?: any) {
+      return ItemLogApiFp(configuration).itemLogQueryItemLog(itemId, model, options)(fetch, basePath);
     },
   };
 };

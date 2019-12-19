@@ -17,6 +17,12 @@ export interface DodiOperationsSummaryWebModel {
    * @type {boolean}
    * @memberof DodiOperationsSummaryWebModel
    */
+  canDelete: boolean;
+  /**
+   * 
+   * @type {boolean}
+   * @memberof DodiOperationsSummaryWebModel
+   */
   canReadItems: boolean;
   /**
    * 
@@ -30,6 +36,12 @@ export interface DodiOperationsSummaryWebModel {
    * @memberof DodiOperationsSummaryWebModel
    */
   canDeleteItems: boolean;
+  /**
+   * 
+   * @type {boolean}
+   * @memberof DodiOperationsSummaryWebModel
+   */
+  canCreateItems: boolean;
   /**
    * 
    * @type {Array<DodiAttributeOperationsSummaryWebModel>}

@@ -9,13 +9,9 @@ import { LayerGetClusterTileWebResponseModel } from './LayerGetClusterTileWebRes
 import { LayerGetNetworkTileWebResponseModel } from './LayerGetNetworkTileWebResponseModel';
 import { LayerPermissionsEditWebRequestModel } from './LayerPermissionsEditWebRequestModel';
 import { LayerPermissionsGetWebResponseModel } from './LayerPermissionsGetWebResponseModel';
-import { LayerReorderStylesWebRequestModel } from './LayerReorderStylesWebRequestModel';
-import { LayerReorderStylesWebResponseModel } from './LayerReorderStylesWebResponseModel';
-import { LayerStyleCreateRequestWebModel } from './LayerStyleCreateRequestWebModel';
-import { LayerStyleDeleteWebRequestModel } from './LayerStyleDeleteWebRequestModel';
-import { LayerStyleEditRequestWebModel } from './LayerStyleEditRequestWebModel';
 import { LayerTagsListWebResponseModel } from './LayerTagsListWebResponseModel';
 import { LayerWithOperationsSummaryWebResponseModel } from './LayerWithOperationsSummaryWebResponseModel';
+import { LayerAccessAdvisorListWebResponseModel } from './LayerAccessAdvisorListWebResponseModel';
 import { LayerListWebResponseModel } from './LayerListWebResponseModel';
 import { LayerApiFetchParamCreator } from './LayerApiFetchParamCreator';
 import { LayerApi } from './LayerApi';
@@ -34,38 +30,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerCreate(model: LayerCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * Adds a style to the specified layer. A layer accepts both a style of type Aqs or Wfs.
-     * @summary Add a style to a layer
-     * @param {string} code The Guc of the layer to add a style to
-     * @param {LayerStyleCreateRequestWebModel} model Model containing the information of the style to be added
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerCreateStyle(code: string, model: LayerStyleCreateRequestWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
-      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerCreateStyle(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -77,43 +49,18 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerDelete(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerDelete(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
-     * Removes a style to the specified layer
-     * @summary Remove a style from a layer
-     * @param {string} code The Guc of the layer to remove a style from
-     * @param {string} id The AId of the style to remove
-     * @param {LayerStyleDeleteWebRequestModel} model The model containing the signature necessary to delete a style from the layer
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerDeleteStyle(code: string, id: string, model: LayerStyleDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
-      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerDeleteStyle(code, id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * Edits a card based on the information sent in the model
+     * Edits a layer based on the information sent in the model
      * @summary Edit a layer
      * @param {string} code The Guc of the layer to edit
      * @param {LayerEditWebRequestModel} model Model containing the new layer details
@@ -122,16 +69,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerEdit(code: string, model: LayerEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerEdit(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -144,39 +89,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerEditPermissions(code: string, model: LayerPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerEditPermissions(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * Edits a style on the specified layer. A layer style type cannot be changed.
-     * @summary Edit a style on a layer
-     * @param {string} code The Guc of the layer to add edit a style on
-     * @param {string} id The AId of the style to edit
-     * @param {LayerStyleEditRequestWebModel} model Model containing the information of the style to be edited
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerEditStyle(code: string, id: string, model: LayerStyleEditRequestWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
-      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerEditStyle(code, id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -188,16 +108,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerGet(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -213,16 +131,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerGetClusterLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerGetClusterTileWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerGetClusterLayerTile(code, x, y, z, styleIds, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -238,37 +154,55 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerGetNetworkLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerGetNetworkTileWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerGetNetworkLayerTile(code, x, y, z, styleIds, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * Fetches the permissions of a layer by its Guc
      * @summary Get the permissions of a layer by its code
      * @param {string} code The Guc for the layer whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerGetPermissions(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    layerGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerGetPermissions(code, username, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user layers with their winning permission
+     * @param {string} username The name of the user to get layer access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    layerLayerAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerAccessAdvisorListWebResponseModel> {
+      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerLayerAccessAdvisor(username, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -287,16 +221,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerListWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerList(name, context, andTags, orTags, notTags, userGroup, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -307,38 +239,14 @@ export const LayerApiFp = function(configuration?: Configuration) {
      */
     layerListTags(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerTagsListWebResponseModel> {
       const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerListTags(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * This endpoint reorders the styles on a layer taking a list of the style ids in the new order. All the style ids currently in the layer have to be present in the request
-     * @summary Reorder styles on a layer
-     * @param {string} code The Guc of the layer whose styles need to be reordered
-     * @param {LayerReorderStylesWebRequestModel} model The model containing the info necessary to the styles reorder operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerReorderStyle(code: string, model: LayerReorderStylesWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LayerReorderStylesWebResponseModel> {
-      const localVarFetchArgs = LayerApiFetchParamCreator(configuration).layerReorderStyle(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

@@ -3,12 +3,14 @@ import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { CreateManualWorkflowRunWebRequestModel } from './CreateManualWorkflowRunWebRequestModel';
 import { WorkflowAddActionWebRequestModel } from './WorkflowAddActionWebRequestModel';
 import { WorkflowCreateWebRequestModel } from './WorkflowCreateWebRequestModel';
 import { WorkflowEditActionWebRequestModel } from './WorkflowEditActionWebRequestModel';
 import { WorkflowEditWebRequestModel } from './WorkflowEditWebRequestModel';
 import { WorkflowGetActionParametersWebRequestModel } from './WorkflowGetActionParametersWebRequestModel';
 import { WorkflowGetAllowedActionsWebRequestModel } from './WorkflowGetAllowedActionsWebRequestModel';
+import { WorkflowListNextDateTimesWebRequestModel } from './WorkflowListNextDateTimesWebRequestModel';
 import { WorkflowPermissionsEditWebRequestModel } from './WorkflowPermissionsEditWebRequestModel';
 import { WorkflowRemoveActionWebRequestModel } from './WorkflowRemoveActionWebRequestModel';
 import { WorkflowApi } from './WorkflowApi';
@@ -240,9 +242,9 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
       };
     },
     /**
-     * Edit the permissions on the layer with the specified code
-     * @summary Edit permissions for a layer
-     * @param {string} code The Guc of the layer to edit the permissions of
+     * Edit the permissions on the workflow with the specified code
+     * @summary Edit permissions for a workflow
+     * @param {string} code The Guc of the workflow to edit the permissions of
      * @param {WorkflowPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -323,8 +325,8 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
       };
     },
     /**
-     * 
-     * @summary Given an action type, position in workflow, and values, get information about extra parameters that need to be supplied (and if any are optional since they can be inferred by the system) in this case.
+     * Given an action type, position in workflow action group, and values, get information about extra parameters that need to be supplied (and if any are optional since they can be inferred by the system) in this case.
+     * @summary List the parameters for the specified action.
      * @param {string} code The code of the workflow being queried
      * @param {WorkflowGetActionParametersWebRequestModel} model Model containing the details of the get parameters request
      * @param {*} [options] Override http request option.
@@ -370,7 +372,7 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
     },
     /**
      * 
-     * @summary Given a position in a workflow, list the actions that are potentially valid to be added to this location.
+     * @summary List the actions that are valid to be added to this location in a workflow action group.
      * @param {string} code The code of the workflow being queried
      * @param {WorkflowGetAllowedActionsWebRequestModel} model Model containing the details of the get allowed actions request
      * @param {*} [options] Override http request option.
@@ -458,10 +460,11 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
      * Fetches the permissions of a workflow by its Guc
      * @summary Get a workflow permissions by its code
      * @param {string} code The Guc for the workflow whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowGetPermissions(code: string, options: any = {}): FetchArgs {
+    workflowGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling workflowGetPermissions.');
@@ -479,6 +482,10 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (username !== undefined) {
+        localVarQueryParameter['username'] = username;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -728,6 +735,139 @@ export const WorkflowApiFetchParamCreator = function (configuration?: Configurat
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
       const needsSerialization = (<any>"WorkflowRemoveActionWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user workflows with their winning permission
+     * @param {string} username The name of the user to get workflow access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling workflowWorkflowAccessAdvisor.');
+      }
+      const localVarPath = `/api/workflow/access-advisor/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Returns the next n dates, where n is the number specified in the model,       at which the stated workflows will trigger. If more than the specified dates are available, only the n       closest to the current date will be returned.       NOTE: Currently only Calendar triggers are supported
+     * @summary Get next trigger dates
+     * @param {WorkflowListNextDateTimesWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowListNextDates(model: WorkflowListNextDateTimesWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling workflowWorkflowListNextDates.');
+      }
+      const localVarPath = `/api/workflow/next-dates`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"WorkflowListNextDateTimesWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Queues a workflow run for a workflow that has a manual trigger,       using the supplied AQS query to specify the output items of the manual trigger.
+     * @summary Start a manually triggered workflow run
+     * @param {string} code The code of the workflow to run, which must have a manual trigger
+     * @param {CreateManualWorkflowRunWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowManualRun(code: string, model: CreateManualWorkflowRunWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'code' is not null or undefined
+      if (code === null || code === undefined) {
+        throw new RequiredError('code','Required parameter code was null or undefined when calling workflowWorkflowManualRun.');
+      }
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling workflowWorkflowManualRun.');
+      }
+      const localVarPath = `/api/workflow/{code}/manual-run`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"CreateManualWorkflowRunWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {

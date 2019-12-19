@@ -14,7 +14,7 @@ export interface BudgetPeriodJobCostsWebModel {
    */
   budgetPeriodItem: ItemWebModel;
   /**
-   * The job costs per job statuses for this budget period. Key is camelized status string e.g. 'issued' or 'onHold', value sum of JWI costs for jobs that fit into this budget period.
+   * The job costs per job statuses for this budget period. Key is job task status item id e.g. for standard items 5bc5bdd281d088d177342c72 is 'Proposed' job status value is sum of JWI costs for jobs that fit into this budget period.
    * @type {JObject}
    * @memberof BudgetPeriodJobCostsWebModel
    */

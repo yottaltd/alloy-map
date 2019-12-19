@@ -27,16 +27,14 @@ export const ImportApiFp = function(configuration?: Configuration) {
      */
     importDelete(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ImportApiFetchParamCreator(configuration).importDelete(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -48,16 +46,14 @@ export const ImportApiFp = function(configuration?: Configuration) {
      */
     importGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ImportGetWebResponseModel> {
       const localVarFetchArgs = ImportApiFetchParamCreator(configuration).importGet(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -69,16 +65,14 @@ export const ImportApiFp = function(configuration?: Configuration) {
      */
     importImportCommit(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ImportCommitWebResponseModel> {
       const localVarFetchArgs = ImportApiFetchParamCreator(configuration).importImportCommit(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -90,16 +84,14 @@ export const ImportApiFp = function(configuration?: Configuration) {
      */
     importImportInitialise(model: ImportInitialiseWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ImportInitialiseWebResponseModel> {
       const localVarFetchArgs = ImportApiFetchParamCreator(configuration).importImportInitialise(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -112,22 +104,20 @@ export const ImportApiFp = function(configuration?: Configuration) {
      */
     importImportValidate(code: string, model: ImportValidateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ImportValidateWebResponseModel> {
       const localVarFetchArgs = ImportApiFetchParamCreator(configuration).importImportValidate(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * List imports
      * @summary List imports
-     * @param {string} [query] Optional query to filter the user groups by
+     * @param {string} [query] Optional query to filter the imports by
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
@@ -135,16 +125,14 @@ export const ImportApiFp = function(configuration?: Configuration) {
      */
     importList(query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ImportListWebResponseModel> {
       const localVarFetchArgs = ImportApiFetchParamCreator(configuration).importList(query, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

@@ -25,16 +25,14 @@ export const ExtendedWorkItemApiFp = function(configuration?: Configuration) {
      */
     workItemAddWorkItemApplicableComponentDodis(id: string, model: ApplicableDodisAddWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemAddWorkItemApplicableComponentDodis(id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -47,16 +45,14 @@ export const ExtendedWorkItemApiFp = function(configuration?: Configuration) {
      */
     workItemAddWorkItemApplicableDodis(id: string, model: ApplicableDodisAddWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemAddWorkItemApplicableDodis(id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -70,16 +66,14 @@ export const ExtendedWorkItemApiFp = function(configuration?: Configuration) {
      */
     workItemGetWorkItemApplicableComponentDodis(id: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApplicableDodiContainerListWebResponseModel> {
       const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemGetWorkItemApplicableComponentDodis(id, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -93,62 +87,58 @@ export const ExtendedWorkItemApiFp = function(configuration?: Configuration) {
      */
     workItemGetWorkItemApplicableDodis(id: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApplicableDodiContainerListWebResponseModel> {
       const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemGetWorkItemApplicableDodis(id, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * List applicable component work items for the given asset component design
      * @summary List applicable component work items for asset component
      * @param {string} code The asset component design Guc to fetch applicable component work items for
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workItemListApplicableComponentWorkItems(code: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApplicableWorkItemListWebResponseModel> {
-      const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemListApplicableComponentWorkItems(code, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    workItemListApplicableComponentWorkItems(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApplicableWorkItemListWebResponseModel> {
+      const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemListApplicableComponentWorkItems(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * List applicable work items for the given job design type
      * @summary List applicable work items for job type
      * @param {string} code The job design Guc to fetch applicable work items for
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workItemListApplicableWorkItems(code: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApplicableWorkItemListWebResponseModel> {
-      const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemListApplicableWorkItems(code, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    workItemListApplicableWorkItems(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApplicableWorkItemListWebResponseModel> {
+      const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemListApplicableWorkItems(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -161,16 +151,14 @@ export const ExtendedWorkItemApiFp = function(configuration?: Configuration) {
      */
     workItemRemoveWorkItemApplicableComponentDodis(id: string, model: ApplicableDodisRemoveWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemRemoveWorkItemApplicableComponentDodis(id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -183,16 +171,14 @@ export const ExtendedWorkItemApiFp = function(configuration?: Configuration) {
      */
     workItemRemoveWorkItemApplicableDodis(id: string, model: ApplicableDodisRemoveWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ExtendedWorkItemApiFetchParamCreator(configuration).workItemRemoveWorkItemApplicableDodis(id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
   }

@@ -29,16 +29,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userCreate(model: AlloyUserCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserCreateWebResponseModel> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -50,16 +48,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userEditCurrentUser(model: AlloyUserEditCurrentWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserEditCurrentWebResponseModel> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userEditCurrentUser(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -71,16 +67,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userForgotPasswordReset(model: ForgotPasswordWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userForgotPasswordReset(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -92,16 +86,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userGet(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserGetWebResponseModel> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userGet(username, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -112,16 +104,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userGetCurrentUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserGetCurrentWebResponseModel> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userGetCurrentUser(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -136,16 +126,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserListWebResponseModel> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userList(query, userGroup, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -157,16 +145,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userRemove(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userRemove(username, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -177,16 +163,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userRequestPasswordReset(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userRequestPasswordReset(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -199,16 +183,14 @@ export const UserApiFp = function(configuration?: Configuration) {
      */
     userSubmitPasswordReset(resetToken: string, model: SubmitPasswordResetWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = UserApiFetchParamCreator(configuration).userSubmitPasswordReset(resetToken, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
   }

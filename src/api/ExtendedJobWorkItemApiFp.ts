@@ -29,16 +29,14 @@ export const ExtendedJobWorkItemApiFp = function(configuration?: Configuration) 
      */
     jobWorkItemClone(id: string, model: ExtendedCloneWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ExtendedCloneWebResponseModel> {
       const localVarFetchArgs = ExtendedJobWorkItemApiFetchParamCreator(configuration).jobWorkItemClone(id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -50,16 +48,14 @@ export const ExtendedJobWorkItemApiFp = function(configuration?: Configuration) 
      */
     jobWorkItemCreate(model: JobWorkItemCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<JobWorkItemCreateWebResponseModel> {
       const localVarFetchArgs = ExtendedJobWorkItemApiFetchParamCreator(configuration).jobWorkItemCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -71,16 +67,14 @@ export const ExtendedJobWorkItemApiFp = function(configuration?: Configuration) 
      */
     jobWorkItemDelete(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ExtendedJobWorkItemApiFetchParamCreator(configuration).jobWorkItemDelete(id, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -93,16 +87,14 @@ export const ExtendedJobWorkItemApiFp = function(configuration?: Configuration) 
      */
     jobWorkItemEdit(id: string, model: ItemEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemEditWebResponseModel> {
       const localVarFetchArgs = ExtendedJobWorkItemApiFetchParamCreator(configuration).jobWorkItemEdit(id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

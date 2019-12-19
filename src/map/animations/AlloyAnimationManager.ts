@@ -167,10 +167,7 @@ export abstract class AlloyAnimationManager {
           const elapsedRatio: number = Math.min(elapsed / duration, 1.0);
 
           // call the handler for composing the animation (this does the work per type of animation)
-          animationListener.compose(
-            PolyfillVectorContext.get(event),
-            elapsedRatio,
-          );
+          animationListener.compose(PolyfillVectorContext.getVectorContext(event), elapsedRatio);
 
           // cleanup the animation if its finished
           if (elapsed >= duration) {

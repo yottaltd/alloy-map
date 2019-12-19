@@ -27,15 +27,15 @@ export class AuditLogApi extends BaseAPI {
    * Retrieve the audit logs and filter them by request model parameters
    * @summary List the audit logs
    * @param {Array<LogFeature>} features Audit logs features to get logs for
-   * @param {Date} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
-   * @param {Date} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
+   * @param {string} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
+   * @param {string} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof AuditLogApi
    */
-  public auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: Date, endDate?: Date, page?: number, pageSize?: number, options?: any) {
+  public auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: string, endDate?: string, page?: number, pageSize?: number, options?: any) {
     return AuditLogApiFp(this.configuration).auditLogListAuditLogsByFeatures(features, startDate, endDate, page, pageSize, options)(this.fetch, this.basePath);
   }
 

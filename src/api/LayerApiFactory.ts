@@ -4,10 +4,6 @@ import { FetchAPI } from './FetchAPI';
 import { LayerCreateWebRequestModel } from './LayerCreateWebRequestModel';
 import { LayerEditWebRequestModel } from './LayerEditWebRequestModel';
 import { LayerPermissionsEditWebRequestModel } from './LayerPermissionsEditWebRequestModel';
-import { LayerReorderStylesWebRequestModel } from './LayerReorderStylesWebRequestModel';
-import { LayerStyleCreateRequestWebModel } from './LayerStyleCreateRequestWebModel';
-import { LayerStyleDeleteWebRequestModel } from './LayerStyleDeleteWebRequestModel';
-import { LayerStyleEditRequestWebModel } from './LayerStyleEditRequestWebModel';
 import { LayerApiFp } from './LayerApiFp';
 import { LayerApi } from './LayerApi';
 /**
@@ -27,17 +23,6 @@ export const LayerApiFactory = function (configuration?: Configuration, fetch?: 
       return LayerApiFp(configuration).layerCreate(model, options)(fetch, basePath);
     },
     /**
-     * Adds a style to the specified layer. A layer accepts both a style of type Aqs or Wfs.
-     * @summary Add a style to a layer
-     * @param {string} code The Guc of the layer to add a style to
-     * @param {LayerStyleCreateRequestWebModel} model Model containing the information of the style to be added
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerCreateStyle(code: string, model: LayerStyleCreateRequestWebModel, options?: any) {
-      return LayerApiFp(configuration).layerCreateStyle(code, model, options)(fetch, basePath);
-    },
-    /**
      * Deletes a layer based on the information sent in the model
      * @summary Delete a layer
      * @param {string} code The Guc of the layer to delete
@@ -48,19 +33,7 @@ export const LayerApiFactory = function (configuration?: Configuration, fetch?: 
       return LayerApiFp(configuration).layerDelete(code, options)(fetch, basePath);
     },
     /**
-     * Removes a style to the specified layer
-     * @summary Remove a style from a layer
-     * @param {string} code The Guc of the layer to remove a style from
-     * @param {string} id The AId of the style to remove
-     * @param {LayerStyleDeleteWebRequestModel} model The model containing the signature necessary to delete a style from the layer
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerDeleteStyle(code: string, id: string, model: LayerStyleDeleteWebRequestModel, options?: any) {
-      return LayerApiFp(configuration).layerDeleteStyle(code, id, model, options)(fetch, basePath);
-    },
-    /**
-     * Edits a card based on the information sent in the model
+     * Edits a layer based on the information sent in the model
      * @summary Edit a layer
      * @param {string} code The Guc of the layer to edit
      * @param {LayerEditWebRequestModel} model Model containing the new layer details
@@ -80,18 +53,6 @@ export const LayerApiFactory = function (configuration?: Configuration, fetch?: 
      */
     layerEditPermissions(code: string, model: LayerPermissionsEditWebRequestModel, options?: any) {
       return LayerApiFp(configuration).layerEditPermissions(code, model, options)(fetch, basePath);
-    },
-    /**
-     * Edits a style on the specified layer. A layer style type cannot be changed.
-     * @summary Edit a style on a layer
-     * @param {string} code The Guc of the layer to add edit a style on
-     * @param {string} id The AId of the style to edit
-     * @param {LayerStyleEditRequestWebModel} model Model containing the information of the style to be edited
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerEditStyle(code: string, id: string, model: LayerStyleEditRequestWebModel, options?: any) {
-      return LayerApiFp(configuration).layerEditStyle(code, id, model, options)(fetch, basePath);
     },
     /**
      * Fetches a layer by its globally unique code (GUC).
@@ -135,11 +96,24 @@ export const LayerApiFactory = function (configuration?: Configuration, fetch?: 
      * Fetches the permissions of a layer by its Guc
      * @summary Get the permissions of a layer by its code
      * @param {string} code The Guc for the layer whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGetPermissions(code: string, options?: any) {
-      return LayerApiFp(configuration).layerGetPermissions(code, options)(fetch, basePath);
+    layerGetPermissions(code: string, username?: string, options?: any) {
+      return LayerApiFp(configuration).layerGetPermissions(code, username, options)(fetch, basePath);
+    },
+    /**
+     * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user layers with their winning permission
+     * @param {string} username The name of the user to get layer access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    layerLayerAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+      return LayerApiFp(configuration).layerLayerAccessAdvisor(username, page, pageSize, options)(fetch, basePath);
     },
     /**
      * Fetches a list of layers optionally specifying page and the number of results to return per page.
@@ -166,17 +140,6 @@ export const LayerApiFactory = function (configuration?: Configuration, fetch?: 
      */
     layerListTags(options?: any) {
       return LayerApiFp(configuration).layerListTags(options)(fetch, basePath);
-    },
-    /**
-     * This endpoint reorders the styles on a layer taking a list of the style ids in the new order. All the style ids currently in the layer have to be present in the request
-     * @summary Reorder styles on a layer
-     * @param {string} code The Guc of the layer whose styles need to be reordered
-     * @param {LayerReorderStylesWebRequestModel} model The model containing the info necessary to the styles reorder operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerReorderStyle(code: string, model: LayerReorderStylesWebRequestModel, options?: any) {
-      return LayerApiFp(configuration).layerReorderStyle(code, model, options)(fetch, basePath);
     },
   };
 };

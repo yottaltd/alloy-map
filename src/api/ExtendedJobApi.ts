@@ -95,14 +95,15 @@ export class ExtendedJobApi extends BaseAPI {
    * Lists job designs applicable to ALL input job, defect, inspection or asset designs
    * @summary List applicable job designs for ALL given job, defect, inspection or asset designs
    * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item designs Guc info
+   * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedJobApi
    */
-  public jobListApplicableJobDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options?: any) {
-    return ExtendedJobApiFp(this.configuration).jobListApplicableJobDesigns(itemDesignsModel, page, pageSize, options)(this.fetch, this.basePath);
+  public jobListApplicableJobDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ExtendedJobApiFp(this.configuration).jobListApplicableJobDesigns(itemDesignsModel, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

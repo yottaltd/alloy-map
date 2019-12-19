@@ -24,41 +24,37 @@ export const AuditLogApiFp = function(configuration?: Configuration) {
      */
     auditLogListAuditLogsByDocumentCode(documentCode: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AuditLogListWebResponseModel> {
       const localVarFetchArgs = AuditLogApiFetchParamCreator(configuration).auditLogListAuditLogsByDocumentCode(documentCode, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * Retrieve the audit logs and filter them by request model parameters
      * @summary List the audit logs
      * @param {Array<LogFeature>} features Audit logs features to get logs for
-     * @param {Date} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
-     * @param {Date} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
+     * @param {string} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
+     * @param {string} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: Date, endDate?: Date, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AuditLogListWebResponseModel> {
+    auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: string, endDate?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AuditLogListWebResponseModel> {
       const localVarFetchArgs = AuditLogApiFetchParamCreator(configuration).auditLogListAuditLogsByFeatures(features, startDate, endDate, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

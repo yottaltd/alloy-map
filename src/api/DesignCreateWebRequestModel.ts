@@ -51,17 +51,11 @@ export interface DesignCreateWebRequestModel {
    */
   geometry: DesignGeometryWebModel;
   /**
-   * If true, this design will include the \"inventory\" collection allowing the items within it to be placed in it to simulate items not actually on the field but just in storage areas. One important difference of inventory items is that they can have no geometry even if their design specified required geometry
-   * @type {boolean}
-   * @memberof DesignCreateWebRequestModel
-   */
-  includeInventory?: boolean;
-  /**
-   * The collections for the design that items will be allowed to be created in. For now not required and a null will be treated as old code (adding Archive, Live and Inventory when IncludeInventory flag is set). In time this property will become required and null will mean no collections.
+   * The collections for the design that items will be allowed to be created in. Null will mean no collections.
    * @type {Array<CollectionCode>}
    * @memberof DesignCreateWebRequestModel
    */
-  collections?: Array<CollectionCode>;
+  collections: Array<CollectionCode>;
   /**
    * The optional stencil configuration to use for layout of the item forms generated for this design.
    * @type {DodiStencilCreateWebModel}

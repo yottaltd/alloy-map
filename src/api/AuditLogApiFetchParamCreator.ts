@@ -62,14 +62,14 @@ export const AuditLogApiFetchParamCreator = function (configuration?: Configurat
      * Retrieve the audit logs and filter them by request model parameters
      * @summary List the audit logs
      * @param {Array<LogFeature>} features Audit logs features to get logs for
-     * @param {Date} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
-     * @param {Date} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
+     * @param {string} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
+     * @param {string} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: Date, endDate?: Date, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: string, endDate?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'features' is not null or undefined
       if (features === null || features === undefined) {
         throw new RequiredError('features','Required parameter features was null or undefined when calling auditLogListAuditLogsByFeatures.');
@@ -93,11 +93,11 @@ export const AuditLogApiFetchParamCreator = function (configuration?: Configurat
       }
 
       if (startDate !== undefined) {
-        localVarQueryParameter['startDate'] = (startDate as any).toISOString();
+        localVarQueryParameter['startDate'] = startDate;
       }
 
       if (endDate !== undefined) {
-        localVarQueryParameter['endDate'] = (endDate as any).toISOString();
+        localVarQueryParameter['endDate'] = endDate;
       }
 
       if (page !== undefined) {
