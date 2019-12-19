@@ -37,18 +37,6 @@ export class AqsApi extends BaseAPI {
   }
 
   /**
-   * This endpoint enacts an Aqs Math Aggregation operation. This operation is intended to be executed on an attribute belonging to the items matched by the specified query and return the result of an aggregation operation
-   * @summary Aqs Math Aggregation Endpoint
-   * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof AqsApi
-   */
-  public aqsMathAggregation(aqs: AqsJsonNode, options?: any) {
-    return AqsApiFp(this.configuration).aqsMathAggregation(aqs, options)(this.fetch, this.basePath);
-  }
-
-  /**
    * This endpoint enacts an Aqs Query operation. This operation is intended to find items matching the specified condition tree       and return their basic information alongside any of the specified attributes       
    * @summary Aqs Query Endpoint
    * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
@@ -60,6 +48,20 @@ export class AqsApi extends BaseAPI {
    */
   public aqsQuery(aqs: AqsJsonNode, page?: number, pageSize?: number, options?: any) {
     return AqsApiFp(this.configuration).aqsQuery(aqs, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * This endpoint enacts an Aqs Statistics Aggregation operation. This operation is intended to be executed on an attribute belonging to the items matched by the specified query (i.e. the query subject) and returns the result of an aggregation operation. It is also able to group on an attribute on the query subject or on one of the parents. If the attribute to group on is specified, the aggregation will be executed on each of the \"buckets\" resulting from the group operation.
+   * @summary Aqs Statistics Aggregation Endpoint
+   * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AqsApi
+   */
+  public aqsStatisticsAggregation(aqs: AqsJsonNode, page?: number, pageSize?: number, options?: any) {
+    return AqsApiFp(this.configuration).aqsStatisticsAggregation(aqs, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

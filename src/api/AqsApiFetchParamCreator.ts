@@ -103,18 +103,20 @@ export const AqsApiFetchParamCreator = function (configuration?: Configuration) 
       };
     },
     /**
-     * This endpoint enacts an Aqs Math Aggregation operation. This operation is intended to be executed on an attribute belonging to the items matched by the specified query and return the result of an aggregation operation
-     * @summary Aqs Math Aggregation Endpoint
+     * This endpoint enacts an Aqs Query operation. This operation is intended to find items matching the specified condition tree       and return their basic information alongside any of the specified attributes       
+     * @summary Aqs Query Endpoint
      * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    aqsMathAggregation(aqs: AqsJsonNode, options: any = {}): FetchArgs {
+    aqsQuery(aqs: AqsJsonNode, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'aqs' is not null or undefined
       if (aqs === null || aqs === undefined) {
-        throw new RequiredError('aqs','Required parameter aqs was null or undefined when calling aqsMathAggregation.');
+        throw new RequiredError('aqs','Required parameter aqs was null or undefined when calling aqsQuery.');
       }
-      const localVarPath = `/api/aqs/statistics`;
+      const localVarPath = `/api/aqs/query`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
@@ -126,6 +128,14 @@ export const AqsApiFetchParamCreator = function (configuration?: Configuration) 
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
       }
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -143,20 +153,20 @@ export const AqsApiFetchParamCreator = function (configuration?: Configuration) 
       };
     },
     /**
-     * This endpoint enacts an Aqs Query operation. This operation is intended to find items matching the specified condition tree       and return their basic information alongside any of the specified attributes       
-     * @summary Aqs Query Endpoint
+     * This endpoint enacts an Aqs Statistics Aggregation operation. This operation is intended to be executed on an attribute belonging to the items matched by the specified query (i.e. the query subject) and returns the result of an aggregation operation. It is also able to group on an attribute on the query subject or on one of the parents. If the attribute to group on is specified, the aggregation will be executed on each of the \"buckets\" resulting from the group operation.
+     * @summary Aqs Statistics Aggregation Endpoint
      * @param {AqsJsonNode} aqs The AqsJsonNode containing the Aqs query
      * @param {number} [page] The page number to fetch (1 based)
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    aqsQuery(aqs: AqsJsonNode, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    aqsStatisticsAggregation(aqs: AqsJsonNode, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'aqs' is not null or undefined
       if (aqs === null || aqs === undefined) {
-        throw new RequiredError('aqs','Required parameter aqs was null or undefined when calling aqsQuery.');
+        throw new RequiredError('aqs','Required parameter aqs was null or undefined when calling aqsStatisticsAggregation.');
       }
-      const localVarPath = `/api/aqs/query`;
+      const localVarPath = `/api/aqs/statistics`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;

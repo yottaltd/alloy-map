@@ -9,7 +9,9 @@ import {
   Polygon,
 } from 'geojson';
 import * as _ from 'lodash';
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
@@ -41,18 +43,15 @@ export abstract class GeometryUtils {
    * @param anchor the anchor point to rotate around
    */
   public static rotateCoordinate(
-    coordinate: [number, number],
+    coordinate: OLCoordinate,
     angleRadians: number,
-    anchor: [number, number],
-  ): [number, number] {
+    anchor: OLCoordinate,
+  ): OLCoordinate {
     return GeometryUtils.memoizedRotateCoordinate(
       coordinate,
       angleRadians,
       anchor,
-    ).slice() /* slice returns [] not [number, number] but we know it is so cast */ as [
-      number,
-      number
-    ];
+    ).slice() /* slice returns [] notOLCoordinate but we know it is so cast */ as [number, number];
   }
 
   /**
@@ -60,9 +59,9 @@ export abstract class GeometryUtils {
    * @param geometry parent geometry from which to remove coordinate
    * @param coordinate coordinate to remove from geometry
    */
-  public static removeCoordinate(geometry: OLGeometry, coordinate: [number, number]) {
+  public static removeCoordinate(geometry: OLGeometry, coordinate: OLCoordinate) {
     switch (geometry.getType()) {
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         const multiPoint = geometry as OLMultiPoint;
         const multiPointCoordinates = multiPoint.getCoordinates().slice();
         const pointIdx = multiPointCoordinates.findIndex((mpc) =>
@@ -73,7 +72,7 @@ export abstract class GeometryUtils {
         }
         multiPoint.setCoordinates(multiPointCoordinates);
         break;
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         const lineString = geometry as OLLineString;
         const lineStringCoordinates = lineString.getCoordinates().slice();
         const lineIdx = lineStringCoordinates.findIndex((lsc) =>
@@ -84,7 +83,7 @@ export abstract class GeometryUtils {
         }
         lineString.setCoordinates(lineStringCoordinates);
         break;
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         const multiLineString = geometry as OLMultiLineString;
         const multiLineStringCoordinates = multiLineString.getCoordinates().slice();
         for (const line of multiLineStringCoordinates) {
@@ -95,7 +94,7 @@ export abstract class GeometryUtils {
         }
         multiLineString.setCoordinates(multiLineStringCoordinates);
         break;
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         const polygon = geometry as OLPolygon;
         const polygonCoordinates = polygon.getCoordinates().slice();
         for (const coords of polygonCoordinates) {
@@ -103,14 +102,14 @@ export abstract class GeometryUtils {
           if (idx > -1) {
             coords.splice(idx, 1);
             if (idx === 0) {
-              coords.splice(-1, 1, coords[0].slice() as [number, number]);
+              coords.splice(-1, 1, coords[0].slice() as OLCoordinate);
             }
             break;
           }
         }
         polygon.setCoordinates(polygonCoordinates);
         break;
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         const multiPolygon = geometry as OLMultiPolygon;
         const multiPolygonCoordinates = multiPolygon.getCoordinates().slice();
         for (const poly of multiPolygonCoordinates) {
@@ -120,7 +119,7 @@ export abstract class GeometryUtils {
             if (idx > -1) {
               coords.splice(idx, 1);
               if (idx === 0) {
-                coords.splice(-1, 1, coords[0].slice() as [number, number]);
+                coords.splice(-1, 1, coords[0].slice() as OLCoordinate);
               }
               removed = true;
               break;
@@ -198,7 +197,7 @@ export abstract class GeometryUtils {
    * @param second second coordinate
    * @return true if coordinates are equals to 6dp
    */
-  public static isCoordinateEqual(first: [number, number], second: [number, number]): boolean {
+  public static isCoordinateEqual(first: OLCoordinate, second: OLCoordinate): boolean {
     return (
       MathUtils.approximateEquals(first[0], second[0], 0.000001) &&
       MathUtils.approximateEquals(first[1], second[1], 0.000001)
@@ -213,7 +212,7 @@ export abstract class GeometryUtils {
   private static readonly memoizedRotateCoordinate = _.memoize(
     GeometryUtils.rotateCoordinateImplementation,
     // custom resolver because lodash only keys on the first argument
-    (coordinate: [number, number], angleRadians: number, anchor: [number, number]) =>
+    (coordinate: OLCoordinate, angleRadians: number, anchor: OLCoordinate) =>
       coordinate.join(',') + ':' + angleRadians + ':' + anchor.join(','),
   );
 
@@ -224,7 +223,7 @@ export abstract class GeometryUtils {
    */
   private static readonly memoizedRoundCoordinate = _.memoize(
     GeometryUtils.roundCoordinate,
-    (coordinate: [number, number]) => coordinate.join(','),
+    (coordinate: OLCoordinate) => coordinate.join(','),
   );
 
   /**
@@ -244,10 +243,10 @@ export abstract class GeometryUtils {
    * @internal
    */
   private static rotateCoordinateImplementation(
-    coordinate: [number, number],
+    coordinate: OLCoordinate,
     angleRadians: number,
-    anchor: [number, number],
-  ): [number, number] {
+    anchor: OLCoordinate,
+  ): OLCoordinate {
     const p = new OLPoint(coordinate);
     p.rotate(angleRadians, anchor);
     return p.getCoordinates();

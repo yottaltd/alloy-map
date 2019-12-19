@@ -514,7 +514,7 @@ export class AlloySelectionInteraction {
    * finds all the features in managed layers (excluding hover etc.) under the provided pixel coord
    * @param pixel the pixel coordinate to find features under
    */
-  private getFeaturesForPixel(pixel: [number, number]) {
+  private getFeaturesForPixel(pixel: number[]) {
     const layers = Array.from(this.map.layers.values());
     // map the openlayers layers one to one with ours so indices are the same
     const olLayers = _.flatten(layers.map((l) => l.olLayers));

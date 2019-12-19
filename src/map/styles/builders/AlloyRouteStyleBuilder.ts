@@ -2,6 +2,7 @@ import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
+import OLGeometryType from 'ol/geom/GeometryType';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
@@ -61,9 +62,12 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
     resolution: number,
   ): OLStyle | OLStyle[] {
     const geometryType = feature.olFeature.getGeometry().getType();
-    if (geometryType === 'Point' && feature instanceof AlloyRouteWaypointFeature) {
+    if (geometryType === OLGeometryType.POINT && feature instanceof AlloyRouteWaypointFeature) {
       return this.createRouteWaypointStyles(resolution, feature);
-    } else if (geometryType === 'LineString' && feature instanceof AlloyRouteFeature) {
+    } else if (
+      geometryType === OLGeometryType.LINE_STRING &&
+      feature instanceof AlloyRouteFeature
+    ) {
       return this.createRouteStyles(resolution, feature);
     }
     throw new AlloyMapError(1559453941, 'unsupported geometry type');

@@ -1,4 +1,4 @@
-import RenderCanvas from 'ol/render/canvas';
+import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 
 /**
  * listener interface for animation lifecycle, allows bespoke drawing for animations
@@ -16,7 +16,7 @@ export interface AlloyAnimationListener {
    * @param renderer the canvas to render to
    * @param ratio a value between 0-1 indicating where in the timeline an animation is 0 start 1 end
    */
-  compose: (renderer: RenderCanvas.Immediate, ratio: number) => void;
+  compose: (renderer: OLCanvasImmediateRenderer, ratio: number) => void;
 
   /**
    * called post animation cycle

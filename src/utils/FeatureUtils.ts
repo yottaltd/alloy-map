@@ -1,5 +1,7 @@
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
+import { Extent as OLExtent } from 'ol/extent';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import { AlloyMapError } from '../error/AlloyMapError';
@@ -55,8 +57,8 @@ export abstract class FeatureUtils {
     const features: FindFeaturesWithinResult[] = [];
 
     // calculate the coordinate and bounds of source to use
-    let sourceCoord: [number, number];
-    let sourceBounds: [number, number, number, number];
+    let sourceCoord: OLCoordinate;
+    let sourceBounds: OLExtent;
 
     if (source instanceof AlloyCoordinate) {
       // if source is AlloyCoordinate then get map coordinate for it
@@ -101,7 +103,7 @@ export abstract class FeatureUtils {
           const closest = olFeature.getGeometry().getClosestPoint(sourceCoord);
 
           // set coordinate to use for length measurement from source
-          let coord: [number, number];
+          let coord: OLCoordinate;
           if (source instanceof AlloyCoordinate) {
             // if source is a coordinate then re-use source coordinate
             coord = sourceCoord;
@@ -145,7 +147,7 @@ export abstract class FeatureUtils {
    */
   public static calculateFeaturesBounds(features: AlloyFeature[]): AlloyBounds {
     // flatten coordinates of features
-    const coordinates: Array<[number, number]> = _.flatten(
+    const coordinates: OLCoordinate[] = _.flatten(
       features.map((feature) =>
         AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
           feature.olFeature.getGeometry(),

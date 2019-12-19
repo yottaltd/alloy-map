@@ -10,7 +10,7 @@ import { CustomerApi } from './CustomerApi';
 export const CustomerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
   return {
     /**
-     * Fetches a card by its Guc
+     * Fetches a customer by customer Guc
      * @summary Get a customer by its code
      * @param {string} code The Guc of the customer to retrieve
      * @param {boolean} [retrieveLastSeenDate] If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in
@@ -19,6 +19,16 @@ export const CustomerApiFactory = function (configuration?: Configuration, fetch
      */
     customerGet(code: string, retrieveLastSeenDate?: boolean, options?: any) {
       return CustomerApiFp(configuration).customerGet(code, retrieveLastSeenDate, options)(fetch, basePath);
+    },
+    /**
+     * Fetches customer metrics by customer Guc, see response model comments for details
+     * @summary Get usage metrics for a customer by customer code
+     * @param {string} code The Guc of the customer to retrieve metrics
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    customerGetMetrics(code: string, options?: any) {
+      return CustomerApiFp(configuration).customerGetMetrics(code, options)(fetch, basePath);
     },
     /**
      * Lists all the customers that the user making the request has access to

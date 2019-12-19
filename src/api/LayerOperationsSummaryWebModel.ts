@@ -7,9 +7,15 @@
  */
 export interface LayerOperationsSummaryWebModel {
   /**
-   * If true, the current user has permissions to edit or delete this layer
+   * If true, the current user has permissions to edit this layer
    * @type {boolean}
    * @memberof LayerOperationsSummaryWebModel
    */
   canWrite: boolean;
+  /**
+   * If true, the current user has permissions to delete this layer
+   * @type {boolean}
+   * @memberof LayerOperationsSummaryWebModel
+   */
+  canDelete: boolean;
 }

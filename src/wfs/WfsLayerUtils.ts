@@ -5,6 +5,7 @@ import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import OLStyle from 'ol/style/Style';
 import OLProjection from 'ol/proj/Projection';
+import OLRenderFeature from 'ol/render/Feature';
 import { AlloyLayerZIndex } from '../map/core/AlloyLayerZIndex';
 import { PolyfillLoadingStrategy } from '../polyfills/PolyfillLoadingStrategy';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
@@ -34,7 +35,10 @@ export abstract class WfsLayerUtils {
     version: string,
     epsg: number,
     zIndex: AlloyLayerZIndex,
-    styleFunction?: (feature: OLFeature, resolution: number) => OLStyle | OLStyle[],
+    styleFunction?: (
+      feature: OLFeature | OLRenderFeature,
+      resolution: number,
+    ) => OLStyle | OLStyle[],
     featureSetter?: (feature: OLFeature[]) => void,
   ): OLVectorLayer {
     const epsgCode = 'EPSG:' + epsg;
@@ -108,8 +112,7 @@ export abstract class WfsLayerUtils {
       zIndex,
       visible: true,
       opacity: 1,
-      renderMode: 'vector',
-      style: styleFunction as ol.StyleFunction,
+      style: styleFunction,
     });
     return vectorLayer;
   }

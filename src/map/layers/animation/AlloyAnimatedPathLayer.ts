@@ -127,8 +127,6 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
     this.styleProcessor = this.createStyleProcessor();
 
     this.olLayerAnimatedPaths = new OLVectorLayer({
-      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-      renderMode: 'vector',
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
       style: (olFeature, resolution) => {
         if (this.styleProcessor) {
@@ -138,7 +136,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
             AlloyStyleBuilderBuildState.Hover,
           );
         } else {
-          return null;
+          return [];
         }
       },
       source: this.olSourceAnimatedPaths,
@@ -146,8 +144,6 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
     });
 
     this.olLayerPathNodes = new OLVectorLayer({
-      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-      renderMode: 'vector',
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
       style: (olFeature, resolution) => {
         if (this.styleProcessor) {
@@ -157,7 +153,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
             AlloyStyleBuilderBuildState.Hover,
           );
         } else {
-          return null;
+          return [];
         }
       },
       source: this.olSourcePathNodes,
@@ -165,8 +161,6 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
     });
 
     this.olLayerPathNodeConnectors = new OLVectorLayer({
-      // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-      renderMode: 'vector',
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
       style: (olFeature, resolution) => {
         if (this.styleProcessor) {
@@ -176,7 +170,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
             AlloyStyleBuilderBuildState.Default,
           );
         } else {
-          return null;
+          return [];
         }
       },
       source: this.olSourcePathNodeConnectors,

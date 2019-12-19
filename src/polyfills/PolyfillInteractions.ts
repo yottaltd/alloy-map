@@ -1,5 +1,5 @@
-import { defaults } from 'ol/interaction.js';
 import OLCollection from 'ol/Collection';
+import { defaults } from 'ol/interaction';
 import OLInteraction from 'ol/interaction/Interaction';
 
 /**

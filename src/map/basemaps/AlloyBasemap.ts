@@ -1,4 +1,4 @@
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 
 /**
  * alloy basemap interface
@@ -9,5 +9,10 @@ export interface AlloyBasemap {
    * @ignore
    * @internal
    */
-  readonly layer: Readonly<OLLayer>;
+  readonly layer: BaseLayer;
+
+  /**
+   * Clone method to create a copy of a basemap
+   */
+  readonly clone: () => AlloyBasemap;
 }

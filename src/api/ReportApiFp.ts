@@ -6,6 +6,7 @@ import { FetchArgs } from './FetchArgs';
 import { ReportGenerateWebRequestModel } from './ReportGenerateWebRequestModel';
 import { ReportGeneratedWebResponseModel } from './ReportGeneratedWebResponseModel';
 import { ReportListWebResponseModel } from './ReportListWebResponseModel';
+import { ReportListApplicableDodisWebResponseModel } from './ReportListApplicableDodisWebResponseModel';
 import { ReportApiFetchParamCreator } from './ReportApiFetchParamCreator';
 import { ReportApi } from './ReportApi';
 /**
@@ -23,16 +24,14 @@ export const ReportApiFp = function(configuration?: Configuration) {
      */
     reportGenerate(model: ReportGenerateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ReportGeneratedWebResponseModel> {
       const localVarFetchArgs = ReportApiFetchParamCreator(configuration).reportGenerate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -47,16 +46,36 @@ export const ReportApiFp = function(configuration?: Configuration) {
      */
     reportList(dodiCode: string, reportImplementsInterface: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ReportListWebResponseModel> {
       const localVarFetchArgs = ReportApiFetchParamCreator(configuration).reportList(dodiCode, reportImplementsInterface, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Lists applicable dodis for given report design code. If applicable dodi is interface also all designs that implement it will be in the response.
+     * @summary Lists the applicable dodis for report design code
+     * @param {string} dodiCode The Guc report dodi to get applicable dodis for
+     * @param {string} [query] Optional query to filter the report applicable dodis by
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    reportListApplicableDodis(dodiCode: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ReportListApplicableDodisWebResponseModel> {
+      const localVarFetchArgs = ReportApiFetchParamCreator(configuration).reportListApplicableDodis(dodiCode, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

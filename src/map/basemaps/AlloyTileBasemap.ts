@@ -1,5 +1,5 @@
 import * as DOMPurify from 'dompurify';
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
 import { AlloyBasemap } from './AlloyBasemap';
@@ -22,10 +22,16 @@ export class AlloyTileBasemap implements AlloyBasemap {
   private readonly source: OLXYZ;
 
   /**
+   * Tile options for basemap
+   */
+  private readonly options: AlloyTileBasemapOptions;
+
+  /**
    * creates a new tile basemap instance
    * @param options the options to apply to the basemap
    */
   constructor(options: AlloyTileBasemapOptions) {
+    this.options = options;
     this.source = new OLXYZ({
       url: options.url,
       crossOrigin: 'anonymous',
@@ -41,7 +47,14 @@ export class AlloyTileBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.tileLayer;
+  }
+
+  /**
+   * @implements
+   */
+  public clone(): AlloyTileBasemap {
+    return new AlloyTileBasemap(this.options);
   }
 }

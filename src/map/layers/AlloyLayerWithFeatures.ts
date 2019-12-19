@@ -77,8 +77,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.map = map;
     this.olLayers = [
       new OLVectorLayer({
-        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-        renderMode: 'vector',
         // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
         style: (olFeature, resolution) => {
           if (this.currentStyleProcessor) {
@@ -89,7 +87,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
             );
           } else {
             this.debugger('style processor called but not set');
-            return null;
+            return [];
           }
         },
         source: this.olSource,
@@ -193,7 +191,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     const hasFeatures = this.currentFeatures.size > 0;
     if (hasFeatures) {
       this.debugger('clearing features');
-      this.olSource.clear(true /* fast option doesn't dispatch removeFeature events */);
+      this.olSource.refresh();
       this.currentFeatures.clear();
     } else {
       this.debugger('no features to clear');

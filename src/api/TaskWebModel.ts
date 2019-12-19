@@ -2,6 +2,7 @@
 import { AlloyTaskStatus } from './AlloyTaskStatus';
 import { AlloyTaskType } from './AlloyTaskType';
 import { Exception } from './Exception';
+import { TaskProcessStateWebModel } from './TaskProcessStateWebModel';
 import { AlloyException } from './AlloyException';
 /**
  * Model for an alloy task
@@ -15,6 +16,12 @@ export interface TaskWebModel {
    * @memberof TaskWebModel
    */
   createdDate: string;
+  /**
+   * When the task was last updated, if known
+   * @type {string}
+   * @memberof TaskWebModel
+   */
+  lastUpdatedDate?: string;
   /**
    * Username that created the task
    * @type {string}
@@ -45,4 +52,10 @@ export interface TaskWebModel {
    * @memberof TaskWebModel
    */
   statusMessage: string;
+  /**
+   * Current state of the task
+   * @type {TaskProcessStateWebModel}
+   * @memberof TaskWebModel
+   */
+  processState: TaskProcessStateWebModel;
 }

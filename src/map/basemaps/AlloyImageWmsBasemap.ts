@@ -1,4 +1,4 @@
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLImageLayer from 'ol/layer/Image';
 import OLImageWMS from 'ol/source/ImageWMS';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
@@ -23,10 +23,16 @@ export class AlloyImageWmsBasemap implements AlloyBasemap {
   private readonly source: OLImageWMS;
 
   /**
+   * Wms options for basemap
+   */
+  private readonly options: AlloyWmsParameters;
+
+  /**
    * creates a new instance
    * @param options: options for Wms basemap layer
    */
   constructor(options: AlloyWmsParameters) {
+    this.options = options;
     this.source = WmsUtils.createImageWmsSourceFromParameters(options, false);
     this.imageLayer = new OLImageLayer({
       source: this.source,
@@ -38,7 +44,14 @@ export class AlloyImageWmsBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.imageLayer;
+  }
+
+  /**
+   * @implements
+   */
+  public clone(): AlloyImageWmsBasemap {
+    return new AlloyImageWmsBasemap(this.options);
   }
 }

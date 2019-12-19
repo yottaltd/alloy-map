@@ -1,3 +1,4 @@
+import { Extent as OLExtent } from 'ol/extent';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 
 /**
@@ -20,7 +21,7 @@ export class MapChangeCentreEvent {
   /**
    * the current map extents
    */
-  private readonly originalOlExtent: [number, number, number, number];
+  private readonly originalOlExtent: OLExtent;
 
   /**
    * creates a new event instance
@@ -30,11 +31,7 @@ export class MapChangeCentreEvent {
    * @ignore
    * @internal
    */
-  constructor(
-    centre: AlloyCoordinate,
-    olResolution: number,
-    olExtent: [number, number, number, number],
-  ) {
+  constructor(centre: AlloyCoordinate, olResolution: number, olExtent: OLExtent) {
     this.originalCentre = centre;
     this.olResolution = olResolution;
     this.originalOlExtent = olExtent;
@@ -52,7 +49,7 @@ export class MapChangeCentreEvent {
    * @ignore
    * @internal
    */
-  public get olExtent(): [number, number, number, number] {
+  public get olExtent(): OLExtent {
     return this.originalOlExtent.slice(0) as /* cast as ts dont like */ [
       number,
       number,

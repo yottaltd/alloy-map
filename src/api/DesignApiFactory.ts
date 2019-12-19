@@ -72,6 +72,18 @@ export const DesignApiFactory = function (configuration?: Configuration, fetch?:
       return DesignApiFp(configuration).designDeleteDesignAttribute(code, attributeCode, model, options)(fetch, basePath);
     },
     /**
+     * Fetches a list of design and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists design and its attributes with their winning permission
+     * @param {string} username The name of the user to get design with attributes access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designDesignAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+      return DesignApiFp(configuration).designDesignAccessAdvisor(username, page, pageSize, options)(fetch, basePath);
+    },
+    /**
      * Edits the design matching the specified code by using the provided details
      * @summary Edit a design
      * @param {string} code The Guc of the design to edit
@@ -116,14 +128,15 @@ export const DesignApiFactory = function (configuration?: Configuration, fetch?:
       return DesignApiFp(configuration).designGet(code, options)(fetch, basePath);
     },
     /**
-     * Finds the permissions of a design with the specified code
+     * Finds the permissions of a design with the specified code for optional user
      * @summary Get the design permissions
      * @param {string} code The Guc to use to fetch the required design permissions
+     * @param {string} [username] Optional username to get dodi permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designGetPermissions(code: string, options?: any) {
-      return DesignApiFp(configuration).designGetPermissions(code, options)(fetch, basePath);
+    designGetPermissions(code: string, username?: string, options?: any) {
+      return DesignApiFp(configuration).designGetPermissions(code, username, options)(fetch, basePath);
     },
     /**
      * List designs with optional filters on Context and a string query
@@ -133,13 +146,14 @@ export const DesignApiFactory = function (configuration?: Configuration, fetch?:
      * @param {string} [implementsInterface] The optional dodi code Guc, if specified, only the designs implementing that interface will be returned
      * @param {string} [userGroup] Optional Guc to filter designs by. If specified, only the designs that have this user group code within their permissions or the permissions of the attributes within them are returned
      * @param {string} [childDodi] Optional Guc to filter designs by. If specified, only the designs that have a link attribute pointing to the specified dodi are returned
+     * @param {string} [lastEditDate] The optional last edit date to return only designs created or edited after this date
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, page?: number, pageSize?: number, options?: any) {
-      return DesignApiFp(configuration).designList(query, context, implementsInterface, userGroup, childDodi, page, pageSize, options)(fetch, basePath);
+    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options?: any) {
+      return DesignApiFp(configuration).designList(query, context, implementsInterface, userGroup, childDodi, lastEditDate, page, pageSize, options)(fetch, basePath);
     },
     /**
      * Removes an interface from the ones the design implements. This does not remove the interface itself from the system. However all the item attributes belonging to the interface being removed will be deleted from all the items belonging to the design. This is an unaudited change and it will not be possible to bring those values back. Returns updated design.

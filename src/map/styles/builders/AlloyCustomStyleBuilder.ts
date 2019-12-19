@@ -1,6 +1,7 @@
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
 import OLRenderFeature from 'ol/render/Feature';
@@ -75,19 +76,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
    */
   protected createStyles(feature: AlloyCustomFeatureBase, resolution: number): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
+      case OLGeometryType.POINT:
         return this.createPointStyles(resolution, feature);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return this.createLineStringStyles(resolution, feature);
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return this.createPolygonStyles(resolution, feature);
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         return this.createMultiPointStyles(resolution, feature);
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         return this.createMultiLineStringStyles(resolution, feature);
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         return this.createMultiPolygonStyles(resolution, feature);
-      case 'GeometryCollection':
+      case OLGeometryType.GEOMETRY_COLLECTION:
         return this.createGeometryCollectionStyles(resolution, feature);
       default:
         throw new AlloyMapError(1556117088, 'unsupported geometry type');
@@ -102,19 +103,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
     resolution: number,
   ): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
+      case OLGeometryType.POINT:
         return this.createPointHoverStyles(resolution, feature);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return this.createLineStringHoverStyles(resolution, feature);
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return this.createPolygonHoverStyles(resolution, feature);
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         return this.createMultiPointHoverStyles(resolution, feature);
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         return this.createMultiLineStringHoverStyles(resolution, feature);
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         return this.createMultiPolygonHoverStyles(resolution, feature);
-      case 'GeometryCollection':
+      case OLGeometryType.GEOMETRY_COLLECTION:
         return this.createGeometryCollectionHoverStyles(resolution, feature);
       default:
         throw new AlloyMapError(1556117120, 'unsupported geometry type');
@@ -129,19 +130,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
     resolution: number,
   ): OLStyle | OLStyle[] {
     switch (feature.olFeature.getGeometry().getType()) {
-      case 'Point':
+      case OLGeometryType.POINT:
         return this.createPointSelectedStyles(resolution, feature);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return this.createLineStringSelectedStyles(resolution, feature);
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return this.createPolygonSelectedStyles(resolution, feature);
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         return this.createMultiPointSelectedStyles(resolution, feature);
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         return this.createMultiLineStringSelectedStyles(resolution, feature);
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         return this.createMultiPolygonSelectedStyles(resolution, feature);
-      case 'GeometryCollection':
+      case OLGeometryType.GEOMETRY_COLLECTION:
         return this.createGeometryCollectionSelectedStyles(resolution, feature);
       default:
         throw new AlloyMapError(1556117154, 'unsupported geometry type');

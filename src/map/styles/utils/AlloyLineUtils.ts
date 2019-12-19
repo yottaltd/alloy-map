@@ -98,7 +98,6 @@ export abstract class AlloyLineUtils {
       image: new OLCircle({
         radius: width / 3,
         fill: new OLFill({ color: colour }),
-        snapToPixel: false,
       }),
       geometry: geometryFunction,
       zIndex: 0,

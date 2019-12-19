@@ -1,3 +1,4 @@
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import { PolyfillProj } from '../../polyfills/PolyfillProj';
 import { MathUtils } from '../../utils/MathUtils';
 
@@ -19,7 +20,7 @@ export class AlloyCoordinate {
    * @ignore
    * @internal
    */
-  public static fromMapCoordinate(array: [number, number]) {
+  public static fromMapCoordinate(array: OLCoordinate) {
     array = PolyfillProj.toLonLat(array);
     return new AlloyCoordinate(array[0], array[1]);
   }
@@ -50,7 +51,7 @@ export class AlloyCoordinate {
    * @ignore
    * @internal
    */
-  public toMapCoordinate(): [number, number] {
+  public toMapCoordinate(): OLCoordinate {
     return PolyfillProj.fromLonLat([this.lon, this.lat]);
   }
 

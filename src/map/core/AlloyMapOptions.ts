@@ -7,7 +7,7 @@ export interface AlloyMapOptions {
   /**
    * the dom element to use when rendering the map
    */
-  element: Element;
+  element: HTMLElement;
 
   /**
    * the basepath of the alloy api to make tile requests to e.g. https://api.labs.alloyapp.io/

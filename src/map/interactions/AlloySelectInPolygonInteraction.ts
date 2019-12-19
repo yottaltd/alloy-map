@@ -1,5 +1,6 @@
 import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import OLDraw from 'ol/interaction/Draw';
@@ -99,7 +100,7 @@ export class AlloySelectInPolygonInteraction {
 
     // create the draw interaction
     this.olDraw = new OLDraw({
-      type: 'Polygon',
+      type: OLGeometryType.POLYGON,
       source: this.olSource,
       style: [
         new OLStyle({
@@ -131,9 +132,7 @@ export class AlloySelectInPolygonInteraction {
     });
 
     // listen for draw end interaction
-    this.olDraw.on('drawend', (e) => {
-      const event = e as OLDraw.Event /* guaranteed to be this event type due to handler */;
-
+    this.olDraw.on('drawend', (event) => {
       // we're expecting a polygon because thats our draw interaction
       const poly: OLPolygon = event.feature.getGeometry() as OLPolygon;
 

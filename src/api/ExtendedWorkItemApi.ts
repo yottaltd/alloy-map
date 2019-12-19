@@ -68,28 +68,30 @@ export class ExtendedWorkItemApi extends BaseAPI {
    * List applicable component work items for the given asset component design
    * @summary List applicable component work items for asset component
    * @param {string} code The asset component design Guc to fetch applicable component work items for
+   * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedWorkItemApi
    */
-  public workItemListApplicableComponentWorkItems(code: string, page?: number, pageSize?: number, options?: any) {
-    return ExtendedWorkItemApiFp(this.configuration).workItemListApplicableComponentWorkItems(code, page, pageSize, options)(this.fetch, this.basePath);
+  public workItemListApplicableComponentWorkItems(code: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ExtendedWorkItemApiFp(this.configuration).workItemListApplicableComponentWorkItems(code, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
    * List applicable work items for the given job design type
    * @summary List applicable work items for job type
    * @param {string} code The job design Guc to fetch applicable work items for
+   * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedWorkItemApi
    */
-  public workItemListApplicableWorkItems(code: string, page?: number, pageSize?: number, options?: any) {
-    return ExtendedWorkItemApiFp(this.configuration).workItemListApplicableWorkItems(code, page, pageSize, options)(this.fetch, this.basePath);
+  public workItemListApplicableWorkItems(code: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ExtendedWorkItemApiFp(this.configuration).workItemListApplicableWorkItems(code, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

@@ -1,3 +1,4 @@
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
@@ -60,9 +61,12 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     resolution: number,
   ): OLStyle | OLStyle[] {
     const geometryType = feature.olFeature.getGeometry().getType();
-    if (geometryType === 'Point' && feature instanceof AlloyCableUnitFeature) {
+    if (geometryType === OLGeometryType.POINT && feature instanceof AlloyCableUnitFeature) {
       return this.createCableUnitStyles(resolution, feature);
-    } else if (geometryType === 'LineString' && feature instanceof AlloyCableFeature) {
+    } else if (
+      geometryType === OLGeometryType.LINE_STRING &&
+      feature instanceof AlloyCableFeature
+    ) {
       return this.createCableStyles(resolution, feature);
     }
     throw new AlloyMapError(1559408789, 'unsupported geometry type');
@@ -76,9 +80,12 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     resolution: number,
   ): OLStyle | OLStyle[] {
     const geometryType = feature.olFeature.getGeometry().getType();
-    if (geometryType === 'Point' && feature instanceof AlloyCableUnitFeature) {
+    if (geometryType === OLGeometryType.POINT && feature instanceof AlloyCableUnitFeature) {
       return this.createCableUnitHoverStyles(resolution, feature);
-    } else if (geometryType === 'LineString' && feature instanceof AlloyCableFeature) {
+    } else if (
+      geometryType === OLGeometryType.LINE_STRING &&
+      feature instanceof AlloyCableFeature
+    ) {
       return this.createCableHoverStyles(resolution, feature);
     }
     throw new AlloyMapError(1561046423, 'unsupported geometry type');
@@ -92,9 +99,12 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     resolution: number,
   ): OLStyle | OLStyle[] {
     const geometryType = feature.olFeature.getGeometry().getType();
-    if (geometryType === 'Point' && feature instanceof AlloyCableUnitFeature) {
+    if (geometryType === OLGeometryType.POINT && feature instanceof AlloyCableUnitFeature) {
       return this.createCableUnitSelectedStyles(resolution, feature);
-    } else if (geometryType === 'LineString' && feature instanceof AlloyCableFeature) {
+    } else if (
+      geometryType === OLGeometryType.LINE_STRING &&
+      feature instanceof AlloyCableFeature
+    ) {
       return this.createCableSelectedStyles(resolution, feature);
     }
     throw new AlloyMapError(1561046431, 'unsupported geometry type');

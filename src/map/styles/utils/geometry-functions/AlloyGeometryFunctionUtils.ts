@@ -1,7 +1,9 @@
 import * as _ from 'lodash';
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
@@ -36,24 +38,24 @@ export abstract class AlloyGeometryFunctionUtils {
    */
   public static convertGeometryToMultiPoint(geometry: OLGeometry): OLMultiPoint {
     switch (geometry.getType()) {
-      case 'GeometryCollection':
-        const points: Array<[number, number]> = _.flatten(
+      case OLGeometryType.GEOMETRY_COLLECTION:
+        const points: OLCoordinate[] = _.flatten(
           (geometry as OLGeometryCollection)
             .getGeometries()
             .map((g) => AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(g).getCoordinates()),
         );
         return new OLMultiPoint(points);
-      case 'LineString':
+      case OLGeometryType.LINE_STRING:
         return new OLMultiPoint((geometry as OLLineString).getCoordinates());
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         return new OLMultiPoint(_.flatten((geometry as OLMultiLineString).getCoordinates()));
-      case 'Point':
+      case OLGeometryType.POINT:
         return new OLMultiPoint([(geometry as OLPoint).getCoordinates()]);
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         return new OLMultiPoint((geometry as OLMultiPoint).getCoordinates());
-      case 'Polygon':
+      case OLGeometryType.POLYGON:
         return new OLMultiPoint(_.flatten((geometry as OLPolygon).getCoordinates()));
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         return new OLMultiPoint(
           _.flatten(_.flatten((geometry as OLMultiPolygon).getCoordinates())),
         );
@@ -72,21 +74,21 @@ export abstract class AlloyGeometryFunctionUtils {
    */
   public static convertGeometryToSimpleGeometries(geometry: OLGeometry): OLGeometry[] {
     switch (geometry.getType()) {
-      case 'GeometryCollection':
+      case OLGeometryType.GEOMETRY_COLLECTION:
         return _.flatten(
           (geometry as OLGeometryCollection)
             .getGeometries()
             .map(AlloyGeometryFunctionUtils.convertGeometryToSimpleGeometries),
         );
-      case 'MultiLineString':
+      case OLGeometryType.MULTI_LINE_STRING:
         return (geometry as OLMultiLineString).getLineStrings();
-      case 'MultiPoint':
+      case OLGeometryType.MULTI_POINT:
         return (geometry as OLMultiPoint).getPoints();
-      case 'MultiPolygon':
+      case OLGeometryType.MULTI_POLYGON:
         return (geometry as OLMultiPolygon).getPolygons();
-      case 'LineString':
-      case 'Point':
-      case 'Polygon':
+      case OLGeometryType.LINE_STRING:
+      case OLGeometryType.POINT:
+      case OLGeometryType.POLYGON:
         return [geometry];
       default:
         throw new AlloyMapError(

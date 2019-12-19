@@ -1,3 +1,4 @@
+import { Extent as OLExtent } from 'ol/extent';
 import OLProjection from 'ol/proj/Projection';
 
 /**
@@ -13,9 +14,5 @@ export interface AlloyFeatureLoader {
    * @param resolution the resolution of the current view
    * @param projection the projection used for the current view
    */
-  loadFeatures(
-    extent: [number, number, number, number],
-    resolution: number,
-    projection: OLProjection,
-  ): Promise<void>;
+  loadFeatures(extent: OLExtent, resolution: number, projection: OLProjection): Promise<void>;
 }

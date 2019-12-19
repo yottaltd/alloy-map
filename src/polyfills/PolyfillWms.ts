@@ -1,4 +1,4 @@
-import OLWmsCapabilities from 'ol/format/WMSCapabilities.js';
+import OLWmsCapabilities from 'ol/format/WMSCapabilities';
 import { WmsCapabilities } from '../wms/WmsCapabilities';
 
 /**
@@ -19,7 +19,7 @@ export abstract class PolyfillWms {
    * @param input WMS capabilities input to parse
    * @returns WMS capabilities as JSON object
    */
-  public static read(input: string | Document | Node): WmsCapabilities {
+  public static read(input: string | Document | Element): WmsCapabilities {
     const parsed = OL_WMS_CAPABILITIES.read(input);
     return {
       Title: parsed.Service.Title,

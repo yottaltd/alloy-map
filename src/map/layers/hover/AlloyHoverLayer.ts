@@ -80,8 +80,6 @@ export class AlloyHoverLayer implements AlloyLayer {
     // create a new vector layer instance to render our features
     this.olLayers = [
       new OLVectorLayer({
-        // vector mode as it is more accurate for rendering, but maybe consider "image" in future?
-        renderMode: 'vector',
         // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
         style: (olFeature, resolution) =>
           this.styleProcessor.onStyleProcess(

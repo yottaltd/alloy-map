@@ -1,4 +1,4 @@
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLBingMaps from 'ol/source/BingMaps';
 import { AlloyBasemap } from './AlloyBasemap';
@@ -37,7 +37,14 @@ export class AlloyBingBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.tileLayer;
+  }
+
+  /**
+   * @implements
+   */
+  public clone(): AlloyBingBasemap {
+    return new AlloyBingBasemap(this.source.getApiKey());
   }
 }

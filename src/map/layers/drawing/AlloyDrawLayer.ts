@@ -1,6 +1,7 @@
 import { Geometry } from 'geojson';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
@@ -13,8 +14,6 @@ import { GeometryUtils } from '../../../utils/GeometryUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-// tslint:disable-next-line: max-line-length
-import { AlloyDrawInteractionGeometryType } from '../../interactions/AlloyDrawInteractionGeometryType';
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
@@ -82,15 +81,15 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
       const firstType = geometries[0].getType();
       if (geometries.every((g) => g.getType() === firstType)) {
         switch (firstType) {
-          case AlloyDrawInteractionGeometryType.Point:
+          case OLGeometryType.POINT:
             geom = new OLMultiPoint((geometries as OLPoint[]).map((g) => g.getCoordinates()));
             break;
-          case AlloyDrawInteractionGeometryType.LineString:
+          case OLGeometryType.LINE_STRING:
             geom = new OLMultiLineString(
               (geometries as OLLineString[]).map((g) => g.getCoordinates()),
             );
             break;
-          case AlloyDrawInteractionGeometryType.Polygon:
+          case OLGeometryType.POLYGON:
             geom = new OLMultiPolygon((geometries as OLPolygon[]).map((g) => g.getCoordinates()));
             break;
           default:

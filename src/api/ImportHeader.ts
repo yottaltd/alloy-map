@@ -1,4 +1,5 @@
 // tslint:disable
+import { HeaderType } from './HeaderType';
 import { ImportHeaderType } from './ImportHeaderType';
 import { JObject } from './JObject';
 /**

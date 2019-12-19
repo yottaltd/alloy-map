@@ -1,7 +1,8 @@
+import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLPolygon from 'ol/geom/Polygon';
-import OLRenderCanvas from 'ol/render/canvas';
+import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
@@ -37,11 +38,11 @@ export class AlloyRouteAnimationManager extends AlloyAnimationManager {
       (
         lineString: OLLineString,
         currentScaleRatio: number,
-        renderer: OLRenderCanvas.Immediate,
+        renderer: OLCanvasImmediateRenderer,
         ratio: number,
       ) => {
-        const centre: [number, number] = lineString.getCoordinateAt(ratio);
-        const nose: [number, number] =
+        const centre: OLCoordinate = lineString.getCoordinateAt(ratio);
+        const nose: OLCoordinate =
           ratio > 1 - currentScaleRatio
             ? lineString.getCoordinateAt(1)
             : lineString.getCoordinateAt(ratio + currentScaleRatio);
@@ -77,7 +78,7 @@ export class AlloyRouteAnimationManager extends AlloyAnimationManager {
         const vector = [nose[0] - centre[0], nose[1] - centre[1]];
 
         // construct the path
-        const coordinates: Array<[number, number]> = [];
+        const coordinates: OLCoordinate[] = [];
         coordinates.push(nose);
         coordinates.push(noseClockwise90Degrees);
         coordinates.push([
