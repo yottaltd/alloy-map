@@ -36,4 +36,19 @@ export class ReportApi extends BaseAPI {
     return ReportApiFp(this.configuration).reportList(dodiCode, reportImplementsInterface, page, pageSize, options)(this.fetch, this.basePath);
   }
 
+  /**
+   * Lists applicable dodis for given report design code. If applicable dodi is interface also all designs that implement it will be in the response.
+   * @summary Lists the applicable dodis for report design code
+   * @param {string} dodiCode The Guc report dodi to get applicable dodis for
+   * @param {string} [query] Optional query to filter the report applicable dodis by
+   * @param {number} [page] 
+   * @param {number} [pageSize] 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof ReportApi
+   */
+  public reportListApplicableDodis(dodiCode: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ReportApiFp(this.configuration).reportListApplicableDodis(dodiCode, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
 }

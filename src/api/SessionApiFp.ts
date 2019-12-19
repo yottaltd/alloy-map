@@ -3,6 +3,8 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { SessionCreateOAuthUrlWebRequest } from './SessionCreateOAuthUrlWebRequest';
+import { SessionCreateOAuthUrlWebResponse } from './SessionCreateOAuthUrlWebResponse';
 import { SessionCreateWebResponseModel } from './SessionCreateWebResponseModel';
 import { SessionMasterCreateWebRequestModel } from './SessionMasterCreateWebRequestModel';
 import { UserSessionGetWebResponseModel } from './UserSessionGetWebResponseModel';
@@ -23,16 +25,14 @@ export const SessionApiFp = function(configuration?: Configuration) {
      */
     sessionCreate(model: SessionMasterCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SessionCreateWebResponseModel> {
       const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -44,16 +44,33 @@ export const SessionApiFp = function(configuration?: Configuration) {
      */
     sessionCreate2(customerCode: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SessionCreateWebResponseModel> {
       const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionCreate2(customerCode, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter, the user can be redirected to this url and will be faced with authentication provided by the service. A successful challenge will return to the redirect url specified as a parameter and the Alloy session token will be available as the Authorization header in this request.
+     * @summary Gets OAuth provider sign in urls
+     * @param {SessionCreateOAuthUrlWebRequest} model The model containing info about which provider and how to generate sign in urls
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sessionCreateOAuthUrl(model: SessionCreateOAuthUrlWebRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SessionCreateOAuthUrlWebResponse> {
+      const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionCreateOAuthUrl(model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -64,16 +81,14 @@ export const SessionApiFp = function(configuration?: Configuration) {
      */
     sessionDelete(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionDelete(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -84,16 +99,14 @@ export const SessionApiFp = function(configuration?: Configuration) {
      */
     sessionGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserSessionGetWebResponseModel> {
       const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionGet(options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

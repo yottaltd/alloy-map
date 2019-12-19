@@ -81,14 +81,15 @@ export class ExtendedDefectApi extends BaseAPI {
    * Lists defect designs applicable to ALL input job, defect, inspection or asset designs
    * @summary List applicable defect designs for ALL given job, defect, inspection or asset designs
    * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item design Guc info
+   * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedDefectApi
    */
-  public defectListApplicableDefectDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options?: any) {
-    return ExtendedDefectApiFp(this.configuration).defectListApplicableDefectDesigns(itemDesignsModel, page, pageSize, options)(this.fetch, this.basePath);
+  public defectListApplicableDefectDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ExtendedDefectApiFp(this.configuration).defectListApplicableDefectDesigns(itemDesignsModel, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

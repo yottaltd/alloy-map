@@ -3,20 +3,28 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { CreateManualWorkflowRunWebRequestModel } from './CreateManualWorkflowRunWebRequestModel';
+import { CreateManualWorkflowRunWebResponseModel } from './CreateManualWorkflowRunWebResponseModel';
 import { WorkflowAddActionWebRequestModel } from './WorkflowAddActionWebRequestModel';
 import { WorkflowAddActionWebResponseModel } from './WorkflowAddActionWebResponseModel';
 import { WorkflowCreateWebRequestModel } from './WorkflowCreateWebRequestModel';
 import { WorkflowEditActionWebRequestModel } from './WorkflowEditActionWebRequestModel';
+import { WorkflowEditActionWebResponseModel } from './WorkflowEditActionWebResponseModel';
 import { WorkflowEditWebRequestModel } from './WorkflowEditWebRequestModel';
 import { WorkflowGetActionParametersWebRequestModel } from './WorkflowGetActionParametersWebRequestModel';
 import { WorkflowGetActionParametersWebResponseModel } from './WorkflowGetActionParametersWebResponseModel';
 import { WorkflowGetAllowedActionsWebRequestModel } from './WorkflowGetAllowedActionsWebRequestModel';
 import { WorkflowGetAllowedActionsWebResponseModel } from './WorkflowGetAllowedActionsWebResponseModel';
+import { WorkflowGetWebResponseModel } from './WorkflowGetWebResponseModel';
+import { WorkflowListNextDateTimesWebRequestModel } from './WorkflowListNextDateTimesWebRequestModel';
+import { WorkflowListNextDateTimesWebResponseModel } from './WorkflowListNextDateTimesWebResponseModel';
 import { WorkflowLogsGetWebResponseModel } from './WorkflowLogsGetWebResponseModel';
 import { WorkflowPermissionsEditWebRequestModel } from './WorkflowPermissionsEditWebRequestModel';
 import { WorkflowPermissionsGetWebResponseModel } from './WorkflowPermissionsGetWebResponseModel';
 import { WorkflowRemoveActionWebRequestModel } from './WorkflowRemoveActionWebRequestModel';
+import { WorkflowRemoveActionWebResponseModel } from './WorkflowRemoveActionWebResponseModel';
 import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
+import { WorkflowAccessAdvisorListWebResponseModel } from './WorkflowAccessAdvisorListWebResponseModel';
 import { WorkflowListApplicableWebResponseModel } from './WorkflowListApplicableWebResponseModel';
 import { WorkflowListCloningItemWebResponseModel } from './WorkflowListCloningItemWebResponseModel';
 import { WorkflowListWebResponseModel } from './WorkflowListWebResponseModel';
@@ -39,16 +47,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowAddAction(code: string, model: WorkflowAddActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAddActionWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowAddAction(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -60,16 +66,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowCreate(model: WorkflowCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -81,16 +85,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowDelete(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowDelete(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -103,16 +105,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowEdit(code: string, model: WorkflowEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEdit(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -124,40 +124,36 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowEditAction(code: string, id: string, model: WorkflowEditActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    workflowEditAction(code: string, id: string, model: WorkflowEditActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowEditActionWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEditAction(code, id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
-     * Edit the permissions on the layer with the specified code
-     * @summary Edit permissions for a layer
-     * @param {string} code The Guc of the layer to edit the permissions of
+     * Edit the permissions on the workflow with the specified code
+     * @summary Edit permissions for a workflow
+     * @param {string} code The Guc of the workflow to edit the permissions of
      * @param {WorkflowPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     workflowEditPermissions(code: string, model: WorkflowPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEditPermissions(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -167,23 +163,21 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    workflowGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowGetWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGet(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
-     * 
-     * @summary Given an action type, position in workflow, and values, get information about extra parameters that need to be supplied (and if any are optional since they can be inferred by the system) in this case.
+     * Given an action type, position in workflow action group, and values, get information about extra parameters that need to be supplied (and if any are optional since they can be inferred by the system) in this case.
+     * @summary List the parameters for the specified action.
      * @param {string} code The code of the workflow being queried
      * @param {WorkflowGetActionParametersWebRequestModel} model Model containing the details of the get parameters request
      * @param {*} [options] Override http request option.
@@ -191,21 +185,19 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowGetActionParameters(code: string, model: WorkflowGetActionParametersWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowGetActionParametersWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetActionParameters(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * 
-     * @summary Given a position in a workflow, list the actions that are potentially valid to be added to this location.
+     * @summary List the actions that are valid to be added to this location in a workflow action group.
      * @param {string} code The code of the workflow being queried
      * @param {WorkflowGetAllowedActionsWebRequestModel} model Model containing the details of the get allowed actions request
      * @param {*} [options] Override http request option.
@@ -213,16 +205,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowGetAllowedActions(code: string, model: WorkflowGetAllowedActionsWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowGetAllowedActionsWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetAllowedActions(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -234,37 +224,34 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowGetLogs(runId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowLogsGetWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetLogs(runId, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * Fetches the permissions of a workflow by its Guc
      * @summary Get a workflow permissions by its code
      * @param {string} code The Guc for the workflow whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetPermissions(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    workflowGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetPermissions(code, username, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -279,16 +266,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowList(name, userGroup, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -302,16 +287,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowListApplicableWorkflows(code: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListApplicableWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowListApplicableWorkflows(code, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -325,16 +308,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowListCloningItemWorkflows(itemId: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListCloningItemWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowListCloningItemWorkflows(itemId, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -348,16 +329,14 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowListTriggerLogs(code: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowLogTriggerListWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowListTriggerLogs(code, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -369,18 +348,76 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowRemoveAction(code: string, id: string, model: WorkflowRemoveActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    workflowRemoveAction(code: string, id: string, model: WorkflowRemoveActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowRemoveActionWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowRemoveAction(code, id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user workflows with their winning permission
+     * @param {string} username The name of the user to get workflow access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAccessAdvisorListWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowAccessAdvisor(username, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Returns the next n dates, where n is the number specified in the model,       at which the stated workflows will trigger. If more than the specified dates are available, only the n       closest to the current date will be returned.       NOTE: Currently only Calendar triggers are supported
+     * @summary Get next trigger dates
+     * @param {WorkflowListNextDateTimesWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowListNextDates(model: WorkflowListNextDateTimesWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListNextDateTimesWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowListNextDates(model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Queues a workflow run for a workflow that has a manual trigger,       using the supplied AQS query to specify the output items of the manual trigger.
+     * @summary Start a manually triggered workflow run
+     * @param {string} code The code of the workflow to run, which must have a manual trigger
+     * @param {CreateManualWorkflowRunWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowManualRun(code: string, model: CreateManualWorkflowRunWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateManualWorkflowRunWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowManualRun(code, model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

@@ -27,14 +27,15 @@ export class DodiApi extends BaseAPI {
    * @param {string} [implementsInterface] The optional dodi code Guc, if specified, only the dodis implementing that interface code will be returned
    * @param {string} [userGroup] The optional user group Guc. If specified, only the dodis that have this user group code within their permissions or the permissions of the attributes within them are returned
    * @param {string} [childDodi] Optional Guc to filter dodis by. If specified, only the dodis that have a link attribute pointing to the specified dodi are returned
+   * @param {string} [lastEditDate] The optional last edit date to return only dodis created or edited after this date
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof DodiApi
    */
-  public dodiList(query?: string, implementsInterface?: string, userGroup?: string, childDodi?: string, page?: number, pageSize?: number, options?: any) {
-    return DodiApiFp(this.configuration).dodiList(query, implementsInterface, userGroup, childDodi, page, pageSize, options)(this.fetch, this.basePath);
+  public dodiList(query?: string, implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options?: any) {
+    return DodiApiFp(this.configuration).dodiList(query, implementsInterface, userGroup, childDodi, lastEditDate, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

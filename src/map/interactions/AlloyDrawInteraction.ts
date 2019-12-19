@@ -19,6 +19,7 @@ import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
 import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { AlloyMapError } from '../../error/AlloyMapError';
+import { EnumUtils } from '../../utils/EnumUtils';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { GeometryUtils } from '../../utils/GeometryUtils';
 import { AlloyMap } from '../core/AlloyMap';
@@ -26,7 +27,6 @@ import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
-import { EnumGuards } from '../guards/EnumGuards';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 // tslint:disable-next-line: max-line-length
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
@@ -210,7 +210,7 @@ export class AlloyDrawInteraction {
     // cancels previous draw interaction
     this.removeDrawInteraction();
 
-    const olGeometryType = EnumGuards.alloyDrawGeometryToOpenlayersGeometryType(type);
+    const olGeometryType = EnumUtils.alloyDrawGeometryToOpenlayersGeometryType(type);
     if (!olGeometryType) {
       throw new AlloyMapError(1572524091, 'incompatible draw geometry type');
     }
@@ -277,7 +277,7 @@ export class AlloyDrawInteraction {
   public getDrawTypes(): GeoJSONObjectType[] {
     return _.uniq(
       this.drawLayer.olSource.getFeatures().map((f) => {
-        const geoJsonType = EnumGuards.openlayersGeometryToGeoJSONGeometryType(
+        const geoJsonType = EnumUtils.openlayersGeometryToGeoJSONGeometryType(
           f.getGeometry().getType(),
         );
         if (!geoJsonType) {

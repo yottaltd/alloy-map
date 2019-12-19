@@ -1,4 +1,4 @@
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLTileWMS from 'ol/source/TileWMS';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
@@ -43,7 +43,7 @@ export class AlloyWmsBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.tileLayer;
   }
 

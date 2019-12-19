@@ -145,10 +145,11 @@ export const MeshApiFetchParamCreator = function (configuration?: Configuration)
      * Fetches the permissions of a mesh by its Guc
      * @summary Get a mesh permissions by its code
      * @param {string} code The Guc for the mesh whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshGetPermissions(code: string, options: any = {}): FetchArgs {
+    meshGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling meshGetPermissions.');
@@ -166,6 +167,10 @@ export const MeshApiFetchParamCreator = function (configuration?: Configuration)
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (username !== undefined) {
+        localVarQueryParameter['username'] = username;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -209,6 +214,53 @@ export const MeshApiFetchParamCreator = function (configuration?: Configuration)
 
       if (userGroup !== undefined) {
         localVarQueryParameter['userGroup'] = userGroup;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of meshes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user meshes with their winning permission
+     * @param {string} username The name of the user to get mesh access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    meshMeshAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling meshMeshAccessAdvisor.');
+      }
+      const localVarPath = `/api/mesh/access-advisor/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
       if (page !== undefined) {

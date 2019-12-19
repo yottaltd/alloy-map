@@ -33,5 +33,18 @@ export const ReportApiFactory = function (configuration?: Configuration, fetch?:
     reportList(dodiCode: string, reportImplementsInterface: string, page?: number, pageSize?: number, options?: any) {
       return ReportApiFp(configuration).reportList(dodiCode, reportImplementsInterface, page, pageSize, options)(fetch, basePath);
     },
+    /**
+     * Lists applicable dodis for given report design code. If applicable dodi is interface also all designs that implement it will be in the response.
+     * @summary Lists the applicable dodis for report design code
+     * @param {string} dodiCode The Guc report dodi to get applicable dodis for
+     * @param {string} [query] Optional query to filter the report applicable dodis by
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    reportListApplicableDodis(dodiCode: string, query?: string, page?: number, pageSize?: number, options?: any) {
+      return ReportApiFp(configuration).reportListApplicableDodis(dodiCode, query, page, pageSize, options)(fetch, basePath);
+    },
   };
 };

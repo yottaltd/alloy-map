@@ -1,11 +1,13 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
+import { CreateManualWorkflowRunWebRequestModel } from './CreateManualWorkflowRunWebRequestModel';
 import { WorkflowAddActionWebRequestModel } from './WorkflowAddActionWebRequestModel';
 import { WorkflowCreateWebRequestModel } from './WorkflowCreateWebRequestModel';
 import { WorkflowEditActionWebRequestModel } from './WorkflowEditActionWebRequestModel';
 import { WorkflowEditWebRequestModel } from './WorkflowEditWebRequestModel';
 import { WorkflowGetActionParametersWebRequestModel } from './WorkflowGetActionParametersWebRequestModel';
 import { WorkflowGetAllowedActionsWebRequestModel } from './WorkflowGetAllowedActionsWebRequestModel';
+import { WorkflowListNextDateTimesWebRequestModel } from './WorkflowListNextDateTimesWebRequestModel';
 import { WorkflowPermissionsEditWebRequestModel } from './WorkflowPermissionsEditWebRequestModel';
 import { WorkflowRemoveActionWebRequestModel } from './WorkflowRemoveActionWebRequestModel';
 import { WorkflowApiFp } from './WorkflowApiFp';
@@ -81,9 +83,9 @@ export class WorkflowApi extends BaseAPI {
   }
 
   /**
-   * Edit the permissions on the layer with the specified code
-   * @summary Edit permissions for a layer
-   * @param {string} code The Guc of the layer to edit the permissions of
+   * Edit the permissions on the workflow with the specified code
+   * @summary Edit permissions for a workflow
+   * @param {string} code The Guc of the workflow to edit the permissions of
    * @param {WorkflowPermissionsEditWebRequestModel} model The model containing the info necessary to the edit permissions operation
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -106,8 +108,8 @@ export class WorkflowApi extends BaseAPI {
   }
 
   /**
-   * 
-   * @summary Given an action type, position in workflow, and values, get information about extra parameters that need to be supplied (and if any are optional since they can be inferred by the system) in this case.
+   * Given an action type, position in workflow action group, and values, get information about extra parameters that need to be supplied (and if any are optional since they can be inferred by the system) in this case.
+   * @summary List the parameters for the specified action.
    * @param {string} code The code of the workflow being queried
    * @param {WorkflowGetActionParametersWebRequestModel} model Model containing the details of the get parameters request
    * @param {*} [options] Override http request option.
@@ -120,7 +122,7 @@ export class WorkflowApi extends BaseAPI {
 
   /**
    * 
-   * @summary Given a position in a workflow, list the actions that are potentially valid to be added to this location.
+   * @summary List the actions that are valid to be added to this location in a workflow action group.
    * @param {string} code The code of the workflow being queried
    * @param {WorkflowGetAllowedActionsWebRequestModel} model Model containing the details of the get allowed actions request
    * @param {*} [options] Override http request option.
@@ -147,12 +149,13 @@ export class WorkflowApi extends BaseAPI {
    * Fetches the permissions of a workflow by its Guc
    * @summary Get a workflow permissions by its code
    * @param {string} code The Guc for the workflow whose permissions are being requested
+   * @param {string} [username] Optional username to get permissions for the specific user
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
    */
-  public workflowGetPermissions(code: string, options?: any) {
-    return WorkflowApiFp(this.configuration).workflowGetPermissions(code, options)(this.fetch, this.basePath);
+  public workflowGetPermissions(code: string, username?: string, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowGetPermissions(code, username, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -224,6 +227,45 @@ export class WorkflowApi extends BaseAPI {
    */
   public workflowRemoveAction(code: string, id: string, model: WorkflowRemoveActionWebRequestModel, options?: any) {
     return WorkflowApiFp(this.configuration).workflowRemoveAction(code, id, model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists user workflows with their winning permission
+   * @param {string} username The name of the user to get workflow access advisor for
+   * @param {number} [page] 
+   * @param {number} [pageSize] 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowWorkflowAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowWorkflowAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Returns the next n dates, where n is the number specified in the model,       at which the stated workflows will trigger. If more than the specified dates are available, only the n       closest to the current date will be returned.       NOTE: Currently only Calendar triggers are supported
+   * @summary Get next trigger dates
+   * @param {WorkflowListNextDateTimesWebRequestModel} model 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowWorkflowListNextDates(model: WorkflowListNextDateTimesWebRequestModel, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowWorkflowListNextDates(model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Queues a workflow run for a workflow that has a manual trigger,       using the supplied AQS query to specify the output items of the manual trigger.
+   * @summary Start a manually triggered workflow run
+   * @param {string} code The code of the workflow to run, which must have a manual trigger
+   * @param {CreateManualWorkflowRunWebRequestModel} model 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowWorkflowManualRun(code: string, model: CreateManualWorkflowRunWebRequestModel, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowWorkflowManualRun(code, model, options)(this.fetch, this.basePath);
   }
 
 }

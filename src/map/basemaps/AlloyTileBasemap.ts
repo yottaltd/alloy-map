@@ -1,5 +1,5 @@
 import * as DOMPurify from 'dompurify';
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
 import { AlloyBasemap } from './AlloyBasemap';
@@ -47,7 +47,7 @@ export class AlloyTileBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.tileLayer;
   }
 

@@ -107,5 +107,57 @@ export const ReportApiFetchParamCreator = function (configuration?: Configuratio
         options: localVarRequestOptions,
       };
     },
+    /**
+     * Lists applicable dodis for given report design code. If applicable dodi is interface also all designs that implement it will be in the response.
+     * @summary Lists the applicable dodis for report design code
+     * @param {string} dodiCode The Guc report dodi to get applicable dodis for
+     * @param {string} [query] Optional query to filter the report applicable dodis by
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    reportListApplicableDodis(dodiCode: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'dodiCode' is not null or undefined
+      if (dodiCode === null || dodiCode === undefined) {
+        throw new RequiredError('dodiCode','Required parameter dodiCode was null or undefined when calling reportListApplicableDodis.');
+      }
+      const localVarPath = `/api/report/{dodiCode}/applicable-dodis`
+        .replace(`{${"dodiCode"}}`, encodeURIComponent(String(dodiCode)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   }
 };

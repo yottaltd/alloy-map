@@ -74,7 +74,7 @@ export class ImportApi extends BaseAPI {
   /**
    * List imports
    * @summary List imports
-   * @param {string} [query] Optional query to filter the user groups by
+   * @param {string} [query] Optional query to filter the imports by
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.

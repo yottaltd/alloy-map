@@ -84,13 +84,14 @@ export const ExtendedInspectionApiFactory = function (configuration?: Configurat
      * Lists inspection designs applicable to ALL input job, defect, inspection or asset designs
      * @summary List applicable inspection designs for ALL given job, defect, inspection or asset designs
      * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item design Guc info
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    inspectionListApplicableInspectionDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options?: any) {
-      return ExtendedInspectionApiFp(configuration).inspectionListApplicableInspectionDesigns(itemDesignsModel, page, pageSize, options)(fetch, basePath);
+    inspectionListApplicableInspectionDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options?: any) {
+      return ExtendedInspectionApiFp(configuration).inspectionListApplicableInspectionDesigns(itemDesignsModel, query, page, pageSize, options)(fetch, basePath);
     },
     /**
      * Removes applicable dodis from the inspection design filter. After the dodis has been removed the inspection design filter will include all the dodis that are part of that filter. This does not remove the dodis itself from the system or inspection design, just from its filter.

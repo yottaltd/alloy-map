@@ -52,12 +52,13 @@ export class MeshApi extends BaseAPI {
    * Fetches the permissions of a mesh by its Guc
    * @summary Get a mesh permissions by its code
    * @param {string} code The Guc for the mesh whose permissions are being requested
+   * @param {string} [username] Optional username to get permissions for the specific user
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof MeshApi
    */
-  public meshGetPermissions(code: string, options?: any) {
-    return MeshApiFp(this.configuration).meshGetPermissions(code, options)(this.fetch, this.basePath);
+  public meshGetPermissions(code: string, username?: string, options?: any) {
+    return MeshApiFp(this.configuration).meshGetPermissions(code, username, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -73,6 +74,20 @@ export class MeshApi extends BaseAPI {
    */
   public meshList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
     return MeshApiFp(this.configuration).meshList(query, userGroup, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of meshes with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists user meshes with their winning permission
+   * @param {string} username The name of the user to get mesh access advisor for
+   * @param {number} [page] 
+   * @param {number} [pageSize] 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof MeshApi
+   */
+  public meshMeshAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+    return MeshApiFp(this.configuration).meshMeshAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

@@ -202,12 +202,13 @@ export const ExtendedWorkItemApiFetchParamCreator = function (configuration?: Co
      * List applicable component work items for the given asset component design
      * @summary List applicable component work items for asset component
      * @param {string} code The asset component design Guc to fetch applicable component work items for
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workItemListApplicableComponentWorkItems(code: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    workItemListApplicableComponentWorkItems(code: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling workItemListApplicableComponentWorkItems.');
@@ -225,6 +226,10 @@ export const ExtendedWorkItemApiFetchParamCreator = function (configuration?: Co
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
       }
 
       if (page !== undefined) {
@@ -249,12 +254,13 @@ export const ExtendedWorkItemApiFetchParamCreator = function (configuration?: Co
      * List applicable work items for the given job design type
      * @summary List applicable work items for job type
      * @param {string} code The job design Guc to fetch applicable work items for
+     * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workItemListApplicableWorkItems(code: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    workItemListApplicableWorkItems(code: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling workItemListApplicableWorkItems.');
@@ -272,6 +278,10 @@ export const ExtendedWorkItemApiFetchParamCreator = function (configuration?: Co
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
       }
 
       if (page !== undefined) {

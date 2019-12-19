@@ -8,6 +8,7 @@
 export enum AqsItemType {
   Query = 'Query',
   MathAggregation = 'MathAggregation',
+  StatisticsAggregation = 'StatisticsAggregation',
   Join = 'Join',
   Group = 'Group',
   And = 'And',

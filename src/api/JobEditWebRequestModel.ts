@@ -1,7 +1,7 @@
 // tslint:disable
 import { ItemEditWebRequestModel } from './ItemEditWebRequestModel';
 /**
- * Web request model to edit a job item
+ * Web request model to edit a job item  Note - passing geometry = null means don't edit geometry. To unset geometry, pass the itemGeometry attribute with a null value
  * @export
  * @interface JobEditWebRequestModel
  */

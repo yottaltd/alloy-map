@@ -11,6 +11,7 @@ import { CardPermissionsGetWebResponseModel } from './CardPermissionsGetWebRespo
 import { CardQueryCreateWebModel } from './CardQueryCreateWebModel';
 import { CardQueryDeleteWebRequestModel } from './CardQueryDeleteWebRequestModel';
 import { CardWithOperationsSummaryWebResponseModel } from './CardWithOperationsSummaryWebResponseModel';
+import { CardAccessAdvisorListWebResponseModel } from './CardAccessAdvisorListWebResponseModel';
 import { CardListWebResponseModel } from './CardListWebResponseModel';
 import { CardApiFetchParamCreator } from './CardApiFetchParamCreator';
 import { CardApi } from './CardApi';
@@ -21,6 +22,27 @@ import { CardApi } from './CardApi';
 export const CardApiFp = function(configuration?: Configuration) {
   return {
     /**
+     * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user cards with their winning permission
+     * @param {string} username The name of the user to get card access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardCardAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardAccessAdvisorListWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCardAccessAdvisor(username, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
      * Creates a card based on the information sent in the model
      * @summary Create a card
      * @param {CardCreateWebRequestModel} model Model containing the new card details
@@ -29,16 +51,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardCreate(model: CardCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -51,16 +71,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardCreateQuery(code: string, model: CardQueryCreateWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCreateQuery(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -72,16 +90,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardDelete(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardDelete(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -95,16 +111,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardDeleteQuery(code: string, id: string, model: CardQueryDeleteWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardDeleteQuery(code, id, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -117,16 +131,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardEdit(code: string, model: CardEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardEdit(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -139,16 +151,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardEditPermissions(code: string, model: CardPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardEditPermissions(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -160,16 +170,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGet(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -181,37 +189,34 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardGetComputedCard(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardComputedGetWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGetComputedCard(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
      * Fetches the permissions of a card by its Guc
      * @summary Get a card permissions by its code
      * @param {string} code The Guc for the card whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardGetPermissions(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGetPermissions(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+    cardGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGetPermissions(code, username, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -226,16 +231,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardListWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardList(query, userGroup, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }
