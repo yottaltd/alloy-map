@@ -8,13 +8,13 @@ import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
  */
 export interface TimeCronTrigger extends WorkflowTriggerWebModelBase {
   /**
-   * Minute of the day to trigger on
+   * Minute of the day to trigger on, in the customer's time zone
    * @type {number}
    * @memberof TimeCronTrigger
    */
   minute: number;
   /**
-   * Hour of the day to trigger on
+   * Hour of the day to trigger on, in the customer's time zone
    * @type {number}
    * @memberof TimeCronTrigger
    */

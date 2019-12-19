@@ -240,6 +240,53 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
       };
     },
     /**
+     * Fetches a list of design and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists design and its attributes with their winning permission
+     * @param {string} username The name of the user to get design with attributes access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designDesignAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling designDesignAccessAdvisor.');
+      }
+      const localVarPath = `/api/design/access-advisor/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
      * Edits the design matching the specified code by using the provided details
      * @summary Edit a design
      * @param {string} code The Guc of the design to edit
@@ -421,13 +468,14 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
       };
     },
     /**
-     * Finds the permissions of a design with the specified code
+     * Finds the permissions of a design with the specified code for optional user
      * @summary Get the design permissions
      * @param {string} code The Guc to use to fetch the required design permissions
+     * @param {string} [username] Optional username to get dodi permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designGetPermissions(code: string, options: any = {}): FetchArgs {
+    designGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling designGetPermissions.');
@@ -445,6 +493,10 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (username !== undefined) {
+        localVarQueryParameter['username'] = username;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -465,12 +517,13 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
      * @param {string} [implementsInterface] The optional dodi code Guc, if specified, only the designs implementing that interface will be returned
      * @param {string} [userGroup] Optional Guc to filter designs by. If specified, only the designs that have this user group code within their permissions or the permissions of the attributes within them are returned
      * @param {string} [childDodi] Optional Guc to filter designs by. If specified, only the designs that have a link attribute pointing to the specified dodi are returned
+     * @param {string} [lastEditDate] The optional last edit date to return only designs created or edited after this date
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/design`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -503,6 +556,10 @@ export const DesignApiFetchParamCreator = function (configuration?: Configuratio
 
       if (childDodi !== undefined) {
         localVarQueryParameter['childDodi'] = childDodi;
+      }
+
+      if (lastEditDate !== undefined) {
+        localVarQueryParameter['lastEditDate'] = lastEditDate;
       }
 
       if (page !== undefined) {

@@ -54,12 +54,13 @@ export const DodiApiFetchParamCreator = function (configuration?: Configuration)
      * @param {string} [implementsInterface] The optional dodi code Guc, if specified, only the dodis implementing that interface code will be returned
      * @param {string} [userGroup] The optional user group Guc. If specified, only the dodis that have this user group code within their permissions or the permissions of the attributes within them are returned
      * @param {string} [childDodi] Optional Guc to filter dodis by. If specified, only the dodis that have a link attribute pointing to the specified dodi are returned
+     * @param {string} [lastEditDate] The optional last edit date to return only dodis created or edited after this date
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    dodiList(query?: string, implementsInterface?: string, userGroup?: string, childDodi?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    dodiList(query?: string, implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/dodi`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -88,6 +89,10 @@ export const DodiApiFetchParamCreator = function (configuration?: Configuration)
 
       if (childDodi !== undefined) {
         localVarQueryParameter['childDodi'] = childDodi;
+      }
+
+      if (lastEditDate !== undefined) {
+        localVarQueryParameter['lastEditDate'] = lastEditDate;
       }
 
       if (page !== undefined) {

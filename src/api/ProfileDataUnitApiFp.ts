@@ -25,16 +25,14 @@ export const ProfileDataUnitApiFp = function(configuration?: Configuration) {
      */
     profileDataUnitCreate(model: ProfileDataUnitCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ProfileDataUnitWebModel> {
       const localVarFetchArgs = ProfileDataUnitApiFetchParamCreator(configuration).profileDataUnitCreate(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -46,16 +44,14 @@ export const ProfileDataUnitApiFp = function(configuration?: Configuration) {
      */
     profileDataUnitDelete(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ProfileDataUnitApiFetchParamCreator(configuration).profileDataUnitDelete(code, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response;
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
       };
     },
     /**
@@ -68,16 +64,14 @@ export const ProfileDataUnitApiFp = function(configuration?: Configuration) {
      */
     profileDataUnitEdit(code: string, model: ProfileDataUnitEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ProfileDataUnitWebModel> {
       const localVarFetchArgs = ProfileDataUnitApiFetchParamCreator(configuration).profileDataUnitEdit(code, model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -92,16 +86,14 @@ export const ProfileDataUnitApiFp = function(configuration?: Configuration) {
      */
     profileDataUnitList(discriminator?: string, page?: number, pageSize?: number, dataScopes?: Array<ProfileDataScope>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ProfileDataUnitListWebResponseModel> {
       const localVarFetchArgs = ProfileDataUnitApiFetchParamCreator(configuration).profileDataUnitList(discriminator, page, pageSize, dataScopes, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

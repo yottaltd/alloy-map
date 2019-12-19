@@ -1,5 +1,6 @@
 // tslint:disable
 import { BaseAPI } from './BaseAPI';
+import { SessionCreateOAuthUrlWebRequest } from './SessionCreateOAuthUrlWebRequest';
 import { SessionMasterCreateWebRequestModel } from './SessionMasterCreateWebRequestModel';
 import { SessionApiFp } from './SessionApiFp';
 /**
@@ -31,6 +32,18 @@ export class SessionApi extends BaseAPI {
    */
   public sessionCreate2(customerCode: string, options?: any) {
     return SessionApiFp(this.configuration).sessionCreate2(customerCode, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter, the user can be redirected to this url and will be faced with authentication provided by the service. A successful challenge will return to the redirect url specified as a parameter and the Alloy session token will be available as the Authorization header in this request.
+   * @summary Gets OAuth provider sign in urls
+   * @param {SessionCreateOAuthUrlWebRequest} model The model containing info about which provider and how to generate sign in urls
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SessionApi
+   */
+  public sessionCreateOAuthUrl(model: SessionCreateOAuthUrlWebRequest, options?: any) {
+    return SessionApiFp(this.configuration).sessionCreateOAuthUrl(model, options)(this.fetch, this.basePath);
   }
 
   /**

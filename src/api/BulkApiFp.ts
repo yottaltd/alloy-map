@@ -5,10 +5,10 @@ import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { BulkActionSubmittedWebResponseModel } from './BulkActionSubmittedWebResponseModel';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
+import { EditItemsBulkActionWebRequestModel } from './EditItemsBulkActionWebRequestModel';
 import { GetBulkActionWebResponseModel } from './GetBulkActionWebResponseModel';
 import { ItemBulkWebRequestModel } from './ItemBulkWebRequestModel';
 import { ItemBulkWebResponseModel } from './ItemBulkWebResponseModel';
-import { SetAttributesBulkActionWebRequestModel } from './SetAttributesBulkActionWebRequestModel';
 import { TouchItemsBulkActionWebRequestModel } from './TouchItemsBulkActionWebRequestModel';
 import { ListBulkActionErrorsWebResponseModel } from './ListBulkActionErrorsWebResponseModel';
 import { BulkApiFetchParamCreator } from './BulkApiFetchParamCreator';
@@ -28,16 +28,33 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkDeleteItems(model: DeleteItemsBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkDeleteItems(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * This operation allows to edit a specific set of attributes and properties on the items matching the specified Aqs query
+     * @summary Submit a bulk item edit operation
+     * @param {EditItemsBulkActionWebRequestModel} model The model containing the info needed for the edit items bulk operation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    bulkEditItems(model: EditItemsBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
+      const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkEditItems(model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -49,16 +66,14 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkGeneric(model: ItemBulkWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemBulkWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkGeneric(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -70,16 +85,14 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkGet(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetBulkActionWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkGet(id, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -93,37 +106,14 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkListErrors(id: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListBulkActionErrorsWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkListErrors(id, page, pageSize, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
-      };
-    },
-    /**
-     * This operation allows to edit a specific set of attributes on the items matching the specified Aqs query
-     * @summary Submit a bulk set attributes
-     * @param {SetAttributesBulkActionWebRequestModel} model The model containing the info needed for the set attributes items bulk operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    bulkSetAttributes(model: SetAttributesBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
-      const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkSetAttributes(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
     /**
@@ -135,16 +125,14 @@ export const BulkApiFp = function(configuration?: Configuration) {
      */
     bulkTouchItems(model: TouchItemsBulkActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BulkActionSubmittedWebResponseModel> {
       const localVarFetchArgs = BulkApiFetchParamCreator(configuration).bulkTouchItems(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

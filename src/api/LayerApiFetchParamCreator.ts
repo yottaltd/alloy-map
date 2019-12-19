@@ -6,10 +6,6 @@ import { RequiredError } from './RequiredError';
 import { LayerCreateWebRequestModel } from './LayerCreateWebRequestModel';
 import { LayerEditWebRequestModel } from './LayerEditWebRequestModel';
 import { LayerPermissionsEditWebRequestModel } from './LayerPermissionsEditWebRequestModel';
-import { LayerReorderStylesWebRequestModel } from './LayerReorderStylesWebRequestModel';
-import { LayerStyleCreateRequestWebModel } from './LayerStyleCreateRequestWebModel';
-import { LayerStyleDeleteWebRequestModel } from './LayerStyleDeleteWebRequestModel';
-import { LayerStyleEditRequestWebModel } from './LayerStyleEditRequestWebModel';
 import { LayerApi } from './LayerApi';
 /**
  * LayerApi - fetch parameter creator
@@ -58,52 +54,6 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
       };
     },
     /**
-     * Adds a style to the specified layer. A layer accepts both a style of type Aqs or Wfs.
-     * @summary Add a style to a layer
-     * @param {string} code The Guc of the layer to add a style to
-     * @param {LayerStyleCreateRequestWebModel} model Model containing the information of the style to be added
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerCreateStyle(code: string, model: LayerStyleCreateRequestWebModel, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling layerCreateStyle.');
-      }
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling layerCreateStyle.');
-      }
-      const localVarPath = `/api/layer/{code}/style`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"LayerStyleCreateRequestWebModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
      * Deletes a layer based on the information sent in the model
      * @summary Delete a layer
      * @param {string} code The Guc of the layer to delete
@@ -141,59 +91,7 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
       };
     },
     /**
-     * Removes a style to the specified layer
-     * @summary Remove a style from a layer
-     * @param {string} code The Guc of the layer to remove a style from
-     * @param {string} id The AId of the style to remove
-     * @param {LayerStyleDeleteWebRequestModel} model The model containing the signature necessary to delete a style from the layer
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerDeleteStyle(code: string, id: string, model: LayerStyleDeleteWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling layerDeleteStyle.');
-      }
-      // verify required parameter 'id' is not null or undefined
-      if (id === null || id === undefined) {
-        throw new RequiredError('id','Required parameter id was null or undefined when calling layerDeleteStyle.');
-      }
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling layerDeleteStyle.');
-      }
-      const localVarPath = `/api/layer/{code}/style/{id}`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"LayerStyleDeleteWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
-     * Edits a card based on the information sent in the model
+     * Edits a layer based on the information sent in the model
      * @summary Edit a layer
      * @param {string} code The Guc of the layer to edit
      * @param {LayerEditWebRequestModel} model Model containing the new layer details
@@ -277,58 +175,6 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
       const needsSerialization = (<any>"LayerPermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
-     * Edits a style on the specified layer. A layer style type cannot be changed.
-     * @summary Edit a style on a layer
-     * @param {string} code The Guc of the layer to add edit a style on
-     * @param {string} id The AId of the style to edit
-     * @param {LayerStyleEditRequestWebModel} model Model containing the information of the style to be edited
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerEditStyle(code: string, id: string, model: LayerStyleEditRequestWebModel, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling layerEditStyle.');
-      }
-      // verify required parameter 'id' is not null or undefined
-      if (id === null || id === undefined) {
-        throw new RequiredError('id','Required parameter id was null or undefined when calling layerEditStyle.');
-      }
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling layerEditStyle.');
-      }
-      const localVarPath = `/api/layer/{code}/style/{id}`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"LayerStyleEditRequestWebModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
@@ -497,10 +343,11 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
      * Fetches the permissions of a layer by its Guc
      * @summary Get the permissions of a layer by its code
      * @param {string} code The Guc for the layer whose permissions are being requested
+     * @param {string} [username] Optional username to get permissions for the specific user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGetPermissions(code: string, options: any = {}): FetchArgs {
+    layerGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling layerGetPermissions.');
@@ -518,6 +365,57 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (username !== undefined) {
+        localVarQueryParameter['username'] = username;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user layers with their winning permission
+     * @param {string} username The name of the user to get layer access advisor for
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    layerLayerAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling layerLayerAccessAdvisor.');
+      }
+      const localVarPath = `/api/layer/access-advisor/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['pageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -626,52 +524,6 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
-     * This endpoint reorders the styles on a layer taking a list of the style ids in the new order. All the style ids currently in the layer have to be present in the request
-     * @summary Reorder styles on a layer
-     * @param {string} code The Guc of the layer whose styles need to be reordered
-     * @param {LayerReorderStylesWebRequestModel} model The model containing the info necessary to the styles reorder operation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    layerReorderStyle(code: string, model: LayerReorderStylesWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling layerReorderStyle.');
-      }
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling layerReorderStyle.');
-      }
-      const localVarPath = `/api/layer/{code}/reorder-styles`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"LayerReorderStylesWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
         url: url.format(localVarUrlObj),

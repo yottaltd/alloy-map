@@ -1,5 +1,5 @@
 // tslint:disable
-import { BoundingBox } from './BoundingBox';
+import { BoundingBoxWebModel } from './BoundingBoxWebModel';
 import { CustomerSettingWebModel } from './CustomerSettingWebModel';
 /**
  * Web model for a customer. A customer represents a system in Alloy which has its own database and is separate from the other Alloy Customers
@@ -33,8 +33,8 @@ export interface CustomerWebModel {
   userLastSeen?: string;
   /**
    * The optional bounding box representing the area where the items are in it. It is not returned if no item with geometry exists (the bounding box is recomputed periodically)
-   * @type {BoundingBox}
+   * @type {BoundingBoxWebModel}
    * @memberof CustomerWebModel
    */
-  boundingBox?: BoundingBox;
+  boundingBox?: BoundingBoxWebModel;
 }

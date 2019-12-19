@@ -1,4 +1,4 @@
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLImageLayer from 'ol/layer/Image';
 import OLImageWMS from 'ol/source/ImageWMS';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
@@ -44,7 +44,7 @@ export class AlloyImageWmsBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.imageLayer;
   }
 

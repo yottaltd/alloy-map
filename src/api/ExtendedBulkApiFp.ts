@@ -22,16 +22,14 @@ export const ExtendedBulkApiFp = function(configuration?: Configuration) {
      */
     bulkGeneric(model: ExtendedBulkWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ExtendedBulkWebResponseModel> {
       const localVarFetchArgs = ExtendedBulkApiFetchParamCreator(configuration).bulkGeneric(model, options);
-      return (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-          if (configuration && configuration.responseInterceptor) {
-            return configuration.responseInterceptor(response);
-          } else if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else {
-            throw response;
-          }
-        });
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
       };
     },
   }

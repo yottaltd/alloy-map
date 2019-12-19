@@ -95,14 +95,15 @@ export class ExtendedInspectionApi extends BaseAPI {
    * Lists inspection designs applicable to ALL input job, defect, inspection or asset designs
    * @summary List applicable inspection designs for ALL given job, defect, inspection or asset designs
    * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item design Guc info
+   * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
    * @param {number} [page] 
    * @param {number} [pageSize] 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedInspectionApi
    */
-  public inspectionListApplicableInspectionDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, page?: number, pageSize?: number, options?: any) {
-    return ExtendedInspectionApiFp(this.configuration).inspectionListApplicableInspectionDesigns(itemDesignsModel, page, pageSize, options)(this.fetch, this.basePath);
+  public inspectionListApplicableInspectionDesigns(itemDesignsModel: ItemDesignsForFilterWebRequestModel, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ExtendedInspectionApiFp(this.configuration).inspectionListApplicableInspectionDesigns(itemDesignsModel, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

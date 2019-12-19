@@ -12,4 +12,10 @@ export interface Basemap extends ProfileDataUnitValueWebModelBase {
    * @memberof Basemap
    */
   url: string;
+  /**
+   * Optional watermark string to show on the basemap
+   * @type {string}
+   * @memberof Basemap
+   */
+  watermark?: string;
 }

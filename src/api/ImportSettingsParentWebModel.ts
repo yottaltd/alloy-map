@@ -25,9 +25,15 @@ export interface ImportSettingsParentWebModel {
    */
   matchHeader: string;
   /**
-   * The attribute code on the parent dodi to search on via the matchHeader to help locate the parent item
+   * The attribute code on the parent dodi to search on via the MatchHeader to help locate the parent item. This field is optional when MatchByItemId is used and set to true
    * @type {string}
    * @memberof ImportSettingsParentWebModel
    */
-  matchAttributeCode: string;
+  matchAttributeCode?: string;
+  /**
+   * Optional flag to allow matching existing parent items by their item id specified in MatchHeader column of the import file. Multiple parents are supported by using pipe delimited format 'parentItemId1 | parentItemId2' Note this flag is mutually exclusive with MatchAttributeCode string
+   * @type {boolean}
+   * @memberof ImportSettingsParentWebModel
+   */
+  matchByItemId?: boolean;
 }

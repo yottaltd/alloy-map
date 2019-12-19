@@ -14,6 +14,20 @@ import { CardApiFp } from './CardApiFp';
  */
 export class CardApi extends BaseAPI {
   /**
+   * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists user cards with their winning permission
+   * @param {string} username The name of the user to get card access advisor for
+   * @param {number} [page] 
+   * @param {number} [pageSize] 
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CardApi
+   */
+  public cardCardAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
+    return CardApiFp(this.configuration).cardCardAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
    * Creates a card based on the information sent in the model
    * @summary Create a card
    * @param {CardCreateWebRequestModel} model Model containing the new card details
@@ -118,12 +132,13 @@ export class CardApi extends BaseAPI {
    * Fetches the permissions of a card by its Guc
    * @summary Get a card permissions by its code
    * @param {string} code The Guc for the card whose permissions are being requested
+   * @param {string} [username] Optional username to get permissions for the specific user
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CardApi
    */
-  public cardGetPermissions(code: string, options?: any) {
-    return CardApiFp(this.configuration).cardGetPermissions(code, options)(this.fetch, this.basePath);
+  public cardGetPermissions(code: string, username?: string, options?: any) {
+    return CardApiFp(this.configuration).cardGetPermissions(code, username, options)(this.fetch, this.basePath);
   }
 
   /**

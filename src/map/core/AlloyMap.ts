@@ -2,15 +2,15 @@ import { debug, Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
+import OLLayer from 'ol/layer/Layer';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { GeoJSONObjectType } from '../../api';
 import { Configuration } from '../../api/configuration';
+import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { FeatureUtils } from '../../utils/FeatureUtils';
-import OLLayer from 'ol/layer/Layer';
 import { FontUtils } from '../../utils/FontUtils';
 import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
@@ -753,5 +753,13 @@ export class AlloyMap {
    */
   public fitFeaturesViewport(features: AlloyFeature[]) {
     this.setViewport(FeatureUtils.calculateFeaturesBounds(features));
+  }
+
+  /**
+   * Force a recalculation of the map viewport size. This should be called when third-party code
+   * changes the size of the map viewport.
+   */
+  public updateSize() {
+    this.olMap.updateSize();
   }
 }
