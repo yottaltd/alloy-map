@@ -1,11 +1,11 @@
-import OLLayer from 'ol/layer/Layer';
+import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLWMTS from 'ol/source/WMTS';
+import { AlloyWmtsCapabilities } from '../../wmts/AlloyWmtsCapabilities';
+import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
 import { WmtsUtils } from '../../wmts/WmtsUtils';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyBasemap } from './AlloyBasemap';
-import { AlloyWmtsCapabilities } from '../../wmts/AlloyWmtsCapabilities';
-import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
 
 /**
  * an alloy tile basemap using an WMTS service
@@ -51,7 +51,7 @@ export class AlloyWmtsBasemap implements AlloyBasemap {
   /**
    * @implements
    */
-  public get layer(): Readonly<OLLayer> {
+  public get layer(): BaseLayer {
     return this.tileLayer;
   }
 
