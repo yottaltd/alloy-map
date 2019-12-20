@@ -7,5 +7,5 @@ export interface AlloyCableUnitFeatureProperties extends AlloyPathNodeFeaturePro
   /**
    * the icon of the feature
    */
-  readonly icon: string;
+  readonly icon?: string;
 }

@@ -23,7 +23,7 @@ export class AlloyLayerStyle {
   /**
    * the icon of the style, should be a font class name
    */
-  public readonly icon: string;
+  public readonly icon?: string;
 
   /**
    * creates a new instance
@@ -31,7 +31,7 @@ export class AlloyLayerStyle {
    * @param colour the colour of the style
    * @param icon the icon font class name
    */
-  constructor(styleId: string, colour: string, icon: string) {
+  constructor(styleId: string, colour: string, icon?: string) {
     this.styleId = styleId;
     this.icon = icon;
 

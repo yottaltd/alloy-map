@@ -1,0 +1,7 @@
+{
+  "ukLon": -2,
+  "ukLat": 52,
+  "mapZoom": 10,
+  "apiUrl": "https://api.labs.alloyapp.io",
+  "apiToken": "XYZ"
+}
