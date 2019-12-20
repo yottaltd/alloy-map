@@ -176,7 +176,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
@@ -185,16 +185,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPointStyles(
@@ -205,7 +212,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
@@ -214,16 +221,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createLineStringStyles(
@@ -298,15 +312,22 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPolygonStyles(
@@ -349,15 +370,22 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    return styles;
   }
 
   private createGeometryCollectionStyles(
@@ -387,7 +415,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -404,16 +432,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPointHoverStyles(
@@ -426,7 +461,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -443,16 +478,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createLineStringHoverStyles(
@@ -552,7 +594,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
@@ -565,8 +607,15 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPolygonHoverStyles(
@@ -610,7 +659,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
         processGeometryCollection
@@ -623,8 +672,15 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    return styles;
   }
 
   private createGeometryCollectionHoverStyles(
@@ -652,7 +708,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -669,16 +725,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPointSelectedStyles(
@@ -689,7 +752,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -706,16 +769,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
-          : undefined,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createLineStringSelectedStyles(
@@ -727,7 +797,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const width = this.getLineWidth(resolution);
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       AlloyLineUtils.createLineHaloStyle(
         width,
         layerStyle.colour,
@@ -768,21 +838,28 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
             )
           : AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryFunctionUtils.pipe(
-              // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-              // then convert to mid points
-              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
-            )
-          : AlloyLineStringFunctions.convertFeatureToMidPoint,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiLineStringSelectedStyles(
@@ -794,7 +871,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const width = this.getLineWidth(resolution);
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       AlloyLineUtils.createLineHaloStyle(
         width,
         layerStyle.colour,
@@ -835,21 +912,28 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
             )
           : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(
-        radius,
-        layerStyle.icon,
-        ICON_COLOUR,
-        processGeometryCollection
-          ? AlloyGeometryFunctionUtils.pipe(
-              // if we have geometry collection, first convert to multi line strings
-              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-              // then convert to mid points
-              AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
-            )
-          : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
-      ),
     ];
+
+    if (layerStyle.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          layerStyle.icon,
+          ICON_COLOUR,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createPolygonSelectedStyles(
@@ -888,7 +972,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         layerStyle.colour,
         processGeometryCollection
@@ -901,8 +985,15 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiPolygonSelectedStyles(
@@ -943,7 +1034,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // clamp the icon size to a max
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
-    return [
+    const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         layerStyle.colour,
         processGeometryCollection
@@ -956,8 +1047,15 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
-      AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
     ];
+
+    if (layerStyle.icon) {
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    return styles;
   }
 
   private createGeometryCollectionSelectedStyles(

@@ -117,7 +117,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
@@ -126,9 +126,14 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
     ];
+    if (feature.properties.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+      );
+    }
+    return styles;
   }
 
   private createCableStyles(
@@ -158,7 +163,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -175,9 +180,14 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
     ];
+    if (feature.properties.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+      );
+    }
+    return styles;
   }
 
   private createCableHoverStyles(
@@ -215,7 +225,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
 
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -232,9 +242,14 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-      // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
     ];
+    if (feature.properties.icon) {
+      // the icon of the item
+      styles.push(
+        AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+      );
+    }
+    return styles;
   }
 
   private createCableSelectedStyles(

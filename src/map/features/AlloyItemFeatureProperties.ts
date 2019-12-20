@@ -13,16 +13,6 @@ export interface AlloyItemFeatureProperties {
   readonly itemId: string;
 
   /**
-   * the colour to represent the item
-   */
-  readonly colour?: string;
-
-  /**
-   * the icon of the item
-   */
-  readonly icon?: string;
-
-  /**
    * the title of the item
    */
   readonly title: string;
