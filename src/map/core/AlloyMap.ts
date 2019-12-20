@@ -628,7 +628,7 @@ export class AlloyMap {
     }
 
     // add the map to open layers
-    this.olMap.getLayers().insertAt(0, basemap.layer as OLLayer);
+    this.olMap.getLayers().insertAt(0, basemap.layer);
 
     // update internal basemap reference
     this.currentBasemap = basemap;
