@@ -623,7 +623,7 @@ export class AlloyMap {
   public setBasemap(basemap: AlloyBasemap): void {
     // remove the layer from the map
     if (this.currentBasemap) {
-      this.olMap.removeLayer(this.currentBasemap.layer as OLLayer);
+      this.olMap.removeLayer(this.currentBasemap.layer);
       this.currentBasemap = null;
     }
 
