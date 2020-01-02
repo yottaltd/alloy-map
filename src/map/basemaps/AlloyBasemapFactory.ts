@@ -1,5 +1,8 @@
+import { AlloyMapError } from '../../error/AlloyMapError';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
+import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
+import { WmtsUtils } from '../../wmts/WmtsUtils';
 import { AlloyBasemap } from './AlloyBasemap';
 import { AlloyBingBasemap } from './AlloyBingBasemap';
 import { AlloyImageWmsBasemap } from './AlloyImageWmsBasemap';
@@ -7,10 +10,6 @@ import { AlloyTileBasemap } from './AlloyTileBasemap';
 import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 import { AlloyWmsBasemap } from './AlloyWmsBasemap';
 import { AlloyWmtsBasemap } from './AlloyWmtsBasemap';
-import { AlloyWmtsCapabilities } from '../../wmts/AlloyWmtsCapabilities';
-import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
-import { WmtsUtils } from '../../wmts/WmtsUtils';
-import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * the mapbox user account we use
@@ -135,7 +134,11 @@ export abstract class AlloyBasemapFactory {
     if (tileMatrixSet) {
       try {
         const split = tileMatrixSet.SupportedCRS.split(':');
-        await ProjectionUtils.register(parseInt(split[split.length - 1], 10));
+        const epsg = parseInt(split[split.length - 1], 10);
+        if (isNaN(epsg)) {
+          throw new AlloyMapError(1577964771, 'epsg code was not a number');
+        }
+        await ProjectionUtils.register(epsg);
       } catch (e) {
         // do not throw if failed to register projection
         // tslint:disable-next-line:no-console

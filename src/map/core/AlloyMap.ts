@@ -623,12 +623,12 @@ export class AlloyMap {
   public setBasemap(basemap: AlloyBasemap): void {
     // remove the layer from the map
     if (this.currentBasemap) {
-      this.olMap.removeLayer(this.currentBasemap.layer as OLLayer);
+      this.olMap.removeLayer(this.currentBasemap.layer);
       this.currentBasemap = null;
     }
 
     // add the map to open layers
-    this.olMap.getLayers().insertAt(0, basemap.layer as OLLayer);
+    this.olMap.getLayers().insertAt(0, basemap.layer);
 
     // update internal basemap reference
     this.currentBasemap = basemap;
