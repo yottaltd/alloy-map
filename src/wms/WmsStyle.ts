@@ -11,7 +11,6 @@ export interface WmsStyle {
 
   /**
    * Human readable title of the style
-   *
    */
   readonly Title?: string;
 
