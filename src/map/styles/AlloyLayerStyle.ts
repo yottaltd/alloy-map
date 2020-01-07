@@ -1,4 +1,5 @@
 import { AlloyMapError } from '../../error/AlloyMapError';
+import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
 
 /**
  * regex for testing a colour is valid hex
@@ -26,14 +27,26 @@ export class AlloyLayerStyle {
   public readonly icon?: string;
 
   /**
+   * whether to show labels against features (where applicable)
+   */
+  public readonly labelMode: AlloyLayerStyleLabelMode;
+
+  /**
    * creates a new instance
    * @param styleId the style id
    * @param colour the colour of the style
    * @param icon the icon font class name
+   * @param labelMode the mode for displaying labels
    */
-  constructor(styleId: string, colour: string, icon?: string) {
+  constructor(
+    styleId: string,
+    colour: string,
+    icon?: string,
+    labelMode?: AlloyLayerStyleLabelMode,
+  ) {
     this.styleId = styleId;
     this.icon = icon;
+    this.labelMode = labelMode || AlloyLayerStyleLabelMode.None;
 
     // we're really picky about colours being hex to avoid issues in openlayers
     if (!HEX_REGEX.test(colour)) {

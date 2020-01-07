@@ -33,7 +33,7 @@
 
       const map = new alloymap.AlloyMap({
         api: 'https://api.labs.alloyapp.io/',
-        token: '9f5a4e82-424a-4e5e-bfbd-b671dcd58ff7',
+        token: 'acde4616-4a76-42dd-b21d-88dc66f060d4',
         element: document.getElementById('map'),
         centre: new alloymap.AlloyCoordinate(-2, 52),
         zoom: 10,
@@ -47,48 +47,29 @@
       const basemap = alloymap.AlloyBasemapFactory.createSkyward();
       map.setBasemap(basemap);
 
-      const layer = new alloymap.AlloyClusterLayer({
-        map,
-        layerCode: 'layers_aggregated_5c9e4846ff5c130f601273b0',
-        bounds: new alloymap.AlloyBounds(
-          new alloymap.AlloyCoordinate(-10, 37),
-          new alloymap.AlloyCoordinate(10, 67),
-        ),
-        styles: [
-          {
-            styleId: '5c9e485cff5c130f601273bd',
-            colour: '#cc3300',
-            icon: 'icon-stl',
-          },
-          {
-            styleId: '5c9e48a8ff5c130f601273c3',
-            colour: '#33cc00',
-            icon: 'icon-system-1',
-          },
-          {
-            styleId: '5c9e48f8ff5c130f60127544',
-            colour: '#3380cc',
-            icon: 'icon-drainage-sewers',
-          },
-        ],
-      });
       const layer2 = new alloymap.AlloyClusterLayer({
         map,
-        layerCode: 'layers_parks_5ca74d84ff5c130ae454763b',
+        layerCode: 'layers_inspectionStatus',
         bounds: new alloymap.AlloyBounds(
-          new alloymap.AlloyCoordinate(-10, 37),
-          new alloymap.AlloyCoordinate(10, 67),
+          new alloymap.AlloyCoordinate(-20, 17),
+          new alloymap.AlloyCoordinate(20, 87),
         ),
         styles: [
-          {
-            styleId: '5ca74da4ff5c130ae4547885',
-            colour: '#44a541',
-            icon: 'icon-tree-leaf-average',
-          },
+          new alloymap.AlloyLayerStyle(
+            '5d2840feff5c13018091aae0',
+            '#44a541',
+            'icon-tree-leaf-average',
+            'Title',
+          ),
+          new alloymap.AlloyLayerStyle(
+            '5d2840feff5c13018091aae1',
+            '#a54411',
+            'icon-tree-leaf-average',
+            'TitleAndSubtitle',
+          ),
         ],
       });
 
-      map.addLayer(layer);
       map.addLayer(layer2);
     </script>
   </body>
