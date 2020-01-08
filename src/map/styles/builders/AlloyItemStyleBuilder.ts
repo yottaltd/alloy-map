@@ -1452,6 +1452,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
