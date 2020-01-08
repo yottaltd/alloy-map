@@ -18,6 +18,11 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run docs
+      - name: GitHub Pages Deploy
+        uses: maxheld83/ghpages@v0.2.1
+        env:
+          BUILD_DIR: docs/
       - name: Actions for Discord
         uses: Ilshidur/action-discord@0.0.2
         env:
