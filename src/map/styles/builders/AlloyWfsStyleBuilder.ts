@@ -8,12 +8,13 @@ import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
-import { AlloyLayerStyle } from '../AlloyLayerStyle';
+import { AlloyLayerStyleLabelMode } from '../AlloyLayerStyleLabelMode';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyWfsLayerStyle } from '../AlloyWfsLayerStyle';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
+import { AlloyLabelUtils } from '../utils/AlloyLabelUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
 import { AlloyPolygonUtils } from '../utils/AlloyPolygonUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
@@ -37,7 +38,10 @@ const ICON_COLOUR = '#ffffff';
  * @ignore
  * @internal
  */
-export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<AlloyWfsFeature> {
+export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
+  AlloyWfsFeature,
+  AlloyWfsLayerStyle
+> {
   /**
    * shame we need a reference to the map :( but its for calculating coord to pixel coord transforms
    */
@@ -65,17 +69,27 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       throw new AlloyMapError(1562245691, 'missing layer style: ' + feature.styleId);
     }
     const type = feature.getExpectedGeometry().getType();
-    if (type === OLGeometryType.POLYGON || type === OLGeometryType.MULTI_POLYGON) {
-      // for polygons need to use ID so that centre icon is cached per geometry
-      return StringUtils.cacheKeyConcat(
-        state,
-        resolution,
-        feature.id,
-        layerStyle.colour,
-        layerStyle.icon,
-      );
-    }
-    return StringUtils.cacheKeyConcat(state, resolution, layerStyle.colour, layerStyle.icon);
+    return StringUtils.cacheKeyConcat(
+      state,
+      resolution,
+      layerStyle.colour,
+      layerStyle.icon,
+      // if polygon then we need to cache per feature due to centre of polygon calcuations
+      type === OLGeometryType.POLYGON || type === OLGeometryType.MULTI_POLYGON
+        ? feature.id
+        : undefined,
+      // if we have titles and we are in title mode then we need to cache on them
+      !!layerStyle.labelTitle &&
+        (layerStyle.labelMode === AlloyLayerStyleLabelMode.Title ||
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle)
+        ? feature.olFeature.get(layerStyle.labelTitle)
+        : undefined,
+      // if we have subtitles and we are in subtitle mode then we need to cache on them
+      !!layerStyle.labelSubtitle &&
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+        ? feature.olFeature.get(layerStyle.labelSubtitle)
+        : undefined,
+    );
   }
 
   /**
@@ -89,19 +103,19 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     switch (feature.olFeature.getGeometry().getType()) {
       case OLGeometryType.POINT:
-        return this.createPointStyles(resolution, feature, layerStyle);
+        return this.createPointStyles(feature, resolution, layerStyle);
       case OLGeometryType.LINE_STRING:
-        return this.createLineStringStyles(resolution, feature, layerStyle);
+        return this.createLineStringStyles(feature, resolution, layerStyle);
       case OLGeometryType.POLYGON:
-        return this.createPolygonStyles(resolution, feature, layerStyle);
+        return this.createPolygonStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_POINT:
-        return this.createMultiPointStyles(resolution, feature, layerStyle);
+        return this.createMultiPointStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_LINE_STRING:
-        return this.createMultiLineStringStyles(resolution, feature, layerStyle);
+        return this.createMultiLineStringStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_POLYGON:
-        return this.createMultiPolygonStyles(resolution, feature, layerStyle);
+        return this.createMultiPolygonStyles(feature, resolution, layerStyle);
       case OLGeometryType.GEOMETRY_COLLECTION:
-        return this.createGeometryCollectionStyles(resolution, feature, layerStyle);
+        return this.createGeometryCollectionStyles(feature, resolution, layerStyle);
       default:
         throw new AlloyMapError(1556117088, 'unsupported geometry type');
     }
@@ -118,19 +132,19 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     switch (feature.olFeature.getGeometry().getType()) {
       case OLGeometryType.POINT:
-        return this.createPointHoverStyles(resolution, feature, layerStyle);
+        return this.createPointHoverStyles(feature, resolution, layerStyle);
       case OLGeometryType.LINE_STRING:
-        return this.createLineStringHoverStyles(resolution, feature, layerStyle);
+        return this.createLineStringHoverStyles(feature, resolution, layerStyle);
       case OLGeometryType.POLYGON:
-        return this.createPolygonHoverStyles(resolution, feature, layerStyle);
+        return this.createPolygonHoverStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_POINT:
-        return this.createMultiPointHoverStyles(resolution, feature, layerStyle);
+        return this.createMultiPointHoverStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_LINE_STRING:
-        return this.createMultiLineStringHoverStyles(resolution, feature, layerStyle);
+        return this.createMultiLineStringHoverStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_POLYGON:
-        return this.createMultiPolygonHoverStyles(resolution, feature, layerStyle);
+        return this.createMultiPolygonHoverStyles(feature, resolution, layerStyle);
       case OLGeometryType.GEOMETRY_COLLECTION:
-        return this.createGeometryCollectionHoverStyles(resolution, feature, layerStyle);
+        return this.createGeometryCollectionHoverStyles(feature, resolution, layerStyle);
       default:
         throw new AlloyMapError(1556117120, 'unsupported geometry type');
     }
@@ -150,33 +164,53 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     switch (feature.olFeature.getGeometry().getType()) {
       case OLGeometryType.POINT:
-        return this.createPointSelectedStyles(resolution, feature, layerStyle);
+        return this.createPointSelectedStyles(feature, resolution, layerStyle);
       case OLGeometryType.LINE_STRING:
-        return this.createLineStringSelectedStyles(resolution, feature, layerStyle);
+        return this.createLineStringSelectedStyles(feature, resolution, layerStyle);
       case OLGeometryType.POLYGON:
-        return this.createPolygonSelectedStyles(resolution, feature, layerStyle);
+        return this.createPolygonSelectedStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_POINT:
-        return this.createMultiPointSelectedStyles(resolution, feature, layerStyle);
+        return this.createMultiPointSelectedStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_LINE_STRING:
-        return this.createMultiLineStringSelectedStyles(resolution, feature, layerStyle);
+        return this.createMultiLineStringSelectedStyles(feature, resolution, layerStyle);
       case OLGeometryType.MULTI_POLYGON:
-        return this.createMultiPolygonSelectedStyles(resolution, feature, layerStyle);
+        return this.createMultiPolygonSelectedStyles(feature, resolution, layerStyle);
       case OLGeometryType.GEOMETRY_COLLECTION:
-        return this.createGeometryCollectionSelectedStyles(resolution, feature, layerStyle);
+        return this.createGeometryCollectionSelectedStyles(feature, resolution, layerStyle);
       default:
         throw new AlloyMapError(1556117154, 'unsupported geometry type');
     }
   }
 
   private createPointStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
+    const styles: OLStyle[] = [];
 
-    const styles = [
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    styles.push(
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
@@ -185,10 +219,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -205,14 +239,34 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createMultiPointStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
+    const styles: OLStyle[] = [];
 
-    const styles = [
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    styles.push(
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
@@ -221,10 +275,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -241,12 +295,12 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createLineStringStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    return [
+    const styles: OLStyle[] = [
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
         layerStyle.colour,
@@ -255,15 +309,41 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           : undefined,
       ),
     ];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiLineStringStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    return [
+    const styles: OLStyle[] = [
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
         layerStyle.colour,
@@ -272,12 +352,39 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           : undefined,
       ),
     ];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createPolygonStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const semiTransparentColour = ColourUtils.semiTransparent(layerStyle.colour);
@@ -327,13 +434,31 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       );
     }
 
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
     return styles;
   }
 
   private createMultiPolygonStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const semiTransparentColour = ColourUtils.semiTransparent(layerStyle.colour);
@@ -385,37 +510,75 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       );
     }
 
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          // we already have the mid point so use it
+          midPoint,
+        ),
+      );
+    }
+
     return styles;
   }
 
   private createGeometryCollectionStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPointStyles(resolution, feature, layerStyle, true),
-      ...this.createLineStringStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiLineStringStyles(resolution, feature, layerStyle, true),
-      ...this.createPolygonStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPolygonStyles(resolution, feature, layerStyle, true),
+      ...this.createPointStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiPointStyles(feature, resolution, layerStyle, true),
+      ...this.createLineStringStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiLineStringStyles(feature, resolution, layerStyle, true),
+      ...this.createPolygonStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiPolygonStyles(feature, resolution, layerStyle, true),
     ];
   }
 
   private createPointHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
+    const styles: OLStyle[] = [];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
-    const styles = [
+    styles.push(
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -432,10 +595,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -452,16 +615,36 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createMultiPointHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
+    const styles: OLStyle[] = [];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
-    const styles = [
+    styles.push(
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -478,10 +661,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -498,9 +681,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createLineStringHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
@@ -508,7 +691,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
-    return [
+    const styles: OLStyle[] = [
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
@@ -524,12 +707,38 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           : undefined,
       ),
     ];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createMultiLineStringHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
@@ -537,7 +746,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
 
-    return [
+    const styles: OLStyle[] = [
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
@@ -553,12 +762,38 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           : undefined,
       ),
     ];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    return styles;
   }
 
   private createPolygonHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
@@ -609,9 +844,28 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          // we already have the mid point so use it
+          midPoint,
+        ),
       );
     }
 
@@ -619,9 +873,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createMultiPolygonHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // modified hover colour
@@ -674,9 +928,28 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          // we already have the mid point so use it
+          midPoint,
+        ),
       );
     }
 
@@ -684,31 +957,51 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createGeometryCollectionHoverStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPointHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createLineStringHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiLineStringHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createPolygonHoverStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPolygonHoverStyles(resolution, feature, layerStyle, true),
+      ...this.createPointHoverStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiPointHoverStyles(feature, resolution, layerStyle, true),
+      ...this.createLineStringHoverStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiLineStringHoverStyles(feature, resolution, layerStyle, true),
+      ...this.createPolygonHoverStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiPolygonHoverStyles(feature, resolution, layerStyle, true),
     ];
   }
 
   private createPointSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
+    const styles: OLStyle[] = [];
 
-    const styles = [
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    styles.push(
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -725,10 +1018,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -745,14 +1038,34 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createMultiPointSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const radius = this.getBallRadius(resolution);
+    const styles: OLStyle[] = [];
 
-    const styles = [
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+            : undefined,
+        ),
+      );
+    }
+
+    styles.push(
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -769,10 +1082,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -789,9 +1102,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createLineStringSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
@@ -812,6 +1125,33 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
       ),
+    ];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    styles.push(
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -838,10 +1178,10 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
             )
           : AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
-    ];
+    );
 
+    // add icon support
     if (layerStyle.icon) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -863,9 +1203,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createMultiLineStringSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     const width = this.getLineWidth(resolution);
@@ -886,6 +1226,33 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
       ),
+    ];
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          processGeometryCollection
+            ? AlloyGeometryFunctionUtils.pipe(
+                // if we have geometry collection, first convert to multi line strings
+                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+                // then convert to mid points
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+              )
+            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+        ),
+      );
+    }
+
+    styles.push(
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -912,7 +1279,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
             )
           : AlloyMultiLineStringFunctions.convertFeatureToMidPoints,
       ),
-    ];
+    );
 
     if (layerStyle.icon) {
       // the icon of the item
@@ -937,9 +1304,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createPolygonSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // we need to calculate the icon size on a feature by feature basis
@@ -987,9 +1354,28 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          // we already have the mid point so use it
+          midPoint,
+        ),
       );
     }
 
@@ -997,9 +1383,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createMultiPolygonSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
     // we need to calculate the icon size on a feature by feature basis
@@ -1049,9 +1435,28 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+      );
+    }
+
+    // add labelling support
+    if (layerStyle.labelMode !== AlloyLayerStyleLabelMode.None) {
+      // parse the title and subtitle
+      const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
+
+      styles.push(
+        AlloyLabelUtils.createLabelStyle(
+          title || '',
+          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+            ? subtitle || null
+            : null,
+          layerStyle.colour,
+          // we already have the mid point so use it
+          midPoint,
+        ),
       );
     }
 
@@ -1059,19 +1464,19 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
   }
 
   private createGeometryCollectionSelectedStyles(
-    resolution: number,
     feature: AlloyWfsFeature,
-    layerStyle: AlloyLayerStyle,
+    resolution: number,
+    layerStyle: AlloyWfsLayerStyle,
   ): OLStyle[] {
     return [
       // pass extra flag to process geometry collection on all these style rules, this will
       // recursively transform a geometry collections data into its respective types for the style
-      ...this.createPointSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPointSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createLineStringSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiLineStringSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createPolygonSelectedStyles(resolution, feature, layerStyle, true),
-      ...this.createMultiPolygonSelectedStyles(resolution, feature, layerStyle, true),
+      ...this.createPointSelectedStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiPointSelectedStyles(feature, resolution, layerStyle, true),
+      ...this.createLineStringSelectedStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiLineStringSelectedStyles(feature, resolution, layerStyle, true),
+      ...this.createPolygonSelectedStyles(feature, resolution, layerStyle, true),
+      ...this.createMultiPolygonSelectedStyles(feature, resolution, layerStyle, true),
     ];
   }
 
@@ -1095,5 +1500,25 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     return (
       AlloyScaleUtils.LINE_WIDTH_MAX * AlloyScaleUtils.getScaleMultiplierForResolution(resolution)
     );
+  }
+
+  /**
+   * tries to get the title and subtitle from a wfs feature
+   * @param layerStyle the layer style with keys to get from the feature
+   * @param feature the feature to get the values from
+   */
+  private tryGetFeatureTitleAndSubtitle(
+    layerStyle: AlloyWfsLayerStyle,
+    feature: AlloyWfsFeature,
+  ): {
+    title?: string;
+    subtitle?: string;
+  } {
+    return {
+      title: !!layerStyle.labelTitle ? feature.olFeature.get(layerStyle.labelTitle) : undefined,
+      subtitle: !!layerStyle.labelSubtitle
+        ? feature.olFeature.get(layerStyle.labelSubtitle)
+        : undefined,
+    };
   }
 }
