@@ -30,4 +30,4 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: 'New Version of alloy-map released.\nsee: https://www.npmjs.com/package/@yotta/alloy-map'
+          args: 'New Version of alloy-map released.\nsee: https://www.npmjs.com/package/@yotta/alloy-map\ndocs: https://yottaltd.github.io/alloy-map/'
