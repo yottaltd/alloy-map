@@ -1,0 +1,1969 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>AlloyMap | @yotta/alloy-map</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@yotta/alloy-map</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="alloymap.html">AlloyMap</a>
+				</li>
+			</ul>
+			<h1>Class AlloyMap</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>the alloy map manages basemaps, layers and drawing</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">AlloyMap</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="alloymap.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#basemap" class="tsd-kind-icon">basemap</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#centre" class="tsd-kind-icon">centre</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#layers" class="tsd-kind-icon">layers</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#overlays" class="tsd-kind-icon">overlays</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#selectedfeatures" class="tsd-kind-icon">selected<wbr>Features</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#selectionmode" class="tsd-kind-icon">selection<wbr>Mode</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#viewport" class="tsd-kind-icon">viewport</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="alloymap.html#zoom" class="tsd-kind-icon">zoom</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#adddrawfeature" class="tsd-kind-icon">add<wbr>Draw<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#adddrawlistener" class="tsd-kind-icon">add<wbr>Draw<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addfeatureselectionchangelistener" class="tsd-kind-icon">add<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addfeaturesunderselectionlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addlayer" class="tsd-kind-icon">add<wbr>Layer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addlayerschangelistener" class="tsd-kind-icon">add<wbr>Layers<wbr>Change<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addmapchangecentrelistener" class="tsd-kind-icon">add<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addmapchangezoomlistener" class="tsd-kind-icon">add<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#addoverlay" class="tsd-kind-icon">add<wbr>Overlay</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#canceldraw" class="tsd-kind-icon">cancel<wbr>Draw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#canceldrawremoval" class="tsd-kind-icon">cancel<wbr>Draw<wbr>Removal</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#cancelpolygonselect" class="tsd-kind-icon">cancel<wbr>Polygon<wbr>Select</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#cleardraw" class="tsd-kind-icon">clear<wbr>Draw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#deselectfeature" class="tsd-kind-icon">deselect<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#fitfeaturesviewport" class="tsd-kind-icon">fit<wbr>Features<wbr>Viewport</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#getdrawfeatures" class="tsd-kind-icon">get<wbr>Draw<wbr>Features</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#getdrawgeometry" class="tsd-kind-icon">get<wbr>Draw<wbr>Geometry</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#getdrawtypes" class="tsd-kind-icon">get<wbr>Draw<wbr>Types</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#remove" class="tsd-kind-icon">remove</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removedrawfeature" class="tsd-kind-icon">remove<wbr>Draw<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removedrawlistener" class="tsd-kind-icon">remove<wbr>Draw<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removefeatureselectionchangelistener" class="tsd-kind-icon">remove<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removefeaturesunderselectionlistener" class="tsd-kind-icon">remove<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removelayer" class="tsd-kind-icon">remove<wbr>Layer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removelayerschangelistener" class="tsd-kind-icon">remove<wbr>Layers<wbr>Change<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removemapchangecentrelistener" class="tsd-kind-icon">remove<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removemapchangezoomlistener" class="tsd-kind-icon">remove<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#removeoverlay" class="tsd-kind-icon">remove<wbr>Overlay</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#render" class="tsd-kind-icon">render</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#screenshot" class="tsd-kind-icon">screenshot</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#selectfeature" class="tsd-kind-icon">select<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#selectfeatures" class="tsd-kind-icon">select<wbr>Features</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setbasemap" class="tsd-kind-icon">set<wbr>Basemap</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setcentre" class="tsd-kind-icon">set<wbr>Centre</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setselectedfeature" class="tsd-kind-icon">set<wbr>Selected<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setselectedfeatures" class="tsd-kind-icon">set<wbr>Selected<wbr>Features</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setselectionmode" class="tsd-kind-icon">set<wbr>Selection<wbr>Mode</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setsize" class="tsd-kind-icon">set<wbr>Size</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setviewport" class="tsd-kind-icon">set<wbr>Viewport</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#setzoom" class="tsd-kind-icon">set<wbr>Zoom</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#startdraw" class="tsd-kind-icon">start<wbr>Draw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#startdrawremoval" class="tsd-kind-icon">start<wbr>Draw<wbr>Removal</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#startpolygonselect" class="tsd-kind-icon">start<wbr>Polygon<wbr>Select</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloymap.html#updatesize" class="tsd-kind-icon">update<wbr>Size</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Alloy<wbr>Map<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloymapoptions.html" class="tsd-signature-type">AlloyMapOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloymap.html" class="tsd-signature-type">AlloyMap</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L164">map/core/AlloyMap.ts:164</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>creates a new alloy map instance</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/alloymapoptions.html" class="tsd-signature-type">AlloyMapOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the options to initialise the map</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="alloymap.html" class="tsd-signature-type">AlloyMap</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="basemap" class="tsd-anchor"></a>
+					<h3>basemap</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> basemap<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L275">map/core/AlloyMap.ts:275</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the active basemap shown under all layers</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="centre" class="tsd-anchor"></a>
+					<h3>centre</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> centre<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="alloycoordinate.html" class="tsd-signature-type">AlloyCoordinate</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L311">map/core/AlloyMap.ts:311</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the coordinates of the current map centre</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="alloycoordinate.html" class="tsd-signature-type">AlloyCoordinate</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="layers" class="tsd-anchor"></a>
+					<h3>layers</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> layers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L261">map/core/AlloyMap.ts:261</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>layers currently on display in the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="overlays" class="tsd-anchor"></a>
+					<h3>overlays</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> overlays<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/alloyoverlay.html" class="tsd-signature-type">AlloyOverlay</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L268">map/core/AlloyMap.ts:268</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>overlays currently on display in the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/alloyoverlay.html" class="tsd-signature-type">AlloyOverlay</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="selectedfeatures" class="tsd-anchor"></a>
+					<h3>selected<wbr>Features</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> selectedFeatures<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L282">map/core/AlloyMap.ts:282</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the currently selected features</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="selectionmode" class="tsd-anchor"></a>
+					<h3>selection<wbr>Mode</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> selectionMode<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../enums/alloyselectionmode.html" class="tsd-signature-type">AlloySelectionMode</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L289">map/core/AlloyMap.ts:289</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the current selection mode</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../enums/alloyselectionmode.html" class="tsd-signature-type">AlloySelectionMode</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="viewport" class="tsd-anchor"></a>
+					<h3>viewport</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> viewport<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="alloybounds.html" class="tsd-signature-type">AlloyBounds</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L303">map/core/AlloyMap.ts:303</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the current viewport representing the south west and north east corners of the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="alloybounds.html" class="tsd-signature-type">AlloyBounds</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="zoom" class="tsd-anchor"></a>
+					<h3>zoom</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> zoom<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L296">map/core/AlloyMap.ts:296</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>the current zoom level</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="adddrawfeature" class="tsd-anchor"></a>
+					<h3>add<wbr>Draw<wbr>Feature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Draw<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L577">map/core/AlloyMap.ts:577</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an <code>AlloyDrawFeature</code> to the draw layer</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>feature: <a href="alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>feature to process and add to draw layer</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="adddrawlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Draw<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Draw<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#alloydraweventhandler" class="tsd-signature-type">AlloyDrawEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L513">map/core/AlloyMap.ts:513</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an event handler to listen for the <code>AlloyDrawEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#alloydraweventhandler" class="tsd-signature-type">AlloyDrawEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to call when the event is raised</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addfeatureselectionchangelistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#featureselectionchangeeventhandler" class="tsd-signature-type">FeatureSelectionChangeEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L708">map/core/AlloyMap.ts:708</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an event handler to listen for the <code>FeatureSelectionChangeEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#featureselectionchangeeventhandler" class="tsd-signature-type">FeatureSelectionChangeEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to call when the event is raised</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addfeaturesunderselectionlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#featuresunderselectioneventhandler" class="tsd-signature-type">FeaturesUnderSelectionEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L724">map/core/AlloyMap.ts:724</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an event handler to listen for the <code>FeaturesUnderSelectionEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#featuresunderselectioneventhandler" class="tsd-signature-type">FeaturesUnderSelectionEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to call when the event is raised</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addlayer" class="tsd-anchor"></a>
+					<h3>add<wbr>Layer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Layer<span class="tsd-signature-symbol">(</span>layer<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L387">map/core/AlloyMap.ts:387</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds a layer to the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>layer: <a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the layer to add to the map</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addlayerschangelistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Layers<wbr>Change<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Layers<wbr>Change<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#layerschangeeventhandler" class="tsd-signature-type">LayersChangeEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L475">map/core/AlloyMap.ts:475</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an event handler to listen for the <code>LayersChangeEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#layerschangeeventhandler" class="tsd-signature-type">LayersChangeEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to call when the event is raised</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addmapchangecentrelistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#mapchangecentreeventhandler" class="tsd-signature-type">MapChangeCentreEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L327">map/core/AlloyMap.ts:327</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an event handler to listen for the <code>MapChangeCentreEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#mapchangecentreeventhandler" class="tsd-signature-type">MapChangeCentreEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to call when the event is raised</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addmapchangezoomlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#mapchangezoomeventhandler" class="tsd-signature-type">MapChangeZoomEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L363">map/core/AlloyMap.ts:363</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an event handler to listen for the <code>MapChangeZoomEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#mapchangezoomeventhandler" class="tsd-signature-type">MapChangeZoomEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to call when the event is raised</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addoverlay" class="tsd-anchor"></a>
+					<h3>add<wbr>Overlay</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Overlay<span class="tsd-signature-symbol">(</span>overlay<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyoverlay.html" class="tsd-signature-type">AlloyOverlay</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L451">map/core/AlloyMap.ts:451</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>adds an overlay to the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>overlay: <a href="../interfaces/alloyoverlay.html" class="tsd-signature-type">AlloyOverlay</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the overlay to add to the map</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="canceldraw" class="tsd-anchor"></a>
+					<h3>cancel<wbr>Draw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cancel<wbr>Draw<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L540">map/core/AlloyMap.ts:540</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>cancels the draw interaction</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="canceldrawremoval" class="tsd-anchor"></a>
+					<h3>cancel<wbr>Draw<wbr>Removal</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cancel<wbr>Draw<wbr>Removal<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L561">map/core/AlloyMap.ts:561</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>cancels the draw layer vertices remove interaction</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="cancelpolygonselect" class="tsd-anchor"></a>
+					<h3>cancel<wbr>Polygon<wbr>Select</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cancel<wbr>Polygon<wbr>Select<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L505">map/core/AlloyMap.ts:505</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>cancels interaction for selecting features in a drawn polygon</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="cleardraw" class="tsd-anchor"></a>
+					<h3>clear<wbr>Draw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">clear<wbr>Draw<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L547">map/core/AlloyMap.ts:547</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>clears the drawing layer and interactions</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deselectfeature" class="tsd-anchor"></a>
+					<h3>deselect<wbr>Feature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">deselect<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L700">map/core/AlloyMap.ts:700</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>deselects a feature, this will retain any other existing selected feature(s)
+									and trigger the <code>FeatureSelectionChangeEvent</code> if selected features were modified.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>feature: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the feature to deselect</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="findfeatureswithin" class="tsd-anchor"></a>
+					<h3>find<wbr>Features<wbr>Within</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Features<wbr>Within<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="alloycoordinate.html" class="tsd-signature-type">AlloyCoordinate</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Geometry</span>, delta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/findfeatureswithinresult.html" class="tsd-signature-type">FindFeaturesWithinResult</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L612">map/core/AlloyMap.ts:612</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>finds features close to provided source across all layers</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>source: <a href="alloycoordinate.html" class="tsd-signature-type">AlloyCoordinate</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Geometry</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><code>AlloyCoordinate</code>, <code>AlloyFeature</code> or <code>Geometry</code> source to measure distance of
+										features from</p>
+									</div>
+								</li>
+								<li>
+									<h5>delta: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>distance (in metres) from source for which to return features</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/findfeatureswithinresult.html" class="tsd-signature-type">FindFeaturesWithinResult</a><span class="tsd-signature-symbol">[]</span></h4>
+							<p>an array of results ordered by closest first</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="fitfeaturesviewport" class="tsd-anchor"></a>
+					<h3>fit<wbr>Features<wbr>Viewport</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">fit<wbr>Features<wbr>Viewport<span class="tsd-signature-symbol">(</span>features<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L754">map/core/AlloyMap.ts:754</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fits viewport around provided features</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>features: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><code>AlloyFeature</code> array to fit in veiwport</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getdrawfeatures" class="tsd-anchor"></a>
+					<h3>get<wbr>Draw<wbr>Features</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Draw<wbr>Features<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L593">map/core/AlloyMap.ts:593</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets all features in the draw layer</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a><span class="tsd-signature-symbol">[]</span></h4>
+							<p>an array of <code>AlloyDrawFeature</code></p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getdrawgeometry" class="tsd-anchor"></a>
+					<h3>get<wbr>Draw<wbr>Geometry</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Draw<wbr>Geometry<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Geometry</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L601">map/core/AlloyMap.ts:601</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets all features geometries in the draw layer as a single geometry</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Geometry</span></h4>
+							<p>a merged geometry GeoJSON of all draw features</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getdrawtypes" class="tsd-anchor"></a>
+					<h3>get<wbr>Draw<wbr>Types</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Draw<wbr>Types<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GeoJSONObjectType</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L585">map/core/AlloyMap.ts:585</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns an array of current feature geometry types in the draw layer.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">GeoJSONObjectType</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>array of <code>GeoJSONObjectType</code></p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="remove" class="tsd-anchor"></a>
+					<h3>remove</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L746">map/core/AlloyMap.ts:746</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unsets the map from DOM</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removedrawfeature" class="tsd-anchor"></a>
+					<h3>remove<wbr>Draw<wbr>Feature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Draw<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L569">map/core/AlloyMap.ts:569</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an <code>AlloyDrawFeature</code> from draw layer and related interactions</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>feature: <a href="alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the feature to remove</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removedrawlistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Draw<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Draw<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#alloydraweventhandler" class="tsd-signature-type">AlloyDrawEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L521">map/core/AlloyMap.ts:521</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an event handler listening to the <code>AlloyDrawEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#alloydraweventhandler" class="tsd-signature-type">AlloyDrawEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to stop listening</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removefeatureselectionchangelistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#featureselectionchangeeventhandler" class="tsd-signature-type">FeatureSelectionChangeEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L716">map/core/AlloyMap.ts:716</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an event handler listening to the <code>FeatureSelectionChangeEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#featureselectionchangeeventhandler" class="tsd-signature-type">FeatureSelectionChangeEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to stop listening</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removefeaturesunderselectionlistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#featuresunderselectioneventhandler" class="tsd-signature-type">FeaturesUnderSelectionEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L732">map/core/AlloyMap.ts:732</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an event handler listening to the <code>FeaturesUnderSelectionEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#featuresunderselectioneventhandler" class="tsd-signature-type">FeaturesUnderSelectionEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to stop listening</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removelayer" class="tsd-anchor"></a>
+					<h3>remove<wbr>Layer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Layer<span class="tsd-signature-symbol">(</span>layer<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L406">map/core/AlloyMap.ts:406</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes a layer from the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>layer: <a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the layer to remove</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removelayerschangelistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Layers<wbr>Change<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Layers<wbr>Change<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#layerschangeeventhandler" class="tsd-signature-type">LayersChangeEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L483">map/core/AlloyMap.ts:483</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an event handler listening to the <code>LayersChangeEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#layerschangeeventhandler" class="tsd-signature-type">LayersChangeEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to stop listening</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removemapchangecentrelistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#mapchangecentreeventhandler" class="tsd-signature-type">MapChangeCentreEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L335">map/core/AlloyMap.ts:335</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an event handler listening to the <code>MapChangeCentreEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#mapchangecentreeventhandler" class="tsd-signature-type">MapChangeCentreEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to stop listening</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removemapchangezoomlistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="../globals.html#mapchangezoomeventhandler" class="tsd-signature-type">MapChangeZoomEventHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L371">map/core/AlloyMap.ts:371</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an event handler listening to the <code>MapChangeZoomEvent</code> event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="../globals.html#mapchangezoomeventhandler" class="tsd-signature-type">MapChangeZoomEventHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the handler to stop listening</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removeoverlay" class="tsd-anchor"></a>
+					<h3>remove<wbr>Overlay</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Overlay<span class="tsd-signature-symbol">(</span>overlay<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyoverlay.html" class="tsd-signature-type">AlloyOverlay</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L463">map/core/AlloyMap.ts:463</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>removes an overlay from the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>overlay: <a href="../interfaces/alloyoverlay.html" class="tsd-signature-type">AlloyOverlay</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the overlay to remove</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="render" class="tsd-anchor"></a>
+					<h3>render</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">render<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L649">map/core/AlloyMap.ts:649</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Request a map rendering (at the next animation frame).</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="screenshot" class="tsd-anchor"></a>
+					<h3>screenshot</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">screenshot<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L739">map/core/AlloyMap.ts:739</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>takes a screenshot and returns the blob data that can be saved as a png</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="selectfeature" class="tsd-anchor"></a>
+					<h3>select<wbr>Feature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">select<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L681">map/core/AlloyMap.ts:681</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>selects a feature in addition to the already selected features, this will retain any existing
+										selected feature(s) and trigger the <code>FeatureSelectionChangeEvent</code> if selected features were
+									modified.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>feature: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the feature to select</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="selectfeatures" class="tsd-anchor"></a>
+					<h3>select<wbr>Features</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">select<wbr>Features<span class="tsd-signature-symbol">(</span>features<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L691">map/core/AlloyMap.ts:691</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>selects features in addition to the already selected features, this will retain any existing
+										selected feature(s) and trigger the <code>FeatureSelectionChangeEvent</code> if selected features were
+									modified.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>features: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the features to select</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setbasemap" class="tsd-anchor"></a>
+					<h3>set<wbr>Basemap</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Basemap<span class="tsd-signature-symbol">(</span>basemap<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L623">map/core/AlloyMap.ts:623</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>sets the active basemap to render layers on top of</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>basemap: <a href="../interfaces/alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the basemap to use</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setcentre" class="tsd-anchor"></a>
+					<h3>set<wbr>Centre</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Centre<span class="tsd-signature-symbol">(</span>coordinate<span class="tsd-signature-symbol">: </span><a href="alloycoordinate.html" class="tsd-signature-type">AlloyCoordinate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L319">map/core/AlloyMap.ts:319</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>centres the map viewport on a location</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>coordinate: <a href="alloycoordinate.html" class="tsd-signature-type">AlloyCoordinate</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the location to centre the map on</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setselectedfeature" class="tsd-anchor"></a>
+					<h3>set<wbr>Selected<wbr>Feature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Selected<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L658">map/core/AlloyMap.ts:658</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>sets the currently selected feature, this will remove any existing selected feature(s) and
+									trigger the <code>FeatureSelectionChangeEvent</code> if selected features were modified.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>feature: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the feature to select or null to deselect all features</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setselectedfeatures" class="tsd-anchor"></a>
+					<h3>set<wbr>Selected<wbr>Features</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Selected<wbr>Features<span class="tsd-signature-symbol">(</span>features<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L671">map/core/AlloyMap.ts:671</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>sets the currently selected features, this will remove any existing selected feature(s) and
+									trigger the <code>FeatureSelectionChangeEvent</code> if selected features were modified.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>features: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the features to select, passing an empty array will deselect all features</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setselectionmode" class="tsd-anchor"></a>
+					<h3>set<wbr>Selection<wbr>Mode</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Selection<wbr>Mode<span class="tsd-signature-symbol">(</span>mode<span class="tsd-signature-symbol">: </span><a href="../enums/alloyselectionmode.html" class="tsd-signature-type">AlloySelectionMode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L379">map/core/AlloyMap.ts:379</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>sets the selection mode for the map and resets any applicable state</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>mode: <a href="../enums/alloyselectionmode.html" class="tsd-signature-type">AlloySelectionMode</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the mode to set</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setsize" class="tsd-anchor"></a>
+					<h3>set<wbr>Size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Size<span class="tsd-signature-symbol">(</span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L642">map/core/AlloyMap.ts:642</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>sets the size of the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>width: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>DOM width in pixels</p>
+									</div>
+								</li>
+								<li>
+									<h5>height: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>DOM height in pixels</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setviewport" class="tsd-anchor"></a>
+					<h3>set<wbr>Viewport</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Viewport<span class="tsd-signature-symbol">(</span>bounds<span class="tsd-signature-symbol">: </span><a href="alloybounds.html" class="tsd-signature-type">AlloyBounds</a>, animate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L345">map/core/AlloyMap.ts:345</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>attempts to set the viewport to the bounds provided, it will attempt a &quot;best fit&quot; approach
+									which makes sure both north east and south west are visible</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bounds: <a href="alloybounds.html" class="tsd-signature-type">AlloyBounds</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the bounds to fit on the screen</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> animate: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>whether to animate to the viewport</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setzoom" class="tsd-anchor"></a>
+					<h3>set<wbr>Zoom</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Zoom<span class="tsd-signature-symbol">(</span>zoom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L355">map/core/AlloyMap.ts:355</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>sets the zoom level of the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>zoom: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the zoom level</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="startdraw" class="tsd-anchor"></a>
+					<h3>start<wbr>Draw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">start<wbr>Draw<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><a href="../enums/alloydrawinteractiongeometrytype.html" class="tsd-signature-type">AlloyDrawInteractionGeometryType</a>, properties<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloydrawfeatureproperties.html" class="tsd-signature-type">AlloyDrawFeatureProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L530">map/core/AlloyMap.ts:530</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>starts the draw interaction for a geometry type</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <a href="../enums/alloydrawinteractiongeometrytype.html" class="tsd-signature-type">AlloyDrawInteractionGeometryType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>geometry type to start drawing for</p>
+									</div>
+								</li>
+								<li>
+									<h5>properties: <a href="../interfaces/alloydrawfeatureproperties.html" class="tsd-signature-type">AlloyDrawFeatureProperties</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>properties for created draw features</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="startdrawremoval" class="tsd-anchor"></a>
+					<h3>start<wbr>Draw<wbr>Removal</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">start<wbr>Draw<wbr>Removal<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L554">map/core/AlloyMap.ts:554</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>starts the drawing layer vertices remove interaction</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="startpolygonselect" class="tsd-anchor"></a>
+					<h3>start<wbr>Polygon<wbr>Select</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">start<wbr>Polygon<wbr>Select<span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span>, onEnd<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span>, appendToSelection<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L494">map/core/AlloyMap.ts:494</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>starts interaction to draw a polygon and select all features inside of it</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> filter: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>custom filter function to be called with alloy feature to check whether selection
+										is allowed</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onEnd: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>custom function to be called when interaction is finished</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> appendToSelection: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>whether to append the final selection to the existing selection</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatesize" class="tsd-anchor"></a>
+					<h3>update<wbr>Size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/8af51e1/src/map/core/AlloyMap.ts#L762">map/core/AlloyMap.ts:762</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Force a recalculation of the map viewport size. This should be called when third-party code
+									changes the size of the map viewport.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="alloymap.html" class="tsd-kind-icon">Alloy<wbr>Map</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="alloymap.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#basemap" class="tsd-kind-icon">basemap</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#centre" class="tsd-kind-icon">centre</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#layers" class="tsd-kind-icon">layers</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#overlays" class="tsd-kind-icon">overlays</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#selectedfeatures" class="tsd-kind-icon">selected<wbr>Features</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#selectionmode" class="tsd-kind-icon">selection<wbr>Mode</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#viewport" class="tsd-kind-icon">viewport</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="alloymap.html#zoom" class="tsd-kind-icon">zoom</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#adddrawfeature" class="tsd-kind-icon">add<wbr>Draw<wbr>Feature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#adddrawlistener" class="tsd-kind-icon">add<wbr>Draw<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addfeatureselectionchangelistener" class="tsd-kind-icon">add<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addfeaturesunderselectionlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addlayer" class="tsd-kind-icon">add<wbr>Layer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addlayerschangelistener" class="tsd-kind-icon">add<wbr>Layers<wbr>Change<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addmapchangecentrelistener" class="tsd-kind-icon">add<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addmapchangezoomlistener" class="tsd-kind-icon">add<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#addoverlay" class="tsd-kind-icon">add<wbr>Overlay</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#canceldraw" class="tsd-kind-icon">cancel<wbr>Draw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#canceldrawremoval" class="tsd-kind-icon">cancel<wbr>Draw<wbr>Removal</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#cancelpolygonselect" class="tsd-kind-icon">cancel<wbr>Polygon<wbr>Select</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#cleardraw" class="tsd-kind-icon">clear<wbr>Draw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#deselectfeature" class="tsd-kind-icon">deselect<wbr>Feature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#fitfeaturesviewport" class="tsd-kind-icon">fit<wbr>Features<wbr>Viewport</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#getdrawfeatures" class="tsd-kind-icon">get<wbr>Draw<wbr>Features</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#getdrawgeometry" class="tsd-kind-icon">get<wbr>Draw<wbr>Geometry</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#getdrawtypes" class="tsd-kind-icon">get<wbr>Draw<wbr>Types</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#remove" class="tsd-kind-icon">remove</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removedrawfeature" class="tsd-kind-icon">remove<wbr>Draw<wbr>Feature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removedrawlistener" class="tsd-kind-icon">remove<wbr>Draw<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removefeatureselectionchangelistener" class="tsd-kind-icon">remove<wbr>Feature<wbr>Selection<wbr>Change<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removefeaturesunderselectionlistener" class="tsd-kind-icon">remove<wbr>Features<wbr>Under<wbr>Selection<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removelayer" class="tsd-kind-icon">remove<wbr>Layer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removelayerschangelistener" class="tsd-kind-icon">remove<wbr>Layers<wbr>Change<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removemapchangecentrelistener" class="tsd-kind-icon">remove<wbr>Map<wbr>Change<wbr>Centre<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removemapchangezoomlistener" class="tsd-kind-icon">remove<wbr>Map<wbr>Change<wbr>Zoom<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#removeoverlay" class="tsd-kind-icon">remove<wbr>Overlay</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#render" class="tsd-kind-icon">render</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#screenshot" class="tsd-kind-icon">screenshot</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#selectfeature" class="tsd-kind-icon">select<wbr>Feature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#selectfeatures" class="tsd-kind-icon">select<wbr>Features</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setbasemap" class="tsd-kind-icon">set<wbr>Basemap</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setcentre" class="tsd-kind-icon">set<wbr>Centre</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setselectedfeature" class="tsd-kind-icon">set<wbr>Selected<wbr>Feature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setselectedfeatures" class="tsd-kind-icon">set<wbr>Selected<wbr>Features</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setselectionmode" class="tsd-kind-icon">set<wbr>Selection<wbr>Mode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setsize" class="tsd-kind-icon">set<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setviewport" class="tsd-kind-icon">set<wbr>Viewport</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#setzoom" class="tsd-kind-icon">set<wbr>Zoom</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#startdraw" class="tsd-kind-icon">start<wbr>Draw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#startdrawremoval" class="tsd-kind-icon">start<wbr>Draw<wbr>Removal</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#startpolygonselect" class="tsd-kind-icon">start<wbr>Polygon<wbr>Select</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloymap.html#updatesize" class="tsd-kind-icon">update<wbr>Size</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
