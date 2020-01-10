@@ -1,4 +1,4 @@
-import RenderEvent from '@hanreev/types-ol/ol/render/Event';
+import RenderEvent from 'ol/render/Event';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyMap } from '../map/core/AlloyMap';
 
