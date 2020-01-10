@@ -259,5 +259,12 @@ export enum ErrorCodeCategory {
   CustomReportBadFormat = 'CustomReportBadFormat',
   CustomReportDataSourceMalformed = 'CustomReportDataSourceMalformed',
   CustomReportDocumentDefinitionAlreadyExists = 'CustomReportDocumentDefinitionAlreadyExists',
-  CustomReportDocumentDefinitionNotFound = 'CustomReportDocumentDefinitionNotFound'
+  CustomReportDocumentDefinitionNotFound = 'CustomReportDocumentDefinitionNotFound',
+  BasemapNotFound = 'BasemapNotFound',
+  BasemapCreateForbidden = 'BasemapCreateForbidden',
+  BasemapDeleteForbidden = 'BasemapDeleteForbidden',
+  BasemapEditForbidden = 'BasemapEditForbidden',
+  BasemapSignatureMismatch = 'BasemapSignatureMismatch',
+  BasemapReadForbidden = 'BasemapReadForbidden',
+  BasemapPermissionAlreadyPresent = 'BasemapPermissionAlreadyPresent'
 }

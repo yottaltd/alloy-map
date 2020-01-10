@@ -1,3 +1,4 @@
+import RenderEvent from '@hanreev/types-ol/ol/render/Event';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyMap } from '../map/core/AlloyMap';
 
@@ -13,13 +14,20 @@ export abstract class ScreenshotUtils {
    */
   public static async screenshot(map: AlloyMap): Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => {
-      map.olMap.once('postcompose', (event) => {
+      map.olMap.once('rendercomplete', (event: RenderEvent) => {
         try {
           // get the canvas
-          const canvas: HTMLCanvasElement = event.context.canvas;
+          const canvas: HTMLCanvasElement | null = map.olMap
+            .getTargetElement()
+            .querySelector<HTMLCanvasElement>('canvas');
+          if (canvas === null) {
+            reject(new AlloyMapError(1578673819, 'failed to find map canvas'));
+            return;
+          }
+
           canvas.toBlob((blob: Blob | null) => {
             if (!blob) {
-              reject(new AlloyMapError(1559148073, 'failed to convert canvas to blob'));
+              reject(new AlloyMapError(1578673083, 'failed to convert canvas to blob'));
               return;
             }
 
