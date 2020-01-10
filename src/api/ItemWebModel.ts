@@ -40,12 +40,6 @@ export interface ItemWebModel {
   end: string;
   /**
    * 
-   * @type {IGeometryObject}
-   * @memberof ItemWebModel
-   */
-  geometry?: IGeometryObject;
-  /**
-   * 
    * @type {string}
    * @memberof ItemWebModel
    */
@@ -68,16 +62,4 @@ export interface ItemWebModel {
    * @memberof ItemWebModel
    */
   signature: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof ItemWebModel
-   */
-  title?: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof ItemWebModel
-   */
-  subtitle?: string;
 }
