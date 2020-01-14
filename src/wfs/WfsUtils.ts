@@ -65,11 +65,26 @@ export abstract class WfsUtils {
 
       // populate the feature types
       const featureTypes: AlloyWfsFeatureType[] = [];
-      const featureTypeList = rootEl.querySelector('FeatureTypeList');
+      let usePrefix = false;
+      let featureTypeList = rootEl.querySelector('FeatureTypeList');
+      if (!featureTypeList) {
+        featureTypeList = rootEl.getElementsByTagName('wfs:FeatureTypeList')[0];
+        if (featureTypeList) {
+          usePrefix = true;
+        }
+      }
       if (featureTypeList) {
-        featureTypeList.querySelectorAll('FeatureType').forEach((ftNode: Element) => {
+        let featureTypeElements: Element[];
+        if (usePrefix) {
+          featureTypeElements = Array.from(featureTypeList.getElementsByTagName('wfs:FeatureType'));
+        } else {
+          featureTypeElements = Array.from(featureTypeList.querySelectorAll('FeatureType'));
+        }
+        featureTypeElements.forEach((ftNode: Element) => {
           try {
-            featureTypes.push(WfsVersionParser.parseFeatureTypeNode(ftNode, attributeVersion));
+            featureTypes.push(
+              WfsVersionParser.parseFeatureTypeNode(ftNode, attributeVersion, usePrefix),
+            );
           } catch (error) {
             // ignore feature type if something went wrong parsing it
             WfsUtils.debugger('failed to parse feature type node');
