@@ -176,8 +176,9 @@ export abstract class WfsVersionParser {
    * @internal
    */
   private static getChildByTagName(node: Element, tag: string): Element | undefined {
-    for (const child of node.children) {
-      if (child.tagName.toLowerCase() === tag.toLowerCase()) {
+    for (let i = 0; i < node.children.length; i++) {
+      const child = node.children.item(i);
+      if (child && child.tagName.toLowerCase() === tag.toLowerCase()) {
         return child;
       }
     }

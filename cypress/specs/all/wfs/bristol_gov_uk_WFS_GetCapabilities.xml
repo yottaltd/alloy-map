@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wfs:WFS_Capabilities
+  xmlns="http://www.opengis.net/wfs/2.0"
+  xmlns:wfs="http://www.opengis.net/wfs/2.0"
+  xmlns:ows="http://www.opengis.net/ows/1.1"
+  xmlns:fes="http://www.opengis.net/fes/2.0"
+  xmlns:ext_datagov="http://w-gisprod-app06:6080/arcgis/services/ext/datagov/MapServer/WFSServer"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  version="2.0.0"  xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://w-gisprod-app06:6080/arcgis/services/ext/datagov/MapServer/WFSServer https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?service=wfs%26version=2.0.0%26request=DescribeFeatureType"
+>
+  <ows:ServiceIdentification>
+    <ows:Title>WFS</ows:Title>
+    <ows:Abstract></ows:Abstract>
+    <ows:Keywords><ows:Keyword></ows:Keyword></ows:Keywords>
+    <ows:ServiceType>WFS</ows:ServiceType>
+    <ows:ServiceTypeVersion>2.0.0</ows:ServiceTypeVersion>
+    <ows:Fees></ows:Fees>
+    <ows:AccessConstraints></ows:AccessConstraints>
+  </ows:ServiceIdentification>
+  <ows:ServiceProvider>
+    <ows:ProviderName></ows:ProviderName>
+    <ows:ServiceContact>
+      <ows:IndividualName></ows:IndividualName>
+      <ows:PositionName></ows:PositionName>
+      <ows:ContactInfo>
+        <ows:Phone>
+          <ows:Voice></ows:Voice>
+          <ows:Facsimile></ows:Facsimile>
+        </ows:Phone>
+        <ows:Address>
+          <ows:DeliveryPoint></ows:DeliveryPoint>
+          <ows:City></ows:City>
+          <ows:AdministrativeArea></ows:AdministrativeArea>
+          <ows:PostalCode></ows:PostalCode>
+          <ows:Country></ows:Country>
+          <ows:ElectronicMailAddress></ows:ElectronicMailAddress>
+        </ows:Address>
+        <ows:OnlineResource xlink:href="http://w-gisprod-app06:6080/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        <ows:HoursOfService></ows:HoursOfService>
+        <ows:ContactInstructions></ows:ContactInstructions>
+      </ows:ContactInfo>
+      <ows:Role></ows:Role>
+    </ows:ServiceContact>
+  </ows:ServiceProvider>
+  <ows:OperationsMetadata>
+    <ows:Operation name="GetCapabilities">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="AcceptVersions">
+        <ows:AllowedValues>
+          <ows:Value>2.0.0</ows:Value>
+      </ows:AllowedValues>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="DescribeFeatureType">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+    <ows:Parameter name="outputFormat">
+      <ows:AllowedValues>
+        <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+      </ows:AllowedValues>
+    </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="GetPropertyValue">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    <ows:Operation name="GetFeature">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="resultType">
+        <ows:AllowedValues>
+          <ows:Value>results</ows:Value>
+          <ows:Value>hits</ows:Value>
+        </ows:AllowedValues>
+      </ows:Parameter>
+      <ows:Parameter name="outputFormat">
+        <ows:AllowedValues>
+          <ows:Value>GML32</ows:Value>
+          <ows:Value>GML32+ZIP</ows:Value>
+          <ows:Value>application/gml+xml; version=3.2</ows:Value>
+          <ows:Value>GML3</ows:Value>
+          <ows:Value>GML3+ZIP</ows:Value>
+          <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+          <ows:Value>GML2</ows:Value>
+          <ows:Value>GML2+ZIP</ows:Value>
+          <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+          <ows:Value>GEOJSON</ows:Value>
+          <ows:Value>GEOJSON+ZIP</ows:Value>
+          <ows:Value>ESRIGEOJSON</ows:Value>
+          <ows:Value>ESRIGEOJSON+ZIP</ows:Value>
+          <ows:Value>KML</ows:Value>
+          <ows:Value>application/vnd.google-earth.kml xml</ows:Value>
+          <ows:Value>application/vnd.google-earth.kml+xml</ows:Value>
+          <ows:Value>KMZ</ows:Value>
+          <ows:Value>application/vnd.google-earth.kmz</ows:Value>
+          <ows:Value>SHAPE+ZIP</ows:Value>
+          <ows:Value>CSV</ows:Value>
+          <ows:Value>CSV+ZIP</ows:Value>
+        </ows:AllowedValues>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="GetGmlObject">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    <ows:Operation name="ListStoredQueries">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    <ows:Operation name="DescribeStoredQueries">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer?"/>
+          <ows:Post xlink:href="https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    <ows:Constraint name="ImplementsBasicWFS"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsTransactionalWFS"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsLockingWFS"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="KVPEncoding"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="XMLEncoding"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="SOAPEncoding"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsInheritance"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsRemoteResolve"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsResultPaging"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsStandardJoins"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsSpatialJoins"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsTemporalJoins"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ImplementsFeatureVersioning"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+    <ows:Constraint name="ManageStoredQueries"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></ows:Constraint>
+  </ows:OperationsMetadata>
+  <wfs:FeatureTypeList>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Traffic_regulation_orders_for_RPS</wfs:Name>
+    <wfs:Title>Traffic_regulation_orders_for_RPS</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.632772419140852 51.43692685576013</ows:LowerCorner>
+      <ows:UpperCorner>-2.569285237291599 51.47581939759765</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Wards</wfs:Name>
+    <wfs:Title>Wards</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.721070996357648 51.39608442095512</ows:LowerCorner>
+      <ows:UpperCorner>-2.508638805247059 51.54478165285293</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Polling_districts</wfs:Name>
+    <wfs:Title>Polling_districts</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.721070996357648 51.39608442095512</ows:LowerCorner>
+      <ows:UpperCorner>-2.508638805247059 51.54478165285293</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Cycle_network</wfs:Name>
+    <wfs:Title>Cycle_network</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.698659021855536 51.40255120175677</ows:LowerCorner>
+      <ows:UpperCorner>-2.463556303109863 51.55194129993195</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Traffic_survey_locations</wfs:Name>
+    <wfs:Title>Traffic_survey_locations</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.990940464293133 51.2788650663901</ows:LowerCorner>
+      <ows:UpperCorner>-2.273504411841841 51.64092447147942</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Designated_car_parks</wfs:Name>
+    <wfs:Title>Designated_car_parks</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.618470293815389 51.40368221677472</ows:LowerCorner>
+      <ows:UpperCorner>-2.558743576880294 51.49975809195944</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Public_Toilets_-_Council</wfs:Name>
+    <wfs:Title>Public_Toilets_-_Council</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.69330529595187 51.40359263888938</ows:LowerCorner>
+      <ows:UpperCorner>-2.515241934685747 51.50598086812583</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Car_parks</wfs:Name>
+    <wfs:Title>Car_parks</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.701223921164444 51.40360775858085</ows:LowerCorner>
+      <ows:UpperCorner>-2.52530579540066 51.50941177698554</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Rider_zones</wfs:Name>
+    <wfs:Title>Rider_zones</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-3.122356370283006 51.2680465259352</ows:LowerCorner>
+      <ows:UpperCorner>-2.248399413552412 51.68267270787397</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Public_bike_pumps</wfs:Name>
+    <wfs:Title>Public_bike_pumps</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.987950582104047 51.32033917858919</ows:LowerCorner>
+      <ows:UpperCorner>-2.472136719889444 51.5264067172912</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Cycling_-_Leisure_rides</wfs:Name>
+    <wfs:Title>Cycling_-_Leisure_rides</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-3.040120809997508 51.27227837650953</ows:LowerCorner>
+      <ows:UpperCorner>-2.197604537016343 51.65559054618372</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Trees</wfs:Name>
+    <wfs:Title>Trees</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-7.788855684595716 49.76618581067837</ows:LowerCorner>
+      <ows:UpperCorner>-2.124186111866559 51.82715640660972</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Wireless_hotspots</wfs:Name>
+    <wfs:Title>Wireless_hotspots</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.759931566969617 51.4019723316741</ows:LowerCorner>
+      <ows:UpperCorner>-2.513409594461639 51.51287614365137</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:BMX_facilities</wfs:Name>
+    <wfs:Title>BMX_facilities</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.672277894227918 51.36205728332561</ows:LowerCorner>
+      <ows:UpperCorner>-2.372357956969295 51.53754571021364</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Cycle_shops_and_repairs</wfs:Name>
+    <wfs:Title>Cycle_shops_and_repairs</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.98304619902904 51.32421427205805</ows:LowerCorner>
+      <ows:UpperCorner>-2.356078521947083 51.60974591557704</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Parks_and_green_spaces</wfs:Name>
+    <wfs:Title>Parks_and_green_spaces</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-46.99999492618106 -89.36556097323941</ows:LowerCorner>
+      <ows:UpperCorner>-2.318273365286124 51.51482263140662</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Air_Quality_Monitors</wfs:Name>
+    <wfs:Title>Air_Quality_Monitors</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.695949236527365 51.40479341356088</ows:LowerCorner>
+      <ows:UpperCorner>-2.514141269725512 51.50929488333789</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:City_Evacuation_Zones</wfs:Name>
+    <wfs:Title>City_Evacuation_Zones</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.60874604170773 51.44471920278716</ows:LowerCorner>
+      <ows:UpperCorner>-2.575245812934352 51.460624144143</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Area_committees__CIL_areas_</wfs:Name>
+    <wfs:Title>Area_committees__CIL_areas_</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.721070996357648 51.39608442095512</ows:LowerCorner>
+      <ows:UpperCorner>-2.508638805247059 51.54478165285293</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Neighbourhood_Planning_Network</wfs:Name>
+    <wfs:Title>Neighbourhood_Planning_Network</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.721071111108103 51.39604484373115</ows:LowerCorner>
+      <ows:UpperCorner>-2.508550379436999 51.54478911435541</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:No_cold-calling_zones</wfs:Name>
+    <wfs:Title>No_cold-calling_zones</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.67052665545564 51.43201295608704</ows:LowerCorner>
+      <ows:UpperCorner>-2.510459391535474 51.50118348513612</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Childrens_centre_reach_areas</wfs:Name>
+    <wfs:Title>Childrens_centre_reach_areas</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.721091749655163 51.39608435342727</ows:LowerCorner>
+      <ows:UpperCorner>-2.508638909405789 51.54478159934812</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Secondary_school_areas_of_first_priority</wfs:Name>
+    <wfs:Title>Secondary_school_areas_of_first_priority</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.721090436647241 51.39605188328893</ows:LowerCorner>
+      <ows:UpperCorner>-2.508620982853421 51.54478984079483</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Secondary_school_areas_of_second_priority</wfs:Name>
+    <wfs:Title>Secondary_school_areas_of_second_priority</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.648727504265282 51.45676138278088</ows:LowerCorner>
+      <ows:UpperCorner>-2.613939812053201 51.49247579243809</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Cumulative_Impact_Areas</wfs:Name>
+    <wfs:Title>Cumulative_Impact_Areas</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.624770760388702 51.43726570934407</ows:LowerCorner>
+      <ows:UpperCorner>-2.576970032629089 51.48516716257824</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Council_CCTV_cameras</wfs:Name>
+    <wfs:Title>Council_CCTV_cameras</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.712968317700441 51.38457138465613</ows:LowerCorner>
+      <ows:UpperCorner>-2.388938753633005 53.08428596645226</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Debt_advice_agencies</wfs:Name>
+    <wfs:Title>Debt_advice_agencies</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.658263914875357 51.40379796375963</ows:LowerCorner>
+      <ows:UpperCorner>-2.561716402842388 51.53078244565693</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:S106_agreements</wfs:Name>
+    <wfs:Title>S106_agreements</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Tree_planting_locations</wfs:Name>
+    <wfs:Title>Tree_planting_locations</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-7.964921092284279 49.76618581067837</ows:LowerCorner>
+      <ows:UpperCorner>-2.495181728489978 53.15606914992378</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Discretionary_licensing</wfs:Name>
+    <wfs:Title>Discretionary_licensing</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.578938841168831 51.45136524558254</ows:LowerCorner>
+      <ows:UpperCorner>-2.523765199991434 51.48890887128229</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Allotment_sites</wfs:Name>
+    <wfs:Title>Allotment_sites</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.681005894190765 51.40155255425624</ows:LowerCorner>
+      <ows:UpperCorner>-2.509025373767005 51.51528341339064</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Childrens_Play_Equipment</wfs:Name>
+    <wfs:Title>Childrens_Play_Equipment</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.701318742451862 51.40392982452902</ows:LowerCorner>
+      <ows:UpperCorner>-2.510820000173218 51.51289924775175</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Park_User_Facilities</wfs:Name>
+    <wfs:Title>Park_User_Facilities</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-9.176049551594987 48.79838104028988</ows:LowerCorner>
+      <ows:UpperCorner>-2.484225208819332 51.51466116161188</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Tourist_information</wfs:Name>
+    <wfs:Title>Tourist_information</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.596802864032997 51.45128892551072</ows:LowerCorner>
+      <ows:UpperCorner>-2.596802864032997 51.45128892551072</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Bus_stops</wfs:Name>
+    <wfs:Title>Bus_stops</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-4.211645946425586 50.369144259843</ows:LowerCorner>
+      <ows:UpperCorner>-1.727262844932054 51.86570195466076</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Grit_bins</wfs:Name>
+    <wfs:Title>Grit_bins</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.697616318737738 51.39948646808473</ows:LowerCorner>
+      <ows:UpperCorner>-2.510628548625548 51.51373788901641</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Gullies</wfs:Name>
+    <wfs:Title>Gullies</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-31.99965784533233 51.3985482828046</ows:LowerCorner>
+      <ows:UpperCorner>-2.50883881141301 89.36589957797725</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Resurfacing_-_pothole_fund_2014</wfs:Name>
+    <wfs:Title>Resurfacing_-_pothole_fund_2014</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.701772646148766 51.39850408682515</ows:LowerCorner>
+      <ows:UpperCorner>-2.508996454203138 51.54146816928793</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Streetlights_and_Street_Furniture</wfs:Name>
+    <wfs:Title>Streetlights_and_Street_Furniture</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.701775374038441 51.39853500757292</ows:LowerCorner>
+      <ows:UpperCorner>-2.508822853352369 51.5385712000429</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Temporary_Play_Street_Orders</wfs:Name>
+    <wfs:Title>Temporary_Play_Street_Orders</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.615786452712152 51.43070265722024</ows:LowerCorner>
+      <ows:UpperCorner>-2.514844223362287 51.49649238849521</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Twenty_mph_zones</wfs:Name>
+    <wfs:Title>Twenty_mph_zones</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.704181485750165 51.39647093975897</ows:LowerCorner>
+      <ows:UpperCorner>-2.50863559418731 51.5176049765352</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Reported_highways_issues</wfs:Name>
+    <wfs:Title>Reported_highways_issues</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-4.183729387088348 51.38510279275047</ows:LowerCorner>
+      <ows:UpperCorner>-2.491541698807278 55.84277933304883</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Proposed_Maintenance_Schemes</wfs:Name>
+    <wfs:Title>Proposed_Maintenance_Schemes</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.688135603872629 51.40515465820398</ows:LowerCorner>
+      <ows:UpperCorner>-2.512133344858056 51.51097220274284</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Elected_councillors_2016</wfs:Name>
+    <wfs:Title>Elected_councillors_2016</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.690044151715778 51.40466259832412</ows:LowerCorner>
+      <ows:UpperCorner>-2.519410740624995 51.51518990616528</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Elected_councillors_1999_to_2015</wfs:Name>
+    <wfs:Title>Elected_councillors_1999_to_2015</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.686523993964781 51.40055707754169</ows:LowerCorner>
+      <ows:UpperCorner>-2.523331906366904 51.51797554482138</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Cycling_-_strategic_routes</wfs:Name>
+    <wfs:Title>Cycling_-_strategic_routes</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.754295223193307 51.38299984658222</ows:LowerCorner>
+      <ows:UpperCorner>-2.398979524880171 51.52640924420663</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Public_toilets_-_Community</wfs:Name>
+    <wfs:Title>Public_toilets_-_Community</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.697275636832231 51.40400335204698</ows:LowerCorner>
+      <ows:UpperCorner>-2.515239563262941 51.51028137947699</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  <wfs:FeatureType>
+    <wfs:Name>ext_datagov:Student_accommodation</wfs:Name>
+    <wfs:Title>Student_accommodation</wfs:Title>
+    <wfs:DefaultCRS>urn:ogc:def:crs:EPSG::27700</wfs:DefaultCRS>
+    <ows:WGS84BoundingBox>
+      <ows:LowerCorner>-2.62747316988394 51.43792568717502</ows:LowerCorner>
+      <ows:UpperCorner>-2.522841291283723 51.49490361303049</ows:UpperCorner>
+    </ows:WGS84BoundingBox>
+  </wfs:FeatureType>
+  </wfs:FeatureTypeList>
+  <fes:Filter_Capabilities>
+  <fes:Conformance>
+    <fes:Constraint name="ImplementsQuery"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsAdHocQuery"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsFunctions"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsResourceId"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsMinStandardFilter"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsStandardFilter"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsMinSpatialFilter"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsSpatialFilter"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsMinTemporalFilter"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsTemporalFilter"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsVersionNav"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsSorting"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsExtendedOperators"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsMinimumXPath"><ows:NoValues/><ows:DefaultValue>TRUE</ows:DefaultValue></fes:Constraint>
+    <fes:Constraint name="ImplementsSchemaElementFunc"><ows:NoValues/><ows:DefaultValue>FALSE</ows:DefaultValue></fes:Constraint>
+  </fes:Conformance>
+  <fes:Id_Capabilities>
+    <fes:ResourceIdentifier name="fes:ResourceId"/>
+  </fes:Id_Capabilities>
+  <fes:Scalar_Capabilities>
+    <fes:LogicalOperators/>
+    <fes:ComparisonOperators>
+      <fes:ComparisonOperator name="PropertyIsEqualTo"/>
+      <fes:ComparisonOperator name="PropertyIsNotEqualTo"/>
+      <fes:ComparisonOperator name="PropertyIsLessThan"/>
+      <fes:ComparisonOperator name="PropertyIsGreaterThan"/>
+      <fes:ComparisonOperator name="PropertyIsLessThanOrEqualTo"/>
+      <fes:ComparisonOperator name="PropertyIsGreaterThanOrEqualTo"/>
+      <fes:ComparisonOperator name="PropertyIsLike"/>
+      <fes:ComparisonOperator name="PropertyIsNull"/>
+      <fes:ComparisonOperator name="PropertyIsNil"/>
+      <fes:ComparisonOperator name="PropertyIsBetween"/>
+    </fes:ComparisonOperators>
+  </fes:Scalar_Capabilities>
+  <fes:Spatial_Capabilities>
+    <fes:GeometryOperands xmlns:gml="http://www.opengis.net/gml" xmlns:gml32="http://www.opengis.net/gml">
+      <fes:GeometryOperand name="gml:Box"/>
+      <fes:GeometryOperand name="gml:Envelope"/>
+      <fes:GeometryOperand name="gml:Point"/>
+      <fes:GeometryOperand name="gml:LineString"/>
+      <fes:GeometryOperand name="gml:LinearRing"/>
+      <fes:GeometryOperand name="gml:Polygon"/>
+      <fes:GeometryOperand name="gml:MultiPoint"/>
+      <fes:GeometryOperand name="gml:MultiCurve"/>
+      <fes:GeometryOperand name="gml:MultiSurface"/>
+    </fes:GeometryOperands>
+    <fes:SpatialOperators>
+      <fes:SpatialOperator name="BBOX"/>
+      <fes:SpatialOperator name="Equals"/>
+      <fes:SpatialOperator name="Disjoint"/>
+      <fes:SpatialOperator name="Intersects"/>
+      <fes:SpatialOperator name="Touches"/>
+      <fes:SpatialOperator name="Crosses"/>
+      <fes:SpatialOperator name="Within"/>
+      <fes:SpatialOperator name="Contains"/>
+      <fes:SpatialOperator name="Overlaps"/>
+      <fes:SpatialOperator name="Beyond"/>
+      <fes:SpatialOperator name="DWithin"/>
+    </fes:SpatialOperators>
+  </fes:Spatial_Capabilities>
+  </fes:Filter_Capabilities>
+</wfs:WFS_Capabilities>

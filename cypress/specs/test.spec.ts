@@ -4,6 +4,7 @@ import layers from './all/layers';
 import navigation from './all/navigation';
 import search from './all/search';
 import MapData from './MapData';
+import wfsCapabilities from './all/wfs/wfsCapabilities';
 
 context('tests', () => {
   const mapData: MapData = new MapData();
@@ -18,4 +19,5 @@ context('tests', () => {
   layers(mapData);
   navigation(mapData);
   search(mapData);
+  wfsCapabilities(mapData);
 });
