@@ -1,4 +1,4 @@
-import { WfsUtils } from '../../../../src/wfs/wfsUtils';
+import { WfsUtils } from '../../../../src/wfs/WfsUtils';
 import MapData from '../../MapData';
 
 const wfsNoPrefixCapabilities = 'cypress/specs/all/wfs/blaby_gov_uk_WFS_GetCapabilities.xml';
