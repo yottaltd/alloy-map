@@ -5,6 +5,7 @@ import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { CustomerAddUserRequestModel } from './CustomerAddUserRequestModel';
 import { CustomerAddUserResponseModel } from './CustomerAddUserResponseModel';
+import { CustomerBackupGetWebResponseModel } from './CustomerBackupGetWebResponseModel';
 import { CustomerBackupListWebResponseModel } from './CustomerBackupListWebResponseModel';
 import { CustomerBackupRequestModel } from './CustomerBackupRequestModel';
 import { CustomerCloneWebRequestModel } from './CustomerCloneWebRequestModel';
@@ -127,6 +128,26 @@ export const ForgeCustomerApiFp = function(configuration?: Configuration) {
       };
     },
     /**
+     * 
+     * @summary Download a mongo backup dump file by its unique id
+     * @param {string} backupId 
+     * @param {boolean} [applyContentDispositionHeader] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    customerDownloadBackup(backupId: string, applyContentDispositionHeader?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerDownloadBackup(backupId, applyContentDispositionHeader, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
      * Edits a customer based on the information sent in the model
      * @summary Edit a customer's name or enabled state
      * @param {string} id Id of the customer
@@ -207,6 +228,25 @@ export const ForgeCustomerApiFp = function(configuration?: Configuration) {
       };
     },
     /**
+     * 
+     * @summary Get a backup by its unique id
+     * @param {string} backupId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    customerGetBackup(backupId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerBackupGetWebResponseModel> {
+      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerGetBackup(backupId, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
      * Fetches customer metrics by database name, see response model comments for details
      * @summary Get usage metrics for a customer by database name
      * @param {string} id The database name of the customer to retrieve metrics
@@ -244,14 +284,17 @@ export const ForgeCustomerApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * 
-     * @summary Backups List
-     * @param {string} id 
+     * Fetches a paged list of backups sorted by backup taken date in reverse order, most recent first.
+     * @summary List backups filtering by some optional query parameters, ordered by backup taken date in descending order
+     * @param {number} [pageSize] Optional number of results to return per page, default 20
+     * @param {string} [customerId] Optional Customer Id to exact match on (i.e. customer database name)
+     * @param {string} [searchString] Optional search string to match within the backup Name or Database Name
+     * @param {string} [beforeDateTime] Optional, return only backup files created before this date
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerListBackups(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerBackupListWebResponseModel> {
-      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerListBackups(id, options);
+    customerListBackups(pageSize?: number, customerId?: string, searchString?: string, beforeDateTime?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerBackupListWebResponseModel> {
+      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerListBackups(pageSize, customerId, searchString, beforeDateTime, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

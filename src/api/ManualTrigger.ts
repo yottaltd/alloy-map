@@ -11,5 +11,5 @@ export interface ManualTrigger extends WorkflowTriggerWebModelBase {
    * @type {string}
    * @memberof ManualTrigger
    */
-  dodiCode: string;
+  dodiCode?: string;
 }

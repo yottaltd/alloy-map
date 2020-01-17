@@ -1,6 +1,6 @@
 {
   "name": "@yotta/alloy-map",
-  "version": "1.0.29",
+  "version": "1.0.31",
   "repository": {
     "type": "git",
     "url": "https://github.com/yottaltd/alloy-map.git"
@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.1",
-    "@hanreev/types-ol": "^3.0.0",
     "@types/chai": "^4.2.7",
     "@types/color": "^3.0.0",
     "@types/debug": "^4.1.5",
@@ -51,7 +50,7 @@
     "@types/geojson": "^7946.0.7",
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^5.2.7",
-    "@types/ol": "file:node_modules/@hanreev/types-ol/ol",
+    "@types/ol": "^6.1.0",
     "@types/uuid": "^3.4.6",
     "@types/webfontloader": "^1.6.29",
     "chai": "^4.2.0",

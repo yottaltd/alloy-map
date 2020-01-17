@@ -23,6 +23,7 @@ export enum ApiModelNames {
   CustomerBackupGetWebResponseModel = 'CustomerBackupGetWebResponseModel',
   CustomerBackupListWebResponseModel = 'CustomerBackupListWebResponseModel',
   CustomerBackupRequestModel = 'CustomerBackupRequestModel',
+  CustomerBackupUploadWebResponseModel = 'CustomerBackupUploadWebResponseModel',
   CustomerCloneWebRequestModel = 'CustomerCloneWebRequestModel',
   CustomerCreateWebRequestModel = 'CustomerCreateWebRequestModel',
   CustomerCreateWebResponseModel = 'CustomerCreateWebResponseModel',

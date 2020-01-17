@@ -113,5 +113,18 @@ export default function(mapData: MapData) {
         capture: 'runner',
       });
     });
+
+    it('should take a screenshot', () => {
+      let blob: Blob | null = null;
+      const basemap = AlloyBasemapFactory.createSkyward();
+      mapData.map.setBasemap(basemap);
+
+      mapData.map.screenshot().then((screenshot) => {
+        blob = screenshot;
+      });
+      cy.wait(500).then(() => {
+        assert.exists(blob);
+      });
+    });
   });
 }
