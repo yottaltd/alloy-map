@@ -147,7 +147,8 @@ export class AlloySelectionInteraction {
   public setSelectedFeature(feature: AlloyFeature, userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
-      this.currentSelectionMode !== AlloySelectionMode.Single
+      this.currentSelectionMode !== AlloySelectionMode.Single &&
+      this.currentSelectionMode !== AlloySelectionMode.Always
     ) {
       throw new AlloyMapError(
         1554032198,
@@ -186,7 +187,8 @@ export class AlloySelectionInteraction {
   public setSelectedFeatures(features: AlloyFeature[], userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
-      this.currentSelectionMode !== AlloySelectionMode.Single
+      this.currentSelectionMode !== AlloySelectionMode.Single &&
+      this.currentSelectionMode !== AlloySelectionMode.Always
     ) {
       throw new AlloyMapError(
         1554032187,
@@ -205,7 +207,11 @@ export class AlloySelectionInteraction {
 
     // behind guard because we are performing operations for a log
     if (this.debugger.enabled) {
-      this.debugger('setting %d selected features: %o', features.length, features.map((f) => f.id));
+      this.debugger(
+        'setting %d selected features: %o',
+        features.length,
+        features.map((f) => f.id),
+      );
     }
 
     // check if the features are already selected
@@ -224,7 +230,10 @@ export class AlloySelectionInteraction {
       if (!hasDifferentFeatures) {
         // behind guard because we are performing operations for a log
         if (this.debugger.enabled) {
-          this.debugger('features are already selected: ', features.map((f) => f.id));
+          this.debugger(
+            'features are already selected: ',
+            features.map((f) => f.id),
+          );
         }
         return;
       }
@@ -257,7 +266,8 @@ export class AlloySelectionInteraction {
   public selectFeature(feature: AlloyFeature, userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
-      this.currentSelectionMode !== AlloySelectionMode.Single
+      this.currentSelectionMode !== AlloySelectionMode.Single &&
+      this.currentSelectionMode !== AlloySelectionMode.Always
     ) {
       throw new AlloyMapError(
         1554032154,
@@ -292,7 +302,8 @@ export class AlloySelectionInteraction {
   public selectFeatures(features: AlloyFeature[], userEvent: boolean): void {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
-      this.currentSelectionMode !== AlloySelectionMode.Single
+      this.currentSelectionMode !== AlloySelectionMode.Single &&
+      this.currentSelectionMode !== AlloySelectionMode.Always
     ) {
       throw new AlloyMapError(
         1554032900,
@@ -320,7 +331,11 @@ export class AlloySelectionInteraction {
 
     // behind guard because we are performing operations for a log
     if (this.debugger.enabled) {
-      this.debugger('adding %d features: %s', features.length, features.map((f) => f.id));
+      this.debugger(
+        'adding %d features: %s',
+        features.length,
+        features.map((f) => f.id),
+      );
     }
     // only attempt to add the features and track modified
     const modified = this.map.selectionLayer.addFeatures(features);
@@ -424,11 +439,15 @@ export class AlloySelectionInteraction {
       return;
     }
 
-    if (this.selectionMode === AlloySelectionMode.Multi) {
+    if (
+      this.selectionMode === AlloySelectionMode.Multi ||
+      this.selectionMode === AlloySelectionMode.Always
+    ) {
       // work out if we are shift/ctrl clicking
       const isCtrlOrShiftClicking =
-        event.originalEvent instanceof PointerEvent &&
-        (event.originalEvent.shiftKey || event.originalEvent.ctrlKey);
+        this.selectionMode === AlloySelectionMode.Always ||
+        (event.originalEvent instanceof PointerEvent &&
+          (event.originalEvent.shiftKey || event.originalEvent.ctrlKey));
       if (isCtrlOrShiftClicking) {
         if (featureAlreadySelected) {
           // if its already selected then we are deselecting the feature, modify the currently
