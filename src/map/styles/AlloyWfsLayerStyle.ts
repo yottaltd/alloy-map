@@ -10,24 +10,37 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
    * @internal
    */
   public readonly url: string;
+
   /**
    * WFS service feature set / layer name
    * @ignore
    * @internal
    */
   public readonly featureName: string;
+
   /**
    * EPSG code numeric id to use for style
    * @ignore
    * @internal
    */
   public readonly epsg: number;
+
   /**
    * WFS service version
    * @ignore
    * @internal
    */
   public readonly version: string;
+
+  /**
+   * the WFS property name to use for the title
+   */
+  public readonly labelTitle?: string;
+
+  /**
+   * the WFS property name to use for the subtitle
+   */
+  public readonly labelSubtitle?: string;
 
   constructor(
     styleId: string,
@@ -37,11 +50,15 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     version: string,
     colour: string,
     icon: string,
+    labelTitle?: string,
+    labelSubtitle?: string,
   ) {
     super(styleId, colour, icon);
     this.url = url;
     this.featureName = featureName;
     this.epsg = epsg;
     this.version = version;
+    this.labelTitle = labelTitle;
+    this.labelSubtitle = labelSubtitle;
   }
 }
