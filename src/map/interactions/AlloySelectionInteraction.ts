@@ -152,7 +152,7 @@ export class AlloySelectionInteraction {
     ) {
       throw new AlloyMapError(
         1554032198,
-        'selection mode is not Multi or Single, features cannot be selected',
+        'selection mode is not Multi, Single or Toggle, features cannot be selected',
       );
     }
     if (!feature.allowsSelection) {
@@ -192,7 +192,7 @@ export class AlloySelectionInteraction {
     ) {
       throw new AlloyMapError(
         1554032187,
-        'selection mode is not Multi or Single, features cannot be selected',
+        'selection mode is not Multi, Single or Toggle, features cannot be selected',
       );
     }
     if (this.currentSelectionMode === AlloySelectionMode.Single && features.length > 1) {
@@ -271,7 +271,7 @@ export class AlloySelectionInteraction {
     ) {
       throw new AlloyMapError(
         1554032154,
-        'selection mode is not Multi or Single, features cannot be selected',
+        'selection mode is not Multi, Single or Toggle, features cannot be selected',
       );
     }
     if (!feature.allowsSelection) {
@@ -307,7 +307,7 @@ export class AlloySelectionInteraction {
     ) {
       throw new AlloyMapError(
         1554032900,
-        'selection mode is not Multi or Single, features cannot be selected',
+        'selection mode is not Multi, Single or Toggle, features cannot be selected',
       );
     }
     if (this.currentSelectionMode === AlloySelectionMode.Single && features.length > 1) {
