@@ -18,7 +18,7 @@ export enum AlloySelectionMode {
   Multi,
 
   /**
-   * allows continuous selection of multiple features
+   * allows toggling selection of multiple features
    */
-  Always,
+  Toggle,
 }

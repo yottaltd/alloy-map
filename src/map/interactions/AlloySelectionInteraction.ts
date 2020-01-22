@@ -148,7 +148,7 @@ export class AlloySelectionInteraction {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single &&
-      this.currentSelectionMode !== AlloySelectionMode.Always
+      this.currentSelectionMode !== AlloySelectionMode.Toggle
     ) {
       throw new AlloyMapError(
         1554032198,
@@ -188,7 +188,7 @@ export class AlloySelectionInteraction {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single &&
-      this.currentSelectionMode !== AlloySelectionMode.Always
+      this.currentSelectionMode !== AlloySelectionMode.Toggle
     ) {
       throw new AlloyMapError(
         1554032187,
@@ -267,7 +267,7 @@ export class AlloySelectionInteraction {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single &&
-      this.currentSelectionMode !== AlloySelectionMode.Always
+      this.currentSelectionMode !== AlloySelectionMode.Toggle
     ) {
       throw new AlloyMapError(
         1554032154,
@@ -303,7 +303,7 @@ export class AlloySelectionInteraction {
     if (
       this.currentSelectionMode !== AlloySelectionMode.Multi &&
       this.currentSelectionMode !== AlloySelectionMode.Single &&
-      this.currentSelectionMode !== AlloySelectionMode.Always
+      this.currentSelectionMode !== AlloySelectionMode.Toggle
     ) {
       throw new AlloyMapError(
         1554032900,
@@ -441,11 +441,11 @@ export class AlloySelectionInteraction {
 
     if (
       this.selectionMode === AlloySelectionMode.Multi ||
-      this.selectionMode === AlloySelectionMode.Always
+      this.selectionMode === AlloySelectionMode.Toggle
     ) {
       // work out if we are shift/ctrl clicking
       const isCtrlOrShiftClicking =
-        this.selectionMode === AlloySelectionMode.Always ||
+        this.selectionMode === AlloySelectionMode.Toggle ||
         (event.originalEvent instanceof PointerEvent &&
           (event.originalEvent.shiftKey || event.originalEvent.ctrlKey));
       if (isCtrlOrShiftClicking) {
