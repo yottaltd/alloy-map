@@ -26,14 +26,21 @@ export class AlloyLayerStyle {
   public readonly icon?: string;
 
   /**
+   * opacity of the style
+   */
+  public readonly opacity: number;
+
+  /**
    * creates a new instance
    * @param styleId the style id
    * @param colour the colour of the style
    * @param icon the icon font class name
+   * @param opacity the opacity of the style
    */
-  constructor(styleId: string, colour: string, icon?: string) {
+  constructor(styleId: string, colour: string, icon?: string, opacity = 1) {
     this.styleId = styleId;
     this.icon = icon;
+    this.opacity = opacity;
 
     // we're really picky about colours being hex to avoid issues in openlayers
     if (!HEX_REGEX.test(colour)) {

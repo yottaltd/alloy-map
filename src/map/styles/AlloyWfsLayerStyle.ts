@@ -37,8 +37,9 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     version: string,
     colour: string,
     icon: string,
+    opacity = 1,
   ) {
-    super(styleId, colour, icon);
+    super(styleId, colour, icon, opacity);
     this.url = url;
     this.featureName = featureName;
     this.epsg = epsg;

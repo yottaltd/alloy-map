@@ -104,10 +104,16 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
         radius,
         feature.properties.icon,
         colour,
+        1,
         geometryFunction,
       );
     } else if (feature.properties.text) {
-      return AlloyIconUtils.createTextIconStyle(feature.properties.text, colour, geometryFunction);
+      return AlloyIconUtils.createTextIconStyle(
+        feature.properties.text,
+        colour,
+        1,
+        geometryFunction,
+      );
     } else {
       throw new AlloyMapError(1558971976, 'Route waypoint style requires an icon or text');
     }
@@ -127,6 +133,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -135,6 +142,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -165,6 +173,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -172,6 +181,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,

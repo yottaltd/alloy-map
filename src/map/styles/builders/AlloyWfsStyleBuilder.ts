@@ -73,9 +73,16 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
         feature.id,
         layerStyle.colour,
         layerStyle.icon,
+        state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity : 1,
       );
     }
-    return StringUtils.cacheKeyConcat(state, resolution, layerStyle.colour, layerStyle.icon);
+    return StringUtils.cacheKeyConcat(
+      state,
+      resolution,
+      layerStyle.colour,
+      layerStyle.icon,
+      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity : 1,
+    );
   }
 
   /**
@@ -181,6 +188,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
+        layerStyle.opacity,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -194,6 +202,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          layerStyle.opacity,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -217,6 +226,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
+        layerStyle.opacity,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -230,6 +240,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          layerStyle.opacity,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
             : undefined,
@@ -250,6 +261,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
         layerStyle.colour,
+        layerStyle.opacity,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -267,6 +279,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
         layerStyle.colour,
+        layerStyle.opacity,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -315,6 +328,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const styles = [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
+        layerStyle.opacity,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
@@ -323,7 +337,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     if (layerStyle.icon) {
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          layerStyle.opacity,
+          midPoint,
+        ),
       );
     }
 
@@ -373,6 +393,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const styles = [
       AlloyPolygonUtils.createPolygonStyle(
         semiTransparentColour,
+        layerStyle.opacity,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
@@ -381,7 +402,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     if (layerStyle.icon) {
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+        AlloyIconUtils.createAlloyIconStyle(
+          iconSize,
+          layerStyle.icon,
+          ICON_COLOUR,
+          layerStyle.opacity,
+          midPoint,
+        ),
       );
     }
 
@@ -420,6 +447,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -428,6 +456,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -441,6 +470,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          1,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -466,6 +496,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -474,6 +505,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -487,6 +519,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          1,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
             : undefined,
@@ -512,6 +545,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -519,6 +553,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -541,6 +576,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -548,6 +584,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -597,12 +634,14 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
@@ -611,7 +650,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     if (layerStyle.icon) {
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, 1, midPoint),
       );
     }
 
@@ -662,12 +701,14 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
@@ -676,7 +717,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     if (layerStyle.icon) {
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, 1, midPoint),
       );
     }
 
@@ -713,6 +754,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -721,6 +763,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -734,6 +777,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          1,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -757,6 +801,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -765,6 +810,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -778,6 +824,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          1,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
             : undefined,
@@ -801,6 +848,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineHaloStyle(
         width,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -808,6 +856,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineStyle(
         width,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -816,6 +865,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -829,6 +879,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -847,6 +898,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          1,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -875,6 +927,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineHaloStyle(
         width,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -882,6 +935,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyLineUtils.createLineStyle(
         width,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -890,6 +944,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -903,6 +958,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -921,6 +977,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
           radius,
           layerStyle.icon,
           ICON_COLOUR,
+          1,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -975,12 +1032,14 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
@@ -989,7 +1048,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     if (layerStyle.icon) {
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, 1, midPoint),
       );
     }
 
@@ -1037,12 +1096,14 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         layerStyle.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
@@ -1051,7 +1112,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Alloy
 
     if (layerStyle.icon) {
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, midPoint),
+        AlloyIconUtils.createAlloyIconStyle(iconSize, layerStyle.icon, ICON_COLOUR, 1, midPoint),
       );
     }
 

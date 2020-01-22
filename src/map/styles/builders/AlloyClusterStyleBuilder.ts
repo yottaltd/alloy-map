@@ -66,6 +66,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       resolution,
       // icon is not in here because clusters don't have them
       layerStyle.colour,
+      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity : 1,
       text,
     );
   }
@@ -88,13 +89,14 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return [
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, layerStyle.colour),
+      AlloyBallUtils.createBallStyle(radius, layerStyle.colour, layerStyle.opacity),
       // the text in the cluster
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
           scale: 1,
           imgSize: [textCanvas.width, textCanvas.height],
+          opacity: layerStyle.opacity,
         }),
       }),
     ];
@@ -124,15 +126,16 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return [
       // the halo circle
-      AlloyBallUtils.createBallHaloStyle(radius, hoverColour),
+      AlloyBallUtils.createBallHaloStyle(radius, hoverColour, 1),
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, hoverColour),
+      AlloyBallUtils.createBallStyle(radius, hoverColour, 1),
       // the text in the cluster
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
           scale: 1,
           imgSize: [textCanvas.width, textCanvas.height],
+          opacity: 1,
         }),
       }),
     ];

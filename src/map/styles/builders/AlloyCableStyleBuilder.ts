@@ -122,6 +122,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -147,6 +148,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -168,6 +170,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -176,6 +179,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -204,6 +208,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -211,6 +216,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -230,6 +236,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallHaloStyle(
         radius,
         feature.properties.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -238,6 +245,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -263,6 +271,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineHaloStyle(
         width,
         feature.properties.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -270,6 +279,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
