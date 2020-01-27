@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AlloyWmtsCapabilitiesLayer | @yotta/alloy-map</title>
+	<title>AlloyLayerStyleLabelMode | @yotta/alloy-map</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="alloywmtscapabilitieslayer.html">AlloyWmtsCapabilitiesLayer</a>
+					<a href="alloylayerstylelabelmode.html">AlloyLayerStyleLabelMode</a>
 				</li>
 			</ul>
-			<h1>Interface AlloyWmtsCapabilitiesLayer</h1>
+			<h1>Enumeration AlloyLayerStyleLabelMode</h1>
 		</div>
 	</div>
 </header>
@@ -69,109 +69,69 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>WMTS Capabilties layer parameters</p>
+						<p>modes available for layer style labels</p>
 					</div>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">AlloyWmtsCapabilitiesLayer</span>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloywmtscapabilitieslayer.html#boundingbox" class="tsd-kind-icon">bounding<wbr>Box</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloywmtscapabilitieslayer.html#identifier" class="tsd-kind-icon">identifier</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloywmtscapabilitieslayer.html#styles" class="tsd-kind-icon">styles</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloywmtscapabilitieslayer.html#tilematrixidentifier" class="tsd-kind-icon">tile<wbr>Matrix<wbr>Identifier</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloywmtscapabilitieslayer.html#title" class="tsd-kind-icon">title</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="alloylayerstylelabelmode.html#none" class="tsd-kind-icon">None</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="alloylayerstylelabelmode.html#title" class="tsd-kind-icon">Title</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="alloylayerstylelabelmode.html#titleandsubtitle" class="tsd-kind-icon">Title<wbr>And<wbr>Subtitle</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="boundingbox" class="tsd-anchor"></a>
-					<h3>bounding<wbr>Box</h3>
-					<div class="tsd-signature tsd-kind-icon">bounding<wbr>Box<span class="tsd-signature-symbol">:</span> <a href="../classes/alloybounds.html" class="tsd-signature-type">AlloyBounds</a></div>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="none" class="tsd-anchor"></a>
+					<h3>None</h3>
+					<div class="tsd-signature tsd-kind-icon">None<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;None&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/wmts/AlloyWmtsCapabilitiesLayer.ts#L23">wmts/AlloyWmtsCapabilitiesLayer.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyleLabelMode.ts#L8">map/styles/AlloyLayerStyleLabelMode.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Bounds of this WMTS layer</p>
+							<p>don&#39;t show labels</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="identifier" class="tsd-anchor"></a>
-					<h3>identifier</h3>
-					<div class="tsd-signature tsd-kind-icon">identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/wmts/AlloyWmtsCapabilitiesLayer.ts#L15">wmts/AlloyWmtsCapabilitiesLayer.ts:15</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Identifier for layer request</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="styles" class="tsd-anchor"></a>
-					<h3>styles</h3>
-					<div class="tsd-signature tsd-kind-icon">styles<span class="tsd-signature-symbol">:</span> <a href="alloywmtscapabilitieslayerstyle.html" class="tsd-signature-type">AlloyWmtsCapabilitiesLayerStyle</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/wmts/AlloyWmtsCapabilitiesLayer.ts#L19">wmts/AlloyWmtsCapabilitiesLayer.ts:19</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Available styles for layer</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="tilematrixidentifier" class="tsd-anchor"></a>
-					<h3>tile<wbr>Matrix<wbr>Identifier</h3>
-					<div class="tsd-signature tsd-kind-icon">tile<wbr>Matrix<wbr>Identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/wmts/AlloyWmtsCapabilitiesLayer.ts#L27">wmts/AlloyWmtsCapabilitiesLayer.ts:27</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Tile matrix that is used for layer</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
 					<a name="title" class="tsd-anchor"></a>
-					<h3>title</h3>
-					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<h3>Title</h3>
+					<div class="tsd-signature tsd-kind-icon">Title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;Title&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/wmts/AlloyWmtsCapabilitiesLayer.ts#L11">wmts/AlloyWmtsCapabilitiesLayer.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyleLabelMode.ts#L13">map/styles/AlloyLayerStyleLabelMode.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Title of the layer (displayed to user)</p>
+							<p>only show titles</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="titleandsubtitle" class="tsd-anchor"></a>
+					<h3>Title<wbr>And<wbr>Subtitle</h3>
+					<div class="tsd-signature tsd-kind-icon">Title<wbr>And<wbr>Subtitle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;TitleAndSubtitle&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyleLabelMode.ts#L18">map/styles/AlloyLayerStyleLabelMode.ts:18</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>show titles and subtitle</p>
 						</div>
 					</div>
 				</section>
@@ -189,23 +149,17 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="alloywmtscapabilitieslayer.html" class="tsd-kind-icon">Alloy<wbr>Wmts<wbr>Capabilities<wbr>Layer</a>
+					<li class="current tsd-kind-enum">
+						<a href="alloylayerstylelabelmode.html" class="tsd-kind-icon">Alloy<wbr>Layer<wbr>Style<wbr>Label<wbr>Mode</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloywmtscapabilitieslayer.html#boundingbox" class="tsd-kind-icon">bounding<wbr>Box</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="alloylayerstylelabelmode.html#none" class="tsd-kind-icon">None</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloywmtscapabilitieslayer.html#identifier" class="tsd-kind-icon">identifier</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="alloylayerstylelabelmode.html#title" class="tsd-kind-icon">Title</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloywmtscapabilitieslayer.html#styles" class="tsd-kind-icon">styles</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloywmtscapabilitieslayer.html#tilematrixidentifier" class="tsd-kind-icon">tile<wbr>Matrix<wbr>Identifier</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloywmtscapabilitieslayer.html#title" class="tsd-kind-icon">title</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="alloylayerstylelabelmode.html#titleandsubtitle" class="tsd-kind-icon">Title<wbr>And<wbr>Subtitle</a>
 							</li>
 						</ul>
 					</li>

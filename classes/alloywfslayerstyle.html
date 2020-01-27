@@ -96,11 +96,14 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="alloywfslayerstyle.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloywfslayerstyle.html#colour" class="tsd-kind-icon">colour</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloywfslayerstyle.html#icon" class="tsd-kind-icon">icon</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloywfslayerstyle.html#labelmode" class="tsd-kind-icon">label<wbr>Mode</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloywfslayerstyle.html#labelsubtitle" class="tsd-kind-icon">label<wbr>Subtitle</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloywfslayerstyle.html#labeltitle" class="tsd-kind-icon">label<wbr>Title</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloywfslayerstyle.html#styleid" class="tsd-kind-icon">style<wbr>Id</a></li>
 							</ul>
 						</section>
@@ -113,14 +116,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Alloy<wbr>Wfs<wbr>Layer<wbr>Style<span class="tsd-signature-symbol">(</span>styleId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, epsg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, colour<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, icon<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloywfslayerstyle.html" class="tsd-signature-type">AlloyWfsLayerStyle</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Alloy<wbr>Wfs<wbr>Layer<wbr>Style<span class="tsd-signature-symbol">(</span>styleId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, featureName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, epsg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, colour<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, icon<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, labelTitle<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, labelSubtitle<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloywfslayerstyle.html" class="tsd-signature-type">AlloyWfsLayerStyle</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="alloylayerstyle.html">AlloyLayerStyle</a>.<a href="alloylayerstyle.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/47e7b95/src/map/styles/AlloyWfsLayerStyle.ts#L30">map/styles/AlloyWfsLayerStyle.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyWfsLayerStyle.ts#L43">map/styles/AlloyWfsLayerStyle.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -146,13 +149,19 @@
 								<li>
 									<h5>icon: <span class="tsd-signature-type">string</span></h5>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> labelTitle: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> labelSubtitle: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="alloywfslayerstyle.html" class="tsd-signature-type">AlloyWfsLayerStyle</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="colour" class="tsd-anchor"></a>
@@ -161,7 +170,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="alloylayerstyle.html">AlloyLayerStyle</a>.<a href="alloylayerstyle.html#colour">colour</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/47e7b95/src/map/styles/AlloyLayerStyle.ts#L21">map/styles/AlloyLayerStyle.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyle.ts#L22">map/styles/AlloyLayerStyle.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -177,12 +186,58 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="alloylayerstyle.html">AlloyLayerStyle</a>.<a href="alloylayerstyle.html#icon">icon</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/47e7b95/src/map/styles/AlloyLayerStyle.ts#L26">map/styles/AlloyLayerStyle.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyle.ts#L27">map/styles/AlloyLayerStyle.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>the icon of the style, should be a font class name</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="labelmode" class="tsd-anchor"></a>
+					<h3>label<wbr>Mode</h3>
+					<div class="tsd-signature tsd-kind-icon">label<wbr>Mode<span class="tsd-signature-symbol">:</span> <a href="../enums/alloylayerstylelabelmode.html" class="tsd-signature-type">AlloyLayerStyleLabelMode</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="alloylayerstyle.html">AlloyLayerStyle</a>.<a href="alloylayerstyle.html#labelmode">labelMode</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyle.ts#L32">map/styles/AlloyLayerStyle.ts:32</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>whether to show labels against features (where applicable)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="labelsubtitle" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> label<wbr>Subtitle</h3>
+					<div class="tsd-signature tsd-kind-icon">label<wbr>Subtitle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyWfsLayerStyle.ts#L43">map/styles/AlloyWfsLayerStyle.ts:43</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the WFS property name to use for the subtitle</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="labeltitle" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> label<wbr>Title</h3>
+					<div class="tsd-signature tsd-kind-icon">label<wbr>Title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyWfsLayerStyle.ts#L38">map/styles/AlloyWfsLayerStyle.ts:38</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the WFS property name to use for the title</p>
 						</div>
 					</div>
 				</section>
@@ -193,7 +248,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="alloylayerstyle.html">AlloyLayerStyle</a>.<a href="alloylayerstyle.html#styleid">styleId</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/47e7b95/src/map/styles/AlloyLayerStyle.ts#L16">map/styles/AlloyLayerStyle.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/b05570f/src/map/styles/AlloyLayerStyle.ts#L17">map/styles/AlloyLayerStyle.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -227,6 +282,15 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="alloywfslayerstyle.html#icon" class="tsd-kind-icon">icon</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="alloywfslayerstyle.html#labelmode" class="tsd-kind-icon">label<wbr>Mode</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="alloywfslayerstyle.html#labelsubtitle" class="tsd-kind-icon">label<wbr>Subtitle</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="alloywfslayerstyle.html#labeltitle" class="tsd-kind-icon">label<wbr>Title</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="alloywfslayerstyle.html#styleid" class="tsd-kind-icon">style<wbr>Id</a>
