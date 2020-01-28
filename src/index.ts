@@ -9,13 +9,9 @@ export { AlloySelectionMode } from './map/core/AlloySelectionMode';
 export { AlloyDrawEvent } from './map/events/AlloyDrawEvent';
 export { AlloyDrawEventHandler } from './map/events/AlloyDrawEventHandler';
 export { FeatureSelectionChangeEvent } from './map/events/FeatureSelectionChangeEvent';
-export {
-  FeatureSelectionChangeEventHandler,
-} from './map/events/FeatureSelectionChangeEventHandler';
+export { FeatureSelectionChangeEventHandler } from './map/events/FeatureSelectionChangeEventHandler';
 export { FeaturesUnderSelectionEvent } from './map/events/FeaturesUnderSelectionEvent';
-export {
-  FeaturesUnderSelectionEventHandler,
-} from './map/events/FeaturesUnderSelectionEventHandler';
+export { FeaturesUnderSelectionEventHandler } from './map/events/FeaturesUnderSelectionEventHandler';
 export { LayersChangeEvent } from './map/events/LayersChangeEvent';
 export { LayersChangeEventHandler } from './map/events/LayersChangeEventHandler';
 export { MapChangeCentreEvent } from './map/events/MapChangeCentreEvent';
@@ -23,9 +19,7 @@ export { MapChangeCentreEventHandler } from './map/events/MapChangeCentreEventHa
 export { MapChangeZoomEvent } from './map/events/MapChangeZoomEvent';
 export { MapChangeZoomEventHandler } from './map/events/MapChangeZoomEventHandler';
 export { AlloyAnimatedPathFeature } from './map/features/AlloyAnimatedPathFeature';
-export {
-  AlloyAnimatedPathFeatureProperties,
-} from './map/features/AlloyAnimatedPathFeatureProperties';
+export { AlloyAnimatedPathFeatureProperties } from './map/features/AlloyAnimatedPathFeatureProperties';
 export { AlloyCableFeature } from './map/features/AlloyCableFeature';
 export { AlloyCableFeatureFactory } from './map/features/AlloyCableFeatureFactory';
 export { AlloyCableFeatureProperties } from './map/features/AlloyCableFeatureProperties';
@@ -54,28 +48,20 @@ export { AlloyRouteFeature } from './map/features/AlloyRouteFeature';
 export { AlloyRouteFeatureFactory } from './map/features/AlloyRouteFeatureFactory';
 export { AlloyRouteFeatureProperties } from './map/features/AlloyRouteFeatureProperties';
 export { AlloyRouteWaypointFeature } from './map/features/AlloyRouteWaypointFeature';
-export {
-  AlloyRouteWaypointFeatureProperties,
-} from './map/features/AlloyRouteWaypointFeatureProperties';
+export { AlloyRouteWaypointFeatureProperties } from './map/features/AlloyRouteWaypointFeatureProperties';
 export { AlloySimplifiedGeometryFeature } from './map/features/AlloySimplifiedGeometryFeature';
-export {
-  AlloySimplifiedGeometryFeatureProperties,
-} from './map/features/AlloySimplifiedGeometryFeatureProperties';
+export { AlloySimplifiedGeometryFeatureProperties } from './map/features/AlloySimplifiedGeometryFeatureProperties';
 export { AlloyWfsFeature } from './map/features/AlloyWfsFeature';
 export { AlloyWfsFeatureProperties } from './map/features/AlloyWfsFeatureProperties';
 export { FeatureGuards } from './map/guards/FeatureGuards';
-export {
-  AlloyDrawInteractionGeometryType,
-} from './map/interactions/AlloyDrawInteractionGeometryType';
+export { AlloyDrawInteractionGeometryType } from './map/interactions/AlloyDrawInteractionGeometryType';
 export { AlloyBoundedLayer } from './map/layers/AlloyBoundedLayer';
 export { AlloyLayer } from './map/layers/AlloyLayer';
 export { AlloyLayerWithFeatures } from './map/layers/AlloyLayerWithFeatures';
 export { AlloyLayerWithFeaturesWithItemId } from './map/layers/AlloyLayerWithFeaturesWithItemId';
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
 export { AlloyAnimatedPathLayer } from './map/layers/animation/AlloyAnimatedPathLayer';
-export {
-  AlloyAnimatedPathLayerOptions,
-} from './map/layers/animation/AlloyAnimatedPathLayerOptions';
+export { AlloyAnimatedPathLayerOptions } from './map/layers/animation/AlloyAnimatedPathLayerOptions';
 export { AlloyCableLayer } from './map/layers/cable/AlloyCableLayer';
 export { AlloyCableLayerOptions } from './map/layers/cable/AlloyCableLayerOptions';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';
@@ -96,6 +82,7 @@ export { AlloyOverlayPositioning } from './map/overlays/AlloyOverlayPositioning'
 export { AlloyCustomOverlay } from './map/overlays/custom/AlloyCustomOverlay';
 export { AlloyCustomOverlayOptions } from './map/overlays/custom/AlloyCustomOverlayOptions';
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
+export { AlloyLayerStyleScale } from './map/styles/AlloyLayerStyleScale';
 export { AlloyStyleBuilderBuildState } from './map/styles/AlloyStyleBuilderBuildState';
 export { AlloyWfsLayerStyle } from './map/styles/AlloyWfsLayerStyle';
 export { EpsgIo } from './utils/epsg-io/EpsgIo';
@@ -118,8 +105,6 @@ export { WmsUtils } from './wms/WmsUtils';
 export { AlloyWmtsCapabilities } from './wmts/AlloyWmtsCapabilities';
 export { AlloyWmtsCapabilitiesLayer } from './wmts/AlloyWmtsCapabilitiesLayer';
 export { AlloyWmtsCapabilitiesLayerStyle } from './wmts/AlloyWmtsCapabilitiesLayerStyle';
-export {
-  AlloyWmtsCapabilitiesLayerStyleLegend,
-} from './wmts/AlloyWmtsCapabilitiesLayerStyleLegend';
+export { AlloyWmtsCapabilitiesLayerStyleLegend } from './wmts/AlloyWmtsCapabilitiesLayerStyleLegend';
 export { AlloyWmtsParameters } from './wmts/AlloyWmtsParameters';
 export { WmtsUtils } from './wmts/WmtsUtils';

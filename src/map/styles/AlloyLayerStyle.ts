@@ -1,5 +1,6 @@
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleScale } from './AlloyLayerStyleScale';
 
 /**
  * regex for testing a colour is valid hex
@@ -32,21 +33,29 @@ export class AlloyLayerStyle {
   public readonly labelMode: AlloyLayerStyleLabelMode;
 
   /**
+   * scale for style features
+   */
+  public readonly scale: AlloyLayerStyleScale;
+
+  /**
    * creates a new instance
    * @param styleId the style id
    * @param colour the colour of the style
    * @param icon the icon font class name
    * @param labelMode the mode for displaying labels
+   * @param scale the scale to use when displaying style features, defaults to 1
    */
   constructor(
     styleId: string,
     colour: string,
     icon?: string,
     labelMode?: AlloyLayerStyleLabelMode,
+    scale = AlloyLayerStyleScale.Medium,
   ) {
     this.styleId = styleId;
     this.icon = icon;
     this.labelMode = labelMode || AlloyLayerStyleLabelMode.None;
+    this.scale = scale;
 
     // we're really picky about colours being hex to avoid issues in openlayers
     if (!HEX_REGEX.test(colour)) {

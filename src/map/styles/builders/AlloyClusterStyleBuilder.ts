@@ -66,6 +66,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       resolution,
       // icon is not in here because clusters don't have them
       layerStyle.colour,
+      layerStyle.scale,
       text,
     );
   }
@@ -80,7 +81,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     }
 
     const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
-    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale;
+    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale * layerStyle.scale;
     const textCanvas = AlloyTextUtils.createTextCanvas(
       NumberFormatUtils.smallFormatNumber(feature.properties.count),
       TEXT_COLOUR,
@@ -93,7 +94,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
-          scale: 1,
+          scale: layerStyle.scale,
           imgSize: [textCanvas.width, textCanvas.height],
         }),
       }),
@@ -113,7 +114,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     }
 
     const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
-    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale;
+    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale * layerStyle.scale;
     const textCanvas = AlloyTextUtils.createTextCanvas(
       NumberFormatUtils.smallFormatNumber(feature.properties.count),
       TEXT_COLOUR,
@@ -131,7 +132,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
-          scale: 1,
+          scale: layerStyle.scale,
           imgSize: [textCanvas.width, textCanvas.height],
         }),
       }),
