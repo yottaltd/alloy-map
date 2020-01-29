@@ -1,4 +1,5 @@
 import { AlloyLayerStyle } from './AlloyLayerStyle';
+import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
 import { AlloyLayerStyleScale } from './AlloyLayerStyleScale';
 
 /**
@@ -68,7 +69,15 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     labelSubtitle?: string,
     scale = AlloyLayerStyleScale.Medium,
   ) {
-    super(styleId, colour, icon, scale);
+    let mode = AlloyLayerStyleLabelMode.None;
+    if (labelTitle) {
+      if (labelSubtitle) {
+        mode = AlloyLayerStyleLabelMode.TitleAndSubtitle;
+      } else {
+        mode = AlloyLayerStyleLabelMode.Title;
+      }
+    }
+    super(styleId, colour, icon, mode, scale);
     this.url = url;
     this.featureName = featureName;
     this.epsg = epsg;
