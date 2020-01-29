@@ -84,6 +84,7 @@ export { AlloyCustomOverlayOptions } from './map/overlays/custom/AlloyCustomOver
 export { AlloyLayerStyle } from './map/styles/AlloyLayerStyle';
 export { AlloyLayerStyleScale } from './map/styles/AlloyLayerStyleScale';
 export { AlloyStyleBuilderBuildState } from './map/styles/AlloyStyleBuilderBuildState';
+export { AlloyLayerStyleLabelMode } from './map/styles/AlloyLayerStyleLabelMode';
 export { AlloyWfsLayerStyle } from './map/styles/AlloyWfsLayerStyle';
 export { EpsgIo } from './utils/epsg-io/EpsgIo';
 export { EpsgIoSearchResponse } from './utils/epsg-io/EpsgIoSearchResponse';
