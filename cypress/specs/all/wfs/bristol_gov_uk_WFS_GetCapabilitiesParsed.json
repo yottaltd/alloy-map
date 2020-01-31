@@ -1,0 +1,711 @@
+{
+  "title": "",
+  "version": "2.0.0",
+  "featureTypes": [
+    {
+      "name": "ext_datagov:Traffic_regulation_orders_for_RPS",
+      "title": "Traffic_regulation_orders_for_RPS",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004620657756362334,
+          "lon": -0.000023650597037225538
+        },
+        "ne": {
+          "lat": 0.00046241515326528315,
+          "lon": -0.00002308028197921695
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Wards",
+      "title": "Wards",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046169888179292684,
+          "lon": -0.000024443796652024096
+        },
+        "ne": {
+          "lat": 0.00046303465175867586,
+          "lon": -0.000022535485810887687
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Polling_districts",
+      "title": "Polling_districts",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046169888179292684,
+          "lon": -0.000024443796652024096
+        },
+        "ne": {
+          "lat": 0.00046303465175867586,
+          "lon": -0.000022535485810887687
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Cycle_network",
+      "title": "Cycle_network",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046175697386274805,
+          "lon": -0.000024242466459598655
+        },
+        "ne": {
+          "lat": 0.00046309896795548866,
+          "lon": -0.000022130502803725745
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Traffic_survey_locations",
+      "title": "Traffic_survey_locations",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046064588241279125,
+          "lon": -0.00002686807532966059
+        },
+        "ne": {
+          "lat": 0.0004638983173919087,
+          "lon": -0.00002042323761670689
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Designated_car_parks",
+      "title": "Designated_car_parks",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046176713395595925,
+          "lon": -0.00002352211885947298
+        },
+        "ne": {
+          "lat": 0.0004626301982284531,
+          "lon": -0.000022985584632542215
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Public_Toilets_-_Council",
+      "title": "Public_Toilets_-_Council",
+      "bbox": {
+        "sw": {
+          "lat": 0.000461766329266311,
+          "lon": -0.00002419437312153616
+        },
+        "ne": {
+          "lat": 0.00046268609837341046,
+          "lon": -0.000022594802731865616
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Car_parks",
+      "title": "Car_parks",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617664650794495,
+          "lon": -0.00002426550734211285
+        },
+        "ne": {
+          "lat": 0.00046271691876142995,
+          "lon": -0.000022685207930840176
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Rider_zones",
+      "title": "Rider_zones",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004605486978164208,
+          "lon": -0.00002804860449893176
+        },
+        "ne": {
+          "lat": 0.00046427334818588406,
+          "lon": -0.000020197715579995
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Public_bike_pumps",
+      "title": "Public_bike_pumps",
+      "bbox": {
+        "sw": {
+          "lat": 0.000461018450707229,
+          "lon": -0.000026841216760978862
+        },
+        "ne": {
+          "lat": 0.0004628695868973409,
+          "lon": -0.000022207581999097874
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Cycling_-_Leisure_rides",
+      "title": "Cycling_-_Leisure_rides",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046058671318860434,
+          "lon": -0.00002730986989190581
+        },
+        "ne": {
+          "lat": 0.00046403006498962895,
+          "lon": -0.000019741417440521853
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Trees",
+      "title": "Trees",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004470572534529538,
+          "lon": -0.0000699684810727355
+        },
+        "ne": {
+          "lat": 0.0004655712673269363,
+          "lon": -0.000019081888506041496
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Wireless_hotspots",
+      "title": "Wireless_hotspots",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046175177379836896,
+          "lon": -0.000024792887097327473
+        },
+        "ne": {
+          "lat": 0.00046274803968060496,
+          "lon": -0.00002257834253957538
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:BMX_facilities",
+      "title": "BMX_facilities",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046139321082705465,
+          "lon": -0.000024005480757996687
+        },
+        "ne": {
+          "lat": 0.00046296965017234015,
+          "lon": -0.000021311254121480796
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Cycle_shops_and_repairs",
+      "title": "Cycle_shops_and_repairs",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046105326127587887,
+          "lon": -0.000026797159938224304
+        },
+        "ne": {
+          "lat": 0.00046361823565632676,
+          "lon": -0.00002116501346850796
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Parks_and_green_spaces",
+      "title": "Parks_and_green_spaces",
+      "bbox": {
+        "sw": {
+          "lat": -0.0008027844929188177,
+          "lon": -0.00042220813795728403
+        },
+        "ne": {
+          "lat": 0.00046276552528468073,
+          "lon": -0.000020825403968037235
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Air_Quality_Monitors",
+      "title": "Air_Quality_Monitors",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046177711598716087,
+          "lon": -0.000024218124043828866
+        },
+        "ne": {
+          "lat": 0.0004627158686645316,
+          "lon": -0.000022584915290300877
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:City_Evacuation_Zones",
+      "title": "City_Evacuation_Zones",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046213577546438955,
+          "lon": -0.000023434764416523566
+        },
+        "ne": {
+          "lat": 0.0004622786519945521,
+          "lon": -0.000023133826741237302
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Area_committees__CIL_areas_",
+      "title": "Area_committees__CIL_areas_",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046169888179292684,
+          "lon": -0.000024443796652024096
+        },
+        "ne": {
+          "lat": 0.00046303465175867586,
+          "lon": -0.000022535485810887687
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Neighbourhood_Planning_Network",
+      "title": "Neighbourhood_Planning_Network",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004616985262515527,
+          "lon": -0.00002444379768284497
+        },
+        "ne": {
+          "lat": 0.0004630347187770667,
+          "lon": -0.00002253469146832081
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:No_cold-calling_zones",
+      "title": "No_cold-calling_zones",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046202163331088286,
+          "lon": -0.000023989749112443887
+        },
+        "ne": {
+          "lat": 0.00046264300274856396,
+          "lon": -0.0000225518404157771
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Childrens_centre_reach_areas",
+      "title": "Childrens_centre_reach_areas",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004616988811818601,
+          "lon": -0.000024443983082067635
+        },
+        "ne": {
+          "lat": 0.0004630346512755068,
+          "lon": -0.000022535486746561477
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Secondary_school_areas_of_first_priority",
+      "title": "Secondary_school_areas_of_first_priority",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046169858950406706,
+          "lon": -0.000024443971287116785
+        },
+        "ne": {
+          "lat": 0.00046303472531405987,
+          "lon": -0.000022535325709601637
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Secondary_school_areas_of_second_priority",
+      "title": "Secondary_school_areas_of_second_priority",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004622439522137256,
+          "lon": -0.000023793924005492577
+        },
+        "ne": {
+          "lat": 0.00046256478022144165,
+          "lon": -0.000023481420849358998
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Cumulative_Impact_Areas",
+      "title": "Cumulative_Impact_Areas",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004620688196013134,
+          "lon": -0.00002357871691367189
+        },
+        "ne": {
+          "lat": 0.00046249912568896434,
+          "lon": -0.000023149315670286926
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Council_CCTV_cameras",
+      "title": "Council_CCTV_cameras",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004615954584323845,
+          "lon": -0.00002437100905122332
+        },
+        "ne": {
+          "lat": 0.0004768642543098167,
+          "lon": -0.00002146020195213968
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Debt_advice_agencies",
+      "title": "Debt_advice_agencies",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046176817373577705,
+          "lon": -0.000023879591039559277
+        },
+        "ne": {
+          "lat": 0.0004629088947325499,
+          "lon": -0.000023012289982529982
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Tree_planting_locations",
+      "title": "Tree_planting_locations",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004470572534529538,
+          "lon": -0.0000715501035400492
+        },
+        "ne": {
+          "lat": 0.00047750909361354843,
+          "lon": -0.000022414598833583133
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Discretionary_licensing",
+      "title": "Discretionary_licensing",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046219547786563453,
+          "lon": -0.000023167001778314475
+        },
+        "ne": {
+          "lat": 0.0004625327379983446,
+          "lon": -0.000022671368526812657
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Allotment_sites",
+      "title": "Allotment_sites",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046174800286280515,
+          "lon": -0.000024083885715660882
+        },
+        "ne": {
+          "lat": 0.00046276966456559876,
+          "lon": -0.000022538958414985955
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Childrens_Play_Equipment",
+      "title": "Childrens_Play_Equipment",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617693582389393,
+          "lon": -0.000024266359136230325
+        },
+        "ne": {
+          "lat": 0.0004627482472301381,
+          "lon": -0.00002255507981828581
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Park_User_Facilities",
+      "title": "Park_User_Facilities",
+      "bbox": {
+        "sw": {
+          "lat": 0.00043836331529689687,
+          "lon": -0.00008242985560035858
+        },
+        "ne": {
+          "lat": 0.00046276407478273995,
+          "lon": -0.000022316174742774156
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Tourist_information",
+      "title": "Tourist_information",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004621947922913705,
+          "lon": -0.000023327477026061886
+        },
+        "ne": {
+          "lat": 0.0004621947922913705,
+          "lon": -0.000023327477026061886
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Bus_stops",
+      "title": "Bus_stops",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004524737213671415,
+          "lon": -0.000037833859249741307
+        },
+        "ne": {
+          "lat": 0.00046591752787605856,
+          "lon": -0.00001551626613294231
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Grit_bins",
+      "title": "Grit_bins",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617294429181129,
+          "lon": -0.000024233099698123485
+        },
+        "ne": {
+          "lat": 0.00046275578088739167,
+          "lon": -0.00002255335997977141
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Gullies",
+      "title": "Gullies",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617210150286155,
+          "lon": -0.00028745781729057183
+        },
+        "ne": {
+          "lat": 0.0008027875346812152,
+          "lon": -0.000022537282496845603
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Resurfacing_-_pothole_fund_2014",
+      "title": "Resurfacing_-_pothole_fund_2014",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617206180057565,
+          "lon": -0.0000242704366225148
+        },
+        "ne": {
+          "lat": 0.000463004886228191,
+          "lon": -0.000022538698626123637
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Streetlights_and_Street_Furniture",
+      "title": "Streetlights_and_Street_Furniture",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617208957853336,
+          "lon": -0.000024270461127564684
+        },
+        "ne": {
+          "lat": 0.00046297886230206586,
+          "lon": -0.000022537139143147817
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Temporary_Play_Street_Orders",
+      "title": "Temporary_Play_Street_Orders",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004620098627015068,
+          "lon": -0.00002349800950464112
+        },
+        "ne": {
+          "lat": 0.0004626008619084132,
+          "lon": -0.0000225912300302603
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Twenty_mph_zones",
+      "title": "Twenty_mph_zones",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617023539594811,
+          "lon": -0.00002429207559682409
+        },
+        "ne": {
+          "lat": 0.00046279051952069494,
+          "lon": -0.00002253545696544718
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Reported_highways_issues",
+      "title": "Reported_highways_issues",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046160023215691126,
+          "lon": -0.0000375830805304146
+        },
+        "ne": {
+          "lat": 0.0005016442218135353,
+          "lon": -0.00002238189989059695
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Proposed_Maintenance_Schemes",
+      "title": "Proposed_Maintenance_Schemes",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004617803611211002,
+          "lon": -0.000024147932987446423
+        },
+        "ne": {
+          "lat": 0.0004627309362916776,
+          "lon": -0.000022566877794322883
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Elected_councillors_2016",
+      "title": "Elected_councillors_2016",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046177594086316276,
+          "lon": -0.00002416507776442616
+        },
+        "ne": {
+          "lat": 0.0004627688245761874,
+          "lon": -0.00002263225175278316
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Elected_councillors_1999_to_2015",
+      "title": "Elected_councillors_1999_to_2015",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046173906035562595,
+          "lon": -0.000024133455649323838
+        },
+        "ne": {
+          "lat": 0.00046279384838499027,
+          "lon": -0.00002266747618395839
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Cycling_-_strategic_routes",
+      "title": "Cycling_-_strategic_routes",
+      "bbox": {
+        "sw": {
+          "lat": 0.0004615813410566716,
+          "lon": -0.00002474225495971936
+        },
+        "ne": {
+          "lat": 0.0004628696095920759,
+          "lon": -0.000021550399734896454
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Public_toilets_-_Community",
+      "title": "Public_toilets_-_Community",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046177001875946644,
+          "lon": -0.000024230039300496085
+        },
+        "ne": {
+          "lat": 0.0004627247305251103,
+          "lon": -0.0000225947814290121
+        }
+      },
+      "epsg": 27700
+    },
+    {
+      "name": "ext_datagov:Student_accommodation",
+      "title": "Student_accommodation",
+      "bbox": {
+        "sw": {
+          "lat": 0.00046207474828463546,
+          "lon": -0.00002360299307120711
+        },
+        "ne": {
+          "lat": 0.0004625865897054382,
+          "lon": -0.00002266306891367998
+        }
+      },
+      "epsg": 27700
+    }
+  ]
+}

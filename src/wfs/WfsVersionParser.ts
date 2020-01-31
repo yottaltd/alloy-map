@@ -24,22 +24,31 @@ export abstract class WfsVersionParser {
    * Parses XML GetCapabilities response FeatureType into `AlloyWfsFeatureType`
    * @param node XML element of FeatureType to parse
    * @param version version of WFS service
+   * @param usePrefix whether nodes have 'wfs:' at the start of tags
    */
-  public static parseFeatureTypeNode(node: Element, version: string): AlloyWfsFeatureType {
+  public static parseFeatureTypeNode(
+    node: Element,
+    version: string,
+    usePrefix: boolean = false,
+  ): AlloyWfsFeatureType {
     WfsVersionParser.debugger('parsing feature type node');
 
-    const nameNode = node.querySelector(featureTypeName);
+    const nameNode = usePrefix
+      ? WfsVersionParser.getChildByTagName(node, `wfs:${featureTypeName}`)
+      : node.querySelector(featureTypeName);
     if (!nameNode) {
       throw new AlloyMapError(1562248616, 'Failed to get feature type name node');
     }
     const nameValue = nameNode.innerHTML;
-    const titleNode = node.querySelector(featureTypeTitle);
+    const titleNode = usePrefix
+      ? WfsVersionParser.getChildByTagName(node, `wfs:${featureTypeTitle}`)
+      : node.querySelector(featureTypeTitle);
     if (!titleNode) {
       throw new AlloyMapError(1562248648, 'Failed to get feature type title node');
     }
     const titleValue = titleNode.innerHTML;
     const wgs84bboxValue = WfsVersionParser.parseFeatureTypeBbox(node, version);
-    const epsgValue = WfsVersionParser.parseFeatureTypeEpsg(node, version);
+    const epsgValue = WfsVersionParser.parseFeatureTypeEpsg(node, version, usePrefix);
 
     WfsVersionParser.debugger(`finished parsing feature type node ${titleValue}`);
 
@@ -61,10 +70,15 @@ export abstract class WfsVersionParser {
    * Gets epsg code for WFS Feature type
    * @param node XML element of FeatureType to find epsg for
    * @param version WFS version
+   * @param usePrefix whether `wfs:` prefix for tag names is used
    * @ignore
    * @internal
    */
-  private static parseFeatureTypeEpsg(node: Element, version: string): number {
+  private static parseFeatureTypeEpsg(
+    node: Element,
+    version: string,
+    usePrefix: boolean = false,
+  ): number {
     WfsVersionParser.debugger('parsing feature type epsg');
     let srsTag: string;
     switch (version) {
@@ -78,7 +92,7 @@ export abstract class WfsVersionParser {
         srsTag = featureTypeEpsg200;
         break;
     }
-    const srsNode = WfsVersionParser.getChildByTagName(node, srsTag);
+    const srsNode = WfsVersionParser.getChildByTagName(node, `${usePrefix ? 'wfs:' : ''}${srsTag}`);
     if (!srsNode) {
       throw new AlloyMapError(1562248514, 'Failed to get srs node for feature type');
     }
@@ -162,8 +176,9 @@ export abstract class WfsVersionParser {
    * @internal
    */
   private static getChildByTagName(node: Element, tag: string): Element | undefined {
-    for (const child of node.children) {
-      if (child.tagName.toLowerCase() === tag.toLowerCase()) {
+    for (let i = 0; i < node.children.length; i++) {
+      const child = node.children.item(i);
+      if (child && child.tagName.toLowerCase() === tag.toLowerCase()) {
         return child;
       }
     }

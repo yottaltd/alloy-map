@@ -29,6 +29,16 @@ export abstract class ColourUtils {
   }
 
   /**
+   * consistent darkening of a colour for labels
+   * @param colour the colour to darken
+   */
+  public static darkenLabel(colour: string): string {
+    return color(colour)
+      .darken(DARKEN_AMOUNT * 2)
+      .hex();
+  }
+
+  /**
    * consistent lightening of a colour for backgrounds
    * @param colour the colour to lighten
    */

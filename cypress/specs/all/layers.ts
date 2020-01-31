@@ -21,11 +21,7 @@ export default function(mapData: MapData) {
       );
       const layerCode = 'myFakeLayer';
       const styles: AlloyLayerStyle[] = [
-        {
-          colour: '#cc3300',
-          icon: 'icon-stl',
-          styleId: 'myFakeStyleId',
-        },
+        new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
       const layer = new AlloyClusterLayer({
         bounds,
@@ -56,11 +52,7 @@ export default function(mapData: MapData) {
       );
       const layerCode = 'myFakeLayer';
       const styles: AlloyLayerStyle[] = [
-        {
-          colour: '#cc3300',
-          icon: 'icon-stl',
-          styleId: 'myFakeStyleId',
-        },
+        new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
       const layer = new AlloyNetworkLayer({
         bounds,
@@ -91,11 +83,7 @@ export default function(mapData: MapData) {
       );
       const layerCode = 'myFakeLayer';
       const styles: AlloyLayerStyle[] = [
-        {
-          colour: '#cc3300',
-          icon: 'icon-stl',
-          styleId: 'myFakeStyleId',
-        },
+        new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
       const layer = new AlloyClusterLayer({
         bounds,
@@ -133,11 +121,7 @@ export default function(mapData: MapData) {
       );
       const layerCode = 'myFakeLayer';
       const styles: AlloyLayerStyle[] = [
-        {
-          colour: '#cc3300',
-          icon: 'icon-stl',
-          styleId: 'myFakeStyleId',
-        },
+        new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
       const layer = new AlloyClusterLayer({
         bounds,
@@ -171,11 +155,7 @@ export default function(mapData: MapData) {
       const layerCode = 'myFakeLayer';
       const layerCodeOther = 'myOtherFakeLayer';
       const styles: AlloyLayerStyle[] = [
-        {
-          colour: '#cc3300',
-          icon: 'icon-stl',
-          styleId: 'myFakeStyleId',
-        },
+        new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
       const layer = new AlloyClusterLayer({
         bounds,
