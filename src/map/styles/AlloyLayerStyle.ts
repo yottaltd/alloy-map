@@ -1,4 +1,5 @@
 import { AlloyMapError } from '../../error/AlloyMapError';
+import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
 
 /**
  * regex for testing a colour is valid hex
@@ -26,6 +27,11 @@ export class AlloyLayerStyle {
   public readonly icon?: string;
 
   /**
+   * whether to show labels against features (where applicable)
+   */
+  public readonly labelMode: AlloyLayerStyleLabelMode;
+
+  /**
    * opacity of the style
    */
   public readonly opacity: number;
@@ -35,11 +41,19 @@ export class AlloyLayerStyle {
    * @param styleId the style id
    * @param colour the colour of the style
    * @param icon the icon font class name
+   * @param labelMode the mode for displaying labels
    * @param opacity the opacity of the style
    */
-  constructor(styleId: string, colour: string, icon?: string, opacity = 1) {
+  constructor(
+    styleId: string,
+    colour: string,
+    icon?: string,
+    labelMode?: AlloyLayerStyleLabelMode,
+    opacity = 1,
+  ) {
     this.styleId = styleId;
     this.icon = icon;
+    this.labelMode = labelMode || AlloyLayerStyleLabelMode.None;
     this.opacity = opacity;
 
     // we're really picky about colours being hex to avoid issues in openlayers

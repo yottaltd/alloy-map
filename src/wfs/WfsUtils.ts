@@ -37,6 +37,21 @@ export abstract class WfsUtils {
 
       const caps = await (await fetch(capsUrl.href)).text();
 
+      return await WfsUtils.parseCapabilities(url, caps);
+    } catch (e) {
+      throw new AlloyMapError(1579267818, 'Failed to get and parse capabilities');
+    }
+  }
+
+  /**
+   * Parser response to GetCapabilities request
+   * @param url url of WFS service
+   * @param caps GetCapabilities response
+   * @ignore
+   * @internal
+   */
+  public static async parseCapabilities(url: string, caps: string): Promise<AlloyWfsCapabilities> {
+    try {
       WfsUtils.debugger('parsing xml');
       const domparser = new DOMParser();
       const domdoc = domparser.parseFromString(caps, 'text/xml');
@@ -65,11 +80,30 @@ export abstract class WfsUtils {
 
       // populate the feature types
       const featureTypes: AlloyWfsFeatureType[] = [];
-      const featureTypeList = rootEl.querySelector('FeatureTypeList');
+      let usePrefix = false;
+      let featureTypeList = rootEl.querySelector('FeatureTypeList');
+      if (!featureTypeList) {
+        featureTypeList = rootEl.getElementsByTagName('wfs:FeatureTypeList')[0];
+        if (featureTypeList) {
+          usePrefix = true;
+        }
+      }
       if (featureTypeList) {
-        featureTypeList.querySelectorAll('FeatureType').forEach((ftNode: Element) => {
+        let featureTypeElements: Element[];
+        if (usePrefix) {
+          featureTypeElements = Array.from(featureTypeList.getElementsByTagName('wfs:FeatureType'));
+        } else {
+          featureTypeElements = Array.from(featureTypeList.querySelectorAll('FeatureType'));
+        }
+        featureTypeElements.forEach((ftNode: Element) => {
           try {
-            featureTypes.push(WfsVersionParser.parseFeatureTypeNode(ftNode, attributeVersion));
+            featureTypes.push(
+              WfsVersionParser.parseFeatureTypeNode(
+                ftNode,
+                attributeVersion,
+                usePrefix || ftNode.tagName.startsWith('wfs:'),
+              ),
+            );
           } catch (error) {
             // ignore feature type if something went wrong parsing it
             WfsUtils.debugger('failed to parse feature type node');
@@ -197,7 +231,11 @@ export abstract class WfsUtils {
     }
 
     const complexTypes = schemaRoot.getElementsByTagName('xsd:complexType');
-    for (const complexType of complexTypes) {
+    for (let i = 0; i < complexTypes.length; i++) {
+      const complexType = complexTypes.item(i);
+      if (!complexType) {
+        continue;
+      }
       const complexContent = complexType.getElementsByTagName('xsd:complexContent').item(0);
       if (!complexContent) {
         throw new AlloyMapError(1562248352, 'Failed to find complex content node in schema');
@@ -213,7 +251,11 @@ export abstract class WfsUtils {
 
       const featureTypeElements = sequence.getElementsByTagName('xsd:element');
       if (featureTypeElements.length > 0) {
-        for (const element of featureTypeElements) {
+        for (let i = 0; i < featureTypeElements.length; i++) {
+          const element = featureTypeElements.item(i);
+          if (!element) {
+            continue;
+          }
           const name: string | null = element.getAttribute('name');
           if (name) {
             WfsUtils.debugger(`Parsing description for parameter ${name}`);

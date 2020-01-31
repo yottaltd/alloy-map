@@ -1,4 +1,5 @@
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
+import { AlloyLayerStyleLabelMode } from '../styles/AlloyLayerStyleLabelMode';
 
 /**
  * the properties for an alloy custom feature
@@ -48,4 +49,9 @@ export interface AlloyCustomFeatureProperties {
    * State to force when styling this feature
    */
   readonly forceState?: AlloyStyleBuilderBuildState;
+
+  /**
+   * the label mode to use for this feature (uses the title and subtitle properties)
+   */
+  readonly labelMode?: AlloyLayerStyleLabelMode;
 }
