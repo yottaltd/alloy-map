@@ -1417,6 +1417,7 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       AlloyLineUtils.createLineDashStyle(
         width,
         NETWORK_LINE_COLOUR,
+        1,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -1424,6 +1425,7 @@ export class AlloyNetworkStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       AlloyLineUtils.createLineEndStyle(
         width,
         NETWORK_LINE_COLOUR,
+        1,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
