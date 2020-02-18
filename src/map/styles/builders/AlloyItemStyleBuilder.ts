@@ -210,6 +210,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -266,6 +267,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -329,6 +331,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -371,6 +374,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -456,6 +460,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -537,6 +542,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -583,6 +589,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -649,6 +656,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -734,6 +742,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -788,6 +797,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -880,6 +890,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -968,6 +979,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1014,6 +1026,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1078,6 +1091,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1159,6 +1173,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1260,6 +1275,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1398,6 +1414,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1483,6 +1500,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
             ? feature.properties.subtitle
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
