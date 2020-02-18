@@ -112,7 +112,7 @@ export abstract class AlloyLabelUtils {
         // y value is a fraction as we want it centred
         anchorYUnits: IconAnchorUnits.FRACTION,
         // offset the label to the right of its destination
-        anchor: [LABEL_ARROW_OFFSET * scale, 0.5],
+        anchor: [LABEL_ARROW_OFFSET * Math.pow(scale, 2), 0.5],
       }),
       geometry: geometryFunction,
       zIndex: 0,
