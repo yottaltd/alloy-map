@@ -64,7 +64,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     epsg: number,
     version: string,
     colour: string,
-    icon: string,
+    icon?: string,
     labelTitle?: string,
     labelSubtitle?: string,
     scale = AlloyLayerStyleScale.Medium,
