@@ -47,7 +47,17 @@ export abstract class WmtsUtils {
     // first get the web response
     let capabilitiesResponse: Response;
     try {
-      capabilitiesResponse = await fetch(url);
+      const capsUrl = new URL(url);
+      if (
+        !(
+          capsUrl.href.toLowerCase().endsWith('.xml') ||
+          capsUrl.href.toLowerCase().endsWith('.xml?')
+        )
+      ) {
+        capsUrl.searchParams.set('service', 'WMTS');
+        capsUrl.searchParams.set('request', 'GetCapabilities');
+      }
+      capabilitiesResponse = await fetch(capsUrl.href);
     } catch (error) {
       if (error instanceof AlloyMapError) {
         throw error;
