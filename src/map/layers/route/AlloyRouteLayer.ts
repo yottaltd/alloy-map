@@ -127,4 +127,26 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer {
       this.addConnectorLine(waypointFeature, this.routeFeature);
     }
   }
+
+  /**
+   * Fades out layer and stops animations
+   * @param fade whether to fade out route layer
+   */
+  public fadeOut(fade: boolean) {
+    if (fade) {
+      if (this.routeFeature) {
+        this.animationManager.stopAnimation(this.routeFeature);
+      }
+      for (const layer of this.olLayers) {
+        layer.setOpacity(0.25);
+      }
+    } else {
+      if (this.routeFeature) {
+        this.animationManager.startAnimation(this.routeFeature);
+      }
+      for (const layer of this.olLayers) {
+        layer.setOpacity(1);
+      }
+    }
+  }
 }
