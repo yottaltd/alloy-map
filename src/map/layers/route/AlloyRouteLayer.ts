@@ -1,11 +1,6 @@
-import { LineString, Point } from 'geojson';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
-import { AlloyRouteFeatureFactory } from '../../features/AlloyRouteFeatureFactory';
-import { AlloyRouteFeatureProperties } from '../../features/AlloyRouteFeatureProperties';
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
-// tslint:disable-next-line:max-line-length
-import { AlloyRouteWaypointFeatureProperties } from '../../features/AlloyRouteWaypointFeatureProperties';
 import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
 import { AlloyRouteAnimationManager } from './AlloyRouteAnimationManager';
 import { AlloyRouteLayerOptions } from './AlloyRouteLayerOptions';

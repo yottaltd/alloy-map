@@ -63,7 +63,7 @@ export abstract class WfsLayerUtils {
         );
 
         const onError = (e: any) =>
-          // tslint:disable-next-line:no-console
+          // eslint-disable-next-line no-console
           console.error('failed to fetch WFS features for extent', extent, e);
         const fetchPromise = async () => {
           try {

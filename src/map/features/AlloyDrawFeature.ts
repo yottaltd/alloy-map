@@ -5,7 +5,7 @@ import * as uuid from 'uuid';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
