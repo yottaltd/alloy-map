@@ -14,7 +14,7 @@ export abstract class ScreenshotUtils {
    */
   public static async screenshot(map: AlloyMap): Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => {
-      map.olMap.once('rendercomplete', (event: RenderEvent) => {
+      map.olMap.once('postrender', (event: RenderEvent) => {
         try {
           // get the canvas
           const canvas: HTMLCanvasElement | null = map.olMap
