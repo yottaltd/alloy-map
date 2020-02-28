@@ -1,0 +1,47 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es6": true,
+    "cypress/globals": true
+  },
+  "plugins": ["@typescript-eslint", "prettier", "cypress", "chai-friendly"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:cypress/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {},
+    "sourceType": "module"
+  },
+  "ignorePatterns": ["src/api/**"],
+  "rules": {
+    "eqeqeq": "warn",
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-prototype-builtins": "off",
+    "no-unused-expressions": "off",
+    "max-len": ["warn", { "code": 100, "ignoreUrls": true }],
+    "quotes": ["error", "single", "avoid-escape"],
+    "chai-friendly/no-unused-expressions": "error",
+    "@typescript-eslint/prefer-for-of": ["warn"],
+    "@typescript-eslint/no-inferrable-types": ["warn"],
+    "@typescript-eslint/explicit-function-return-type": ["off"],
+    "@typescript-eslint/no-use-before-define": ["error", { "functions": false }],
+    "@typescript-eslint/camelcase": ["off"],
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/no-empty-interface": ["off"],
+    "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],
+    "prettier/prettier": "error"
+  }
+}
