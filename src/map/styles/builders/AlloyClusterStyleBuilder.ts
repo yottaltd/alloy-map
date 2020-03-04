@@ -67,7 +67,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       resolution,
       // icon is not in here because clusters don't have them
       layerStyle.colour,
-      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity : 1,
+      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
       text,
     );
   }

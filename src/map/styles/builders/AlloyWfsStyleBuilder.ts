@@ -90,7 +90,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
         layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
         ? feature.olFeature.get(layerStyle.labelSubtitle)
         : undefined,
-      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity : 1,
+      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
     );
   }
 
