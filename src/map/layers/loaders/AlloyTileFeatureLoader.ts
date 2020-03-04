@@ -90,8 +90,8 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     // array of requests for tiles, each result is the loaded features for a given tile
     const requests: Array<Promise<T[]>> = [];
 
-    // calculate the zoom level for the current resolution
-    const zoom = this.olTileGrid.getZForResolution(resolution);
+    // calculate the zoom level for the current resolution, direction = 1 floors zoom when rounding
+    const zoom = this.olTileGrid.getZForResolution(resolution, 1);
 
     // get all the tile coordinates that we are going to request
     const tileCoordinates: AlloyTileCoordinate[] = [];
