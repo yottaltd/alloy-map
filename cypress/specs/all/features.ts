@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { AlloyCoordinate } from '../../../src/map/core/AlloyCoordinate';
+import { AlloySelectionMode } from '../../../src/map/core/AlloySelectionMode';
 import { AlloyFeature } from '../../../src/map/features/AlloyFeature';
 import { AlloyCustomLayer } from '../../../src/map/layers/custom/AlloyCustomLayer';
 import { AlloyStyleBuilderBuildState } from '../../../src/map/styles/AlloyStyleBuilderBuildState';
@@ -108,6 +109,57 @@ export default function(mapData: MapData) {
         // Check that feature has been selected
         cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
         cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
+      });
+    });
+
+    it('should select multiple features on map on click with toggle mode', () => {
+      // set selection mode to toggle
+      mapData.map.setSelectionMode(AlloySelectionMode.Toggle);
+      // Add layer
+      const layer = new AlloyCustomLayer({
+        map: mapData.map,
+        id: 'selectFeatureByClick',
+      });
+      mapData.map.addLayer(layer);
+
+      // Add custom feature at centre
+      const customFeature = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        mapCentre,
+      );
+
+      // Add second custom feature at new coordinates
+      const secondCoordinate = new AlloyCoordinate(mapCentre.lon + 0.05, mapCentre.lat + 0.05);
+      const customFeature2 = layer.addPointFeature(
+        {
+          title: 'Title',
+          subtitle: 'Subtitle',
+          colour: '#115599',
+          icon: 'icon-system-success',
+        },
+        secondCoordinate,
+      );
+
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Click centre of the map
+        const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
+        mapClick(pixel[0], pixel[1]);
+        // Click second coordinate
+        const pixel2 = mapData.map.olMap.getPixelFromCoordinate(secondCoordinate.toMapCoordinate());
+        mapClick(pixel2[0], pixel2[1]);
+      });
+      // Wait for map to re-render
+      cy.wait(100).then(() => {
+        // Check that both features has been selected
+        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
+        cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
+        cy.wrap(mapData.map.selectedFeatures.has(customFeature2.id)).should('be.true');
       });
     });
 

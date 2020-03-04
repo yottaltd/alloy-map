@@ -5,6 +5,7 @@ import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyCableFeature } from '../../features/AlloyCableFeature';
 import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -122,6 +123,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -130,7 +132,12 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     if (feature.properties.icon) {
       // the icon of the item
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          feature.properties.icon,
+          ICON_COLOUR,
+          AlloyLayerStyleOpacity.Opaque,
+        ),
       );
     }
     return styles;
@@ -147,6 +154,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -168,6 +176,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -176,6 +185,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -184,7 +194,12 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     if (feature.properties.icon) {
       // the icon of the item
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          feature.properties.icon,
+          ICON_COLOUR,
+          AlloyLayerStyleOpacity.Opaque,
+        ),
       );
     }
     return styles;
@@ -204,6 +219,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -211,6 +227,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -230,6 +247,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallHaloStyle(
         radius,
         feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -238,6 +256,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -246,7 +265,12 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     if (feature.properties.icon) {
       // the icon of the item
       styles.push(
-        AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+        AlloyIconUtils.createAlloyIconStyle(
+          radius,
+          feature.properties.icon,
+          ICON_COLOUR,
+          AlloyLayerStyleOpacity.Opaque,
+        ),
       );
     }
     return styles;
@@ -263,6 +287,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineHaloStyle(
         width,
         feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -270,6 +295,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,

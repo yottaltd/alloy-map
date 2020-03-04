@@ -37,9 +37,7 @@ export class AlloyTileCoordinate {
   constructor(olTileCoordinate: number[]) {
     this.olTileCoordinate = olTileCoordinate;
     this.x = olTileCoordinate[1];
-    // calculate the normalised tile coordinates, for some reason openlayers like negative y
-    // values and we need to offset them anyway
-    this.y = Math.abs(olTileCoordinate[2] + 1);
+    this.y = olTileCoordinate[2];
     this.z = olTileCoordinate[0];
 
     this.requestKey = this.z + ':' + this.x + ':' + this.y;
