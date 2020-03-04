@@ -1,5 +1,4 @@
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
-import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLPolygon from 'ol/geom/Polygon';
 import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
@@ -7,7 +6,6 @@ import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
 import { ColourUtils } from '../../../utils/ColourUtils';
-import { GeometryUtils } from '../../../utils/GeometryUtils';
 import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyFeature } from '../../features/AlloyFeature';
 
@@ -22,6 +20,22 @@ const DEGREES_90_IN_RADIANS: number = Math.PI / 2;
  * @ignore
  */
 const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
+
+/**
+ * Chevron shape for route animation
+ * @ignore
+ */
+const SHAPE: OLPolygon = new OLPolygon([
+  [
+    [0, 0],
+    [1, -1],
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [-1, -1],
+    [0, 0],
+  ],
+]);
 
 /**
  * animation manager handles common animation utilities
@@ -59,41 +73,22 @@ export class AlloyRouteAnimationManager extends AlloyAnimationManager {
         // create style with opacity for current ratio
         const routingStyle = new OLStyle({
           fill: new OLFill({
-            color: ColourUtils.opacity(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
+            color: ColourUtils.opacity(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2),
           }),
         });
 
-        const noseClockwise90Degrees = GeometryUtils.rotateCoordinate(
-          nose,
-          DEGREES_90_IN_RADIANS,
-          centre,
-        );
-        const noseCounterClockwise90Degrees = GeometryUtils.rotateCoordinate(
-          nose,
-          -DEGREES_90_IN_RADIANS,
-          centre,
-        );
+        // vector coordinate - distance between centre and front coordinates
+        const vector = [centre[0] - nose[0], centre[1] - nose[1]];
 
-        // vector coordinate - distance between centre coordinates
-        const vector = [nose[0] - centre[0], nose[1] - centre[1]];
+        // clone animated shape polygon and position it
+        const polygon = SHAPE.clone();
+        polygon.rotate(DEGREES_90_IN_RADIANS + Math.atan2(vector[1], vector[0]), [0, 0]);
+        polygon.scale(Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)));
+        polygon.translate(centre[0], centre[1]);
 
-        // construct the path
-        const coordinates: OLCoordinate[] = [];
-        coordinates.push(nose);
-        coordinates.push(noseClockwise90Degrees);
-        coordinates.push([
-          noseClockwise90Degrees[0] - vector[0],
-          noseClockwise90Degrees[1] - vector[1],
-        ]);
-        coordinates.push(centre);
-        coordinates.push([
-          noseCounterClockwise90Degrees[0] - vector[0],
-          noseCounterClockwise90Degrees[1] - vector[1],
-        ]);
-        coordinates.push(noseCounterClockwise90Degrees);
-        coordinates.push(nose);
-
-        renderer.drawFeature(new OLFeature(new OLPolygon([coordinates])), routingStyle);
+        // set render style and draw geometry
+        renderer.setStyle(routingStyle);
+        renderer.drawGeometry(polygon);
       },
     );
   }
