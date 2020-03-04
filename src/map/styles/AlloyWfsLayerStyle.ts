@@ -1,4 +1,5 @@
 import { AlloyLayerStyle } from './AlloyLayerStyle';
+import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
 
 /**
  * an alloy wfs layer style informs an alloy layer about how to style its contents
@@ -52,7 +53,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     icon: string,
     labelTitle?: string,
     labelSubtitle?: string,
-    opacity?: number,
+    opacity?: AlloyLayerStyleOpacity,
   ) {
     super(styleId, colour, icon, undefined, opacity);
     this.url = url;

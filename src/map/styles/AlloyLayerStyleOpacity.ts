@@ -1,7 +1,5 @@
 /**
  * Wrapper for style opacity that limits opacity to 0-1 range
- * @ignore
- * @internal
  */
 export class AlloyLayerStyleOpacity {
   /**
