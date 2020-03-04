@@ -1,5 +1,6 @@
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
 
 /**
  * regex for testing a colour is valid hex
@@ -34,7 +35,7 @@ export class AlloyLayerStyle {
   /**
    * opacity of the style
    */
-  public readonly opacity: number;
+  public readonly opacity: AlloyLayerStyleOpacity;
 
   /**
    * creates a new instance
@@ -49,12 +50,13 @@ export class AlloyLayerStyle {
     colour: string,
     icon?: string,
     labelMode?: AlloyLayerStyleLabelMode,
-    opacity = 1,
+    opacity?: number,
   ) {
     this.styleId = styleId;
     this.icon = icon;
     this.labelMode = labelMode || AlloyLayerStyleLabelMode.None;
-    this.opacity = opacity;
+    this.opacity =
+      opacity !== undefined ? new AlloyLayerStyleOpacity(opacity) : AlloyLayerStyleOpacity.Opaque;
 
     // we're really picky about colours being hex to avoid issues in openlayers
     if (!HEX_REGEX.test(colour)) {

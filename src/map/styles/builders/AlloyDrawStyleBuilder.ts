@@ -15,6 +15,7 @@ import { AlloyPolygonUtils } from '../utils/AlloyPolygonUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
 import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineStringFunctions';
 import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 
 /**
  * the icon colour in the balls
@@ -117,9 +118,18 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
 
     return [
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, feature.properties.colour),
+      AlloyBallUtils.createBallStyle(
+        radius,
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+      AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon,
+        ICON_COLOUR,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
     ];
   }
 
@@ -128,7 +138,7 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
       AlloyLineUtils.createLineStyle(
         this.getLineWidth(resolution),
         feature.properties.colour,
-        undefined,
+        AlloyLayerStyleOpacity.Opaque,
       ),
     ];
   }
@@ -153,12 +163,12 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
     return [
-      AlloyPolygonUtils.createPolygonStyle(semiTransparentColour, undefined),
+      AlloyPolygonUtils.createPolygonStyle(semiTransparentColour, AlloyLayerStyleOpacity.Opaque),
       AlloyIconUtils.createAlloyIconStyle(
         iconSize,
         feature.properties.icon,
         ICON_COLOUR,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         // we already have the mid point so use it
         midPoint,
       ),
@@ -172,11 +182,16 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
     return [
       // the halo circle
-      AlloyBallUtils.createBallHaloStyle(radius, hoverColour),
+      AlloyBallUtils.createBallHaloStyle(radius, hoverColour, AlloyLayerStyleOpacity.Opaque),
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, hoverColour),
+      AlloyBallUtils.createBallStyle(radius, hoverColour, AlloyLayerStyleOpacity.Opaque),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+      AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon,
+        ICON_COLOUR,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
     ];
   }
 
@@ -187,8 +202,8 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
 
     return [
-      AlloyLineUtils.createLineHaloStyle(width, hoverColour, undefined),
-      AlloyLineUtils.createLineStyle(width, hoverColour, undefined),
+      AlloyLineUtils.createLineHaloStyle(width, hoverColour, AlloyLayerStyleOpacity.Opaque),
+      AlloyLineUtils.createLineStyle(width, hoverColour, AlloyLayerStyleOpacity.Opaque),
     ];
   }
 
@@ -213,13 +228,13 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
     return [
-      AlloyPolygonUtils.createPolygonHaloStyle(hoverColour, undefined),
-      AlloyPolygonUtils.createPolygonStyle(hoverColour, undefined),
+      AlloyPolygonUtils.createPolygonHaloStyle(hoverColour, AlloyLayerStyleOpacity.Opaque),
+      AlloyPolygonUtils.createPolygonStyle(hoverColour, AlloyLayerStyleOpacity.Opaque),
       AlloyIconUtils.createAlloyIconStyle(
         iconSize,
         feature.properties.icon,
         ICON_COLOUR,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         // we already have the mid point so use it
         midPoint,
       ),
@@ -231,11 +246,24 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
 
     return [
       // the halo circle
-      AlloyBallUtils.createBallHaloStyle(radius, feature.properties.colour),
+      AlloyBallUtils.createBallHaloStyle(
+        radius,
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, feature.properties.colour),
+      AlloyBallUtils.createBallStyle(
+        radius,
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
       // the icon of the item
-      AlloyIconUtils.createAlloyIconStyle(radius, feature.properties.icon, ICON_COLOUR),
+      AlloyIconUtils.createAlloyIconStyle(
+        radius,
+        feature.properties.icon,
+        ICON_COLOUR,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
     ];
   }
 
@@ -244,20 +272,28 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     const radius = this.getBallRadius(resolution);
 
     return [
-      AlloyLineUtils.createLineHaloStyle(width, feature.properties.colour),
-      AlloyLineUtils.createLineStyle(width, feature.properties.colour),
+      AlloyLineUtils.createLineHaloStyle(
+        width,
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
+      AlloyLineUtils.createLineStyle(
+        width,
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
         feature.properties.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
       // the background coloured circle
       AlloyBallUtils.createBallStyle(
         radius,
         feature.properties.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
       // the icon of the item
@@ -265,7 +301,7 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
         radius,
         feature.properties.icon,
         ICON_COLOUR,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         AlloyLineStringFunctions.convertFeatureToMidPoint,
       ),
     ];
@@ -289,13 +325,19 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     iconSize = Math.min(iconSize, AlloyScaleUtils.POINT_RADIUS_MAX * 2);
 
     return [
-      AlloyPolygonUtils.createPolygonHaloStyle(feature.properties.colour, undefined),
-      AlloyPolygonUtils.createPolygonStyle(feature.properties.colour, undefined),
+      AlloyPolygonUtils.createPolygonHaloStyle(
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
+      AlloyPolygonUtils.createPolygonStyle(
+        feature.properties.colour,
+        AlloyLayerStyleOpacity.Opaque,
+      ),
       AlloyIconUtils.createAlloyIconStyle(
         iconSize,
         feature.properties.icon,
         ICON_COLOUR,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         // we already have the mid point so use it
         midPoint,
       ),

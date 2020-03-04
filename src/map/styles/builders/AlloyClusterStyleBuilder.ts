@@ -5,6 +5,7 @@ import { ColourUtils } from '../../../utils/ColourUtils';
 import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -96,7 +97,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
           img: textCanvas,
           scale: 1,
           imgSize: [textCanvas.width, textCanvas.height],
-          opacity: layerStyle.opacity,
+          opacity: layerStyle.opacity.value,
         }),
       }),
     ];
@@ -126,9 +127,9 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return [
       // the halo circle
-      AlloyBallUtils.createBallHaloStyle(radius, hoverColour, 1),
+      AlloyBallUtils.createBallHaloStyle(radius, hoverColour, AlloyLayerStyleOpacity.Opaque),
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, hoverColour, 1),
+      AlloyBallUtils.createBallStyle(radius, hoverColour, AlloyLayerStyleOpacity.Opaque),
       // the text in the cluster
       new OLStyle({
         image: new OLIcon({

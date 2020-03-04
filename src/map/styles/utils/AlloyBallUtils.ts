@@ -6,6 +6,7 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { Colour, ColourUtils } from '../../../utils/ColourUtils';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 
 /**
  * utility for ball styles
@@ -23,18 +24,18 @@ export abstract class AlloyBallUtils {
   public static createBallStyle(
     radius: number,
     colour: Colour,
-    opacity = 1,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       image: new OLCircle({
         radius,
         fill: new OLFill({
-          color: ColourUtils.opacity(colour, opacity),
+          color: ColourUtils.opacity(colour, opacity.value),
         }),
         stroke: new OLStroke({
           width: 1,
-          color: ColourUtils.opacity(ColourUtils.darkenBorder(colour), opacity),
+          color: ColourUtils.opacity(ColourUtils.darkenBorder(colour), opacity.value),
         }),
       }),
       geometry: geometryFunction,
@@ -53,14 +54,14 @@ export abstract class AlloyBallUtils {
   public static createBallHaloStyle(
     radius: number,
     colour: Colour,
-    opacity = 1,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       image: new OLCircle({
         radius: radius * 1.33,
         fill: new OLFill({
-          color: ColourUtils.opacity(ColourUtils.lightenHalo(colour), opacity),
+          color: ColourUtils.opacity(ColourUtils.lightenHalo(colour), opacity.value),
         }),
       }),
       geometry: geometryFunction,

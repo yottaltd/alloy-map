@@ -4,9 +4,10 @@ import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
-import { FontUtils } from '../../../utils/FontUtils';
-import { AlloyTextUtils } from './AlloyTextUtils';
 import { Colour, ColourUtils } from '../../../utils/ColourUtils';
+import { FontUtils } from '../../../utils/FontUtils';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
+import { AlloyTextUtils } from './AlloyTextUtils';
 
 /**
  * the size in pixels of the canvas to render icons on
@@ -41,7 +42,7 @@ export abstract class AlloyIconUtils {
     size: number,
     alloyIconClass: string,
     colour: Colour,
-    opacity = 1,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // generate the icon canvas
@@ -57,7 +58,7 @@ export abstract class AlloyIconUtils {
         img: iconCanvas,
         scale: size / iconCanvas.width,
         imgSize: [iconCanvas.width, iconCanvas.height],
-        opacity,
+        opacity: opacity.value,
       }),
       geometry: geometryFunction,
       zIndex: 0,
@@ -74,7 +75,7 @@ export abstract class AlloyIconUtils {
   public static createTextIconStyle(
     text: string,
     colour: Colour,
-    opacity = 1,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // generate the text canvas
@@ -85,7 +86,7 @@ export abstract class AlloyIconUtils {
         img: textCanvas,
         scale: 1,
         imgSize: [textCanvas.width, textCanvas.height],
-        opacity,
+        opacity: opacity.value,
       }),
       geometry: geometryFunction,
       zIndex: 0,

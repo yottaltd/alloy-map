@@ -52,7 +52,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     icon: string,
     labelTitle?: string,
     labelSubtitle?: string,
-    opacity = 1,
+    opacity?: number,
   ) {
     super(styleId, colour, icon, undefined, opacity);
     this.url = url;

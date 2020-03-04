@@ -5,6 +5,7 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { Colour, ColourUtils } from '../../../utils/ColourUtils';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyScaleUtils } from './AlloyScaleUtils';
 
 /**
@@ -21,12 +22,12 @@ export abstract class AlloyPolygonUtils {
    */
   public static createPolygonStyle(
     colour: Colour,
-    opacity = 1,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       fill: new OLFill({
-        color: ColourUtils.opacity(colour, opacity),
+        color: ColourUtils.opacity(colour, opacity.value),
       }),
       geometry: geometryFunction,
       zIndex: 0,
@@ -41,12 +42,12 @@ export abstract class AlloyPolygonUtils {
    */
   public static createPolygonHaloStyle(
     colour: Colour,
-    opacity = 1,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       stroke: new OLStroke({
-        color: ColourUtils.opacity(ColourUtils.lightenHalo(colour), opacity),
+        color: ColourUtils.opacity(ColourUtils.lightenHalo(colour), opacity.value),
         width: AlloyScaleUtils.LINE_WIDTH_MAX,
         lineJoin: 'miter',
       }),

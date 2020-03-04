@@ -10,6 +10,7 @@ import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayerStyle } from '../AlloyLayerStyle';
 import { AlloyLayerStyleLabelMode } from '../AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -76,7 +77,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       resolution,
       layerStyle.icon,
       layerStyle.colour,
-      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity : 1,
+      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
       // need to key on geometry type as we support everything
       type,
       // polygons, multi polygons and geometry collections are also special due to icon sizing
@@ -605,7 +606,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -614,7 +615,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -628,7 +629,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           radius,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -673,7 +674,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -682,7 +683,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -696,7 +697,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           radius,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
             : undefined,
@@ -724,7 +725,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -732,7 +733,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -780,7 +781,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -788,7 +789,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -862,14 +863,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
@@ -883,7 +884,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           iconSize,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -953,14 +954,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         hoverColour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
@@ -974,7 +975,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           iconSize,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1048,7 +1049,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -1057,7 +1058,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -1071,7 +1072,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           radius,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1114,7 +1115,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -1123,7 +1124,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
           : undefined,
@@ -1137,7 +1138,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           radius,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeatureMultiPointsToMultiPoint
             : undefined,
@@ -1163,7 +1164,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineHaloStyle(
         width,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -1171,7 +1172,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineStyle(
         width,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -1204,7 +1205,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -1218,7 +1219,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -1237,7 +1238,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           radius,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1268,7 +1269,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineHaloStyle(
         width,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -1276,7 +1277,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyLineUtils.createLineStyle(
         width,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiLineStringsToMultiLineString
           : undefined,
@@ -1309,7 +1310,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallHaloStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -1323,7 +1324,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       AlloyBallUtils.createBallStyle(
         radius,
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryFunctionUtils.pipe(
               // if we have geometry collection, first convert to multi line strings
@@ -1342,7 +1343,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           radius,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1398,14 +1399,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePolygonsToMultiPolygon
           : undefined,
@@ -1419,7 +1420,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           iconSize,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1486,14 +1487,14 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
     const styles = [
       AlloyPolygonUtils.createPolygonHaloStyle(
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
       ),
       AlloyPolygonUtils.createPolygonStyle(
         layerStyle.colour,
-        1,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureMultiPolygonsToMultiPolygon
           : undefined,
@@ -1507,7 +1508,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
           iconSize,
           layerStyle.icon,
           ICON_COLOUR,
-          1,
+          AlloyLayerStyleOpacity.Opaque,
           // we already have the mid point so use it
           midPoint,
         ),

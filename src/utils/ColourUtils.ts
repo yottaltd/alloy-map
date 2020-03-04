@@ -12,6 +12,9 @@ const DARKEN_AMOUNT = 0.08;
  */
 const LIGHTEN_AMOUNT = 0.16;
 
+/**
+ * Wrapper for colour representation, either a string or number array in [r,g,b,a] format
+ */
 export type Colour = string | [number, number, number, number];
 /**
  * utility for colours
