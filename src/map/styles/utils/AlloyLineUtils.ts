@@ -6,6 +6,7 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { ColourUtils } from '../../../utils/ColourUtils';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 
 /**
  * utility for line style
@@ -17,17 +18,19 @@ export abstract class AlloyLineUtils {
    * creates a line style
    * @param width the width of the line
    * @param colour the colour of the line
+   * @param opacity the opacity of the line
    * @param geometryFunction the optional geometry function for the style
    */
   public static createLineStyle(
     width: number,
     colour: string,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       stroke: new OLStroke({
         width,
-        color: colour,
+        color: ColourUtils.opacity(colour, opacity.value),
         lineCap: 'round',
         lineJoin: 'round',
       }),
@@ -41,17 +44,19 @@ export abstract class AlloyLineUtils {
    * @param width the width of line to add a halo around (the value will be modified by a standard
    *               multiplier)
    * @param colour the colour of the line
+   * @param opacity the opacity of the line
    * @param geometryFunction the optional geometry function for the style
    */
   public static createLineHaloStyle(
     width: number,
     colour: string,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       stroke: new OLStroke({
         width: width * 2,
-        color: ColourUtils.lightenHalo(colour),
+        color: ColourUtils.opacity(ColourUtils.lightenHalo(colour), opacity.value),
         lineCap: 'round',
         lineJoin: 'round',
       }),
@@ -64,16 +69,18 @@ export abstract class AlloyLineUtils {
    * @param width the width of line to calculate line dash size and spacing (the value will be
    *              modified by a standard multiplier)
    * @param colour the colour of the line
+   * @param opacity the opacity of the line
    * @param geometryFunction the optional geometry function for the style
    */
   public static createLineDashStyle(
     width: number,
     colour: string,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       stroke: new OLStroke({
-        color: colour,
+        color: ColourUtils.opacity(colour, opacity.value),
         width: width / 6,
         lineDash: [width, width],
         lineCap: 'square',
@@ -87,17 +94,21 @@ export abstract class AlloyLineUtils {
    * @param width the width of line to calculate line end points radius (the value will be modified
    *              by a standard multiplier)
    * @param colour the colour of the line
+   * @param opacity the opacity of the line
    * @param geometryFunction the optional geometry function for the style
    */
   public static createLineEndStyle(
     width: number,
     colour: string,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
   ): OLStyle {
     return new OLStyle({
       image: new OLCircle({
         radius: width / 3,
-        fill: new OLFill({ color: colour }),
+        fill: new OLFill({
+          color: ColourUtils.opacity(colour, opacity.value),
+        }),
       }),
       geometry: geometryFunction,
       zIndex: 0,
