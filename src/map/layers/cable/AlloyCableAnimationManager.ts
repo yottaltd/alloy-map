@@ -1,5 +1,4 @@
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
-import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLPolygon from 'ol/geom/Polygon';
 import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
@@ -7,7 +6,6 @@ import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
 import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
 import { ColourUtils } from '../../../utils/ColourUtils';
-import { GeometryUtils } from '../../../utils/GeometryUtils';
 import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyFeature } from '../../features/AlloyFeature';
 
@@ -22,6 +20,22 @@ const DEGREES_90_IN_RADIANS: number = Math.PI / 2;
  * @ignore
  */
 const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
+
+/**
+ * Lighting bolt shape for cable animation
+ * @ignore
+ */
+const SHAPE: OLPolygon = new OLPolygon([
+  [
+    [0, 1],
+    [-0.4, -0.2],
+    [0.1, -0.1],
+    [0, -1],
+    [0.4, 0.2],
+    [-0.1, 0.1],
+    [0, 1],
+  ],
+]);
 
 /**
  * animation manager for cables
@@ -43,32 +57,10 @@ export class AlloyCableAnimationManager extends AlloyAnimationManager {
       ) => {
         // calculate coordinates for positioning
         const centre: OLCoordinate = lineString.getCoordinateAt(ratio);
-        let nose: OLCoordinate;
-        let back: OLCoordinate;
-
-        if (ratio > 1 - currentScaleRatio) {
-          back = GeometryUtils.rotateCoordinate(
-            lineString.getCoordinateAt(ratio - currentScaleRatio),
-            DEGREES_90_IN_RADIANS,
-            centre,
-          );
-          nose = GeometryUtils.rotateCoordinate(
-            lineString.getCoordinateAt(1),
-            DEGREES_90_IN_RADIANS,
-            centre,
-          );
-        } else {
-          back = GeometryUtils.rotateCoordinate(
-            lineString.getCoordinateAt(ratio - currentScaleRatio),
-            DEGREES_90_IN_RADIANS,
-            centre,
-          );
-          nose = GeometryUtils.rotateCoordinate(
-            lineString.getCoordinateAt(ratio + currentScaleRatio),
-            DEGREES_90_IN_RADIANS,
-            centre,
-          );
-        }
+        const nose: OLCoordinate =
+          ratio > 1 - currentScaleRatio
+            ? lineString.getCoordinateAt(1)
+            : lineString.getCoordinateAt(ratio + currentScaleRatio);
 
         // don't draw if coordinates are not in the view extent
         const viewExtent = this.map.viewport.toMapExtent();
@@ -82,34 +74,22 @@ export class AlloyCableAnimationManager extends AlloyAnimationManager {
         // create style with opacity for current ratio
         const cableStyle = new OLStyle({
           fill: new OLFill({
-            color: ColourUtils.opacity(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2)!,
+            color: ColourUtils.opacity(CHEVRON_COLOUR, 0.4 + Math.sin(Math.PI * ratio) / 2),
           }),
         });
 
-        const b1: OLCoordinate = GeometryUtils.rotateCoordinate(
-          centre,
-          DEGREES_90_IN_RADIANS / 3,
-          nose,
-        );
-        const n1: OLCoordinate = GeometryUtils.rotateCoordinate(
-          centre,
-          DEGREES_90_IN_RADIANS / 3,
-          back,
-        );
+        // vector coordinate - distance between centre and front coordinates
+        const vector = [centre[0] - nose[0], centre[1] - nose[1]];
 
-        const b2: OLCoordinate = GeometryUtils.rotateCoordinate(back, DEGREES_90_IN_RADIANS, b1);
-        const n2: OLCoordinate = GeometryUtils.rotateCoordinate(nose, DEGREES_90_IN_RADIANS, n1);
+        // clone animated shape polygon and position it
+        const polygon = SHAPE.clone();
+        polygon.rotate(DEGREES_90_IN_RADIANS + Math.atan2(vector[1], vector[0]), [0, 0]);
+        polygon.scale(Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)) * 1.5);
+        polygon.translate(centre[0], centre[1]);
 
-        const coordinates: OLCoordinate[] = [];
-        coordinates.push(nose);
-        coordinates.push(n1);
-        coordinates.push(n2);
-        coordinates.push(back);
-        coordinates.push(b1);
-        coordinates.push(b2);
-        coordinates.push(nose);
-
-        renderer.drawFeature(new OLFeature(new OLPolygon([coordinates])), cableStyle);
+        // set render style and draw geometry
+        renderer.setStyle(cableStyle);
+        renderer.drawGeometry(polygon);
       },
     );
   }
