@@ -1,13 +1,14 @@
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryType from 'ol/geom/GeometryType';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
-import OLGeometryType from 'ol/geom/GeometryType';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
@@ -108,10 +109,16 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
         radius,
         feature.properties.icon,
         colour,
+        AlloyLayerStyleOpacity.Opaque,
         geometryFunction,
       );
     } else if (feature.properties.text) {
-      return AlloyIconUtils.createTextIconStyle(feature.properties.text, colour, geometryFunction);
+      return AlloyIconUtils.createTextIconStyle(
+        feature.properties.text,
+        colour,
+        AlloyLayerStyleOpacity.Opaque,
+        geometryFunction,
+      );
     } else {
       throw new AlloyMapError(1558971976, 'Route waypoint style requires an icon or text');
     }
@@ -131,6 +138,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallHaloStyle(
         radius,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -139,6 +147,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyBallUtils.createBallStyle(
         radius,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
           : undefined,
@@ -169,6 +178,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineHaloStyle(
         width,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
@@ -176,6 +186,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       AlloyLineUtils.createLineStyle(
         width,
         hoverColour,
+        AlloyLayerStyleOpacity.Opaque,
         processGeometryCollection
           ? AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString
           : undefined,
