@@ -1,4 +1,6 @@
 import { AlloyLayerStyle } from './AlloyLayerStyle';
+import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
 
 /**
  * an alloy wfs layer style informs an alloy layer about how to style its contents
@@ -52,8 +54,17 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     icon: string,
     labelTitle?: string,
     labelSubtitle?: string,
+    opacity?: AlloyLayerStyleOpacity,
   ) {
-    super(styleId, colour, icon);
+    let mode: AlloyLayerStyleLabelMode = AlloyLayerStyleLabelMode.None;
+    if (labelTitle) {
+      if (labelSubtitle) {
+        mode = AlloyLayerStyleLabelMode.TitleAndSubtitle;
+      } else {
+        mode = AlloyLayerStyleLabelMode.Title;
+      }
+    }
+    super(styleId, colour, icon, mode, opacity);
     this.url = url;
     this.featureName = featureName;
     this.epsg = epsg;
