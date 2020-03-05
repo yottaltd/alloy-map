@@ -1,11 +1,7 @@
-import { LineString, Point } from 'geojson';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
-import { AlloyRouteFeatureFactory } from '../../features/AlloyRouteFeatureFactory';
-import { AlloyRouteFeatureProperties } from '../../features/AlloyRouteFeatureProperties';
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
-// tslint:disable-next-line:max-line-length
-import { AlloyRouteWaypointFeatureProperties } from '../../features/AlloyRouteWaypointFeatureProperties';
+import { AlloyManagedLayer } from '../AlloyManagedLayer';
 import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
 import { AlloyRouteAnimationManager } from './AlloyRouteAnimationManager';
 import { AlloyRouteLayerOptions } from './AlloyRouteLayerOptions';
@@ -15,7 +11,7 @@ import { AlloyRouteStyleProcessor } from './AlloyRouteStyleProcessor';
  * an alloy route layer for rendering route and waypoint features provided externally on the map,
  * use this to add route features onto the map and animate them automatically
  */
-export class AlloyRouteLayer extends AlloyAnimatedPathLayer {
+export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyManagedLayer {
   /**
    * animation manager for routes
    * @override
@@ -129,24 +125,26 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer {
   }
 
   /**
-   * Fades out layer and stops animations
-   * @param fade whether to fade out route layer
+   * @implements
    */
-  public fadeOut(fade: boolean) {
-    if (fade) {
-      if (this.routeFeature) {
-        this.animationManager.stopAnimation(this.routeFeature);
-      }
-      for (const layer of this.olLayers) {
-        layer.setOpacity(0.25);
-      }
-    } else {
-      if (this.routeFeature) {
-        this.animationManager.startAnimation(this.routeFeature);
-      }
-      for (const layer of this.olLayers) {
-        layer.setOpacity(1);
-      }
+  public enable(): void {
+    if (this.routeFeature) {
+      this.animationManager.startAnimation(this.routeFeature);
+    }
+    for (const layer of this.olLayers) {
+      layer.setOpacity(1);
+    }
+  }
+
+  /**
+   * @implements
+   */
+  public disable(): void {
+    if (this.routeFeature) {
+      this.animationManager.stopAnimation(this.routeFeature);
+    }
+    for (const layer of this.olLayers) {
+      layer.setOpacity(0.25);
     }
   }
 }
