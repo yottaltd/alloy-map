@@ -69,7 +69,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     labelTitle?: string,
     labelSubtitle?: string,
     opacity?: AlloyLayerStyleOpacity,
-    scale = AlloyLayerStyleScale.Medium,
+    scale?: AlloyLayerStyleScale,
   ) {
     let mode: AlloyLayerStyleLabelMode = AlloyLayerStyleLabelMode.None;
     if (labelTitle) {

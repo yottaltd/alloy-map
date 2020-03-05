@@ -58,13 +58,13 @@ export class AlloyLayerStyle {
     icon?: string,
     labelMode?: AlloyLayerStyleLabelMode,
     opacity?: AlloyLayerStyleOpacity,
-    scale = AlloyLayerStyleScale.Medium,
+    scale?: AlloyLayerStyleScale,
   ) {
     this.styleId = styleId;
     this.icon = icon;
     this.labelMode = labelMode || AlloyLayerStyleLabelMode.None;
     this.opacity = opacity || AlloyLayerStyleOpacity.Opaque;
-    this.scale = scale;
+    this.scale = scale || AlloyLayerStyleScale.Medium;
 
     // we're really picky about colours being hex to avoid issues in openlayers
     if (!HEX_REGEX.test(colour)) {
