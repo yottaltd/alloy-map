@@ -1,5 +1,6 @@
 import { AlloyLayerStyle } from './AlloyLayerStyle';
 import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
 import { AlloyLayerStyleScale } from './AlloyLayerStyleScale';
 
 /**
@@ -67,9 +68,10 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     icon?: string,
     labelTitle?: string,
     labelSubtitle?: string,
+    opacity?: AlloyLayerStyleOpacity,
     scale = AlloyLayerStyleScale.Medium,
   ) {
-    let mode = AlloyLayerStyleLabelMode.None;
+    let mode: AlloyLayerStyleLabelMode = AlloyLayerStyleLabelMode.None;
     if (labelTitle) {
       if (labelSubtitle) {
         mode = AlloyLayerStyleLabelMode.TitleAndSubtitle;
@@ -77,7 +79,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
         mode = AlloyLayerStyleLabelMode.Title;
       }
     }
-    super(styleId, colour, icon, mode, scale);
+    super(styleId, colour, icon, mode, opacity, scale);
     this.url = url;
     this.featureName = featureName;
     this.epsg = epsg;

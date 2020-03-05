@@ -22,7 +22,7 @@ export interface AlloyWmtsCapabilitiesLayer {
    */
   boundingBox: AlloyBounds;
   /**
-   * Tile matrix that is used for layer
+   * Available tile matrices for layer
    */
-  tileMatrixIdentifier: string;
+  tileMatrixIdentifiers: string[];
 }

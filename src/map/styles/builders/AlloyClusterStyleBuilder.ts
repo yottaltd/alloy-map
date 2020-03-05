@@ -5,6 +5,7 @@ import { ColourUtils } from '../../../utils/ColourUtils';
 import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -66,6 +67,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       resolution,
       // icon is not in here because clusters don't have them
       layerStyle.colour,
+      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
       layerStyle.scale,
       text,
     );
@@ -89,13 +91,14 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return [
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, layerStyle.colour),
+      AlloyBallUtils.createBallStyle(radius, layerStyle.colour, layerStyle.opacity),
       // the text in the cluster
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
           scale: layerStyle.scale,
           imgSize: [textCanvas.width, textCanvas.height],
+          opacity: layerStyle.opacity.value,
         }),
       }),
     ];
@@ -125,15 +128,16 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
 
     return [
       // the halo circle
-      AlloyBallUtils.createBallHaloStyle(radius, hoverColour),
+      AlloyBallUtils.createBallHaloStyle(radius, hoverColour, AlloyLayerStyleOpacity.Opaque),
       // the background coloured circle
-      AlloyBallUtils.createBallStyle(radius, hoverColour),
+      AlloyBallUtils.createBallStyle(radius, hoverColour, AlloyLayerStyleOpacity.Opaque),
       // the text in the cluster
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
           scale: layerStyle.scale,
           imgSize: [textCanvas.width, textCanvas.height],
+          opacity: 1,
         }),
       }),
     ];
