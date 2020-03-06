@@ -27,6 +27,7 @@ import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineS
 import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
 import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
+import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /**
  * the icon colour in the balls
@@ -74,7 +75,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       state,
       resolution,
       layerStyle.colour,
-      layerStyle.icon,
+      layerStyle.scale !== AlloyLayerStyleScale.Tiny ? layerStyle.icon : undefined,
       // if polygon then we need to cache per feature due to centre of polygon calcuations
       type === OLGeometryType.POLYGON || type === OLGeometryType.MULTI_POLYGON
         ? feature.id
@@ -190,7 +191,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -205,6 +206,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -225,7 +227,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -248,7 +250,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -263,6 +265,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -283,7 +286,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -308,7 +311,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   ): OLStyle[] {
     const styles: OLStyle[] = [
       AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution),
+        this.getLineWidth(resolution, layerStyle.scale),
         layerStyle.colour,
         layerStyle.opacity,
         processGeometryCollection
@@ -329,6 +332,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -352,7 +356,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   ): OLStyle[] {
     const styles: OLStyle[] = [
       AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution),
+        this.getLineWidth(resolution, layerStyle.scale),
         layerStyle.colour,
         layerStyle.opacity,
         processGeometryCollection
@@ -374,6 +378,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -437,6 +442,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
@@ -461,6 +467,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -520,6 +527,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       ),
     ];
 
+    // add icon support
     if (layerStyle.icon) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
@@ -544,6 +552,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -576,7 +585,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -591,6 +600,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -622,7 +632,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
+      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -645,7 +656,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -660,6 +671,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -691,7 +703,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
+      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -714,7 +727,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution);
+    const width = this.getLineWidth(resolution, layerStyle.scale);
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
@@ -750,6 +763,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -771,7 +785,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution);
+    const width = this.getLineWidth(resolution, layerStyle.scale);
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
@@ -807,6 +821,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -903,6 +918,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -995,6 +1011,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1027,7 +1044,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -1042,6 +1059,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1071,7 +1089,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1094,7 +1112,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -1109,6 +1127,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1138,7 +1157,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1161,8 +1180,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution);
-    const radius = this.getBallRadius(resolution);
+    const width = this.getLineWidth(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
 
     const styles = [
       AlloyLineUtils.createLineHaloStyle(
@@ -1195,6 +1214,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1239,7 +1259,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     );
 
     // add icon support
-    if (layerStyle.icon) {
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1267,8 +1287,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution);
-    const radius = this.getBallRadius(resolution);
+    const width = this.getLineWidth(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, layerStyle.scale);
 
     const styles = [
       AlloyLineUtils.createLineHaloStyle(
@@ -1301,6 +1321,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1344,8 +1365,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       ),
     );
 
-    if (layerStyle.icon) {
-      // the icon of the item
+    if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1445,6 +1465,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1534,6 +1555,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
             ? subtitle || null
             : null,
           layerStyle.colour,
+          layerStyle.scale,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1563,22 +1585,26 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   /**
    * calculates the size of a ball on screen given the resolution
    * @param resolution the current resolution
-   * @param scale whether to scale the radius based on resolution or not
+   * @param scale the style scale
    */
-  private getBallRadius(resolution: number): number {
+  private getBallRadius(resolution: number, scale: AlloyLayerStyleScale): number {
     return (
-      AlloyScaleUtils.POINT_RADIUS_MAX * AlloyScaleUtils.getScaleMultiplierForResolution(resolution)
+      AlloyScaleUtils.POINT_RADIUS_MAX *
+      AlloyScaleUtils.getScaleMultiplierForResolution(resolution) *
+      scale
     );
   }
 
   /**
    * calculates the line width on screen given the resolution
    * @param resolution the current resolution
-   * @param scale whether to scale the width based on resolution or not
+   * @param scale the style scale
    */
-  private getLineWidth(resolution: number): number {
+  private getLineWidth(resolution: number, scale: AlloyLayerStyleScale): number {
     return (
-      AlloyScaleUtils.LINE_WIDTH_MAX * AlloyScaleUtils.getScaleMultiplierForResolution(resolution)
+      AlloyScaleUtils.LINE_WIDTH_MAX *
+      AlloyScaleUtils.getScaleMultiplierForResolution(resolution) *
+      scale
     );
   }
 

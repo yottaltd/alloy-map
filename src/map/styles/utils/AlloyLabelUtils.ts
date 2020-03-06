@@ -6,6 +6,7 @@ import OLIcon from 'ol/style/Icon';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import OLStyle from 'ol/style/Style';
 import { ColourUtils } from '../../../utils/ColourUtils';
+import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /**
  * The size in pixels of the rendered label canvas
@@ -88,12 +89,14 @@ export abstract class AlloyLabelUtils {
    * @param title the title of the label
    * @param subtitle the optional subtitle of the label
    * @param backgroundColour the background colour of the label
+   * @param scale the scale of layer style to position label correctly
    * @param geometryFunction the geometry or function to transform the feature geometry
    */
   public static createLabelStyle(
     title: string,
     subtitle: string | null,
     backgroundColour: string,
+    scale: AlloyLayerStyleScale,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // get or generate the canvas for this label
@@ -110,7 +113,7 @@ export abstract class AlloyLabelUtils {
         // y value is a fraction as we want it centred
         anchorYUnits: IconAnchorUnits.FRACTION,
         // offset the label to the right of its destination
-        anchor: [LABEL_ARROW_OFFSET, 0.5],
+        anchor: [LABEL_ARROW_OFFSET * Math.pow(scale, 2), 0.5],
       }),
       geometry: geometryFunction,
       zIndex: 0,
