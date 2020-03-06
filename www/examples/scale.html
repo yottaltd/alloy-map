@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Alloy Map Sandbox - Wfs</title>
+    <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
+
+    <script>
+      localStorage.debug = 'alloymaps:*';
+
+      const map = new alloymap.AlloyMap({
+        api: 'https://api.labs.alloyapp.io/',
+        token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(-2, 52),
+        zoom: 6,
+      });
+
+      // Add basemap
+      const basemap = alloymap.AlloyBasemapFactory.createNightscape();
+      map.setBasemap(basemap);
+
+      // Add WFS layer
+      const layerUrl = 'http://lle.gov.wales/services/inspire-nrw/wfs';
+      const version = '2.0.0';
+      const layer = new alloymap.AlloyWfsLayer({
+        map,
+        styles: [
+          new alloymap.AlloyWfsLayerStyle(
+            'tiny-points',
+            layerUrl,
+            'inspire-nrw:NRW_ART17_SUBTIDAL_REEF_POINT',
+            4326,
+            version,
+            '#25aae1',
+            'icon-close',
+            alloymap.AlloyLayerStyleScale.Tiny,
+          ),
+          new alloymap.AlloyWfsLayerStyle(
+            'small-lines',
+            layerUrl,
+            'inspire-nrw:NRW_ART17_SEACAVE_LINES',
+            27700,
+            version,
+            '#e4734f',
+            'icon-close',
+            alloymap.AlloyLayerStyleScale.Small,
+          ),
+          new alloymap.AlloyWfsLayerStyle(
+            'large-lines',
+            layerUrl,
+            'inspire-nrw:NRW_FOREST_ROADS',
+            27700,
+            version,
+            '#b230b4',
+            undefined,
+            alloymap.AlloyLayerStyleScale.Large,
+          ),
+        ],
+      });
+      map.addLayer(layer);
+    </script>
+  </body>
+</html>
