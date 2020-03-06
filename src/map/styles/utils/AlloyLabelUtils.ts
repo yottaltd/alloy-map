@@ -89,13 +89,14 @@ export abstract class AlloyLabelUtils {
    * @param title the title of the label
    * @param subtitle the optional subtitle of the label
    * @param backgroundColour the background colour of the label
+   * @param scale the scale of layer style to position label correctly
    * @param geometryFunction the geometry or function to transform the feature geometry
    */
   public static createLabelStyle(
     title: string,
     subtitle: string | null,
     backgroundColour: string,
-    scale: AlloyLayerStyleScale = AlloyLayerStyleScale.Medium,
+    scale: AlloyLayerStyleScale,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // get or generate the canvas for this label

@@ -1,3 +1,6 @@
+/**
+ * Scales avaialable for layer style points and linestrings
+ */
 export enum AlloyLayerStyleScale {
   Tiny = 0.25,
   ExtraSmall = 0.5,

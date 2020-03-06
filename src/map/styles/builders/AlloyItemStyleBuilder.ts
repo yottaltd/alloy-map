@@ -233,8 +233,8 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       ),
     );
 
+    // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -292,8 +292,8 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
       ),
     );
 
+    // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -634,7 +634,6 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -704,7 +703,6 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1085,7 +1083,6 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1153,7 +1150,6 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1255,7 +1251,6 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,
@@ -1362,7 +1357,6 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
 
     // add icon support
     if (layerStyle.icon && layerStyle.scale !== AlloyLayerStyleScale.Tiny) {
-      // the icon of the item
       styles.push(
         AlloyIconUtils.createAlloyIconStyle(
           radius,

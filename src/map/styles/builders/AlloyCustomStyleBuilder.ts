@@ -13,6 +13,7 @@ import { AlloyMap } from '../../core/AlloyMap';
 import { AlloyCustomFeatureBase } from '../../features/AlloyCustomFeatureBase';
 import { AlloyLayerStyleLabelMode } from '../AlloyLayerStyleLabelMode';
 import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
@@ -204,7 +205,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -260,7 +261,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -323,7 +324,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -367,7 +368,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -448,7 +449,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -525,7 +526,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -570,7 +571,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -637,7 +638,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -724,7 +725,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -781,7 +782,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -870,7 +871,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -955,7 +956,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1001,7 +1002,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1066,7 +1067,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
             : undefined,
@@ -1150,7 +1151,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1254,7 +1255,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           processGeometryCollection
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
@@ -1389,7 +1390,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           // we already have the mid point so use it
           midPoint,
         ),
@@ -1471,7 +1472,7 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? feature.properties.subtitle
             : null,
           feature.properties.colour,
-          undefined,
+          AlloyLayerStyleScale.Medium,
           // we already have the mid point so use it
           midPoint,
         ),
