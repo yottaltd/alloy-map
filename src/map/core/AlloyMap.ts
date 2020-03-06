@@ -212,6 +212,7 @@ export class AlloyMap {
       controls,
       interactions: options.interactive === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
+      keyboardEventTarget: options.element,
     });
 
     // listen for view centre changes
@@ -260,6 +261,9 @@ export class AlloyMap {
 
     // setup draw interaction
     this.drawInteraction = new AlloyDrawInteraction(this);
+
+    // on click focus on map element so that keyboard events work
+    this.olMap.on('click', (e) => options.element.focus());
   }
 
   /**

@@ -1,3 +1,4 @@
+import { DEVICE_PIXEL_RATIO } from 'ol/has';
 import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLBingMaps from 'ol/source/BingMaps';
@@ -26,7 +27,8 @@ export class AlloyBingBasemap implements AlloyBasemap {
   constructor(key: string) {
     this.source = new OLBingMaps({
       key,
-      imagerySet: 'AerialWithLabels',
+      imagerySet: 'AerialWithLabelsOnDemand',
+      hidpi: DEVICE_PIXEL_RATIO > 1,
     });
     this.tileLayer = new OLTileLayer({
       source: this.source,
