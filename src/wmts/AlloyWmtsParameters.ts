@@ -26,4 +26,8 @@ export interface AlloyWmtsParameters {
    * Whether tiles on service are 512x512 that should be used in 256x256 grid
    */
   isHiDpi?: boolean;
+  /**
+   * Tile matrix to use for this layer
+   */
+  tileMatrixId?: string;
 }

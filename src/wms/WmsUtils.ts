@@ -191,22 +191,6 @@ export abstract class WmsUtils {
       boundingBox = new AlloyBounds(new AlloyCoordinate(-180, -90), new AlloyCoordinate(180, 90));
     }
 
-    // check if one of the defaultly handled CRS is present in the request
-    let crs: string | undefined;
-    if (layer.CRS) {
-      if (layer.CRS.indexOf('CRS:84') >= 0) {
-        crs = 'CRS:84';
-      } else if (layer.CRS.indexOf('EPSG:4326') >= 0) {
-        crs = 'EPSG:4326';
-      } else if (layer.CRS.indexOf('EPSG:3857') >= 0) {
-        crs = 'EPSG:3857';
-      } else if (layer.CRS.indexOf('EPSG:900913') >= 0) {
-        crs = 'ESPG:900913';
-      } else if (layer.CRS.length > 0) {
-        crs = layer.CRS[0];
-      }
-    }
-
     return {
       name: layer.Name,
       title: layer.Title,
@@ -216,7 +200,8 @@ export abstract class WmsUtils {
       opaque: layer.opaque || false,
       fixedWidth: layer.fixedWidth,
       fixedHeight: layer.fixedHeight,
-      crs,
+      // removing duplicates here as parent layer CRS will also be included
+      crs: layer.CRS ? Array.from(new Set(layer.CRS)) : [],
     };
   }
 
