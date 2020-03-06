@@ -85,16 +85,16 @@ export abstract class ScreenshotUtils {
 
     const offset = 20;
     const height = 10;
-    const padding = 2;
+    const padding = 10;
     const fontHeight = 12;
     const width = parseInt(inner.style['width'], 10);
 
     context.fillStyle = 'rgba(10, 49, 82, 0.5)';
     context.fillRect(
-      offset - padding * 2,
-      canvas.height - offset - fontHeight - padding * 4,
-      width + padding * 4,
-      fontHeight + padding * 6,
+      offset - padding,
+      canvas.height - offset - fontHeight - padding * 2,
+      width + padding * 2,
+      fontHeight + padding * 3,
     );
 
     context.lineWidth = 1;
@@ -110,10 +110,6 @@ export abstract class ScreenshotUtils {
     context.textAlign = 'center';
     context.font = `${fontHeight}px "Open Sans"`;
 
-    context.strokeText(
-      inner.innerText,
-      offset + width / 2,
-      canvas.height - (offset + height - padding),
-    );
+    context.strokeText(inner.innerText, offset + width / 2, canvas.height - (offset + height - 2));
   }
 }
