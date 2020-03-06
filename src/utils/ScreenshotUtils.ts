@@ -16,6 +16,7 @@ export abstract class ScreenshotUtils {
    */
   public static async screenshot(map: AlloyMap): Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => {
+      let canvasCopy: HTMLCanvasElement | undefined;
       map.olMap.once('postrender', (event: RenderEvent) => {
         try {
           // get the canvas
@@ -29,7 +30,7 @@ export abstract class ScreenshotUtils {
 
           // Crete a copy of the canvas, since we will be drawing scale on it we don't want it to be
           // visible on the main map canvas
-          const canvasCopy = document.createElement('canvas');
+          canvasCopy = document.createElement('canvas');
           canvasCopy.width = canvas.width;
           canvasCopy.height = canvas.height;
           map.olMap.getTargetElement().appendChild(canvasCopy);
@@ -47,8 +48,6 @@ export abstract class ScreenshotUtils {
           }
 
           canvasCopy.toBlob((blob: Blob | null) => {
-            map.olMap.getTargetElement().removeChild(canvasCopy);
-
             if (!blob) {
               reject(new AlloyMapError(1578673083, 'failed to convert canvas to blob'));
               return;
@@ -58,6 +57,10 @@ export abstract class ScreenshotUtils {
           }, 'image/png');
         } catch (error) {
           reject(new AlloyMapError(1559148073, 'failed to convert canvas to blob'));
+        } finally {
+          if (canvasCopy) {
+            map.olMap.getTargetElement().removeChild(canvasCopy);
+          }
         }
       });
 
