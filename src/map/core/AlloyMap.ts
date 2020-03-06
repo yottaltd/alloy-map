@@ -11,7 +11,6 @@ import { Configuration } from '../../api/configuration';
 import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
-import { CanvasUtils } from '../../utils/CanvasUtils';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { FontUtils } from '../../utils/FontUtils';
 import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
@@ -643,23 +642,6 @@ export class AlloyMap {
 
     // update internal basemap reference
     this.currentBasemap = basemap;
-
-    // listen to map render complete to check canvas colours and update scale line colour
-    this.olMap.once('rendercomplete', () => {
-      const canvas: HTMLCanvasElement | null = this.olMap
-        .getTargetElement()
-        .querySelector<HTMLCanvasElement>('canvas');
-      const scaleInner: HTMLElement | null = this.olMap
-        .getTargetElement()
-        .querySelector<HTMLElement>('.ol-scale-line-inner');
-      if (canvas === null || scaleInner === null) {
-        return;
-      }
-      const isLight = CanvasUtils.isCanvasLight(canvas);
-      const colour = isLight ? '#111' : '#eee';
-      scaleInner.style.borderColor = colour;
-      scaleInner.style.color = colour;
-    });
   }
 
   /**

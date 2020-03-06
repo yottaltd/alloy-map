@@ -1,8 +1,6 @@
 import RenderEvent from 'ol/render/Event';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyMap } from '../map/core/AlloyMap';
-import * as color from 'color';
-import { CanvasUtils } from './CanvasUtils';
 
 /**
  * utility for screenshotting the map
@@ -87,17 +85,20 @@ export abstract class ScreenshotUtils {
 
     const offset = 20;
     const height = 10;
+    const padding = 2;
+    const fontHeight = 12;
     const width = parseInt(inner.style['width'], 10);
 
-    const isLight = CanvasUtils.isCanvasLight(canvas, {
-      startX: offset,
-      startY: canvas.height - (offset + height),
-      width,
-      height,
-    });
+    context.fillStyle = 'rgba(10, 49, 82, 0.5)';
+    context.fillRect(
+      offset - padding * 2,
+      canvas.height - offset - fontHeight - padding * 4,
+      width + padding * 4,
+      fontHeight + padding * 6,
+    );
 
     context.lineWidth = 1;
-    context.strokeStyle = isLight ? '#111' : '#eee';
+    context.strokeStyle = '#eee';
 
     context.beginPath();
     context.moveTo(offset, canvas.height - (offset + height));
@@ -107,7 +108,12 @@ export abstract class ScreenshotUtils {
     context.stroke();
 
     context.textAlign = 'center';
-    context.font = '12px "Open Sans"';
-    context.strokeText(inner.innerText, offset + width / 2, canvas.height - (offset + height - 2));
+    context.font = `${fontHeight}px "Open Sans"`;
+
+    context.strokeText(
+      inner.innerText,
+      offset + width / 2,
+      canvas.height - (offset + height - padding),
+    );
   }
 }
