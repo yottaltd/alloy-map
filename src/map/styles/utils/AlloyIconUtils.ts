@@ -4,7 +4,9 @@ import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
+import { Colour, ColourUtils } from '../../../utils/ColourUtils';
 import { FontUtils } from '../../../utils/FontUtils';
+import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 import { AlloyTextUtils } from './AlloyTextUtils';
 
 /**
@@ -33,12 +35,14 @@ export abstract class AlloyIconUtils {
    * @param size the size of the icon
    * @param alloyIconClass the alloy icon class e.g. icon-stl
    * @param colour the colour of the icon
+   * @param opacity the opacity of the icon
    * @param geometryFunction the geometry or function to transform the style
    */
   public static createAlloyIconStyle(
     size: number,
     alloyIconClass: string,
-    colour: string,
+    colour: Colour,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // generate the icon canvas
@@ -54,6 +58,7 @@ export abstract class AlloyIconUtils {
         img: iconCanvas,
         scale: size / iconCanvas.width,
         imgSize: [iconCanvas.width, iconCanvas.height],
+        opacity: opacity.value,
       }),
       geometry: geometryFunction,
       zIndex: 0,
@@ -64,11 +69,13 @@ export abstract class AlloyIconUtils {
    * creates an alloy text style, for any text based features
    * @param text text to use as an icon for style
    * @param colour the colour of the icon
+   * @param opacity the opacity of the icon
    * @param geometryFunction the geometry or function to transform the feature geometry
    */
   public static createTextIconStyle(
     text: string,
-    colour: string,
+    colour: Colour,
+    opacity: AlloyLayerStyleOpacity,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // generate the text canvas
@@ -79,6 +86,7 @@ export abstract class AlloyIconUtils {
         img: textCanvas,
         scale: 1,
         imgSize: [textCanvas.width, textCanvas.height],
+        opacity: opacity.value,
       }),
       geometry: geometryFunction,
       zIndex: 0,
@@ -95,7 +103,7 @@ export abstract class AlloyIconUtils {
    */
   public static createIconCanvas(
     classNames: string,
-    colour: string,
+    colour: Colour,
     font: string,
     fontWeight: number,
   ): HTMLCanvasElement {
@@ -108,7 +116,7 @@ export abstract class AlloyIconUtils {
   private static readonly memoizedCreateIconCanvas = _.memoize(
     AlloyIconUtils.createIconCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
-    (classNames: string, colour: string, font: string, fontWeight: number) =>
+    (classNames: string, colour: Colour, font: string, fontWeight: number) =>
       classNames +
       ':' +
       colour +
@@ -131,7 +139,7 @@ export abstract class AlloyIconUtils {
    */
   private static createIconCanvasImplementation(
     classNames: string,
-    colour: string,
+    colour: Colour,
     font: string,
     fontWeight: number,
   ): HTMLCanvasElement {
@@ -154,7 +162,7 @@ export abstract class AlloyIconUtils {
     }
 
     const context = canvas.getContext('2d')! /* cannot be null in the year 2019 */;
-    context.fillStyle = colour;
+    context.fillStyle = ColourUtils.toString(colour);
     // set the font to use, font-weight must be valid for the font, the 256px/256px syntax is
     // fontSize/lineHeight to ensure we are vertically positioning
     context.font = `${fontWeight} ${ICON_CANVAS_SIZE}px/${ICON_CANVAS_SIZE}px "${font}"`;

@@ -47,17 +47,17 @@ export abstract class WmtsUtils {
     // first get the web response
     let capabilitiesResponse: Response;
     try {
-      let capsUrl: string = url;
-      if (!capsUrl.endsWith('WMTSCapabilities.xml')) {
-        if (capsUrl.toLowerCase().endsWith('wmts/')) {
-          capsUrl += '1.0.0/WMTSCapabilities.xml';
-        } else if (capsUrl.toLowerCase().endsWith('wmts')) {
-          capsUrl += '/1.0.0/WMTSCapabilities.xml';
-        } else {
-          capsUrl += '/wmts/1.0.0/WMTSCapabilities.xml';
-        }
+      const capsUrl = new URL(url);
+      if (
+        !(
+          capsUrl.href.toLowerCase().endsWith('.xml') ||
+          capsUrl.href.toLowerCase().endsWith('.xml?')
+        )
+      ) {
+        capsUrl.searchParams.set('service', 'WMTS');
+        capsUrl.searchParams.set('request', 'GetCapabilities');
       }
-      capabilitiesResponse = await fetch(capsUrl);
+      capabilitiesResponse = await fetch(capsUrl.href);
     } catch (error) {
       if (error instanceof AlloyMapError) {
         throw error;
@@ -143,7 +143,7 @@ export abstract class WmtsUtils {
     return {
       identifier: layer.Identifier,
       title: layer.Title,
-      tileMatrixIdentifier: layer.TileMatrixSetLink[0].TileMatrixSet,
+      tileMatrixIdentifiers: layer.TileMatrixSetLink.map((link) => link.TileMatrixSet),
       boundingBox,
       styles: layer.Style.map((style) => WmtsUtils.parseWmtsStyle(style)),
     };
