@@ -2,12 +2,11 @@ import { debug, Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
-import OLLayer from 'ol/layer/Layer';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { Configuration } from '../../api/configuration';
+import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { FeatureUtils } from '../../utils/FeatureUtils';
@@ -16,6 +15,7 @@ import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinR
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
+import { FeatureLoaderEventHandler } from '../events/FeatureLoaderEventHandler';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { LayersChangeEvent } from '../events/LayersChangeEvent';
@@ -34,6 +34,7 @@ import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
 import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
 import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
 import { AlloyLayer } from '../layers/AlloyLayer';
+import { AlloyLayerWithFeatures } from '../layers/AlloyLayerWithFeatures';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
 import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
 import { AlloyOverlay } from '../overlays/AlloyOverlay';
@@ -765,5 +766,31 @@ export class AlloyMap {
    */
   public updateSize() {
     this.olMap.updateSize();
+  }
+
+  /**
+   * adds a handler to listen for the feature loading
+   * @param handler the handler to call when features have been loaded
+   */
+  public addFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
+    Array.from(this.layers.values())
+      .filter(
+        (layer): layer is AlloyLayerWithFeatures<AlloyFeature> =>
+          layer instanceof AlloyLayerWithFeatures,
+      )
+      .forEach((layer) => layer.addFeatureLoaderListener(handler));
+  }
+
+  /**
+   * removes a handler listening to the feature loading
+   * @param handler the handler to stop listening
+   */
+  public removeFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
+    Array.from(this.layers.values())
+      .filter(
+        (layer): layer is AlloyLayerWithFeatures<AlloyFeature> =>
+          layer instanceof AlloyLayerWithFeatures,
+      )
+      .forEach((layer) => layer.removeFeatureLoaderListener(handler));
   }
 }

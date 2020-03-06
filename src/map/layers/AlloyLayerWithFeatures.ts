@@ -7,6 +7,7 @@ import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinR
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
+import { FeatureLoaderEventHandler } from '../events/FeatureLoaderEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
@@ -60,6 +61,8 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * the active style processor
    */
   private currentStyleProcessor: AlloyStyleProcessor | null = null;
+
+  private readonly featureLoadHandlers = new Set<FeatureLoaderEventHandler>();
 
   /**
    * creates a new instance
@@ -166,7 +169,10 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     if (featuresNotInLayer.length === 0) {
       // behind guard because we are performing operations for a log
       if (this.debugger.enabled) {
-        this.debugger('all features already exist in layer: %o', features.map((f) => f.id));
+        this.debugger(
+          'all features already exist in layer: %o',
+          features.map((f) => f.id),
+        );
       }
       return false; // no-op
     }
@@ -180,6 +186,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
+    this.featureLoadHandlers.forEach((loader) => loader(this, featuresNotInLayer));
     return true;
   }
 
@@ -226,5 +233,21 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    */
   protected setStyleProcessor(processor: AlloyStyleProcessor) {
     this.currentStyleProcessor = processor;
+  }
+
+  /**
+   * adds a handler to listen for the feature loading
+   * @param handler the handler to call when features have been loaded
+   */
+  public addFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
+    this.featureLoadHandlers.add(handler);
+  }
+
+  /**
+   * removes a handler listening to the feature loading
+   * @param handler the handler to stop listening
+   */
+  public removeFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
+    this.featureLoadHandlers.delete(handler);
   }
 }
