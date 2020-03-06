@@ -2,12 +2,13 @@ import { debug, Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
-import OLLayer from 'ol/layer/Layer';
+import OLControl from 'ol/control/Control';
+import OLScaleLine from 'ol/control/ScaleLine';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { Configuration } from '../../api/configuration';
+import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 import { AlloyMapError } from '../../error/AlloyMapError';
 import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
 import { FeatureUtils } from '../../utils/FeatureUtils';
@@ -190,19 +191,24 @@ export class AlloyMap {
       maxZoom: MAX_ZOOM,
     });
 
+    const controls: OLControl[] = [];
+    if (options.attributions !== false) {
+      controls.push(
+        new OLAttribution({
+          collapsed: false,
+          collapsible: false,
+          className: 'map__attributions',
+        }),
+      );
+    }
+    if (options.interactive !== false) {
+      controls.push(new OLScaleLine({ units: 'metric' }));
+    }
+
     // construct the map instance
     this.olMap = new OLMap({
       target: options.element,
-      controls:
-        options.attributions === false
-          ? []
-          : [
-              new OLAttribution({
-                collapsed: false,
-                collapsible: false,
-                className: 'map__attributions',
-              }),
-            ],
+      controls,
       interactions: options.interactive === false ? [] : PolyfillInteractions.defaults(),
       view: this.olView,
       keyboardEventTarget: options.element,
