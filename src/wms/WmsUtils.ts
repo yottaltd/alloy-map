@@ -106,7 +106,10 @@ export abstract class WmsUtils {
     // first get the web response
     let capabilitiesResponse: Response;
     try {
-      capabilitiesResponse = await fetch(url + '&REQUEST=GetCapabilities&SERVICE=WMS');
+      const capsUrl = new URL(url);
+      capsUrl.searchParams.set('service', 'WMS');
+      capsUrl.searchParams.set('request', 'GetCapabilities');
+      capabilitiesResponse = await fetch(capsUrl.href);
     } catch (error) {
       if (error instanceof AlloyMapError) {
         throw error;
