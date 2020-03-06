@@ -644,8 +644,8 @@ export class AlloyMap {
     // update internal basemap reference
     this.currentBasemap = basemap;
 
-    // check canvas colours and update scale line colour
-    setTimeout(() => {
+    // listen to map render complete to check canvas colours and update scale line colour
+    this.olMap.once('rendercomplete', () => {
       const canvas: HTMLCanvasElement | null = this.olMap
         .getTargetElement()
         .querySelector<HTMLCanvasElement>('canvas');
@@ -659,7 +659,7 @@ export class AlloyMap {
       const colour = isLight ? '#111' : '#eee';
       scaleInner.style.borderColor = colour;
       scaleInner.style.color = colour;
-    }, 1000);
+    });
   }
 
   /**
