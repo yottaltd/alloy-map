@@ -774,30 +774,4 @@ export class AlloyMap {
   public updateSize() {
     this.olMap.updateSize();
   }
-
-  /**
-   * adds a handler to listen for the feature loading
-   * @param handler the handler to call when features have been loaded
-   */
-  public addFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
-    Array.from(this.layers.values())
-      .filter(
-        (layer): layer is AlloyLayerWithFeatures<AlloyFeature> =>
-          layer instanceof AlloyLayerWithFeatures,
-      )
-      .forEach((layer) => layer.addFeatureLoaderListener(handler));
-  }
-
-  /**
-   * removes a handler listening to the feature loading
-   * @param handler the handler to stop listening
-   */
-  public removeFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
-    Array.from(this.layers.values())
-      .filter(
-        (layer): layer is AlloyLayerWithFeatures<AlloyFeature> =>
-          layer instanceof AlloyLayerWithFeatures,
-      )
-      .forEach((layer) => layer.removeFeatureLoaderListener(handler));
-  }
 }
