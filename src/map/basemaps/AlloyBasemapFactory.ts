@@ -126,7 +126,7 @@ export abstract class AlloyBasemapFactory {
     if (!layer) {
       throw new AlloyMapError(1574876271, 'layer does not exist in WMTS capabilities');
     }
-    const tileMatrixId = layer.tileMatrixIdentifier;
+    const tileMatrixId = options.tileMatrixId ?? layer.tileMatrixIdentifiers[0];
     const tileMatrixSet = capabilities.capabilities.TileMatrixSet.find(
       (tileMatrix) => tileMatrix.Identifier === tileMatrixId,
     );

@@ -2,11 +2,14 @@ import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import { SimpleEventDispatcher } from 'ste-simple-events';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
+import { FeaturesAddedEvent } from '../events/FeaturesAddedEvent';
+import { FeaturesAddedEventHandler } from '../events/FeaturesAddedEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
@@ -60,6 +63,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * the active style processor
    */
   private currentStyleProcessor: AlloyStyleProcessor | null = null;
+
+  /**
+   * event dispatcher for added features
+   */
+  private readonly featuresAddedDispatcher = new SimpleEventDispatcher<FeaturesAddedEvent>();
 
   /**
    * creates a new instance
@@ -134,6 +142,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
+    this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
     return true;
   }
 
@@ -166,7 +175,10 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     if (featuresNotInLayer.length === 0) {
       // behind guard because we are performing operations for a log
       if (this.debugger.enabled) {
-        this.debugger('all features already exist in layer: %o', features.map((f) => f.id));
+        this.debugger(
+          'all features already exist in layer: %o',
+          features.map((f) => f.id),
+        );
       }
       return false; // no-op
     }
@@ -180,6 +192,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
+    this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
     return true;
   }
 
@@ -226,5 +239,21 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    */
   protected setStyleProcessor(processor: AlloyStyleProcessor) {
     this.currentStyleProcessor = processor;
+  }
+
+  /**
+   * adds a handler to listen for the features added to layer
+   * @param handler the handler to call when features have been added
+   */
+  public addFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
+    this.featuresAddedDispatcher.subscribe(handler);
+  }
+
+  /**
+   * removes a handler listening to the features added to layer
+   * @param handler the handler to stop listening
+   */
+  public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
+    this.featuresAddedDispatcher.unsubscribe(handler);
   }
 }

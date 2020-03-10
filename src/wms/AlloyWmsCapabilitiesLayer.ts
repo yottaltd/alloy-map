@@ -34,9 +34,9 @@ export interface AlloyWmsCapabilitiesLayer {
    */
   fixedHeight?: number;
   /**
-   * CRS that should be use for tile requests
+   * CRS that could be use for wms requests
    */
-  crs?: string;
+  crs: string[];
   /**
    * Available child layers
    */

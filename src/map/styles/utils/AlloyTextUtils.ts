@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { Colour, ColourUtils } from '../../../utils/ColourUtils';
 
 /**
  * the canvas min size, width is always a multiple of this whilst height is always exactly this
@@ -24,7 +25,7 @@ export abstract class AlloyTextUtils {
    * @param text the text to write on the canvas
    * @param colour the colour of the text
    */
-  public static createTextCanvas(text: string, colour: string): HTMLCanvasElement {
+  public static createTextCanvas(text: string, colour: Colour): HTMLCanvasElement {
     return AlloyTextUtils.memoizedCreateTextCanvas(text, colour);
   }
 
@@ -34,7 +35,7 @@ export abstract class AlloyTextUtils {
   private static readonly memoizedCreateTextCanvas = _.memoize(
     AlloyTextUtils.createTextCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
-    (text: string, colour: string) => AlloyTextUtils.cleanText(text) + ':' + colour,
+    (text: string, colour: Colour) => AlloyTextUtils.cleanText(text) + ':' + colour,
   );
 
   /**
@@ -50,7 +51,7 @@ export abstract class AlloyTextUtils {
    * @param text the text to write on the canvas
    * @param colour the colour of the text
    */
-  private static createTextCanvasImplementation(text: string, colour: string): HTMLCanvasElement {
+  private static createTextCanvasImplementation(text: string, colour: Colour): HTMLCanvasElement {
     // clean the text input
     text = AlloyTextUtils.cleanText(text);
 
@@ -65,7 +66,7 @@ export abstract class AlloyTextUtils {
     }
 
     const context = canvas.getContext('2d')! /* cannot be null in the year 2019 */;
-    context.fillStyle = colour;
+    context.fillStyle = ColourUtils.toString(colour);
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.font = TEXT_FONT;
