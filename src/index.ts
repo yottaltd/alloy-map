@@ -8,6 +8,8 @@ export { AlloyMapOptions } from './map/core/AlloyMapOptions';
 export { AlloySelectionMode } from './map/core/AlloySelectionMode';
 export { AlloyDrawEvent } from './map/events/AlloyDrawEvent';
 export { AlloyDrawEventHandler } from './map/events/AlloyDrawEventHandler';
+export { FeaturesAddedEvent } from './map/events/FeaturesAddedEvent';
+export { FeaturesAddedEventHandler } from './map/events/FeaturesAddedEventHandler';
 export { FeatureSelectionChangeEvent } from './map/events/FeatureSelectionChangeEvent';
 export { FeatureSelectionChangeEventHandler } from './map/events/FeatureSelectionChangeEventHandler';
 export { FeaturesUnderSelectionEvent } from './map/events/FeaturesUnderSelectionEvent';
