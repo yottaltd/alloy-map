@@ -39,7 +39,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**
    * @override
    */
-  public addFeature(feature: AlloyDrawFeature, addToSource: boolean = true): boolean {
+  public addFeature(feature: AlloyDrawFeature, addToSource = true): boolean {
     // overrides implementation of super.addFeature to support adding features but not to source as
     // this is handled by the openlayers draw interaction and causes exceptions if we add it
     // manually

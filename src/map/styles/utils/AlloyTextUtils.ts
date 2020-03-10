@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { AlloyMapError } from '../../../error/AlloyMapError';
 import { Colour, ColourUtils } from '../../../utils/ColourUtils';
 
 /**
@@ -65,7 +66,10 @@ export abstract class AlloyTextUtils {
       return canvas;
     }
 
-    const context = canvas.getContext('2d')! /* cannot be null in the year 2019 */;
+    const context = canvas.getContext('2d');
+    if (context === null) {
+      throw new AlloyMapError(1583862791, 'Could not get canvas context');
+    }
     context.fillStyle = ColourUtils.toString(colour);
     context.textAlign = 'center';
     context.textBaseline = 'middle';

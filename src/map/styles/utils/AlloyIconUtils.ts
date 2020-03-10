@@ -4,6 +4,7 @@ import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
+import { AlloyMapError } from '../../../error/AlloyMapError';
 import { Colour, ColourUtils } from '../../../utils/ColourUtils';
 import { FontUtils } from '../../../utils/FontUtils';
 import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
@@ -161,7 +162,10 @@ export abstract class AlloyIconUtils {
       return canvas;
     }
 
-    const context = canvas.getContext('2d')! /* cannot be null in the year 2019 */;
+    const context = canvas.getContext('2d');
+    if (context === null) {
+      throw new AlloyMapError(1583862760, 'Could not get canvas context');
+    }
     context.fillStyle = ColourUtils.toString(colour);
     // set the font to use, font-weight must be valid for the font, the 256px/256px syntax is
     // fontSize/lineHeight to ensure we are vertically positioning

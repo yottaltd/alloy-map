@@ -32,7 +32,7 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
    * @param request the request to cancel
    * @param cancel optionally decide to cancel a request
    */
-  public delete(request: AlloyTileRequestCacheItem<T>, cancel: boolean = true): void {
+  public delete(request: AlloyTileRequestCacheItem<T>, cancel = true): void {
     if (cancel) {
       request.cancel();
     }

@@ -54,7 +54,7 @@ export class MapChangeCentreEvent {
       number,
       number,
       number,
-      number
+      number,
     ];
   }
 }
