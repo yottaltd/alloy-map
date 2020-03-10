@@ -142,6 +142,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
+    this.featureLoadDispatcher.dispatch(new FeatureLoaderEvent(this, [feature]));
     return true;
   }
 
