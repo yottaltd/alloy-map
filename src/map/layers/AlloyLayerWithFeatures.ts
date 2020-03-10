@@ -2,11 +2,13 @@ import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import { SimpleEventDispatcher } from 'ste-simple-events';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
+import { FeatureLoaderEvent } from '../events/FeatureLoaderEvent';
 import { FeatureLoaderEventHandler } from '../events/FeatureLoaderEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
@@ -62,7 +64,10 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    */
   private currentStyleProcessor: AlloyStyleProcessor | null = null;
 
-  private readonly featureLoadHandlers = new Set<FeatureLoaderEventHandler>();
+  /**
+   * event dispatcher for loaded features
+   */
+  private readonly featureLoadDispatcher = new SimpleEventDispatcher<FeatureLoaderEvent>();
 
   /**
    * creates a new instance
@@ -186,7 +191,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
-    this.featureLoadHandlers.forEach((loader) => loader(this, featuresNotInLayer));
+    this.featureLoadDispatcher.dispatch(new FeatureLoaderEvent(this, featuresNotInLayer));
     return true;
   }
 
@@ -240,7 +245,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param handler the handler to call when features have been loaded
    */
   public addFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
-    this.featureLoadHandlers.add(handler);
+    this.featureLoadDispatcher.subscribe(handler);
   }
 
   /**
@@ -248,6 +253,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param handler the handler to stop listening
    */
   public removeFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
-    this.featureLoadHandlers.delete(handler);
+    this.featureLoadDispatcher.unsubscribe(handler);
   }
 }

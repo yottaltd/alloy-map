@@ -1,7 +1,6 @@
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyLayer } from '../layers/AlloyLayer';
+import { FeatureLoaderEvent } from './FeatureLoaderEvent';
 
 /**
  * handler for the layers feature loading
  */
-export type FeatureLoaderEventHandler = (layer: AlloyLayer, features: AlloyFeature[]) => void;
+export type FeatureLoaderEventHandler = (event: FeatureLoaderEvent) => void;
