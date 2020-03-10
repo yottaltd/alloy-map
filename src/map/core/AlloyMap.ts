@@ -17,7 +17,6 @@ import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinR
 import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
 import { AlloyBasemap } from '../basemaps/AlloyBasemap';
 import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
-import { FeatureLoaderEventHandler } from '../events/FeatureLoaderEventHandler';
 import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
 import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
 import { LayersChangeEvent } from '../events/LayersChangeEvent';
@@ -36,7 +35,6 @@ import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
 import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
 import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
 import { AlloyLayer } from '../layers/AlloyLayer';
-import { AlloyLayerWithFeatures } from '../layers/AlloyLayerWithFeatures';
 import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
 import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
 import { AlloyOverlay } from '../overlays/AlloyOverlay';

@@ -8,8 +8,8 @@ import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinR
 import { AlloyCoordinate } from '../core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
 import { AlloyMap } from '../core/AlloyMap';
-import { FeatureLoaderEvent } from '../events/FeatureLoaderEvent';
-import { FeatureLoaderEventHandler } from '../events/FeatureLoaderEventHandler';
+import { FeaturesAddedEvent } from '../events/FeaturesAddedEvent';
+import { FeaturesAddedEventHandler } from '../events/FeaturesAddedEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
@@ -65,9 +65,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   private currentStyleProcessor: AlloyStyleProcessor | null = null;
 
   /**
-   * event dispatcher for loaded features
+   * event dispatcher for added features
    */
-  private readonly featureLoadDispatcher = new SimpleEventDispatcher<FeatureLoaderEvent>();
+  private readonly featuresAddedDispatcher = new SimpleEventDispatcher<FeaturesAddedEvent>();
 
   /**
    * creates a new instance
@@ -142,7 +142,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
-    this.featureLoadDispatcher.dispatch(new FeatureLoaderEvent(this, [feature]));
+    this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
     return true;
   }
 
@@ -192,7 +192,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
-    this.featureLoadDispatcher.dispatch(new FeatureLoaderEvent(this, featuresNotInLayer));
+    this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
     return true;
   }
 
@@ -242,18 +242,18 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * adds a handler to listen for the feature loading
-   * @param handler the handler to call when features have been loaded
+   * adds a handler to listen for the features added to layer
+   * @param handler the handler to call when features have been added
    */
-  public addFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
-    this.featureLoadDispatcher.subscribe(handler);
+  public addFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
+    this.featuresAddedDispatcher.subscribe(handler);
   }
 
   /**
-   * removes a handler listening to the feature loading
+   * removes a handler listening to the features added to layer
    * @param handler the handler to stop listening
    */
-  public removeFeatureLoaderListener(handler: FeatureLoaderEventHandler) {
-    this.featureLoadDispatcher.unsubscribe(handler);
+  public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
+    this.featuresAddedDispatcher.unsubscribe(handler);
   }
 }

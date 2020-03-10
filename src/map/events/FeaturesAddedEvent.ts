@@ -2,13 +2,13 @@ import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyLayer } from '../layers/AlloyLayer';
 
 /**
- * Event for the layer feature loading
+ * Event for the layer features added
  */
-export class FeatureLoaderEvent {
+export class FeaturesAddedEvent {
   /**
-   * last loaded features
+   * last added features
    */
-  private readonly loadedFeatures: AlloyFeature[];
+  private readonly addedFeatures: AlloyFeature[];
 
   /**
    * the layer that triggered the event
@@ -22,13 +22,13 @@ export class FeatureLoaderEvent {
    */
   constructor(layer: AlloyLayer, features: AlloyFeature[]) {
     this.layer = layer;
-    this.loadedFeatures = features;
+    this.addedFeatures = features;
   }
 
   /**
-   * @return array of loaded features
+   * @return array of added features
    */
   public get features(): AlloyFeature[] {
-    return this.loadedFeatures.slice();
+    return this.addedFeatures.slice();
   }
 }
