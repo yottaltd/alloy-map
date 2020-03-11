@@ -21,6 +21,7 @@
   "scripts": {
     "test:start-server": "http-server ./ -p 8888 -c-1 --silent",
     "test:cypress-ci": "cypress run --record --key d23922fd-ccda-44fe-8857-2b0206885367",
+    "test:cypress-verify": "cypress verify",
     "test:cypress": "cypress open",
     "test:ci": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress-ci",
     "test": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress",
@@ -57,7 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
     "chai": "^4.2.0",
-    "cypress": "^3.8.0",
+    "cypress": "^4.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-chai-friendly": "^0.5.0",
