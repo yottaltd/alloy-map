@@ -13,7 +13,7 @@ import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { AlloyMap } from '../core/AlloyMap';
 import { AlloyFeature } from '../features/AlloyFeature';
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 
 /**
@@ -66,12 +66,12 @@ export class AlloySelectInPolygonInteraction {
    * keeps the selection interaction enabled state because during draw we turn it off and we want
    * to resume the last state when finished
    */
-  private wasSelectionEnabled: boolean = true;
+  private wasSelectionEnabled = true;
 
   /**
    * whether to append the final selection to the existing selection or replace it
    */
-  private appendToSelection: boolean = false;
+  private appendToSelection = false;
 
   /**
    * Custom function to call on interaction end (e.g. to control button state)
@@ -170,7 +170,7 @@ export class AlloySelectInPolygonInteraction {
   public startPolygonSelect(
     filter?: (feature: AlloyFeature) => boolean,
     onEnd?: () => void,
-    appendToSelection: boolean = false,
+    appendToSelection = false,
   ): void {
     // save the filter if specified
     this.filter = filter || null;

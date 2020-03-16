@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
@@ -21,15 +23,15 @@ import { AlloyLabelUtils } from '../utils/AlloyLabelUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
 import { AlloyPolygonUtils } from '../utils/AlloyPolygonUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
-// tslint:disable-next-line: max-line-length
 import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
 import { AlloyGeometryFunctionUtils } from '../utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineStringFunctions';
-// tslint:disable-next-line: max-line-length
 import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
 import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
 import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
+
+/* eslint-enable max-len */
 
 /**
  * the icon colour in the balls

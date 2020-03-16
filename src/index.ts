@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export { AlloyMapError } from './error/AlloyMapError';
 export { AlloyBasemap } from './map/basemaps/AlloyBasemap';
 export { AlloyBasemapFactory } from './map/basemaps/AlloyBasemapFactory';

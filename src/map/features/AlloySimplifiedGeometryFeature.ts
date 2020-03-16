@@ -11,7 +11,7 @@ import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { AlloySimplifiedGeometryFeatureProperties } from './AlloySimplifiedGeometryFeatureProperties';
 
 /**

@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
+
 import OLGeoJSON from 'ol/format/GeoJSON';
 import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
-// tslint:disable-next-line: max-line-length
 import { LayerGetNetworkTileWebResponseModel } from '../../../api/LayerGetNetworkTileWebResponseModel';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
@@ -14,6 +15,8 @@ import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
 import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
 import { AlloyNetworkLayer } from './AlloyNetworkLayer';
+
+/* eslint-enable max-len */
 
 /**
  * max zoom level supported for the tile grid (won't make requests beyond this point)
@@ -47,7 +50,7 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
   /**
    * indicates whether to clear the source the next time tiles load
    */
-  private shouldClearSource: boolean = false;
+  private shouldClearSource = false;
 
   /**
    * creates a new instance
@@ -186,9 +189,8 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
         default:
           throw new AlloyMapError(
             1553883056,
-            `unhandled alloy feature type ${
-              r.properties.type
-            }, expected SimplifiedGeometry or Item`,
+            // eslint-disable-next-line max-len
+            `unhandled alloy feature type ${r.properties.type}, expected SimplifiedGeometry or Item`,
           );
       }
     });

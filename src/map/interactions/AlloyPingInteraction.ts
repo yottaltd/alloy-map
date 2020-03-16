@@ -96,6 +96,7 @@ export class AlloyPingInteraction {
       const opacity = easeOut(1 - elapsedRatio) * 0.5;
 
       if (radius < 0) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         PolyfillObservable.unByKey(listener);
         return;
       }
@@ -114,6 +115,7 @@ export class AlloyPingInteraction {
 
       // remove the event listener when done
       if (elapsed > PING_ANIMATION_LENGTH) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         PolyfillObservable.unByKey(listener);
         return;
       }

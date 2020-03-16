@@ -146,7 +146,10 @@ export abstract class AlloyAnimationManager {
   ) {
     // remove existing animation for feature if already setup
     if (this.animationKeys.has(feature)) {
-      PolyfillObservable.unByKey(this.animationKeys.get(feature)!);
+      const key = this.animationKeys.get(feature);
+      if (key) {
+        PolyfillObservable.unByKey(key);
+      }
       this.animationKeys.delete(feature);
     }
 

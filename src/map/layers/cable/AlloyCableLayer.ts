@@ -1,9 +1,5 @@
-import { LineString, Point } from 'geojson';
 import { AlloyCableFeature } from '../../features/AlloyCableFeature';
-import { AlloyCableFeatureFactory } from '../../features/AlloyCableFeatureFactory';
-import { AlloyCableFeatureProperties } from '../../features/AlloyCableFeatureProperties';
 import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
-import { AlloyCableUnitFeatureProperties } from '../../features/AlloyCableUnitFeatureProperties';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
 import { AlloyCableAnimationManager } from './AlloyCableAnimationManager';

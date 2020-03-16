@@ -7,6 +7,7 @@ import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import OLStyle from 'ol/style/Style';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
+import { AlloyMapError } from '../../../error/AlloyMapError';
 
 /**
  * The size in pixels of the rendered label canvas
@@ -149,7 +150,7 @@ export abstract class AlloyLabelUtils {
     (title: string, subtitle: string | null, backgroundColour: string) =>
       AlloyLabelUtils.memoizedCleanText(title) +
       ':' +
-      (!!subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null) +
+      (subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null) +
       ':' +
       backgroundColour,
   );
@@ -171,7 +172,7 @@ export abstract class AlloyLabelUtils {
     backgroundColour: string,
   ): HTMLCanvasElement {
     title = AlloyLabelUtils.memoizedCleanText(title);
-    subtitle = !!subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null;
+    subtitle = subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null;
 
     // create a canvas to work on
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
@@ -185,7 +186,10 @@ export abstract class AlloyLabelUtils {
       return canvas;
     }
 
-    const context = canvas.getContext('2d')! /* cannot be null in the year 2019 */;
+    const context = canvas.getContext('2d');
+    if (context === null) {
+      throw new AlloyMapError(1583862146, 'Could not get canvas context');
+    }
 
     // calculate the width of the label based on text
     if (hasTitle && hasSubtitle) {

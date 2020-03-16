@@ -30,7 +30,6 @@ const MAPBOX_ACCESS_TOKEN =
  * @ignore
  */
 function mapboxUrl(style: string): string {
-  // tslint:disable-next-line: max-line-length
   return `https://api.mapbox.com/styles/v1/${MAPBOX_ACCOUNT}/${style}/tiles/{z}/{x}/{y}?access_token=${MAPBOX_ACCESS_TOKEN}`;
 }
 
@@ -92,7 +91,7 @@ export abstract class AlloyBasemapFactory {
         await ProjectionUtils.register(parseInt(options.crs.split(':')[1], 10));
       } catch (e) {
         // do not throw if failed to register projection
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.error('failed to register projection ' + options.crs, e);
       }
     }
@@ -110,7 +109,7 @@ export abstract class AlloyBasemapFactory {
         await ProjectionUtils.register(parseInt(options.crs.split(':')[1], 10));
       } catch (e) {
         // do not throw if failed to register projection
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.error('failed to register projection ' + options.crs);
       }
     }
@@ -141,7 +140,7 @@ export abstract class AlloyBasemapFactory {
         await ProjectionUtils.register(epsg);
       } catch (e) {
         // do not throw if failed to register projection
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.error('failed to register projection ' + tileMatrixSet.SupportedCRS);
       }
     }
