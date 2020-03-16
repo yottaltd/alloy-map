@@ -29,7 +29,7 @@ export abstract class WfsVersionParser {
   public static parseFeatureTypeNode(
     node: Element,
     version: string,
-    usePrefix: boolean = false,
+    usePrefix = false,
   ): AlloyWfsFeatureType {
     WfsVersionParser.debugger('parsing feature type node');
 
@@ -74,11 +74,7 @@ export abstract class WfsVersionParser {
    * @ignore
    * @internal
    */
-  private static parseFeatureTypeEpsg(
-    node: Element,
-    version: string,
-    usePrefix: boolean = false,
-  ): number {
+  private static parseFeatureTypeEpsg(node: Element, version: string, usePrefix = false): number {
     WfsVersionParser.debugger('parsing feature type epsg');
     let srsTag: string;
     switch (version) {
@@ -121,10 +117,14 @@ export abstract class WfsVersionParser {
   ): [number, number, number, number] {
     WfsVersionParser.debugger('parsing feature type bbox');
     const isNew = version !== '1.0.0';
-    const bbox: Element = WfsVersionParser.getChildByTagName(
+    const bbox: Element | undefined = WfsVersionParser.getChildByTagName(
       node,
       isNew ? featureTypeBboxNew : featureTypeBboxOld,
-    )!;
+    );
+
+    if (!bbox) {
+      throw new AlloyMapError(1583862837, 'Could not get bbox');
+    }
 
     let min: number[];
     let max: number[];

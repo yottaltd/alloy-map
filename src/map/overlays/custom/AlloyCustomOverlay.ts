@@ -34,7 +34,7 @@ export class AlloyCustomOverlay implements AlloyOverlay {
       autoPan: false, // don't try to fit to the map screen when set position is called on the map
       element: options.element,
       offset: options.offset,
-      position: !!options.position ? options.position.toMapCoordinate() : undefined,
+      position: options.position ? options.position.toMapCoordinate() : undefined,
       positioning: EnumUtils.alloyToOpenlayersOverlayPositioning(options.positioning),
       stopEvent: true, // event propogation to the map viewport is stopped
       insertFirst: false, // append to end to last is always on top

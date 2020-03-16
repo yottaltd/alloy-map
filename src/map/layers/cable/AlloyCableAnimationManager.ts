@@ -19,7 +19,7 @@ const DEGREES_90_IN_RADIANS: number = Math.PI / 2;
  * the colour of chevrons in rgb
  * @ignore
  */
-const CHEVRON_COLOUR: string = 'rgb(245, 245, 245)';
+const CHEVRON_COLOUR = 'rgb(245, 245, 245)';
 
 /**
  * Lighting bolt shape for cable animation

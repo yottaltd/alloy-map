@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
@@ -11,12 +13,13 @@ import { AlloyFeature } from '../map/features/AlloyFeature';
 import { GeometryGuards } from '../map/guards/GeometryGuards';
 import { AlloyLayer } from '../map/layers/AlloyLayer';
 import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
-// tslint:disable-next-line:max-line-length
 import { AlloyGeometryFunctionUtils } from '../map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { PolyfillExtent } from '../polyfills/PolyfillExtent';
 import { GeometryUtils } from './GeometryUtils';
 import { FindFeaturesWithinResult } from './models/FindFeaturesWithinResult';
 import { ProjectionUtils } from './ProjectionUtils';
+
+/* eslint-enable max-len */
 
 /**
  * the property name of the feature id stored on an openlayers feature (so we can go from openlayers

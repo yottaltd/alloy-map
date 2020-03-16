@@ -54,7 +54,7 @@ export class AlloyTileCache<T> {
   /**
    * the current length or size of the cache
    */
-  private length: number = 0;
+  private length = 0;
 
   /**
    * the head item

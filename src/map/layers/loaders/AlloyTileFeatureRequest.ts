@@ -28,7 +28,7 @@ export class AlloyTileFeatureRequest<T extends AlloyFeature>
   /**
    * whether the request has been aborted
    */
-  private aborted: boolean = false;
+  private aborted = false;
 
   /**
    * creates a new instance

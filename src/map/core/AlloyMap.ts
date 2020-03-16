@@ -47,19 +47,19 @@ import { AlloySelectionMode } from './AlloySelectionMode';
  * minimum zoom level for the map
  * @ignore
  */
-const MIN_ZOOM: number = 4;
+const MIN_ZOOM = 4;
 
 /**
  * maximum zoom level for the map
  * @ignore
  */
-const MAX_ZOOM: number = 22;
+const MAX_ZOOM = 22;
 
 /**
  * the number in milliseconds to debounce very shouty openlayers events e.g. resolution change
  * @ignore
  */
-const DEBOUNCED_EVENT_TIMEOUT: number = 100;
+const DEBOUNCED_EVENT_TIMEOUT = 100;
 
 /**
  * the alloy map manages basemaps, layers and drawing
@@ -504,7 +504,7 @@ export class AlloyMap {
   public startPolygonSelect(
     filter?: (feature: AlloyFeature) => boolean,
     onEnd?: () => void,
-    appendToSelection: boolean = false,
+    appendToSelection = false,
   ): void {
     this.selectInPolygonInteraction.startPolygonSelect(filter, onEnd, appendToSelection);
   }

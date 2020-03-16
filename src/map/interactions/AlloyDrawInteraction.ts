@@ -28,7 +28,7 @@ import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
 import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
 import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
 import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { AlloyDrawInteractionGeometryType } from './AlloyDrawInteractionGeometryType';
 
@@ -93,7 +93,7 @@ export class AlloyDrawInteraction {
    * keeps the selection interaction enabled state because during draw we turn it off and we want
    * to resume the last state when finished
    */
-  private wasSelectionEnabled: boolean = true;
+  private wasSelectionEnabled = true;
 
   /**
    * `OLDraw` interaction when active, otherwise null
@@ -308,12 +308,13 @@ export class AlloyDrawInteraction {
     this.setRemoveInteractionFeatures();
 
     // add new select interaction for remove layer
-    this.olSelect = new OLSelect({
+    const olSelect = new OLSelect({
       layers: [this.removeLayer.olLayers[0]],
     });
+    this.olSelect = olSelect;
 
     // handler to remove coordinates from draw features on selection of remove features
-    this.olSelect.on('select', (event) => {
+    olSelect.on('select', (event) => {
       // don't process if no features are selected
       if (event.selected.length === 0) {
         return;
@@ -321,7 +322,10 @@ export class AlloyDrawInteraction {
       // find remove AlloyDrawFeature for selected OLFeature
       const selectedFeature = this.removeLayer.getFeatureById(
         FeatureUtils.getFeatureIdFromOlFeature(event.selected[0]),
-      )!;
+      );
+      if (!selectedFeature) {
+        throw new AlloyMapError(1582282699, 'selected feature must not be null');
+      }
       // get coordinate of selected remove point
       const coord = (selectedFeature.olFeature.getGeometry() as OLPoint).getCoordinates();
       // iterate over existing draw geometries to find matching coordinate for
@@ -338,7 +342,7 @@ export class AlloyDrawInteraction {
 
         // delete selected point from remove layer
         this.removeLayer.removeFeature(selectedFeature);
-        this.olSelect!.getFeatures().remove(selectedFeature.olFeature);
+        olSelect.getFeatures().remove(selectedFeature.olFeature);
 
         // process existining geometry on whether we need to remove a
         // single point or whole geometry if not enough points are left

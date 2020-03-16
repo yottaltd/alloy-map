@@ -15,5 +15,18 @@
   "vetur.format.defaultFormatter.less": "none",
   "vetur.format.defaultFormatter.stylus": "none",
   "vetur.format.defaultFormatter.js": "none",
-  "vetur.format.defaultFormatter.ts": "none"
+  "vetur.format.defaultFormatter.ts": "none",
+  "eslint.format.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.lintTask.enable": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true
+  },
+  "eslint.run": "onSave",
+  "eslint.validate": ["javacript", "typescript"]
 }

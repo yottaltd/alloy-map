@@ -102,10 +102,11 @@ export default function(mapData: MapData) {
       cy.wait(100).then(() => {
         // Click centre of the map
         const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
-        mapClick(pixel[0], pixel[1]);
-      });
+        return mapClick(pixel[0], pixel[1]);
+      })
       // Wait for map to re-render
-      cy.wait(100).then(() => {
+      .wait(100)
+      .then(() => {
         // Check that feature has been selected
         cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
         cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
@@ -152,10 +153,11 @@ export default function(mapData: MapData) {
         mapClick(pixel[0], pixel[1]);
         // Click second coordinate
         const pixel2 = mapData.map.olMap.getPixelFromCoordinate(secondCoordinate.toMapCoordinate());
-        mapClick(pixel2[0], pixel2[1]);
-      });
+        return mapClick(pixel2[0], pixel2[1]);
+      })
       // Wait for map to re-render
-      cy.wait(100).then(() => {
+      .wait(100)
+      .then(() => {
         // Check that both features has been selected
         cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
         cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
@@ -220,10 +222,11 @@ export default function(mapData: MapData) {
       cy.wait(100).then(() => {
         // Click somewhere else on the map to deselect it
         const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
-        mapClick(pixel[0] / 2, pixel[1] / 2);
-        // Check that feature has been deselected
-        cy.wrap(mapData.map.selectedFeatures).should('be.empty');
-      });
+        return mapClick(pixel[0] / 2, pixel[1] / 2);
+      })
+      .wait(100)
+      // Check that feature has been deselected
+      .then(() => cy.wrap(mapData.map.selectedFeatures).should('be.empty'));
     });
 
     it('should remove selection from feature on map programatically', () => {
@@ -317,10 +320,11 @@ export default function(mapData: MapData) {
         const pixel = mapData.map.olMap
           .getPixelFromCoordinate(mapCentre.toMapCoordinate())
           .map((p) => Math.round(p));
-        mapClick(pixel[0], pixel[1]);
-      });
+        return mapClick(pixel[0], pixel[1]);
+      })
       // Wait for map to re-render
-      cy.wait(100).then(() => {
+      .wait(100)
+      .then(() => {
         if (!selectedFeatures) {
           assert.fail('stack features are null');
           return;
@@ -385,10 +389,11 @@ export default function(mapData: MapData) {
         const pixel = mapData.map.olMap
           .getPixelFromCoordinate(mapCentre.toMapCoordinate())
           .map((p) => Math.round(p));
-        mapClick(pixel[0], pixel[1]);
-      });
+        return mapClick(pixel[0], pixel[1]);
+      })
       // Wait for map to re-render
-      cy.wait(100).then(() => {
+      .wait(100)
+      .then(() => {
         // Check that top feature has been selected
         cy.wrap(selectedFeature).should('equal', topFeature);
         if (!stack) {
@@ -447,9 +452,10 @@ export default function(mapData: MapData) {
           .getPixelFromCoordinate(coordinate2.toMapCoordinate())
           .map((p) => Math.round(p));
         mapClick(pixel2[0], pixel2[1], true);
-      });
+      })
       // Wait for map to re-render
-      cy.wait(100).then(() => {
+      .wait(100)
+      .then(() => {
         // Check that both features have been selected
         cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
         cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
@@ -542,10 +548,11 @@ export default function(mapData: MapData) {
         const pixel = mapData.map.olMap
           .getPixelFromCoordinate(coordinate2.toMapCoordinate())
           .map((p) => Math.round(p));
-        mapClick(pixel[0], pixel[1], true);
-      });
+        return mapClick(pixel[0], pixel[1], true);
+      })
       // Wait for map to re-render
-      cy.wait(100).then(() => {
+      .wait(100)
+      .then(() => {
         // Check that second feature has been deselected
         cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
         cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
@@ -603,8 +610,10 @@ export default function(mapData: MapData) {
           const pixel = mapData.map.olMap
             .getPixelFromCoordinate(mapCentre.toMapCoordinate())
             .map((p) => Math.round(p));
-          return cy.get(mapElementId).trigger('pointermove', pixel[0], pixel[1]);
+          return mapPointerMove(pixel[0], pixel[1]);
         })
+        // Wait for map to re-render
+        .wait(100)
         .then(() => {
           // Check that feature is hovered
           cy.wrap(mapData.map.hoverLayer.hoveredFeature).should('equal', customFeature);
@@ -638,8 +647,10 @@ export default function(mapData: MapData) {
           const pixel = mapData.map.olMap
             .getPixelFromCoordinate(mapCentre.toMapCoordinate())
             .map((p) => Math.round(p));
-          return cy.get(mapElementId).trigger('pointermove', pixel[0], pixel[1]);
+          return mapPointerMove(pixel[0], pixel[1]);
         })
+        // Wait for map to re-render
+        .wait(100)
         .then(() => {
           // Check that non-hoberable feature is not hovered
           cy.wrap(mapData.map.hoverLayer.hoveredFeature).should('equal', null);
@@ -708,12 +719,33 @@ export default function(mapData: MapData) {
   // Added since actual clicking on the map is not working due to dragging issue
   // So forcing drag to be `false` in the event
   function mapClick(x: number, y: number, isShiftKey?: boolean) {
-    cy.get(mapElementId).then((el) => {
+    return cy.get(mapElementId).then((el) => {
       cy.log('Map click', { x, y });
       const evt = new OLMapBrowserPointerEvent(
         'click',
         mapData.map.olMap,
         new PointerEvent('click', {
+          clientX: x,
+          clientY: y,
+          relatedTarget: el[0],
+          shiftKey: isShiftKey,
+        }),
+        false,
+      );
+      mapData.map.olMap.dispatchEvent(evt);
+    });
+  }
+
+  // Custom method to dispatch map pointermove event at given coordinates
+  // Added since actual pointermove on the map is not working due to dragging issue
+  // So forcing drag to be `false` in the event
+  function mapPointerMove(x: number, y: number, isShiftKey?: boolean) {
+    return cy.get(mapElementId).then((el) => {
+      cy.log('Map pointer move', { x, y });
+      const evt = new OLMapBrowserPointerEvent(
+        'pointermove',
+        mapData.map.olMap,
+        new PointerEvent('pointermove', {
           clientX: x,
           clientY: y,
           relatedTarget: el[0],

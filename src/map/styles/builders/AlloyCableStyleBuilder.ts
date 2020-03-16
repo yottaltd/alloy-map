@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLStyle from 'ol/style/Style';
 import { AlloyMapError } from '../../../error/AlloyMapError';
@@ -12,8 +14,9 @@ import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
-// tslint:disable-next-line: max-line-length
 import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
+
+/* eslint-enable max-len */
 
 /**
  * the icon colour for feeds and units

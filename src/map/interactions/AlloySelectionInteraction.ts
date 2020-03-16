@@ -54,7 +54,7 @@ export class AlloySelectionInteraction {
   /**
    * whether the interaction is enabled or not
    */
-  private enabled: boolean = true;
+  private enabled = true;
 
   /**
    * creates a new instance
@@ -423,9 +423,7 @@ export class AlloySelectionInteraction {
     }
 
     // if it is already the only thing selected then deselect
-    const featureAlreadySelected: boolean = !!this.map.selectionLayer.getFeatureById(
-      firstFeature.id,
-    );
+    const featureAlreadySelected = !!this.map.selectionLayer.getFeatureById(firstFeature.id);
     if (this.map.selectionLayer.features.size === 1 && featureAlreadySelected) {
       this.debugger(
         'first feature: %s is the only feature selected, deselecting...',

@@ -6,7 +6,7 @@ import { MathUtils } from '../../utils/MathUtils';
  * the difference between two lat/lon values allowed to be considered as the same value
  * @ignore
  */
-const ALLOWED_EQUALITY_DIFFERENCE: number = 0.00001;
+const ALLOWED_EQUALITY_DIFFERENCE = 0.00001;
 
 /**
  * an alloy coordinate represents lon/lat positions on the map, it is normalised to always represent

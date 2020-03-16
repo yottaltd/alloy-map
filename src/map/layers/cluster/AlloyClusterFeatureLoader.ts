@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
+
 import OLGeoJSON from 'ol/format/GeoJSON';
 import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
-// tslint:disable-next-line: max-line-length
 import { LayerGetClusterTileWebResponseModel } from '../../../api/LayerGetClusterTileWebResponseModel';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
@@ -14,6 +15,8 @@ import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
 import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
 import { AlloyClusterLayer } from './AlloyClusterLayer';
+
+/* eslint-enable max-len */
 
 /**
  * max zoom level supported for the tile grid (won't make requests beyond this point)
@@ -51,7 +54,7 @@ export class AlloyClusterFeatureLoader extends AlloyTileFeatureLoader<
   /**
    * indicates whether to clear the source the next time tiles load
    */
-  private shouldClearSource: boolean = false;
+  private shouldClearSource = false;
 
   /**
    * creates a new instance

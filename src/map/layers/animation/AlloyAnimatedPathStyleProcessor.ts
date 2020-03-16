@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
@@ -8,9 +10,10 @@ import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConne
 import { AlloyStyleBuilder } from '../../styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-// tslint:disable-next-line:max-line-length
 import { AlloyPathNodeConnectorStyleBuilder } from '../../styles/builders/AlloyPathNodeConnectorStyleBuilder';
 import { AlloyAnimatedPathLayer } from './AlloyAnimatedPathLayer';
+
+/* eslint-enable max-len */
 
 /**
  * abstract class for animation layer style processors
