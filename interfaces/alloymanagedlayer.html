@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AlloyFeature | @yotta/alloy-map</title>
+	<title>AlloyManagedLayer | @yotta/alloy-map</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="alloyfeature.html">AlloyFeature</a>
+					<a href="alloymanagedlayer.html">AlloyManagedLayer</a>
 				</li>
 			</ul>
-			<h1>Interface AlloyFeature</h1>
+			<h1>Interface AlloyManagedLayer</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>an alloy feature is used to display objects on the map</p>
+						<p>an alloy layer that can be enabled/disabled</p>
 					</div>
 				</div>
 			</section>
@@ -77,81 +77,74 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AlloyFeature</span>
+						<a href="alloylayer.html" class="tsd-signature-type">AlloyLayer</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">AlloyManagedLayer</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/alloyanimatedpathfeature.html" class="tsd-signature-type">AlloyAnimatedPathFeature</a></li>
-					<li><a href="../classes/alloycablefeature.html" class="tsd-signature-type">AlloyCableFeature</a></li>
-					<li><a href="../classes/alloycableunitfeature.html" class="tsd-signature-type">AlloyCableUnitFeature</a></li>
-					<li><a href="../classes/alloyclusterfeature.html" class="tsd-signature-type">AlloyClusterFeature</a></li>
-					<li><a href="../classes/alloycustomfeature.html" class="tsd-signature-type">AlloyCustomFeature</a></li>
-					<li><a href="../classes/alloycustomfeaturebase.html" class="tsd-signature-type">AlloyCustomFeatureBase</a></li>
-					<li><a href="../classes/alloycustomitemfeature.html" class="tsd-signature-type">AlloyCustomItemFeature</a></li>
-					<li><a href="../classes/alloydrawfeature.html" class="tsd-signature-type">AlloyDrawFeature</a></li>
-					<li><a href="../classes/alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a></li>
-					<li><a href="../classes/alloypathnodefeature.html" class="tsd-signature-type">AlloyPathNodeFeature</a></li>
-					<li><a href="../classes/alloyroutefeature.html" class="tsd-signature-type">AlloyRouteFeature</a></li>
-					<li><a href="../classes/alloyroutewaypointfeature.html" class="tsd-signature-type">AlloyRouteWaypointFeature</a></li>
-					<li><a href="../classes/alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a></li>
-					<li><a href="../classes/alloywfsfeature.html" class="tsd-signature-type">AlloyWfsFeature</a></li>
+					<li><a href="../classes/alloyroutelayer.html" class="tsd-signature-type">AlloyRouteLayer</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloyfeature.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloyfeature.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="alloymanagedlayer.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="alloymanagedlayer.html#map" class="tsd-kind-icon">map</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="alloyfeature.html#setgeometry" class="tsd-kind-icon">set<wbr>Geometry</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="alloyfeature.html#setvisible" class="tsd-kind-icon">set<wbr>Visible</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="alloymanagedlayer.html#disable" class="tsd-kind-icon">disable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="alloymanagedlayer.html#enable" class="tsd-kind-icon">enable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="alloymanagedlayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="alloylayer.html">AlloyLayer</a>.<a href="alloylayer.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/features/AlloyFeature.ts#L20">src/map/features/AlloyFeature.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/AlloyLayer.ts#L13">src/map/layers/AlloyLayer.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>the id of the feature, this is meaningless for 3rd parties using this library except for
-								directly referencing the feature on the map, it should not be relied upon to be, for instance,
-							an item id</p>
+							<p>unique identifier for the layer</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/alloyfeaturetype.html" class="tsd-signature-type">AlloyFeatureType</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="map" class="tsd-anchor"></a>
+					<h3>map</h3>
+					<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> <a href="../classes/alloymap.html" class="tsd-signature-type">AlloyMap</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="alloylayer.html">AlloyLayer</a>.<a href="alloylayer.html#map">map</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/features/AlloyFeature.ts#L13">src/map/features/AlloyFeature.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/AlloyLayer.ts#L18">src/map/layers/AlloyLayer.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>the features type</p>
+							<p>the map the alloy layer was created for</p>
 						</div>
 					</div>
 				</section>
@@ -159,64 +152,78 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="setgeometry" class="tsd-anchor"></a>
-					<h3>set<wbr>Geometry</h3>
+					<a name="disable" class="tsd-anchor"></a>
+					<h3>disable</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Geometry<span class="tsd-signature-symbol">(</span>geometry<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Geometry</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">disable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/features/AlloyFeature.ts#L70">src/map/features/AlloyFeature.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/AlloyManagedLayer.ts#L15">src/map/layers/AlloyManagedLayer.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>sets geometry of alloy feature</p>
+									<p>Disables the layer</p>
 								</div>
 							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>geometry: <span class="tsd-signature-type">Geometry</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>new geometry to set for this feature or null</p>
-									</div>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="setvisible" class="tsd-anchor"></a>
-					<h3>set<wbr>Visible</h3>
+					<a name="enable" class="tsd-anchor"></a>
+					<h3>enable</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Visible<span class="tsd-signature-symbol">(</span>visible<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">enable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/features/AlloyFeature.ts#L64">src/map/features/AlloyFeature.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/AlloyManagedLayer.ts#L10">src/map/layers/AlloyManagedLayer.ts:10</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>sets visibility of alloy feature</p>
+									<p>Enables the layer</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="getfeaturebyid" class="tsd-anchor"></a>
+					<h3>get<wbr>Feature<wbr>ById</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Feature<wbr>ById<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="alloylayer.html">AlloyLayer</a>.<a href="alloylayer.html#getfeaturebyid">getFeatureById</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/AlloyLayer.ts#L38">src/map/layers/AlloyLayer.ts:38</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>gets an alloy feature by its id</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>visible: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>whether feature is visible</p>
+										<p>the feature id</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -235,19 +242,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="alloyfeature.html" class="tsd-kind-icon">Alloy<wbr>Feature</a>
+						<a href="alloymanagedlayer.html" class="tsd-kind-icon">Alloy<wbr>Managed<wbr>Layer</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloyfeature.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="alloymanagedlayer.html#id" class="tsd-kind-icon">id</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloyfeature.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="alloyfeature.html#setgeometry" class="tsd-kind-icon">set<wbr>Geometry</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="alloymanagedlayer.html#map" class="tsd-kind-icon">map</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="alloyfeature.html#setvisible" class="tsd-kind-icon">set<wbr>Visible</a>
+								<a href="alloymanagedlayer.html#disable" class="tsd-kind-icon">disable</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="alloymanagedlayer.html#enable" class="tsd-kind-icon">enable</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="alloymanagedlayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a>
 							</li>
 						</ul>
 					</li>

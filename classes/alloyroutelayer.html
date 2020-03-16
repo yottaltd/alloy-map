@@ -91,6 +91,7 @@
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
 					<li><a href="../interfaces/alloylayer.html" class="tsd-signature-type">AlloyLayer</a></li>
+					<li><a href="../interfaces/alloymanagedlayer.html" class="tsd-signature-type">AlloyManagedLayer</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -114,7 +115,9 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloyroutelayer.html#clear" class="tsd-kind-icon">clear</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloyroutelayer.html#disable" class="tsd-kind-icon">disable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloyroutelayer.html#dispose" class="tsd-kind-icon">dispose</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloyroutelayer.html#enable" class="tsd-kind-icon">enable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="alloyroutelayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloyroutelayer.html#setroutefeature" class="tsd-kind-icon">set<wbr>Route<wbr>Feature</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="alloyroutelayer.html#setwaypointfeatures" class="tsd-kind-icon">set<wbr>Waypoint<wbr>Features</a></li>
@@ -136,7 +139,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="alloyanimatedpathlayer.html">AlloyAnimatedPathLayer</a>.<a href="alloyanimatedpathlayer.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/route/AlloyRouteLayer.ts#L35">map/layers/route/AlloyRouteLayer.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L31">src/map/layers/route/AlloyRouteLayer.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -167,10 +170,10 @@
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/alloylayer.html">AlloyLayer</a>.<a href="../interfaces/alloylayer.html#id">id</a></p>
+						<p>Implementation of <a href="../interfaces/alloymanagedlayer.html">AlloyManagedLayer</a>.<a href="../interfaces/alloymanagedlayer.html#id">id</a></p>
 						<p>Inherited from <a href="alloyanimatedpathlayer.html">AlloyAnimatedPathLayer</a>.<a href="alloyanimatedpathlayer.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/animation/AlloyAnimatedPathLayer.ts#L41">map/layers/animation/AlloyAnimatedPathLayer.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/animation/AlloyAnimatedPathLayer.ts#L41">src/map/layers/animation/AlloyAnimatedPathLayer.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,10 +188,10 @@
 					<h3>map</h3>
 					<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> <a href="alloymap.html" class="tsd-signature-type">AlloyMap</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/alloylayer.html">AlloyLayer</a>.<a href="../interfaces/alloylayer.html#map">map</a></p>
+						<p>Implementation of <a href="../interfaces/alloymanagedlayer.html">AlloyManagedLayer</a>.<a href="../interfaces/alloymanagedlayer.html#map">map</a></p>
 						<p>Inherited from <a href="alloyanimatedpathlayer.html">AlloyAnimatedPathLayer</a>.<a href="alloyanimatedpathlayer.html#map">map</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/animation/AlloyAnimatedPathLayer.ts#L46">map/layers/animation/AlloyAnimatedPathLayer.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/animation/AlloyAnimatedPathLayer.ts#L46">src/map/layers/animation/AlloyAnimatedPathLayer.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -211,13 +214,37 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/route/AlloyRouteLayer.ts#L80">map/layers/route/AlloyRouteLayer.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L76">src/map/layers/route/AlloyRouteLayer.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Clears the layer and stops route animation</p>
 								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="disable" class="tsd-anchor"></a>
+					<h3>disable</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">disable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/alloymanagedlayer.html">AlloyManagedLayer</a>.<a href="../interfaces/alloymanagedlayer.html#disable">disable</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L142">src/map/layers/route/AlloyRouteLayer.ts:142</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>implements</dt>
+									<dd></dd>
+								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
@@ -234,7 +261,31 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="alloyanimatedpathlayer.html">AlloyAnimatedPathLayer</a>.<a href="alloyanimatedpathlayer.html#dispose">dispose</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/animation/AlloyAnimatedPathLayer.ts#L202">map/layers/animation/AlloyAnimatedPathLayer.ts:202</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/animation/AlloyAnimatedPathLayer.ts#L202">src/map/layers/animation/AlloyAnimatedPathLayer.ts:202</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>implements</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="enable" class="tsd-anchor"></a>
+					<h3>enable</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">enable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/alloymanagedlayer.html">AlloyManagedLayer</a>.<a href="../interfaces/alloymanagedlayer.html#enable">enable</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L130">src/map/layers/route/AlloyRouteLayer.ts:130</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -256,10 +307,10 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/alloylayer.html">AlloyLayer</a>.<a href="../interfaces/alloylayer.html#getfeaturebyid">getFeatureById</a></p>
+								<p>Implementation of <a href="../interfaces/alloymanagedlayer.html">AlloyManagedLayer</a>.<a href="../interfaces/alloymanagedlayer.html#getfeaturebyid">getFeatureById</a></p>
 								<p>Overrides <a href="alloyanimatedpathlayer.html">AlloyAnimatedPathLayer</a>.<a href="alloyanimatedpathlayer.html#getfeaturebyid">getFeatureById</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/route/AlloyRouteLayer.ts#L96">map/layers/route/AlloyRouteLayer.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L92">src/map/layers/route/AlloyRouteLayer.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -274,10 +325,7 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -291,7 +339,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/route/AlloyRouteLayer.ts#L50">map/layers/route/AlloyRouteLayer.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L46">src/map/layers/route/AlloyRouteLayer.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -322,7 +370,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/f67ee13/src/map/layers/route/AlloyRouteLayer.ts#L68">map/layers/route/AlloyRouteLayer.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dc08513/src/map/layers/route/AlloyRouteLayer.ts#L64">src/map/layers/route/AlloyRouteLayer.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,8 +420,14 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="alloyroutelayer.html#clear" class="tsd-kind-icon">clear</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloyroutelayer.html#disable" class="tsd-kind-icon">disable</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="alloyroutelayer.html#dispose" class="tsd-kind-icon">dispose</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="alloyroutelayer.html#enable" class="tsd-kind-icon">enable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="alloyroutelayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a>
@@ -398,62 +452,27 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
