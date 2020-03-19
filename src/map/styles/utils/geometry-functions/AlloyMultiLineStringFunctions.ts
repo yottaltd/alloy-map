@@ -1,11 +1,13 @@
+import * as _ from 'lodash';
+import { getCenter } from 'ol/extent';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
+import OLPoint from 'ol/geom/Point';
 import OLRenderFeature from 'ol/render/Feature';
 import { AlloyMapError } from '../../../../error/AlloyMapError';
-import * as _ from 'lodash';
 
 /**
  * geometry functions for openlayers styles, modifies multi linestring geometry for styling
@@ -14,7 +16,7 @@ import * as _ from 'lodash';
  */
 export abstract class AlloyMultiLineStringFunctions {
   /**
-   * converts a feature of multi line string to its central point along the line.
+   * converts a feature of multi line string to its central points along the line.
    * **this is cached per geometry**
    */
   public static convertFeatureToMidPoints(olFeature: OLFeature | OLRenderFeature): OLMultiPoint {
@@ -22,7 +24,15 @@ export abstract class AlloyMultiLineStringFunctions {
   }
 
   /**
-   * converts a multi line string to its central point along the line.
+   * converts a feature of multi line string to its central point along the line.
+   * **this is cached per geometry**
+   */
+  public static convertFeatureToMidPoint(olFeature: OLFeature | OLRenderFeature): OLPoint {
+    return AlloyMultiLineStringFunctions.convertGeometryToMidPoint(olFeature.getGeometry());
+  }
+
+  /**
+   * converts a multi line string to its central points along the line.
    * **this is cached per geometry**
    */
   public static convertGeometryToMidPoints(olGeometry: OLGeometry | OLRenderFeature): OLMultiPoint {
@@ -33,6 +43,22 @@ export abstract class AlloyMultiLineStringFunctions {
 
     // get mid point from behind the cache
     return AlloyMultiLineStringFunctions.getAndCacheMultiLineStringMidPoints(
+      olGeometry as OLMultiLineString,
+    );
+  }
+
+  /**
+   * converts a multi line string to its central point along the line.
+   * **this is cached per geometry**
+   */
+  public static convertGeometryToMidPoint(olGeometry: OLGeometry | OLRenderFeature): OLPoint {
+    // MUST be a multi linestring, otherwise why are we running this?
+    if (olGeometry.getType() !== OLGeometryType.MULTI_LINE_STRING) {
+      throw new AlloyMapError(1584632543, 'cannot run geometry function for non-multi linestring');
+    }
+
+    // get mid point from behind the cache
+    return AlloyMultiLineStringFunctions.getAndCacheMultiLineStringMidPoint(
       olGeometry as OLMultiLineString,
     );
   }
@@ -69,6 +95,7 @@ export abstract class AlloyMultiLineStringFunctions {
    * the linestring anymore
    */
   private static readonly cache = new WeakMap<OLMultiLineString, OLMultiPoint>();
+  private static readonly cachePoint = new WeakMap<OLMultiLineString, OLPoint>();
 
   /**
    * gets or generates the multi linestring mid points and returns the result
@@ -88,5 +115,28 @@ export abstract class AlloyMultiLineStringFunctions {
     // cache and return the results
     AlloyMultiLineStringFunctions.cache.set(olGeometry, multiPoint);
     return multiPoint;
+  }
+
+  /**
+   * gets or generates the multi linestring mid point and returns the result
+   * @param olGeometry the linestring to calculate the mid point for
+   */
+  private static getAndCacheMultiLineStringMidPoint(olGeometry: OLMultiLineString): OLPoint {
+    // first check the cache
+    let point: OLPoint | undefined = AlloyMultiLineStringFunctions.cachePoint.get(olGeometry);
+    if (point) {
+      // if its in the cache, great! short circuit!
+      return point;
+    }
+
+    // calculate the mid point
+    const multiPoints = AlloyMultiLineStringFunctions.getAndCacheMultiLineStringMidPoints(
+      olGeometry,
+    );
+    point = new OLPoint(multiPoints.getClosestPoint(getCenter(olGeometry.getExtent())));
+
+    // cache and return the results
+    AlloyMultiLineStringFunctions.cachePoint.set(olGeometry, point);
+    return point;
   }
 }
