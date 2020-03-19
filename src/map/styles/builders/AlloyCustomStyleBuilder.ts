@@ -331,8 +331,8 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
                 AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid points
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+                // then convert to mid point
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
               )
             : AlloyLineStringFunctions.convertFeatureToMidPoint,
         ),
@@ -375,10 +375,10 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
                 AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid points
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+                // then convert to mid point
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
               )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
         ),
       );
     }
@@ -732,8 +732,8 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
                 AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid points
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+                // then convert to mid point
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
               )
             : AlloyLineStringFunctions.convertFeatureToMidPoint,
         ),
@@ -789,10 +789,10 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
                 AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid points
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+                // then convert to mid point
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
               )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
         ),
       );
     }
@@ -1158,8 +1158,8 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
                 AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid points
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+                // then convert to mid point
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
               )
             : AlloyLineStringFunctions.convertFeatureToMidPoint,
         ),
@@ -1262,10 +1262,10 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
             ? AlloyGeometryFunctionUtils.pipe(
                 // if we have geometry collection, first convert to multi line strings
                 AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid points
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoints,
+                // then convert to mid point
+                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
               )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
+            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
         ),
       );
     }
