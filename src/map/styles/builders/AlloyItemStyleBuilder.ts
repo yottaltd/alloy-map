@@ -1600,7 +1600,7 @@ export class AlloyItemStyleBuilder extends AlloyStyleBuilderWithLayerStyles<Allo
   }
 
   /**
-   * Returnss provided scale or default
+   * Returns provided scale or default
    * @param scale this style scale or null
    */
   private getStyleScale(scale: AlloyLayerStyleScale | null): AlloyLayerStyleScale {
