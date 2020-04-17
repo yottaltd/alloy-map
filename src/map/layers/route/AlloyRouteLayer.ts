@@ -130,10 +130,11 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
   public enable(): void {
     if (this.routeFeature) {
       this.animationManager.startAnimation(this.routeFeature);
+      this.routeFeature.allowsSelection = true;
     }
-    for (const layer of this.olLayers) {
-      layer.setOpacity(1);
-    }
+    this.olLayerAnimatedPaths.setOpacity(1);
+    this.olLayerPathNodes.setOpacity(1);
+    this.olLayerPathNodeConnectors.setOpacity(1);
   }
 
   /**
@@ -142,9 +143,10 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
   public disable(): void {
     if (this.routeFeature) {
       this.animationManager.stopAnimation(this.routeFeature);
+      this.routeFeature.allowsSelection = false;
     }
-    for (const layer of this.olLayers) {
-      layer.setOpacity(0.25);
-    }
+    this.olLayerAnimatedPaths.setOpacity(0.25);
+    this.olLayerPathNodes.setOpacity(0);
+    this.olLayerPathNodeConnectors.setOpacity(0);
   }
 }

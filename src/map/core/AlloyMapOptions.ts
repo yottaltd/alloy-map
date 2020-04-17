@@ -40,6 +40,11 @@ export interface AlloyMapOptions {
   attributions?: boolean;
 
   /**
+   * whether map scale should be displayed on the map, defaults to true
+   */
+  scale?: boolean;
+
+  /**
    * the webfont family names to load into the map. "alloyicons" are attempted to be loaded by
    * default
    */

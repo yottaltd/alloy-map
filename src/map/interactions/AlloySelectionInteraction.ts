@@ -559,7 +559,7 @@ export class AlloySelectionInteraction {
               FeatureUtils.getFeatureIdFromOlFeature(olFeature),
             );
             // if we have a feature add it to the array
-            if (feature) {
+            if (feature && feature.allowsSelection) {
               features.push(feature);
             } else {
               // behind guard because we are performing operations for a log
