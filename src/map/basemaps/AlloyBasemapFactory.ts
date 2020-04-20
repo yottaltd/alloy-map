@@ -87,13 +87,7 @@ export abstract class AlloyBasemapFactory {
   public static async createWms(options: AlloyWmsParameters): Promise<AlloyBasemap> {
     // register projection
     if (options.crs) {
-      try {
-        await ProjectionUtils.register(parseInt(options.crs.split(':')[1], 10));
-      } catch (e) {
-        // do not throw if failed to register projection
-        // eslint-disable-next-line no-console
-        console.error('failed to register projection ' + options.crs, e);
-      }
+      await AlloyBasemapFactory.registerProjection(options.crs);
     }
     return new AlloyWmsBasemap(options);
   }
@@ -105,13 +99,7 @@ export abstract class AlloyBasemapFactory {
   public static async createImageWms(options: AlloyWmsParameters): Promise<AlloyBasemap> {
     // register projection
     if (options.crs) {
-      try {
-        await ProjectionUtils.register(parseInt(options.crs.split(':')[1], 10));
-      } catch (e) {
-        // do not throw if failed to register projection
-        // eslint-disable-next-line no-console
-        console.error('failed to register projection ' + options.crs);
-      }
+      await AlloyBasemapFactory.registerProjection(options.crs);
     }
     return new AlloyImageWmsBasemap(options);
   }
@@ -131,19 +119,29 @@ export abstract class AlloyBasemapFactory {
       (tileMatrix) => tileMatrix.Identifier === tileMatrixId,
     );
     if (tileMatrixSet) {
-      try {
-        const split = tileMatrixSet.SupportedCRS.split(':');
-        const epsg = parseInt(split[split.length - 1], 10);
-        if (isNaN(epsg)) {
-          throw new AlloyMapError(1577964771, 'epsg code was not a number');
-        }
-        await ProjectionUtils.register(epsg);
-      } catch (e) {
-        // do not throw if failed to register projection
-        // eslint-disable-next-line no-console
-        console.error('failed to register projection ' + tileMatrixSet.SupportedCRS);
-      }
+      await AlloyBasemapFactory.registerProjection(tileMatrixSet.SupportedCRS);
     }
     return new AlloyWmtsBasemap(capabilities, options);
+  }
+
+  /**
+   * Tries to parse epsg code from crs string and register it
+   * @param crs corrdinate reference system string
+   * @ignore
+   * @internal
+   */
+  private static async registerProjection(crs: string): Promise<void> {
+    try {
+      const split = crs.split(':');
+      const epsg = parseInt(split[split.length - 1], 10);
+      if (isNaN(epsg)) {
+        throw new AlloyMapError(1577964771, 'epsg code was not a number');
+      }
+      await ProjectionUtils.register(epsg);
+    } catch (e) {
+      // do not throw if failed to register projection
+      // eslint-disable-next-line no-console
+      console.error(`failed to register projection - ${crs}`, e);
+    }
   }
 }
