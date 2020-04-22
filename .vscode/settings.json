@@ -27,6 +27,10 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnSave": true
   },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   "eslint.run": "onSave",
   "eslint.validate": ["javacript", "typescript"]
 }
