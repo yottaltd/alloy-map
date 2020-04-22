@@ -104,7 +104,7 @@ export abstract class ScreenshotUtils {
       return 'Could not get canvas context';
     }
 
-    const inner = map.olMap.getTargetElement().querySelector<HTMLElement>('.ol-scale-line-inner');
+    const inner = map.olMap.getTargetElement().querySelector<HTMLElement>('.map__scale-inner');
     if (!inner) {
       return 'Could not get scale line inner element';
     }
