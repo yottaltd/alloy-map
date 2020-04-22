@@ -114,17 +114,12 @@ export default function(mapData: MapData) {
       });
     });
 
-    it('should take a screenshot', () => {
-      let blob: Blob | null = null;
+    it('should take a screenshot', async () => {
       const basemap = AlloyBasemapFactory.createSkyward();
       mapData.map.setBasemap(basemap);
 
-      mapData.map.screenshot().then((screenshot) => {
-        blob = screenshot;
-      });
-      cy.wait(500).then(() => {
-        assert.exists(blob);
-      });
+      const screenshot = await mapData.map.screenshot();
+      assert.exists(screenshot);
     });
   });
 }

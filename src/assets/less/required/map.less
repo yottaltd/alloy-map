@@ -1,0 +1,22 @@
+// these styles will be packed into js file with webpack, so that they are always included
+
+// the open layers map
+.map {
+  width: 100%;
+  height: 100%;
+
+  &__canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+  }
+}
+
+// needed for pointer interactions to work
+.ol-overlaycontainer-stopevent {
+  pointer-events: none;
+
+  &> * {
+    pointer-events: auto;
+  }
+}

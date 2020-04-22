@@ -43,6 +43,7 @@ export abstract class ScreenshotUtils {
           const drawScaleResponse = ScreenshotUtils.drawScale(map, canvasCopy);
           if (drawScaleResponse) {
             reject(new AlloyMapError(1583155169, 'failed to draw scale - ' + drawScaleResponse));
+            return;
           }
 
           canvasCopy.toBlob((blob: Blob | null) => {
@@ -80,7 +81,7 @@ export abstract class ScreenshotUtils {
 
     const inner = map.olMap.getTargetElement().querySelector<HTMLElement>('.map__scale-inner');
     if (!inner) {
-      return 'Could not get scale line inner element';
+      return;
     }
 
     const offset = 20;

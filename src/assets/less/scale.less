@@ -1,0 +1,21 @@
+// style for scale line control
+.map__scale {
+  padding: 10px;
+  background-color: fade(@blue-dark, 50%);
+  transition: background-color 500ms ease;
+
+  &:hover {
+    background-color: @blue-dark;
+  }
+
+  &-inner {
+    border: 1px solid @white;
+    border-top: none;
+    color: @white;
+    font-size: 10px;
+    text-align: center;
+    margin: 1px;
+    will-change: contents, width;
+    transition: all 0.25s;
+  }
+}

@@ -201,8 +201,25 @@ export class AlloyMap {
         }),
       );
     }
-    if (options.scale !== false) {
+    if (options.scale !== undefined) {
       controls.push(new OLScaleLine({ units: Units.METRIC, className: 'map__scale' }));
+      setTimeout(() => {
+        const scaleElement = options.element.querySelector('.map__scale');
+        if (options.scale && scaleElement) {
+          const scaleStyle = (scaleElement as HTMLElement).style;
+          scaleStyle.position = 'absolute';
+          if (options.scale.anchor.startsWith('Top')) {
+            scaleStyle.top = `${options.scale.y}px`;
+          } else if (options.scale.anchor.startsWith('Bottom')) {
+            scaleStyle.bottom = `${options.scale.y}px`;
+          }
+          if (options.scale.anchor.endsWith('Left')) {
+            scaleStyle.left = `${options.scale.x}px`;
+          } else if (options.scale.anchor.endsWith('Right')) {
+            scaleStyle.right = `${options.scale.x}px`;
+          }
+        }
+      });
     }
 
     // construct the map instance
