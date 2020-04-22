@@ -22,7 +22,8 @@ export abstract class ScreenshotUtils {
             .getTargetElement()
             .querySelectorAll<HTMLCanvasElement>('canvas');
           if (mapCanvases.length === 0) {
-            throw new AlloyMapError(1578673819, 'failed to find map canvases');
+            reject(new AlloyMapError(1578673819, 'failed to find map canvases'));
+            return;
           }
 
           // Device pixel ratio will be used to scale down the resulting canvas so that screenshot
@@ -37,7 +38,8 @@ export abstract class ScreenshotUtils {
           map.olMap.getTargetElement().appendChild(canvas);
           const canvasContext = canvas.getContext('2d');
           if (!canvasContext) {
-            throw new AlloyMapError(1583231614, 'failed to copy map canvases to new canvas');
+            reject(new AlloyMapError(1583231614, 'failed to copy map canvases to new canvas'));
+            return;
           }
 
           for (let i = 0; i < mapCanvases.length; i++) {
@@ -65,21 +67,19 @@ export abstract class ScreenshotUtils {
           // Draw scale on the canvas copy
           const drawScaleResponse = ScreenshotUtils.drawScale(map, canvas);
           if (drawScaleResponse) {
-            throw new AlloyMapError(1583155169, 'failed to draw scale - ' + drawScaleResponse);
+            reject(new AlloyMapError(1583155169, 'failed to draw scale - ' + drawScaleResponse));
+            return;
           }
 
           canvas.toBlob((blob: Blob | null) => {
             if (!blob) {
-              throw new AlloyMapError(1578673083, 'failed to convert canvas to blob');
+              reject(new AlloyMapError(1578673083, 'failed to convert canvas to blob'));
+              return;
             }
 
             resolve(blob);
           }, 'image/png');
         } catch (error) {
-          if (error instanceof AlloyMapError) {
-            reject(error);
-            return;
-          }
           reject(new AlloyMapError(1559148073, 'failed to convert canvas to blob'));
         } finally {
           if (canvas) {
