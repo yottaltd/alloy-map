@@ -99,7 +99,11 @@ export abstract class AlloyLabelUtils {
     backgroundColour: string,
     scale: AlloyLayerStyleScale,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
-  ): OLStyle {
+  ): OLStyle | null {
+    if (!title && !subtitle) {
+      return null;
+    }
+
     // get or generate the canvas for this label
     const canvas = AlloyLabelUtils.createLabelCanvas(
       title ?? null,
