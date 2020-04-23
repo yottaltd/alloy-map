@@ -15,12 +15,12 @@ export interface AlloyItemFeatureProperties {
   /**
    * the title of the item
    */
-  readonly title: string;
+  readonly title?: string;
 
   /**
    * the subtitle of the item
    */
-  readonly subtitle: string;
+  readonly subtitle?: string;
 
   /**
    * its stringified type

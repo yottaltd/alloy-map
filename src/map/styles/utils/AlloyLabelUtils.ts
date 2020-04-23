@@ -94,14 +94,18 @@ export abstract class AlloyLabelUtils {
    * @param geometryFunction the geometry or function to transform the feature geometry
    */
   public static createLabelStyle(
-    title: string,
-    subtitle: string | null,
+    title: string | undefined,
+    subtitle: string | null | undefined,
     backgroundColour: string,
     scale: AlloyLayerStyleScale,
     geometryFunction?: OLGeometry | ((olFeature: OLFeature | OLRenderFeature) => OLGeometry),
   ): OLStyle {
     // get or generate the canvas for this label
-    const canvas = AlloyLabelUtils.createLabelCanvas(title, subtitle, backgroundColour);
+    const canvas = AlloyLabelUtils.createLabelCanvas(
+      title ?? null,
+      subtitle ?? null,
+      backgroundColour,
+    );
 
     // create a custom style to support it
     return new OLStyle({
@@ -130,7 +134,7 @@ export abstract class AlloyLabelUtils {
    * @param backgroundColour the colour of the background
    */
   public static createLabelCanvas(
-    title: string,
+    title: string | null,
     subtitle: string | null,
     backgroundColour: string,
   ): HTMLCanvasElement {
@@ -147,8 +151,8 @@ export abstract class AlloyLabelUtils {
   private static readonly memoizedCreateLabelCanvasImplementation = _.memoize(
     AlloyLabelUtils.createLabelCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
-    (title: string, subtitle: string | null, backgroundColour: string) =>
-      AlloyLabelUtils.memoizedCleanText(title) +
+    (title: string | null, subtitle: string | null, backgroundColour: string) =>
+      (title ? AlloyLabelUtils.memoizedCleanText(title) : null) +
       ':' +
       (subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null) +
       ':' +
@@ -167,11 +171,11 @@ export abstract class AlloyLabelUtils {
    * @param backgroundColour the background colour of the label
    */
   private static createLabelCanvasImplementation(
-    title: string,
+    title: string | null,
     subtitle: string | null,
     backgroundColour: string,
   ): HTMLCanvasElement {
-    title = AlloyLabelUtils.memoizedCleanText(title);
+    title = title ? AlloyLabelUtils.memoizedCleanText(title) : null;
     subtitle = subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null;
 
     // create a canvas to work on
@@ -180,7 +184,7 @@ export abstract class AlloyLabelUtils {
     canvas.height = LABEL_CANVAS_HEIGHT;
 
     // return empty canvas if we have no text
-    const hasTitle = title.length > 0;
+    const hasTitle = title !== null && title.length > 0;
     const hasSubtitle = subtitle !== null && subtitle.length > 0;
     if (!hasTitle && !hasSubtitle) {
       return canvas;
@@ -196,12 +200,12 @@ export abstract class AlloyLabelUtils {
       // if we have a title and subtitle we need to find the biggest out of title/subtitle
       canvas.width = AlloyLabelUtils.getCanvasWidthWithTitleAndSubtitle(
         context,
-        title,
+        title || '',
         subtitle || '',
       );
-    } else {
+    } else if (hasTitle) {
       // otherwise only display title
-      canvas.width = AlloyLabelUtils.getCanvasWidthWithTitle(context, title);
+      canvas.width = AlloyLabelUtils.getCanvasWidthWithTitle(context, title || '');
     }
 
     // draw the label background shape
@@ -223,10 +227,10 @@ export abstract class AlloyLabelUtils {
     // clear the style and render the text
     if (hasTitle && hasSubtitle) {
       // if we have a title and subtitle we need to position differently
-      AlloyLabelUtils.drawTitleAndSubtitle(context, title, subtitle || '');
-    } else {
+      AlloyLabelUtils.drawTitleAndSubtitle(context, title || '', subtitle || '');
+    } else if (hasTitle) {
       // otherwise only display title
-      AlloyLabelUtils.drawTitle(context, title);
+      AlloyLabelUtils.drawTitle(context, title || '');
     }
 
     return canvas;
