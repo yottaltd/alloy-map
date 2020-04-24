@@ -53,6 +53,20 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   /**
    * @implements
    */
+  public removeFeature(feature: AlloyFeature): boolean {
+    if (feature.originatingLayerId) {
+      const layer = this.map.layers.get(feature.originatingLayerId);
+      if (layer instanceof AlloyLayerWithFeatures) {
+        layer.olSource.addFeature(feature.olFeature);
+      }
+    }
+
+    return super.removeFeature(feature);
+  }
+
+  /**
+   * @implements
+   */
   public clearFeatures(): boolean {
     Array.from(this.features.values()).forEach((feature) => {
       if (feature.originatingLayerId) {
