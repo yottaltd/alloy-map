@@ -242,15 +242,15 @@ export class AlloyMap {
       ),
     );
 
-    // setup hover layer, interaction and add it to the map
-    this.hoverLayer = new AlloyHoverLayer({ map: this });
-    this.hoverInteraction = new AlloyHoverInteraction(this);
-    this.hoverLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
-
     // setup selection layer, interaction and add it to the map
     this.selectionLayer = new AlloySelectionLayer({ map: this });
     this.selectionInteraction = new AlloySelectionInteraction(this);
     this.selectionLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
+
+    // setup hover layer, interaction and add it to the map
+    this.hoverLayer = new AlloyHoverLayer({ map: this });
+    this.hoverInteraction = new AlloyHoverInteraction(this);
+    this.hoverLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
 
     // setup ping interaction
     this.pingInteraction = new AlloyPingInteraction(this);

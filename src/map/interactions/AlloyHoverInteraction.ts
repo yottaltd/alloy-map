@@ -160,7 +160,7 @@ export class AlloyHoverInteraction {
    * recalculates the payload of data used on pointer movement
    */
   private recalculatePointerMovePayload() {
-    const layers = Array.from(this.map.layers.values());
+    const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
     const olLayers = _.flatten(layers.map((l) => l.olLayers));
 
     // TODO maybe work out the z-index?
