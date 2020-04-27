@@ -22,7 +22,7 @@ import { AlloyClusterLayer } from './AlloyClusterLayer';
  * max zoom level supported for the tile grid (won't make requests beyond this point)
  * @ignore
  */
-const TILE_GRID_MAX_ZOOM = 17;
+const TILE_GRID_MAX_ZOOM = 16;
 
 /**
  * loads cluster layer features from the alloy api
