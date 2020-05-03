@@ -11,6 +11,7 @@ import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerS
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
 import { AlloyTextUtils } from '../utils/AlloyTextUtils';
+import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /**
  * cluster scale multiplier for the band 2 to 99 items
@@ -83,7 +84,8 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     }
 
     const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
-    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale * layerStyle.scale;
+    const radius =
+      AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale * this.getStyleScale(layerStyle.scale);
     const textCanvas = AlloyTextUtils.createTextCanvas(
       NumberFormatUtils.smallFormatNumber(feature.properties.count),
       TEXT_COLOUR,
@@ -96,7 +98,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
-          scale: layerStyle.scale,
+          scale: this.getStyleScale(layerStyle.scale),
           imgSize: [textCanvas.width, textCanvas.height],
           opacity: layerStyle.opacity.value,
         }),
@@ -117,7 +119,8 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     }
 
     const clusterScale = this.getScaleMultiplierForClusterCount(feature.properties.count);
-    const radius = AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale * layerStyle.scale;
+    const radius =
+      AlloyScaleUtils.POINT_RADIUS_MAX * clusterScale * this.getStyleScale(layerStyle.scale);
     const textCanvas = AlloyTextUtils.createTextCanvas(
       NumberFormatUtils.smallFormatNumber(feature.properties.count),
       TEXT_COLOUR,
@@ -135,7 +138,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       new OLStyle({
         image: new OLIcon({
           img: textCanvas,
-          scale: layerStyle.scale,
+          scale: this.getStyleScale(layerStyle.scale),
           imgSize: [textCanvas.width, textCanvas.height],
           opacity: 1,
         }),
@@ -162,5 +165,13 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
    */
   private getScaleMultiplierForClusterCount(count: number): number {
     return count < 100 ? CLUSTER_2_99 : count < 10000 ? CLUSTER_100_9999 : CLUSTER_10000_INFINITY;
+  }
+
+  /**
+   * Returns provided scale or default
+   * @param scale this style scale or null
+   */
+  private getStyleScale(scale: AlloyLayerStyleScale | null): AlloyLayerStyleScale {
+    return scale || AlloyLayerStyleScale.Medium;
   }
 }
