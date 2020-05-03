@@ -27,7 +27,7 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
    * @ignore
    * @internal
    */
-  public allowsSelection!: true; // see end of file for prototype
+  public allowsSelection!: boolean; // see end of file for prototype
 
   /**
    * @implements

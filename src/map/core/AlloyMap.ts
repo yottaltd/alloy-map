@@ -3,7 +3,7 @@ import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
 import OLControl from 'ol/control/Control';
-import OLScaleLine from 'ol/control/ScaleLine';
+import OLScaleLine, { Units } from 'ol/control/ScaleLine';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
@@ -201,8 +201,8 @@ export class AlloyMap {
         }),
       );
     }
-    if (options.interactive !== false) {
-      controls.push(new OLScaleLine({ units: 'metric' }));
+    if (options.scale !== false) {
+      controls.push(new OLScaleLine({ units: Units.METRIC, className: 'map__scale' }));
     }
 
     // construct the map instance

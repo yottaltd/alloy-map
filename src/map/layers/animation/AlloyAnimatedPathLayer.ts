@@ -110,11 +110,11 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
   protected readonly olLayerPathNodeConnectors: OLVectorLayer;
 
   /**
-   * openlayers layer for annimated path
+   * openlayers layer for animated path
    * @ignore
    * @internal
    */
-  private readonly olLayerAnimatedPaths: OLVectorLayer;
+  protected readonly olLayerAnimatedPaths: OLVectorLayer;
 
   /**
    * creates a new instance
