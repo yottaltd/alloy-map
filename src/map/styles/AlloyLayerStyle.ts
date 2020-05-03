@@ -41,7 +41,7 @@ export class AlloyLayerStyle {
   /**
    * scale for style features
    */
-  public readonly scale: AlloyLayerStyleScale;
+  public readonly scale: AlloyLayerStyleScale | null;
 
   /**
    * creates a new instance
@@ -64,7 +64,7 @@ export class AlloyLayerStyle {
     this.icon = icon;
     this.labelMode = labelMode || AlloyLayerStyleLabelMode.None;
     this.opacity = opacity || AlloyLayerStyleOpacity.Opaque;
-    this.scale = scale || AlloyLayerStyleScale.Medium;
+    this.scale = scale || null;
 
     // we're really picky about colours being hex to avoid issues in openlayers
     if (!HEX_REGEX.test(colour)) {
