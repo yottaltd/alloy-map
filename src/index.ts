@@ -120,4 +120,4 @@ export { WmtsUtils } from './wmts/WmtsUtils';
  * @ignore
  * @internal
  */
-import './assets/less/required/map.less';
+import './assets/less/index.less';
