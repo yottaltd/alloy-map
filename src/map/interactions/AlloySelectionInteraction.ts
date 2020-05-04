@@ -532,7 +532,7 @@ export class AlloySelectionInteraction {
    * @param pixel the pixel coordinate to find features under
    */
   private getFeaturesForPixel(pixel: number[]) {
-    const layers = Array.from(this.map.layers.values());
+    const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
     // map the openlayers layers one to one with ours so indices are the same
     const olLayers = _.flatten(layers.map((l) => l.olLayers));
     // create a set for fast lookup

@@ -41,7 +41,7 @@ export default function(mapData: MapData) {
           mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate()),
         );
         cy.wrap(featuresAtPixel).should('have.length', 1);
-        cy.wrap(featuresAtPixel![0]).should('equal', customFeature.olFeature);
+        cy.wrap(featuresAtPixel[0]).should('equal', customFeature.olFeature);
       });
     });
 
@@ -99,18 +99,19 @@ export default function(mapData: MapData) {
       );
 
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Click centre of the map
-        const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
-        return mapClick(pixel[0], pixel[1]);
-      })
-      // Wait for map to re-render
-      .wait(100)
-      .then(() => {
-        // Check that feature has been selected
-        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
-        cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
-      });
+      cy.wait(100)
+        .then(() => {
+          // Click centre of the map
+          const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
+          return mapClick(pixel[0], pixel[1]);
+        })
+        // Wait for map to re-render
+        .wait(100)
+        .then(() => {
+          // Check that feature has been selected
+          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
+          cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
+        });
     });
 
     it('should select multiple features on map on click with toggle mode', () => {
@@ -147,22 +148,25 @@ export default function(mapData: MapData) {
       );
 
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Click centre of the map
-        const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
-        mapClick(pixel[0], pixel[1]);
-        // Click second coordinate
-        const pixel2 = mapData.map.olMap.getPixelFromCoordinate(secondCoordinate.toMapCoordinate());
-        return mapClick(pixel2[0], pixel2[1]);
-      })
-      // Wait for map to re-render
-      .wait(100)
-      .then(() => {
-        // Check that both features has been selected
-        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
-        cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
-        cy.wrap(mapData.map.selectedFeatures.has(customFeature2.id)).should('be.true');
-      });
+      cy.wait(100)
+        .then(() => {
+          // Click centre of the map
+          const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
+          mapClick(pixel[0], pixel[1]);
+          // Click second coordinate
+          const pixel2 = mapData.map.olMap.getPixelFromCoordinate(
+            secondCoordinate.toMapCoordinate(),
+          );
+          return mapClick(pixel2[0], pixel2[1]);
+        })
+        // Wait for map to re-render
+        .wait(100)
+        .then(() => {
+          // Check that both features has been selected
+          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
+          cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
+          cy.wrap(mapData.map.selectedFeatures.has(customFeature2.id)).should('be.true');
+        });
     });
 
     it('should select feature on map programatically', () => {
@@ -219,14 +223,15 @@ export default function(mapData: MapData) {
       cy.wrap(mapData.map.selectedFeatures.has(customFeature.id)).should('be.true');
 
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Click somewhere else on the map to deselect it
-        const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
-        return mapClick(pixel[0] / 2, pixel[1] / 2);
-      })
-      .wait(100)
-      // Check that feature has been deselected
-      .then(() => cy.wrap(mapData.map.selectedFeatures).should('be.empty'));
+      cy.wait(100)
+        .then(() => {
+          // Click somewhere else on the map to deselect it
+          const pixel = mapData.map.olMap.getPixelFromCoordinate(mapCentre.toMapCoordinate());
+          return mapClick(pixel[0] / 2, pixel[1] / 2);
+        })
+        .wait(100)
+        // Check that feature has been deselected
+        .then(() => cy.wrap(mapData.map.selectedFeatures).should('be.empty'));
     });
 
     it('should remove selection from feature on map programatically', () => {
@@ -310,29 +315,30 @@ export default function(mapData: MapData) {
 
       let selectedFeatures: Map<string, AlloyFeature> | null = null;
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Add selection listener
-        mapData.map.addFeatureSelectionChangeListener((event) => {
-          selectedFeatures = event.features;
-        });
+      cy.wait(100)
+        .then(() => {
+          // Add selection listener
+          mapData.map.addFeatureSelectionChangeListener((event) => {
+            selectedFeatures = event.features;
+          });
 
-        // Click centre of the map to select feature
-        const pixel = mapData.map.olMap
-          .getPixelFromCoordinate(mapCentre.toMapCoordinate())
-          .map((p) => Math.round(p));
-        return mapClick(pixel[0], pixel[1]);
-      })
-      // Wait for map to re-render
-      .wait(100)
-      .then(() => {
-        if (!selectedFeatures) {
-          assert.fail('stack features are null');
-          return;
-        }
-        // Check that only one, top feature has been selected
-        cy.wrap(selectedFeatures.size).should('equal', 1);
-        cy.wrap(selectedFeatures.has(topFeature.id)).should('be.true');
-      });
+          // Click centre of the map to select feature
+          const pixel = mapData.map.olMap
+            .getPixelFromCoordinate(mapCentre.toMapCoordinate())
+            .map((p) => Math.round(p));
+          return mapClick(pixel[0], pixel[1]);
+        })
+        // Wait for map to re-render
+        .wait(100)
+        .then(() => {
+          if (!selectedFeatures) {
+            assert.fail('stack features are null');
+            return;
+          }
+          // Check that only one, top feature has been selected
+          cy.wrap(selectedFeatures.size).should('equal', 1);
+          cy.wrap(selectedFeatures.has(topFeature.id)).should('be.true');
+        });
     });
 
     it('should suggest features underneath stack of features on click', () => {
@@ -378,33 +384,34 @@ export default function(mapData: MapData) {
       let stack: Map<string, AlloyFeature> | null = null;
       let selectedFeature: AlloyFeature | null = null;
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Add under selection listener
-        mapData.map.addFeaturesUnderSelectionListener((event) => {
-          stack = event.stack;
-          selectedFeature = event.selectedFeature;
-        });
+      cy.wait(100)
+        .then(() => {
+          // Add under selection listener
+          mapData.map.addFeaturesUnderSelectionListener((event) => {
+            stack = event.stack;
+            selectedFeature = event.selectedFeature;
+          });
 
-        // Click centre of the map
-        const pixel = mapData.map.olMap
-          .getPixelFromCoordinate(mapCentre.toMapCoordinate())
-          .map((p) => Math.round(p));
-        return mapClick(pixel[0], pixel[1]);
-      })
-      // Wait for map to re-render
-      .wait(100)
-      .then(() => {
-        // Check that top feature has been selected
-        cy.wrap(selectedFeature).should('equal', topFeature);
-        if (!stack) {
-          assert.fail('stack features are null');
-          return;
-        }
-        // Check that other features at same coordinates have been returned in under selection
-        cy.wrap(stack.size).should('equal', 2);
-        cy.wrap(stack.has(feature1.id)).should('be.true');
-        cy.wrap(stack.has(feature2.id)).should('be.true');
-      });
+          // Click centre of the map
+          const pixel = mapData.map.olMap
+            .getPixelFromCoordinate(mapCentre.toMapCoordinate())
+            .map((p) => Math.round(p));
+          return mapClick(pixel[0], pixel[1]);
+        })
+        // Wait for map to re-render
+        .wait(100)
+        .then(() => {
+          // Check that top feature has been selected
+          cy.wrap(selectedFeature).should('equal', topFeature);
+          if (!stack) {
+            assert.fail('stack features are null');
+            return;
+          }
+          // Check that other features at same coordinates have been returned in under selection
+          cy.wrap(stack.size).should('equal', 2);
+          cy.wrap(stack.has(feature1.id)).should('be.true');
+          cy.wrap(stack.has(feature2.id)).should('be.true');
+        });
     });
 
     it('should multi select features on map on click', () => {
@@ -440,27 +447,28 @@ export default function(mapData: MapData) {
       );
 
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Click centre of the map
-        const pixel1 = mapData.map.olMap
-          .getPixelFromCoordinate(mapCentre.toMapCoordinate())
-          .map((p) => Math.round(p));
-        mapClick(pixel1[0], pixel1[1]);
+      cy.wait(100)
+        .then(() => {
+          // Click centre of the map
+          const pixel1 = mapData.map.olMap
+            .getPixelFromCoordinate(mapCentre.toMapCoordinate())
+            .map((p) => Math.round(p));
+          mapClick(pixel1[0], pixel1[1]);
 
-        // Shift+click map at the secondary coordinates
-        const pixel2 = mapData.map.olMap
-          .getPixelFromCoordinate(coordinate2.toMapCoordinate())
-          .map((p) => Math.round(p));
-        mapClick(pixel2[0], pixel2[1], true);
-      })
-      // Wait for map to re-render
-      .wait(100)
-      .then(() => {
-        // Check that both features have been selected
-        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
-        cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
-        cy.wrap(mapData.map.selectedFeatures.has(feature2.id)).should('be.true');
-      });
+          // Shift+click map at the secondary coordinates
+          const pixel2 = mapData.map.olMap
+            .getPixelFromCoordinate(coordinate2.toMapCoordinate())
+            .map((p) => Math.round(p));
+          mapClick(pixel2[0], pixel2[1], true);
+        })
+        // Wait for map to re-render
+        .wait(100)
+        .then(() => {
+          // Check that both features have been selected
+          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 2);
+          cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
+          cy.wrap(mapData.map.selectedFeatures.has(feature2.id)).should('be.true');
+        });
     });
 
     it('should multi select features on map programatically', () => {
@@ -543,20 +551,21 @@ export default function(mapData: MapData) {
       mapData.map.selectFeatures([feature1, feature2]);
 
       // Wait for map to re-render
-      cy.wait(100).then(() => {
-        // Shift+click map at the secondary coordinates
-        const pixel = mapData.map.olMap
-          .getPixelFromCoordinate(coordinate2.toMapCoordinate())
-          .map((p) => Math.round(p));
-        return mapClick(pixel[0], pixel[1], true);
-      })
-      // Wait for map to re-render
-      .wait(100)
-      .then(() => {
-        // Check that second feature has been deselected
-        cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
-        cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
-      });
+      cy.wait(100)
+        .then(() => {
+          // Shift+click map at the secondary coordinates
+          const pixel = mapData.map.olMap
+            .getPixelFromCoordinate(coordinate2.toMapCoordinate())
+            .map((p) => Math.round(p));
+          return mapClick(pixel[0], pixel[1], true);
+        })
+        // Wait for map to re-render
+        .wait(100)
+        .then(() => {
+          // Check that second feature has been deselected
+          cy.wrap(mapData.map.selectedFeatures.size).should('equal', 1);
+          cy.wrap(mapData.map.selectedFeatures.has(feature1.id)).should('be.true');
+        });
     });
 
     it('should not select non-selectable feature', () => {
