@@ -200,19 +200,20 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -256,19 +257,20 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -319,24 +321,25 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -363,24 +366,25 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -444,18 +448,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -521,18 +526,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
     return styles;
   }
@@ -566,19 +572,20 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     // modified hover colour
@@ -633,19 +640,20 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     // modified hover colour
@@ -720,24 +728,25 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -777,24 +786,25 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -866,18 +876,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -951,18 +962,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -997,19 +1009,20 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1062,19 +1075,20 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1146,24 +1160,25 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1250,24 +1265,25 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1385,18 +1401,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -1467,18 +1484,19 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
       feature.properties.labelMode === AlloyLayerStyleLabelMode.Title ||
       feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
     ) {
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          feature.properties.title,
-          feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? feature.properties.subtitle
-            : null,
-          feature.properties.colour,
-          AlloyLayerStyleScale.Medium,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        feature.properties.title,
+        feature.properties.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
+          ? feature.properties.subtitle
+          : null,
+        feature.properties.colour,
+        AlloyLayerStyleScale.Medium,
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
