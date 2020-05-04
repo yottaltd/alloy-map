@@ -197,14 +197,14 @@ export class AlloyMap {
         new OLAttribution({
           collapsed: false,
           collapsible: false,
-          className: 'map__attributions',
+          className: 'alloy-map__attributions',
         }),
       );
     }
     if (options.scale !== undefined) {
-      controls.push(new OLScaleLine({ units: Units.METRIC, className: 'map__scale' }));
+      controls.push(new OLScaleLine({ units: Units.METRIC, className: 'alloy-map__scale' }));
       setTimeout(() => {
-        const scaleElement = options.element.querySelector('.map__scale');
+        const scaleElement = options.element.querySelector('.alloy-map__scale');
         if (options.scale && scaleElement) {
           const scaleStyle = (scaleElement as HTMLElement).style;
           scaleStyle.position = 'absolute';

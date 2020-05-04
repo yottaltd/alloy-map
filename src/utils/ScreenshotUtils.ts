@@ -104,7 +104,7 @@ export abstract class ScreenshotUtils {
       return 'Could not get canvas context';
     }
 
-    const inner = map.olMap.getTargetElement().querySelector<HTMLElement>('.map__scale-inner');
+    const inner = map.olMap.getTargetElement().querySelector<HTMLElement>('.alloy-map__scale-inner');
     if (!inner) {
       return;
     }
