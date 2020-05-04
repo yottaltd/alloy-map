@@ -336,7 +336,7 @@ export class AlloyDrawInteraction {
           sourceGeometry,
         ).getCoordinates();
         // check if this geometry has a coordinate that matches remove point
-        if (flatCoords.findIndex((c) => GeometryUtils.isCoordinateEqual(c, coord)) === -1) {
+        if (!flatCoords.some((c) => GeometryUtils.isCoordinateEqual(c, coord))) {
           continue;
         }
 

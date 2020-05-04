@@ -11,6 +11,7 @@ import {
 import * as _ from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
@@ -131,8 +132,16 @@ export abstract class GeometryUtils {
         }
         multiPolygon.setCoordinates(multiPolygonCoordinates);
         break;
-      default:
+      case OLGeometryType.GEOMETRY_COLLECTION:
+        const geometryCollection = geometry as OLGeometryCollection;
+        const subGeometries = geometryCollection.getGeometries();
+        for (const subGeometry of subGeometries) {
+          GeometryUtils.removeCoordinate(subGeometry, coordinate);
+        }
+        geometryCollection.setGeometries(subGeometries);
         break;
+      default:
+        throw new AlloyMapError(1587399847, `Unhandled geometry type ${geometry.getType()}`);
     }
   }
 
