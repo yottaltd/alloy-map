@@ -1,4 +1,5 @@
 import { AlloyCoordinate } from './AlloyCoordinate';
+import { AlloyMapScaleOptions } from './AlloyMapScaleOptions';
 
 /**
  * options that can be set when initialising an `AlloyMap` instance
@@ -40,9 +41,9 @@ export interface AlloyMapOptions {
   attributions?: boolean;
 
   /**
-   * whether map scale should be displayed on the map, defaults to true
+   * map scale position options, if not provided then scale will not be displayed
    */
-  scale?: boolean;
+  scale?: AlloyMapScaleOptions;
 
   /**
    * the webfont family names to load into the map. "alloyicons" are attempted to be loaded by

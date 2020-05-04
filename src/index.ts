@@ -6,6 +6,7 @@ export { AlloyBounds } from './map/core/AlloyBounds';
 export { AlloyCoordinate } from './map/core/AlloyCoordinate';
 export { AlloyMap } from './map/core/AlloyMap';
 export { AlloyMapOptions } from './map/core/AlloyMapOptions';
+export { AlloyMapScaleOptions } from './map/core/AlloyMapScaleOptions';
 export { AlloySelectionMode } from './map/core/AlloySelectionMode';
 export { AlloyDrawEvent } from './map/events/AlloyDrawEvent';
 export { AlloyDrawEventHandler } from './map/events/AlloyDrawEventHandler';
@@ -113,3 +114,10 @@ export { AlloyWmtsCapabilitiesLayerStyle } from './wmts/AlloyWmtsCapabilitiesLay
 export { AlloyWmtsCapabilitiesLayerStyleLegend } from './wmts/AlloyWmtsCapabilitiesLayerStyleLegend';
 export { AlloyWmtsParameters } from './wmts/AlloyWmtsParameters';
 export { WmtsUtils } from './wmts/WmtsUtils';
+
+/**
+ * importing index less here for webpacking
+ * @ignore
+ * @internal
+ */
+import './assets/less/index.less';
