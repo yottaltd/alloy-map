@@ -104,7 +104,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
       }
     }
 
-    const geometry: Geometry = ProjectionUtils.GEOJSON.writeGeometryObject(geom) as any;
+    const geometry: Geometry = ProjectionUtils.GEOJSON.writeGeometryObject(geom);
     GeometryUtils.roundCoordinates(geometry);
     return geometry;
   }

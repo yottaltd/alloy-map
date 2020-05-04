@@ -1,0 +1,25 @@
+{
+  "syntax": "less",
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "color-hex-case": "lower",
+    "selector-combinator-space-after": "always",
+    "declaration-block-trailing-semicolon": "always",
+    "declaration-colon-space-before": "never",
+    "declaration-colon-space-after": "always",
+    "property-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "at-rule-no-vendor-prefix": true,
+    "rule-empty-line-before": [
+      "always",
+      {
+        "except": ["after-single-line-comment", "first-nested"]
+      }
+    ],
+    "selector-pseudo-element-colon-notation": "single",
+    "selector-no-vendor-prefix": true,
+    "media-feature-name-no-vendor-prefix": true
+  }
+}

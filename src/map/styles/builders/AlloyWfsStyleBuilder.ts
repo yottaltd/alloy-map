@@ -193,7 +193,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -201,19 +201,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -252,7 +251,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -260,19 +259,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -313,7 +311,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   ): OLStyle[] {
     const styles: OLStyle[] = [
       AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution, layerStyle.scale),
+        this.getLineWidth(resolution, this.getStyleScale(layerStyle.scale)),
         layerStyle.colour,
         layerStyle.opacity,
         processGeometryCollection
@@ -327,24 +325,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -358,7 +355,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
   ): OLStyle[] {
     const styles: OLStyle[] = [
       AlloyLineUtils.createLineStyle(
-        this.getLineWidth(resolution, layerStyle.scale),
+        this.getLineWidth(resolution, this.getStyleScale(layerStyle.scale)),
         layerStyle.colour,
         layerStyle.opacity,
         processGeometryCollection
@@ -373,24 +370,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -462,18 +458,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -547,18 +542,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -587,7 +581,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -595,19 +589,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     // modified hover colour
@@ -658,7 +651,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -666,19 +659,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     // modified hover colour
@@ -729,7 +721,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, layerStyle.scale);
+    const width = this.getLineWidth(resolution, this.getStyleScale(layerStyle.scale));
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
@@ -758,24 +750,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -787,7 +778,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, layerStyle.scale);
+    const width = this.getLineWidth(resolution, this.getStyleScale(layerStyle.scale));
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(layerStyle.colour);
@@ -816,24 +807,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -913,18 +903,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -1006,18 +995,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -1046,7 +1034,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -1054,19 +1042,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1114,7 +1101,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
     const styles: OLStyle[] = [];
 
     // add labelling support
@@ -1122,19 +1109,18 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
-            : undefined,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+          : undefined,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1182,8 +1168,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, layerStyle.scale);
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const width = this.getLineWidth(resolution, this.getStyleScale(layerStyle.scale));
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
 
     const styles = [
       AlloyLineUtils.createLineHaloStyle(
@@ -1209,24 +1195,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1289,8 +1274,8 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     layerStyle: AlloyWfsLayerStyle,
     processGeometryCollection?: boolean,
   ): OLStyle[] {
-    const width = this.getLineWidth(resolution, layerStyle.scale);
-    const radius = this.getBallRadius(resolution, layerStyle.scale);
+    const width = this.getLineWidth(resolution, this.getStyleScale(layerStyle.scale));
+    const radius = this.getBallRadius(resolution, this.getStyleScale(layerStyle.scale));
 
     const styles = [
       AlloyLineUtils.createLineHaloStyle(
@@ -1316,24 +1301,23 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          processGeometryCollection
-            ? AlloyGeometryFunctionUtils.pipe(
-                // if we have geometry collection, first convert to multi line strings
-                AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
-                // then convert to mid point
-                AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
-              )
-            : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        processGeometryCollection
+          ? AlloyGeometryFunctionUtils.pipe(
+              // if we have geometry collection, first convert to multi line strings
+              AlloyGeometryCollectionFunctions.convertFeatureLineStringsToMultiLineString,
+              // then convert to mid point
+              AlloyMultiLineStringFunctions.convertGeometryToMidPoint,
+            )
+          : AlloyMultiLineStringFunctions.convertFeatureToMidPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     styles.push(
@@ -1460,18 +1444,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -1550,18 +1533,17 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       // parse the title and subtitle
       const { title, subtitle } = this.tryGetFeatureTitleAndSubtitle(layerStyle, feature);
 
-      styles.push(
-        AlloyLabelUtils.createLabelStyle(
-          title || '',
-          layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-            ? subtitle || null
-            : null,
-          layerStyle.colour,
-          layerStyle.scale,
-          // we already have the mid point so use it
-          midPoint,
-        ),
+      const labelStyle = AlloyLabelUtils.createLabelStyle(
+        title,
+        layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle ? subtitle : null,
+        layerStyle.colour,
+        this.getStyleScale(layerStyle.scale),
+        // we already have the mid point so use it
+        midPoint,
       );
+      if (labelStyle) {
+        styles.push(labelStyle);
+      }
     }
 
     return styles;
@@ -1628,5 +1610,13 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
         ? feature.olFeature.get(layerStyle.labelSubtitle)
         : undefined,
     };
+  }
+
+  /**
+   * Returns provided scale or default
+   * @param scale this style scale or null
+   */
+  private getStyleScale(scale: AlloyLayerStyleScale | null): AlloyLayerStyleScale {
+    return scale || AlloyLayerStyleScale.Medium;
   }
 }
