@@ -35,7 +35,7 @@ export abstract class AlloyMultiPolygonFunctions {
           polygon: p,
           area: p.getArea(),
         }))
-        .sort((a, b) => a.area - b.area)[0].polygon;
+        .sort((a, b) => b.area - a.area)[0].polygon;
     }
 
     // cache the result
