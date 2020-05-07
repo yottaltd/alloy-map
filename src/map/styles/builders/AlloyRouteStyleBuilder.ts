@@ -11,9 +11,11 @@ import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
 import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
 import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 import { AlloyBallUtils } from '../utils/AlloyBallUtils';
 import { AlloyIconUtils } from '../utils/AlloyIconUtils';
+import { AlloyLabelUtils } from '../utils/AlloyLabelUtils';
 import { AlloyLineUtils } from '../utils/AlloyLineUtils';
 import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
 import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
@@ -55,6 +57,8 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
       resolution,
       feature.id, // each route feature is unique (expensive)
       feature.properties.colour,
+      feature instanceof AlloyRouteWaypointFeature ? feature.properties.title : undefined,
+      feature instanceof AlloyRouteWaypointFeature ? feature.properties.subtitle : undefined,
       feature instanceof AlloyRouteWaypointFeature
         ? feature.properties.icon || feature.properties.text
         : undefined,
@@ -136,7 +140,7 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
 
     // modified hover colour
     const hoverColour = ColourUtils.lightenBackground(feature.properties.colour);
-    return [
+    const styles = [
       // the halo circle
       AlloyBallUtils.createBallHaloStyle(
         radius,
@@ -165,6 +169,19 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
           : undefined,
       ),
     ];
+    const labelStyle = AlloyLabelUtils.createLabelStyle(
+      feature.properties.title,
+      feature.properties.subtitle,
+      hoverColour,
+      AlloyLayerStyleScale.Medium,
+      processGeometryCollection
+        ? AlloyGeometryCollectionFunctions.convertFeaturePointsToMultiPoint
+        : undefined,
+    );
+    if (labelStyle) {
+      styles.push(labelStyle);
+    }
+    return styles;
   }
 
   private createRouteStyles(
