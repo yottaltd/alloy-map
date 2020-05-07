@@ -13,4 +13,14 @@ export interface AlloyRouteWaypointFeatureProperties extends AlloyPathNodeFeatur
    * the text of the feature
    */
   readonly text?: string;
+
+  /**
+   * the label title of the waypoint feature
+   */
+  readonly title?: string;
+
+  /**
+   * the label subtitle of the waypoint feature
+   */
+  readonly subtitle?: string;
 }
