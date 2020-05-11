@@ -777,9 +777,10 @@ export class AlloyMap {
   /**
    * Fits viewport around provided features
    * @param features `AlloyFeature` array to fit in veiwport
+   * @param animate whether to animate to the viewport
    */
-  public fitFeaturesViewport(features: AlloyFeature[]) {
-    this.setViewport(FeatureUtils.calculateFeaturesBounds(features));
+  public fitFeaturesViewport(features: AlloyFeature[], animate?: boolean) {
+    this.setViewport(FeatureUtils.calculateFeaturesBounds(features), animate);
   }
 
   /**
