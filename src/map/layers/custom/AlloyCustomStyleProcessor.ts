@@ -3,6 +3,7 @@ import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyCustomFeatureBase } from '../../features/AlloyCustomFeatureBase';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyCustomStyleBuilder } from '../../styles/builders/AlloyCustomStyleBuilder';
@@ -45,7 +46,14 @@ export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
     if (!feature) {
       return [];
     }
+    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
+  }
 
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ) {
     if (feature instanceof AlloyCustomFeatureBase) {
       return this.customStyleBuilder.build(
         feature,

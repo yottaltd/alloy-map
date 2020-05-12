@@ -2,6 +2,7 @@ import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyNetworkStyleBuilder } from '../../styles/builders/AlloyNetworkStyleBuilder';
@@ -41,7 +42,14 @@ export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
     if (!feature) {
       return [];
     }
+    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
+  }
 
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ) {
     return this.networkStyleBuilder.build(feature as any, resolution, state);
   }
 }

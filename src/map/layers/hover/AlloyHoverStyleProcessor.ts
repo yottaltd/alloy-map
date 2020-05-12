@@ -2,6 +2,7 @@ import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 
@@ -29,6 +30,14 @@ export class AlloyHoverStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
 
+    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
+  }
+
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ) {
     // if we don't have an originating layer then bail
     if (!feature.originatingLayerId) {
       return [];
@@ -41,8 +50,8 @@ export class AlloyHoverStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
 
-    return layer.styleProcessor.onStyleProcess(
-      olFeature,
+    return layer.styleProcessor.onStyleProcessWithAlloyFeature(
+      feature,
       resolution,
       // we ignore the state and always pass "hover"
       AlloyStyleBuilderBuildState.Hover,

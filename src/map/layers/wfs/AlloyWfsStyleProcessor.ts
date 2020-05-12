@@ -2,6 +2,7 @@ import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
@@ -45,7 +46,14 @@ export class AlloyWfsStyleProcessor extends AlloyStyleProcessor {
     if (!feature) {
       return [];
     }
+    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
+  }
 
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ) {
     if (feature instanceof AlloyWfsFeature) {
       return this.wfsStyleBuilder.build(feature, resolution, state);
     } else {
