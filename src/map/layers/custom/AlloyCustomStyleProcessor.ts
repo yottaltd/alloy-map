@@ -1,7 +1,3 @@
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyCustomFeatureBase } from '../../features/AlloyCustomFeatureBase';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
@@ -33,22 +29,6 @@ export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
-    resolution: number,
-    state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-
-    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
-    if (!feature) {
-      return [];
-    }
-    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
-  }
-
   public onStyleProcessWithAlloyFeature(
     feature: AlloyFeature,
     resolution: number,

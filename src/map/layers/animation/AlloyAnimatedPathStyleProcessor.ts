@@ -1,9 +1,5 @@
 /* eslint-disable max-len */
 
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyAnimatedPathFeature } from '../../features/AlloyAnimatedPathFeature';
 import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
@@ -47,25 +43,7 @@ export abstract class AlloyAnimatedPathStyleProcessor<
 
   /**
    * @override
-   * @ignore
-   * @internal
    */
-  public onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
-    resolution: number,
-    state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-
-    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
-    if (!feature) {
-      return [];
-    }
-    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
-  }
-
   public onStyleProcessWithAlloyFeature(
     feature: AlloyFeature,
     resolution: number,
