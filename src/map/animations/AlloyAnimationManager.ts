@@ -25,9 +25,14 @@ export abstract class AlloyAnimationManager {
   protected readonly map: AlloyMap;
 
   /**
-   * Openlayers layer for animations to animate "under"
+   * Openlayers layer for animations to animate "under" or "above"
    */
-  private readonly olPrecomposeLayer?: OLVectorLayer;
+  private readonly olLayer: OLVectorLayer;
+
+  /**
+   * Whether prerender or postrender event is called on the layer
+   */
+  private readonly eventType: 'prerender' | 'postrender';
 
   /**
    * a lookup of features with active animating events keys
@@ -49,12 +54,13 @@ export abstract class AlloyAnimationManager {
   /**
    * creates a new instance
    * @param map the alloy map to animate
-   * @param olPrecomposeLayer optional layer under which animations will be drawn
-   * otherwise they will be drawn on top of everything
+   * @param olLayer layer under or above which animations will be drawn
+   * @param isPrerender whether animation is drawn under or above the layer, defaults to above
    */
-  public constructor(map: AlloyMap, olPrecomposeLayer?: OLVectorLayer) {
+  public constructor(map: AlloyMap, olLayer: OLVectorLayer, isPrerender?: boolean) {
     this.map = map;
-    this.olPrecomposeLayer = olPrecomposeLayer;
+    this.olLayer = olLayer;
+    this.eventType = isPrerender ? 'prerender' : 'postrender';
   }
 
   /**
@@ -162,33 +168,30 @@ export abstract class AlloyAnimationManager {
     // set the animation going
     this.animationKeys.set(
       feature,
-      (this.olPrecomposeLayer || this.map.olMap).on(
-        this.olPrecomposeLayer ? 'prerender' : 'postcompose',
-        (e) => {
-          const event: OLRenderEvent = e as OLRenderEvent;
-          const elapsed: number = event.frameState.time - start;
-          const elapsedRatio: number = Math.min(elapsed / duration, 1.0);
+      this.olLayer.on(this.eventType, (e) => {
+        const event: OLRenderEvent = e as OLRenderEvent;
+        const elapsed: number = event.frameState.time - start;
+        const elapsedRatio: number = Math.min(elapsed / duration, 1.0);
 
-          // call the handler for composing the animation (this does the work per type of animation)
-          animationListener.compose(PolyfillVectorContext.getVectorContext(event), elapsedRatio);
+        // call the handler for composing the animation (this does the work per type of animation)
+        animationListener.compose(PolyfillVectorContext.getVectorContext(event), elapsedRatio);
 
-          // cleanup the animation if its finished
-          if (elapsed >= duration) {
-            const key = this.animationKeys.get(feature);
-            if (key) {
-              PolyfillObservable.unByKey(key);
-            }
-            this.animationKeys.delete(feature);
-
-            // call post animation handler
-            animationListener.postAnimation();
-            return;
+        // cleanup the animation if its finished
+        if (elapsed >= duration) {
+          const key = this.animationKeys.get(feature);
+          if (key) {
+            PolyfillObservable.unByKey(key);
           }
+          this.animationKeys.delete(feature);
 
-          // re-render the map
-          this.map.olMap.render();
-        },
-      ),
+          // call post animation handler
+          animationListener.postAnimation();
+          return;
+        }
+
+        // re-render the map
+        this.map.olMap.render();
+      }),
     );
 
     // force a re-render
@@ -231,8 +234,8 @@ export abstract class AlloyAnimationManager {
               this.animateAlongLineString(feature, lineString, timerMs, scale, renderStepDraw);
             }
           };
-          centreChangeListener = this.map.olMap.on('change:center', el);
-          resolutionChangeListener = this.map.olMap.on('change:resolution', el);
+          centreChangeListener = this.map.olView.on('change:center', el);
+          resolutionChangeListener = this.map.olView.on('change:resolution', el);
         },
         compose: (renderer: OLCanvasImmediateRenderer, ratio: number) => {
           if (this.map.zoom < 18) {
