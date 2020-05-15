@@ -21,6 +21,7 @@ import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyBounds } from '../map/core/AlloyBounds';
+import { AlloyFeature } from '../map/features/AlloyFeature';
 import { MathUtils } from './MathUtils';
 import { ProjectionUtils } from './ProjectionUtils';
 
@@ -35,6 +36,15 @@ export abstract class GeometryUtils {
    */
   public static getGeometryBounds(geometry: Geometry): AlloyBounds {
     return AlloyBounds.fromMapExtent(ProjectionUtils.GEOJSON.readGeometry(geometry).getExtent());
+  }
+
+  /**
+   * Gets geometry extent bounds for a feature
+   * @param feature geature for which to get bounds
+   * @returns AlloyBounds that wraps feature
+   */
+  public static getGeometryBoundsForFeature(feature: AlloyFeature): AlloyBounds {
+    return AlloyBounds.fromMapExtent(feature.olFeature.getGeometry().getExtent());
   }
 
   /**

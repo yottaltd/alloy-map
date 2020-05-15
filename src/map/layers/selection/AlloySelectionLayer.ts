@@ -28,7 +28,9 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
     if (feature.originatingLayerId) {
       const layer = this.map.layers.get(feature.originatingLayerId);
       if (layer instanceof AlloyLayerWithFeatures) {
-        layer.olSource.removeFeature(feature.olFeature);
+        if (feature.olFeature.getId() && layer.olSource.hasFeature(feature.olFeature)) {
+          layer.olSource.removeFeature(layer.olSource.getFeatureById(feature.olFeature.getId()));
+        }
       }
     }
     return super.addFeature(feature);
@@ -42,7 +44,9 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
       if (feature.originatingLayerId) {
         const layer = this.map.layers.get(feature.originatingLayerId);
         if (layer instanceof AlloyLayerWithFeatures) {
-          layer.olSource.removeFeature(feature.olFeature);
+          if (feature.olFeature.getId() && layer.olSource.hasFeature(feature.olFeature)) {
+            layer.olSource.removeFeature(layer.olSource.getFeatureById(feature.olFeature.getId()));
+          }
         }
       }
     });
@@ -56,7 +60,10 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   public removeFeature(feature: AlloyFeature): boolean {
     if (feature.originatingLayerId) {
       const layer = this.map.layers.get(feature.originatingLayerId);
-      if (layer instanceof AlloyLayerWithFeatures) {
+      if (
+        layer instanceof AlloyLayerWithFeatures &&
+        !layer.olSource.hasFeature(feature.olFeature)
+      ) {
         layer.olSource.addFeature(feature.olFeature);
       }
     }
@@ -71,7 +78,10 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
     Array.from(this.features.values()).forEach((feature) => {
       if (feature.originatingLayerId) {
         const layer = this.map.layers.get(feature.originatingLayerId);
-        if (layer instanceof AlloyLayerWithFeatures) {
+        if (
+          layer instanceof AlloyLayerWithFeatures &&
+          !layer.olSource.hasFeature(feature.olFeature)
+        ) {
           layer.olSource.addFeature(feature.olFeature);
         }
       }

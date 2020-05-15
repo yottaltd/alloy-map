@@ -1,8 +1,5 @@
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyDrawStyleBuilder } from '../../styles/builders/AlloyDrawStyleBuilder';
@@ -32,20 +29,11 @@ export class AlloyDrawStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-
-    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
-    if (!feature) {
-      return [];
-    }
-
+  ) {
     if (feature instanceof AlloyDrawFeature) {
       return this.drawStyleBuilder.build(feature, resolution, state);
     } else {

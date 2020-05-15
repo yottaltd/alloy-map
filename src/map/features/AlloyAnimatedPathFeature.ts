@@ -27,7 +27,7 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
    * @ignore
    * @internal
    */
-  public allowsSelection!: boolean; // see end of file for prototype
+  public allowsSelection!: false; // see end of file for prototype
 
   /**
    * @implements
@@ -123,5 +123,5 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
   }
 }
 
-AlloyAnimatedPathFeature.prototype.allowsSelection = true;
+AlloyAnimatedPathFeature.prototype.allowsSelection = false;
 AlloyAnimatedPathFeature.prototype.allowsHover = false;

@@ -1,6 +1,8 @@
 import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
+import { FeatureUtils } from '../../utils/FeatureUtils';
+import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyLayer } from '../layers/AlloyLayer';
 import { AlloyStyleBuilderBuildState } from './AlloyStyleBuilderBuildState';
 
@@ -29,8 +31,31 @@ export abstract class AlloyStyleProcessor {
    * @param resolution the resolution of the view
    * @param state the state to generate styles for
    */
-  public abstract onStyleProcess(
+  public onStyleProcess(
     olFeature: OLFeature | OLRenderFeature,
+    resolution: number,
+    state: AlloyStyleBuilderBuildState,
+  ): OLStyle | OLStyle[] {
+    if (olFeature instanceof OLRenderFeature) {
+      return [];
+    }
+
+    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
+    if (!feature) {
+      return [];
+    }
+
+    return this.onStyleProcessWithAlloyFeature(feature, resolution, state);
+  }
+
+  /**
+   * the style function called during render
+   * @param feature the alloy feature to style
+   * @param resolution the resolution of the view
+   * @param state the state to generate styles for
+   */
+  public abstract onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): OLStyle | OLStyle[];
