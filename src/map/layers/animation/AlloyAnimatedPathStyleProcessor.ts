@@ -1,12 +1,9 @@
 /* eslint-disable max-len */
 
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyAnimatedPathFeature } from '../../features/AlloyAnimatedPathFeature';
-import { AlloyPathNodeFeature } from '../../features/AlloyPathNodeFeature';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
+import { AlloyPathNodeFeature } from '../../features/AlloyPathNodeFeature';
 import { AlloyStyleBuilder } from '../../styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
@@ -46,23 +43,12 @@ export abstract class AlloyAnimatedPathStyleProcessor<
 
   /**
    * @override
-   * @ignore
-   * @internal
    */
-  public onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-
-    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
-    if (!feature) {
-      return [];
-    }
-
+  ) {
     if (feature instanceof AlloyAnimatedPathFeature || feature instanceof AlloyPathNodeFeature) {
       return this.styleBuilder.build(feature as F, resolution, state);
     } else if (feature instanceof AlloyPathNodeConnectorFeature) {

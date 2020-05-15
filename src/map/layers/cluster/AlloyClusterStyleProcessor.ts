@@ -1,8 +1,5 @@
-import OLFeature from 'ol/Feature';
-import OLRenderFeature from 'ol/render/Feature';
-import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
+import { AlloyFeature } from '../../features/AlloyFeature';
 import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
@@ -42,20 +39,11 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public onStyleProcess(
-    olFeature: OLFeature | OLRenderFeature,
+  public onStyleProcessWithAlloyFeature(
+    feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): OLStyle | OLStyle[] {
-    if (olFeature instanceof OLRenderFeature) {
-      return [];
-    }
-
-    const feature = this.layer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(olFeature));
-    if (!feature) {
-      return [];
-    }
-
+  ) {
     if (feature instanceof AlloyClusterFeature) {
       return this.clusterStyleBuilder.build(feature, resolution, state);
     } else if (feature instanceof AlloyItemFeature) {

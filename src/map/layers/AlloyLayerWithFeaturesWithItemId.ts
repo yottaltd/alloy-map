@@ -36,48 +36,44 @@ export abstract class AlloyLayerWithFeaturesWithItemId<
    * @override
    */
   public addFeature(feature: T): boolean {
-    const result = super.addFeature(feature);
     // intercept and add feature to lookup
     if (FeatureGuards.isAlloyFeatureWithItemId(feature)) {
       this.featureIdsForItemIds.set(feature.itemId, feature.id);
     }
-    return result;
+    return super.addFeature(feature);
   }
 
   /**
    * @override
    */
   public removeFeature(feature: T): boolean {
-    const result = super.removeFeature(feature);
     // intercept and remove feature from lookup
     if (FeatureGuards.isAlloyFeatureWithItemId(feature)) {
       this.featureIdsForItemIds.delete(feature.itemId);
     }
-    return result;
+    return super.removeFeature(feature);
   }
 
   /**
    * @override
    */
   public addFeatures(features: T[]): boolean {
-    const result = super.addFeatures(features);
     // intercept and add all features to lookup
     features.forEach((f) => {
       if (FeatureGuards.isAlloyFeatureWithItemId(f)) {
         this.featureIdsForItemIds.set(f.itemId, f.id);
       }
     });
-    return result;
+    return super.addFeatures(features);
   }
 
   /**
    * @override
    */
   public clearFeatures(): boolean {
-    const result = super.clearFeatures();
     // intercept and remove all features from lookup
     this.featureIdsForItemIds.clear();
-    return result;
+    return super.clearFeatures();
   }
 
   /**

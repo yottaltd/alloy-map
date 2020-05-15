@@ -127,7 +127,7 @@ export class AlloyPingInteraction {
     // setup the animation listener on postrender and keep a reference so we can clean it up
     const listener = basemap.layer.on('postrender', (e) => {
       // needs to be called inside fat arrow function to retain "this"
-      animate(e);
+      animate(e as OLRenderEvent);
     });
 
     // tell open layers to request rendering, without this the map freezes!
