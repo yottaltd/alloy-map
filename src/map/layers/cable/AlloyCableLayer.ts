@@ -44,7 +44,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
    */
   constructor(options: AlloyCableLayerOptions) {
     super(options);
-    this.animationManager = new AlloyCableAnimationManager(this.map, this.olLayerPathNodes);
+    this.animationManager = new AlloyCableAnimationManager(this.map, this.olLayerAnimatedPaths);
   }
 
   /**

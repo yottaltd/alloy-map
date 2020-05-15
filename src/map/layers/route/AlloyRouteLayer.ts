@@ -36,7 +36,7 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
    */
   constructor(options: AlloyRouteLayerOptions) {
     super(options);
-    this.animationManager = new AlloyRouteAnimationManager(this.map, this.olLayerPathNodes);
+    this.animationManager = new AlloyRouteAnimationManager(this.map, this.olLayerAnimatedPaths);
   }
 
   /**
