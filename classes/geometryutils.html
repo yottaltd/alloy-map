@@ -89,6 +89,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="geometryutils.html#getgeometrybounds" class="tsd-kind-icon">get<wbr>Geometry<wbr>Bounds</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="geometryutils.html#getgeometryboundsforfeature" class="tsd-kind-icon">get<wbr>Geometry<wbr>Bounds<wbr>For<wbr>Feature</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="geometryutils.html#iscoordinateequal" class="tsd-kind-icon">is<wbr>Coordinate<wbr>Equal</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="geometryutils.html#removecoordinate" class="tsd-kind-icon">remove<wbr>Coordinate</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="geometryutils.html#rotatecoordinate" class="tsd-kind-icon">rotate<wbr>Coordinate</a></li>
@@ -109,7 +110,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/c48772f/src/utils/GeometryUtils.ts#L36">src/utils/GeometryUtils.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd8ee16/src/utils/GeometryUtils.ts#L37">src/utils/GeometryUtils.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -132,6 +133,38 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="getgeometryboundsforfeature" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> get<wbr>Geometry<wbr>Bounds<wbr>For<wbr>Feature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Geometry<wbr>Bounds<wbr>For<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloybounds.html" class="tsd-signature-type">AlloyBounds</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd8ee16/src/utils/GeometryUtils.ts#L46">src/utils/GeometryUtils.ts:46</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets geometry extent bounds for a feature</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>feature: <a href="../interfaces/alloyfeature.html" class="tsd-signature-type">AlloyFeature</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>geature for which to get bounds</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="alloybounds.html" class="tsd-signature-type">AlloyBounds</a></h4>
+							<p>AlloyBounds that wraps feature</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="iscoordinateequal" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> is<wbr>Coordinate<wbr>Equal</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -141,7 +174,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/c48772f/src/utils/GeometryUtils.ts#L209">src/utils/GeometryUtils.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd8ee16/src/utils/GeometryUtils.ts#L219">src/utils/GeometryUtils.ts:219</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -179,7 +212,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/c48772f/src/utils/GeometryUtils.ts#L63">src/utils/GeometryUtils.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd8ee16/src/utils/GeometryUtils.ts#L73">src/utils/GeometryUtils.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -216,7 +249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/c48772f/src/utils/GeometryUtils.ts#L46">src/utils/GeometryUtils.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd8ee16/src/utils/GeometryUtils.ts#L56">src/utils/GeometryUtils.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -268,6 +301,9 @@
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="geometryutils.html#getgeometrybounds" class="tsd-kind-icon">get<wbr>Geometry<wbr>Bounds</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="geometryutils.html#getgeometryboundsforfeature" class="tsd-kind-icon">get<wbr>Geometry<wbr>Bounds<wbr>For<wbr>Feature</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="geometryutils.html#iscoordinateequal" class="tsd-kind-icon">is<wbr>Coordinate<wbr>Equal</a>
