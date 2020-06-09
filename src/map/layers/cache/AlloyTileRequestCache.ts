@@ -27,6 +27,14 @@ export class AlloyTileRequestCache<T extends AlloyFeature> {
   }
 
   /**
+   * gets a request in the cache for coordinates
+   * @param coordinate the coordinate to get cache request for
+   */
+  public get(coordinate: AlloyTileCoordinate): AlloyTileRequestCacheItem<T> | undefined {
+    return this.requests.get(coordinate.z)?.get(coordinate.requestKey);
+  }
+
+  /**
    * deletes and cancels a request in the cache, if no request exists in the cache it will be
    * ignored
    * @param request the request to cancel
