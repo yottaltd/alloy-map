@@ -17,8 +17,6 @@ import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
 import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
 
-const CLUSTER_ID_REGEX = /SID(\d*\w*)X(\d+)Y(\d+)Z(\d+)/;
-
 /**
  * an alloy cluster layer uses the `/api/layer/{code}/{x}/{y}/{z}/cluster` endpoint to request and
  * display features. it will cluster features that are close together until they are suitably
@@ -163,80 +161,53 @@ export class AlloyClusterLayer
    * or clusters/items 1 zoom level down when zooming out
    * @param feature feature to animate
    */
-  private animateFeature(feature: AlloyItemFeature | AlloyClusterFeature) {
+  private async animateFeature(feature: AlloyItemFeature | AlloyClusterFeature) {
     if (!this.animate) {
       return;
     }
-    let sid: string;
-    let tileCoordinate: AlloyTileCoordinate;
-    if (feature instanceof AlloyClusterFeature) {
-      const result = CLUSTER_ID_REGEX.exec(feature.id);
-      if (!result || result.length !== 5) {
-        return;
-      }
-      sid = result[1];
-      const resultX = parseInt(result[2], 10);
-      const resultY = parseInt(result[3], 10);
-      const resultZ = parseInt(result[4], 10);
-      if (isNaN(resultX) || isNaN(resultY) || isNaN(resultZ)) {
-        return;
-      }
 
-      const x = Math.floor(resultX / 2);
-      const y = Math.floor(resultY / 2);
-      const z = resultZ - 1;
-      tileCoordinate = this.isZoomIn
-        ? new AlloyTileCoordinate([z - 1, Math.floor(x / 2), Math.floor(y / 2)])
-        : new AlloyTileCoordinate([resultZ, resultX, resultY]);
-    } else {
-      sid = feature.properties.styleId;
-      const coordinate = PolyfillExtent.getCentre(feature.olFeature.getGeometry().getExtent());
-      const tile = this.featureLoader.olTileGrid.getTileCoordForCoordAndZ(
-        coordinate,
-        this.latestZoom + (this.isZoomIn ? -1 : 1),
-      );
-      tileCoordinate = new AlloyTileCoordinate(tile);
+    const sid = feature.properties.styleId;
+    const featureCoordinate = PolyfillExtent.getCentre(feature.olFeature.getGeometry().getExtent());
+    const tile = this.featureLoader.olTileGrid.getTileCoordForCoordAndZ(
+      featureCoordinate,
+      this.latestZoom + (this.isZoomIn ? -1 : 1),
+    );
+
+    // tile request promises should always be resolved straight away
+    const tileFeatures = await this.featureLoader.getFeatures(new AlloyTileCoordinate(tile));
+    if (!tileFeatures) {
+      return;
+    }
+    const parentFeatures = tileFeatures.filter((feature) => feature.properties.styleId === sid);
+    if (parentFeatures.length === 0) {
+      return;
     }
 
-    this.featureLoader.getFeatures(tileCoordinate).then((upZFeatures) => {
-      if (!upZFeatures) {
-        return;
-      }
-      const parentFeatures = upZFeatures.filter((feature) => feature.properties.styleId === sid);
-      if (parentFeatures.length === 0) {
-        return;
-      }
+    if (this.isZoomIn) {
+      const path = parentFeatures
+        .map<[AlloyItemFeature | AlloyClusterFeature, OLLineString]>((parent) => {
+          const centre = PolyfillExtent.getCentre(parent.olFeature.getGeometry().getExtent());
+          const line = new OLLineString([centre, featureCoordinate]);
+          return [parent, line];
+        })
+        .sort((f1, f2) => f1[1].getLength() - f2[1].getLength())[0][1];
 
-      const featureCoordinate = PolyfillExtent.getCentre(
-        feature.olFeature.getGeometry().getExtent(),
-      );
-
-      if (this.isZoomIn) {
-        const path = parentFeatures
-          .map<[AlloyItemFeature | AlloyClusterFeature, OLLineString]>((p) => {
-            const centre = PolyfillExtent.getCentre(p.olFeature.getGeometry().getExtent());
-            const line = new OLLineString([centre, featureCoordinate]);
-            return [p, line];
-          })
-          .sort((f1, f2) => f1[1].getLength() - f2[1].getLength())[0][1];
-
-        this.animationManager.startAnimation(feature, path, false);
-      } else {
-        feature.setVisible(false);
-        parentFeatures.forEach((p) => {
-          const centre = PolyfillExtent.getCentre(p.olFeature.getGeometry().getExtent());
-          this.animationManager.startAnimation(
-            p,
-            new OLLineString([centre, featureCoordinate]),
-            true,
-            () => {
-              feature.setVisible(true);
-            },
-          );
-        });
-      }
-      this.animate = false;
-    });
+      this.animationManager.startAnimation(feature, path, false);
+    } else {
+      feature.setVisible(false);
+      parentFeatures.forEach((parent) => {
+        const centre = PolyfillExtent.getCentre(parent.olFeature.getGeometry().getExtent());
+        this.animationManager.startAnimation(
+          parent,
+          new OLLineString([centre, featureCoordinate]),
+          true,
+          () => {
+            feature.setVisible(true);
+          },
+        );
+      });
+    }
+    this.animate = false;
   }
 
   /**
