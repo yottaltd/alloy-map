@@ -1,4 +1,4 @@
-import { tile, bbox as bboxStrategy } from 'ol/loadingstrategy';
+import { tile, bbox as bboxStrategy, all as allStrategy } from 'ol/loadingstrategy';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
 import { Extent as OLExtent } from 'ol/extent';
 
@@ -19,5 +19,9 @@ export abstract class PolyfillLoadingStrategy {
 
   public static bbox(): (extent: OLExtent, resolution: number) => OLExtent[] {
     return bboxStrategy;
+  }
+
+  public static all(): (extent: OLExtent, resoultion: number) => OLExtent[] {
+    return allStrategy;
   }
 }
