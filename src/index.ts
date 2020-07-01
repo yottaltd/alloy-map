@@ -29,6 +29,8 @@ export { AlloyCableFeatureFactory } from './map/features/AlloyCableFeatureFactor
 export { AlloyCableFeatureProperties } from './map/features/AlloyCableFeatureProperties';
 export { AlloyCableUnitFeature } from './map/features/AlloyCableUnitFeature';
 export { AlloyCableUnitFeatureProperties } from './map/features/AlloyCableUnitFeatureProperties';
+export { AlloyBasicFeature } from './map/features/AlloyBasicFeature';
+export { AlloyBasicFeatureProperties } from './map/features/AlloyBasicFeatureProperties';
 export { AlloyClusterFeature } from './map/features/AlloyClusterFeature';
 export { AlloyClusterFeatureProperties } from './map/features/AlloyClusterFeatureProperties';
 export { AlloyCustomFeature } from './map/features/AlloyCustomFeature';
@@ -66,6 +68,8 @@ export { AlloyLayerWithFeaturesWithItemId } from './map/layers/AlloyLayerWithFea
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
 export { AlloyAnimatedPathLayer } from './map/layers/animation/AlloyAnimatedPathLayer';
 export { AlloyAnimatedPathLayerOptions } from './map/layers/animation/AlloyAnimatedPathLayerOptions';
+export { AlloyBasicLayer } from './map/layers/basic/AlloyBasicLayer';
+export { AlloyBasicLayerOptions } from './map/layers/basic/AlloyBasicLayerOptions';
 export { AlloyCableLayer } from './map/layers/cable/AlloyCableLayer';
 export { AlloyCableLayerOptions } from './map/layers/cable/AlloyCableLayerOptions';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';
