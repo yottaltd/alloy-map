@@ -1,7 +1,6 @@
-// tslint:disable
 import { DesignWebModel } from './DesignWebModel';
 /**
- * Web response model for reports list operations
+ * 
  * @export
  * @interface ReportListWebResponseModel
  */

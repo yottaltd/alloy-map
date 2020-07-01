@@ -1,9 +1,8 @@
-// tslint:disable
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 import { CustomReportDocumentDefinitionWebModelBase } from './CustomReportDocumentDefinitionWebModelBase';
 import { CustomReportDocumentFlowVisualizationType } from './CustomReportDocumentFlowVisualizationType';
 /**
- * Custom report document definition web model
+ * 
  * @export
  * @interface CustomReportDocumentDefinitionFlowWebModel
  */

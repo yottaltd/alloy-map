@@ -1,12 +1,11 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { BlueprintApplyWebRequestModel } from './BlueprintApplyWebRequestModel';
 import { GetBlueprintsDataWebResponseModel } from './GetBlueprintsDataWebResponseModel';
-import { ListBlueprintsWebResponseModel } from './ListBlueprintsWebResponseModel';
 import { TaskSubmittedResponseModel } from './TaskSubmittedResponseModel';
+import { ListBlueprintsWebResponseModel } from './ListBlueprintsWebResponseModel';
 import { ForgeBlueprintApiFetchParamCreator } from './ForgeBlueprintApiFetchParamCreator';
 import { ForgeBlueprintApi } from './ForgeBlueprintApi';
 /**
@@ -55,12 +54,14 @@ export const ForgeBlueprintApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary List blueprints by modules
-     * @param {string} locale locale to use
+     * @param {string} [locale] locale to use
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    blueprintListBlueprints(locale: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListBlueprintsWebResponseModel> {
-      const localVarFetchArgs = ForgeBlueprintApiFetchParamCreator(configuration).blueprintListBlueprints(locale, options);
+    blueprintListBlueprints(locale?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListBlueprintsWebResponseModel> {
+      const localVarFetchArgs = ForgeBlueprintApiFetchParamCreator(configuration).blueprintListBlueprints(locale, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

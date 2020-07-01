@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -7,6 +6,7 @@ import { CreateManualWorkflowRunWebRequestModel } from './CreateManualWorkflowRu
 import { CreateManualWorkflowRunWebResponseModel } from './CreateManualWorkflowRunWebResponseModel';
 import { WorkflowAddActionWebRequestModel } from './WorkflowAddActionWebRequestModel';
 import { WorkflowAddActionWebResponseModel } from './WorkflowAddActionWebResponseModel';
+import { WorkflowCloneWebRequestModel } from './WorkflowCloneWebRequestModel';
 import { WorkflowCreateWebRequestModel } from './WorkflowCreateWebRequestModel';
 import { WorkflowEditActionWebRequestModel } from './WorkflowEditActionWebRequestModel';
 import { WorkflowEditActionWebResponseModel } from './WorkflowEditActionWebResponseModel';
@@ -24,7 +24,9 @@ import { WorkflowPermissionsGetWebResponseModel } from './WorkflowPermissionsGet
 import { WorkflowRemoveActionWebRequestModel } from './WorkflowRemoveActionWebRequestModel';
 import { WorkflowRemoveActionWebResponseModel } from './WorkflowRemoveActionWebResponseModel';
 import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
-import { WorkflowAccessAdvisorListWebResponseModel } from './WorkflowAccessAdvisorListWebResponseModel';
+import { WorkflowWithPermissionsWebResponseModel } from './WorkflowWithPermissionsWebResponseModel';
+import { WorkflowAccessAdvisorByRoleListWebResponseModel } from './WorkflowAccessAdvisorByRoleListWebResponseModel';
+import { WorkflowAccessAdvisorByUserListWebResponseModel } from './WorkflowAccessAdvisorByUserListWebResponseModel';
 import { WorkflowListApplicableWebResponseModel } from './WorkflowListApplicableWebResponseModel';
 import { WorkflowListCloningItemWebResponseModel } from './WorkflowListCloningItemWebResponseModel';
 import { WorkflowListWebResponseModel } from './WorkflowListWebResponseModel';
@@ -47,6 +49,26 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      */
     workflowAddAction(code: string, model: WorkflowAddActionWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAddActionWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowAddAction(code, model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * 
+     * @summary Clone a workflow
+     * @param {string} code The code of the workflow to clone
+     * @param {WorkflowCloneWebRequestModel} model The model containing all the clone operation details
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowClone(code: string, model: WorkflowCloneWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowClone(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -119,7 +141,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * 
      * @summary Edit an action on a workflow
      * @param {string} code The code of the workflow to edit the action on
-     * @param {string} id The id of the action to remove
+     * @param {string} id The id of the action to edit
      * @param {WorkflowEditActionWebRequestModel} model The model containing all the edit action operation details
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -144,7 +166,7 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowEditPermissions(code: string, model: WorkflowPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    workflowEditPermissions(code: string, model: WorkflowPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowWithPermissionsWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowEditPermissions(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -218,11 +240,11 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary Get the logs associated with a workflow run
-     * @param {string} runId The id of the workflow run to retrieve logs for
+     * @param {string} [runId] The id of the workflow run to retrieve logs for
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowGetLogs(runId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowLogsGetWebResponseModel> {
+    workflowGetLogs(runId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowLogsGetWebResponseModel> {
       const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetLogs(runId, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -238,12 +260,13 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * Fetches the permissions of a workflow by its Guc
      * @summary Get a workflow permissions by its code
      * @param {string} code The Guc for the workflow whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetPermissions(code, username, options);
+    workflowGetPermissions(code: string, username?: string, role?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowGetPermissions(code, username, role, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -258,14 +281,15 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * 
      * @summary List workflows
      * @param {string} [name] The optional workflow name (full or partial) to filter on
+     * @param {'Core' | 'Module' | 'Customer'} [context] The optional workflow context to filter on
      * @param {string} [userGroup] Optional Guc to filter workflows by. If specified, only the workflows that have this user group code within their permissions are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListWebResponseModel> {
-      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowList(name, userGroup, page, pageSize, options);
+    workflowList(name?: string, context?: 'Core' | 'Module' | 'Customer', userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowListWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowList(name, context, userGroup, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -280,8 +304,8 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * 
      * @summary List the workflows that are applicable to a dodi
      * @param {string} code The dodi code to find workflows applicable to
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -301,8 +325,8 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * 
      * @summary List the workflows that will clone a specific item
      * @param {string} itemId The id of the item that will be cloned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -322,8 +346,8 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
      * 
      * @summary List the triggered runs for a workflow
      * @param {string} code 
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -362,15 +386,60 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
     },
     /**
      * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists user workflows with their winning permission
+     * @summary Use api/workflow/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get workflow access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowWorkflowAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAccessAdvisorListWebResponseModel> {
-      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowAccessAdvisor(username, page, pageSize, options);
+    workflowWorkflowAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowAccessAdvisor(username, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role workflows with their winning permission
+     * @param {string} code The code of the role to get workflow access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAccessAdvisorByRoleListWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowAccessAdvisorByRole(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user workflows with their winning permission
+     * @param {string} username The name of the user to get workflow access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowWorkflowAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = WorkflowApiFetchParamCreator(configuration).workflowWorkflowAccessAdvisorByUser(username, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -401,9 +470,9 @@ export const WorkflowApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * Queues a workflow run for a workflow that has a manual trigger,       using the supplied AQS query to specify the output items of the manual trigger.
+     * Queues a workflow run for a workflow that has a time or manual trigger, event triggered workflows are not supported.       Manual trigger workflows are using the supplied AQS query to specify the output items of the manual trigger.       Time based workflows do not support the query parameter for the manual runs.
      * @summary Start a manually triggered workflow run
-     * @param {string} code The code of the workflow to run, which must have a manual trigger
+     * @param {string} code The code of the workflow to run, which must have a time or manual trigger
      * @param {CreateManualWorkflowRunWebRequestModel} model 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

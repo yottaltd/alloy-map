@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web model for a an item version get request

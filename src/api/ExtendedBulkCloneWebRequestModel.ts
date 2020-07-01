@@ -1,9 +1,8 @@
-// tslint:disable
 import { ExtendedBulkApiRequestBase } from './ExtendedBulkApiRequestBase';
 import { ItemCloneWebRequestModel } from './ItemCloneWebRequestModel';
 import { ExtendedBulkApi } from './ExtendedBulkApi';
 /**
- * Web request model to clone a item
+ * 
  * @export
  * @interface ExtendedBulkCloneWebRequestModel
  */

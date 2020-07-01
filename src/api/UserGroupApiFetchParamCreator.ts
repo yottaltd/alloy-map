@@ -1,8 +1,8 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { Context } from './Context';
 import { UserGroupAddUserWebRequestModel } from './UserGroupAddUserWebRequestModel';
 import { UserGroupCreateWebRequestModel } from './UserGroupCreateWebRequestModel';
 import { UserGroupEditWebRequestModel } from './UserGroupEditWebRequestModel';
@@ -40,7 +40,7 @@ export const UserGroupApiFetchParamCreator = function (configuration?: Configura
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -80,7 +80,7 @@ export const UserGroupApiFetchParamCreator = function (configuration?: Configura
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -163,7 +163,7 @@ export const UserGroupApiFetchParamCreator = function (configuration?: Configura
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -220,12 +220,13 @@ export const UserGroupApiFetchParamCreator = function (configuration?: Configura
      * @param {string} [query] Optional query to filter the user groups by
      * @param {'Core' | 'Module' | 'Customer'} [context] Optional Context filter
      * @param {string} [username] Optional username parameter to return only groups containing the correspondent user
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [role] Optional role parameter to return only groups that are part of this role
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, role?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/user-group`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -241,23 +242,27 @@ export const UserGroupApiFetchParamCreator = function (configuration?: Configura
       }
 
       if (query !== undefined) {
-        localVarQueryParameter['query'] = query;
+        localVarQueryParameter['Query'] = query;
       }
 
       if (context !== undefined) {
-        localVarQueryParameter['context'] = context;
+        localVarQueryParameter['Context'] = context;
       }
 
       if (username !== undefined) {
-        localVarQueryParameter['username'] = username;
+        localVarQueryParameter['Username'] = username;
+      }
+
+      if (role !== undefined) {
+        localVarQueryParameter['Role'] = role;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -296,7 +301,7 @@ export const UserGroupApiFetchParamCreator = function (configuration?: Configura
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943

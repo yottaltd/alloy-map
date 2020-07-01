@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { ReportGenerateWebRequestModel } from './ReportGenerateWebRequestModel';
@@ -24,13 +23,13 @@ export const ReportApiFactory = function (configuration?: Configuration, fetch?:
      * Lists reports that are applicable to another dodi and filtered by a report type dodi
      * @summary Lists the report designs
      * @param {string} dodiCode The Guc to filter reports that apply to this dodi
-     * @param {string} reportImplementsInterface Guc to filter report designs by.
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [reportImplementsInterface] Guc to filter report designs by.
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    reportList(dodiCode: string, reportImplementsInterface: string, page?: number, pageSize?: number, options?: any) {
+    reportList(dodiCode: string, reportImplementsInterface?: string, page?: number, pageSize?: number, options?: any) {
       return ReportApiFp(configuration).reportList(dodiCode, reportImplementsInterface, page, pageSize, options)(fetch, basePath);
     },
     /**
@@ -38,8 +37,8 @@ export const ReportApiFactory = function (configuration?: Configuration, fetch?:
      * @summary Lists the applicable dodis for report design code
      * @param {string} dodiCode The Guc report dodi to get applicable dodis for
      * @param {string} [query] Optional query to filter the report applicable dodis by
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

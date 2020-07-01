@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Remove data source web request model

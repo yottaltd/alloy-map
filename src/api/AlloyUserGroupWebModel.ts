@@ -1,4 +1,3 @@
-// tslint:disable
 import { Context } from './Context';
 import { MetadataWebModel } from './MetadataWebModel';
 /**

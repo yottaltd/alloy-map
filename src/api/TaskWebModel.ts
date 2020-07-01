@@ -1,9 +1,7 @@
-// tslint:disable
-import { AlloyTaskStatus } from './AlloyTaskStatus';
-import { AlloyTaskType } from './AlloyTaskType';
-import { Exception } from './Exception';
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
+import { BackgroundTaskStatus } from './BackgroundTaskStatus';
+import { BackgroundTaskType } from './BackgroundTaskType';
 import { TaskProcessStateWebModel } from './TaskProcessStateWebModel';
-import { AlloyException } from './AlloyException';
 /**
  * Model for an alloy task
  * @export
@@ -30,22 +28,22 @@ export interface TaskWebModel {
   createdUserUsername: string;
   /**
    * Type of task
-   * @type {AlloyTaskType}
+   * @type {BackgroundTaskType}
    * @memberof TaskWebModel
    */
-  type: AlloyTaskType;
+  type: BackgroundTaskType;
   /**
    * Status of the task
-   * @type {AlloyTaskStatus}
+   * @type {BackgroundTaskStatus}
    * @memberof TaskWebModel
    */
-  status: AlloyTaskStatus;
+  status: BackgroundTaskStatus;
   /**
    * If the task has failed, the associated error
-   * @type {AlloyException}
+   * @type {AlloyExceptionWebModel}
    * @memberof TaskWebModel
    */
-  error?: AlloyException;
+  error?: AlloyExceptionWebModel;
   /**
    * Any message associated with the status of the task
    * @type {string}

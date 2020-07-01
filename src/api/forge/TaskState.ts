@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * State of a forge task

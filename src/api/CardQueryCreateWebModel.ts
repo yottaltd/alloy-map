@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsJsonNode } from './AqsJsonNode';
 /**
  * Web request model for a card query create operation

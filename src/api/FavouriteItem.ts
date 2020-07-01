@@ -1,8 +1,7 @@
-// tslint:disable
 import { FavouriteFeatureName } from './FavouriteFeatureName';
 import { ProfileDataUnitValueWebModelBase } from './ProfileDataUnitValueWebModelBase';
 /**
- * Profile data unit value representing a favourite item
+ * 
  * @export
  * @interface FavouriteItem
  */
@@ -25,4 +24,28 @@ export interface FavouriteItem extends ProfileDataUnitValueWebModelBase {
    * @memberof FavouriteItem
    */
   featureName: FavouriteFeatureName;
+  /**
+   * The colour of the favourite item
+   * @type {string}
+   * @memberof FavouriteItem
+   */
+  colour?: string;
+  /**
+   * The icon of the favourite item
+   * @type {string}
+   * @memberof FavouriteItem
+   */
+  icon?: string;
+  /**
+   * The title of the favourite item
+   * @type {string}
+   * @memberof FavouriteItem
+   */
+  title?: string;
+  /**
+   * The subtitle of the favourite item
+   * @type {string}
+   * @memberof FavouriteItem
+   */
+  subtitle?: string;
 }

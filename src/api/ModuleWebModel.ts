@@ -1,4 +1,3 @@
-// tslint:disable
 import { MetadataWebModel } from './MetadataWebModel';
 /**
  * Web model for an alloy module

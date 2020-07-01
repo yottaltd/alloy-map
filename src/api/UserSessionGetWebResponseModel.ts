@@ -1,4 +1,3 @@
-// tslint:disable
 import { UserSessionWebModel } from './UserSessionWebModel';
 /**
  * Web model for a user session

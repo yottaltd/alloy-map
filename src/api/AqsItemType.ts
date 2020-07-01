@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * 
@@ -37,8 +36,6 @@ export enum AqsItemType {
   Ceiling = 'Ceiling',
   Floor = 'Floor',
   Length = 'Length',
-  Lower = 'Lower',
-  Upper = 'Upper',
   Count = 'Count',
   Sum = 'Sum',
   Avg = 'Avg',

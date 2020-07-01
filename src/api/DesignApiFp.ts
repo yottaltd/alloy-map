@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -8,6 +7,7 @@ import { DesignCreateWebRequestModel } from './DesignCreateWebRequestModel';
 import { DesignEditWebRequestModel } from './DesignEditWebRequestModel';
 import { DesignRemoveDesignInterfaceWebRequestModel } from './DesignRemoveDesignInterfaceWebRequestModel';
 import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
+import { DesignWithPermissionsWebResponseModel } from './DesignWithPermissionsWebResponseModel';
 import { DodiAttributeCreateWebRequestModel } from './DodiAttributeCreateWebRequestModel';
 import { DodiAttributeCreateWebResponseModel } from './DodiAttributeCreateWebResponseModel';
 import { DodiAttributeDeleteWebRequestModel } from './DodiAttributeDeleteWebRequestModel';
@@ -15,7 +15,8 @@ import { DodiAttributeEditWebRequestModel } from './DodiAttributeEditWebRequestM
 import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DodiPermissionsGetWebResponseModel } from './DodiPermissionsGetWebResponseModel';
 import { DesignListWebResponseModel } from './DesignListWebResponseModel';
-import { DodiAccessAdvisorListWebResponseModel } from './DodiAccessAdvisorListWebResponseModel';
+import { DodiAccessAdvisorByRoleListWebResponseModel } from './DodiAccessAdvisorByRoleListWebResponseModel';
+import { DodiAccessAdvisorByUserListWebResponseModel } from './DodiAccessAdvisorByUserListWebResponseModel';
 import { DesignApiFetchParamCreator } from './DesignApiFetchParamCreator';
 import { DesignApi } from './DesignApi';
 /**
@@ -125,15 +126,60 @@ export const DesignApiFp = function(configuration?: Configuration) {
     },
     /**
      * Fetches a list of design and its attributes with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists design and its attributes with their winning permission
+     * @summary Use api/design/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get design with attributes access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designDesignAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAccessAdvisorListWebResponseModel> {
-      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDesignAccessAdvisor(username, page, pageSize, options);
+    designDesignAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDesignAccessAdvisor(username, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of design and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists design and its attributes with their winning permission for the role
+     * @param {string} code The code of the role to get design with attributes access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designDesignAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAccessAdvisorByRoleListWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDesignAccessAdvisorByRole(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of design and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists design and its attributes with their winning permission for the user
+     * @param {string} username The name of the user to get design with attributes access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designDesignAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designDesignAccessAdvisorByUser(username, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -193,7 +239,7 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designEditPermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithOperationsSummaryWebResponseModel> {
+    designEditPermissions(code: string, model: DodiPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignWithPermissionsWebResponseModel> {
       const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designEditPermissions(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -228,12 +274,13 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * Finds the permissions of a design with the specified code for optional user
      * @summary Get the design permissions
      * @param {string} code The Guc to use to fetch the required design permissions
-     * @param {string} [username] Optional username to get dodi permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designGetPermissions(code, username, options);
+    designGetPermissions(code: string, username?: string, role?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DodiPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designGetPermissions(code, username, role, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -253,13 +300,14 @@ export const DesignApiFp = function(configuration?: Configuration) {
      * @param {string} [userGroup] Optional Guc to filter designs by. If specified, only the designs that have this user group code within their permissions or the permissions of the attributes within them are returned
      * @param {string} [childDodi] Optional Guc to filter designs by. If specified, only the designs that have a link attribute pointing to the specified dodi are returned
      * @param {string} [lastEditDate] The optional last edit date to return only designs created or edited after this date
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {boolean} [queryCompleteDodi] Optional boolean that can be set to false to query against designs without taking into account inheritance
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignListWebResponseModel> {
-      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designList(query, context, implementsInterface, userGroup, childDodi, lastEditDate, page, pageSize, options);
+    designList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, queryCompleteDodi?: boolean, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DesignListWebResponseModel> {
+      const localVarFetchArgs = DesignApiFetchParamCreator(configuration).designList(query, context, implementsInterface, userGroup, childDodi, lastEditDate, queryCompleteDodi, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

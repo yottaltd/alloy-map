@@ -1,8 +1,8 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { CollectionCode } from './CollectionCode';
 import { ItemCloneWebRequestModel } from './ItemCloneWebRequestModel';
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';
 import { ItemEditWebRequestModel } from './ItemEditWebRequestModel';
@@ -45,7 +45,7 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -85,7 +85,7 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -168,7 +168,7 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -224,10 +224,12 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
      * @summary Gets an item graph by id and code
      * @param {string} id The AId of the item to retrieve
      * @param {string} code The code of the graph to retrieve for example \&quot;Component\&quot;, \&quot;Job\&quot;, \&quot;Lookup\&quot;, \&quot;Network\&quot;
+     * @param {Array<CollectionCode>} [collectionCodes] Optional collections to filter the children by
+     * @param {number} [maxRecursionDepth] Optional maximum recursion depth
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    itemGetItemGraph(id: string, code: string, options: any = {}): FetchArgs {
+    itemGetItemGraph(id: string, code: string, collectionCodes?: Array<CollectionCode>, maxRecursionDepth?: number, options: any = {}): FetchArgs {
       // verify required parameter 'id' is not null or undefined
       if (id === null || id === undefined) {
         throw new RequiredError('id','Required parameter id was null or undefined when calling itemGetItemGraph.');
@@ -252,6 +254,14 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
+      if (collectionCodes) {
+        localVarQueryParameter['CollectionCodes'] = collectionCodes;
+      }
+
+      if (maxRecursionDepth !== undefined) {
+        localVarQueryParameter['MaxRecursionDepth'] = maxRecursionDepth;
+      }
+
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
@@ -268,8 +278,8 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
      * @param {string} id The AId of the item to retrieve parents for
      * @param {string} [attributeCode] Optional attribute code to filter parents on
      * @param {string} [graphCode] Optional graph code to filter parents on
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -294,19 +304,19 @@ export const ItemApiFetchParamCreator = function (configuration?: Configuration)
       }
 
       if (attributeCode !== undefined) {
-        localVarQueryParameter['attributeCode'] = attributeCode;
+        localVarQueryParameter['AttributeCode'] = attributeCode;
       }
 
       if (graphCode !== undefined) {
-        localVarQueryParameter['graphCode'] = graphCode;
+        localVarQueryParameter['GraphCode'] = graphCode;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

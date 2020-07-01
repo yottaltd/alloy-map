@@ -1,6 +1,4 @@
-// tslint:disable
-import { Exception } from './Exception';
-import { AlloyException } from './AlloyException';
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
 /**
  * Response model for extended api bulk request
  * @export
@@ -21,12 +19,12 @@ export interface ExtendedBulkWebResponseModel {
   failed: number;
   /**
    * The errors corresponding to the failed operations, indexed by the position in the request
-   * @type {{ [key: string]: AlloyException; }}
+   * @type {{ [key: string]: AlloyExceptionWebModel; }}
    * @memberof ExtendedBulkWebResponseModel
    */
-  errors: { [key: string]: AlloyException; };
+  errors: { [key: string]: AlloyExceptionWebModel; };
   /**
-   * 
+   * The mapping between the request index and the id of the created item
    * @type {{ [key: string]: string; }}
    * @memberof ExtendedBulkWebResponseModel
    */

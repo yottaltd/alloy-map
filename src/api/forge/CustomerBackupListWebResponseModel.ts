@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomerBackupGetWebResponseModel } from './CustomerBackupGetWebResponseModel';
 /**
  * Customer backups list response

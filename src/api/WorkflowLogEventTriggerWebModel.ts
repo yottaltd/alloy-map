@@ -1,10 +1,9 @@
-// tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { ItemChangeType } from './ItemChangeType';
 import { WorkflowLogNodeWebModelBase } from './WorkflowLogNodeWebModelBase';
 import { EventTrigger } from './EventTrigger';
 /**
- * Model representing the log of an event based trigger
+ * 
  * @export
  * @interface WorkflowLogEventTriggerWebModel
  */

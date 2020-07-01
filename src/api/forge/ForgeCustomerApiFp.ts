@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -16,12 +15,12 @@ import { CustomerEditWebRequestModel } from './CustomerEditWebRequestModel';
 import { CustomerEditWebResponseModel } from './CustomerEditWebResponseModel';
 import { CustomerGetForgeMetricsWebResponseModel } from './CustomerGetForgeMetricsWebResponseModel';
 import { CustomerGetWebResponseModel } from './CustomerGetWebResponseModel';
-import { CustomerListUserResponseModel } from './CustomerListUserResponseModel';
-import { CustomerListWebResponseModel } from './CustomerListWebResponseModel';
 import { CustomerMoveWebRequestModel } from './CustomerMoveWebRequestModel';
 import { SettingListResponseModel } from './SettingListResponseModel';
 import { SettingSetRequestModel } from './SettingSetRequestModel';
 import { TaskSubmittedResponseModel } from './TaskSubmittedResponseModel';
+import { CustomerListUserWebResponseModel } from './CustomerListUserWebResponseModel';
+import { CustomerListWebResponseModel } from './CustomerListWebResponseModel';
 import { ForgeCustomerApiFetchParamCreator } from './ForgeCustomerApiFetchParamCreator';
 import { ForgeCustomerApi } from './ForgeCustomerApi';
 /**
@@ -268,11 +267,15 @@ export const ForgeCustomerApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary List customers on the region's master
+     * @param {string} [query] Optional query to filter the customers by name
+     * @param {string} [clusterId] Optional query to filter the customers by Cluster Id
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerList(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerListWebResponseModel> {
-      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerList(options);
+    customerList(query?: string, clusterId?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerListWebResponseModel> {
+      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerList(query, clusterId, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -328,11 +331,14 @@ export const ForgeCustomerApiFp = function(configuration?: Configuration) {
      * 
      * @summary List users on a customer
      * @param {string} id id of customer 
+     * @param {string} [query] Optional query to filter the users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerListUsers(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerListUserResponseModel> {
-      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerListUsers(id, options);
+    customerListUsers(id: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerListUserWebResponseModel> {
+      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerListUsers(id, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -393,6 +399,25 @@ export const ForgeCustomerApiFp = function(configuration?: Configuration) {
      */
     customerRemoveUser(id: string, username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerRemoveUser(id, username, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
+      };
+    },
+    /**
+     * Resets the recurring background tasks, useful if the tasks are not registered in the first place or are not the right ones
+     * @summary Resets the recurring background tasks
+     * @param {string} id The database name of the customer to reset the recurring background tasks for
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    customerResetRecurringBackgroundTasks(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+      const localVarFetchArgs = ForgeCustomerApiFetchParamCreator(configuration).customerResetRecurringBackgroundTasks(id, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

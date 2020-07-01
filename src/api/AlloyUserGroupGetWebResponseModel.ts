@@ -1,4 +1,3 @@
-// tslint:disable
 import { AlloyUserGroupWebModel } from './AlloyUserGroupWebModel';
 /**
  * Web model for a user group

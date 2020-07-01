@@ -1,4 +1,3 @@
-// tslint:disable
 import { LayerPermissionResponseWebModel } from './LayerPermissionResponseWebModel';
 /**
  * Web model for a layer permissions get operation

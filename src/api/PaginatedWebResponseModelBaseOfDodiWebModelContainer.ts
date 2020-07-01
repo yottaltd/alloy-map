@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiWebModel } from './DodiWebModel';
 import { DodiWebModelContainer } from './DodiWebModelContainer';
 /**

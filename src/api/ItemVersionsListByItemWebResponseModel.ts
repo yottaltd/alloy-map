@@ -1,7 +1,6 @@
-// tslint:disable
 import { ItemVersionGetWebResponseModel } from './ItemVersionGetWebResponseModel';
 /**
- * Web response model for a design list operation
+ * 
  * @export
  * @interface ItemVersionsListByItemWebResponseModel
  */

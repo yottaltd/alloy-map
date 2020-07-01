@@ -1,8 +1,9 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { DrivingRouteCreateWebRequestModel } from './DrivingRouteCreateWebRequestModel';
 import { DrivingRouteEditWebRequestModel } from './DrivingRouteEditWebRequestModel';
+import { GenerateFastestRouteWebRequestModel } from './GenerateFastestRouteWebRequestModel';
+import { GenerateShortestRouteWebRequestModel } from './GenerateShortestRouteWebRequestModel';
 import { RouteApiFp } from './RouteApiFp';
 import { RouteApi } from './RouteApi';
 /**
@@ -41,6 +42,26 @@ export const RouteApiFactory = function (configuration?: Configuration, fetch?: 
      */
     routeEditRouteItem(id: string, model: DrivingRouteEditWebRequestModel, options?: any) {
       return RouteApiFp(configuration).routeEditRouteItem(id, model, options)(fetch, basePath);
+    },
+    /**
+     * Generates and returns a driving route which honours the ordering of route stops. It will attempt to find the fastest route but retain the order so may not necessarily produce the overall fastest result.    The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
+     * @summary Generates the fastest driving route between coordinates in the supplied order.
+     * @param {GenerateFastestRouteWebRequestModel} model The model containing the info about the route to be generated
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    routeGenerateFastestRoute(model: GenerateFastestRouteWebRequestModel, options?: any) {
+      return RouteApiFp(configuration).routeGenerateFastestRoute(model, options)(fetch, basePath);
+    },
+    /**
+     * Finds the shortest route between fixed start and end points disregarding the order of middle stops. To get the order in which trip is visiting stops, look into WaypointIndex property.        The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
+     * @summary Generates the trip (shortest route between start and end) for the provided route stops
+     * @param {GenerateShortestRouteWebRequestModel} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    routeGenerateShortestRoute(model: GenerateShortestRouteWebRequestModel, options?: any) {
+      return RouteApiFp(configuration).routeGenerateShortestRoute(model, options)(fetch, basePath);
     },
   };
 };

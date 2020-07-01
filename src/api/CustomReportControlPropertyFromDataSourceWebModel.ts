@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web model for the custom report control dynamically defined properties

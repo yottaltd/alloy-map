@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -38,13 +37,13 @@ export const ReportApiFp = function(configuration?: Configuration) {
      * Lists reports that are applicable to another dodi and filtered by a report type dodi
      * @summary Lists the report designs
      * @param {string} dodiCode The Guc to filter reports that apply to this dodi
-     * @param {string} reportImplementsInterface Guc to filter report designs by.
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [reportImplementsInterface] Guc to filter report designs by.
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    reportList(dodiCode: string, reportImplementsInterface: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ReportListWebResponseModel> {
+    reportList(dodiCode: string, reportImplementsInterface?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ReportListWebResponseModel> {
       const localVarFetchArgs = ReportApiFetchParamCreator(configuration).reportList(dodiCode, reportImplementsInterface, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -61,8 +60,8 @@ export const ReportApiFp = function(configuration?: Configuration) {
      * @summary Lists the applicable dodis for report design code
      * @param {string} dodiCode The Guc report dodi to get applicable dodis for
      * @param {string} [query] Optional query to filter the report applicable dodis by
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

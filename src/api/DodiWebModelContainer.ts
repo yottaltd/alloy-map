@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiWebModel } from './DodiWebModel';
 import { DesignInterfaceWebModel } from './DesignInterfaceWebModel';
 import { DesignWebModel } from './DesignWebModel';

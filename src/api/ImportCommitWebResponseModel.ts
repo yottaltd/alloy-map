@@ -1,4 +1,3 @@
-// tslint:disable
 import { ImportWebModel } from './ImportWebModel';
 /**
  * Commit import web response model
@@ -17,5 +16,5 @@ export interface ImportCommitWebResponseModel {
    * @type {string}
    * @memberof ImportCommitWebResponseModel
    */
-  alloyTaskId: string;
+  backgroundTaskId: string;
 }

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -94,29 +93,17 @@ export const FileApiFetchParamCreator = function (configuration?: Configuration)
      * 
      * @summary Download a file thumbnail
      * @param {string} id The AId of the file to download a thumbnail of
-     * @param {number} width The height of the thumbnail
-     * @param {number} height The height of the thumbnail
-     * @param {'Cover' | 'Contain'} mode The mode to use to resize the image
+     * @param {number} [width] The height of the thumbnail
+     * @param {number} [height] The height of the thumbnail
+     * @param {'Cover' | 'Contain'} [mode] The mode to use to resize the image
      * @param {boolean} [applyContentDispositionHeader] If true, the content disposition header will be returned, triggering a file download from the browser. If false, the header won&#39;t be returned and the image will be displayed as is
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    fileDownloadThumbnail(id: string, width: number, height: number, mode: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options: any = {}): FetchArgs {
+    fileDownloadThumbnail(id: string, width?: number, height?: number, mode?: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options: any = {}): FetchArgs {
       // verify required parameter 'id' is not null or undefined
       if (id === null || id === undefined) {
         throw new RequiredError('id','Required parameter id was null or undefined when calling fileDownloadThumbnail.');
-      }
-      // verify required parameter 'width' is not null or undefined
-      if (width === null || width === undefined) {
-        throw new RequiredError('width','Required parameter width was null or undefined when calling fileDownloadThumbnail.');
-      }
-      // verify required parameter 'height' is not null or undefined
-      if (height === null || height === undefined) {
-        throw new RequiredError('height','Required parameter height was null or undefined when calling fileDownloadThumbnail.');
-      }
-      // verify required parameter 'mode' is not null or undefined
-      if (mode === null || mode === undefined) {
-        throw new RequiredError('mode','Required parameter mode was null or undefined when calling fileDownloadThumbnail.');
       }
       const localVarPath = `/api/file/{id}/thumbnail`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -134,19 +121,19 @@ export const FileApiFetchParamCreator = function (configuration?: Configuration)
       }
 
       if (width !== undefined) {
-        localVarQueryParameter['width'] = width;
+        localVarQueryParameter['Width'] = width;
       }
 
       if (height !== undefined) {
-        localVarQueryParameter['height'] = height;
+        localVarQueryParameter['Height'] = height;
       }
 
       if (mode !== undefined) {
-        localVarQueryParameter['mode'] = mode;
+        localVarQueryParameter['Mode'] = mode;
       }
 
       if (applyContentDispositionHeader !== undefined) {
-        localVarQueryParameter['applyContentDispositionHeader'] = applyContentDispositionHeader;
+        localVarQueryParameter['ApplyContentDispositionHeader'] = applyContentDispositionHeader;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -191,7 +178,7 @@ export const FileApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943

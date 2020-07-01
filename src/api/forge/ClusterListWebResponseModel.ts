@@ -1,15 +1,38 @@
-// tslint:disable
 import { ClusterGetWebResponseModel } from './ClusterGetWebResponseModel';
 /**
- * Region List response
+ * 
  * @export
  * @interface ClusterListWebResponseModel
  */
 export interface ClusterListWebResponseModel {
   /**
-   * The clusters
+   * 
+   * @type {number}
+   * @memberof ClusterListWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ClusterListWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<ClusterGetWebResponseModel>}
    * @memberof ClusterListWebResponseModel
    */
-  clusters: Array<ClusterGetWebResponseModel>;
+  results: Array<ClusterGetWebResponseModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof ClusterListWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ClusterListWebResponseModel
+   */
+  totalResults: number;
 }

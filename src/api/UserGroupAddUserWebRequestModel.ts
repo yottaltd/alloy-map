@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web request model for a user group user add operation

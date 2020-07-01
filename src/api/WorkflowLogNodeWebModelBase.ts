@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowLogNodeInfoWebModel } from './WorkflowLogNodeInfoWebModel';
 import { WorkflowNodeRunDataWebModel } from './WorkflowNodeRunDataWebModel';
 /**

@@ -1,4 +1,3 @@
-// tslint:disable
 import { BlueprintModuleDependencyWebResponseModel } from './BlueprintModuleDependencyWebResponseModel';
 import { BlueprintWebResponseModel } from './BlueprintWebResponseModel';
 /**

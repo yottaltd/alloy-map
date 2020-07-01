@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemEditWebRequestModel } from './ItemEditWebRequestModel';
 /**
  * Web request model to edit an inspection item

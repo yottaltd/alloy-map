@@ -1,8 +1,8 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { Context } from './Context';
 import { DodiPermissionsEditWebRequestModel } from './DodiPermissionsEditWebRequestModel';
 import { DesignInterfaceApi } from './DesignInterfaceApi';
 /**
@@ -13,17 +13,18 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
   return {
     /**
      * Fetches a list of interface and its attributes with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists interface and its attributes with their winning permission
+     * @summary Use api/design-interface/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get interface with attributes access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceDesignAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    designInterfaceDesignInterfaceAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'username' is not null or undefined
       if (username === null || username === undefined) {
-        throw new RequiredError('username','Required parameter username was null or undefined when calling designInterfaceDesignAccessAdvisor.');
+        throw new RequiredError('username','Required parameter username was null or undefined when calling designInterfaceDesignInterfaceAccessAdvisor.');
       }
       const localVarPath = `/api/design-interface/access-advisor/{username}`
         .replace(`{${"username"}}`, encodeURIComponent(String(username)));
@@ -40,12 +41,120 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of interface and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists interface and its attributes with their winning permission for the role
+     * @param {string} code The code of the role to get interface with attributes access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designInterfaceDesignInterfaceAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'code' is not null or undefined
+      if (code === null || code === undefined) {
+        throw new RequiredError('code','Required parameter code was null or undefined when calling designInterfaceDesignInterfaceAccessAdvisorByRole.');
+      }
+      const localVarPath = `/api/design-interface/access-advisor/role/{code}`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of interface and its attributes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists interface and its attributes with their winning permission for the user
+     * @param {string} username The name of the user to get interface with attributes access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    designInterfaceDesignInterfaceAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling designInterfaceDesignInterfaceAccessAdvisorByUser.');
+      }
+      const localVarPath = `/api/design-interface/access-advisor/user/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -90,7 +199,7 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -145,11 +254,12 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
      * Finds the permissions of a interface with the specified code for optional user
      * @summary Get the interface permissions
      * @param {string} code The Guc to use to fetch the required design permissions
-     * @param {string} [username] Optional username to get dodi permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
+    designInterfaceGetPermissions(code: string, username?: string, role?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling designInterfaceGetPermissions.');
@@ -170,7 +280,11 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
       }
 
       if (username !== undefined) {
-        localVarQueryParameter['username'] = username;
+        localVarQueryParameter['Username'] = username;
+      }
+
+      if (role !== undefined) {
+        localVarQueryParameter['Role'] = role;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -186,18 +300,20 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
     /**
      * Lists the interfaces in the system using pagination
      * @summary List design interfaces
-     * @param {string} [query] Optional query to filter the designs by
+     * @param {string} [query] Optional query to filter the design interfaces by
+     * @param {'Core' | 'Module' | 'Customer'} [context] Optional Context to filter the design interfaces by
      * @param {string} [implementedByDodi] The optional dodi code Guc, if specified, only the interfaces implemented by that design or interface will be returned
      * @param {string} [implementsInterface] The optional dodi code Guc, if specified, only the interfaces implementing that interface will be returned
      * @param {string} [userGroup] The optional user group Guc. If specified, only the interfaces that have this user group code within their permissions or the permissions of the attributes within them are returned
      * @param {string} [childDodi] Optional Guc to filter design interfaces by. If specified, only the designs that have a link attribute pointing to the specified dodi are returned
      * @param {string} [lastEditDate] The optional last edit date to return only interfaces created or edited after this date
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {boolean} [queryCompleteDodi] Optional boolean that can be set to false to query against design interfaces without taking into account inheritance
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    designInterfaceList(query?: string, implementedByDodi?: string, implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    designInterfaceList(query?: string, context?: 'Core' | 'Module' | 'Customer', implementedByDodi?: string, implementsInterface?: string, userGroup?: string, childDodi?: string, lastEditDate?: string, queryCompleteDodi?: boolean, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/design-interface`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -213,35 +329,43 @@ export const DesignInterfaceApiFetchParamCreator = function (configuration?: Con
       }
 
       if (query !== undefined) {
-        localVarQueryParameter['query'] = query;
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (context !== undefined) {
+        localVarQueryParameter['Context'] = context;
       }
 
       if (implementedByDodi !== undefined) {
-        localVarQueryParameter['implementedByDodi'] = implementedByDodi;
+        localVarQueryParameter['ImplementedByDodi'] = implementedByDodi;
       }
 
       if (implementsInterface !== undefined) {
-        localVarQueryParameter['implementsInterface'] = implementsInterface;
+        localVarQueryParameter['ImplementsInterface'] = implementsInterface;
       }
 
       if (userGroup !== undefined) {
-        localVarQueryParameter['userGroup'] = userGroup;
+        localVarQueryParameter['UserGroup'] = userGroup;
       }
 
       if (childDodi !== undefined) {
-        localVarQueryParameter['childDodi'] = childDodi;
+        localVarQueryParameter['ChildDodi'] = childDodi;
       }
 
       if (lastEditDate !== undefined) {
-        localVarQueryParameter['lastEditDate'] = lastEditDate;
+        localVarQueryParameter['LastEditDate'] = lastEditDate;
+      }
+
+      if (queryCompleteDodi !== undefined) {
+        localVarQueryParameter['QueryCompleteDodi'] = queryCompleteDodi;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

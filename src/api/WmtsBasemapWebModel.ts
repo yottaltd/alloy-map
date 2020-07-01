@@ -1,8 +1,6 @@
-// tslint:disable
 import { BasemapWebModelBase } from './BasemapWebModelBase';
-import { Basemap } from './Basemap';
 /**
- * Web Map Tile Service Basemap
+ * 
  * @export
  * @interface WmtsBasemapWebModel
  */
@@ -25,4 +23,10 @@ export interface WmtsBasemapWebModel extends BasemapWebModelBase {
    * @memberof WmtsBasemapWebModel
    */
   hiDpi: boolean;
+  /**
+   * Which tile matrix to use from those available (optional). If this is not set, the default matrix is used
+   * @type {string}
+   * @memberof WmtsBasemapWebModel
+   */
+  tileMatrixIdentifier?: string;
 }

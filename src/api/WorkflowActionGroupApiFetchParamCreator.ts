@@ -1,8 +1,8 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { Context } from './Context';
 import { WorkflowActionGroupAddActionWebRequestModel } from './WorkflowActionGroupAddActionWebRequestModel';
 import { WorkflowActionGroupCreateWebRequestModel } from './WorkflowActionGroupCreateWebRequestModel';
 import { WorkflowActionGroupEditActionWebRequestModel } from './WorkflowActionGroupEditActionWebRequestModel';
@@ -50,7 +50,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -90,7 +90,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -173,7 +173,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -191,7 +191,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
      * 
      * @summary Edit an action on a workflowActionGroup
      * @param {string} code The code of the workflowActionGroup to edit the action on
-     * @param {string} id The id of the action to remove
+     * @param {string} id The id of the action to edit
      * @param {WorkflowActionGroupEditActionWebRequestModel} model The model containing all the edit action operation details
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -225,7 +225,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -271,7 +271,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -354,7 +354,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -400,7 +400,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -418,11 +418,12 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
      * Fetches the permissions of a workflowActionGroup by its Guc
      * @summary Get a workflowActionGroup permissions by its code
      * @param {string} code The Guc for the workflowActionGroup whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
+    workflowActionGroupGetPermissions(code: string, username?: string, role?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling workflowActionGroupGetPermissions.');
@@ -443,7 +444,11 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
       }
 
       if (username !== undefined) {
-        localVarQueryParameter['username'] = username;
+        localVarQueryParameter['Username'] = username;
+      }
+
+      if (role !== undefined) {
+        localVarQueryParameter['Role'] = role;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -460,14 +465,15 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
      * 
      * @summary List workflowActionGroups
      * @param {string} [name] The optional workflow Action Group name (full or partial) to filter on
+     * @param {'Core' | 'Module' | 'Customer'} [context] The optional workflow Action Group context to filter on
      * @param {string} [userGroup] Optional Guc to filter workflow Action Groups by. If specified, only the workflow action groups that have this user group code within their permissions are returned
      * @param {string} [actionGroupInputCode] Optional Guc to filter workflow action groups by. If specified, only the workflow action groups that have this dodi code as their declared input type are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupList(name?: string, userGroup?: string, actionGroupInputCode?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    workflowActionGroupList(name?: string, context?: 'Core' | 'Module' | 'Customer', userGroup?: string, actionGroupInputCode?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/workflow-action-group`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -483,23 +489,27 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
       }
 
       if (name !== undefined) {
-        localVarQueryParameter['name'] = name;
+        localVarQueryParameter['Name'] = name;
+      }
+
+      if (context !== undefined) {
+        localVarQueryParameter['Context'] = context;
       }
 
       if (userGroup !== undefined) {
-        localVarQueryParameter['userGroup'] = userGroup;
+        localVarQueryParameter['UserGroup'] = userGroup;
       }
 
       if (actionGroupInputCode !== undefined) {
-        localVarQueryParameter['actionGroupInputCode'] = actionGroupInputCode;
+        localVarQueryParameter['ActionGroupInputCode'] = actionGroupInputCode;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -550,7 +560,7 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -566,14 +576,15 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
     },
     /**
      * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists user workflowActionGroups with their winning permission
+     * @summary Use api/workflow-action-group/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get workflowActionGroup access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupWorkflowActionGroupAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    workflowActionGroupWorkflowActionGroupAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'username' is not null or undefined
       if (username === null || username === undefined) {
         throw new RequiredError('username','Required parameter username was null or undefined when calling workflowActionGroupWorkflowActionGroupAccessAdvisor.');
@@ -593,12 +604,120 @@ export const WorkflowActionGroupApiFetchParamCreator = function (configuration?:
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role workflowActionGroups with their winning permission
+     * @param {string} code The code of the role to get workflowActionGroup access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowActionGroupWorkflowActionGroupAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'code' is not null or undefined
+      if (code === null || code === undefined) {
+        throw new RequiredError('code','Required parameter code was null or undefined when calling workflowActionGroupWorkflowActionGroupAccessAdvisorByRole.');
+      }
+      const localVarPath = `/api/workflow-action-group/access-advisor/role/{code}`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user workflowActionGroups with their winning permission
+     * @param {string} username The name of the user to get workflowActionGroup access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowActionGroupWorkflowActionGroupAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling workflowActionGroupWorkflowActionGroupAccessAdvisorByUser.');
+      }
+      const localVarPath = `/api/workflow-action-group/access-advisor/user/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomerWebModel } from './CustomerWebModel';
 /**
  * Response model for get operation on CustomerWebModel

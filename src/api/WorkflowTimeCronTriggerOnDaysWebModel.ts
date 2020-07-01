@@ -1,4 +1,3 @@
-// tslint:disable
 import { CalendarOfUnit } from './CalendarOfUnit';
 import { TimeCronTrigger } from './TimeCronTrigger';
 /**

@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ItemVersionGetWebRequestModel } from './ItemVersionGetWebRequestModel';
 import { ItemVersionApiFp } from './ItemVersionApiFp';
@@ -26,8 +25,8 @@ export class ItemVersionApi extends BaseAPI {
    * List the versions of the item matching the id specified, in ascending order by start date
    * @summary List the item versions for a specific item
    * @param {string} id The AId of the item whose versions need to be retrieved
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ItemVersionApi

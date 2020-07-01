@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ReportGenerateWebRequestModel } from './ReportGenerateWebRequestModel';
 import { ReportApiFp } from './ReportApiFp';
@@ -25,14 +24,14 @@ export class ReportApi extends BaseAPI {
    * Lists reports that are applicable to another dodi and filtered by a report type dodi
    * @summary Lists the report designs
    * @param {string} dodiCode The Guc to filter reports that apply to this dodi
-   * @param {string} reportImplementsInterface Guc to filter report designs by.
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {string} [reportImplementsInterface] Guc to filter report designs by.
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ReportApi
    */
-  public reportList(dodiCode: string, reportImplementsInterface: string, page?: number, pageSize?: number, options?: any) {
+  public reportList(dodiCode: string, reportImplementsInterface?: string, page?: number, pageSize?: number, options?: any) {
     return ReportApiFp(this.configuration).reportList(dodiCode, reportImplementsInterface, page, pageSize, options)(this.fetch, this.basePath);
   }
 
@@ -41,8 +40,8 @@ export class ReportApi extends BaseAPI {
    * @summary Lists the applicable dodis for report design code
    * @param {string} dodiCode The Guc report dodi to get applicable dodis for
    * @param {string} [query] Optional query to filter the report applicable dodis by
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ReportApi

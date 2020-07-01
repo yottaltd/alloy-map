@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web request model to add the specified design interface to the ones implemented by the design

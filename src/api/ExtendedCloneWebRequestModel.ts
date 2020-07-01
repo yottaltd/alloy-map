@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemCloneWebRequestModel } from './ItemCloneWebRequestModel';
 /**
  * Web request model to clone an extended api item

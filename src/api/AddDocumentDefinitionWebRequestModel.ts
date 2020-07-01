@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomReportDocumentDefinitionInfoWebModelBase } from './CustomReportDocumentDefinitionInfoWebModelBase';
 /**
  * Add document definition web request model

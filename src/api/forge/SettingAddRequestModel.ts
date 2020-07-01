@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Add setting request model

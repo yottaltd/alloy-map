@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -37,7 +36,7 @@ export const ExportApiFetchParamCreator = function (configuration?: Configuratio
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -54,7 +53,7 @@ export const ExportApiFetchParamCreator = function (configuration?: Configuratio
     /**
      * Finds the file id for the given task or returns not found
      * @summary Get the file AId for the export once completed
-     * @param {string} id The AId of the export task
+     * @param {string} id The id of the export task
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

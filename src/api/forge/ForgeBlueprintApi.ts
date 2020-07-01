@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { BlueprintApplyWebRequestModel } from './BlueprintApplyWebRequestModel';
 import { ForgeBlueprintApiFp } from './ForgeBlueprintApiFp';
@@ -35,13 +34,15 @@ export class ForgeBlueprintApi extends BaseAPI {
   /**
    * 
    * @summary List blueprints by modules
-   * @param {string} locale locale to use
+   * @param {string} [locale] locale to use
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeBlueprintApi
    */
-  public blueprintListBlueprints(locale: string, options?: any) {
-    return ForgeBlueprintApiFp(this.configuration).blueprintListBlueprints(locale, options)(this.fetch, this.basePath);
+  public blueprintListBlueprints(locale?: string, page?: number, pageSize?: number, options?: any) {
+    return ForgeBlueprintApiFp(this.configuration).blueprintListBlueprints(locale, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

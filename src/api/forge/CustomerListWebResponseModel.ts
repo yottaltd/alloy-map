@@ -1,15 +1,38 @@
-// tslint:disable
 import { CustomerGetWebResponseModel } from './CustomerGetWebResponseModel';
 /**
- * Region List response
+ * 
  * @export
  * @interface CustomerListWebResponseModel
  */
 export interface CustomerListWebResponseModel {
   /**
-   * Customers
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<CustomerGetWebResponseModel>}
    * @memberof CustomerListWebResponseModel
    */
-  customers: Array<CustomerGetWebResponseModel>;
+  results: Array<CustomerGetWebResponseModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  totalResults: number;
 }

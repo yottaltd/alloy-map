@@ -1,4 +1,3 @@
-// tslint:disable
 import { ImportWebModel } from './ImportWebModel';
 /**
  * Validate import web response model
@@ -17,5 +16,5 @@ export interface ImportValidateWebResponseModel {
    * @type {string}
    * @memberof ImportValidateWebResponseModel
    */
-  alloyTaskId: string;
+  backgroundTaskId: string;
 }

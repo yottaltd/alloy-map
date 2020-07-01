@@ -1,8 +1,7 @@
-// tslint:disable
 import { CustomReportDataSourceHeaderWebModel } from './CustomReportDataSourceHeaderWebModel';
 import { CustomReportDataSourceInfoBaseWebModel } from './CustomReportDataSourceInfoBaseWebModel';
 /**
- * Web model for a card
+ * Web model for a custom report data source
  * @export
  * @interface CustomReportDataSourceWebModel
  */
@@ -19,6 +18,12 @@ export interface CustomReportDataSourceWebModel {
    * @memberof CustomReportDataSourceWebModel
    */
   name: string;
+  /**
+   * Whether the data source is required at report generation time
+   * @type {boolean}
+   * @memberof CustomReportDataSourceWebModel
+   */
+  required: boolean;
   /**
    * The data sources info containing the data source default value and additional information
    * @type {CustomReportDataSourceInfoBaseWebModel}

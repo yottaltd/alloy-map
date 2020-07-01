@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { UserGroupAddUserWebRequestModel } from './UserGroupAddUserWebRequestModel';
@@ -70,13 +69,14 @@ export const UserGroupApiFactory = function (configuration?: Configuration, fetc
      * @param {string} [query] Optional query to filter the user groups by
      * @param {'Core' | 'Module' | 'Customer'} [context] Optional Context filter
      * @param {string} [username] Optional username parameter to return only groups containing the correspondent user
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [role] Optional role parameter to return only groups that are part of this role
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, page?: number, pageSize?: number, options?: any) {
-      return UserGroupApiFp(configuration).userGroupList(query, context, username, page, pageSize, options)(fetch, basePath);
+    userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, role?: string, page?: number, pageSize?: number, options?: any) {
+      return UserGroupApiFp(configuration).userGroupList(query, context, username, role, page, pageSize, options)(fetch, basePath);
     },
     /**
      * This endpoint allows to remove users from an existing user group

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { ForgeTaskApiFp } from './ForgeTaskApiFp';
@@ -22,11 +21,14 @@ export const ForgeTaskApiFactory = function (configuration?: Configuration, fetc
     /**
      * 
      * @summary List all running tasks and their state
+     * @param {string} [query] Optional query to filter the tasks by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    taskTasks(options?: any) {
-      return ForgeTaskApiFp(configuration).taskTasks(options)(fetch, basePath);
+    taskTasks(query?: string, page?: number, pageSize?: number, options?: any) {
+      return ForgeTaskApiFp(configuration).taskTasks(query, page, pageSize, options)(fetch, basePath);
     },
   };
 };

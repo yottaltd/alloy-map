@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { AlloyUserCreateWebRequestModel } from './AlloyUserCreateWebRequestModel';
@@ -67,13 +66,14 @@ export const UserApiFactory = function (configuration?: Configuration, fetch?: F
      * @summary List users
      * @param {string} [query] Optional query to filter the user groups by which is applied to first name, last name, username and email
      * @param {string} [userGroup] Optional user group code to filter users by the user group they belong to
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [role] Optional role code to filter users by the role they belong to
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
-      return UserApiFp(configuration).userList(query, userGroup, page, pageSize, options)(fetch, basePath);
+    userList(query?: string, userGroup?: string, role?: string, page?: number, pageSize?: number, options?: any) {
+      return UserApiFp(configuration).userList(query, userGroup, role, page, pageSize, options)(fetch, basePath);
     },
     /**
      * This call will remove a user from the current sessions customer. This does not delete the user from an Alloy region but, instead, deletes the user for this customer.

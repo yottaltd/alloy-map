@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * The web request model used to delete a card query

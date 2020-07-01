@@ -1,4 +1,3 @@
-// tslint:disable
 import { AlloyUserGroupGetWebResponseModel } from './AlloyUserGroupGetWebResponseModel';
 /**
  * 

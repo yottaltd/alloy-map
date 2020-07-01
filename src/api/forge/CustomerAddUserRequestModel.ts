@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Add user to customer request model

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -50,7 +49,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -96,7 +95,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -136,7 +135,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -298,7 +297,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -344,7 +343,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -396,7 +395,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -524,10 +523,14 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
     /**
      * 
      * @summary List customers on the region's master
+     * @param {string} [query] Optional query to filter the customers by name
+     * @param {string} [clusterId] Optional query to filter the customers by Cluster Id
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerList(options: any = {}): FetchArgs {
+    customerList(query?: string, clusterId?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/customer`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -540,6 +543,22 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (clusterId !== undefined) {
+        localVarQueryParameter['ClusterId'] = clusterId;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -578,19 +597,19 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       if (customerId !== undefined) {
-        localVarQueryParameter['customerId'] = customerId;
+        localVarQueryParameter['CustomerId'] = customerId;
       }
 
       if (searchString !== undefined) {
-        localVarQueryParameter['searchString'] = searchString;
+        localVarQueryParameter['SearchString'] = searchString;
       }
 
       if (beforeDateTime !== undefined) {
-        localVarQueryParameter['beforeDateTime'] = beforeDateTime;
+        localVarQueryParameter['BeforeDateTime'] = beforeDateTime;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -644,10 +663,13 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
      * 
      * @summary List users on a customer
      * @param {string} id id of customer 
+     * @param {string} [query] Optional query to filter the users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerListUsers(id: string, options: any = {}): FetchArgs {
+    customerListUsers(id: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'id' is not null or undefined
       if (id === null || id === undefined) {
         throw new RequiredError('id','Required parameter id was null or undefined when calling customerListUsers.');
@@ -665,6 +687,18 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -709,7 +743,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -810,6 +844,43 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
       };
     },
     /**
+     * Resets the recurring background tasks, useful if the tasks are not registered in the first place or are not the right ones
+     * @summary Resets the recurring background tasks
+     * @param {string} id The database name of the customer to reset the recurring background tasks for
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    customerResetRecurringBackgroundTasks(id: string, options: any = {}): FetchArgs {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id','Required parameter id was null or undefined when calling customerResetRecurringBackgroundTasks.');
+      }
+      const localVarPath = `/api/customer/{id}/reset-recurring-background-tasks`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
      * 
      * @summary Backup
      * @param {string} id 
@@ -841,7 +912,7 @@ export const ForgeCustomerApiFetchParamCreator = function (configuration?: Confi
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943

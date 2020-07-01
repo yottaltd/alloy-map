@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { DeleteItemsBulkActionWebRequestModel } from './DeleteItemsBulkActionWebRequestModel';
 import { EditItemsBulkActionWebRequestModel } from './EditItemsBulkActionWebRequestModel';
@@ -51,7 +50,7 @@ export class BulkApi extends BaseAPI {
   /**
    * Fetches a bulk action by its Alloy Id (AId)
    * @summary Get a bulk action by its id
-   * @param {string} id The AId for the bulk action
+   * @param {string} id The id for the bulk action
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof BulkApi
@@ -64,8 +63,8 @@ export class BulkApi extends BaseAPI {
    * Fetches a list of bulk action errors, optionally specifying page and the number of results to return per page.
    * @summary Get a list of bulk action errors
    * @param {string} id The AId for the bulk action
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof BulkApi

@@ -1,7 +1,6 @@
-// tslint:disable
 import { DodiWebModel } from './DodiWebModel';
 /**
- * Web response model for report applicable dodis list operations
+ * 
  * @export
  * @interface ReportListApplicableDodisWebResponseModel
  */

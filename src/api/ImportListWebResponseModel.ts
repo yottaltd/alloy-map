@@ -1,7 +1,6 @@
-// tslint:disable
 import { ImportGetWebResponseModel } from './ImportGetWebResponseModel';
 /**
- * Web response model for a list import operation
+ * 
  * @export
  * @interface ImportListWebResponseModel
  */

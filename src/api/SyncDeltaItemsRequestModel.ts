@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsJsonNode } from './AqsJsonNode';
 /**
  * Request model for listing errors of a bulk action
@@ -24,4 +23,16 @@ export interface SyncDeltaItemsRequestModel {
    * @memberof SyncDeltaItemsRequestModel
    */
   deltaDate: string;
+  /**
+   * Maximum number of root items to return, or null to use the default of 10,000
+   * @type {number}
+   * @memberof SyncDeltaItemsRequestModel
+   */
+  maxRootItems?: number;
+  /**
+   * Optional maximum recursion depth
+   * @type {number}
+   * @memberof SyncDeltaItemsRequestModel
+   */
+  maxRecursionDepth?: number;
 }

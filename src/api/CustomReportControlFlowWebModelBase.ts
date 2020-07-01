@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Custom report control base

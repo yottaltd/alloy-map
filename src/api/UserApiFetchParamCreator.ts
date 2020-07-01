@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -40,7 +39,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -80,7 +79,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -120,7 +119,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -207,12 +206,13 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
      * @summary List users
      * @param {string} [query] Optional query to filter the user groups by which is applied to first name, last name, username and email
      * @param {string} [userGroup] Optional user group code to filter users by the user group they belong to
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [role] Optional role code to filter users by the role they belong to
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userList(query?: string, userGroup?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    userList(query?: string, userGroup?: string, role?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/user`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -228,19 +228,23 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
       }
 
       if (query !== undefined) {
-        localVarQueryParameter['query'] = query;
+        localVarQueryParameter['Query'] = query;
       }
 
       if (userGroup !== undefined) {
-        localVarQueryParameter['userGroup'] = userGroup;
+        localVarQueryParameter['UserGroup'] = userGroup;
+      }
+
+      if (role !== undefined) {
+        localVarQueryParameter['Role'] = role;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -353,7 +357,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943

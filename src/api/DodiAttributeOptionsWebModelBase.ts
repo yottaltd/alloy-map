@@ -1,7 +1,6 @@
-// tslint:disable
 
 /**
- * 
+ * Base web model for dodi attribute options
  * @export
  * @interface DodiAttributeOptionsWebModelBase
  */

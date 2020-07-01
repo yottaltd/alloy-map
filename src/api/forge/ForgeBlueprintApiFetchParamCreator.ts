@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -37,7 +36,7 @@ export const ForgeBlueprintApiFetchParamCreator = function (configuration?: Conf
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -85,15 +84,13 @@ export const ForgeBlueprintApiFetchParamCreator = function (configuration?: Conf
     /**
      * 
      * @summary List blueprints by modules
-     * @param {string} locale locale to use
+     * @param {string} [locale] locale to use
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    blueprintListBlueprints(locale: string, options: any = {}): FetchArgs {
-      // verify required parameter 'locale' is not null or undefined
-      if (locale === null || locale === undefined) {
-        throw new RequiredError('locale','Required parameter locale was null or undefined when calling blueprintListBlueprints.');
-      }
+    blueprintListBlueprints(locale?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/blueprint`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -109,7 +106,15 @@ export const ForgeBlueprintApiFetchParamCreator = function (configuration?: Conf
       }
 
       if (locale !== undefined) {
-        localVarQueryParameter['locale'] = locale;
+        localVarQueryParameter['Locale'] = locale;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

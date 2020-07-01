@@ -1,4 +1,3 @@
-// tslint:disable
 import { CardPermissionWebModel } from './CardPermissionWebModel';
 /**
  * Web model for a design permissions get operation

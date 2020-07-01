@@ -1,4 +1,3 @@
-// tslint:disable
 import { JObject } from './JObject';
 import { LogAction } from './LogAction';
 /**

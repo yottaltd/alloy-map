@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Create user request

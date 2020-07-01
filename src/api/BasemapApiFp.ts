@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -8,8 +7,8 @@ import { BasemapEditWebRequestModel } from './BasemapEditWebRequestModel';
 import { BasemapPermissionsEditWebRequestModel } from './BasemapPermissionsEditWebRequestModel';
 import { BasemapPermissionsGetWebResponseModel } from './BasemapPermissionsGetWebResponseModel';
 import { BasemapWithOperationsSummaryWebResponseModel } from './BasemapWithOperationsSummaryWebResponseModel';
-import { Basemap } from './Basemap';
-import { BasemapAccessAdvisorListWebResponseModel } from './BasemapAccessAdvisorListWebResponseModel';
+import { BasemapAccessAdvisorByRoleListWebResponseModel } from './BasemapAccessAdvisorByRoleListWebResponseModel';
+import { BasemapAccessAdvisorByUserListWebResponseModel } from './BasemapAccessAdvisorByUserListWebResponseModel';
 import { BasemapListWebResponseModel } from './BasemapListWebResponseModel';
 import { BasemapApiFetchParamCreator } from './BasemapApiFetchParamCreator';
 import { BasemapApi } from './BasemapApi';
@@ -21,15 +20,60 @@ export const BasemapApiFp = function(configuration?: Configuration) {
   return {
     /**
      * Fetches a list of basemaps with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists user basemaps with their winning permission
+     * @summary Use api/basemap/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get basemap access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    basemapBasemapAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapAccessAdvisorListWebResponseModel> {
-      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapBasemapAccessAdvisor(username, page, pageSize, options);
+    basemapBasemapAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapBasemapAccessAdvisor(username, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of basemaps with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role basemaps with their winning permission
+     * @param {string} code The code of the role to get basemap access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    basemapBasemapAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapAccessAdvisorByRoleListWebResponseModel> {
+      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapBasemapAccessAdvisorByRole(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of basemaps with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user basemaps with their winning permission
+     * @param {string} username The name of the user to get basemap access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    basemapBasemapAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapBasemapAccessAdvisorByUser(username, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -141,12 +185,13 @@ export const BasemapApiFp = function(configuration?: Configuration) {
      * Fetches the permissions of a basemap by its Guc
      * @summary Get a basemap permissions by its code
      * @param {string} code The Guc for the basemap whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    basemapGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapGetPermissions(code, username, options);
+    basemapGetPermissions(code: string, username?: string, role?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapGetPermissions(code, username, role, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -162,13 +207,14 @@ export const BasemapApiFp = function(configuration?: Configuration) {
      * @summary Get a list of basemaps
      * @param {string} [query] Optional Name query to filter the basemaps by
      * @param {string} [userGroup] Optional Guc to filter basemaps by. If specified, only the basemaps that have this user group code within their permissions are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {'Core' | 'Module' | 'Customer'} [context] The optional basemaps context to filter on
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    basemapList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapListWebResponseModel> {
-      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapList(query, userGroup, page, pageSize, options);
+    basemapList(query?: string, userGroup?: string, context?: 'Core' | 'Module' | 'Customer', page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapListWebResponseModel> {
+      const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapList(query, userGroup, context, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

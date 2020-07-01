@@ -1,6 +1,5 @@
-// tslint:disable
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
 import { CollectionCode } from './CollectionCode';
-import { Exception } from './Exception';
 import { ImportHeader } from './ImportHeader';
 import { ImportMode } from './ImportMode';
 import { ImportSettingsBaseWebModel } from './ImportSettingsBaseWebModel';
@@ -8,7 +7,6 @@ import { ImportStatus } from './ImportStatus';
 import { ImportSummary } from './ImportSummary';
 import { ImportType } from './ImportType';
 import { MetadataWebModel } from './MetadataWebModel';
-import { AlloyException } from './AlloyException';
 /**
  * Web model for import
  * @export
@@ -77,10 +75,10 @@ export interface ImportWebModel {
   settings?: ImportSettingsBaseWebModel;
   /**
    * An optional JSON object of the error
-   * @type {AlloyException}
+   * @type {AlloyExceptionWebModel}
    * @memberof ImportWebModel
    */
-  error?: AlloyException;
+  error?: AlloyExceptionWebModel;
   /**
    * An optional import summary object with number of success/warning/error validated or committed records
    * @type {ImportSummary}

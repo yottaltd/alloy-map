@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for a list of workflows with cloning item action
+ * 
  * @export
  * @interface WorkflowListCloningItemWebResponseModel
  */

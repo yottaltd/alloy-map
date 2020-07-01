@@ -1,5 +1,3 @@
-// tslint:disable
-import { AId } from './AId';
 import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
  * 
@@ -8,9 +6,9 @@ import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModel
  */
 export interface DodiAttributeOptionsStreamWebModel extends DodiAttributeOptionsWebModelBase {
   /**
-   * 
-   * @type {AId}
+   * The optional default value of this attribute
+   * @type {string}
    * @memberof DodiAttributeOptionsStreamWebModel
    */
-  defaultValue?: AId;
+  defaultValue?: string;
 }

@@ -1,4 +1,3 @@
-// tslint:disable
 import { LayerClusterFeatureWebModel } from './LayerClusterFeatureWebModel';
 /**
  * Web response model for a layer cluster tile get operation

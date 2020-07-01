@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
- * Model for a trigger that causes a workflow to run when items are created, edited or deleted.
+ * 
  * @export
  * @interface ManualTrigger
  */

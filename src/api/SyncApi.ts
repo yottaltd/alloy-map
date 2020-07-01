@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { SyncBootstrapItemsRequestModel } from './SyncBootstrapItemsRequestModel';
 import { SyncDeltaItemsRequestModel } from './SyncDeltaItemsRequestModel';
@@ -35,7 +34,7 @@ export class SyncApi extends BaseAPI {
   }
 
   /**
-   * Streams a sequence of ItemVersion BsonDocuments, based on the input parameters. These are back-to-back, so repeated deserialization of item versions will be required until end of stream. This endpoint will return all the items matching the query (and the children down the specified graphs) that were edited after the delta date. It will also return all the ids of items still matching the query (and the children down the specified graphs) that were not edited. This means that all the item ids NOT returned have to assumed either having been delete or not matching the query anymore, which means they can be removed from the remote db that is been synced using this endpoint
+   * Streams a sequence of ItemVersion BsonDocuments, based on the input parameters. These are back-to-back, so repeated deserialization of item versions will be required until the end of the stream. This endpoint will return all the items matching the query (and the children down the specified graphs) that were edited after the delta date. It will also return all the ids of items still matching the query (and the children down the specified graphs) that were not edited. This means that any item ids NOT returned are assumed to have either been deleted or no longer match the query, which means they can be removed from the remote db being synced via this endpoint
    * @summary Download of delta data
    * @param {SyncDeltaItemsRequestModel} model Parameters
    * @param {*} [options] Override http request option.

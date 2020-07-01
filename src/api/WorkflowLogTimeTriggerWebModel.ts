@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowLogNodeWebModelBase } from './WorkflowLogNodeWebModelBase';
 /**
- * Model representing the log of a time based workflow trigger
+ * 
  * @export
  * @interface WorkflowLogTimeTriggerWebModel
  */

@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomReportWebModel } from './CustomReportWebModel';
 /**
  * Remove data source web response model

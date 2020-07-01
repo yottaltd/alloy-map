@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -35,11 +34,14 @@ export const ForgeTaskApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary List all running tasks and their state
+     * @param {string} [query] Optional query to filter the tasks by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    taskTasks(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TaskListWebResponseModel> {
-      const localVarFetchArgs = ForgeTaskApiFetchParamCreator(configuration).taskTasks(options);
+    taskTasks(query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TaskListWebResponseModel> {
+      const localVarFetchArgs = ForgeTaskApiFetchParamCreator(configuration).taskTasks(query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

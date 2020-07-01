@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ApplicableDodisAddWebRequestModel } from './ApplicableDodisAddWebRequestModel';
 import { ApplicableDodisRemoveWebRequestModel } from './ApplicableDodisRemoveWebRequestModel';
@@ -81,8 +80,8 @@ export class ExtendedJobApi extends BaseAPI {
    * List jobable dodis for this job design code, usually assets e.g. STL Job for street lights not benches.
    * @summary List applicable jobable dodis for this job type
    * @param {string} code The job design Guc to fetch applicable jobable item designs for
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedJobApi
@@ -96,8 +95,8 @@ export class ExtendedJobApi extends BaseAPI {
    * @summary List applicable job designs for ALL given job, defect, inspection or asset designs
    * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item designs Guc info
    * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExtendedJobApi

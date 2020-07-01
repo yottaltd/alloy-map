@@ -1,8 +1,8 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { LayerCreateWebRequestModel } from './LayerCreateWebRequestModel';
 import { LayerEditWebRequestModel } from './LayerEditWebRequestModel';
 import { LayerPermissionsEditWebRequestModel } from './LayerPermissionsEditWebRequestModel';
+import { LayerVisualisationType } from './LayerVisualisationType';
 import { LayerApiFp } from './LayerApiFp';
 /**
  * LayerApi - object-oriented interface
@@ -74,62 +74,110 @@ export class LayerApi extends BaseAPI {
   }
 
   /**
-   * This endpoint allows to query a layer returning information in a clustered format to be displayed on the map. The tiles returned are GeoJson features containing two types of properties. If the tile contains more than one item, then the following properties are returned:   * type: A string whose value is \"Cluster\"   * styleId: The id of the style that originated this feature   * count: The number of items in this cluster/feature   * bbox: The bounding box containing the items in this cluster If the tile contains one item, then the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
-   * @summary Get a cluster tile for a layer
+   * This endpoint allows to query a layer returning big items to be displayed on the map. Only request at zoom level 16 or lower        The tiles returned are GeoJson features Items with the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
+   * @summary Get a basic tile for a layer
    * @param {string} code The code of the layer to query for
-   * @param {number} x The x google tile coordinate
-   * @param {number} y The y google tile coordinate
-   * @param {number} z The z google tile coordinate (zoom)
-   * @param {Array<string>} [styleIds] The list of style ids to query for. An item will only be returned in one style. The order of the styles specified is thus important since an item belonging to both the first and the last style in the list, will only appear for the first one. A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
+   * @param {number} X The x google tile coordinate
+   * @param {number} Y The y google tile coordinate
+   * @param {number} Z The z google tile coordinate (zoom)
+   * @param {Array<string>} [styleIds] The list of style ids to query for.        A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof LayerApi
    */
-  public layerGetClusterLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options?: any) {
-    return LayerApiFp(this.configuration).layerGetClusterLayerTile(code, x, y, z, styleIds, options)(this.fetch, this.basePath);
+  public layerGetBasicLayerTile(code: string, X: number, Y: number, Z: number, styleIds?: Array<string>, options?: any) {
+    return LayerApiFp(this.configuration).layerGetBasicLayerTile(code, X, Y, Z, styleIds, options)(this.fetch, this.basePath);
   }
 
   /**
-   * This endpoint allows to query a layer returning information in a clustered format to be displayed on the map. The tiles returned are GeoJson features containing two types of properties. If the tile contains more than one item, then the following properties are returned:   * type: A string whose value is \"SimplifiedGeometry\"   * styleId: The id of the style that originated this feature If the tile contains one item, then the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
-   * @summary Get a network tile for a layer
+   * This endpoint allows to query a layer returning information in a clustered format to be displayed on the map. No results are returned for zoom levels greater than 16. Only items are returned at zoom level 16, not clusters. At zoom levels 15 and lower, clusters will be returned.  The tiles returned are GeoJson features containing two types of properties. When returning clusters the following properties are returned:   * type: A string whose value is \"Cluster\"   * styleId: The id of the style that originated this feature   * count: The number of items in this cluster/feature   * bbox: The bounding box containing the items in this cluster  When returning items the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
+   * @summary Get a cluster tile for a layer
    * @param {string} code The code of the layer to query for
-   * @param {number} x The x google tile coordinate
-   * @param {number} y The y google tile coordinate
-   * @param {number} z The z google tile coordinate (zoom)
-   * @param {Array<string>} [styleIds] The list of style ids to query for. An item will only be returned in one style. The order of the styles specified is thus important since an item belonging to both the first and the last style in the list, will only appear for the first one. A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
+   * @param {number} X The x google tile coordinate
+   * @param {number} Y The y google tile coordinate
+   * @param {number} Z The z google tile coordinate (zoom)
+   * @param {Array<string>} [styleIds] The list of style ids to query for.       A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof LayerApi
    */
-  public layerGetNetworkLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options?: any) {
-    return LayerApiFp(this.configuration).layerGetNetworkLayerTile(code, x, y, z, styleIds, options)(this.fetch, this.basePath);
+  public layerGetClusterLayerTile(code: string, X: number, Y: number, Z: number, styleIds?: Array<string>, options?: any) {
+    return LayerApiFp(this.configuration).layerGetClusterLayerTile(code, X, Y, Z, styleIds, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * This endpoint allows to query a layer returning network layer items to be displayed on the map. The tiles returned are GeoJson features containing two types of properties. If the tile contains simplified network geometry, then the following properties are returned:   * type: A string whose value is \"SimplifiedGeometry\"   * styleId: The id of the style that originated this feature If the tile contains network items, then the following properties are returned for each item:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * title: The item title   * subtitle: The item subtitle   * z: The original zoom level that this feature was created for
+   * @summary Get a network tile for a layer
+   * @param {string} code The code of the layer to query for
+   * @param {number} X The x google tile coordinate
+   * @param {number} Y The y google tile coordinate
+   * @param {number} Z The z google tile coordinate (zoom)
+   * @param {Array<string>} [styleIds] The list of style ids to query for. An item will only be returned in one style.       The order of the styles specified is thus important since an item belonging to both the first       and the last style in the list, will only appear for the first one.       A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LayerApi
+   */
+  public layerGetNetworkLayerTile(code: string, X: number, Y: number, Z: number, styleIds?: Array<string>, options?: any) {
+    return LayerApiFp(this.configuration).layerGetNetworkLayerTile(code, X, Y, Z, styleIds, options)(this.fetch, this.basePath);
   }
 
   /**
    * Fetches the permissions of a layer by its Guc
    * @summary Get the permissions of a layer by its code
    * @param {string} code The Guc for the layer whose permissions are being requested
-   * @param {string} [username] Optional username to get permissions for the specific user
+   * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+   * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof LayerApi
    */
-  public layerGetPermissions(code: string, username?: string, options?: any) {
-    return LayerApiFp(this.configuration).layerGetPermissions(code, username, options)(this.fetch, this.basePath);
+  public layerGetPermissions(code: string, username?: string, role?: string, options?: any) {
+    return LayerApiFp(this.configuration).layerGetPermissions(code, username, role, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Use api/layer/access-advisor/user/{username} instead
+   * @param {string} username The name of the user to get layer access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LayerApi
+   */
+  public layerLayerAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return LayerApiFp(this.configuration).layerLayerAccessAdvisor(username, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists role layers with their winning permission
+   * @param {string} code The code of the role to get layer access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof LayerApi
+   */
+  public layerLayerAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return LayerApiFp(this.configuration).layerLayerAccessAdvisorByRole(code, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
    * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
    * @summary Lists user layers with their winning permission
    * @param {string} username The name of the user to get layer access advisor for
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof LayerApi
    */
-  public layerLayerAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
-    return LayerApiFp(this.configuration).layerLayerAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
+  public layerLayerAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return LayerApiFp(this.configuration).layerLayerAccessAdvisorByUser(username, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -141,14 +189,15 @@ export class LayerApi extends BaseAPI {
    * @param {Array<string>} [orTags] If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
    * @param {Array<string>} [notTags] If this parameter is passed, only the layers with NONE of the specified tags will be returned It is possible to use this in conjunction with the other tags conditions
    * @param {string} [userGroup] Optional Guc to filter layers by. If specified, only the layers that have this user group code within their permissions are returned
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {Array<LayerVisualisationType>} [visualisations] The optional layer visualisations to filter on
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof LayerApi
    */
-  public layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, userGroup?: string, page?: number, pageSize?: number, options?: any) {
-    return LayerApiFp(this.configuration).layerList(name, context, andTags, orTags, notTags, userGroup, page, pageSize, options)(this.fetch, this.basePath);
+  public layerList(name?: string, context?: 'Core' | 'Module' | 'Customer', andTags?: Array<string>, orTags?: Array<string>, notTags?: Array<string>, userGroup?: string, visualisations?: Array<LayerVisualisationType>, page?: number, pageSize?: number, options?: any) {
+    return LayerApiFp(this.configuration).layerList(name, context, andTags, orTags, notTags, userGroup, visualisations, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -37,7 +36,7 @@ export const ReportApiFetchParamCreator = function (configuration?: Configuratio
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -55,20 +54,16 @@ export const ReportApiFetchParamCreator = function (configuration?: Configuratio
      * Lists reports that are applicable to another dodi and filtered by a report type dodi
      * @summary Lists the report designs
      * @param {string} dodiCode The Guc to filter reports that apply to this dodi
-     * @param {string} reportImplementsInterface Guc to filter report designs by.
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [reportImplementsInterface] Guc to filter report designs by.
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    reportList(dodiCode: string, reportImplementsInterface: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    reportList(dodiCode: string, reportImplementsInterface?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'dodiCode' is not null or undefined
       if (dodiCode === null || dodiCode === undefined) {
         throw new RequiredError('dodiCode','Required parameter dodiCode was null or undefined when calling reportList.');
-      }
-      // verify required parameter 'reportImplementsInterface' is not null or undefined
-      if (reportImplementsInterface === null || reportImplementsInterface === undefined) {
-        throw new RequiredError('reportImplementsInterface','Required parameter reportImplementsInterface was null or undefined when calling reportList.');
       }
       const localVarPath = `/api/report/dodi/{dodiCode}`
         .replace(`{${"dodiCode"}}`, encodeURIComponent(String(dodiCode)));
@@ -86,15 +81,15 @@ export const ReportApiFetchParamCreator = function (configuration?: Configuratio
       }
 
       if (reportImplementsInterface !== undefined) {
-        localVarQueryParameter['reportImplementsInterface'] = reportImplementsInterface;
+        localVarQueryParameter['ReportImplementsInterface'] = reportImplementsInterface;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -112,8 +107,8 @@ export const ReportApiFetchParamCreator = function (configuration?: Configuratio
      * @summary Lists the applicable dodis for report design code
      * @param {string} dodiCode The Guc report dodi to get applicable dodis for
      * @param {string} [query] Optional query to filter the report applicable dodis by
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -138,15 +133,15 @@ export const ReportApiFetchParamCreator = function (configuration?: Configuratio
       }
 
       if (query !== undefined) {
-        localVarQueryParameter['query'] = query;
+        localVarQueryParameter['Query'] = query;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

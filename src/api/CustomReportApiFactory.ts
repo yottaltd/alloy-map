@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { AddDataSourceWebRequestModel } from './AddDataSourceWebRequestModel';
@@ -111,8 +110,8 @@ export const CustomReportApiFactory = function (configuration?: Configuration, f
      * Lists the custom reports matching the parameters specified
      * @summary List Custom Reports
      * @param {string} [query] Optional query to filter the designs by
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

@@ -1,7 +1,7 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { CreateManualWorkflowRunWebRequestModel } from './CreateManualWorkflowRunWebRequestModel';
 import { WorkflowAddActionWebRequestModel } from './WorkflowAddActionWebRequestModel';
+import { WorkflowCloneWebRequestModel } from './WorkflowCloneWebRequestModel';
 import { WorkflowCreateWebRequestModel } from './WorkflowCreateWebRequestModel';
 import { WorkflowEditActionWebRequestModel } from './WorkflowEditActionWebRequestModel';
 import { WorkflowEditWebRequestModel } from './WorkflowEditWebRequestModel';
@@ -29,6 +29,19 @@ export class WorkflowApi extends BaseAPI {
    */
   public workflowAddAction(code: string, model: WorkflowAddActionWebRequestModel, options?: any) {
     return WorkflowApiFp(this.configuration).workflowAddAction(code, model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * 
+   * @summary Clone a workflow
+   * @param {string} code The code of the workflow to clone
+   * @param {WorkflowCloneWebRequestModel} model The model containing all the clone operation details
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowClone(code: string, model: WorkflowCloneWebRequestModel, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowClone(code, model, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -72,7 +85,7 @@ export class WorkflowApi extends BaseAPI {
    * 
    * @summary Edit an action on a workflow
    * @param {string} code The code of the workflow to edit the action on
-   * @param {string} id The id of the action to remove
+   * @param {string} id The id of the action to edit
    * @param {WorkflowEditActionWebRequestModel} model The model containing all the edit action operation details
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -136,12 +149,12 @@ export class WorkflowApi extends BaseAPI {
   /**
    * 
    * @summary Get the logs associated with a workflow run
-   * @param {string} runId The id of the workflow run to retrieve logs for
+   * @param {string} [runId] The id of the workflow run to retrieve logs for
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
    */
-  public workflowGetLogs(runId: string, options?: any) {
+  public workflowGetLogs(runId?: string, options?: any) {
     return WorkflowApiFp(this.configuration).workflowGetLogs(runId, options)(this.fetch, this.basePath);
   }
 
@@ -149,36 +162,38 @@ export class WorkflowApi extends BaseAPI {
    * Fetches the permissions of a workflow by its Guc
    * @summary Get a workflow permissions by its code
    * @param {string} code The Guc for the workflow whose permissions are being requested
-   * @param {string} [username] Optional username to get permissions for the specific user
+   * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+   * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
    */
-  public workflowGetPermissions(code: string, username?: string, options?: any) {
-    return WorkflowApiFp(this.configuration).workflowGetPermissions(code, username, options)(this.fetch, this.basePath);
+  public workflowGetPermissions(code: string, username?: string, role?: string, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowGetPermissions(code, username, role, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary List workflows
    * @param {string} [name] The optional workflow name (full or partial) to filter on
+   * @param {'Core' | 'Module' | 'Customer'} [context] The optional workflow context to filter on
    * @param {string} [userGroup] Optional Guc to filter workflows by. If specified, only the workflows that have this user group code within their permissions are returned
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
    */
-  public workflowList(name?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
-    return WorkflowApiFp(this.configuration).workflowList(name, userGroup, page, pageSize, options)(this.fetch, this.basePath);
+  public workflowList(name?: string, context?: 'Core' | 'Module' | 'Customer', userGroup?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowList(name, context, userGroup, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary List the workflows that are applicable to a dodi
    * @param {string} code The dodi code to find workflows applicable to
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
@@ -191,8 +206,8 @@ export class WorkflowApi extends BaseAPI {
    * 
    * @summary List the workflows that will clone a specific item
    * @param {string} itemId The id of the item that will be cloned
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
@@ -205,8 +220,8 @@ export class WorkflowApi extends BaseAPI {
    * 
    * @summary List the triggered runs for a workflow
    * @param {string} code 
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
@@ -231,16 +246,47 @@ export class WorkflowApi extends BaseAPI {
 
   /**
    * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
-   * @summary Lists user workflows with their winning permission
+   * @summary Use api/workflow/access-advisor/user/{username} instead
    * @param {string} username The name of the user to get workflow access advisor for
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowApi
    */
-  public workflowWorkflowAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
-    return WorkflowApiFp(this.configuration).workflowWorkflowAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
+  public workflowWorkflowAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowWorkflowAccessAdvisor(username, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists role workflows with their winning permission
+   * @param {string} code The code of the role to get workflow access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowWorkflowAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowWorkflowAccessAdvisorByRole(code, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of workflows with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists user workflows with their winning permission
+   * @param {string} username The name of the user to get workflow access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowApi
+   */
+  public workflowWorkflowAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowApiFp(this.configuration).workflowWorkflowAccessAdvisorByUser(username, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -256,9 +302,9 @@ export class WorkflowApi extends BaseAPI {
   }
 
   /**
-   * Queues a workflow run for a workflow that has a manual trigger,       using the supplied AQS query to specify the output items of the manual trigger.
+   * Queues a workflow run for a workflow that has a time or manual trigger, event triggered workflows are not supported.       Manual trigger workflows are using the supplied AQS query to specify the output items of the manual trigger.       Time based workflows do not support the query parameter for the manual runs.
    * @summary Start a manually triggered workflow run
-   * @param {string} code The code of the workflow to run, which must have a manual trigger
+   * @param {string} code The code of the workflow to run, which must have a time or manual trigger
    * @param {CreateManualWorkflowRunWebRequestModel} model 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}

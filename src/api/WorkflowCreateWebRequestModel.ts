@@ -1,4 +1,4 @@
-// tslint:disable
+import { WorkflowFailureNotificationInfoWebModel } from './WorkflowFailureNotificationInfoWebModel';
 import { WorkflowTimeConditionWebModel } from './WorkflowTimeConditionWebModel';
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
@@ -31,4 +31,10 @@ export interface WorkflowCreateWebRequestModel {
    * @memberof WorkflowCreateWebRequestModel
    */
   trigger: WorkflowTriggerWebModelBase;
+  /**
+   * Failure notification information for the workflow, see implementations for options.
+   * @type {WorkflowFailureNotificationInfoWebModel}
+   * @memberof WorkflowCreateWebRequestModel
+   */
+  failureNotification?: WorkflowFailureNotificationInfoWebModel;
 }

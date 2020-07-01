@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -36,7 +35,7 @@ export const ExportApiFp = function(configuration?: Configuration) {
     /**
      * Finds the file id for the given task or returns not found
      * @summary Get the file AId for the export once completed
-     * @param {string} id The AId of the export task
+     * @param {string} id The id of the export task
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

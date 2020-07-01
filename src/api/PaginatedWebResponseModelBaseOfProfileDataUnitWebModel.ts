@@ -1,4 +1,3 @@
-// tslint:disable
 import { ProfileDataUnitWebModel } from './ProfileDataUnitWebModel';
 /**
  * 

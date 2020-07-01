@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemWebModel } from './ItemWebModel';
 /**
  * Web model for a file item move response

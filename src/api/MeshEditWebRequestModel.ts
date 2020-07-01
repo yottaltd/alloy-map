@@ -1,4 +1,3 @@
-// tslint:disable
 import { JObject } from './JObject';
 /**
  * The web request model used to edit a mesh
