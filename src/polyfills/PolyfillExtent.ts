@@ -1,6 +1,7 @@
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import {
   boundingExtent,
+  buffer,
   containsCoordinate,
   containsExtent,
   Extent as OLExtent,
@@ -30,6 +31,15 @@ export abstract class PolyfillExtent {
    */
   public static contains(extent1: OLExtent, extent2: OLExtent): boolean {
     return containsExtent(extent1, extent2);
+  }
+
+  /**
+   * buffers extent by given value
+   * @param extent extent to buffer
+   * @param value the amount by which the extent should be buffered
+   */
+  public static buffer(extent: OLExtent, value: number): OLExtent {
+    return buffer(extent, value);
   }
 
   /**
