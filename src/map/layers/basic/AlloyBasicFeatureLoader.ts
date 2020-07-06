@@ -3,12 +3,10 @@
 import OLGeoJSON from 'ol/format/GeoJSON';
 import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
 import { LayerGetBasicTileWebResponseModel } from '../../../api/LayerGetBasicTileWebResponseModel';
-import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBasicFeature } from '../../features/AlloyBasicFeature';
-import { AlloyFeatureType } from '../../features/AlloyFeatureType';
 import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
