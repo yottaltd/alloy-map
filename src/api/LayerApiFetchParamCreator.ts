@@ -224,35 +224,35 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
      * This endpoint allows to query a layer returning big items to be displayed on the map. Only request at zoom level 16 or lower        The tiles returned are GeoJson features Items with the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
      * @summary Get a basic tile for a layer
      * @param {string} code The code of the layer to query for
-     * @param {number} X The x google tile coordinate
-     * @param {number} Y The y google tile coordinate
-     * @param {number} Z The z google tile coordinate (zoom)
+     * @param {number} x The x google tile coordinate
+     * @param {number} y The y google tile coordinate
+     * @param {number} z The z google tile coordinate
      * @param {Array<string>} [styleIds] The list of style ids to query for.        A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGetBasicLayerTile(code: string, X: number, Y: number, Z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
+    layerGetBasicLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling layerGetBasicLayerTile.');
       }
-      // verify required parameter 'X' is not null or undefined
-      if (X === null || X === undefined) {
-        throw new RequiredError('X','Required parameter X was null or undefined when calling layerGetBasicLayerTile.');
+      // verify required parameter 'x' is not null or undefined
+      if (x === null || x === undefined) {
+        throw new RequiredError('x','Required parameter x was null or undefined when calling layerGetBasicLayerTile.');
       }
-      // verify required parameter 'Y' is not null or undefined
-      if (Y === null || Y === undefined) {
-        throw new RequiredError('Y','Required parameter Y was null or undefined when calling layerGetBasicLayerTile.');
+      // verify required parameter 'y' is not null or undefined
+      if (y === null || y === undefined) {
+        throw new RequiredError('y','Required parameter y was null or undefined when calling layerGetBasicLayerTile.');
       }
-      // verify required parameter 'Z' is not null or undefined
-      if (Z === null || Z === undefined) {
-        throw new RequiredError('Z','Required parameter Z was null or undefined when calling layerGetBasicLayerTile.');
+      // verify required parameter 'z' is not null or undefined
+      if (z === null || z === undefined) {
+        throw new RequiredError('z','Required parameter z was null or undefined when calling layerGetBasicLayerTile.');
       }
       const localVarPath = `/api/layer/{code}/{x}/{y}/{z}/basic`
-        .replace(`{${"Code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"X"}}`, encodeURIComponent(String(X)))
-        .replace(`{${"Y"}}`, encodeURIComponent(String(Y)))
-        .replace(`{${"Z"}}`, encodeURIComponent(String(Z)));
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
+        .replace(`{${"x"}}`, encodeURIComponent(String(x)))
+        .replace(`{${"y"}}`, encodeURIComponent(String(y)))
+        .replace(`{${"z"}}`, encodeURIComponent(String(z)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
@@ -284,35 +284,35 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
      * This endpoint allows to query a layer returning information in a clustered format to be displayed on the map. No results are returned for zoom levels greater than 16. Only items are returned at zoom level 16, not clusters. At zoom levels 15 and lower, clusters will be returned.  The tiles returned are GeoJson features containing two types of properties. When returning clusters the following properties are returned:   * type: A string whose value is \"Cluster\"   * styleId: The id of the style that originated this feature   * count: The number of items in this cluster/feature   * bbox: The bounding box containing the items in this cluster  When returning items the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
      * @summary Get a cluster tile for a layer
      * @param {string} code The code of the layer to query for
-     * @param {number} X The x google tile coordinate
-     * @param {number} Y The y google tile coordinate
-     * @param {number} Z The z google tile coordinate (zoom)
+     * @param {number} x The x google tile coordinate
+     * @param {number} y The y google tile coordinate
+     * @param {number} z The z google tile coordinate
      * @param {Array<string>} [styleIds] The list of style ids to query for.       A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGetClusterLayerTile(code: string, X: number, Y: number, Z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
+    layerGetClusterLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling layerGetClusterLayerTile.');
       }
-      // verify required parameter 'X' is not null or undefined
-      if (X === null || X === undefined) {
-        throw new RequiredError('X','Required parameter X was null or undefined when calling layerGetClusterLayerTile.');
+      // verify required parameter 'x' is not null or undefined
+      if (x === null || x === undefined) {
+        throw new RequiredError('x','Required parameter x was null or undefined when calling layerGetClusterLayerTile.');
       }
-      // verify required parameter 'Y' is not null or undefined
-      if (Y === null || Y === undefined) {
-        throw new RequiredError('Y','Required parameter Y was null or undefined when calling layerGetClusterLayerTile.');
+      // verify required parameter 'y' is not null or undefined
+      if (y === null || y === undefined) {
+        throw new RequiredError('y','Required parameter y was null or undefined when calling layerGetClusterLayerTile.');
       }
-      // verify required parameter 'Z' is not null or undefined
-      if (Z === null || Z === undefined) {
-        throw new RequiredError('Z','Required parameter Z was null or undefined when calling layerGetClusterLayerTile.');
+      // verify required parameter 'z' is not null or undefined
+      if (z === null || z === undefined) {
+        throw new RequiredError('z','Required parameter z was null or undefined when calling layerGetClusterLayerTile.');
       }
       const localVarPath = `/api/layer/{code}/{x}/{y}/{z}/cluster`
-        .replace(`{${"Code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"X"}}`, encodeURIComponent(String(X)))
-        .replace(`{${"Y"}}`, encodeURIComponent(String(Y)))
-        .replace(`{${"Z"}}`, encodeURIComponent(String(Z)));
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
+        .replace(`{${"x"}}`, encodeURIComponent(String(x)))
+        .replace(`{${"y"}}`, encodeURIComponent(String(y)))
+        .replace(`{${"z"}}`, encodeURIComponent(String(z)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
@@ -344,35 +344,35 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
      * This endpoint allows to query a layer returning network layer items to be displayed on the map. The tiles returned are GeoJson features containing two types of properties. If the tile contains simplified network geometry, then the following properties are returned:   * type: A string whose value is \"SimplifiedGeometry\"   * styleId: The id of the style that originated this feature If the tile contains network items, then the following properties are returned for each item:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * title: The item title   * subtitle: The item subtitle   * z: The original zoom level that this feature was created for
      * @summary Get a network tile for a layer
      * @param {string} code The code of the layer to query for
-     * @param {number} X The x google tile coordinate
-     * @param {number} Y The y google tile coordinate
-     * @param {number} Z The z google tile coordinate (zoom)
+     * @param {number} x The x google tile coordinate
+     * @param {number} y The y google tile coordinate
+     * @param {number} z The z google tile coordinate
      * @param {Array<string>} [styleIds] The list of style ids to query for. An item will only be returned in one style.       The order of the styles specified is thus important since an item belonging to both the first       and the last style in the list, will only appear for the first one.       A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    layerGetNetworkLayerTile(code: string, X: number, Y: number, Z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
+    layerGetNetworkLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling layerGetNetworkLayerTile.');
       }
-      // verify required parameter 'X' is not null or undefined
-      if (X === null || X === undefined) {
-        throw new RequiredError('X','Required parameter X was null or undefined when calling layerGetNetworkLayerTile.');
+      // verify required parameter 'x' is not null or undefined
+      if (x === null || x === undefined) {
+        throw new RequiredError('x','Required parameter x was null or undefined when calling layerGetNetworkLayerTile.');
       }
-      // verify required parameter 'Y' is not null or undefined
-      if (Y === null || Y === undefined) {
-        throw new RequiredError('Y','Required parameter Y was null or undefined when calling layerGetNetworkLayerTile.');
+      // verify required parameter 'y' is not null or undefined
+      if (y === null || y === undefined) {
+        throw new RequiredError('y','Required parameter y was null or undefined when calling layerGetNetworkLayerTile.');
       }
-      // verify required parameter 'Z' is not null or undefined
-      if (Z === null || Z === undefined) {
-        throw new RequiredError('Z','Required parameter Z was null or undefined when calling layerGetNetworkLayerTile.');
+      // verify required parameter 'z' is not null or undefined
+      if (z === null || z === undefined) {
+        throw new RequiredError('z','Required parameter z was null or undefined when calling layerGetNetworkLayerTile.');
       }
       const localVarPath = `/api/layer/{code}/{x}/{y}/{z}/network`
-        .replace(`{${"Code"}}`, encodeURIComponent(String(code)))
-        .replace(`{${"X"}}`, encodeURIComponent(String(X)))
-        .replace(`{${"Y"}}`, encodeURIComponent(String(Y)))
-        .replace(`{${"Z"}}`, encodeURIComponent(String(Z)));
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
+        .replace(`{${"x"}}`, encodeURIComponent(String(x)))
+        .replace(`{${"y"}}`, encodeURIComponent(String(y)))
+        .replace(`{${"z"}}`, encodeURIComponent(String(z)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;

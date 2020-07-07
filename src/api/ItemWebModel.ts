@@ -1,5 +1,4 @@
 import { CollectionCode } from './CollectionCode';
-import { IGeometryObject } from './IGeometryObject';
 import { ItemAttributeWebModel } from './ItemAttributeWebModel';
 /**
  * Web model for an item

@@ -18,6 +18,7 @@ import { WorkflowActionGroupPermissionsGetWebResponseModel } from './WorkflowAct
 import { WorkflowActionGroupRemoveActionWebRequestModel } from './WorkflowActionGroupRemoveActionWebRequestModel';
 import { WorkflowActionGroupRemoveActionWebResponseModel } from './WorkflowActionGroupRemoveActionWebResponseModel';
 import { WorkflowActionGroupWithOperationsSummaryWebResponseModel } from './WorkflowActionGroupWithOperationsSummaryWebResponseModel';
+import { WorkflowActionGroupWithPermissionsWebResponseModel } from './WorkflowActionGroupWithPermissionsWebResponseModel';
 import { WorkflowActionGroupAccessAdvisorByRoleListWebResponseModel } from './WorkflowActionGroupAccessAdvisorByRoleListWebResponseModel';
 import { WorkflowActionGroupAccessAdvisorByUserListWebResponseModel } from './WorkflowActionGroupAccessAdvisorByUserListWebResponseModel';
 import { WorkflowActionGroupListWebResponseModel } from './WorkflowActionGroupListWebResponseModel';
@@ -136,7 +137,7 @@ export const WorkflowActionGroupApiFp = function(configuration?: Configuration) 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupEditPermissions(code: string, model: WorkflowActionGroupPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupWithOperationsSummaryWebResponseModel> {
+    workflowActionGroupEditPermissions(code: string, model: WorkflowActionGroupPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupWithPermissionsWebResponseModel> {
       const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupEditPermissions(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);

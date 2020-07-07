@@ -10,5 +10,6 @@ export enum ClusterState {
   Updating = 'Updating',
   Deleting = 'Deleting',
   Deleted = 'Deleted',
-  Repairing = 'Repairing'
+  Repairing = 'Repairing',
+  Paused = 'Paused'
 }

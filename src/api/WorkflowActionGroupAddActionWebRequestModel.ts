@@ -23,13 +23,13 @@ export interface WorkflowActionGroupAddActionWebRequestModel {
    * @type {Array<WorkflowActionParameterValueWebModelBase>}
    * @memberof WorkflowActionGroupAddActionWebRequestModel
    */
-  parameters: Array<WorkflowActionParameterValueWebModelBase>;
+  parameters?: Array<WorkflowActionParameterValueWebModelBase>;
   /**
    * The variables belonging to this action
    * @type {Array<WorkflowActionVariableWebModel>}
    * @memberof WorkflowActionGroupAddActionWebRequestModel
    */
-  variables: Array<WorkflowActionVariableWebModel>;
+  variables?: Array<WorkflowActionVariableWebModel>;
   /**
    * Design code corresponding to the action to add
    * @type {string}

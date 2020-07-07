@@ -7,6 +7,7 @@ import { BasemapEditWebRequestModel } from './BasemapEditWebRequestModel';
 import { BasemapPermissionsEditWebRequestModel } from './BasemapPermissionsEditWebRequestModel';
 import { BasemapPermissionsGetWebResponseModel } from './BasemapPermissionsGetWebResponseModel';
 import { BasemapWithOperationsSummaryWebResponseModel } from './BasemapWithOperationsSummaryWebResponseModel';
+import { BasemapWithPermissionsWebResponseModel } from './BasemapWithPermissionsWebResponseModel';
 import { BasemapAccessAdvisorByRoleListWebResponseModel } from './BasemapAccessAdvisorByRoleListWebResponseModel';
 import { BasemapAccessAdvisorByUserListWebResponseModel } from './BasemapAccessAdvisorByUserListWebResponseModel';
 import { BasemapListWebResponseModel } from './BasemapListWebResponseModel';
@@ -150,7 +151,7 @@ export const BasemapApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    basemapEditPermissions(code: string, model: BasemapPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapWithOperationsSummaryWebResponseModel> {
+    basemapEditPermissions(code: string, model: BasemapPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BasemapWithPermissionsWebResponseModel> {
       const localVarFetchArgs = BasemapApiFetchParamCreator(configuration).basemapEditPermissions(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);

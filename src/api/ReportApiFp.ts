@@ -34,7 +34,7 @@ export const ReportApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * Lists reports that are applicable to another dodi and filtered by a report type dodi
+     * Lists reports that are applicable to another dodi (with their permissions) and filtered by a report type dodi
      * @summary Lists the report designs
      * @param {string} dodiCode The Guc to filter reports that apply to this dodi
      * @param {string} [reportImplementsInterface] Guc to filter report designs by.
@@ -56,7 +56,7 @@ export const ReportApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * Lists applicable dodis for given report design code. If applicable dodi is interface also all designs that implement it will be in the response.
+     * Lists applicable dodis with their permissions attached for given report design code. If applicable dodi is interface also all designs that implement it will be in the response.
      * @summary Lists the applicable dodis for report design code
      * @param {string} dodiCode The Guc report dodi to get applicable dodis for
      * @param {string} [query] Optional query to filter the report applicable dodis by

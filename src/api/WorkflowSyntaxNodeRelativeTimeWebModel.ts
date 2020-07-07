@@ -11,7 +11,7 @@ export interface WorkflowSyntaxNodeRelativeTimeWebModel extends WorkflowSyntaxNo
    * @type {WorkflowTimeConditionWebModel}
    * @memberof WorkflowSyntaxNodeRelativeTimeWebModel
    */
-  condition: WorkflowTimeConditionWebModel;
+  condition?: WorkflowTimeConditionWebModel;
   /**
    * Milliseconds to offset from now, given the specified condition
    * @type {number}

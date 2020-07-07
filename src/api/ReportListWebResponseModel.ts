@@ -1,4 +1,4 @@
-import { DesignWebModel } from './DesignWebModel';
+import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
 /**
  * 
  * @export
@@ -19,8 +19,8 @@ export interface ReportListWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {Array<DesignWebModel>}
+   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
    * @memberof ReportListWebResponseModel
    */
-  results: Array<DesignWebModel>;
+  results: Array<DesignWithOperationsSummaryWebResponseModel>;
 }
