@@ -1,9 +1,10 @@
+import * as uuid from 'uuid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { MapChangeCentreEventHandler } from '../../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEventHandler } from '../../events/MapChangeZoomEventHandler';
-import { AlloyBasicFeature } from '../../features/AlloyBasicFeature';
+import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
 import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
 import { AlloyLayerWithFeaturesWithItemId } from '../AlloyLayerWithFeaturesWithItemId';
@@ -16,7 +17,7 @@ import { AlloyBasicStyleProcessor } from './AlloyBasicStyleProcessor';
  * an alloy basic layer uses the `/api/layer/{code}/{x}/{y}/{z}/basic` endpoint to request and
  * display features. All features will be individual items.
  */
-export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyBasicFeature>
+export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyItemFeature>
   implements AlloyBoundedLayer, AlloyStyledLayer {
   /**
    * @implements
@@ -43,7 +44,11 @@ export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyBasic
    * @param options the options for the layer
    */
   constructor(options: AlloyBasicLayerOptions) {
-    super(options.layerCode, options.map, AlloyLayerZIndex.Layers);
+    super(
+      options.id || AlloyBasicLayer.name + ':' + uuid.v1(),
+      options.map,
+      AlloyLayerZIndex.Layers,
+    );
     this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;

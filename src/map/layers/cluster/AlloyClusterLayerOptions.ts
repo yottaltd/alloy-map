@@ -17,6 +17,11 @@ export interface AlloyClusterLayerOptions {
   layerCode: string;
 
   /**
+   * optional id for layer
+   */
+  id?: string;
+
+  /**
    * the bounds of the layer to make requests within
    */
   bounds: AlloyBounds;

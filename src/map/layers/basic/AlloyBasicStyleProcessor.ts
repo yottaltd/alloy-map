@@ -1,4 +1,4 @@
-import { AlloyBasicFeature } from '../../features/AlloyBasicFeature';
+import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
 import { AlloyBasicStyleBuilder } from '../../styles/builders/AlloyBasicStyleBuilder';
@@ -31,7 +31,7 @@ export class AlloyBasicStyleProcessor extends AlloyStyleProcessor {
    * @override
    */
   public onStyleProcessWithAlloyFeature(
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ) {

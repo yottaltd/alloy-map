@@ -6,7 +6,7 @@ import { LayerGetBasicTileWebResponseModel } from '../../../api/LayerGetBasicTil
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyBasicFeature } from '../../features/AlloyBasicFeature';
+import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
@@ -26,7 +26,7 @@ const TILE_GRID_MAX_ZOOM = 16;
  * @ignore
  * @internal
  */
-export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyBasicFeature> {
+export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyItemFeature> {
   /**
    * the layer we are loading features for
    * @ignore
@@ -85,7 +85,7 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyBasicFe
   /**
    * @override
    */
-  protected featuresLoaded(features: Array<AlloyBasicFeature>): void {
+  protected featuresLoaded(features: Array<AlloyItemFeature>): void {
     // check if we need to clear the source before adding features
     if (this.shouldClearSource) {
       this.shouldClearSource = false;
@@ -99,12 +99,12 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyBasicFe
    */
   protected requestTile(
     coordinate: AlloyTileCoordinate,
-  ): AlloyTileFeatureRequest<AlloyBasicFeature> {
-    const request = new AlloyTileFeatureRequest<AlloyBasicFeature>(coordinate);
+  ): AlloyTileFeatureRequest<AlloyItemFeature> {
+    const request = new AlloyTileFeatureRequest<AlloyItemFeature>(coordinate);
 
     // start the http request (promisified), make sure this is setup before we return because others
     // will be listening for this to finish
-    request.result = new Promise<Array<AlloyBasicFeature>>((resolve, reject) => {
+    request.result = new Promise<Array<AlloyItemFeature>>((resolve, reject) => {
       try {
         const signal = request.controller.signal;
 
@@ -137,7 +137,7 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyBasicFe
    * parses a tile response into its features
    * @param response the response model to parse
    */
-  private parseResults(response: LayerGetBasicTileWebResponseModel): Array<AlloyBasicFeature> {
+  private parseResults(response: LayerGetBasicTileWebResponseModel): Array<AlloyItemFeature> {
     // return early if no results
     if (response.results.length === 0) {
       return [];
@@ -165,7 +165,7 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyBasicFe
     return response.results.map((r: any /* we don't have typings */, i: number) => {
       const olFeature = olFeatures[i];
       const featureId = FeatureUtils.createFeatureId(this.layer.layerCode, olFeature);
-      return new AlloyBasicFeature(featureId, olFeature, r.properties, this.layer.id);
+      return new AlloyItemFeature(featureId, olFeature, r.properties, this.layer.id);
     });
   }
 }

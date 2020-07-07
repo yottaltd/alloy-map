@@ -9,7 +9,7 @@ import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { StringUtils } from '../../../utils/StringUtils';
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyBasicFeature } from '../../features/AlloyBasicFeature';
+import { AlloyItemFeature } from '../../features/AlloyItemFeature';
 import { AlloyLayerStyle } from '../AlloyLayerStyle';
 import { AlloyLayerStyleLabelMode } from '../AlloyLayerStyleLabelMode';
 import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
@@ -42,7 +42,7 @@ const ICON_COLOUR = '#ffffff';
  * @ignore
  * @internal
  */
-export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<AlloyBasicFeature> {
+export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<AlloyItemFeature> {
   /**
    * shame we need a reference to the map :( but its for calculating coord to pixel coord transforms
    */
@@ -64,7 +64,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
    * @override
    */
   protected getKey(
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): string {
@@ -107,7 +107,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   /**
    * @override
    */
-  protected createStyles(feature: AlloyBasicFeature, resolution: number): OLStyle | OLStyle[] {
+  protected createStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554163777, 'missing layer style: ' + feature.properties.styleId);
@@ -136,7 +136,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   /**
    * @override
    */
-  protected createHoverStyles(feature: AlloyBasicFeature, resolution: number): OLStyle | OLStyle[] {
+  protected createHoverStyles(feature: AlloyItemFeature, resolution: number): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554419738, 'missing layer style: ' + feature.properties.styleId);
@@ -166,7 +166,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
    * @override
    */
   protected createSelectedStyles(
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
   ): OLStyle | OLStyle[] {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
@@ -197,7 +197,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createPointStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -257,7 +257,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createMultiPointStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -317,7 +317,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createLineStringStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -362,7 +362,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createMultiLineStringStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -406,7 +406,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
 
   private createPolygonStyles(
     // can be used within this function as polyfon style functions are unique per feature
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -489,7 +489,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
 
   private createMultiPolygonStyles(
     // can be used within this function as polyfon style functions are unique per feature
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -573,7 +573,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   }
 
   private createGeometryCollectionStyles(
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
   ): OLStyle[] {
@@ -592,7 +592,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createPointHoverStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -662,7 +662,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createMultiPointHoverStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -732,7 +732,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createLineStringHoverStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -790,7 +790,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createMultiLineStringHoverStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -847,7 +847,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
 
   private createPolygonHoverStyles(
     // can be used within this function as polygon style functions are unique per feature
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -938,7 +938,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
 
   private createMultiPolygonHoverStyles(
     // can be used within this function as polyfon style functions are unique per feature
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1030,7 +1030,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   }
 
   private createGeometryCollectionHoverStyles(
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
   ): OLStyle[] {
@@ -1049,7 +1049,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createPointSelectedStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1117,7 +1117,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createMultiPointSelectedStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1185,7 +1185,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createLineStringSelectedStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1292,7 +1292,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   private createMultiLineStringSelectedStyles(
     // only usable for labelling! the cache does not guarantee you will get the same feature, this
     // function may produce an output shared across many!
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1398,7 +1398,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
 
   private createPolygonSelectedStyles(
     // can be used within this function as polyfon style functions are unique per feature
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1486,7 +1486,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
 
   private createMultiPolygonSelectedStyles(
     // can be used within this function as polyfon style functions are unique per feature
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
     processGeometryCollection?: boolean,
@@ -1575,7 +1575,7 @@ export class AlloyBasicStyleBuilder extends AlloyStyleBuilderWithLayerStyles<All
   }
 
   private createGeometryCollectionSelectedStyles(
-    feature: AlloyBasicFeature,
+    feature: AlloyItemFeature,
     resolution: number,
     layerStyle: AlloyLayerStyle,
   ): OLStyle[] {
