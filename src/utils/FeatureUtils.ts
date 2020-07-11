@@ -146,9 +146,13 @@ export abstract class FeatureUtils {
   /**
    * Calculates `AlloyBounds` that wraps all provided features
    * @param features `AlloyFeature` array to calculate bounds for
+   * @param bufferPercent whether to add a buffer around wrapped features
    * @returns `AlloyBounds` that wraps all provided features
    */
-  public static calculateFeaturesBounds(features: AlloyFeature[]): AlloyBounds {
+  public static calculateFeaturesBounds(
+    features: AlloyFeature[],
+    bufferPercent?: number,
+  ): AlloyBounds {
     // flatten coordinates of features
     const coordinates: OLCoordinate[] = _.flatten(
       features.map((feature) =>
@@ -159,7 +163,13 @@ export abstract class FeatureUtils {
     );
 
     // calculate bounding extent for coordinates
-    const extent = PolyfillExtent.boundingExtent(coordinates);
+    let extent = PolyfillExtent.boundingExtent(coordinates);
+
+    if (bufferPercent) {
+      const bufferValue =
+        (Math.min(extent[2] - extent[0], extent[3] - extent[1]) * bufferPercent) / 100.0;
+      extent = PolyfillExtent.buffer(extent, bufferValue);
+    }
 
     // convert extent to alloy bounds
     return new AlloyBounds(
