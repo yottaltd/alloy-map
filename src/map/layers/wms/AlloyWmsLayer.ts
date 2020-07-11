@@ -42,7 +42,7 @@ export class AlloyWmsLayer implements AlloyLayer {
    * @param options the options for the layer
    */
   constructor(options: AlloyWmsLayerOptions) {
-    this.id = options.id || AlloyWmsLayer.name + ':' + uuid.v1();
+    this.id = options.id;
     this.map = options.map;
 
     this.olLayers = [
