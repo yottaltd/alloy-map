@@ -17,9 +17,9 @@ export interface AlloyNetworkLayerOptions {
   layerCode: string;
 
   /**
-   * optional id for layer
+   * id for layer, must be unique
    */
-  id?: string;
+  id: string;
 
   /**
    * the bounds of the layer to make requests within

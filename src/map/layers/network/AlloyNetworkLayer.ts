@@ -1,4 +1,3 @@
-import * as uuid from 'uuid';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
@@ -46,11 +45,7 @@ export class AlloyNetworkLayer
    * @param options the options for the layer
    */
   constructor(options: AlloyNetworkLayerOptions) {
-    super(
-      options.id || AlloyNetworkLayer.name + ':' + uuid.v1(),
-      options.map,
-      AlloyLayerZIndex.Layers,
-    );
+    super(options.id, options.map, AlloyLayerZIndex.Layers);
     this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
