@@ -1,6 +1,5 @@
 import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
-import * as uuid from 'uuid';
 import { WmsUtils } from '../../../wms/WmsUtils';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
