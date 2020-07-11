@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AlloyNetworkLayer | @yotta/alloy-map</title>
+	<title>AlloyBasicLayer | @yotta/alloy-map</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="alloynetworklayer.html">AlloyNetworkLayer</a>
+					<a href="alloybasiclayer.html">AlloyBasicLayer</a>
 				</li>
 			</ul>
-			<h1>Class AlloyNetworkLayer</h1>
+			<h1>Class AlloyBasicLayer</h1>
 		</div>
 	</div>
 </header>
@@ -69,8 +69,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>an alloy network layer uses the <code>/api/layer/{code}/{x}/{y}/{z}/network</code> endpoint to request and
-						display features. it will not cluster items and will heavily simplify low lod geometry</p>
+						<p>an alloy basic layer uses the <code>/api/layer/{code}/{x}/{y}/{z}/basic</code> endpoint to request and
+						display features. All features will be individual items.</p>
 					</div>
 				</div>
 			</section>
@@ -78,10 +78,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">AlloyLayerWithFeaturesWithItemId</span><span class="tsd-signature-symbol">&lt;</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">AlloyLayerWithFeaturesWithItemId</span><span class="tsd-signature-symbol">&lt;</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">AlloyNetworkLayer</span>
+								<span class="target">AlloyBasicLayer</span>
 							</li>
 						</ul>
 					</li>
@@ -102,38 +102,38 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="alloynetworklayer.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="alloybasiclayer.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloynetworklayer.html#bounds" class="tsd-kind-icon">bounds</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloynetworklayer.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#map" class="tsd-kind-icon">map</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloynetworklayer.html#styles" class="tsd-kind-icon">styles</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloybasiclayer.html#bounds" class="tsd-kind-icon">bounds</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloybasiclayer.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#map" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloybasiclayer.html#styles" class="tsd-kind-icon">styles</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#features" class="tsd-kind-icon">features</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#features" class="tsd-kind-icon">features</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloynetworklayer.html#addfeature" class="tsd-kind-icon">add<wbr>Feature</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloynetworklayer.html#addfeatures" class="tsd-kind-icon">add<wbr>Features</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#addfeaturesaddedlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Added<wbr>Listener</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloynetworklayer.html#clearfeatures" class="tsd-kind-icon">clear<wbr>Features</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="alloynetworklayer.html#dispose" class="tsd-kind-icon">dispose</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#getfeaturebyitemid" class="tsd-kind-icon">get<wbr>Feature<wbr>ByItem<wbr>Id</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloynetworklayer.html#removefeature" class="tsd-kind-icon">remove<wbr>Feature</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#removefeaturesaddedlistener" class="tsd-kind-icon">remove<wbr>Features<wbr>Added<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloybasiclayer.html#addfeature" class="tsd-kind-icon">add<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloybasiclayer.html#addfeatures" class="tsd-kind-icon">add<wbr>Features</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#addfeaturesaddedlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Added<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloybasiclayer.html#clearfeatures" class="tsd-kind-icon">clear<wbr>Features</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="alloybasiclayer.html#dispose" class="tsd-kind-icon">dispose</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#getfeaturebyitemid" class="tsd-kind-icon">get<wbr>Feature<wbr>ByItem<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloybasiclayer.html#removefeature" class="tsd-kind-icon">remove<wbr>Feature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloybasiclayer.html#removefeaturesaddedlistener" class="tsd-kind-icon">remove<wbr>Features<wbr>Added<wbr>Listener</a></li>
 							</ul>
 						</section>
 					</div>
@@ -145,14 +145,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Alloy<wbr>Network<wbr>Layer<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloynetworklayeroptions.html" class="tsd-signature-type">AlloyNetworkLayerOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloynetworklayer.html" class="tsd-signature-type">AlloyNetworkLayer</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Alloy<wbr>Basic<wbr>Layer<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/alloybasiclayeroptions.html" class="tsd-signature-type">AlloyBasicLayerOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloybasiclayer.html" class="tsd-signature-type">AlloyBasicLayer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides AlloyLayerWithFeaturesWithItemId.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/network/AlloyNetworkLayer.ts#L41">src/map/layers/network/AlloyNetworkLayer.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayer.ts#L39">src/map/layers/basic/AlloyBasicLayer.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,7 +163,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/alloynetworklayeroptions.html" class="tsd-signature-type">AlloyNetworkLayerOptions</a></h5>
+									<h5>options: <a href="../interfaces/alloybasiclayeroptions.html" class="tsd-signature-type">AlloyBasicLayerOptions</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>the options for the layer</p>
@@ -171,7 +171,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="alloynetworklayer.html" class="tsd-signature-type">AlloyNetworkLayer</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="alloybasiclayer.html" class="tsd-signature-type">AlloyBasicLayer</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -185,7 +185,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/alloyboundedlayer.html">AlloyBoundedLayer</a>.<a href="../interfaces/alloyboundedlayer.html#bounds">bounds</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/network/AlloyNetworkLayer.ts#L26">src/map/layers/network/AlloyNetworkLayer.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayer.ts#L24">src/map/layers/basic/AlloyBasicLayer.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -219,7 +219,7 @@
 					<div class="tsd-signature tsd-kind-icon">layer<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/network/AlloyNetworkLayer.ts#L31">src/map/layers/network/AlloyNetworkLayer.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayer.ts#L29">src/map/layers/basic/AlloyBasicLayer.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -253,7 +253,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#styles">styles</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/network/AlloyNetworkLayer.ts#L36">src/map/layers/network/AlloyNetworkLayer.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayer.ts#L34">src/map/layers/basic/AlloyBasicLayer.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -270,7 +270,7 @@
 					<a name="features" class="tsd-anchor"></a>
 					<h3>features</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> features<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> features<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -285,7 +285,7 @@
 									<p>gets the features in the layer</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -296,7 +296,7 @@
 					<a name="addfeature" class="tsd-anchor"></a>
 					<h3>add<wbr>Feature</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -316,7 +316,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>feature: <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a></h5>
+									<h5>feature: <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -327,7 +327,7 @@
 					<a name="addfeatures" class="tsd-anchor"></a>
 					<h3>add<wbr>Features</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Features<span class="tsd-signature-symbol">(</span>features<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Features<span class="tsd-signature-symbol">(</span>features<span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -347,7 +347,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>features: <span class="tsd-signature-symbol">(</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>features: <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -422,7 +422,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides AlloyLayerWithFeatures.dispose</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/network/AlloyNetworkLayer.ts#L78">src/map/layers/network/AlloyNetworkLayer.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayer.ts#L76">src/map/layers/basic/AlloyBasicLayer.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,7 +479,7 @@
 					<a name="getfeaturebyid" class="tsd-anchor"></a>
 					<h3>get<wbr>Feature<wbr>ById</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Feature<wbr>ById<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Feature<wbr>ById<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -502,7 +502,7 @@
 									<h5>id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -510,7 +510,7 @@
 					<a name="getfeaturebyitemid" class="tsd-anchor"></a>
 					<h3>get<wbr>Feature<wbr>ByItem<wbr>Id</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Feature<wbr>ByItem<wbr>Id<span class="tsd-signature-symbol">(</span>itemId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Feature<wbr>ByItem<wbr>Id<span class="tsd-signature-symbol">(</span>itemId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -531,7 +531,7 @@
 									<h5>itemId: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -539,7 +539,7 @@
 					<a name="removefeature" class="tsd-anchor"></a>
 					<h3>remove<wbr>Feature</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Feature<span class="tsd-signature-symbol">(</span>feature<span class="tsd-signature-symbol">: </span><a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -559,7 +559,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>feature: <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a><span class="tsd-signature-symbol"> | </span><a href="alloysimplifiedgeometryfeature.html" class="tsd-signature-type">AlloySimplifiedGeometryFeature</a></h5>
+									<h5>feature: <a href="alloyitemfeature.html" class="tsd-signature-type">AlloyItemFeature</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -613,58 +613,58 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="alloynetworklayer.html" class="tsd-kind-icon">Alloy<wbr>Network<wbr>Layer</a>
+						<a href="alloybasiclayer.html" class="tsd-kind-icon">Alloy<wbr>Basic<wbr>Layer</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="alloynetworklayer.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="alloybasiclayer.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="alloynetworklayer.html#bounds" class="tsd-kind-icon">bounds</a>
+								<a href="alloybasiclayer.html#bounds" class="tsd-kind-icon">bounds</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#id" class="tsd-kind-icon">id</a>
+								<a href="alloybasiclayer.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="alloynetworklayer.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a>
+								<a href="alloybasiclayer.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#map" class="tsd-kind-icon">map</a>
+								<a href="alloybasiclayer.html#map" class="tsd-kind-icon">map</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="alloynetworklayer.html#styles" class="tsd-kind-icon">styles</a>
+								<a href="alloybasiclayer.html#styles" class="tsd-kind-icon">styles</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#features" class="tsd-kind-icon">features</a>
+								<a href="alloybasiclayer.html#features" class="tsd-kind-icon">features</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="alloynetworklayer.html#addfeature" class="tsd-kind-icon">add<wbr>Feature</a>
+								<a href="alloybasiclayer.html#addfeature" class="tsd-kind-icon">add<wbr>Feature</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="alloynetworklayer.html#addfeatures" class="tsd-kind-icon">add<wbr>Features</a>
+								<a href="alloybasiclayer.html#addfeatures" class="tsd-kind-icon">add<wbr>Features</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#addfeaturesaddedlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Added<wbr>Listener</a>
+								<a href="alloybasiclayer.html#addfeaturesaddedlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Added<wbr>Listener</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="alloynetworklayer.html#clearfeatures" class="tsd-kind-icon">clear<wbr>Features</a>
+								<a href="alloybasiclayer.html#clearfeatures" class="tsd-kind-icon">clear<wbr>Features</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="alloynetworklayer.html#dispose" class="tsd-kind-icon">dispose</a>
+								<a href="alloybasiclayer.html#dispose" class="tsd-kind-icon">dispose</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a>
+								<a href="alloybasiclayer.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a>
+								<a href="alloybasiclayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#getfeaturebyitemid" class="tsd-kind-icon">get<wbr>Feature<wbr>ByItem<wbr>Id</a>
+								<a href="alloybasiclayer.html#getfeaturebyitemid" class="tsd-kind-icon">get<wbr>Feature<wbr>ByItem<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="alloynetworklayer.html#removefeature" class="tsd-kind-icon">remove<wbr>Feature</a>
+								<a href="alloybasiclayer.html#removefeature" class="tsd-kind-icon">remove<wbr>Feature</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="alloynetworklayer.html#removefeaturesaddedlistener" class="tsd-kind-icon">remove<wbr>Features<wbr>Added<wbr>Listener</a>
+								<a href="alloybasiclayer.html#removefeaturesaddedlistener" class="tsd-kind-icon">remove<wbr>Features<wbr>Added<wbr>Listener</a>
 							</li>
 						</ul>
 					</li>

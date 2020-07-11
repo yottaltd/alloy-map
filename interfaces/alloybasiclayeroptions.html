@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AlloyBasemap | @yotta/alloy-map</title>
+	<title>AlloyBasicLayerOptions | @yotta/alloy-map</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="alloybasemap.html">AlloyBasemap</a>
+					<a href="alloybasiclayeroptions.html">AlloyBasicLayerOptions</a>
 				</li>
 			</ul>
-			<h1>Interface AlloyBasemap</h1>
+			<h1>Interface AlloyBasicLayerOptions</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>alloy basemap interface</p>
+						<p>options for the alloy basic layer</p>
 					</div>
 				</div>
 			</section>
@@ -77,7 +77,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AlloyBasemap</span>
+						<span class="target">AlloyBasicLayerOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -88,7 +88,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloybasemap.html#clone" class="tsd-kind-icon">clone</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloybasiclayeroptions.html#bounds" class="tsd-kind-icon">bounds</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloybasiclayeroptions.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloybasiclayeroptions.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloybasiclayeroptions.html#map" class="tsd-kind-icon">map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="alloybasiclayeroptions.html#styles" class="tsd-kind-icon">styles</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,33 +101,78 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="clone" class="tsd-anchor"></a>
-					<h3>clone</h3>
-					<div class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a></div>
+					<a name="bounds" class="tsd-anchor"></a>
+					<h3>bounds</h3>
+					<div class="tsd-signature tsd-kind-icon">bounds<span class="tsd-signature-symbol">:</span> <a href="../classes/alloybounds.html" class="tsd-signature-type">AlloyBounds</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/basemaps/AlloyBasemap.ts#L17">src/map/basemaps/AlloyBasemap.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayerOptions.ts#L27">src/map/layers/basic/AlloyBasicLayerOptions.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Clone method to create a copy of a basemap</p>
+							<p>the bounds of the layer to make requests within</p>
 						</div>
 					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-returns-title">Returns <a href="alloybasemap.html" class="tsd-signature-type">AlloyBasemap</a></h4>
-									</li>
-								</ul>
-							</li>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayerOptions.ts#L22">src/map/layers/basic/AlloyBasicLayerOptions.ts:22</a></li>
 						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>id for layer, must be unique</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="layercode" class="tsd-anchor"></a>
+					<h3>layer<wbr>Code</h3>
+					<div class="tsd-signature tsd-kind-icon">layer<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayerOptions.ts#L17">src/map/layers/basic/AlloyBasicLayerOptions.ts:17</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the layer code</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="map" class="tsd-anchor"></a>
+					<h3>map</h3>
+					<div class="tsd-signature tsd-kind-icon">map<span class="tsd-signature-symbol">:</span> <a href="../classes/alloymap.html" class="tsd-signature-type">AlloyMap</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayerOptions.ts#L12">src/map/layers/basic/AlloyBasicLayerOptions.ts:12</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the alloy map to associate tha layer with</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="styles" class="tsd-anchor"></a>
+					<h3>styles</h3>
+					<div class="tsd-signature tsd-kind-icon">styles<span class="tsd-signature-symbol">:</span> <a href="../classes/alloylayerstyle.html" class="tsd-signature-type">AlloyLayerStyle</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/e81af31/src/map/layers/basic/AlloyBasicLayerOptions.ts#L32">src/map/layers/basic/AlloyBasicLayerOptions.ts:32</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the styles to show on the layer</p>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -141,10 +190,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="alloybasemap.html" class="tsd-kind-icon">Alloy<wbr>Basemap</a>
+						<a href="alloybasiclayeroptions.html" class="tsd-kind-icon">Alloy<wbr>Basic<wbr>Layer<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="alloybasemap.html#clone" class="tsd-kind-icon">clone</a>
+								<a href="alloybasiclayeroptions.html#bounds" class="tsd-kind-icon">bounds</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="alloybasiclayeroptions.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="alloybasiclayeroptions.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="alloybasiclayeroptions.html#map" class="tsd-kind-icon">map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="alloybasiclayeroptions.html#styles" class="tsd-kind-icon">styles</a>
 							</li>
 						</ul>
 					</li>
