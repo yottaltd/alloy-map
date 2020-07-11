@@ -3,9 +3,9 @@ import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyPathNodeConnectorFeatureProperties } from './AlloyPathNodeConnectorFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyPathNodeConnectorFeatureProperties } from './AlloyPathNodeConnectorFeatureProperties';
 
 /**
  * an alloy path node connector feature which represents a single line connector
@@ -92,7 +92,7 @@ export class AlloyPathNodeConnectorFeature implements AlloyFeature {
    */
   public setGeometry(geometry: LineString | null) {
     if (geometry === null) {
-      this.olFeature.setGeometry(undefined as any);
+      this.olFeature.setGeometry(undefined);
     } else {
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
     }
