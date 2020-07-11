@@ -24,6 +24,7 @@ export abstract class WfsLayerUtils {
    * @param version WFS version
    * @param epsg epsg code used for features requests
    * @param zIndex layer z-index
+   * @param loadAll whether to load all features in one go
    * @param styleFunction style function for styling WFS features
    * @param featureSetter custom function to process features
    * @ignore
@@ -35,6 +36,7 @@ export abstract class WfsLayerUtils {
     version: string,
     epsg: number,
     zIndex: AlloyLayerZIndex,
+    loadAll?: boolean,
     styleFunction?: (
       feature: OLFeature | OLRenderFeature,
       resolution: number,
@@ -57,10 +59,12 @@ export abstract class WfsLayerUtils {
       format,
       loader: (extent, resolution, projection) => {
         const extentUrl = new URL(getFeatureUrl.href);
-        extentUrl.searchParams.set(
-          'bbox',
-          `${extent.join(',')},${ProjectionUtils.MAP_PROJECTION.getCode()}`,
-        );
+        if (!loadAll) {
+          extentUrl.searchParams.set(
+            'bbox',
+            `${extent.join(',')},${ProjectionUtils.MAP_PROJECTION.getCode()}`,
+          );
+        }
 
         const onError = (e: any) =>
           // eslint-disable-next-line no-console
@@ -103,7 +107,7 @@ export abstract class WfsLayerUtils {
           fetchPromise();
         }
       },
-      strategy: PolyfillLoadingStrategy.bbox(),
+      strategy: loadAll ? PolyfillLoadingStrategy.all() : PolyfillLoadingStrategy.bbox(),
       features: new OLCollection(),
     });
 
