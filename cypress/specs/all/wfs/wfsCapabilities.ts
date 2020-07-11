@@ -29,7 +29,7 @@ export default function(mapData: MapData) {
       // root is with prefix - wfs:WFS_Capabilities
       cy.readFile(wfsRootPrefixCapabilitiesParsed).then((savedCaps) => {
         cy.readFile(wfsRootPrefixCapabilities).then(async (caps) => {
-          const parsedCaps = await WfsUtils.parseCapabilities(savedCaps.url, caps);
+          const parsedCaps = await WfsUtils.parseCapabilities(caps.url, caps);
           assert.deepEqual(jsonify(parsedCaps), jsonify(savedCaps));
         });
       });

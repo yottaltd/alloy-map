@@ -103,7 +103,7 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
   public setGeometry(geometry: LineString | null) {
     this.animationManager.stopAnimation(this);
     if (geometry === null) {
-      this.olFeature.setGeometry(undefined as any);
+      this.olFeature.setGeometry(undefined);
     } else {
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
       this.animationManager.startAnimation(this);

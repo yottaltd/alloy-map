@@ -111,7 +111,7 @@ export class AlloyDrawFeature implements AlloyFeature {
    */
   public setGeometry(geometry: Geometry | null) {
     if (geometry === null) {
-      this.olFeature.setGeometry(undefined as any);
+      this.olFeature.setGeometry(undefined);
     } else {
       const olGeometry = ProjectionUtils.GEOJSON.readGeometry(geometry);
       const geometryType = olGeometry.getType();

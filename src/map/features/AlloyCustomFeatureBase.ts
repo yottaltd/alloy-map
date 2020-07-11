@@ -109,7 +109,7 @@ export abstract class AlloyCustomFeatureBase implements AlloyFeature {
    */
   public setGeometry(geometry: Geometry | null) {
     if (geometry === null) {
-      this.olFeature.setGeometry(undefined as any);
+      this.olFeature.setGeometry(undefined);
     } else {
       // allows any type
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
