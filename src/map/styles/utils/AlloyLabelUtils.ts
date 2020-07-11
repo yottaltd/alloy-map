@@ -5,9 +5,9 @@ import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import OLStyle from 'ol/style/Style';
+import { AlloyMapError } from '../../../error/AlloyMapError';
 import { ColourUtils } from '../../../utils/ColourUtils';
 import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
-import { AlloyMapError } from '../../../error/AlloyMapError';
 
 /**
  * The size in pixels of the rendered label canvas
@@ -183,7 +183,7 @@ export abstract class AlloyLabelUtils {
     subtitle = subtitle ? AlloyLabelUtils.memoizedCleanText(subtitle) : null;
 
     // create a canvas to work on
-    const canvas = document.createElement('canvas') as HTMLCanvasElement;
+    const canvas = document.createElement('canvas');
     canvas.width = LABEL_CANVAS_HEIGHT;
     canvas.height = LABEL_CANVAS_HEIGHT;
 
