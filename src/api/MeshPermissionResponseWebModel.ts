@@ -1,7 +1,6 @@
-// tslint:disable
 import { MeshAllowedAction } from './MeshAllowedAction';
 /**
- * Web model for a mesh permission
+ * 
  * @export
  * @interface MeshPermissionResponseWebModel
  */

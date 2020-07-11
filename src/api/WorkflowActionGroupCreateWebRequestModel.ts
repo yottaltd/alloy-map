@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowActionGroupParameterWebModel } from './WorkflowActionGroupParameterWebModel';
 /**
  * Web request model for a workflow action group create operation
@@ -11,7 +10,7 @@ export interface WorkflowActionGroupCreateWebRequestModel {
    * @type {Array<WorkflowActionGroupParameterWebModel>}
    * @memberof WorkflowActionGroupCreateWebRequestModel
    */
-  parameters: Array<WorkflowActionGroupParameterWebModel>;
+  parameters?: Array<WorkflowActionGroupParameterWebModel>;
   /**
    * The dodi code that this action group will accept
    * @type {string}

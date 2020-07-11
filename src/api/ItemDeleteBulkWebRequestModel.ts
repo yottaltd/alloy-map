@@ -1,4 +1,3 @@
-// tslint:disable
 import { BulkApiRequestBase } from './BulkApiRequestBase';
 import { BulkApi } from './BulkApi';
 /**
@@ -8,7 +7,7 @@ import { BulkApi } from './BulkApi';
  */
 export interface ItemDeleteBulkWebRequestModel extends BulkApiRequestBase {
   /**
-   * 
+   * The AId of the item to delete
    * @type {string}
    * @memberof ItemDeleteBulkWebRequestModel
    */

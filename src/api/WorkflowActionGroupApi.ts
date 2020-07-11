@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { WorkflowActionGroupAddActionWebRequestModel } from './WorkflowActionGroupAddActionWebRequestModel';
 import { WorkflowActionGroupCreateWebRequestModel } from './WorkflowActionGroupCreateWebRequestModel';
@@ -70,7 +69,7 @@ export class WorkflowActionGroupApi extends BaseAPI {
    * 
    * @summary Edit an action on a workflowActionGroup
    * @param {string} code The code of the workflowActionGroup to edit the action on
-   * @param {string} id The id of the action to remove
+   * @param {string} id The id of the action to edit
    * @param {WorkflowActionGroupEditActionWebRequestModel} model The model containing all the edit action operation details
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -135,29 +134,31 @@ export class WorkflowActionGroupApi extends BaseAPI {
    * Fetches the permissions of a workflowActionGroup by its Guc
    * @summary Get a workflowActionGroup permissions by its code
    * @param {string} code The Guc for the workflowActionGroup whose permissions are being requested
-   * @param {string} [username] Optional username to get permissions for the specific user
+   * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+   * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowActionGroupApi
    */
-  public workflowActionGroupGetPermissions(code: string, username?: string, options?: any) {
-    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupGetPermissions(code, username, options)(this.fetch, this.basePath);
+  public workflowActionGroupGetPermissions(code: string, username?: string, role?: string, options?: any) {
+    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupGetPermissions(code, username, role, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary List workflowActionGroups
    * @param {string} [name] The optional workflow Action Group name (full or partial) to filter on
+   * @param {'Core' | 'Module' | 'Customer'} [context] The optional workflow Action Group context to filter on
    * @param {string} [userGroup] Optional Guc to filter workflow Action Groups by. If specified, only the workflow action groups that have this user group code within their permissions are returned
    * @param {string} [actionGroupInputCode] Optional Guc to filter workflow action groups by. If specified, only the workflow action groups that have this dodi code as their declared input type are returned
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowActionGroupApi
    */
-  public workflowActionGroupList(name?: string, userGroup?: string, actionGroupInputCode?: string, page?: number, pageSize?: number, options?: any) {
-    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupList(name, userGroup, actionGroupInputCode, page, pageSize, options)(this.fetch, this.basePath);
+  public workflowActionGroupList(name?: string, context?: 'Core' | 'Module' | 'Customer', userGroup?: string, actionGroupInputCode?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupList(name, context, userGroup, actionGroupInputCode, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -176,16 +177,47 @@ export class WorkflowActionGroupApi extends BaseAPI {
 
   /**
    * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
-   * @summary Lists user workflowActionGroups with their winning permission
+   * @summary Use api/workflow-action-group/access-advisor/user/{username} instead
    * @param {string} username The name of the user to get workflowActionGroup access advisor for
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WorkflowActionGroupApi
    */
-  public workflowActionGroupWorkflowActionGroupAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
-    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupWorkflowActionGroupAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
+  public workflowActionGroupWorkflowActionGroupAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupWorkflowActionGroupAccessAdvisor(username, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists role workflowActionGroups with their winning permission
+   * @param {string} code The code of the role to get workflowActionGroup access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowActionGroupApi
+   */
+  public workflowActionGroupWorkflowActionGroupAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupWorkflowActionGroupAccessAdvisorByRole(code, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists user workflowActionGroups with their winning permission
+   * @param {string} username The name of the user to get workflowActionGroup access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof WorkflowActionGroupApi
+   */
+  public workflowActionGroupWorkflowActionGroupAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return WorkflowActionGroupApiFp(this.configuration).workflowActionGroupWorkflowActionGroupAccessAdvisorByUser(username, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

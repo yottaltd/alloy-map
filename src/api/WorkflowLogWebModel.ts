@@ -1,7 +1,5 @@
-// tslint:disable
-import { Exception } from './Exception';
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
 import { WorkflowLogNodeWebModelBase } from './WorkflowLogNodeWebModelBase';
-import { AlloyException } from './AlloyException';
 /**
  * Web model for a Workflow
  * @export
@@ -28,10 +26,10 @@ export interface WorkflowLogWebModel {
   message: string;
   /**
    * Any error associated with the log
-   * @type {AlloyException}
+   * @type {AlloyExceptionWebModel}
    * @memberof WorkflowLogWebModel
    */
-  error?: AlloyException;
+  error?: AlloyExceptionWebModel;
   /**
    * The time the log was written
    * @type {string}

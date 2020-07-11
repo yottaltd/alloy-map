@@ -1,4 +1,3 @@
-// tslint:disable
 import { MeshPermissionWebModel } from './MeshPermissionWebModel';
 /**
  * Web model for a mesh permissions edit operation

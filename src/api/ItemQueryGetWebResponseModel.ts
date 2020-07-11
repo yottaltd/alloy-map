@@ -1,7 +1,7 @@
-// tslint:disable
 import { ItemLogWebModel } from './ItemLogWebModel';
 import { ItemVersionDeltaWebModel } from './ItemVersionDeltaWebModel';
 import { ItemWebModel } from './ItemWebModel';
+import { ReconstructedItemWebModel } from './ReconstructedItemWebModel';
 /**
  * Web response model for an item log query operation
  * @export
@@ -16,10 +16,10 @@ export interface ItemQueryGetWebResponseModel {
   log?: ItemLogWebModel;
   /**
    * The state of the item as queried
-   * @type {ItemWebModel}
+   * @type {ReconstructedItemWebModel}
    * @memberof ItemQueryGetWebResponseModel
    */
-  item?: ItemWebModel;
+  item?: ReconstructedItemWebModel;
   /**
    * The previous values of the item that were changed
    * @type {ItemVersionDeltaWebModel}

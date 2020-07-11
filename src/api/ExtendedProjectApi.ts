@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ExtendedCloneWebRequestModel } from './ExtendedCloneWebRequestModel';
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';

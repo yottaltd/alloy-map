@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { CreateForgeUserWebRequestModel } from './CreateForgeUserWebRequestModel';
@@ -58,11 +57,14 @@ export const ForgeForgeUserApiFactory = function (configuration?: Configuration,
     /**
      * 
      * @summary List users in the managed region
+     * @param {string} [query] Optional query to filter the forge users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    forgeUserListForgeUsers(options?: any) {
-      return ForgeForgeUserApiFp(configuration).forgeUserListForgeUsers(options)(fetch, basePath);
+    forgeUserListForgeUsers(query?: string, page?: number, pageSize?: number, options?: any) {
+      return ForgeForgeUserApiFp(configuration).forgeUserListForgeUsers(query, page, pageSize, options)(fetch, basePath);
     },
     /**
      * 

@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowLogWebModel } from './WorkflowLogWebModel';
 /**
- * Web response model for a Workflow list operation
+ * 
  * @export
  * @interface WorkflowLogTriggerListWebResponseModel
  */

@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiAllowedOperation } from './DodiAllowedOperation';
 import { DodiAttributeAllowedAction } from './DodiAttributeAllowedAction';
 import { DodiWebModel } from './DodiWebModel';

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { AccessPolicyCreateWebRequestModel } from './AccessPolicyCreateWebRequestModel';
@@ -95,8 +94,8 @@ export const AccessPolicyApiFactory = function (configuration?: Configuration, f
      * @summary Get a list of Access Policies
      * @param {string} [query] Optional query to filter the access policies by
      * @param {Array<string>} [appliesTo] The optional dodi code Guc, if specified, only the designs implementing that interface will be returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

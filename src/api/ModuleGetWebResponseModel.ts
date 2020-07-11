@@ -1,4 +1,3 @@
-// tslint:disable
 import { ModuleWebModel } from './ModuleWebModel';
 /**
  * Get web response model for an alloy module

@@ -1,7 +1,6 @@
-// tslint:disable
 import { AlloyUserSettingWebModel } from './AlloyUserSettingWebModel';
 /**
- * Web model for currently logged in alloy user
+ * 
  * @export
  * @interface AlloyCurrentUserWebModel
  */

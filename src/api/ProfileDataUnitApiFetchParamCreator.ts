@@ -1,11 +1,9 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
 import { ProfileDataScope } from './ProfileDataScope';
-import { ProfileDataUnitCreateWebRequestModel } from './ProfileDataUnitCreateWebRequestModel';
-import { ProfileDataUnitEditWebRequestModel } from './ProfileDataUnitEditWebRequestModel';
+import { ProfileDataUnitUpsertWebRequestModel } from './ProfileDataUnitUpsertWebRequestModel';
 import { ProfileDataUnitApi } from './ProfileDataUnitApi';
 /**
  * ProfileDataUnitApi - fetch parameter creator
@@ -14,59 +12,20 @@ import { ProfileDataUnitApi } from './ProfileDataUnitApi';
 export const ProfileDataUnitApiFetchParamCreator = function (configuration?: Configuration) {
   return {
     /**
-     * Creates a profile data unit based on the information sent in the model
-     * @summary Create a profile data unit
-     * @param {ProfileDataUnitCreateWebRequestModel} model Model containing the new profile data unit details
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    profileDataUnitCreate(model: ProfileDataUnitCreateWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling profileDataUnitCreate.');
-      }
-      const localVarPath = `/api/profile-data`;
-      const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication token required
-      if (configuration && configuration.apiKey) {
-        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("token")
-					: configuration.apiKey;
-        localVarQueryParameter["token"] = localVarApiKeyValue;
-      }
-
-      localVarHeaderParameter['Content-Type'] = 'application/json';
-
-      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-      delete localVarUrlObj.search;
-      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"ProfileDataUnitCreateWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
-
-      return {
-        url: url.format(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-    /**
-     * Deletes a profile data unit based on the information sent in the model
+     * 
      * @summary Delete a profile data unit
-     * @param {string} code The Guc of the profile data unit to delete
+     * @param {string} key The key of the profile data unit to delete
+     * @param {'Customer' | 'User'} [dataScope] The scope of the profile data unit to delete
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    profileDataUnitDelete(code: string, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling profileDataUnitDelete.');
+    profileDataUnitDelete(key: string, dataScope?: 'Customer' | 'User', options: any = {}): FetchArgs {
+      // verify required parameter 'key' is not null or undefined
+      if (key === null || key === undefined) {
+        throw new RequiredError('key','Required parameter key was null or undefined when calling profileDataUnitDelete.');
       }
-      const localVarPath = `/api/profile-data/{code}`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarPath = `/api/profile-data/{key}`
+        .replace(`{${"key"}}`, encodeURIComponent(String(key)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
       const localVarHeaderParameter = {} as any;
@@ -80,6 +39,10 @@ export const ProfileDataUnitApiFetchParamCreator = function (configuration?: Con
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
+      if (dataScope !== undefined) {
+        localVarQueryParameter['dataScope'] = dataScope;
+      }
+
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
@@ -91,26 +54,22 @@ export const ProfileDataUnitApiFetchParamCreator = function (configuration?: Con
       };
     },
     /**
-     * Sets the value of an existing profile data unit.
-     * @summary Edit a profile data unit
-     * @param {string} code The code of the data unit to change
-     * @param {ProfileDataUnitEditWebRequestModel} model Model containing the set profile data unit details
+     * 
+     * @summary Get a profile data unit
+     * @param {string} key The key of the profile data unit to fetch
+     * @param {'Customer' | 'User'} [dataScope] The scope of the profile data unit to fetch
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    profileDataUnitEdit(code: string, model: ProfileDataUnitEditWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'code' is not null or undefined
-      if (code === null || code === undefined) {
-        throw new RequiredError('code','Required parameter code was null or undefined when calling profileDataUnitEdit.');
+    profileDataUnitGet(key: string, dataScope?: 'Customer' | 'User', options: any = {}): FetchArgs {
+      // verify required parameter 'key' is not null or undefined
+      if (key === null || key === undefined) {
+        throw new RequiredError('key','Required parameter key was null or undefined when calling profileDataUnitGet.');
       }
-      // verify required parameter 'model' is not null or undefined
-      if (model === null || model === undefined) {
-        throw new RequiredError('model','Required parameter model was null or undefined when calling profileDataUnitEdit.');
-      }
-      const localVarPath = `/api/profile-data/{code}`
-        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarPath = `/api/profile-data/{key}`
+        .replace(`{${"key"}}`, encodeURIComponent(String(key)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -122,14 +81,14 @@ export const ProfileDataUnitApiFetchParamCreator = function (configuration?: Con
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      if (dataScope !== undefined) {
+        localVarQueryParameter['dataScope'] = dataScope;
+      }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-      const needsSerialization = (<any>"ProfileDataUnitEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
         url: url.format(localVarUrlObj),
@@ -140,13 +99,13 @@ export const ProfileDataUnitApiFetchParamCreator = function (configuration?: Con
      * Fetches a list of ProfileData optionally specifying page and the number of results to return per page.
      * @summary Get a list of ProfileData
      * @param {string} [discriminator] Optionally, the type of data to return as specified by the discriminators on ProfileDataUnitValueWebModelBase
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
-     * @param {Array<ProfileDataScope>} [dataScopes] 
+     * @param {Array<ProfileDataScope>} [dataScopes] Optionally, the data scope to filter by to get only Customer (Global) level profile data or only User level ones
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    profileDataUnitList(discriminator?: string, page?: number, pageSize?: number, dataScopes?: Array<ProfileDataScope>, options: any = {}): FetchArgs {
+    profileDataUnitList(discriminator?: string, dataScopes?: Array<ProfileDataScope>, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/profile-data`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -162,25 +121,71 @@ export const ProfileDataUnitApiFetchParamCreator = function (configuration?: Con
       }
 
       if (discriminator !== undefined) {
-        localVarQueryParameter['discriminator'] = discriminator;
-      }
-
-      if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
-      }
-
-      if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['Discriminator'] = discriminator;
       }
 
       if (dataScopes) {
-        localVarQueryParameter['dataScopes'] = dataScopes;
+        localVarQueryParameter['DataScopes'] = dataScopes;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Sets the value of an existing profile data unit. If unit does not exist it is created.
+     * @summary Upsert a profile data unit
+     * @param {string} key The key of the data unit to upsert
+     * @param {ProfileDataUnitUpsertWebRequestModel} model Model containing the set profile data unit details
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    profileDataUnitUpsert(key: string, model: ProfileDataUnitUpsertWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'key' is not null or undefined
+      if (key === null || key === undefined) {
+        throw new RequiredError('key','Required parameter key was null or undefined when calling profileDataUnitUpsert.');
+      }
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling profileDataUnitUpsert.');
+      }
+      const localVarPath = `/api/profile-data/{key}`
+        .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"ProfileDataUnitUpsertWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
         url: url.format(localVarUrlObj),

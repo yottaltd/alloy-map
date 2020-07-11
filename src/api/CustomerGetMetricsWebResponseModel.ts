@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomerCollectionsMetricsWebModel } from './CustomerCollectionsMetricsWebModel';
 /**
  * Response model for get operation on customer metrics

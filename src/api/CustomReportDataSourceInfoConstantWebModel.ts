@@ -1,7 +1,6 @@
-// tslint:disable
 import { CustomReportDataSourceInfoBaseWebModel } from './CustomReportDataSourceInfoBaseWebModel';
 /**
- * Custom report data source info single item web model
+ * 
  * @export
  * @interface CustomReportDataSourceInfoConstantWebModel
  */

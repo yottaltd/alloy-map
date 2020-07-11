@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -41,7 +40,7 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -87,7 +86,7 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -176,7 +175,7 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -222,7 +221,7 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -274,7 +273,7 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -330,8 +329,8 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
      * @summary Get a list of Access Policies
      * @param {string} [query] Optional query to filter the access policies by
      * @param {Array<string>} [appliesTo] The optional dodi code Guc, if specified, only the designs implementing that interface will be returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -351,19 +350,19 @@ export const AccessPolicyApiFetchParamCreator = function (configuration?: Config
       }
 
       if (query !== undefined) {
-        localVarQueryParameter['query'] = query;
+        localVarQueryParameter['Query'] = query;
       }
 
       if (appliesTo) {
-        localVarQueryParameter['appliesTo'] = appliesTo;
+        localVarQueryParameter['AppliesTo'] = appliesTo;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

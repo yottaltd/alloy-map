@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web model for import settings attributes

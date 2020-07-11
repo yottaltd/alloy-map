@@ -1,15 +1,38 @@
-// tslint:disable
 import { MasterBackupGetWebResponseModel } from './MasterBackupGetWebResponseModel';
 /**
- * Master backups list response
+ * 
  * @export
  * @interface MasterBackupListWebResponseModel
  */
 export interface MasterBackupListWebResponseModel {
   /**
-   * Backups
+   * 
+   * @type {number}
+   * @memberof MasterBackupListWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof MasterBackupListWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<MasterBackupGetWebResponseModel>}
    * @memberof MasterBackupListWebResponseModel
    */
-  backups: Array<MasterBackupGetWebResponseModel>;
+  results: Array<MasterBackupGetWebResponseModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof MasterBackupListWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof MasterBackupListWebResponseModel
+   */
+  totalResults: number;
 }

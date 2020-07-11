@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowActionGroupWithOperationsSummaryWebResponseModel } from './WorkflowActionGroupWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for a workflow action group list operation
+ * 
  * @export
  * @interface WorkflowActionGroupListWebResponseModel
  */

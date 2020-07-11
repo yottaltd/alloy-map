@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Custom report data source header web model

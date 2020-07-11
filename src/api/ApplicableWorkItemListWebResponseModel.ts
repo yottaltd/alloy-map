@@ -1,7 +1,6 @@
-// tslint:disable
 import { ItemWebModel } from './ItemWebModel';
 /**
- * Web response model for an applicable work item list operation
+ * 
  * @export
  * @interface ApplicableWorkItemListWebResponseModel
  */

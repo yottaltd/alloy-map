@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -42,7 +41,7 @@ export const ForgeForgeUserApiFetchParamCreator = function (configuration?: Conf
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -164,10 +163,13 @@ export const ForgeForgeUserApiFetchParamCreator = function (configuration?: Conf
     /**
      * 
      * @summary List users in the managed region
+     * @param {string} [query] Optional query to filter the forge users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    forgeUserListForgeUsers(options: any = {}): FetchArgs {
+    forgeUserListForgeUsers(query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/forge-user`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -180,6 +182,18 @@ export const ForgeForgeUserApiFetchParamCreator = function (configuration?: Conf
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -224,7 +238,7 @@ export const ForgeForgeUserApiFetchParamCreator = function (configuration?: Conf
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -264,7 +278,7 @@ export const ForgeForgeUserApiFetchParamCreator = function (configuration?: Conf
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943

@@ -1,4 +1,3 @@
-// tslint:disable
 import { ClusterSpecOptions } from './ClusterSpecOptions';
 /**
  * Region Create request

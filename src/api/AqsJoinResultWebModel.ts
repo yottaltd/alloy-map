@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsJoinResultQueryWebModel } from './AqsJoinResultQueryWebModel';
 /**
  * Web model of an aqs join result

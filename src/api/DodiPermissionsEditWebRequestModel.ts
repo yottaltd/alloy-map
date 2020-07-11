@@ -1,4 +1,4 @@
-// tslint:disable
+import { DodiAttributePermissionWebModel } from './DodiAttributePermissionWebModel';
 import { DodiAttributesPermissionEditWebModel } from './DodiAttributesPermissionEditWebModel';
 import { DodiPermissionWebModel } from './DodiPermissionWebModel';
 /**
@@ -19,6 +19,12 @@ export interface DodiPermissionsEditWebRequestModel {
    * @memberof DodiPermissionsEditWebRequestModel
    */
   attributesPermissions: Array<DodiAttributesPermissionEditWebModel>;
+  /**
+   * The default permission to set for dodi attributes. Absence of the attribute means that all permissions will be removed.
+   * @type {Array<DodiAttributePermissionWebModel>}
+   * @memberof DodiPermissionsEditWebRequestModel
+   */
+  defaultAttributePermissions?: Array<DodiAttributePermissionWebModel>;
   /**
    * The signature is used to ensure that the dodi being edited is actually the one provided to the system. This is enforced in order to avoid applying possibly invalid edits after another user has edited the same dodi
    * @type {string}

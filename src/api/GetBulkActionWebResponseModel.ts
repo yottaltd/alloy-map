@@ -1,4 +1,3 @@
-// tslint:disable
 import { BulkActionWebModel } from './BulkActionWebModel';
 import { TaskWebModel } from './TaskWebModel';
 /**

@@ -1,8 +1,6 @@
-// tslint:disable
 import { BasemapWebRequestModelParametersBase } from './BasemapWebRequestModelParametersBase';
-import { Basemap } from './Basemap';
 /**
- * Web Map Tile Service Basemap model for create and edit parameters
+ * 
  * @export
  * @interface WmtsBasemapWebRequestModelParameters
  */
@@ -25,4 +23,10 @@ export interface WmtsBasemapWebRequestModelParameters extends BasemapWebRequestM
    * @memberof WmtsBasemapWebRequestModelParameters
    */
   hiDpi: boolean;
+  /**
+   * Which tile matrix to use from those available (optional). If this is not set, the default matrix is used
+   * @type {string}
+   * @memberof WmtsBasemapWebRequestModelParameters
+   */
+  tileMatrixIdentifier?: string;
 }

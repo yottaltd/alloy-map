@@ -1,7 +1,6 @@
-// tslint:disable
 
 /**
- * 
+ * Project close web request model
  * @export
  * @interface ProjectCloseWebRequestModel
  */

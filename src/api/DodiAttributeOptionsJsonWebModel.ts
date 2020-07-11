@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 import { JObject } from './JObject';
 /**
@@ -8,7 +7,7 @@ import { JObject } from './JObject';
  */
 export interface DodiAttributeOptionsJsonWebModel extends DodiAttributeOptionsWebModelBase {
   /**
-   * 
+   * The optional default value of this attribute
    * @type {JObject}
    * @memberof DodiAttributeOptionsJsonWebModel
    */

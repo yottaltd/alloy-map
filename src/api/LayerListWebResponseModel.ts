@@ -1,7 +1,6 @@
-// tslint:disable
 import { LayerWithOperationsSummaryWebResponseModel } from './LayerWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for a list layers operation
+ * 
  * @export
  * @interface LayerListWebResponseModel
  */

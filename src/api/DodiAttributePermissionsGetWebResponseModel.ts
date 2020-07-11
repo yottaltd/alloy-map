@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiAttributePermissionResponseWebModel } from './DodiAttributePermissionResponseWebModel';
 /**
  * Web model for a dodi attribute permissions get operation

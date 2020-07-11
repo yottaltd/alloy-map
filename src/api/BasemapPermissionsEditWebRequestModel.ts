@@ -1,6 +1,4 @@
-// tslint:disable
 import { BasemapPermissionWebModel } from './BasemapPermissionWebModel';
-import { Basemap } from './Basemap';
 /**
  * Web model for a basemap permissions get operation
  * @export

@@ -1,4 +1,3 @@
-// tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { RouteStopWebModelBase } from './RouteStopWebModelBase';
 /**
@@ -14,7 +13,7 @@ export interface DrivingRouteCreateWebRequestModel {
    */
   name: string;
   /**
-   * The stops to route along, these are either lon lat coordinates or tasks item ids to visit.
+   * The stops to route along, these are either lon lat coordinates or tasks/waypoints item ids to visit.
    * @type {Array<RouteStopWebModelBase>}
    * @memberof DrivingRouteCreateWebRequestModel
    */

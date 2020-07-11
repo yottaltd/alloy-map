@@ -1,4 +1,3 @@
-// tslint:disable
 import { ForgeUserPermission } from './ForgeUserPermission';
 /**
  * Forge user web model

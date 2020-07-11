@@ -1,4 +1,3 @@
-// tslint:disable
 import { ForgeUserWebModel } from './ForgeUserWebModel';
 /**
  * Get forge user response

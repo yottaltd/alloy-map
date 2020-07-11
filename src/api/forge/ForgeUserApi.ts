@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { UserCreateWebRequestModel } from './UserCreateWebRequestModel';
 import { UserEditWebRequestModel } from './UserEditWebRequestModel';
@@ -25,49 +24,52 @@ export class ForgeUserApi extends BaseAPI {
   /**
    * 
    * @summary Delete a user
-   * @param {string} email user to get
+   * @param {string} username user to get
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeUserApi
    */
-  public userDelete(email: string, options?: any) {
-    return ForgeUserApiFp(this.configuration).userDelete(email, options)(this.fetch, this.basePath);
+  public userDelete(username: string, options?: any) {
+    return ForgeUserApiFp(this.configuration).userDelete(username, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary Edit a user in the master
-   * @param {string} email 
+   * @param {string} username 
    * @param {UserEditWebRequestModel} model 
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeUserApi
    */
-  public userEdit(email: string, model: UserEditWebRequestModel, options?: any) {
-    return ForgeUserApiFp(this.configuration).userEdit(email, model, options)(this.fetch, this.basePath);
+  public userEdit(username: string, model: UserEditWebRequestModel, options?: any) {
+    return ForgeUserApiFp(this.configuration).userEdit(username, model, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary Get a user
-   * @param {string} email user to get
+   * @param {string} username user to get
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeUserApi
    */
-  public userGet(email: string, options?: any) {
-    return ForgeUserApiFp(this.configuration).userGet(email, options)(this.fetch, this.basePath);
+  public userGet(username: string, options?: any) {
+    return ForgeUserApiFp(this.configuration).userGet(username, options)(this.fetch, this.basePath);
   }
 
   /**
    * 
    * @summary List users
+   * @param {string} [query] Optional query to filter the users by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeUserApi
    */
-  public userList(options?: any) {
-    return ForgeUserApiFp(this.configuration).userList(options)(this.fetch, this.basePath);
+  public userList(query?: string, page?: number, pageSize?: number, options?: any) {
+    return ForgeUserApiFp(this.configuration).userList(query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

@@ -1,24 +1,23 @@
-// tslint:disable
-import { CustomReportControlPropertyWebModelOfNullableOfBoolean } from './CustomReportControlPropertyWebModelOfNullableOfBoolean';
-import { CustomReportControlPropertyWebModelOfNullableOfHorizontalStackAlign } from './CustomReportControlPropertyWebModelOfNullableOfHorizontalStackAlign';
+import { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
+import { CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign } from './CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign';
 import { HorizontalStackAlign } from './HorizontalStackAlign';
 import { CustomReportControlWithControlsWebModel } from './CustomReportControlWithControlsWebModel';
 /**
- * Custom report control horizontal splitter
+ * 
  * @export
  * @interface CustomReportControlHorizontalStackFlowWebModel
  */
 export interface CustomReportControlHorizontalStackFlowWebModel extends CustomReportControlWithControlsWebModel {
   /**
    * Optional alignment for the horizontal stack, will default to left aligned
-   * @type {CustomReportControlPropertyWebModelOfNullableOfHorizontalStackAlign}
+   * @type {CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign}
    * @memberof CustomReportControlHorizontalStackFlowWebModel
    */
-  align?: CustomReportControlPropertyWebModelOfNullableOfHorizontalStackAlign;
+  align?: CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign;
   /**
    * Optional property to allow wrapping, by default content will not wrap and be forced onto the same line
-   * @type {CustomReportControlPropertyWebModelOfNullableOfBoolean}
+   * @type {CustomReportControlPropertyWebModelOfNullableBoolean}
    * @memberof CustomReportControlHorizontalStackFlowWebModel
    */
-  wrap?: CustomReportControlPropertyWebModelOfNullableOfBoolean;
+  wrap?: CustomReportControlPropertyWebModelOfNullableBoolean;
 }

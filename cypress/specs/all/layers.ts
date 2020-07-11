@@ -23,7 +23,9 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -54,7 +56,9 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
       const layer = new AlloyNetworkLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -85,7 +89,9 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -119,17 +125,20 @@ export default function(mapData: MapData) {
         new AlloyCoordinate(mapCentre.lon, mapCentre.lat),
         new AlloyCoordinate(mapCentre.lon + 2, mapCentre.lat + 2),
       );
+      const id = 'layerId';
       const layerCode = 'myFakeLayer';
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
         styles,
       });
       const layerWithSameCode = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -157,13 +166,17 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
+      const idOther = 'testLayerOther';
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
         styles,
       });
       const otherLayer = new AlloyClusterLayer({
+        id: idOther,
         bounds,
         layerCode: layerCodeOther,
         map: mapData.map,

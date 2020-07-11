@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowPermissionResponseWebModel } from './WorkflowPermissionResponseWebModel';
 /**
  * Web model for a workflow permissions get operation

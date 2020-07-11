@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Master backups get response

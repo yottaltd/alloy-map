@@ -1,9 +1,8 @@
-// tslint:disable
 import { ExtendedBulkApiRequestBase } from './ExtendedBulkApiRequestBase';
 import { ItemEditWebRequestModel } from './ItemEditWebRequestModel';
 import { ExtendedBulkApi } from './ExtendedBulkApi';
 /**
- * Web request model to edit a item
+ * 
  * @export
  * @interface ExtendedBulkEditWebRequestModel
  */

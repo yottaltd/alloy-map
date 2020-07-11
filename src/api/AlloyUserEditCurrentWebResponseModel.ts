@@ -1,4 +1,3 @@
-// tslint:disable
 import { AlloyCurrentUserWebModel } from './AlloyCurrentUserWebModel';
 /**
  * Web response model for editing the current user

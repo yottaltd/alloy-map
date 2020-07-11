@@ -1,4 +1,3 @@
-// tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { ImportMode } from './ImportMode';
 import { ImportSettingsBaseWebModel } from './ImportSettingsBaseWebModel';

@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowAccessAdvisorWebModel } from './WorkflowAccessAdvisorWebModel';
 /**
  * 

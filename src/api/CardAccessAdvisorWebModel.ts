@@ -1,4 +1,3 @@
-// tslint:disable
 import { CardAllowedAction } from './CardAllowedAction';
 import { CardWebModel } from './CardWebModel';
 /**

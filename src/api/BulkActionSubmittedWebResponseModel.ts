@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Response model for submitted bulk actions

@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomerGetWebResponseModel } from './CustomerGetWebResponseModel';
 /**
  * Installed customer module response

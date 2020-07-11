@@ -1,4 +1,3 @@
-// tslint:disable
 import { LayerStyleWebModel } from './LayerStyleWebModel';
 import { WmsLayerStyleLegendWebModel } from './WmsLayerStyleLegendWebModel';
 /**

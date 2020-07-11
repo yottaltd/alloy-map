@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomReportDocumentDefinitionWebModelBase } from './CustomReportDocumentDefinitionWebModelBase';
 import { CustomReportWebModel } from './CustomReportWebModel';
 /**

@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemCreateWebResponseModel } from './ItemCreateWebResponseModel';
 import { ItemWebModel } from './ItemWebModel';
 /**

@@ -1,7 +1,6 @@
-// tslint:disable
 import { AlloyUserGroupGetWebResponseModel } from './AlloyUserGroupGetWebResponseModel';
 /**
- * Web response model for a user group list operation
+ * 
  * @export
  * @interface AlloyUserGroupListWebResponseModel
  */

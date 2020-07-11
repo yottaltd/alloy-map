@@ -1,4 +1,4 @@
-// tslint:disable
+import { BackgroundTaskStorageCreateWebRequestModel } from './BackgroundTaskStorageCreateWebRequestModel';
 import { ServiceProviderDefinitionBase } from './ServiceProviderDefinitionBase';
 /**
  * Region Create request
@@ -24,4 +24,10 @@ export interface MasterCreateWebRequestModel {
    * @memberof MasterCreateWebRequestModel
    */
   serviceProvider: ServiceProviderDefinitionBase;
+  /**
+   * The information to create the first background task storage
+   * @type {BackgroundTaskStorageCreateWebRequestModel}
+   * @memberof MasterCreateWebRequestModel
+   */
+  backgroundTaskStorage: BackgroundTaskStorageCreateWebRequestModel;
 }

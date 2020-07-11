@@ -1,9 +1,8 @@
-// tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { ItemChangeType } from './ItemChangeType';
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
- * Model for a trigger that causes a workflow to run when items are created, edited or deleted.
+ * 
  * @export
  * @interface EventTrigger
  */

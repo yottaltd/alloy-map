@@ -16,7 +16,7 @@ export interface AlloyWmsLayerOptions {
   options: AlloyWmsParameters;
 
   /**
-   * optional id for custom layer
+   * id for wms layer, must be unique
    */
-  id?: string;
+  id: string;
 }

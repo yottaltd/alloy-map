@@ -1,4 +1,3 @@
-// tslint:disable
 import { ClusterSpecOptions } from './ClusterSpecOptions';
 import { ClusterState } from './ClusterState';
 /**

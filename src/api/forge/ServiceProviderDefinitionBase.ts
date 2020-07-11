@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Service provider for alloy

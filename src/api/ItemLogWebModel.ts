@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
 import { ItemChangeType } from './ItemChangeType';
 /**

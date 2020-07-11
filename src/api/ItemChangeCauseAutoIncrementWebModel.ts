@@ -1,7 +1,7 @@
-// tslint:disable
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
+import { ItemChangeCauseAutoIncrement } from './ItemChangeCauseAutoIncrement';
 /**
- * Item change cause auto increment web model
+ * 
  * @export
  * @interface ItemChangeCauseAutoIncrementWebModel
  */

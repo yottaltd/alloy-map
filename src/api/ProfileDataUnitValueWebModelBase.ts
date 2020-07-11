@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Base class for the value of an element of profile data

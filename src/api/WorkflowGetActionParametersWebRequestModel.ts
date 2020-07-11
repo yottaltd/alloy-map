@@ -1,5 +1,5 @@
-// tslint:disable
 import { WorkflowActionParameterValueWebModelBase } from './WorkflowActionParameterValueWebModelBase';
+import { WorkflowActionVariableWebModel } from './WorkflowActionVariableWebModel';
 /**
  * Web request model for a Workflow add action operation
  * @export
@@ -24,4 +24,10 @@ export interface WorkflowGetActionParametersWebRequestModel {
    * @memberof WorkflowGetActionParametersWebRequestModel
    */
   parameters?: Array<WorkflowActionParameterValueWebModelBase>;
+  /**
+   * The variables belonging to this action
+   * @type {Array<WorkflowActionVariableWebModel>}
+   * @memberof WorkflowGetActionParametersWebRequestModel
+   */
+  variables?: Array<WorkflowActionVariableWebModel>;
 }

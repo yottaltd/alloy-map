@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsJsonNode } from './AqsJsonNode';
 /**
  * Web model for a card query which is either an Aqs Query or an Aqs MathAggregation
@@ -24,4 +23,10 @@ export interface CardQueryWebModel {
    * @memberof CardQueryWebModel
    */
   aqs: AqsJsonNode;
+  /**
+   * The value for this card query. Only available if the card has already been precomputed
+   * @type {number}
+   * @memberof CardQueryWebModel
+   */
+  value?: number;
 }

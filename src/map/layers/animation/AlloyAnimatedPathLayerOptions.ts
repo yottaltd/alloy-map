@@ -10,7 +10,7 @@ export interface AlloyAnimatedPathLayerOptions {
   map: AlloyMap;
 
   /**
-   * Optional id for animation layer
+   * id for animation layer, must be unique
    */
-  id?: string;
+  id: string;
 }

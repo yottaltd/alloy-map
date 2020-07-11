@@ -2,6 +2,7 @@ import { debug, Debugger } from 'debug';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyBounds } from '../map/core/AlloyBounds';
 import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
+import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
 
 /**
  * tag names used in WFS GetCapabilties response FeatureType that are used to get info
@@ -55,7 +56,10 @@ export abstract class WfsVersionParser {
     return {
       name: nameValue,
       title: titleValue,
-      bbox: AlloyBounds.fromMapExtent(wgs84bboxValue),
+      bbox: new AlloyBounds(
+        new AlloyCoordinate(wgs84bboxValue[0], wgs84bboxValue[1]),
+        new AlloyCoordinate(wgs84bboxValue[2], wgs84bboxValue[3]),
+      ),
       epsg: epsgValue,
     };
   }

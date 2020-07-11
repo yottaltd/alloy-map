@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -7,10 +6,10 @@ import { CreateForgeUserWebRequestModel } from './CreateForgeUserWebRequestModel
 import { CreateForgeUserWebResponseModel } from './CreateForgeUserWebResponseModel';
 import { ForgeUserPermission } from './ForgeUserPermission';
 import { GetForgeUserWebResponseModel } from './GetForgeUserWebResponseModel';
-import { ListForgeUsersWebResponseModel } from './ListForgeUsersWebResponseModel';
 import { SetForgeUserPasswordWebRequestModel } from './SetForgeUserPasswordWebRequestModel';
 import { SetForgeUserPermissionsWebRequestModel } from './SetForgeUserPermissionsWebRequestModel';
 import { SetForgeUserPermissionsWebResponseModel } from './SetForgeUserPermissionsWebResponseModel';
+import { ListForgeUsersWebResponseModel } from './ListForgeUsersWebResponseModel';
 import { ForgeForgeUserApiFetchParamCreator } from './ForgeForgeUserApiFetchParamCreator';
 import { ForgeForgeUserApi } from './ForgeForgeUserApi';
 import { ForgeUserApiFetchParamCreator } from './ForgeUserApiFetchParamCreator';
@@ -100,11 +99,14 @@ export const ForgeForgeUserApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary List users in the managed region
+     * @param {string} [query] Optional query to filter the forge users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    forgeUserListForgeUsers(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListForgeUsersWebResponseModel> {
-      const localVarFetchArgs = ForgeForgeUserApiFetchParamCreator(configuration).forgeUserListForgeUsers(options);
+    forgeUserListForgeUsers(query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListForgeUsersWebResponseModel> {
+      const localVarFetchArgs = ForgeForgeUserApiFetchParamCreator(configuration).forgeUserListForgeUsers(query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

@@ -1,4 +1,3 @@
-// tslint:disable
 import { LayerAllowedAction } from './LayerAllowedAction';
 import { LayerWebModel } from './LayerWebModel';
 /**

@@ -1,7 +1,6 @@
-// tslint:disable
 import { DodiAttributeAllowedAction } from './DodiAttributeAllowedAction';
 /**
- * Web model for a dodi attribute permission. It contains the information about whether an attribute cannot be accessed, is read only, or is readable and writable by the group
+ * 
  * @export
  * @interface DodiAttributePermissionResponseWebModel
  */
@@ -12,6 +11,12 @@ export interface DodiAttributePermissionResponseWebModel {
    * @memberof DodiAttributePermissionResponseWebModel
    */
   userGroupCode: string;
+  /**
+   * The Guc of the dodi or attribute this permission is declared on
+   * @type {string}
+   * @memberof DodiAttributePermissionResponseWebModel
+   */
+  parent: string;
   /**
    * The operation allowed for this attribute
    * @type {DodiAttributeAllowedAction}

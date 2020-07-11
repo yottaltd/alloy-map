@@ -1,4 +1,3 @@
-// tslint:disable
 import { TaskState } from './TaskState';
 /**
  * Region Get response

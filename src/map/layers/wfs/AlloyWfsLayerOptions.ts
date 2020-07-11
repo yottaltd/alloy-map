@@ -11,9 +11,9 @@ export interface AlloyWfsLayerOptions {
   map: AlloyMap;
 
   /**
-   * optional id for custom layer
+   * id for wfs layer, must be unique
    */
-  id?: string;
+  id: string;
 
   /**
    * Wfs Parameters for ol layers

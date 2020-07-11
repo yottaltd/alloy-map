@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ExtendedBulkWebRequestModel } from './ExtendedBulkWebRequestModel';
 import { ExtendedBulkApiFp } from './ExtendedBulkApiFp';

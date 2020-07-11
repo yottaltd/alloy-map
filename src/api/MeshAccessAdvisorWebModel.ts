@@ -1,4 +1,3 @@
-// tslint:disable
 import { MeshAllowedAction } from './MeshAllowedAction';
 import { MeshWebModel } from './MeshWebModel';
 /**

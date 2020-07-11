@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -14,8 +13,8 @@ export const TaskApiFp = function(configuration?: Configuration) {
   return {
     /**
      * 
-     * @summary Get a task by its AId
-     * @param {string} id The AId of the task to get
+     * @summary Get a task by its identifier
+     * @param {string} id The identifier of the task to get
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

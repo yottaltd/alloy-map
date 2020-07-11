@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Custom report document definition web model

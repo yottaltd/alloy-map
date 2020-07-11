@@ -1,5 +1,4 @@
-// tslint:disable
-import { Basemap } from './Basemap';
+
 /**
  * Web model for basemap operation summary
  * @export

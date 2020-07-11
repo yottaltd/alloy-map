@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { ForgeRegionApiFp } from './ForgeRegionApiFp';

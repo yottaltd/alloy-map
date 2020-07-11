@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { ApplicableDodisAddWebRequestModel } from './ApplicableDodisAddWebRequestModel';
@@ -72,8 +71,8 @@ export const ExtendedInspectionApiFactory = function (configuration?: Configurat
      * List inspectable dodis for this inspection design code, usually assets e.g. Lamp inspection for street lights not benches.
      * @summary List applicable inspectable dodis for this inspection type
      * @param {string} code The inspection design Guc to fetch applicable inspectable item designs for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -85,8 +84,8 @@ export const ExtendedInspectionApiFactory = function (configuration?: Configurat
      * @summary List applicable inspection designs for ALL given job, defect, inspection or asset designs
      * @param {ItemDesignsForFilterWebRequestModel} itemDesignsModel The model containing the item design Guc info
      * @param {string} [query] Optional query to filter the applicable dodi containers or work items by. Make sure to use 3+ characters for work item queries otherwise it will try to match the query to the full item title.
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

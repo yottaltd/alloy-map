@@ -1,4 +1,3 @@
-// tslint:disable
 import { ExtendedBulkApiRequestBase } from './ExtendedBulkApiRequestBase';
 import { ExtendedBulkApi } from './ExtendedBulkApi';
 /**

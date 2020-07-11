@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { MasterBackupRequestModel } from './MasterBackupRequestModel';
@@ -87,11 +86,13 @@ export const ForgeMasterApiFactory = function (configuration?: Configuration, fe
     /**
      * 
      * @summary Backups List
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    masterListBackups(options?: any) {
-      return ForgeMasterApiFp(configuration).masterListBackups(options)(fetch, basePath);
+    masterListBackups(page?: number, pageSize?: number, options?: any) {
+      return ForgeMasterApiFp(configuration).masterListBackups(page, pageSize, options)(fetch, basePath);
     },
     /**
      * 
@@ -121,6 +122,15 @@ export const ForgeMasterApiFactory = function (configuration?: Configuration, fe
      */
     masterRemoveSetting(key: string, options?: any) {
       return ForgeMasterApiFp(configuration).masterRemoveSetting(key, options)(fetch, basePath);
+    },
+    /**
+     * Resets the recurring background tasks for the entire region and it should thus be used with care
+     * @summary Resets the recurring background tasks for the region
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    masterResetRecurringBackgroundTasks(options?: any) {
+      return ForgeMasterApiFp(configuration).masterResetRecurringBackgroundTasks(options)(fetch, basePath);
     },
     /**
      * 

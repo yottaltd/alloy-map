@@ -1,7 +1,6 @@
-// tslint:disable
 import { ServiceProviderDefinitionBase } from './ServiceProviderDefinitionBase';
 /**
- * Local service provider definition
+ * 
  * @export
  * @interface LocalServiceProvider
  */

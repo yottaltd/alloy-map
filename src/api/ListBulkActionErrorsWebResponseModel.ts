@@ -1,7 +1,6 @@
-// tslint:disable
 import { BulkActionErrorWebModel } from './BulkActionErrorWebModel';
 /**
- * Response model for bulk action errors
+ * 
  * @export
  * @interface ListBulkActionErrorsWebResponseModel
  */
