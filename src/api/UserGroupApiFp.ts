@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -121,13 +120,14 @@ export const UserGroupApiFp = function(configuration?: Configuration) {
      * @param {string} [query] Optional query to filter the user groups by
      * @param {'Core' | 'Module' | 'Customer'} [context] Optional Context filter
      * @param {string} [username] Optional username parameter to return only groups containing the correspondent user
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [role] Optional role parameter to return only groups that are part of this role
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserGroupListWebResponseModel> {
-      const localVarFetchArgs = UserGroupApiFetchParamCreator(configuration).userGroupList(query, context, username, page, pageSize, options);
+    userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, role?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AlloyUserGroupListWebResponseModel> {
+      const localVarFetchArgs = UserGroupApiFetchParamCreator(configuration).userGroupList(query, context, username, role, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

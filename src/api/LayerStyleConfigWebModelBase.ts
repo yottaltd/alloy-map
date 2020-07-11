@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * The parent abstract class for a layer style config object

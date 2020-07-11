@@ -1,7 +1,6 @@
-// tslint:disable
 import { DesignInterfaceWithOperationsSummaryWebResponseModel } from './DesignInterfaceWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for a design interface list operation
+ * 
  * @export
  * @interface DesignInterfaceListWebResponseModel
  */

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web response model for a backup file upload

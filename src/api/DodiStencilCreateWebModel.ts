@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiStencilControlWebModel } from './DodiStencilControlWebModel';
 /**
  * Web model for stencil

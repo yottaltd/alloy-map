@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * The types of item supported by the extended api

@@ -1,4 +1,3 @@
-// tslint:disable
 import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
 /**
  * Web model for a dodi attribute

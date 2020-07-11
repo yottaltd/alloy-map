@@ -1,4 +1,3 @@
-// tslint:disable
 import { CardComputedWebModel } from './CardComputedWebModel';
 /**
  * Web model for a card

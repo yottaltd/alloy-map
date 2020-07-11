@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web model for a card query result
@@ -13,9 +12,9 @@ export interface CardQueryResultWebModel {
    */
   name: string;
   /**
-   * The AQS query to execute and display the result for in the card
+   * The value of the query result
    * @type {number}
    * @memberof CardQueryResultWebModel
    */
-  value: number;
+  value?: number;
 }

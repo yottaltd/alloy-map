@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { CreateForgeUserWebRequestModel } from './CreateForgeUserWebRequestModel';
 import { ForgeUserPermission } from './ForgeUserPermission';
@@ -64,12 +63,15 @@ export class ForgeForgeUserApi extends BaseAPI {
   /**
    * 
    * @summary List users in the managed region
+   * @param {string} [query] Optional query to filter the forge users by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeForgeUserApi
    */
-  public forgeUserListForgeUsers(options?: any) {
-    return ForgeForgeUserApiFp(this.configuration).forgeUserListForgeUsers(options)(this.fetch, this.basePath);
+  public forgeUserListForgeUsers(query?: string, page?: number, pageSize?: number, options?: any) {
+    return ForgeForgeUserApiFp(this.configuration).forgeUserListForgeUsers(query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Response model containing the url to redirect a user to for third party authentication

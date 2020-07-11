@@ -1,7 +1,6 @@
-// tslint:disable
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 /**
- * Custom report control with controls
+ * 
  * @export
  * @interface CustomReportControlWithControlsWebModel
  */

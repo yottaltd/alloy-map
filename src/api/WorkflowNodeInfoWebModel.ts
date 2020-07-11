@@ -1,7 +1,5 @@
-// tslint:disable
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
 import { DodiWebModel } from './DodiWebModel';
-import { Exception } from './Exception';
-import { AlloyException } from './AlloyException';
 /**
  * base class representing a node in a workflow - action or trigger
  * @export
@@ -22,8 +20,8 @@ export interface WorkflowNodeInfoWebModel {
   output?: DodiWebModel;
   /**
    * If set, the workflow is malformed at least at this node, such that the output could not be computed. This workflow will always produce errors when run.
-   * @type {AlloyException}
+   * @type {AlloyExceptionWebModel}
    * @memberof WorkflowNodeInfoWebModel
    */
-  error?: AlloyException;
+  error?: AlloyExceptionWebModel;
 }

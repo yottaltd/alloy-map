@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { UserCreateWebRequestModel } from './UserCreateWebRequestModel';
@@ -24,42 +23,45 @@ export const ForgeUserApiFactory = function (configuration?: Configuration, fetc
     /**
      * 
      * @summary Delete a user
-     * @param {string} email user to get
+     * @param {string} username user to get
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userDelete(email: string, options?: any) {
-      return ForgeUserApiFp(configuration).userDelete(email, options)(fetch, basePath);
+    userDelete(username: string, options?: any) {
+      return ForgeUserApiFp(configuration).userDelete(username, options)(fetch, basePath);
     },
     /**
      * 
      * @summary Edit a user in the master
-     * @param {string} email 
+     * @param {string} username 
      * @param {UserEditWebRequestModel} model 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userEdit(email: string, model: UserEditWebRequestModel, options?: any) {
-      return ForgeUserApiFp(configuration).userEdit(email, model, options)(fetch, basePath);
+    userEdit(username: string, model: UserEditWebRequestModel, options?: any) {
+      return ForgeUserApiFp(configuration).userEdit(username, model, options)(fetch, basePath);
     },
     /**
      * 
      * @summary Get a user
-     * @param {string} email user to get
+     * @param {string} username user to get
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userGet(email: string, options?: any) {
-      return ForgeUserApiFp(configuration).userGet(email, options)(fetch, basePath);
+    userGet(username: string, options?: any) {
+      return ForgeUserApiFp(configuration).userGet(username, options)(fetch, basePath);
     },
     /**
      * 
      * @summary List users
+     * @param {string} [query] Optional query to filter the users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userList(options?: any) {
-      return ForgeUserApiFp(configuration).userList(options)(fetch, basePath);
+    userList(query?: string, page?: number, pageSize?: number, options?: any) {
+      return ForgeUserApiFp(configuration).userList(query, page, pageSize, options)(fetch, basePath);
     },
   };
 };

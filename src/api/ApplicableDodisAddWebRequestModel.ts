@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web request model to add the specified dodi codes to the filter design

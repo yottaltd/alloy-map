@@ -1,7 +1,6 @@
-// tslint:disable
 import { AuditLogWebModel } from './AuditLogWebModel';
 /**
- * Web response model for an audit log list operation
+ * 
  * @export
  * @interface AuditLogListWebResponseModel
  */

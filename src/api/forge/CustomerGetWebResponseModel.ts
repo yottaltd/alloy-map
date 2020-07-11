@@ -1,4 +1,3 @@
-// tslint:disable
 import { CustomerGetWebResponseModelModuleCode } from './CustomerGetWebResponseModelModuleCode';
 /**
  * Region Get response

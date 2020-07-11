@@ -66,6 +66,8 @@ export { AlloyLayerWithFeaturesWithItemId } from './map/layers/AlloyLayerWithFea
 export { AlloyStyledLayer } from './map/layers/AlloyStyledLayer';
 export { AlloyAnimatedPathLayer } from './map/layers/animation/AlloyAnimatedPathLayer';
 export { AlloyAnimatedPathLayerOptions } from './map/layers/animation/AlloyAnimatedPathLayerOptions';
+export { AlloyBasicLayer } from './map/layers/basic/AlloyBasicLayer';
+export { AlloyBasicLayerOptions } from './map/layers/basic/AlloyBasicLayerOptions';
 export { AlloyCableLayer } from './map/layers/cable/AlloyCableLayer';
 export { AlloyCableLayerOptions } from './map/layers/cable/AlloyCableLayerOptions';
 export { AlloyClusterLayer } from './map/layers/cluster/AlloyClusterLayer';

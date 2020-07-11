@@ -1,7 +1,6 @@
-// tslint:disable
 import { ServiceProviderDefinitionBase } from './ServiceProviderDefinitionBase';
 /**
- * Definition of settings needed by the aws service provider
+ * 
  * @export
  * @interface AwsServiceProvider
  */
@@ -30,6 +29,12 @@ export interface AwsServiceProvider extends ServiceProviderDefinitionBase {
    * @memberof AwsServiceProvider
    */
   fileBucket: string;
+  /**
+   * File provider public bucket for sharing files externally
+   * @type {string}
+   * @memberof AwsServiceProvider
+   */
+  filePublicBucket: string;
   /**
    * Email provider region
    * @type {string}

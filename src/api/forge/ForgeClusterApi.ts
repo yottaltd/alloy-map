@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ClusterCreateWebRequestModel } from './ClusterCreateWebRequestModel';
 import { ForgeClusterApiFp } from './ForgeClusterApiFp';
@@ -48,12 +47,14 @@ export class ForgeClusterApi extends BaseAPI {
   /**
    * 
    * @summary List clusters
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeClusterApi
    */
-  public clusterList(options?: any) {
-    return ForgeClusterApiFp(this.configuration).clusterList(options)(this.fetch, this.basePath);
+  public clusterList(page?: number, pageSize?: number, options?: any) {
+    return ForgeClusterApiFp(this.configuration).clusterList(page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

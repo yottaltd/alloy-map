@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemWebModel } from './ItemWebModel';
 /**
  * Web model response for job editing

@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowActionGroupParameterTargetWebModel } from './WorkflowActionGroupParameterTargetWebModel';
 /**
  * Web model for action group parameter

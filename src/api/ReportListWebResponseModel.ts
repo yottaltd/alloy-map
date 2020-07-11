@@ -1,7 +1,6 @@
-// tslint:disable
-import { DesignWebModel } from './DesignWebModel';
+import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for reports list operations
+ * 
  * @export
  * @interface ReportListWebResponseModel
  */
@@ -20,8 +19,8 @@ export interface ReportListWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {Array<DesignWebModel>}
+   * @type {Array<DesignWithOperationsSummaryWebResponseModel>}
    * @memberof ReportListWebResponseModel
    */
-  results: Array<DesignWebModel>;
+  results: Array<DesignWithOperationsSummaryWebResponseModel>;
 }

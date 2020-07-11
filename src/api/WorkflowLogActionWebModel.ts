@@ -1,10 +1,9 @@
-// tslint:disable
 import { LogAction } from './LogAction';
 import { WorkflowActionParameterValueWebModelBase } from './WorkflowActionParameterValueWebModelBase';
 import { WorkflowLogNodeWebModelBase } from './WorkflowLogNodeWebModelBase';
 import { WorkflowNodeRunDataWebModel } from './WorkflowNodeRunDataWebModel';
 /**
- * Model representing the log of an action node
+ * 
  * @export
  * @interface WorkflowLogActionWebModel
  */

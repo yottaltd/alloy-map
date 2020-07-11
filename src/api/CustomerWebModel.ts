@@ -1,4 +1,3 @@
-// tslint:disable
 import { BoundingBoxWebModel } from './BoundingBoxWebModel';
 import { CustomerSettingWebModel } from './CustomerSettingWebModel';
 /**

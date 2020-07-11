@@ -1,12 +1,10 @@
-// tslint:disable
 import { BasemapWebRequestModelParametersBase } from './BasemapWebRequestModelParametersBase';
 import { BoundingBoxWebModel } from './BoundingBoxWebModel';
 import { LayerWebModel } from './LayerWebModel';
 import { WmsLayerWebModel } from './WmsLayerWebModel';
 import { WmsTileWebModel } from './WmsTileWebModel';
-import { Basemap } from './Basemap';
 /**
- * Web Map Service Custom Basemap model for create and edit parameters
+ * 
  * @export
  * @interface WmsBasemapWebRequestModelParameters
  */

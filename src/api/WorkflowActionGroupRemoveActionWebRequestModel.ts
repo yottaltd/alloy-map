@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web request model for a workflow action group edit action operation

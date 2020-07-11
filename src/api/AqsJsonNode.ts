@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsItemType } from './AqsItemType';
 import { JObject } from './JObject';
 /**

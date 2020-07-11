@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Set password request

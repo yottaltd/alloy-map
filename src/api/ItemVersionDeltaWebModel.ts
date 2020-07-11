@@ -1,4 +1,3 @@
-// tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { ContainerWebModelOfCollectionCode } from './ContainerWebModelOfCollectionCode';
 import { ContainerWebModelOfDateTime } from './ContainerWebModelOfDateTime';

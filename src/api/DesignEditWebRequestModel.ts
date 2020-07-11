@@ -1,4 +1,3 @@
-// tslint:disable
 import { CollectionCode } from './CollectionCode';
 import { DesignGeometryWebModel } from './DesignGeometryWebModel';
 import { DodiStencilEditWebModel } from './DodiStencilEditWebModel';

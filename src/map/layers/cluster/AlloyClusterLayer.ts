@@ -46,7 +46,7 @@ export class AlloyClusterLayer
    * @param options the options for the layer
    */
   constructor(options: AlloyClusterLayerOptions) {
-    super(options.layerCode, options.map, AlloyLayerZIndex.Layers);
+    super(options.id, options.map, AlloyLayerZIndex.Layers);
     this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;

@@ -1,4 +1,3 @@
-// tslint:disable
 import { CardOperationsSummaryWebModel } from './CardOperationsSummaryWebModel';
 import { CardWebModel } from './CardWebModel';
 /**

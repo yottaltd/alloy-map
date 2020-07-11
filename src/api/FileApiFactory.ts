@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { FileMoveWebRequestModel } from './FileMoveWebRequestModel';
@@ -35,14 +34,14 @@ export const FileApiFactory = function (configuration?: Configuration, fetch?: F
      * 
      * @summary Download a file thumbnail
      * @param {string} id The AId of the file to download a thumbnail of
-     * @param {number} width The height of the thumbnail
-     * @param {number} height The height of the thumbnail
-     * @param {'Cover' | 'Contain'} mode The mode to use to resize the image
+     * @param {number} [width] The height of the thumbnail
+     * @param {number} [height] The height of the thumbnail
+     * @param {'Cover' | 'Contain'} [mode] The mode to use to resize the image
      * @param {boolean} [applyContentDispositionHeader] If true, the content disposition header will be returned, triggering a file download from the browser. If false, the header won&#39;t be returned and the image will be displayed as is
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    fileDownloadThumbnail(id: string, width: number, height: number, mode: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any) {
+    fileDownloadThumbnail(id: string, width?: number, height?: number, mode?: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any) {
       return FileApiFp(configuration).fileDownloadThumbnail(id, width, height, mode, applyContentDispositionHeader, options)(fetch, basePath);
     },
     /**

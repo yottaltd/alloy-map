@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Get embed token web response model

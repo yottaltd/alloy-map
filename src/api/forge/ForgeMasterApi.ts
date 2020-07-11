@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { MasterBackupRequestModel } from './MasterBackupRequestModel';
 import { MasterCreateWebRequestModel } from './MasterCreateWebRequestModel';
@@ -100,12 +99,14 @@ export class ForgeMasterApi extends BaseAPI {
   /**
    * 
    * @summary Backups List
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeMasterApi
    */
-  public masterListBackups(options?: any) {
-    return ForgeMasterApiFp(this.configuration).masterListBackups(options)(this.fetch, this.basePath);
+  public masterListBackups(page?: number, pageSize?: number, options?: any) {
+    return ForgeMasterApiFp(this.configuration).masterListBackups(page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -141,6 +142,17 @@ export class ForgeMasterApi extends BaseAPI {
    */
   public masterRemoveSetting(key: string, options?: any) {
     return ForgeMasterApiFp(this.configuration).masterRemoveSetting(key, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Resets the recurring background tasks for the entire region and it should thus be used with care
+   * @summary Resets the recurring background tasks for the region
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof ForgeMasterApi
+   */
+  public masterResetRecurringBackgroundTasks(options?: any) {
+    return ForgeMasterApiFp(this.configuration).masterResetRecurringBackgroundTasks(options)(this.fetch, this.basePath);
   }
 
   /**

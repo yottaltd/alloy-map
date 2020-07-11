@@ -1,7 +1,5 @@
-// tslint:disable
 import { Context } from './Context';
 import { MetadataWebModel } from './MetadataWebModel';
-import { Basemap } from './Basemap';
 /**
  * Base Web model for a basemap
  * @export

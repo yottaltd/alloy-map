@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Forge user permission

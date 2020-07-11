@@ -1,7 +1,6 @@
-// tslint:disable
 import { CardWithOperationsSummaryWebResponseModel } from './CardWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for a list cards operation
+ * 
  * @export
  * @interface CardListWebResponseModel
  */

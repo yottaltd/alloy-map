@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Remove document definition web request model

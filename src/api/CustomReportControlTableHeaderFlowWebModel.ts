@@ -1,5 +1,4 @@
-// tslint:disable
-import { CustomReportControlPropertyWebModelOfNullableOfBoolean } from './CustomReportControlPropertyWebModelOfNullableOfBoolean';
+import { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
 import { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 /**
  * Custom report control table header
@@ -21,8 +20,8 @@ export interface CustomReportControlTableHeaderFlowWebModel {
   text?: CustomReportControlPropertyWebModelOfString;
   /**
    * Whether the table header wraps or not
-   * @type {CustomReportControlPropertyWebModelOfNullableOfBoolean}
+   * @type {CustomReportControlPropertyWebModelOfNullableBoolean}
    * @memberof CustomReportControlTableHeaderFlowWebModel
    */
-  noWrap?: CustomReportControlPropertyWebModelOfNullableOfBoolean;
+  noWrap?: CustomReportControlPropertyWebModelOfNullableBoolean;
 }

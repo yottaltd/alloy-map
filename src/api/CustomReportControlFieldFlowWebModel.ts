@@ -1,11 +1,10 @@
-// tslint:disable
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
-import { CustomReportControlPropertyWebModelOfNullableOfBoolean } from './CustomReportControlPropertyWebModelOfNullableOfBoolean';
-import { CustomReportControlPropertyWebModelOfNullableOfHeaderType } from './CustomReportControlPropertyWebModelOfNullableOfHeaderType';
+import { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
+import { CustomReportControlPropertyWebModelOfNullableHeaderType } from './CustomReportControlPropertyWebModelOfNullableHeaderType';
 import { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 import { HeaderType } from './HeaderType';
 /**
- * Custom report control field web model
+ * 
  * @export
  * @interface CustomReportControlFieldFlowWebModel
  */
@@ -24,14 +23,14 @@ export interface CustomReportControlFieldFlowWebModel extends CustomReportContro
   value?: CustomReportControlPropertyWebModelOfString;
   /**
    * Optional property to enforce no wrapping ie. a single line rather than multiline (if content is large)
-   * @type {CustomReportControlPropertyWebModelOfNullableOfBoolean}
+   * @type {CustomReportControlPropertyWebModelOfNullableBoolean}
    * @memberof CustomReportControlFieldFlowWebModel
    */
-  noWrap?: CustomReportControlPropertyWebModelOfNullableOfBoolean;
+  noWrap?: CustomReportControlPropertyWebModelOfNullableBoolean;
   /**
    * The type of header to use for default data source column names
-   * @type {CustomReportControlPropertyWebModelOfNullableOfHeaderType}
+   * @type {CustomReportControlPropertyWebModelOfNullableHeaderType}
    * @memberof CustomReportControlFieldFlowWebModel
    */
-  headerType?: CustomReportControlPropertyWebModelOfNullableOfHeaderType;
+  headerType?: CustomReportControlPropertyWebModelOfNullableHeaderType;
 }

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -9,9 +8,13 @@ import { CardEditWebRequestModel } from './CardEditWebRequestModel';
 import { CardPermissionsEditWebRequestModel } from './CardPermissionsEditWebRequestModel';
 import { CardPermissionsGetWebResponseModel } from './CardPermissionsGetWebResponseModel';
 import { CardQueryCreateWebModel } from './CardQueryCreateWebModel';
+import { CardQueryCreateWebResponseModel } from './CardQueryCreateWebResponseModel';
 import { CardQueryDeleteWebRequestModel } from './CardQueryDeleteWebRequestModel';
+import { CardQueryEditWebRequestModel } from './CardQueryEditWebRequestModel';
 import { CardWithOperationsSummaryWebResponseModel } from './CardWithOperationsSummaryWebResponseModel';
-import { CardAccessAdvisorListWebResponseModel } from './CardAccessAdvisorListWebResponseModel';
+import { CardWithPermissionsWebResponseModel } from './CardWithPermissionsWebResponseModel';
+import { CardAccessAdvisorByRoleListWebResponseModel } from './CardAccessAdvisorByRoleListWebResponseModel';
+import { CardAccessAdvisorByUserListWebResponseModel } from './CardAccessAdvisorByUserListWebResponseModel';
 import { CardListWebResponseModel } from './CardListWebResponseModel';
 import { CardApiFetchParamCreator } from './CardApiFetchParamCreator';
 import { CardApi } from './CardApi';
@@ -23,15 +26,60 @@ export const CardApiFp = function(configuration?: Configuration) {
   return {
     /**
      * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists user cards with their winning permission
+     * @summary Use api/card/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get card access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardCardAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardAccessAdvisorListWebResponseModel> {
-      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCardAccessAdvisor(username, page, pageSize, options);
+    cardCardAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCardAccessAdvisor(username, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role cards with their winning permission
+     * @param {string} code The code of the role to get card access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardCardAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardAccessAdvisorByRoleListWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCardAccessAdvisorByRole(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user cards with their winning permission
+     * @param {string} username The name of the user to get card access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardCardAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCardAccessAdvisorByUser(username, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -69,7 +117,7 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardCreateQuery(code: string, model: CardQueryCreateWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
+    cardCreateQuery(code: string, model: CardQueryCreateWebModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardQueryCreateWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardCreateQuery(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -149,8 +197,29 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardEditPermissions(code: string, model: CardPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
+    cardEditPermissions(code: string, model: CardPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithPermissionsWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardEditPermissions(code, model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Edits a card query using the information provided in the model
+     * @summary Edit a card query
+     * @param {string} code The Guc of the card to edit the query
+     * @param {string} id The id of the card query to edit
+     * @param {CardQueryEditWebRequestModel} model The card query edit model
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardEditQuery(code: string, id: string, model: CardQueryEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardEditQuery(code, id, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -181,7 +250,7 @@ export const CardApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * Computes the result of the queries in the card matching the specified code and returns them in the response
+     * Computes or returns the result of the queries in the card matching the specified code
      * @summary Get a computed card
      * @param {string} code The Guc of the card to process
      * @param {*} [options] Override http request option.
@@ -203,12 +272,13 @@ export const CardApiFp = function(configuration?: Configuration) {
      * Fetches the permissions of a card by its Guc
      * @summary Get a card permissions by its code
      * @param {string} code The Guc for the card whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGetPermissions(code, username, options);
+    cardGetPermissions(code: string, username?: string, role?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGetPermissions(code, username, role, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -224,13 +294,14 @@ export const CardApiFp = function(configuration?: Configuration) {
      * @summary Get a list of cards
      * @param {string} [query] Optional query to filter the cards by
      * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {'Core' | 'Module' | 'Customer'} [context] The optional cards context to filter on
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardListWebResponseModel> {
-      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardList(query, userGroup, page, pageSize, options);
+    cardList(query?: string, userGroup?: string, context?: 'Core' | 'Module' | 'Customer', page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardListWebResponseModel> {
+      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardList(query, userGroup, context, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

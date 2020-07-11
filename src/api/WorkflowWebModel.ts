@@ -1,5 +1,5 @@
-// tslint:disable
 import { MetadataWebModel } from './MetadataWebModel';
+import { WorkflowFailureNotificationWebModel } from './WorkflowFailureNotificationWebModel';
 import { WorkflowNodeInfoWebModel } from './WorkflowNodeInfoWebModel';
 import { WorkflowTimeConditionWebModel } from './WorkflowTimeConditionWebModel';
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
@@ -39,6 +39,12 @@ export interface WorkflowWebModel {
    * @memberof WorkflowWebModel
    */
   triggerNodeInfo: WorkflowNodeInfoWebModel;
+  /**
+   * Failure notification information for the workflow, see implementations for options.
+   * @type {WorkflowFailureNotificationWebModel}
+   * @memberof WorkflowWebModel
+   */
+  failureNotification?: WorkflowFailureNotificationWebModel;
   /**
    * The code of the workflow
    * @type {string}

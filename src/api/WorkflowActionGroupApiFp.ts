@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -19,7 +18,9 @@ import { WorkflowActionGroupPermissionsGetWebResponseModel } from './WorkflowAct
 import { WorkflowActionGroupRemoveActionWebRequestModel } from './WorkflowActionGroupRemoveActionWebRequestModel';
 import { WorkflowActionGroupRemoveActionWebResponseModel } from './WorkflowActionGroupRemoveActionWebResponseModel';
 import { WorkflowActionGroupWithOperationsSummaryWebResponseModel } from './WorkflowActionGroupWithOperationsSummaryWebResponseModel';
-import { WorkflowActionGroupAccessAdvisorListWebResponseModel } from './WorkflowActionGroupAccessAdvisorListWebResponseModel';
+import { WorkflowActionGroupWithPermissionsWebResponseModel } from './WorkflowActionGroupWithPermissionsWebResponseModel';
+import { WorkflowActionGroupAccessAdvisorByRoleListWebResponseModel } from './WorkflowActionGroupAccessAdvisorByRoleListWebResponseModel';
+import { WorkflowActionGroupAccessAdvisorByUserListWebResponseModel } from './WorkflowActionGroupAccessAdvisorByUserListWebResponseModel';
 import { WorkflowActionGroupListWebResponseModel } from './WorkflowActionGroupListWebResponseModel';
 import { WorkflowActionGroupApiFetchParamCreator } from './WorkflowActionGroupApiFetchParamCreator';
 import { WorkflowActionGroupApi } from './WorkflowActionGroupApi';
@@ -111,7 +112,7 @@ export const WorkflowActionGroupApiFp = function(configuration?: Configuration) 
      * 
      * @summary Edit an action on a workflowActionGroup
      * @param {string} code The code of the workflowActionGroup to edit the action on
-     * @param {string} id The id of the action to remove
+     * @param {string} id The id of the action to edit
      * @param {WorkflowActionGroupEditActionWebRequestModel} model The model containing all the edit action operation details
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -136,7 +137,7 @@ export const WorkflowActionGroupApiFp = function(configuration?: Configuration) 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupEditPermissions(code: string, model: WorkflowActionGroupPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupWithOperationsSummaryWebResponseModel> {
+    workflowActionGroupEditPermissions(code: string, model: WorkflowActionGroupPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupWithPermissionsWebResponseModel> {
       const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupEditPermissions(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -211,12 +212,13 @@ export const WorkflowActionGroupApiFp = function(configuration?: Configuration) 
      * Fetches the permissions of a workflowActionGroup by its Guc
      * @summary Get a workflowActionGroup permissions by its code
      * @param {string} code The Guc for the workflowActionGroup whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupGetPermissions(code, username, options);
+    workflowActionGroupGetPermissions(code: string, username?: string, role?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupGetPermissions(code, username, role, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -231,15 +233,16 @@ export const WorkflowActionGroupApiFp = function(configuration?: Configuration) 
      * 
      * @summary List workflowActionGroups
      * @param {string} [name] The optional workflow Action Group name (full or partial) to filter on
+     * @param {'Core' | 'Module' | 'Customer'} [context] The optional workflow Action Group context to filter on
      * @param {string} [userGroup] Optional Guc to filter workflow Action Groups by. If specified, only the workflow action groups that have this user group code within their permissions are returned
      * @param {string} [actionGroupInputCode] Optional Guc to filter workflow action groups by. If specified, only the workflow action groups that have this dodi code as their declared input type are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupList(name?: string, userGroup?: string, actionGroupInputCode?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupListWebResponseModel> {
-      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupList(name, userGroup, actionGroupInputCode, page, pageSize, options);
+    workflowActionGroupList(name?: string, context?: 'Core' | 'Module' | 'Customer', userGroup?: string, actionGroupInputCode?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupListWebResponseModel> {
+      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupList(name, context, userGroup, actionGroupInputCode, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -273,15 +276,60 @@ export const WorkflowActionGroupApiFp = function(configuration?: Configuration) 
     },
     /**
      * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists user workflowActionGroups with their winning permission
+     * @summary Use api/workflow-action-group/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get workflowActionGroup access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    workflowActionGroupWorkflowActionGroupAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupAccessAdvisorListWebResponseModel> {
-      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupWorkflowActionGroupAccessAdvisor(username, page, pageSize, options);
+    workflowActionGroupWorkflowActionGroupAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupWorkflowActionGroupAccessAdvisor(username, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role workflowActionGroups with their winning permission
+     * @param {string} code The code of the role to get workflowActionGroup access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowActionGroupWorkflowActionGroupAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupAccessAdvisorByRoleListWebResponseModel> {
+      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupWorkflowActionGroupAccessAdvisorByRole(code, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of workflowActionGroups with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user workflowActionGroups with their winning permission
+     * @param {string} username The name of the user to get workflowActionGroup access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    workflowActionGroupWorkflowActionGroupAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WorkflowActionGroupAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = WorkflowActionGroupApiFetchParamCreator(configuration).workflowActionGroupWorkflowActionGroupAccessAdvisorByUser(username, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web request model for a design attribute delete operation

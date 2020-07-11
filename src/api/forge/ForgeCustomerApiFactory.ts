@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { CustomerAddUserRequestModel } from './CustomerAddUserRequestModel';
@@ -147,11 +146,15 @@ export const ForgeCustomerApiFactory = function (configuration?: Configuration, 
     /**
      * 
      * @summary List customers on the region's master
+     * @param {string} [query] Optional query to filter the customers by name
+     * @param {string} [clusterId] Optional query to filter the customers by Cluster Id
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerList(options?: any) {
-      return ForgeCustomerApiFp(configuration).customerList(options)(fetch, basePath);
+    customerList(query?: string, clusterId?: string, page?: number, pageSize?: number, options?: any) {
+      return ForgeCustomerApiFp(configuration).customerList(query, clusterId, page, pageSize, options)(fetch, basePath);
     },
     /**
      * Fetches a paged list of backups sorted by backup taken date in reverse order, most recent first.
@@ -180,11 +183,14 @@ export const ForgeCustomerApiFactory = function (configuration?: Configuration, 
      * 
      * @summary List users on a customer
      * @param {string} id id of customer 
+     * @param {string} [query] Optional query to filter the users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerListUsers(id: string, options?: any) {
-      return ForgeCustomerApiFp(configuration).customerListUsers(id, options)(fetch, basePath);
+    customerListUsers(id: string, query?: string, page?: number, pageSize?: number, options?: any) {
+      return ForgeCustomerApiFp(configuration).customerListUsers(id, query, page, pageSize, options)(fetch, basePath);
     },
     /**
      * 
@@ -218,6 +224,16 @@ export const ForgeCustomerApiFactory = function (configuration?: Configuration, 
      */
     customerRemoveUser(id: string, username: string, options?: any) {
       return ForgeCustomerApiFp(configuration).customerRemoveUser(id, username, options)(fetch, basePath);
+    },
+    /**
+     * Resets the recurring background tasks, useful if the tasks are not registered in the first place or are not the right ones
+     * @summary Resets the recurring background tasks
+     * @param {string} id The database name of the customer to reset the recurring background tasks for
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    customerResetRecurringBackgroundTasks(id: string, options?: any) {
+      return ForgeCustomerApiFp(configuration).customerResetRecurringBackgroundTasks(id, options)(fetch, basePath);
     },
     /**
      * 

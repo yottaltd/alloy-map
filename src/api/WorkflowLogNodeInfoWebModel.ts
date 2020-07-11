@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Model for the identity of a step taken in a workflow

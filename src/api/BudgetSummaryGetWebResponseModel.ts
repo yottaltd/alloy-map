@@ -1,4 +1,3 @@
-// tslint:disable
 import { BudgetPeriodJobCostsWebModel } from './BudgetPeriodJobCostsWebModel';
 /**
  * Web model for a budget summary data get web response

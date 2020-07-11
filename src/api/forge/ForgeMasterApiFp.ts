@@ -1,9 +1,7 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
-import { MasterBackupListWebResponseModel } from './MasterBackupListWebResponseModel';
 import { MasterBackupRequestModel } from './MasterBackupRequestModel';
 import { MasterCreateWebRequestModel } from './MasterCreateWebRequestModel';
 import { MasterEditWebRequestModel } from './MasterEditWebRequestModel';
@@ -13,6 +11,7 @@ import { SettingAddRequestModel } from './SettingAddRequestModel';
 import { SettingEditRequestModel } from './SettingEditRequestModel';
 import { SettingListResponseModel } from './SettingListResponseModel';
 import { TaskSubmittedResponseModel } from './TaskSubmittedResponseModel';
+import { MasterBackupListWebResponseModel } from './MasterBackupListWebResponseModel';
 import { ForgeMasterApiFetchParamCreator } from './ForgeMasterApiFetchParamCreator';
 import { ForgeMasterApi } from './ForgeMasterApi';
 /**
@@ -156,11 +155,13 @@ export const ForgeMasterApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary Backups List
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    masterListBackups(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterBackupListWebResponseModel> {
-      const localVarFetchArgs = ForgeMasterApiFetchParamCreator(configuration).masterListBackups(options);
+    masterListBackups(page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterBackupListWebResponseModel> {
+      const localVarFetchArgs = ForgeMasterApiFetchParamCreator(configuration).masterListBackups(page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -217,6 +218,24 @@ export const ForgeMasterApiFp = function(configuration?: Configuration) {
      */
     masterRemoveSetting(key: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
       const localVarFetchArgs = ForgeMasterApiFetchParamCreator(configuration).masterRemoveSetting(key, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response;
+        }
+        throw response;
+      };
+    },
+    /**
+     * Resets the recurring background tasks for the entire region and it should thus be used with care
+     * @summary Resets the recurring background tasks for the region
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    masterResetRecurringBackgroundTasks(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+      const localVarFetchArgs = ForgeMasterApiFetchParamCreator(configuration).masterResetRecurringBackgroundTasks(options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

@@ -1,8 +1,8 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { CollectionCode } from './CollectionCode';
 import { ItemCloneWebRequestModel } from './ItemCloneWebRequestModel';
 import { ItemCloneWebResponseModel } from './ItemCloneWebResponseModel';
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';
@@ -123,11 +123,13 @@ export const ItemApiFp = function(configuration?: Configuration) {
      * @summary Gets an item graph by id and code
      * @param {string} id The AId of the item to retrieve
      * @param {string} code The code of the graph to retrieve for example \&quot;Component\&quot;, \&quot;Job\&quot;, \&quot;Lookup\&quot;, \&quot;Network\&quot;
+     * @param {Array<CollectionCode>} [collectionCodes] Optional collections to filter the children by
+     * @param {number} [maxRecursionDepth] Optional maximum recursion depth
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    itemGetItemGraph(id: string, code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemGraphGetWebResponseModel> {
-      const localVarFetchArgs = ItemApiFetchParamCreator(configuration).itemGetItemGraph(id, code, options);
+    itemGetItemGraph(id: string, code: string, collectionCodes?: Array<CollectionCode>, maxRecursionDepth?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ItemGraphGetWebResponseModel> {
+      const localVarFetchArgs = ItemApiFetchParamCreator(configuration).itemGetItemGraph(id, code, collectionCodes, maxRecursionDepth, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -144,8 +146,8 @@ export const ItemApiFp = function(configuration?: Configuration) {
      * @param {string} id The AId of the item to retrieve parents for
      * @param {string} [attributeCode] Optional attribute code to filter parents on
      * @param {string} [graphCode] Optional graph code to filter parents on
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

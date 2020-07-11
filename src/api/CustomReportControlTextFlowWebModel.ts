@@ -1,13 +1,12 @@
-// tslint:disable
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
-import { CustomReportControlPropertyWebModelOfNullableOfBoolean } from './CustomReportControlPropertyWebModelOfNullableOfBoolean';
-import { CustomReportControlPropertyWebModelOfNullableOfTextAlign } from './CustomReportControlPropertyWebModelOfNullableOfTextAlign';
-import { CustomReportControlPropertyWebModelOfNullableOfTextStyle } from './CustomReportControlPropertyWebModelOfNullableOfTextStyle';
+import { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
+import { CustomReportControlPropertyWebModelOfNullableTextAlign } from './CustomReportControlPropertyWebModelOfNullableTextAlign';
+import { CustomReportControlPropertyWebModelOfNullableTextStyle } from './CustomReportControlPropertyWebModelOfNullableTextStyle';
 import { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 import { TextAlign } from './TextAlign';
 import { TextStyle } from './TextStyle';
 /**
- * Custom report control text
+ * 
  * @export
  * @interface CustomReportControlTextFlowWebModel
  */
@@ -20,20 +19,20 @@ export interface CustomReportControlTextFlowWebModel extends CustomReportControl
   text?: CustomReportControlPropertyWebModelOfString;
   /**
    * Optional style of the text, defaults to normal
-   * @type {CustomReportControlPropertyWebModelOfNullableOfTextStyle}
+   * @type {CustomReportControlPropertyWebModelOfNullableTextStyle}
    * @memberof CustomReportControlTextFlowWebModel
    */
-  style?: CustomReportControlPropertyWebModelOfNullableOfTextStyle;
+  style?: CustomReportControlPropertyWebModelOfNullableTextStyle;
   /**
    * Optional alignment of the text, defaults to left
-   * @type {CustomReportControlPropertyWebModelOfNullableOfTextAlign}
+   * @type {CustomReportControlPropertyWebModelOfNullableTextAlign}
    * @memberof CustomReportControlTextFlowWebModel
    */
-  align?: CustomReportControlPropertyWebModelOfNullableOfTextAlign;
+  align?: CustomReportControlPropertyWebModelOfNullableTextAlign;
   /**
    * Optional wrapping setting of the text, defaults to false
-   * @type {CustomReportControlPropertyWebModelOfNullableOfBoolean}
+   * @type {CustomReportControlPropertyWebModelOfNullableBoolean}
    * @memberof CustomReportControlTextFlowWebModel
    */
-  noWrap?: CustomReportControlPropertyWebModelOfNullableOfBoolean;
+  noWrap?: CustomReportControlPropertyWebModelOfNullableBoolean;
 }

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Model for a set of data associated with a workflow step

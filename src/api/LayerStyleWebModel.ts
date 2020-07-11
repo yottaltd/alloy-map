@@ -1,9 +1,8 @@
-// tslint:disable
-import { Exception } from './Exception';
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
 import { LayerStyleConfigWebModelBase } from './LayerStyleConfigWebModelBase';
 import { LayerStyleType } from './LayerStyleType';
 import { LayerStyleValidity } from './LayerStyleValidity';
-import { AlloyException } from './AlloyException';
+import { LayerStyleVisualisationParametersWebModel } from './LayerStyleVisualisationParametersWebModel';
 /**
  * Web model for a layer style
  * @export
@@ -53,11 +52,17 @@ export interface LayerStyleWebModel {
    */
   validity: LayerStyleValidity;
   /**
-   * If the style is invalid, it explains what error made it invalid
-   * @type {AlloyException}
+   * The layer style visualisation parameters
+   * @type {Array<LayerStyleVisualisationParametersWebModel>}
    * @memberof LayerStyleWebModel
    */
-  error?: AlloyException;
+  visualisationParameters?: Array<LayerStyleVisualisationParametersWebModel>;
+  /**
+   * If the style is invalid, it explains what error made it invalid
+   * @type {AlloyExceptionWebModel}
+   * @memberof LayerStyleWebModel
+   */
+  error?: AlloyExceptionWebModel;
   /**
    * This is the number of items hit byt the style. If non specified the style has not been processed yet
    * @type {number}

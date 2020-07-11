@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsJsonNode } from './AqsJsonNode';
 import { ItemWebModel } from './ItemWebModel';
 /**

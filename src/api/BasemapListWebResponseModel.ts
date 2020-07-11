@@ -1,8 +1,6 @@
-// tslint:disable
 import { BasemapWithOperationsSummaryWebResponseModel } from './BasemapWithOperationsSummaryWebResponseModel';
-import { Basemap } from './Basemap';
 /**
- * Web response model for a list basemaps operation
+ * 
  * @export
  * @interface BasemapListWebResponseModel
  */

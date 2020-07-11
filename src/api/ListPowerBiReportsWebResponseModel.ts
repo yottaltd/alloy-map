@@ -1,4 +1,3 @@
-// tslint:disable
 import { PowerBiReportWebModel } from './PowerBiReportWebModel';
 /**
  * List Power Bi reports web response model

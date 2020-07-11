@@ -20,11 +20,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
    * @param options the options for the layer
    */
   constructor(options: AlloyCustomLayerOptions) {
-    super(
-      options.id || AlloyCustomLayer.name + ':' + uuid.v1(),
-      options.map,
-      AlloyLayerZIndex.Drawing,
-    );
+    super(options.id, options.map, AlloyLayerZIndex.Drawing);
 
     // initialised here because style processor need some of the above internal properties
     this.setStyleProcessor(new AlloyCustomStyleProcessor(this));

@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { AddDataSourceWebRequestModel } from './AddDataSourceWebRequestModel';
 import { AddDocumentDefinitionWebRequestModel } from './AddDocumentDefinitionWebRequestModel';
@@ -125,8 +124,8 @@ export class CustomReportApi extends BaseAPI {
    * Lists the custom reports matching the parameters specified
    * @summary List Custom Reports
    * @param {string} [query] Optional query to filter the designs by
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CustomReportApi

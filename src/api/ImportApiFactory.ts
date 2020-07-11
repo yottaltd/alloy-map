@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { ImportInitialiseWebRequestModel } from './ImportInitialiseWebRequestModel';
@@ -66,8 +65,8 @@ export const ImportApiFactory = function (configuration?: Configuration, fetch?:
      * List imports
      * @summary List imports
      * @param {string} [query] Optional query to filter the imports by
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

@@ -1,8 +1,8 @@
-// tslint:disable
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
 import { WorkflowWebModel } from './WorkflowWebModel';
+import { ItemChangeCauseWorkflow } from './ItemChangeCauseWorkflow';
 /**
- * Item Change cause workflow web model
+ * 
  * @export
  * @interface ItemChangeCauseWorkflowWebModel
  */

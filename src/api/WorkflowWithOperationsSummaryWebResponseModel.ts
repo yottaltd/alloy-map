@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowOperationsSummaryWebModel } from './WorkflowOperationsSummaryWebModel';
 import { WorkflowWebModel } from './WorkflowWebModel';
 /**

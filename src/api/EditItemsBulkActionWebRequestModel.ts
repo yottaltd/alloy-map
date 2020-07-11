@@ -1,10 +1,7 @@
-// tslint:disable
 import { AqsJsonNode } from './AqsJsonNode';
 import { CollectionCode } from './CollectionCode';
 import { ContainerWebModelOfCollectionCode } from './ContainerWebModelOfCollectionCode';
-import { ContainerWebModelOfIGeometryObject } from './ContainerWebModelOfIGeometryObject';
 import { ContainerWebModelOfString } from './ContainerWebModelOfString';
-import { IGeometryObject } from './IGeometryObject';
 import { ItemAttributeWebModel } from './ItemAttributeWebModel';
 /**
  * Request model for setting attribute values of many items
@@ -30,12 +27,6 @@ export interface EditItemsBulkActionWebRequestModel {
    * @memberof EditItemsBulkActionWebRequestModel
    */
   collection?: ContainerWebModelOfCollectionCode;
-  /**
-   * The item geometry to set
-   * @type {ContainerWebModelOfIGeometryObject}
-   * @memberof EditItemsBulkActionWebRequestModel
-   */
-  geometry?: ContainerWebModelOfIGeometryObject;
   /**
    * The icon to set
    * @type {ContainerWebModelOfString}

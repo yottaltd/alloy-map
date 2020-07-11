@@ -1,4 +1,3 @@
-// tslint:disable
 import { Context } from './Context';
 import { JObject } from './JObject';
 import { MeshType } from './MeshType';

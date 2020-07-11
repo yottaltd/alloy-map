@@ -1,4 +1,4 @@
-// tslint:disable
+import { DodiAttributePermissionWebModel } from './DodiAttributePermissionWebModel';
 import { DodiAttributePermissionsGetWebResponseModel } from './DodiAttributePermissionsGetWebResponseModel';
 import { DodiPermissionResponseWebModel } from './DodiPermissionResponseWebModel';
 /**
@@ -19,4 +19,10 @@ export interface DodiPermissionsGetWebResponseModel {
    * @memberof DodiPermissionsGetWebResponseModel
    */
   attributesPermissions: Array<DodiAttributePermissionsGetWebResponseModel>;
+  /**
+   * The default permissions for dodi attributes.
+   * @type {Array<DodiAttributePermissionWebModel>}
+   * @memberof DodiPermissionsGetWebResponseModel
+   */
+  defaultAttributePermissions: Array<DodiAttributePermissionWebModel>;
 }

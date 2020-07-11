@@ -1,4 +1,3 @@
-// tslint:disable
 import { SettingModel } from './SettingModel';
 /**
  * Add user to customer request model

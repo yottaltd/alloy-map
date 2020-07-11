@@ -1,8 +1,7 @@
-// tslint:disable
 import { CustomReportWebModel } from './CustomReportWebModel';
 import { ReportListWebResponseModel } from './ReportListWebResponseModel';
 /**
- * Web response model for a dodi list operation
+ * 
  * @export
  * @interface CustomReportListWebResponseModel
  */

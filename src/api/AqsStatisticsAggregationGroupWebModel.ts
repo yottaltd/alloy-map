@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemAttributeWebModel } from './ItemAttributeWebModel';
 import { JToken } from './JToken';
 /**

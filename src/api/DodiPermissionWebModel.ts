@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiAllowedOperation } from './DodiAllowedOperation';
 /**
  * Web model for a design permission

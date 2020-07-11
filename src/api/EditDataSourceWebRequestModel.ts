@@ -1,5 +1,4 @@
-// tslint:disable
-import { CustomReportDataSourceInfoBaseWebModel } from './CustomReportDataSourceInfoBaseWebModel';
+import { CustomReportDataSourceInfoBaseEditWebModel } from './CustomReportDataSourceInfoBaseEditWebModel';
 /**
  * Edit data source web request model
  * @export
@@ -20,10 +19,10 @@ export interface EditDataSourceWebRequestModel {
   required: boolean;
   /**
    * The info about the data source
-   * @type {CustomReportDataSourceInfoBaseWebModel}
+   * @type {CustomReportDataSourceInfoBaseEditWebModel}
    * @memberof EditDataSourceWebRequestModel
    */
-  dataSourceInfo: CustomReportDataSourceInfoBaseWebModel;
+  dataSourceInfo: CustomReportDataSourceInfoBaseEditWebModel;
   /**
    * The signature is used to ensure that the custom report being edited is actually the one provided to the system. This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report
    * @type {string}

@@ -1,4 +1,3 @@
-// tslint:disable
 import { ImportWebModel } from './ImportWebModel';
 /**
  * Get web model for import

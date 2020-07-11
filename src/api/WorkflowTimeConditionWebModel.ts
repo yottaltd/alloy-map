@@ -1,4 +1,3 @@
-// tslint:disable
 import { DateTimeRangeWebModel } from './DateTimeRangeWebModel';
 import { WorkingDaysTimeConditionType } from './WorkingDaysTimeConditionType';
 /**

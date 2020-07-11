@@ -1,9 +1,8 @@
-// tslint:disable
 import { ExtendedBulkApiRequestBase } from './ExtendedBulkApiRequestBase';
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';
 import { ExtendedBulkApi } from './ExtendedBulkApi';
 /**
- * Web request model to create a item
+ * 
  * @export
  * @interface ExtendedBulkCreateWebRequestModel
  */

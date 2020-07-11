@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web request model to create a card

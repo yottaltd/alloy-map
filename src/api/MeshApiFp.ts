@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -7,7 +6,9 @@ import { MeshEditWebRequestModel } from './MeshEditWebRequestModel';
 import { MeshPermissionsEditWebRequestModel } from './MeshPermissionsEditWebRequestModel';
 import { MeshPermissionsGetWebResponseModel } from './MeshPermissionsGetWebResponseModel';
 import { MeshWithOperationsSummaryWebResponseModel } from './MeshWithOperationsSummaryWebResponseModel';
-import { MeshAccessAdvisorListWebResponseModel } from './MeshAccessAdvisorListWebResponseModel';
+import { MeshWithPermissionsWebResponseModel } from './MeshWithPermissionsWebResponseModel';
+import { MeshAccessAdvisorByRoleListWebResponseModel } from './MeshAccessAdvisorByRoleListWebResponseModel';
+import { MeshAccessAdvisorByUserListWebResponseModel } from './MeshAccessAdvisorByUserListWebResponseModel';
 import { MeshListWebResponseModel } from './MeshListWebResponseModel';
 import { MeshApiFetchParamCreator } from './MeshApiFetchParamCreator';
 import { MeshApi } from './MeshApi';
@@ -45,7 +46,7 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshEditPermissions(code: string, model: MeshPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshWithOperationsSummaryWebResponseModel> {
+    meshEditPermissions(code: string, model: MeshPermissionsEditWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshWithPermissionsWebResponseModel> {
       const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshEditPermissions(code, model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -80,12 +81,13 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * Fetches the permissions of a mesh by its Guc
      * @summary Get a mesh permissions by its code
      * @param {string} code The Guc for the mesh whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshGetPermissions(code: string, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshPermissionsGetWebResponseModel> {
-      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshGetPermissions(code, username, options);
+    meshGetPermissions(code: string, username?: string, role?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshPermissionsGetWebResponseModel> {
+      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshGetPermissions(code, username, role, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -101,13 +103,58 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * @summary Get a list of meshes
      * @param {string} [query] The optional mesh query string to filter on
      * @param {string} [userGroup] Optional Guc to filter meshes by. If specified, only the meshes that have this user group code within their permissions are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {'Core' | 'Module' | 'Customer'} [context] Optional mesh Context filter
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshListWebResponseModel> {
-      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshList(query, userGroup, page, pageSize, options);
+    meshList(query?: string, userGroup?: string, context?: 'Core' | 'Module' | 'Customer', page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshListWebResponseModel> {
+      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshList(query, userGroup, context, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of meshes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Use api/mesh/access-advisor/user/{username} instead
+     * @param {string} username The name of the user to get mesh access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    meshMeshAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshMeshAccessAdvisor(username, query, page, pageSize, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Fetches a list of meshes with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role meshes with their winning permission
+     * @param {string} code The code of the role to get mesh access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    meshMeshAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshAccessAdvisorByRoleListWebResponseModel> {
+      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshMeshAccessAdvisorByRole(code, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {
@@ -122,13 +169,14 @@ export const MeshApiFp = function(configuration?: Configuration) {
      * Fetches a list of meshes with winning permission optionally specifying page and the number of results to return per page.
      * @summary Lists user meshes with their winning permission
      * @param {string} username The name of the user to get mesh access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    meshMeshAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshAccessAdvisorListWebResponseModel> {
-      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshMeshAccessAdvisor(username, page, pageSize, options);
+    meshMeshAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MeshAccessAdvisorByUserListWebResponseModel> {
+      const localVarFetchArgs = MeshApiFetchParamCreator(configuration).meshMeshAccessAdvisorByUser(username, query, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

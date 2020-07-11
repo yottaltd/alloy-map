@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
- * Workflow trigger model given a set of fixed points in time
+ * 
  * @export
  * @interface TimeCalendarTrigger
  */

@@ -1,7 +1,6 @@
-// tslint:disable
 import { LayerAllowedAction } from './LayerAllowedAction';
 /**
- * Web model for a layer permission
+ * 
  * @export
  * @interface LayerPermissionResponseWebModel
  */

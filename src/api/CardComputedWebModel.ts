@@ -1,4 +1,3 @@
-// tslint:disable
 import { CardQueryResultWebModel } from './CardQueryResultWebModel';
 /**
  * Web model for a computed card which contains all the results of the card queries

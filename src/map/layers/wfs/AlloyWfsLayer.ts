@@ -1,6 +1,5 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
-import * as uuid from 'uuid';
 import { WfsFeatureDescription } from '../../../wfs/WfsFeatureDescription';
 import { WfsLayerUtils } from '../../../wfs/WfsLayerUtils';
 import { WfsUtils } from '../../../wfs/WfsUtils';
@@ -74,7 +73,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
    * @param options the options for the layer
    */
   constructor(options: AlloyWfsLayerOptions) {
-    this.id = options.id || AlloyWfsLayer.name + ':' + uuid.v1();
+    this.id = options.id;
     this.map = options.map;
     this.styles = options.styles;
     this.debugger = this.map.debugger.extend(AlloyWfsLayer.name + ':' + this.id);

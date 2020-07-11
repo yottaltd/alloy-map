@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -50,10 +49,13 @@ export const ForgeTaskApiFetchParamCreator = function (configuration?: Configura
     /**
      * 
      * @summary List all running tasks and their state
+     * @param {string} [query] Optional query to filter the tasks by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    taskTasks(options: any = {}): FetchArgs {
+    taskTasks(query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/tasks`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -66,6 +68,18 @@ export const ForgeTaskApiFetchParamCreator = function (configuration?: Configura
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
