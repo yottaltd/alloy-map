@@ -23,7 +23,9 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -54,7 +56,9 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
       const layer = new AlloyNetworkLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -85,7 +89,9 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
@@ -160,13 +166,17 @@ export default function(mapData: MapData) {
       const styles: AlloyLayerStyle[] = [
         new AlloyLayerStyle('myFakeStyleId', '#cc3300', 'icon-stl'),
       ];
+      const id = 'testLayer';
+      const idOther = 'testLayerOther';
       const layer = new AlloyClusterLayer({
+        id,
         bounds,
         layerCode,
         map: mapData.map,
         styles,
       });
       const otherLayer = new AlloyClusterLayer({
+        id: idOther,
         bounds,
         layerCode: layerCodeOther,
         map: mapData.map,
