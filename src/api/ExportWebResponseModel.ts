@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Validate import web response model
@@ -11,7 +10,7 @@ export interface ExportWebResponseModel {
    * @type {string}
    * @memberof ExportWebResponseModel
    */
-  alloyTaskId: string;
+  backgroundTaskId: string;
   /**
    * The file name that will be used for the export
    * @type {string}

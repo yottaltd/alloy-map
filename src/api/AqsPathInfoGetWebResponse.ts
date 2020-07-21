@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsPathInfoElementWebModel } from './AqsPathInfoElementWebModel';
 /**
  * Response model of an aqs path info get operation

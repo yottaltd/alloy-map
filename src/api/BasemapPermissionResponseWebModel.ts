@@ -1,8 +1,6 @@
-// tslint:disable
 import { BasemapAllowedAction } from './BasemapAllowedAction';
-import { Basemap } from './Basemap';
 /**
- * Web model for a basemap permission
+ * 
  * @export
  * @interface BasemapPermissionResponseWebModel
  */

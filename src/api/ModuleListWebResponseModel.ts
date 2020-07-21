@@ -1,4 +1,3 @@
-// tslint:disable
 import { ModuleGetWebResponseModel } from './ModuleGetWebResponseModel';
 /**
  * List modules web response model

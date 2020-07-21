@@ -1,7 +1,6 @@
-// tslint:disable
 import { ItemLogWebModel } from './ItemLogWebModel';
 /**
- * Web response model for an item log list operation
+ * 
  * @export
  * @interface ItemLogListWebResponseModel
  */

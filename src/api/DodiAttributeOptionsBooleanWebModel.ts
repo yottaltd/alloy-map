@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
  * 
@@ -7,7 +6,7 @@ import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModel
  */
 export interface DodiAttributeOptionsBooleanWebModel extends DodiAttributeOptionsWebModelBase {
   /**
-   * 
+   * The optional default value of this attribute
    * @type {boolean}
    * @memberof DodiAttributeOptionsBooleanWebModel
    */

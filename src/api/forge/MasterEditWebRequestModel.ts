@@ -1,4 +1,3 @@
-// tslint:disable
 import { ServiceProviderDefinitionBase } from './ServiceProviderDefinitionBase';
 /**
  * Region Edit request

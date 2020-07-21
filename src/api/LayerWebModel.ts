@@ -1,6 +1,6 @@
-// tslint:disable
 import { Context } from './Context';
 import { LayerStyleWebModel } from './LayerStyleWebModel';
+import { LayerVisualisationType } from './LayerVisualisationType';
 import { MetadataWebModel } from './MetadataWebModel';
 /**
  * Web model for a layer
@@ -38,6 +38,18 @@ export interface LayerWebModel {
    * @memberof LayerWebModel
    */
   tags?: Array<string>;
+  /**
+   * The visualisations associated to this layer
+   * @type {Array<LayerVisualisationType>}
+   * @memberof LayerWebModel
+   */
+  visualisations: Array<LayerVisualisationType>;
+  /**
+   * Layer is disabled or not
+   * @type {boolean}
+   * @memberof LayerWebModel
+   */
+  disabled: boolean;
   /**
    * The metadata of a layer
    * @type {MetadataWebModel}

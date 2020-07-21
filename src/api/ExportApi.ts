@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ExportWebRequestModel } from './ExportWebRequestModel';
 import { ExportApiFp } from './ExportApiFp';
@@ -24,7 +23,7 @@ export class ExportApi extends BaseAPI {
   /**
    * Finds the file id for the given task or returns not found
    * @summary Get the file AId for the export once completed
-   * @param {string} id The AId of the export task
+   * @param {string} id The id of the export task
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ExportApi

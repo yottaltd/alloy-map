@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { CustomerAddUserRequestModel } from './CustomerAddUserRequestModel';
 import { CustomerBackupRequestModel } from './CustomerBackupRequestModel';
@@ -170,12 +169,16 @@ export class ForgeCustomerApi extends BaseAPI {
   /**
    * 
    * @summary List customers on the region's master
+   * @param {string} [query] Optional query to filter the customers by name
+   * @param {string} [clusterId] Optional query to filter the customers by Cluster Id
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeCustomerApi
    */
-  public customerList(options?: any) {
-    return ForgeCustomerApiFp(this.configuration).customerList(options)(this.fetch, this.basePath);
+  public customerList(query?: string, clusterId?: string, page?: number, pageSize?: number, options?: any) {
+    return ForgeCustomerApiFp(this.configuration).customerList(query, clusterId, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -209,12 +212,15 @@ export class ForgeCustomerApi extends BaseAPI {
    * 
    * @summary List users on a customer
    * @param {string} id id of customer 
+   * @param {string} [query] Optional query to filter the users by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ForgeCustomerApi
    */
-  public customerListUsers(id: string, options?: any) {
-    return ForgeCustomerApiFp(this.configuration).customerListUsers(id, options)(this.fetch, this.basePath);
+  public customerListUsers(id: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return ForgeCustomerApiFp(this.configuration).customerListUsers(id, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -254,6 +260,18 @@ export class ForgeCustomerApi extends BaseAPI {
    */
   public customerRemoveUser(id: string, username: string, options?: any) {
     return ForgeCustomerApiFp(this.configuration).customerRemoveUser(id, username, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Resets the recurring background tasks, useful if the tasks are not registered in the first place or are not the right ones
+   * @summary Resets the recurring background tasks
+   * @param {string} id The database name of the customer to reset the recurring background tasks for
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof ForgeCustomerApi
+   */
+  public customerResetRecurringBackgroundTasks(id: string, options?: any) {
+    return ForgeCustomerApiFp(this.configuration).customerResetRecurringBackgroundTasks(id, options)(this.fetch, this.basePath);
   }
 
   /**

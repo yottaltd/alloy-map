@@ -1,9 +1,8 @@
-// tslint:disable
 import { BoundingBoxWebModel } from './BoundingBoxWebModel';
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 import { CustomReportControlPropertyWebModelOfBoundingBoxWebModel } from './CustomReportControlPropertyWebModelOfBoundingBoxWebModel';
 /**
- * Custom report control map base
+ * 
  * @export
  * @interface CustomReportControlMapFlowWebModel
  */

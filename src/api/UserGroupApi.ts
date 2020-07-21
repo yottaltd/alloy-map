@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { UserGroupAddUserWebRequestModel } from './UserGroupAddUserWebRequestModel';
 import { UserGroupCreateWebRequestModel } from './UserGroupCreateWebRequestModel';
@@ -79,14 +78,15 @@ export class UserGroupApi extends BaseAPI {
    * @param {string} [query] Optional query to filter the user groups by
    * @param {'Core' | 'Module' | 'Customer'} [context] Optional Context filter
    * @param {string} [username] Optional username parameter to return only groups containing the correspondent user
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {string} [role] Optional role parameter to return only groups that are part of this role
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UserGroupApi
    */
-  public userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, page?: number, pageSize?: number, options?: any) {
-    return UserGroupApiFp(this.configuration).userGroupList(query, context, username, page, pageSize, options)(this.fetch, this.basePath);
+  public userGroupList(query?: string, context?: 'Core' | 'Module' | 'Customer', username?: string, role?: string, page?: number, pageSize?: number, options?: any) {
+    return UserGroupApiFp(this.configuration).userGroupList(query, context, username, role, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**

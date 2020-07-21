@@ -1,4 +1,3 @@
-// tslint:disable
 import { MetadataWebModel } from './MetadataWebModel';
 import { WorkflowActionGroupParameterWebModel } from './WorkflowActionGroupParameterWebModel';
 /**

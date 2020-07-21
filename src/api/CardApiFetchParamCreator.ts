@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -8,6 +7,8 @@ import { CardEditWebRequestModel } from './CardEditWebRequestModel';
 import { CardPermissionsEditWebRequestModel } from './CardPermissionsEditWebRequestModel';
 import { CardQueryCreateWebModel } from './CardQueryCreateWebModel';
 import { CardQueryDeleteWebRequestModel } from './CardQueryDeleteWebRequestModel';
+import { CardQueryEditWebRequestModel } from './CardQueryEditWebRequestModel';
+import { Context } from './Context';
 import { CardApi } from './CardApi';
 /**
  * CardApi - fetch parameter creator
@@ -17,14 +18,15 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
   return {
     /**
      * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-     * @summary Lists user cards with their winning permission
+     * @summary Use api/card/access-advisor/user/{username} instead
      * @param {string} username The name of the user to get card access advisor for
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardCardAccessAdvisor(username: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    cardCardAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       // verify required parameter 'username' is not null or undefined
       if (username === null || username === undefined) {
         throw new RequiredError('username','Required parameter username was null or undefined when calling cardCardAccessAdvisor.');
@@ -44,12 +46,120 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists role cards with their winning permission
+     * @param {string} code The code of the role to get card access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardCardAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'code' is not null or undefined
+      if (code === null || code === undefined) {
+        throw new RequiredError('code','Required parameter code was null or undefined when calling cardCardAccessAdvisorByRole.');
+      }
+      const localVarPath = `/api/card/access-advisor/role/{code}`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+     * @summary Lists user cards with their winning permission
+     * @param {string} username The name of the user to get card access advisor for
+     * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardCardAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling cardCardAccessAdvisorByUser.');
+      }
+      const localVarPath = `/api/card/access-advisor/user/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -88,7 +198,7 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -134,7 +244,7 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -223,7 +333,7 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -269,7 +379,7 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -315,13 +425,65 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
       const needsSerialization = (<any>"CardPermissionsEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Edits a card query using the information provided in the model
+     * @summary Edit a card query
+     * @param {string} code The Guc of the card to edit the query
+     * @param {string} id The id of the card query to edit
+     * @param {CardQueryEditWebRequestModel} model The card query edit model
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    cardEditQuery(code: string, id: string, model: CardQueryEditWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'code' is not null or undefined
+      if (code === null || code === undefined) {
+        throw new RequiredError('code','Required parameter code was null or undefined when calling cardEditQuery.');
+      }
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id','Required parameter id was null or undefined when calling cardEditQuery.');
+      }
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling cardEditQuery.');
+      }
+      const localVarPath = `/api/card/{code}/query/{id}`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"CardQueryEditWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {
@@ -367,7 +529,7 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
       };
     },
     /**
-     * Computes the result of the queries in the card matching the specified code and returns them in the response
+     * Computes or returns the result of the queries in the card matching the specified code
      * @summary Get a computed card
      * @param {string} code The Guc of the card to process
      * @param {*} [options] Override http request option.
@@ -407,11 +569,12 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
      * Fetches the permissions of a card by its Guc
      * @summary Get a card permissions by its code
      * @param {string} code The Guc for the card whose permissions are being requested
-     * @param {string} [username] Optional username to get permissions for the specific user
+     * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+     * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardGetPermissions(code: string, username?: string, options: any = {}): FetchArgs {
+    cardGetPermissions(code: string, username?: string, role?: string, options: any = {}): FetchArgs {
       // verify required parameter 'code' is not null or undefined
       if (code === null || code === undefined) {
         throw new RequiredError('code','Required parameter code was null or undefined when calling cardGetPermissions.');
@@ -432,7 +595,11 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
       }
 
       if (username !== undefined) {
-        localVarQueryParameter['username'] = username;
+        localVarQueryParameter['Username'] = username;
+      }
+
+      if (role !== undefined) {
+        localVarQueryParameter['Role'] = role;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -450,12 +617,13 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
      * @summary Get a list of cards
      * @param {string} [query] Optional query to filter the cards by
      * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {'Core' | 'Module' | 'Customer'} [context] The optional cards context to filter on
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
+    cardList(query?: string, userGroup?: string, context?: 'Core' | 'Module' | 'Customer', page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/card`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -471,19 +639,23 @@ export const CardApiFetchParamCreator = function (configuration?: Configuration)
       }
 
       if (query !== undefined) {
-        localVarQueryParameter['query'] = query;
+        localVarQueryParameter['Query'] = query;
       }
 
       if (userGroup !== undefined) {
-        localVarQueryParameter['userGroup'] = userGroup;
+        localVarQueryParameter['UserGroup'] = userGroup;
+      }
+
+      if (context !== undefined) {
+        localVarQueryParameter['Context'] = context;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

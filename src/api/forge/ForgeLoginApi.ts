@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { LoginWebRequestModel } from './LoginWebRequestModel';
 import { ForgeLoginApiFp } from './ForgeLoginApiFp';

@@ -1,4 +1,3 @@
-// tslint:disable
 import { LayerOperationsSummaryWebModel } from './LayerOperationsSummaryWebModel';
 import { LayerWebModel } from './LayerWebModel';
 /**

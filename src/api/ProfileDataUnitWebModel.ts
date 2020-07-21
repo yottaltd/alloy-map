@@ -1,4 +1,3 @@
-// tslint:disable
 import { ProfileDataUnitValueWebModelBase } from './ProfileDataUnitValueWebModelBase';
 /**
  * An element of profile data
@@ -7,21 +6,15 @@ import { ProfileDataUnitValueWebModelBase } from './ProfileDataUnitValueWebModel
  */
 export interface ProfileDataUnitWebModel {
   /**
-   * The name of the profile datum
+   * The key of the profile datum
    * @type {string}
    * @memberof ProfileDataUnitWebModel
    */
-  name: string;
+  key: string;
   /**
    * The value of the profile datum
    * @type {ProfileDataUnitValueWebModelBase}
    * @memberof ProfileDataUnitWebModel
    */
   value: ProfileDataUnitValueWebModelBase;
-  /**
-   * The code of the profile datum
-   * @type {string}
-   * @memberof ProfileDataUnitWebModel
-   */
-  code: string;
 }

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Web model for a workflow list next trigger dates response

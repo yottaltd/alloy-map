@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Master Backup Request model

@@ -1,7 +1,7 @@
-// tslint:disable
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
+import { ItemChangeCauseClone } from './ItemChangeCauseClone';
 /**
- * Item Change cause Clone web model
+ * 
  * @export
  * @interface ItemChangeCauseCloneWebModel
  */

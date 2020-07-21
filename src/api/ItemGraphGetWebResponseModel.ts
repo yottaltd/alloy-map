@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemGraphWebModel } from './ItemGraphWebModel';
 /**
  * Web model for the item graph response

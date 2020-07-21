@@ -1,4 +1,3 @@
-// tslint:disable
 import { WorkflowActionGroupAllowedAction } from './WorkflowActionGroupAllowedAction';
 /**
  * Web model for a workflow action group permission

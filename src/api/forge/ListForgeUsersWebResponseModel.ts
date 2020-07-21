@@ -1,15 +1,38 @@
-// tslint:disable
 import { ForgeUserWebModel } from './ForgeUserWebModel';
 /**
- * List forge user response
+ * 
  * @export
  * @interface ListForgeUsersWebResponseModel
  */
 export interface ListForgeUsersWebResponseModel {
   /**
-   * Users
+   * 
+   * @type {number}
+   * @memberof ListForgeUsersWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ListForgeUsersWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<ForgeUserWebModel>}
    * @memberof ListForgeUsersWebResponseModel
    */
-  users?: Array<ForgeUserWebModel>;
+  results: Array<ForgeUserWebModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof ListForgeUsersWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ListForgeUsersWebResponseModel
+   */
+  totalResults: number;
 }

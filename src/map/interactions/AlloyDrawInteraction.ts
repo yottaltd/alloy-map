@@ -8,7 +8,7 @@ import OLLineString from 'ol/geom/LineString';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
-import OLDraw from 'ol/interaction/Draw';
+import OLDraw, { createBox as OLCreateBox } from 'ol/interaction/Draw';
 import OLModify from 'ol/interaction/Modify';
 import OLSelect from 'ol/interaction/Select';
 import OLCircle from 'ol/style/Circle';
@@ -214,11 +214,13 @@ export class AlloyDrawInteraction {
     if (!olGeometryType) {
       throw new AlloyMapError(1572524091, 'incompatible draw geometry type');
     }
+
     // initialise draw on draw layer source, with default draw styles
     this.olDraw = new OLDraw({
       type: olGeometryType,
       source: this.drawLayer.olSource,
       style: this.drawStyles,
+      geometryFunction: type === AlloyDrawInteractionGeometryType.Box ? OLCreateBox() : undefined,
     });
 
     // on draw start disable map interactions

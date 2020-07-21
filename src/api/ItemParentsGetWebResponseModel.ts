@@ -1,7 +1,6 @@
-// tslint:disable
 import { ItemWebModel } from './ItemWebModel';
 /**
- * Web model for the item parents response
+ * 
  * @export
  * @interface ItemParentsGetWebResponseModel
  */

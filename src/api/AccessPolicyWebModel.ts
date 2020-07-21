@@ -1,4 +1,3 @@
-// tslint:disable
 import { AccessPolicyRuleWebModel } from './AccessPolicyRuleWebModel';
 import { MetadataWebModel } from './MetadataWebModel';
 /**

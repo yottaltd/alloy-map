@@ -10,7 +10,7 @@ export interface AlloyCustomLayerOptions {
   map: AlloyMap;
 
   /**
-   * optional id for custom layer
+   * id for custom layer, must be unique
    */
-  id?: string;
+  id: string;
 }

@@ -1,8 +1,7 @@
-// tslint:disable
 import { AqsJoinResultWebModel } from './AqsJoinResultWebModel';
 import { ItemWebModel } from './ItemWebModel';
 /**
- * Response model of an aqs join operation
+ * 
  * @export
  * @interface AqsJoinWebResponse
  */

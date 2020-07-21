@@ -1,4 +1,3 @@
-// tslint:disable
 import { TaskWebModel } from './TaskWebModel';
 /**
  * Web model for a task

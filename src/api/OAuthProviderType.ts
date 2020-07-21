@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Enumeration of supported OAuth providers

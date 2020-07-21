@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemWebModel } from './ItemWebModel';
 import { JObject } from './JObject';
 /**

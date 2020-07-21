@@ -1,7 +1,6 @@
-// tslint:disable
 import { AqsStatisticsAggregationGroupWebModel } from './AqsStatisticsAggregationGroupWebModel';
 /**
- * Response model of an aqs statistics aggregation operation
+ * 
  * @export
  * @interface AqsStatisticsAggregationWebResponse
  */

@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -56,14 +55,14 @@ export const FileApiFp = function(configuration?: Configuration) {
      * 
      * @summary Download a file thumbnail
      * @param {string} id The AId of the file to download a thumbnail of
-     * @param {number} width The height of the thumbnail
-     * @param {number} height The height of the thumbnail
-     * @param {'Cover' | 'Contain'} mode The mode to use to resize the image
+     * @param {number} [width] The height of the thumbnail
+     * @param {number} [height] The height of the thumbnail
+     * @param {'Cover' | 'Contain'} [mode] The mode to use to resize the image
      * @param {boolean} [applyContentDispositionHeader] If true, the content disposition header will be returned, triggering a file download from the browser. If false, the header won&#39;t be returned and the image will be displayed as is
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    fileDownloadThumbnail(id: string, width: number, height: number, mode: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+    fileDownloadThumbnail(id: string, width?: number, height?: number, mode?: 'Cover' | 'Contain', applyContentDispositionHeader?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
       const localVarFetchArgs = FileApiFetchParamCreator(configuration).fileDownloadThumbnail(id, width, height, mode, applyContentDispositionHeader, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);

@@ -1,12 +1,11 @@
-// tslint:disable
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
-import { CustomReportControlPropertyWebModelOfNullableOfHeaderType } from './CustomReportControlPropertyWebModelOfNullableOfHeaderType';
-import { CustomReportControlPropertyWebModelOfNullableOfTableDirection } from './CustomReportControlPropertyWebModelOfNullableOfTableDirection';
+import { CustomReportControlPropertyWebModelOfNullableHeaderType } from './CustomReportControlPropertyWebModelOfNullableHeaderType';
+import { CustomReportControlPropertyWebModelOfNullableTableDirection } from './CustomReportControlPropertyWebModelOfNullableTableDirection';
 import { CustomReportControlTableHeaderFlowWebModel } from './CustomReportControlTableHeaderFlowWebModel';
 import { HeaderType } from './HeaderType';
 import { TableDirection } from './TableDirection';
 /**
- * Custom report control table
+ * 
  * @export
  * @interface CustomReportControlTableFlowWebModel
  */
@@ -25,14 +24,14 @@ export interface CustomReportControlTableFlowWebModel extends CustomReportContro
   headers?: Array<CustomReportControlTableHeaderFlowWebModel>;
   /**
    * The table direction
-   * @type {CustomReportControlPropertyWebModelOfNullableOfTableDirection}
+   * @type {CustomReportControlPropertyWebModelOfNullableTableDirection}
    * @memberof CustomReportControlTableFlowWebModel
    */
-  direction?: CustomReportControlPropertyWebModelOfNullableOfTableDirection;
+  direction?: CustomReportControlPropertyWebModelOfNullableTableDirection;
   /**
    * The type of header to use for default data source column names
-   * @type {CustomReportControlPropertyWebModelOfNullableOfHeaderType}
+   * @type {CustomReportControlPropertyWebModelOfNullableHeaderType}
    * @memberof CustomReportControlTableFlowWebModel
    */
-  headerType?: CustomReportControlPropertyWebModelOfNullableOfHeaderType;
+  headerType?: CustomReportControlPropertyWebModelOfNullableHeaderType;
 }

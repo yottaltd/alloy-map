@@ -1,7 +1,6 @@
-// tslint:disable
 import { AccessPolicyWebModel } from './AccessPolicyWebModel';
 /**
- * Web response model for a list accessPolicies operation
+ * 
  * @export
  * @interface AccessPolicyListWebResponseModel
  */

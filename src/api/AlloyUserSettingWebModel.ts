@@ -1,4 +1,3 @@
-// tslint:disable
 import { JToken } from './JToken';
 /**
  * /Web model for an alloy user setting

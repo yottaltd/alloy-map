@@ -1,4 +1,3 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { ExtendedBudgetApiFp } from './ExtendedBudgetApiFp';
 /**

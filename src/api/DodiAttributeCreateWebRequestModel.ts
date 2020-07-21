@@ -1,4 +1,3 @@
-// tslint:disable
 import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
  * Web request model for a dodi attribute create operation

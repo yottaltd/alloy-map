@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Customer Backup Request model

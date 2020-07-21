@@ -1,7 +1,6 @@
-// tslint:disable
 import { WorkflowWithOperationsSummaryWebResponseModel } from './WorkflowWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for a Workflow list applicable operation
+ * 
  * @export
  * @interface WorkflowListApplicableWebResponseModel
  */

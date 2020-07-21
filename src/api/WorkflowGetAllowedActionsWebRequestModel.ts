@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Model for the querying the allowed actions that can be added to a position in a workflow

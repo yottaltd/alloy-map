@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -15,8 +14,8 @@ export const AuditLogApiFetchParamCreator = function (configuration?: Configurat
      * Retrieve the audit log related to a specific document to get the audit history for that item.
      * @summary List the audit logs for a document
      * @param {string} documentCode The the document code whose related logs need to be fetched e.g. design code. For user documents use username instead.
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -41,11 +40,11 @@ export const AuditLogApiFetchParamCreator = function (configuration?: Configurat
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -61,19 +60,15 @@ export const AuditLogApiFetchParamCreator = function (configuration?: Configurat
     /**
      * Retrieve the audit logs and filter them by request model parameters
      * @summary List the audit logs
-     * @param {Array<LogFeature>} features Audit logs features to get logs for
+     * @param {Array<LogFeature>} [features] Audit logs features to get logs for
      * @param {string} [startDate] Optional start date, if specified only audit logs created after that date will be retrieved
      * @param {string} [endDate] Optional start date, if specified only audit logs created before that date will be retrieved
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    auditLogListAuditLogsByFeatures(features: Array<LogFeature>, startDate?: string, endDate?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
-      // verify required parameter 'features' is not null or undefined
-      if (features === null || features === undefined) {
-        throw new RequiredError('features','Required parameter features was null or undefined when calling auditLogListAuditLogsByFeatures.');
-      }
+    auditLogListAuditLogsByFeatures(features?: Array<LogFeature>, startDate?: string, endDate?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/audit-log`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -89,23 +84,23 @@ export const AuditLogApiFetchParamCreator = function (configuration?: Configurat
       }
 
       if (features) {
-        localVarQueryParameter['features'] = features;
+        localVarQueryParameter['Features'] = features;
       }
 
       if (startDate !== undefined) {
-        localVarQueryParameter['startDate'] = startDate;
+        localVarQueryParameter['StartDate'] = startDate;
       }
 
       if (endDate !== undefined) {
-        localVarQueryParameter['endDate'] = endDate;
+        localVarQueryParameter['EndDate'] = endDate;
       }
 
       if (page !== undefined) {
-        localVarQueryParameter['page'] = page;
+        localVarQueryParameter['Page'] = page;
       }
 
       if (pageSize !== undefined) {
-        localVarQueryParameter['pageSize'] = pageSize;
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

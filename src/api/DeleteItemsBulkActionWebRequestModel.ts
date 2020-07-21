@@ -1,4 +1,3 @@
-// tslint:disable
 import { AqsJsonNode } from './AqsJsonNode';
 /**
  * Web request model to delete items

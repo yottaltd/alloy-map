@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * WMS layer style legend

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * WMS Tile dimensions web model

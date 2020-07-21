@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Model for a bulk action
@@ -30,4 +29,10 @@ export interface BulkActionWebModel {
    * @memberof BulkActionWebModel
    */
   total: number;
+  /**
+   * The background task id useful to retrieve progress
+   * @type {string}
+   * @memberof BulkActionWebModel
+   */
+  taskId: string;
 }

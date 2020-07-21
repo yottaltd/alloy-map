@@ -1,6 +1,4 @@
-// tslint:disable
 import { BasemapWebRequestModelParametersBase } from './BasemapWebRequestModelParametersBase';
-import { Basemap } from './Basemap';
 /**
  * Web request model to create a basemap
  * @export

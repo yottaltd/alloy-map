@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Model for an alloy task info process state
@@ -6,6 +5,12 @@
  * @interface TaskProcessStateWebModel
  */
 export interface TaskProcessStateWebModel {
+  /**
+   * The last progress message reported by the task
+   * @type {string}
+   * @memberof TaskProcessStateWebModel
+   */
+  message?: string;
   /**
    * Number of items or operations processed so far by the task
    * @type {number}

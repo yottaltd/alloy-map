@@ -1,4 +1,3 @@
-// tslint:disable
 import { OAuthProviderType } from './OAuthProviderType';
 /**
  * Request model for generating OAuth provider authentication urls

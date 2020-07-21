@@ -1,4 +1,3 @@
-// tslint:disable
 import { ImportSettingsAttributeWebModel } from './ImportSettingsAttributeWebModel';
 /**
  * Import base settings web model

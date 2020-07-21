@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Base model for workflow action parameter definitions

@@ -1,5 +1,5 @@
-// tslint:disable
 import { LayerStyleCreateWebModel } from './LayerStyleCreateWebModel';
+import { LayerVisualisationType } from './LayerVisualisationType';
 /**
  * Web request model to create a layer
  * @export
@@ -24,4 +24,16 @@ export interface LayerCreateWebRequestModel {
    * @memberof LayerCreateWebRequestModel
    */
   tags?: Array<string>;
+  /**
+   * The visualisations to have on the layer upon creation
+   * @type {Array<LayerVisualisationType>}
+   * @memberof LayerCreateWebRequestModel
+   */
+  layerVisualisations?: Array<LayerVisualisationType>;
+  /**
+   * Layer is disabled or not
+   * @type {boolean}
+   * @memberof LayerCreateWebRequestModel
+   */
+  disabled?: boolean;
 }

@@ -1,6 +1,4 @@
-// tslint:disable
 import { BasemapAccessAdvisorWebModel } from './BasemapAccessAdvisorWebModel';
-import { Basemap } from './Basemap';
 /**
  * 
  * @export

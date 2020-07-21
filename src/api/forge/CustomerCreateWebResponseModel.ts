@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Region Create response

@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Setting model

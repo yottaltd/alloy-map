@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import { FetchAPI } from './FetchAPI';
 import { BlueprintApplyWebRequestModel } from './BlueprintApplyWebRequestModel';
@@ -32,12 +31,14 @@ export const ForgeBlueprintApiFactory = function (configuration?: Configuration,
     /**
      * 
      * @summary List blueprints by modules
-     * @param {string} locale locale to use
+     * @param {string} [locale] locale to use
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    blueprintListBlueprints(locale: string, options?: any) {
-      return ForgeBlueprintApiFp(configuration).blueprintListBlueprints(locale, options)(fetch, basePath);
+    blueprintListBlueprints(locale?: string, page?: number, pageSize?: number, options?: any) {
+      return ForgeBlueprintApiFp(configuration).blueprintListBlueprints(locale, page, pageSize, options)(fetch, basePath);
     },
   };
 };

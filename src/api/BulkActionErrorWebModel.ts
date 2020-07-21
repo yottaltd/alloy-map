@@ -1,4 +1,3 @@
-// tslint:disable
 
 /**
  * Model for bulk action error element

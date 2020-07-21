@@ -1,4 +1,3 @@
-// tslint:disable
 import { AuditLogWebModel } from './AuditLogWebModel';
 /**
  * 

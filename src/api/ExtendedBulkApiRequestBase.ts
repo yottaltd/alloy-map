@@ -1,4 +1,3 @@
-// tslint:disable
 import { ExtendedModelType } from './ExtendedModelType';
 import { ExtendedBulkApi } from './ExtendedBulkApi';
 /**

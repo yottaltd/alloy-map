@@ -1,15 +1,38 @@
-// tslint:disable
 import { BlueprintModuleWebResponseModel } from './BlueprintModuleWebResponseModel';
 /**
- * List blueprints response
+ * 
  * @export
  * @interface ListBlueprintsWebResponseModel
  */
 export interface ListBlueprintsWebResponseModel {
   /**
-   * Blueprints, listed by module
+   * 
+   * @type {number}
+   * @memberof ListBlueprintsWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ListBlueprintsWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<BlueprintModuleWebResponseModel>}
    * @memberof ListBlueprintsWebResponseModel
    */
-  modules: Array<BlueprintModuleWebResponseModel>;
+  results: Array<BlueprintModuleWebResponseModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof ListBlueprintsWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof ListBlueprintsWebResponseModel
+   */
+  totalResults: number;
 }

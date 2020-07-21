@@ -1,5 +1,5 @@
-// tslint:disable
 import { WorkflowActionParameterValueWebModelBase } from './WorkflowActionParameterValueWebModelBase';
+import { WorkflowActionVariableWebModel } from './WorkflowActionVariableWebModel';
 import { DesignWebModel } from './DesignWebModel';
 /**
  * Model representing a tree of workflow actions. The output of this action will be the input to the actions in Actions.
@@ -31,4 +31,10 @@ export interface WorkflowActionWebModel {
    * @memberof WorkflowActionWebModel
    */
   parameters?: Array<WorkflowActionParameterValueWebModelBase>;
+  /**
+   * The variables accessible by parameters on this action
+   * @type {Array<WorkflowActionVariableWebModel>}
+   * @memberof WorkflowActionWebModel
+   */
+  variables?: Array<WorkflowActionVariableWebModel>;
 }

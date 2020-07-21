@@ -17,6 +17,11 @@ export interface AlloyNetworkLayerOptions {
   layerCode: string;
 
   /**
+   * id for layer, must be unique
+   */
+  id: string;
+
+  /**
    * the bounds of the layer to make requests within
    */
   bounds: AlloyBounds;

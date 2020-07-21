@@ -1,15 +1,38 @@
-// tslint:disable
 import { UserGetWebResponseModel } from './UserGetWebResponseModel';
 /**
- * List users request
+ * 
  * @export
  * @interface UserListWebResponseModel
  */
 export interface UserListWebResponseModel {
   /**
-   * Users
+   * 
+   * @type {number}
+   * @memberof UserListWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof UserListWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<UserGetWebResponseModel>}
    * @memberof UserListWebResponseModel
    */
-  users: Array<UserGetWebResponseModel>;
+  results: Array<UserGetWebResponseModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof UserListWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof UserListWebResponseModel
+   */
+  totalResults: number;
 }

@@ -1,8 +1,7 @@
-// tslint:disable
 import { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 import { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 /**
- * Custom report control image url
+ * 
  * @export
  * @interface CustomReportControlImageFlowWebModel
  */

@@ -3,7 +3,6 @@ import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import * as uuid from 'uuid';
 import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
@@ -121,7 +120,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
    * @param options the options for the layer
    */
   constructor(options: AlloyAnimatedPathLayerOptions) {
-    this.id = options.id ? options.id : AlloyAnimatedPathLayer.name + ':' + uuid.v1();
+    this.id = options.id;
     this.map = options.map;
     this.debugger = this.map.debugger.extend(AlloyAnimatedPathLayer.name + ':' + this.id);
     this.styleProcessor = this.createStyleProcessor();

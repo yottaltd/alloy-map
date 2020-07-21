@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
@@ -196,8 +195,8 @@ export const CustomReportApiFp = function(configuration?: Configuration) {
      * Lists the custom reports matching the parameters specified
      * @summary List Custom Reports
      * @param {string} [query] Optional query to filter the designs by
-     * @param {number} [page] 
-     * @param {number} [pageSize] 
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */

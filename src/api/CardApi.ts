@@ -1,10 +1,10 @@
-// tslint:disable
 import { BaseAPI } from './BaseAPI';
 import { CardCreateWebRequestModel } from './CardCreateWebRequestModel';
 import { CardEditWebRequestModel } from './CardEditWebRequestModel';
 import { CardPermissionsEditWebRequestModel } from './CardPermissionsEditWebRequestModel';
 import { CardQueryCreateWebModel } from './CardQueryCreateWebModel';
 import { CardQueryDeleteWebRequestModel } from './CardQueryDeleteWebRequestModel';
+import { CardQueryEditWebRequestModel } from './CardQueryEditWebRequestModel';
 import { CardApiFp } from './CardApiFp';
 /**
  * CardApi - object-oriented interface
@@ -15,16 +15,47 @@ import { CardApiFp } from './CardApiFp';
 export class CardApi extends BaseAPI {
   /**
    * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-   * @summary Lists user cards with their winning permission
+   * @summary Use api/card/access-advisor/user/{username} instead
    * @param {string} username The name of the user to get card access advisor for
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CardApi
    */
-  public cardCardAccessAdvisor(username: string, page?: number, pageSize?: number, options?: any) {
-    return CardApiFp(this.configuration).cardCardAccessAdvisor(username, page, pageSize, options)(this.fetch, this.basePath);
+  public cardCardAccessAdvisor(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return CardApiFp(this.configuration).cardCardAccessAdvisor(username, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists role cards with their winning permission
+   * @param {string} code The code of the role to get card access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CardApi
+   */
+  public cardCardAccessAdvisorByRole(code: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return CardApiFp(this.configuration).cardCardAccessAdvisorByRole(code, query, page, pageSize, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
+   * @summary Lists user cards with their winning permission
+   * @param {string} username The name of the user to get card access advisor for
+   * @param {string} [query] Optional query (full or partial feature name) to filter the results by
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CardApi
+   */
+  public cardCardAccessAdvisorByUser(username: string, query?: string, page?: number, pageSize?: number, options?: any) {
+    return CardApiFp(this.configuration).cardCardAccessAdvisorByUser(username, query, page, pageSize, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -105,6 +136,20 @@ export class CardApi extends BaseAPI {
   }
 
   /**
+   * Edits a card query using the information provided in the model
+   * @summary Edit a card query
+   * @param {string} code The Guc of the card to edit the query
+   * @param {string} id The id of the card query to edit
+   * @param {CardQueryEditWebRequestModel} model The card query edit model
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CardApi
+   */
+  public cardEditQuery(code: string, id: string, model: CardQueryEditWebRequestModel, options?: any) {
+    return CardApiFp(this.configuration).cardEditQuery(code, id, model, options)(this.fetch, this.basePath);
+  }
+
+  /**
    * Fetches a card by its globally unique code (Guc).
    * @summary Get a card by its code
    * @param {string} code The Guc for the card being requested
@@ -117,7 +162,7 @@ export class CardApi extends BaseAPI {
   }
 
   /**
-   * Computes the result of the queries in the card matching the specified code and returns them in the response
+   * Computes or returns the result of the queries in the card matching the specified code
    * @summary Get a computed card
    * @param {string} code The Guc of the card to process
    * @param {*} [options] Override http request option.
@@ -132,13 +177,14 @@ export class CardApi extends BaseAPI {
    * Fetches the permissions of a card by its Guc
    * @summary Get a card permissions by its code
    * @param {string} code The Guc for the card whose permissions are being requested
-   * @param {string} [username] Optional username to get permissions for the specific user
+   * @param {string} [username] Optional username to get permissions for the specific user. This value is mutually exclusive with Role.
+   * @param {string} [role] Optional role to get permissions for the specific role. This value is mutually exclusive with Username.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CardApi
    */
-  public cardGetPermissions(code: string, username?: string, options?: any) {
-    return CardApiFp(this.configuration).cardGetPermissions(code, username, options)(this.fetch, this.basePath);
+  public cardGetPermissions(code: string, username?: string, role?: string, options?: any) {
+    return CardApiFp(this.configuration).cardGetPermissions(code, username, role, options)(this.fetch, this.basePath);
   }
 
   /**
@@ -146,14 +192,15 @@ export class CardApi extends BaseAPI {
    * @summary Get a list of cards
    * @param {string} [query] Optional query to filter the cards by
    * @param {string} [userGroup] Optional Guc to filter cards by. If specified, only the cards that have this user group code within their permissions are returned
-   * @param {number} [page] 
-   * @param {number} [pageSize] 
+   * @param {'Core' | 'Module' | 'Customer'} [context] The optional cards context to filter on
+   * @param {number} [page] The page number to fetch (1 based)
+   * @param {number} [pageSize] The number of results to return per page
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CardApi
    */
-  public cardList(query?: string, userGroup?: string, page?: number, pageSize?: number, options?: any) {
-    return CardApiFp(this.configuration).cardList(query, userGroup, page, pageSize, options)(this.fetch, this.basePath);
+  public cardList(query?: string, userGroup?: string, context?: 'Core' | 'Module' | 'Customer', page?: number, pageSize?: number, options?: any) {
+    return CardApiFp(this.configuration).cardList(query, userGroup, context, page, pageSize, options)(this.fetch, this.basePath);
   }
 
 }

@@ -1,4 +1,3 @@
-// tslint:disable
 import { DesignWebModel } from './DesignWebModel';
 /**
  * Model for the allowed actions that can be added to a position in a workflow

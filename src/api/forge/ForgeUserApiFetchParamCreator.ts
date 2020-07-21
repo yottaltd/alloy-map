@@ -1,4 +1,3 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
@@ -38,7 +37,7 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -55,17 +54,17 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
     /**
      * 
      * @summary Delete a user
-     * @param {string} email user to get
+     * @param {string} username user to get
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userDelete(email: string, options: any = {}): FetchArgs {
-      // verify required parameter 'email' is not null or undefined
-      if (email === null || email === undefined) {
-        throw new RequiredError('email','Required parameter email was null or undefined when calling userDelete.');
+    userDelete(username: string, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling userDelete.');
       }
-      const localVarPath = `/api/user/{email}`
-        .replace(`{${"email"}}`, encodeURIComponent(String(email)));
+      const localVarPath = `/api/user/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
       const localVarHeaderParameter = {} as any;
@@ -92,22 +91,22 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
     /**
      * 
      * @summary Edit a user in the master
-     * @param {string} email 
+     * @param {string} username 
      * @param {UserEditWebRequestModel} model 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userEdit(email: string, model: UserEditWebRequestModel, options: any = {}): FetchArgs {
-      // verify required parameter 'email' is not null or undefined
-      if (email === null || email === undefined) {
-        throw new RequiredError('email','Required parameter email was null or undefined when calling userEdit.');
+    userEdit(username: string, model: UserEditWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling userEdit.');
       }
       // verify required parameter 'model' is not null or undefined
       if (model === null || model === undefined) {
         throw new RequiredError('model','Required parameter model was null or undefined when calling userEdit.');
       }
-      const localVarPath = `/api/user/{email}`
-        .replace(`{${"email"}}`, encodeURIComponent(String(email)));
+      const localVarPath = `/api/user/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
@@ -121,7 +120,7 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
-      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -138,17 +137,17 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
     /**
      * 
      * @summary Get a user
-     * @param {string} email user to get
+     * @param {string} username user to get
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userGet(email: string, options: any = {}): FetchArgs {
-      // verify required parameter 'email' is not null or undefined
-      if (email === null || email === undefined) {
-        throw new RequiredError('email','Required parameter email was null or undefined when calling userGet.');
+    userGet(username: string, options: any = {}): FetchArgs {
+      // verify required parameter 'username' is not null or undefined
+      if (username === null || username === undefined) {
+        throw new RequiredError('username','Required parameter username was null or undefined when calling userGet.');
       }
-      const localVarPath = `/api/user/{email}`
-        .replace(`{${"email"}}`, encodeURIComponent(String(email)));
+      const localVarPath = `/api/user/{username}`
+        .replace(`{${"username"}}`, encodeURIComponent(String(username)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
@@ -175,10 +174,13 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
     /**
      * 
      * @summary List users
+     * @param {string} [query] Optional query to filter the users by
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    userList(options: any = {}): FetchArgs {
+    userList(query?: string, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/user`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -191,6 +193,18 @@ export const ForgeUserApiFetchParamCreator = function (configuration?: Configura
 					? configuration.apiKey("token")
 					: configuration.apiKey;
         localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);

@@ -1,4 +1,3 @@
-// tslint:disable
 import { ItemCreateWebRequestModel } from './ItemCreateWebRequestModel';
 /**
  * Web request model to create a job work item

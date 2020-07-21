@@ -1,7 +1,6 @@
-// tslint:disable
 import { DesignWithOperationsSummaryWebResponseModel } from './DesignWithOperationsSummaryWebResponseModel';
 /**
- * Web request model to create a defect item
+ * 
  * @export
  * @interface ListApplicableInspectionsResponse
  */

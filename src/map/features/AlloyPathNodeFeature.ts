@@ -3,9 +3,9 @@ import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
 import { FeatureUtils } from '../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyPathNodeFeatureProperties } from './AlloyPathNodeFeatureProperties';
 import { AlloyFeature } from './AlloyFeature';
 import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyPathNodeFeatureProperties } from './AlloyPathNodeFeatureProperties';
 
 /**
  * an alloy path node feature which represents a connected unit with point geometry
@@ -93,7 +93,7 @@ export abstract class AlloyPathNodeFeature implements AlloyFeature {
    */
   public setGeometry(geometry: Point | null) {
     if (geometry === null) {
-      this.olFeature.setGeometry(undefined as any);
+      this.olFeature.setGeometry(undefined);
     } else {
       this.olFeature.setGeometry(ProjectionUtils.GEOJSON.readGeometry(geometry));
     }

@@ -1,7 +1,6 @@
-// tslint:disable
-import { DodiWebModel } from './DodiWebModel';
+import { DodiWithOperationsSummaryWebResponseModel } from './DodiWithOperationsSummaryWebResponseModel';
 /**
- * Web response model for report applicable dodis list operations
+ * 
  * @export
  * @interface ReportListApplicableDodisWebResponseModel
  */
@@ -20,10 +19,10 @@ export interface ReportListApplicableDodisWebResponseModel {
   pageSize: number;
   /**
    * 
-   * @type {Array<DodiWebModel>}
+   * @type {Array<DodiWithOperationsSummaryWebResponseModel>}
    * @memberof ReportListApplicableDodisWebResponseModel
    */
-  results: Array<DodiWebModel>;
+  results: Array<DodiWithOperationsSummaryWebResponseModel>;
   /**
    * 
    * @type {number}

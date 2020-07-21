@@ -1,5 +1,5 @@
-// tslint:disable
 import { LayerStyleConfigWebModelBase } from './LayerStyleConfigWebModelBase';
+import { LayerStyleVisualisationParametersWebModel } from './LayerStyleVisualisationParametersWebModel';
 /**
  * Web model for a layer style edit operation
  * @export
@@ -30,4 +30,10 @@ export interface LayerStyleCreateWebModel {
    * @memberof LayerStyleCreateWebModel
    */
   config: LayerStyleConfigWebModelBase;
+  /**
+   * The visualisation parameters for the layer style
+   * @type {Array<LayerStyleVisualisationParametersWebModel>}
+   * @memberof LayerStyleCreateWebModel
+   */
+  visualisationParameters?: Array<LayerStyleVisualisationParametersWebModel>;
 }

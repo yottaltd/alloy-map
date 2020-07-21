@@ -1,10 +1,8 @@
-// tslint:disable
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
 import { ClusterCreateWebRequestModel } from './ClusterCreateWebRequestModel';
-import { ClusterCreateWebResponseModel } from './ClusterCreateWebResponseModel';
 import { ClusterGetWebResponseModel } from './ClusterGetWebResponseModel';
 import { ClusterListWebResponseModel } from './ClusterListWebResponseModel';
 import { ForgeClusterApiFetchParamCreator } from './ForgeClusterApiFetchParamCreator';
@@ -22,7 +20,7 @@ export const ForgeClusterApiFp = function(configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    clusterCreate(model: ClusterCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ClusterCreateWebResponseModel> {
+    clusterCreate(model: ClusterCreateWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
       const localVarFetchArgs = ForgeClusterApiFetchParamCreator(configuration).clusterCreate(model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
@@ -75,11 +73,13 @@ export const ForgeClusterApiFp = function(configuration?: Configuration) {
     /**
      * 
      * @summary List clusters
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    clusterList(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ClusterListWebResponseModel> {
-      const localVarFetchArgs = ForgeClusterApiFetchParamCreator(configuration).clusterList(options);
+    clusterList(page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ClusterListWebResponseModel> {
+      const localVarFetchArgs = ForgeClusterApiFetchParamCreator(configuration).clusterList(page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

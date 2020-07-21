@@ -1,15 +1,38 @@
-// tslint:disable
 import { TaskWebModel } from './TaskWebModel';
 /**
- * Task List response
+ * 
  * @export
  * @interface TaskListWebResponseModel
  */
 export interface TaskListWebResponseModel {
   /**
-   * The Tasks
+   * 
+   * @type {number}
+   * @memberof TaskListWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof TaskListWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<TaskWebModel>}
    * @memberof TaskListWebResponseModel
    */
-  tasks: Array<TaskWebModel>;
+  results: Array<TaskWebModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof TaskListWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof TaskListWebResponseModel
+   */
+  totalResults: number;
 }

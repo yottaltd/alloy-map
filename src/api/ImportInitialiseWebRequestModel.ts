@@ -1,4 +1,3 @@
-// tslint:disable
 import { ImportType } from './ImportType';
 /**
  * Web request model for an import initialise operation. This creates new import with user given name and type as well as load items from the import files.

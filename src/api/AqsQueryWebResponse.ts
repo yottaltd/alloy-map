@@ -1,7 +1,6 @@
-// tslint:disable
 import { ItemWebModel } from './ItemWebModel';
 /**
- * Response model of an aqs query operation
+ * 
  * @export
  * @interface AqsQueryWebResponse
  */

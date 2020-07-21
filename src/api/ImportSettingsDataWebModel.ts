@@ -1,10 +1,9 @@
-// tslint:disable
 import { ImportSettingsBaseWebModel } from './ImportSettingsBaseWebModel';
 import { ImportSettingsGeometryWebModel } from './ImportSettingsGeometryWebModel';
 import { ImportSettingsNetworkReferenceWebModel } from './ImportSettingsNetworkReferenceWebModel';
 import { ImportSettingsParentWebModel } from './ImportSettingsParentWebModel';
 /**
- * Web model for data import settings
+ * 
  * @export
  * @interface ImportSettingsDataWebModel
  */

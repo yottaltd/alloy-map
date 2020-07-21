@@ -1,7 +1,6 @@
-// tslint:disable
 import { LayerStyleConfigWebModelBase } from './LayerStyleConfigWebModelBase';
 /**
- * Web model for a layer style config wfs object
+ * 
  * @export
  * @interface LayerStyleConfigWfsWebModel
  */

@@ -1,4 +1,3 @@
-// tslint:disable
 import { AlloyCurrentUserWebModel } from './AlloyCurrentUserWebModel';
 /**
  * Web model for current user

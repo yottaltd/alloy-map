@@ -1,8 +1,7 @@
-// tslint:disable
 import { WorkflowTimeCronTriggerOnDaysWebModel } from './WorkflowTimeCronTriggerOnDaysWebModel';
 import { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 /**
- * Model for a workflow trigger that occurs at a fixed time of day on every day, or certain days of the week, or certain days of the month.
+ * 
  * @export
  * @interface TimeCronTrigger
  */
