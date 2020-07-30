@@ -1,6 +1,7 @@
 {
-  "title": "",
+  "title": "WFS",
   "version": "2.0.0",
+  "outputFormats": ["GML3", "GML2", "GEOJSON", "ESRIGEOJSON", "KML"],
   "featureTypes": [
     {
       "name": "ext_datagov:Traffic_regulation_orders_for_RPS",

@@ -1,6 +1,7 @@
 {
-  "title": "",
+  "title": "Welsh Government INSPIRE WFS",
   "version": "2.0.0",
+  "outputFormats": ["GML2", "KML", "gml3", "json"],
   "featureTypes": [
     {
       "name": "inspire-wg:NAP_uk_w_agg_areas_2015",

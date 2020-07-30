@@ -1,15 +1,24 @@
 import OLCollection from 'ol/Collection';
 import OLFeature from 'ol/Feature';
+import OLEsriJSON from 'ol/format/EsriJSON';
+import OLFormat from 'ol/format/Feature';
 import OLGeoJSON from 'ol/format/GeoJSON';
+import OLGML2 from 'ol/format/GML2';
+import OLGML3 from 'ol/format/GML3';
+import OLKML from 'ol/format/KML';
+import OLWFS from 'ol/format/WFS';
+import OLGeometry from 'ol/geom/Geometry';
 import OLVectorLayer from 'ol/layer/Vector';
-import OLVectorSource from 'ol/source/Vector';
-import OLStyle from 'ol/style/Style';
 import OLProjection from 'ol/proj/Projection';
 import OLRenderFeature from 'ol/render/Feature';
+import OLVectorSource from 'ol/source/Vector';
+import OLStyle from 'ol/style/Style';
 import { AlloyLayerZIndex } from '../map/core/AlloyLayerZIndex';
 import { PolyfillLoadingStrategy } from '../polyfills/PolyfillLoadingStrategy';
 import { PolyfillProj } from '../polyfills/PolyfillProj';
 import { ProjectionUtils } from '../utils/ProjectionUtils';
+import { AlloyWfsFormat } from './AlloyWfsFormat';
+import { WfsUtils } from './WfsUtils';
 
 /**
  * Internal class to create OLVectorLayer with WFS feature loader
@@ -37,6 +46,7 @@ export abstract class WfsLayerUtils {
     epsg: number,
     zIndex: AlloyLayerZIndex,
     loadAll?: boolean,
+    outputFormat?: string,
     styleFunction?: (
       feature: OLFeature | OLRenderFeature,
       resolution: number,
@@ -51,9 +61,10 @@ export abstract class WfsLayerUtils {
     getFeatureUrl.searchParams.set('request', 'GetFeature');
     getFeatureUrl.searchParams.set('typename', name);
     getFeatureUrl.searchParams.set((version.startsWith('1') ? 's' : 'c') + 'rsname', epsgCode);
-    getFeatureUrl.searchParams.set('outputFormat', 'json');
+    getFeatureUrl.searchParams.set('outputFormat', outputFormat ?? 'json');
 
-    const format = new OLGeoJSON();
+    const wfsFormat = outputFormat ? WfsUtils.getAlloyWfsFormatForValue(outputFormat) : undefined;
+    const format = WfsLayerUtils.getFormat(wfsFormat);
 
     const vectorSource = new OLVectorSource({
       format,
@@ -74,10 +85,16 @@ export abstract class WfsLayerUtils {
             const response = await fetch(extentUrl.href);
             if (response.status === 200) {
               const text = await response.text();
+
               let readFeaturesOptions:
                 | { dataProjection: OLProjection; featureProjection: OLProjection }
                 | undefined;
-              if (epsg === 3857) {
+              if (wfsFormat === AlloyWfsFormat.KML) {
+                readFeaturesOptions = {
+                  dataProjection: ProjectionUtils.API_PROJECTION,
+                  featureProjection: ProjectionUtils.MAP_PROJECTION,
+                };
+              } else if (epsg === 3857) {
                 readFeaturesOptions = undefined;
               } else {
                 readFeaturesOptions = {
@@ -86,7 +103,11 @@ export abstract class WfsLayerUtils {
                 };
               }
 
-              const features = format.readFeatures(text, readFeaturesOptions);
+              const features = format
+                .readFeatures(text, readFeaturesOptions)
+                .filter(
+                  (feature): feature is OLFeature<OLGeometry> => feature instanceof OLFeature,
+                );
               if (features && features.length > 0) {
                 if (featureSetter) {
                   featureSetter(features);
@@ -119,5 +140,34 @@ export abstract class WfsLayerUtils {
       style: styleFunction,
     });
     return vectorLayer;
+  }
+
+  /**
+   * Gets appropriate openlayers format to read features for outputFormat value
+   * @param outputFormat AlloyWfsFormat value to get openlayers format for
+   * @returns openlayers format to use to read features from responses
+   */
+  private static getFormat(outputFormat?: AlloyWfsFormat): OLFormat {
+    switch (outputFormat) {
+      case AlloyWfsFormat.KML:
+        return new OLKML({
+          extractStyles: false,
+          writeStyles: false,
+          showPointNames: false,
+        });
+      case AlloyWfsFormat.GML2:
+        return new OLWFS({
+          gmlFormat: new OLGML2(),
+        });
+      case AlloyWfsFormat.GML3:
+        return new OLWFS({
+          gmlFormat: new OLGML3(),
+        });
+      case AlloyWfsFormat.ESRIJSON:
+        return new OLEsriJSON();
+      case AlloyWfsFormat.JSON:
+      default:
+        return new OLGeoJSON();
+    }
   }
 }
