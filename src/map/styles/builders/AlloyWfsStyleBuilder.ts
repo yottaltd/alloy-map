@@ -1611,8 +1611,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       ? feature.olFeature.get(layerStyle.labelSubtitle)
       : undefined;
     return {
-      title: titleValue ? String(titleValue) : undefined,
-      subtitle: subtitleValue ? String(subtitleValue) : undefined,
+      title: titleValue !== undefined && titleValue !== null ? String(titleValue) : undefined,
+      subtitle:
+        subtitleValue !== undefined && subtitleValue !== null ? String(subtitleValue) : undefined,
     };
   }
 
