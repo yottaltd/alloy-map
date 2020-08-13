@@ -143,7 +143,7 @@ export abstract class WfsUtils {
       throw new AlloyMapError(1571669799, 'wfs feature is not assigned to a wfs layer');
     }
 
-    const descriptions = layer.getWfsDescriptionForFeature(feature);
+    const descriptions = layer.getWfsDescriptionForStyleId(feature.styleId);
     const olFeatureProperties = feature.olFeature.getProperties();
     const olFeaturePropertiesKeys = Object.keys(olFeatureProperties);
     for (const key of olFeaturePropertiesKeys) {

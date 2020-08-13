@@ -123,14 +123,12 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
   }
 
   /**
-   * get feature type description associated with given WFS feature.
-   * @param feature WFS feature for which to get parameters
+   * get feature type description associated with given stlye id.
+   * @param styleId style id for which to get parameters
    * @returns map of feature type descriptions keyed on name, or null if descriptions are not loaded
    */
-  public getWfsDescriptionForFeature(
-    feature: AlloyWfsFeature,
-  ): Map<string, WfsFeatureDescription> | null {
-    return this.wfsFeatureTypeDescriptions.get(feature.styleId) || null;
+  public getWfsDescriptionForStyleId(styleId: string): Map<string, WfsFeatureDescription> | null {
+    return this.wfsFeatureTypeDescriptions.get(styleId) || null;
   }
 
   /**
