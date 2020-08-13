@@ -167,7 +167,7 @@ export abstract class WfsLayerUtils {
         return new OLEsriJSON();
       case AlloyWfsFormat.JSON:
       default:
-        return new OLGeoJSON();
+        return new OLGeoJSON({ extractGeometryName: true });
     }
   }
 }
