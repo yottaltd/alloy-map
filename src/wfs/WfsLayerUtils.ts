@@ -53,7 +53,7 @@ export abstract class WfsLayerUtils {
     getFeatureUrl.searchParams.set((version.startsWith('1') ? 's' : 'c') + 'rsname', epsgCode);
     getFeatureUrl.searchParams.set('outputFormat', 'json');
 
-    const format = new OLGeoJSON();
+    const format = new OLGeoJSON({ extractGeometryName: true });
 
     const vectorSource = new OLVectorSource({
       format,

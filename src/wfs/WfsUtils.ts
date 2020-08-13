@@ -1,10 +1,12 @@
 import { debug, Debugger } from 'debug';
+import OLGeoJSON from 'ol/format/GeoJSON';
 import { AlloyMapError } from '../error/AlloyMapError';
 import { AlloyMap } from '../map/core/AlloyMap';
 import { AlloyWfsFeature } from '../map/features/AlloyWfsFeature';
 import { AlloyWfsLayer } from '../map/layers/wfs/AlloyWfsLayer';
 import { AlloyWfsLayerStyle } from '../map/styles/AlloyWfsLayerStyle';
 import { OL_FEATURE_TO_FEATURE_ID } from '../utils/FeatureUtils';
+import { ProjectionUtils } from '../utils/ProjectionUtils';
 import { AlloyWfsCapabilities } from './AlloyWfsCapabilities';
 import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
 import { WfsFeatureDescription } from './WfsFeatureDescription';
@@ -147,13 +149,21 @@ export abstract class WfsUtils {
     const olFeatureProperties = feature.olFeature.getProperties();
     const olFeaturePropertiesKeys = Object.keys(olFeatureProperties);
     for (const key of olFeaturePropertiesKeys) {
-      if (key === OL_FEATURE_TO_FEATURE_ID || key === 'geometry') {
+      if (key === OL_FEATURE_TO_FEATURE_ID) {
         continue;
       }
       if (descriptions === null || descriptions.size === 0 || descriptions.has(key)) {
+        let value = olFeatureProperties[key];
+        if (key === feature.olFeature.getGeometryName()) {
+          value = new OLGeoJSON().writeGeometryObject(value, {
+            dataProjection: ProjectionUtils.API_PROJECTION,
+            featureProjection: ProjectionUtils.MAP_PROJECTION,
+            decimals: 6,
+          });
+        }
         wfsProperties.push({
           name: key,
-          value: olFeatureProperties[key],
+          value,
           description: descriptions ? descriptions.get(key) : undefined,
         });
       }
