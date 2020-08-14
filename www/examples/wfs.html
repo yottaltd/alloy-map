@@ -5,60 +5,97 @@
 <head>
   <title>Alloy Map Sandbox - Wfs</title>
   <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
 
-    #wrapper {
-      background-color: #ccc;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
 
-<body>
-  <!-- dom elements for test setup -->
-  <div id="wrapper">
-    <div id="map" style="width: 100%; height: 800px;"></div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
-  <script src="../../dist/alloy-map.js"></script>
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
 
-  <script>
-    localStorage.debug = 'alloymaps:*';
+    <script>
+      localStorage.debug = 'alloymaps:*';
 
-    const map = new alloymap.AlloyMap({
-      api: 'https://api.labs.alloyapp.io/',
-      token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
-      element: document.getElementById('map'),
-      centre: new alloymap.AlloyCoordinate(-2, 52),
-      zoom: 6,
-    });
+      const map = new alloymap.AlloyMap({
+        api: 'https://api.labs.alloyapp.io/',
+        token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(-2, 52),
+        zoom: 6,
+      });
 
-    // Add basemap
-    const basemap = alloymap.AlloyBasemapFactory.createNightscape();
-    map.setBasemap(basemap);
+      // Add basemap
+      const basemap = alloymap.AlloyBasemapFactory.createNightscape();
+      map.setBasemap(basemap);
 
-    // Add WFS layer
-    const layerUrl = 'http://www.pegelonline.wsv.de/webservices/gis/aktuell/wfs?';
-    const featureName = 'gk:waterlevels';
-    const epsg = 3857;
-    const version = '1.1.0';
-    const layer = new alloymap.AlloyWfsLayer({
-      map,
-      styles: [
-        new alloymap.AlloyWfsLayerStyle(
-          'some-id', layerUrl, featureName, epsg, version, '#25aae1', 'icon-close',
-        ),
-      ],
-    });
-    map.addLayer(layer);
-  </script>
-</body>
-
+      // Add WFS layer
+      const layer = new alloymap.AlloyWfsLayer({
+        map,
+        styles: [
+          new alloymap.AlloyWfsLayerStyle(
+            'some-id1',
+            'https://map.salford.gov.uk/geoserver/NE_open/wfs',
+            'NE_open:v_gm_bridges_structures',
+            3857,
+            '1.0.0',
+            '#269c57',
+            'icon-close',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            'KML',
+          ),
+          new alloymap.AlloyWfsLayerStyle(
+            'some-id',
+            'http://www.pegelonline.wsv.de/webservices/gis/aktuell/wfs?',
+            'gk:waterlevels',
+            3857,
+            '1.1.0',
+            '#25aae1',
+            'icon-close',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            'GML2',
+          ),
+          new alloymap.AlloyWfsLayerStyle(
+            'some-id2',
+            'https://www.dassh.ac.uk/geoserver/wfs',
+            'dassh:pfcs_20mdepth',
+            27700,
+            '2.0.0',
+            '#ff0000',
+            'icon-close',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            'json',
+          ),
+        ],
+      });
+      map.addLayer(layer);
+    </script>
+  </body>
 </html>

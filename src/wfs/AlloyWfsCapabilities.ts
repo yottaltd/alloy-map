@@ -20,4 +20,9 @@ export interface AlloyWfsCapabilities {
    * Collection of feature types available on WFS service
    */
   featureTypes: AlloyWfsFeatureType[];
+
+  /**
+   * Supported output formats of WFS service
+   */
+  outputFormats: string[];
 }

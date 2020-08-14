@@ -100,6 +100,7 @@ export { GeometryUtils } from './utils/GeometryUtils';
 export { FindFeaturesWithinResult } from './utils/models/FindFeaturesWithinResult';
 export { AlloyWfsCapabilities } from './wfs/AlloyWfsCapabilities';
 export { AlloyWfsFeatureType } from './wfs/AlloyWfsFeatureType';
+export { AlloyWfsFormat } from './wfs/AlloyWfsFormat';
 export { WfsFeatureDescription } from './wfs/WfsFeatureDescription';
 export { WfsFeatureProperty } from './wfs/WfsFeatureProperty';
 export { WfsUtils } from './wfs/WfsUtils';

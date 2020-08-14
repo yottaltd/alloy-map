@@ -13,7 +13,7 @@ const featureTypeEpsg100 = 'SRS';
 const featureTypeEpsg110 = 'DefaultSRS';
 const featureTypeEpsg200 = 'DefaultCRS';
 const featureTypeBboxOld = 'LatLongBoundingBox';
-const featureTypeBboxNew = 'ows:WGS84BoundingBox';
+const featureTypeBboxNew = 'WGS84BoundingBox';
 
 /**
  * internal parser for parsing WFS capabilties feature types for different WFS versions
@@ -25,31 +25,22 @@ export abstract class WfsVersionParser {
    * Parses XML GetCapabilities response FeatureType into `AlloyWfsFeatureType`
    * @param node XML element of FeatureType to parse
    * @param version version of WFS service
-   * @param usePrefix whether nodes have 'wfs:' at the start of tags
    */
-  public static parseFeatureTypeNode(
-    node: Element,
-    version: string,
-    usePrefix = false,
-  ): AlloyWfsFeatureType {
+  public static parseFeatureTypeNode(node: Element, version: string): AlloyWfsFeatureType {
     WfsVersionParser.debugger('parsing feature type node');
 
-    const nameNode = usePrefix
-      ? WfsVersionParser.getChildByTagName(node, `wfs:${featureTypeName}`)
-      : node.querySelector(featureTypeName);
+    const nameNode = node.querySelector(featureTypeName);
     if (!nameNode) {
       throw new AlloyMapError(1562248616, 'Failed to get feature type name node');
     }
     const nameValue = nameNode.innerHTML;
-    const titleNode = usePrefix
-      ? WfsVersionParser.getChildByTagName(node, `wfs:${featureTypeTitle}`)
-      : node.querySelector(featureTypeTitle);
+    const titleNode = node.querySelector(featureTypeTitle);
     if (!titleNode) {
       throw new AlloyMapError(1562248648, 'Failed to get feature type title node');
     }
     const titleValue = titleNode.innerHTML;
     const wgs84bboxValue = WfsVersionParser.parseFeatureTypeBbox(node, version);
-    const epsgValue = WfsVersionParser.parseFeatureTypeEpsg(node, version, usePrefix);
+    const epsgValue = WfsVersionParser.parseFeatureTypeEpsg(node, version);
 
     WfsVersionParser.debugger(`finished parsing feature type node ${titleValue}`);
 
@@ -74,11 +65,10 @@ export abstract class WfsVersionParser {
    * Gets epsg code for WFS Feature type
    * @param node XML element of FeatureType to find epsg for
    * @param version WFS version
-   * @param usePrefix whether `wfs:` prefix for tag names is used
    * @ignore
    * @internal
    */
-  private static parseFeatureTypeEpsg(node: Element, version: string, usePrefix = false): number {
+  private static parseFeatureTypeEpsg(node: Element, version: string): number {
     WfsVersionParser.debugger('parsing feature type epsg');
     let srsTag: string;
     switch (version) {
@@ -92,7 +82,7 @@ export abstract class WfsVersionParser {
         srsTag = featureTypeEpsg200;
         break;
     }
-    const srsNode = WfsVersionParser.getChildByTagName(node, `${usePrefix ? 'wfs:' : ''}${srsTag}`);
+    const srsNode = node.querySelector(srsTag);
     if (!srsNode) {
       throw new AlloyMapError(1562248514, 'Failed to get srs node for feature type');
     }
@@ -121,11 +111,9 @@ export abstract class WfsVersionParser {
   ): [number, number, number, number] {
     WfsVersionParser.debugger('parsing feature type bbox');
     const isNew = version !== '1.0.0';
-    const bbox: Element | undefined = WfsVersionParser.getChildByTagName(
-      node,
+    const bbox: Element | null = node.querySelector(
       isNew ? featureTypeBboxNew : featureTypeBboxOld,
     );
-
     if (!bbox) {
       throw new AlloyMapError(1583862837, 'Could not get bbox');
     }
@@ -134,8 +122,8 @@ export abstract class WfsVersionParser {
     let max: number[];
     if (isNew) {
       // ows:LowerCorner, ows:UpperCorner
-      const lowerCornerNode = WfsVersionParser.getChildByTagName(bbox, 'ows:LowerCorner');
-      const upperCornerNode = WfsVersionParser.getChildByTagName(bbox, 'ows:UpperCorner');
+      const lowerCornerNode = bbox.querySelector('LowerCorner');
+      const upperCornerNode = bbox.querySelector('UpperCorner');
       if (!lowerCornerNode || !upperCornerNode) {
         throw new AlloyMapError(1562248808, 'Failed to get bbox nodes for feature type');
       }
@@ -170,22 +158,5 @@ export abstract class WfsVersionParser {
     });
     WfsVersionParser.debugger('finished parsing feature type bbox');
     return bboxValue;
-  }
-
-  /**
-   * Finds child node by tag name
-   * @param node XML element
-   * @param tag child node name
-   * @ignore
-   * @internal
-   */
-  private static getChildByTagName(node: Element, tag: string): Element | undefined {
-    for (let i = 0; i < node.children.length; i++) {
-      const child = node.children.item(i);
-      if (child && child.tagName.toLowerCase() === tag.toLowerCase()) {
-        return child;
-      }
-    }
-    return undefined;
   }
 }

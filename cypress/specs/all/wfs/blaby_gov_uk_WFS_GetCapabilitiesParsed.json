@@ -1,6 +1,7 @@
 {
   "title": "Blaby - Web Feature Service",
   "version": "1.0.0",
+  "outputFormats": ["KML", "GML2", "GML3", "JSON"],
   "featureTypes": [
     {
       "name": "inspire:listed_buildings",
