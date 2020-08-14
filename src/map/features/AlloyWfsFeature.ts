@@ -125,6 +125,14 @@ export class AlloyWfsFeature implements AlloyFeature {
   public setVisible(visible: boolean) {
     this.olFeature.setStyle(visible ? null : []);
   }
+
+  /**
+   * Get the property name associated with the default geometry for this feature.
+   * @returns geometry name
+   */
+  public getGeometryName(): string {
+    return this.olFeature.getGeometryName();
+  }
 }
 
 /**
