@@ -95,6 +95,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
         style.epsg,
         AlloyLayerZIndex.Layers,
         style.loadAll,
+        style.outputFormat,
         (olFeature, resolution) => {
           return this.styleProcessor.onStyleProcess(
             olFeature,

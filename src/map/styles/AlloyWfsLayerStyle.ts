@@ -51,6 +51,11 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
   public readonly loadAll?: boolean;
 
   /**
+   * WFS service supported output format to use for requests
+   */
+  public readonly outputFormat?: string;
+
+  /**
    * creates a new instance
    * @param styleId the style id
    * @param url url for WFS service
@@ -63,6 +68,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
    * @param labelSubtitle WFS property name to use for the subtitle
    * @param scale the scale to use when displaying style features, defaults to 1
    * @param loadAll whether all items should be loaded in one go
+   * @param outputFormat optional format to use for WFS requests
    */
   constructor(
     styleId: string,
@@ -77,6 +83,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     opacity?: AlloyLayerStyleOpacity,
     scale?: AlloyLayerStyleScale,
     loadAll?: boolean,
+    outputFormat?: string,
   ) {
     let mode: AlloyLayerStyleLabelMode = AlloyLayerStyleLabelMode.None;
     if (labelTitle) {
@@ -94,5 +101,6 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
     this.labelTitle = labelTitle;
     this.labelSubtitle = labelSubtitle;
     this.loadAll = loadAll;
+    this.outputFormat = outputFormat;
   }
 }
