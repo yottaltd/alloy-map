@@ -771,7 +771,7 @@ export class AlloyMap {
    * Unsets the map from DOM
    */
   public remove(): void {
-    this.olMap.setTarget(null as any);
+    this.olMap.setTarget(undefined);
   }
 
   /**

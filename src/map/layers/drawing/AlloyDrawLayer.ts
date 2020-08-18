@@ -100,7 +100,42 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
         }
       } else {
         // otherwise wrap all in multi-collection
-        geom = new OLGeometryCollection(geometries);
+        const collection: OLGeometry[] = [];
+
+        // Add Point if only 1 present, otherwise wrap all in MultiPoint
+        const points: OLPoint[] = geometries.filter(
+          (g): g is OLPoint => g.getType() === OLGeometryType.POINT,
+        );
+        if (points.length > 1) {
+          collection.push(new OLMultiPoint(points.map((point) => point.getCoordinates())));
+        } else if (points.length === 1) {
+          collection.push(points[0]);
+        }
+
+        // Add LineString if only 1 present, otherwise wrap all in MultiLineStrings
+        const lineStrings: OLLineString[] = geometries.filter(
+          (g): g is OLLineString => g.getType() === OLGeometryType.LINE_STRING,
+        );
+        if (lineStrings.length > 1) {
+          collection.push(
+            new OLMultiLineString(lineStrings.map((lineString) => lineString.getCoordinates())),
+          );
+        } else if (lineStrings.length === 1) {
+          collection.push(lineStrings[0]);
+        }
+
+        // Add Polygon if only 1 present, otherwise wrap all in MultiPolygon
+        const polygons: OLPolygon[] = geometries.filter(
+          (g): g is OLPolygon => g.getType() === OLGeometryType.POLYGON,
+        );
+        if (polygons.length > 1) {
+          collection.push(new OLMultiPolygon(polygons.map((polygon) => polygon.getCoordinates())));
+        } else if (polygons.length === 1) {
+          collection.push(polygons[0]);
+        }
+
+        // Wrap all geometries in GeometryCollection
+        geom = new OLGeometryCollection(collection);
       }
     }
 
