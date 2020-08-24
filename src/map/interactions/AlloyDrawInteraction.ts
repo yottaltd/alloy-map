@@ -7,6 +7,10 @@ import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
+import OLMultiLineString from 'ol/geom/MultiLineString';
+import OLMultiPoint from 'ol/geom/MultiPoint';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import OLDraw, { createBox as OLCreateBox } from 'ol/interaction/Draw';
 import OLModify from 'ol/interaction/Modify';
@@ -367,11 +371,27 @@ export class AlloyDrawInteraction {
           default:
             break;
         }
-        // remove whole point or single feature
+        // if not removing simple feature then remove coordinate and see if whole feature needs to
+        // be removed
+        if (!featureRemove) {
+          GeometryUtils.removeCoordinate(sourceGeometry, coord);
+          if (
+            (sourceGeometry instanceof OLMultiPoint ||
+              sourceGeometry instanceof OLMultiLineString ||
+              sourceGeometry instanceof OLMultiPolygon) &&
+            sourceGeometry.getCoordinates().length === 0
+          ) {
+            featureRemove = true;
+          } else if (
+            sourceGeometry instanceof OLGeometryCollection &&
+            sourceGeometry.getGeometries().length === 0
+          ) {
+            featureRemove = true;
+          }
+        }
+        // remove whole feature
         if (featureRemove) {
           this.drawLayer.removeFeature(sourceFeature);
-        } else {
-          GeometryUtils.removeCoordinate(sourceGeometry, coord);
         }
 
         // fire change event
