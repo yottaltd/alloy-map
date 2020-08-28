@@ -1,3 +1,40 @@
+/* eslint-disable max-len */
+
+import { Configuration } from '@/api/configuration';
+import { GeoJSONObjectType } from '@/api/GeoJSONObjectType';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyMapOptions } from '@/map/core/AlloyMapOptions';
+import { AlloySelectionMode } from '@/map/core/AlloySelectionMode';
+import { AlloyDrawEventHandler } from '@/map/events/AlloyDrawEventHandler';
+import { FeatureSelectionChangeEventHandler } from '@/map/events/FeatureSelectionChangeEventHandler';
+import { FeaturesUnderSelectionEventHandler } from '@/map/events/FeaturesUnderSelectionEventHandler';
+import { LayersChangeEvent } from '@/map/events/LayersChangeEvent';
+import { LayersChangeEventHandler } from '@/map/events/LayersChangeEventHandler';
+import { MapChangeCentreEvent } from '@/map/events/MapChangeCentreEvent';
+import { MapChangeCentreEventHandler } from '@/map/events/MapChangeCentreEventHandler';
+import { MapChangeZoomEvent } from '@/map/events/MapChangeZoomEvent';
+import { MapChangeZoomEventHandler } from '@/map/events/MapChangeZoomEventHandler';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyDrawFeatureProperties } from '@/map/features/AlloyDrawFeatureProperties';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyDrawInteraction } from '@/map/interactions/AlloyDrawInteraction';
+import { AlloyDrawInteractionGeometryType } from '@/map/interactions/AlloyDrawInteractionGeometryType';
+import { AlloyHoverInteraction } from '@/map/interactions/AlloyHoverInteraction';
+import { AlloyPingInteraction } from '@/map/interactions/AlloyPingInteraction';
+import { AlloySelectInPolygonInteraction } from '@/map/interactions/AlloySelectInPolygonInteraction';
+import { AlloySelectionInteraction } from '@/map/interactions/AlloySelectionInteraction';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyHoverLayer } from '@/map/layers/hover/AlloyHoverLayer';
+import { AlloySelectionLayer } from '@/map/layers/selection/AlloySelectionLayer';
+import { AlloyOverlay } from '@/map/overlays/AlloyOverlay';
+import { PolyfillInteractions } from '@/polyfills/PolyfillInteractions';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { FontUtils } from '@/utils/FontUtils';
+import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
+import { ScreenshotUtils } from '@/utils/ScreenshotUtils';
 import { debug, Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
@@ -7,41 +44,8 @@ import OLScaleLine, { Units } from 'ol/control/ScaleLine';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { Configuration } from '../../api/configuration';
-import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { PolyfillInteractions } from '../../polyfills/PolyfillInteractions';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { FontUtils } from '../../utils/FontUtils';
-import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
-import { ScreenshotUtils } from '../../utils/ScreenshotUtils';
-import { AlloyBasemap } from '../basemaps/AlloyBasemap';
-import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
-import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
-import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
-import { LayersChangeEvent } from '../events/LayersChangeEvent';
-import { LayersChangeEventHandler } from '../events/LayersChangeEventHandler';
-import { MapChangeCentreEvent } from '../events/MapChangeCentreEvent';
-import { MapChangeCentreEventHandler } from '../events/MapChangeCentreEventHandler';
-import { MapChangeZoomEvent } from '../events/MapChangeZoomEvent';
-import { MapChangeZoomEventHandler } from '../events/MapChangeZoomEventHandler';
-import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
-import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyDrawInteraction } from '../interactions/AlloyDrawInteraction';
-import { AlloyDrawInteractionGeometryType } from '../interactions/AlloyDrawInteractionGeometryType';
-import { AlloyHoverInteraction } from '../interactions/AlloyHoverInteraction';
-import { AlloyPingInteraction } from '../interactions/AlloyPingInteraction';
-import { AlloySelectInPolygonInteraction } from '../interactions/AlloySelectInPolygonInteraction';
-import { AlloySelectionInteraction } from '../interactions/AlloySelectionInteraction';
-import { AlloyLayer } from '../layers/AlloyLayer';
-import { AlloyHoverLayer } from '../layers/hover/AlloyHoverLayer';
-import { AlloySelectionLayer } from '../layers/selection/AlloySelectionLayer';
-import { AlloyOverlay } from '../overlays/AlloyOverlay';
-import { AlloyBounds } from './AlloyBounds';
-import { AlloyCoordinate } from './AlloyCoordinate';
-import { AlloyMapOptions } from './AlloyMapOptions';
-import { AlloySelectionMode } from './AlloySelectionMode';
+
+/* eslint-enable max-len */
 
 /**
  * minimum zoom level for the map

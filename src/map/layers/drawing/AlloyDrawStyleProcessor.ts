@@ -1,9 +1,9 @@
-import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyDrawStyleBuilder } from '../../styles/builders/AlloyDrawStyleBuilder';
-import { AlloyDrawLayer } from './AlloyDrawLayer';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyDrawLayer } from '@/map/layers/drawing/AlloyDrawLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyDrawStyleBuilder } from '@/map/styles/builders/AlloyDrawStyleBuilder';
 
 /**
  * processes the draw styled feature items

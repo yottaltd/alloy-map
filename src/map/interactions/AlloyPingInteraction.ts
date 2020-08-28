@@ -1,3 +1,6 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { PolyfillObservable } from '@/polyfills/PolyfillObservable';
+import { PolyfillVectorContext } from '@/polyfills/PolyfillVectorContext';
 import { Debugger } from 'debug';
 import OLPoint from 'ol/geom/Point';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
@@ -6,9 +9,6 @@ import OLRenderEvent from 'ol/render/Event';
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
-import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
-import { PolyfillVectorContext } from '../../polyfills/PolyfillVectorContext';
-import { AlloyMap } from '../core/AlloyMap';
 
 /**
  * the animation length in milliseconds

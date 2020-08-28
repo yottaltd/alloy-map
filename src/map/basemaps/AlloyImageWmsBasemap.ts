@@ -1,10 +1,10 @@
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyWmsParameters } from '@/wms/AlloyWmsParameters';
+import { WmsUtils } from '@/wms/WmsUtils';
 import BaseLayer from 'ol/layer/Base';
 import OLImageLayer from 'ol/layer/Image';
 import OLImageWMS from 'ol/source/ImageWMS';
-import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
-import { WmsUtils } from '../../wms/WmsUtils';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
-import { AlloyBasemap } from './AlloyBasemap';
 
 /**
  * an alloy image basemap using an WMS image service

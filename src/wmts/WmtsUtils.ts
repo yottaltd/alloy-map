@@ -1,17 +1,18 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { PolyfillWmts } from '@/polyfills/PolyfillWmts';
+import { AlloyWmtsCapabilities } from '@/wmts/AlloyWmtsCapabilities';
+import { AlloyWmtsCapabilitiesLayer } from '@/wmts/AlloyWmtsCapabilitiesLayer';
+import { AlloyWmtsCapabilitiesLayerStyle } from '@/wmts/AlloyWmtsCapabilitiesLayerStyle';
+// eslint-disable-next-line max-len
+import { AlloyWmtsCapabilitiesLayerStyleLegend } from '@/wmts/AlloyWmtsCapabilitiesLayerStyleLegend';
+import { AlloyWmtsParameters } from '@/wmts/AlloyWmtsParameters';
+import { WmtsLayer } from '@/wmts/WmtsLayer';
+import { WmtsStyle } from '@/wmts/WmtsStyle';
+import { WmtsStyleLegend } from '@/wmts/WmtsStyleLegend';
 import * as DOMPurify from 'dompurify';
 import OLWMTS, { Options as OLWMTSOptions, optionsFromCapabilities } from 'ol/source/WMTS';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
-import { PolyfillWmts } from '../polyfills/PolyfillWmts';
-import { AlloyWmtsCapabilities } from './AlloyWmtsCapabilities';
-import { AlloyWmtsCapabilitiesLayer } from './AlloyWmtsCapabilitiesLayer';
-import { AlloyWmtsCapabilitiesLayerStyle } from './AlloyWmtsCapabilitiesLayerStyle';
-import { AlloyWmtsCapabilitiesLayerStyleLegend } from './AlloyWmtsCapabilitiesLayerStyleLegend';
-import { AlloyWmtsParameters } from './AlloyWmtsParameters';
-import { WmtsLayer } from './WmtsLayer';
-import { WmtsStyle } from './WmtsStyle';
-import { WmtsStyleLegend } from './WmtsStyleLegend';
 
 /**
  * Public WMTS utils class for getting and processing capabilties

@@ -1,7 +1,7 @@
+import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
+import { AlloyCustomFeatureProperties } from '@/map/features/AlloyCustomFeatureProperties';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
 import OLFeature from 'ol/Feature';
-import { AlloyCustomFeatureBase } from './AlloyCustomFeatureBase';
-import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
-import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy custom feature which represents something being added to the map by a user or

@@ -1,3 +1,8 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+// eslint-disable-next-line max-len
+import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { FeatureUtils } from '@/utils/FeatureUtils';
 import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
 import OLGeometryType from 'ol/geom/GeometryType';
@@ -10,11 +15,6 @@ import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyFeature } from '../features/AlloyFeature';
-// eslint-disable-next-line max-len
-import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 
 /**
  * the line colour of the drawn polygon

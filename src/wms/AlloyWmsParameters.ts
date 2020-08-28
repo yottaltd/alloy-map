@@ -1,5 +1,5 @@
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyWmsParametersLayer } from './AlloyWmsParametersLayer';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyWmsParametersLayer } from '@/wms/AlloyWmsParametersLayer';
 
 /**
  * Parameters for tile WMS layer requests

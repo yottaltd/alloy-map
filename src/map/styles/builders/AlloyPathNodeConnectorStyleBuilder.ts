@@ -1,10 +1,10 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyPathNodeConnectorFeature } from '@/map/features/AlloyPathNodeConnectorFeature';
+import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
+import { StringUtils } from '@/utils/StringUtils';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
-import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
 
 /**
  * builds styles for connectors (line strings)

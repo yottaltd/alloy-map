@@ -1,4 +1,4 @@
-import { MapChangeCentreEvent } from './MapChangeCentreEvent';
+import { MapChangeCentreEvent } from '@/map/events/MapChangeCentreEvent';
 
 /**
  * handler for the map change centre event

@@ -1,24 +1,24 @@
 /* eslint-disable max-len */
 
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyRouteFeature } from '@/map/features/AlloyRouteFeature';
+import { AlloyRouteWaypointFeature } from '@/map/features/AlloyRouteWaypointFeature';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
+import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
+import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
+import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
+import { AlloyLabelUtils } from '@/map/styles/utils/AlloyLabelUtils';
+import { AlloyLineUtils } from '@/map/styles/utils/AlloyLineUtils';
+import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
+import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { ColourUtils } from '@/utils/ColourUtils';
+import { StringUtils } from '@/utils/StringUtils';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
-import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
-import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
-import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
-import { AlloyBallUtils } from '../utils/AlloyBallUtils';
-import { AlloyIconUtils } from '../utils/AlloyIconUtils';
-import { AlloyLabelUtils } from '../utils/AlloyLabelUtils';
-import { AlloyLineUtils } from '../utils/AlloyLineUtils';
-import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
-import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
 
 /* eslint-enable max-len */
 

@@ -1,20 +1,20 @@
 /* eslint-disable max-len */
 
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyCableFeature } from '@/map/features/AlloyCableFeature';
+import { AlloyCableUnitFeature } from '@/map/features/AlloyCableUnitFeature';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
+import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
+import { AlloyLineUtils } from '@/map/styles/utils/AlloyLineUtils';
+import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
+import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { ColourUtils } from '@/utils/ColourUtils';
+import { StringUtils } from '@/utils/StringUtils';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyCableFeature } from '../../features/AlloyCableFeature';
-import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
-import { AlloyStyleBuilder } from '../AlloyStyleBuilder';
-import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
-import { AlloyBallUtils } from '../utils/AlloyBallUtils';
-import { AlloyIconUtils } from '../utils/AlloyIconUtils';
-import { AlloyLineUtils } from '../utils/AlloyLineUtils';
-import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
-import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
 
 /* eslint-enable max-len */
 

@@ -1,4 +1,4 @@
-import { AlloyFeature } from '../features/AlloyFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
 
 /**
  * event fired when there is a change in selected features

@@ -1,9 +1,9 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { PolyfillProj } from '@/polyfills/PolyfillProj';
+import { EpsgIo } from '@/utils/epsg-io/EpsgIo';
+import { EpsgIoSearchResponse } from '@/utils/epsg-io/EpsgIoSearchResponse';
 import OLGeoJson from 'ol/format/GeoJSON';
 import OLProjection from 'ol/proj/Projection';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { PolyfillProj } from '../polyfills/PolyfillProj';
-import { EpsgIo } from './epsg-io/EpsgIo';
-import { EpsgIoSearchResponse } from './epsg-io/EpsgIoSearchResponse';
 
 /**
  * utility class for playing with projections

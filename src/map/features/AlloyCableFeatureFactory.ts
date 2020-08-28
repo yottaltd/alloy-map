@@ -1,11 +1,11 @@
+import { AlloyCableFeature } from '@/map/features/AlloyCableFeature';
+import { AlloyCableFeatureProperties } from '@/map/features/AlloyCableFeatureProperties';
+import { AlloyCableUnitFeature } from '@/map/features/AlloyCableUnitFeature';
+import { AlloyCableUnitFeatureProperties } from '@/map/features/AlloyCableUnitFeatureProperties';
+import { AlloyCableLayer } from '@/map/layers/cable/AlloyCableLayer';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { LineString, Point } from 'geojson';
 import OLFeature from 'ol/Feature';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyCableLayer } from '../layers/cable/AlloyCableLayer';
-import { AlloyCableFeature } from './AlloyCableFeature';
-import { AlloyCableFeatureProperties } from './AlloyCableFeatureProperties';
-import { AlloyCableUnitFeature } from './AlloyCableUnitFeature';
-import { AlloyCableUnitFeatureProperties } from './AlloyCableUnitFeatureProperties';
 
 /**
  * factory for creating cable features

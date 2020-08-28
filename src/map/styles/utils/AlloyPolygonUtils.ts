@@ -1,12 +1,12 @@
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
+import { Colour, ColourUtils } from '@/utils/ColourUtils';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { Colour, ColourUtils } from '../../../utils/ColourUtils';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
-import { AlloyScaleUtils } from './AlloyScaleUtils';
 
 /**
  * utility for creating polygon styles

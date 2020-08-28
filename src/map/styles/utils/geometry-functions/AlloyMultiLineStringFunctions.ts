@@ -1,3 +1,4 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
 import * as _ from 'lodash';
 import { getCenter } from 'ol/extent';
 import OLFeature from 'ol/Feature';
@@ -7,7 +8,6 @@ import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLPoint from 'ol/geom/Point';
 import OLRenderFeature from 'ol/render/Feature';
-import { AlloyMapError } from '../../../../error/AlloyMapError';
 
 /**
  * geometry functions for openlayers styles, modifies multi linestring geometry for styling

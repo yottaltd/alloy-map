@@ -1,11 +1,12 @@
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+// eslint-disable-next-line max-len
+import { AlloyPathNodeConnectorFeatureProperties } from '@/map/features/AlloyPathNodeConnectorFeatureProperties';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { LineString } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyFeature } from './AlloyFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyPathNodeConnectorFeatureProperties } from './AlloyPathNodeConnectorFeatureProperties';
 
 /**
  * an alloy path node connector feature which represents a single line connector

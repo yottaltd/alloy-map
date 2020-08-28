@@ -1,6 +1,6 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyTileRequestCacheItem } from '../cache/AlloyTileRequestCacheItem';
-import { AlloyTileCoordinate } from './AlloyTileCoordinate';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyTileRequestCacheItem } from '@/map/layers/cache/AlloyTileRequestCacheItem';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
 
 /**
  * represents a tile feature request that can be cached and is cancellable if the tile leaves the

@@ -1,5 +1,5 @@
+import { WmtsCapabilities } from '@/wmts/WmtsCapabilities';
 import OLWmtsCapabilities from 'ol/format/WMTSCapabilities';
-import { WmtsCapabilities } from '../wmts/WmtsCapabilities';
 
 /**
  * reader for wmts capabilties

@@ -1,3 +1,11 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
+import { AlloyDrawLayerOptions } from '@/map/layers/drawing/AlloyDrawLayerOptions';
+import { AlloyDrawStyleProcessor } from '@/map/layers/drawing/AlloyDrawStyleProcessor';
+import { GeometryUtils } from '@/utils/GeometryUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -9,14 +17,6 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import * as uuid from 'uuid';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { GeometryUtils } from '../../../utils/GeometryUtils';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
-import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
-import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to

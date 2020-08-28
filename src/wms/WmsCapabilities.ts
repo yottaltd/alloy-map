@@ -1,4 +1,4 @@
-import { WmsLayer } from './WmsLayer';
+import { WmsLayer } from '@/wms/WmsLayer';
 
 /**
  * wms capabilities object describing the capabilities of a wms service

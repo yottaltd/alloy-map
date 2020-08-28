@@ -1,5 +1,5 @@
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyWfsLayerStyle } from '../../styles/AlloyWfsLayerStyle';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyWfsLayerStyle } from '@/map/styles/AlloyWfsLayerStyle';
 
 /**
  * options for the alloy custom layer

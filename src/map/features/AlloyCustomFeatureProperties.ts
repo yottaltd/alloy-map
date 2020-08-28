@@ -1,5 +1,5 @@
-import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
-import { AlloyLayerStyleLabelMode } from '../styles/AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleLabelMode } from '@/map/styles/AlloyLayerStyleLabelMode';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 
 /**
  * the properties for an alloy custom feature

@@ -1,18 +1,18 @@
-import { WfsUtils } from '../../../../src/wfs/WfsUtils';
+import { WfsUtils } from '@/wfs/WfsUtils';
 import MapData from '../../MapData';
 
-const wfsNoPrefixCapabilities = 'cypress/specs/all/wfs/blaby_gov_uk_WFS_GetCapabilities.xml';
+const wfsNoPrefixCapabilities = 'tests/e2e/specs/all/wfs/blaby_gov_uk_WFS_GetCapabilities.xml';
 const wfsNoPrefixCapabilitiesParsed =
-  'cypress/specs/all/wfs/blaby_gov_uk_WFS_GetCapabilitiesParsed.json';
+  'tests/e2e/specs/all/wfs/blaby_gov_uk_WFS_GetCapabilitiesParsed.json';
 
-const wfsRootPrefixCapabilities = 'cypress/specs/all/wfs/gov_wales_WFS_GetCapabilities.xml';
+const wfsRootPrefixCapabilities = 'tests/e2e/specs/all/wfs/gov_wales_WFS_GetCapabilities.xml';
 const wfsRootPrefixCapabilitiesParsed =
-  'cypress/specs/all/wfs/gov_wales_WFS_GetCapabilitiesParsed.json';
+  'tests/e2e/specs/all/wfs/gov_wales_WFS_GetCapabilitiesParsed.json';
 
 const wfsFeaturesPrefixCapabilities =
-  'cypress/specs/all/wfs/bristol_gov_uk_WFS_GetCapabilities.xml';
+  'tests/e2e/specs/all/wfs/bristol_gov_uk_WFS_GetCapabilities.xml';
 const wfsFeaturesPrefixCapabilitiesParsed =
-  'cypress/specs/all/wfs/bristol_gov_uk_WFS_GetCapabilitiesParsed.json';
+  'tests/e2e/specs/all/wfs/bristol_gov_uk_WFS_GetCapabilitiesParsed.json';
 
 export default function(mapData: MapData) {
   describe('wfs capabilities parsing', () => {

@@ -1,5 +1,5 @@
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyWmsCapabilitiesLayerStyle } from './AlloyWmsCapabilitiesLayerStyle';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyWmsCapabilitiesLayerStyle } from '@/wms/AlloyWmsCapabilitiesLayerStyle';
 
 /**
  * WMS Capabilties layer parameters
