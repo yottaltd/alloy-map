@@ -6,7 +6,7 @@
   "screenshotsFolder": "tests/e2e/screenshots",
   "videosFolder": "tests/e2e/videos",
   "baseUrl": "http://localhost:8888",
-  "testFiles": "tests/e2e/**/*.spec.ts",
+  "testFiles": "**/*.spec.ts",
   "userAgent": "E2E",
   "video": true,
   "projectId": "ueiarb"
