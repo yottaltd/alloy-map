@@ -36,4 +36,11 @@ export class AlloyHoverStyleProcessor extends AlloyStyleProcessor {
       AlloyStyleBuilderBuildState.Hover,
     );
   }
+
+  /**
+   * @override
+   */
+  public clearForFeatureId(id: string): void {
+    // do nothing
+  }
 }

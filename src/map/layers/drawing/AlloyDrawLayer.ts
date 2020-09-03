@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { Geometry } from 'geojson';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -12,11 +14,16 @@ import * as uuid from 'uuid';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { GeometryUtils } from '../../../utils/GeometryUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
+import { AlloyGeometryCollectionFunctions } from '../../styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyMultiPolygonFunctions } from '../../styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '../../styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
 import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
+
+/* eslint-enable max-len */
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -142,6 +149,35 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     const geometry: Geometry = ProjectionUtils.GEOJSON.writeGeometryObject(geom);
     GeometryUtils.roundCoordinates(geometry);
     return geometry;
+  }
+
+  /**
+   * updates styles of drawn features
+   * @ignore
+   * @internal
+   */
+  public updateStyles(feature: AlloyDrawFeature | null) {
+    const features: AlloyDrawFeature[] = feature
+      ? [feature]
+      : Array.from(this.currentFeatures.values());
+    features.forEach((clearFeature) => {
+      const geometry = clearFeature.olFeature.getGeometry();
+      let shouldClearStyles = false;
+      if (geometry instanceof OLPolygon) {
+        AlloyPolygonFunctions.removeFromPolygonCache(geometry);
+        shouldClearStyles = true;
+      } else if (geometry instanceof OLMultiPolygon) {
+        AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
+        shouldClearStyles = true;
+      } else if (geometry instanceof OLGeometryCollection) {
+        AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
+        shouldClearStyles = true;
+      }
+      if (shouldClearStyles && this.styleProcessor) {
+        this.styleProcessor.clearForFeatureId(clearFeature.id);
+      }
+      clearFeature.olFeature.changed();
+    });
   }
 
   /**

@@ -1,5 +1,10 @@
+/* eslint-disable max-len */
+
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
+import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
@@ -12,8 +17,13 @@ import { FeaturesAddedEvent } from '../events/FeaturesAddedEvent';
 import { FeaturesAddedEventHandler } from '../events/FeaturesAddedEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
+import { AlloyGeometryCollectionFunctions } from '../styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyMultiPolygonFunctions } from '../styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '../styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
 import { AlloyLayer } from './AlloyLayer';
+
+/* eslint-enable max-len */
 
 /**
  * base implementation for alloy layers with features
@@ -143,6 +153,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
+    this.handleFeatureGeometryChange(feature);
     return true;
   }
 
@@ -193,6 +204,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
+    features.forEach((feature) => this.handleFeatureGeometryChange(feature));
     return true;
   }
 
@@ -255,5 +267,28 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    */
   public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
     this.featuresAddedDispatcher.unsubscribe(handler);
+  }
+
+  private handleFeatureGeometryChange(feature: T) {
+    feature.olFeature.on('change:geometry', (e) => {
+      let shouldClearStyles = false;
+      const geometry = feature.olFeature.getGeometry();
+      if (geometry instanceof OLPolygon) {
+        AlloyPolygonFunctions.removeFromPolygonCache(geometry);
+        shouldClearStyles = true;
+      } else if (geometry instanceof OLMultiPolygon) {
+        AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
+        shouldClearStyles = true;
+      } else if (geometry instanceof OLGeometryCollection) {
+        AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
+        shouldClearStyles = true;
+      }
+      if (shouldClearStyles && this.styleProcessor) {
+        const id = feature.olFeature.getId() ?? feature.id;
+        this.styleProcessor.clearForFeatureId(typeof id === 'string' ? id : id.toString());
+      }
+
+      feature.olFeature.changed();
+    });
   }
 }

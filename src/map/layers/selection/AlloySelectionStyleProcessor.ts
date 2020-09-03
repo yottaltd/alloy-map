@@ -36,4 +36,11 @@ export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
       AlloyStyleBuilderBuildState.Selected,
     );
   }
+
+  /**
+   * @override
+   */
+  public clearForFeatureId(id: string): void {
+    // do nothing
+  }
 }

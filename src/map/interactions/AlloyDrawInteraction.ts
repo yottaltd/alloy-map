@@ -398,6 +398,7 @@ export class AlloyDrawInteraction {
         this.dispatcher.dispatch(
           new AlloyDrawEvent(featureRemove ? null : sourceFeature, this.drawLayer),
         );
+        this.drawLayer.updateStyles(featureRemove ? null : sourceFeature);
         // re-process point features on remove layer for remove interaction
         this.setRemoveInteractionFeatures();
         break;
@@ -514,6 +515,7 @@ export class AlloyDrawInteraction {
         this.dispatcher.dispatch(new AlloyDrawEvent(feature, this.drawLayer));
       }
     });
+    this.drawLayer.updateStyles(feature);
   }
 
   /**

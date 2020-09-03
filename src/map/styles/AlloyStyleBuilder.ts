@@ -64,6 +64,13 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
   }
 
   /**
+   * clears cached styles for feature id
+   */
+  public clear(featureId: string): void {
+    this.styleCache.clear(featureId);
+  }
+
+  /**
    * generates a consistent key for the style given feature and resolution, this should be used
    * to heavily cache styles. common properties on the feature should be used to strongly cache
    * the styles e.g. colour, resolution, icon etc.

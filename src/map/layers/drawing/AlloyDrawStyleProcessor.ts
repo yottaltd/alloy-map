@@ -40,4 +40,11 @@ export class AlloyDrawStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
   }
+
+  /**
+   * @override
+   */
+  public clearForFeatureId(id: string): void {
+    this.drawStyleBuilder.clear(id);
+  }
 }

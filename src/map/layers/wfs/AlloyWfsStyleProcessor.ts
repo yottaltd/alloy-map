@@ -40,4 +40,11 @@ export class AlloyWfsStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
   }
+
+  /**
+   * @override
+   */
+  public clearForFeatureId(id: string): void {
+    this.wfsStyleBuilder.clear(id);
+  }
 }

@@ -79,7 +79,9 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       layerStyle.colour,
       layerStyle.scale !== AlloyLayerStyleScale.Tiny ? layerStyle.icon : undefined,
       // if polygon then we need to cache per feature due to centre of polygon calcuations
-      type === OLGeometryType.POLYGON || type === OLGeometryType.MULTI_POLYGON
+      type === OLGeometryType.POLYGON ||
+        type === OLGeometryType.MULTI_POLYGON ||
+        type === OLGeometryType.GEOMETRY_COLLECTION
         ? feature.id
         : undefined,
       // if we have titles and we are in title mode then we need to cache on them

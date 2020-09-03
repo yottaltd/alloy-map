@@ -27,4 +27,13 @@ export class AlloyStyleCache {
   public set(key: string, style: OLStyle | OLStyle[]): void {
     this.cache.set(key, style);
   }
+
+  /**
+   * Clears cached styles that contain id as part of the key
+   */
+  public clear(id: string): void {
+    Array.from(this.cache.keys())
+      .filter((key) => key.includes(id))
+      .forEach((key) => this.cache.delete(key));
+  }
 }
