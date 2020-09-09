@@ -11,6 +11,8 @@ import { JobCreateWebRequestModel } from './JobCreateWebRequestModel';
 import { JobCreateWebResponseModel } from './JobCreateWebResponseModel';
 import { JobEditWebRequestModel } from './JobEditWebRequestModel';
 import { JobEditWebResponseModel } from './JobEditWebResponseModel';
+import { JobsCostsWebRequestModel } from './JobsCostsWebRequestModel';
+import { JobsCostsWebResponseModel } from './JobsCostsWebResponseModel';
 import { ApplicableDodiContainerListWebResponseModel } from './ApplicableDodiContainerListWebResponseModel';
 import { ListApplicableJobsResponse } from './ListApplicableJobsResponse';
 import { ExtendedJobApiFetchParamCreator } from './ExtendedJobApiFetchParamCreator';
@@ -37,6 +39,25 @@ export const ExtendedJobApiFp = function(configuration?: Configuration) {
           return configuration.responseInterceptor(response);
         } else if (response.status >= 200 && response.status < 300) {
           return response;
+        }
+        throw response;
+      };
+    },
+    /**
+     * 
+     * @summary Calculates costs for job work units and jobs solely using the data sent in the model
+     * @param {JobsCostsWebRequestModel} model Model containing the details of all jobs that require costs calculation with their team, asset and job work units info.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    jobCalculateJobCosts(model: JobsCostsWebRequestModel, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<JobsCostsWebResponseModel> {
+      const localVarFetchArgs = ExtendedJobApiFetchParamCreator(configuration).jobCalculateJobCosts(model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
         }
         throw response;
       };

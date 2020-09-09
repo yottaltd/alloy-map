@@ -48,4 +48,9 @@ export interface WmsLayer {
    * Styles associated with this layer
    */
   readonly Style?: WmsStyle[];
+
+  /**
+   * Whether layer can be queried
+   */
+  readonly queryable?: boolean;
 }

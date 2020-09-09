@@ -143,6 +143,8 @@ export abstract class WmsUtils {
     // finally parse the data
     try {
       const parsedCaps = PolyfillWms.read(capabilitiesText);
+      // eslint-disable-next-line
+      console.log('Parsed caps', parsedCaps);
       return {
         title: parsedCaps.Title,
         url,
@@ -175,6 +177,8 @@ export abstract class WmsUtils {
     // Find bounding box of the layer or set maximum
     let boundingBox: AlloyBounds | undefined;
     const layerBbox = layer.EX_GeographicBoundingBox;
+    // eslint-disable-next-line
+    console.log('BBOX', layerBbox);
     if (layerBbox) {
       if (
         Array.isArray(layerBbox) &&
@@ -191,7 +195,7 @@ export abstract class WmsUtils {
       boundingBox = new AlloyBounds(new AlloyCoordinate(-180, -90), new AlloyCoordinate(180, 90));
     }
 
-    return {
+    const wrappedLayer = {
       name: layer.Name,
       title: layer.Title,
       layers: (layer.Layer || []).map((l) => WmsUtils.parseWmsLayer(l)),
@@ -202,7 +206,11 @@ export abstract class WmsUtils {
       fixedHeight: layer.fixedHeight,
       // removing duplicates here as parent layer CRS will also be included
       crs: layer.CRS ? Array.from(new Set(layer.CRS)) : [],
+      queryable: layer.queryable || false,
     };
+    // eslint-disable-next-line
+    console.log('Wrapped layer', wrappedLayer);
+    return wrappedLayer;
   }
 
   /**

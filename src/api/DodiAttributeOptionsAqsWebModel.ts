@@ -1,3 +1,4 @@
+import { AqsItemType } from './AqsItemType';
 import { AqsJsonNode } from './AqsJsonNode';
 import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 /**
@@ -6,6 +7,12 @@ import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModel
  * @interface DodiAttributeOptionsAqsWebModel
  */
 export interface DodiAttributeOptionsAqsWebModel extends DodiAttributeOptionsWebModelBase {
+  /**
+   * aqs types for the dodi. Could e Query, Join or StatisticsAggregation
+   * @type {Array<AqsItemType>}
+   * @memberof DodiAttributeOptionsAqsWebModel
+   */
+  aqsTypes?: Array<AqsItemType>;
   /**
    * The optional default value of this attribute
    * @type {AqsJsonNode}

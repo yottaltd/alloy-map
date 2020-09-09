@@ -1,7 +1,9 @@
 import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
+import * as url from 'url';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
+import { CreateSessionFromIdTokenWebRequest } from './CreateSessionFromIdTokenWebRequest';
 import { SessionCreateOAuthUrlWebRequest } from './SessionCreateOAuthUrlWebRequest';
 import { SessionCreateOAuthUrlWebResponse } from './SessionCreateOAuthUrlWebResponse';
 import { SessionCreateWebResponseModel } from './SessionCreateWebResponseModel';
@@ -54,14 +56,33 @@ export const SessionApiFp = function(configuration?: Configuration) {
       };
     },
     /**
-     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter, the user can be redirected to this url and will be faced with authentication provided by the service. A successful challenge will return to the redirect url specified as a parameter and the Alloy session token will be available as the Authorization header in this request.
-     * @summary Gets OAuth provider sign in urls
-     * @param {SessionCreateOAuthUrlWebRequest} model The model containing info about which provider and how to generate sign in urls
+     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter. On calling the url, the user will be faced with authentication provided by the service. A successful challenge will return to the success url specified as a parameter and the Alloy session token will be included in the redirect.
+     * @summary Generates an OAuth provider sign-in url. Supply the final redirect URLs for success or failure.
+     * @param {SessionCreateOAuthUrlWebRequest} model The model gives the OAuth provider and the success and failure URLs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     sessionCreateOAuthUrl(model: SessionCreateOAuthUrlWebRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SessionCreateOAuthUrlWebResponse> {
       const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionCreateOAuthUrl(model, options);
+      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
+        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
+        if (configuration && configuration.responseInterceptor) {
+          return configuration.responseInterceptor(response);
+        } else if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        }
+        throw response;
+      };
+    },
+    /**
+     * Return an Alloy Master Session token by reading the user's email from the given OAuth id token
+     * @summary Uses OAuth provider id token to return an Alloy session token on success
+     * @param {CreateSessionFromIdTokenWebRequest} model The model giving the OAuth provider and the id token
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sessionCreateSessionFromIdToken(model: CreateSessionFromIdTokenWebRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SessionCreateWebResponseModel> {
+      const localVarFetchArgs = SessionApiFetchParamCreator(configuration).sessionCreateSessionFromIdToken(model, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

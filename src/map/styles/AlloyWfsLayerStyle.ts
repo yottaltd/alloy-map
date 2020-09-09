@@ -2,38 +2,41 @@ import { AlloyLayerStyle } from './AlloyLayerStyle';
 import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
 import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
 import { AlloyLayerStyleScale } from './AlloyLayerStyleScale';
+import { AlloyWfsLayerStyleBase } from './AlloyWfsLayerStyleBase';
 
 /**
  * an alloy wfs layer style informs an alloy layer about how to style its contents
  */
-export class AlloyWfsLayerStyle extends AlloyLayerStyle {
+export class AlloyWfsLayerStyle extends AlloyLayerStyle implements AlloyWfsLayerStyleBase {
   /**
-   * WFS service url
-   * @ignore
-   * @internal
+   * @implements
    */
   public readonly url: string;
 
   /**
-   * WFS service feature set / layer name
-   * @ignore
-   * @internal
+   * @implements
    */
   public readonly featureName: string;
 
   /**
-   * EPSG code numeric id to use for style
-   * @ignore
-   * @internal
+   * @implements
    */
   public readonly epsg: number;
 
   /**
-   * WFS service version
-   * @ignore
-   * @internal
+   * @implements
    */
   public readonly version: string;
+
+  /**
+   * @implements
+   */
+  public readonly loadAll?: boolean;
+
+  /**
+   * @implements
+   */
+  public readonly outputFormat?: string;
 
   /**
    * the WFS property name to use for the title
@@ -44,16 +47,6 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
    * the WFS property name to use for the subtitle
    */
   public readonly labelSubtitle?: string;
-
-  /**
-   * Whether to load all WFS features for this style in one go
-   */
-  public readonly loadAll?: boolean;
-
-  /**
-   * WFS service supported output format to use for requests
-   */
-  public readonly outputFormat?: string;
 
   /**
    * creates a new instance

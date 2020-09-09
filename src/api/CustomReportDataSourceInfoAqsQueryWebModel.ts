@@ -3,31 +3,31 @@ import { CustomReportDataSourceInfoBaseWebModel } from './CustomReportDataSource
 /**
  * 
  * @export
- * @interface CustomReportDataSourceInfoAqsWebModel
+ * @interface CustomReportDataSourceInfoAqsQueryWebModel
  */
-export interface CustomReportDataSourceInfoAqsWebModel extends CustomReportDataSourceInfoBaseWebModel {
+export interface CustomReportDataSourceInfoAqsQueryWebModel extends CustomReportDataSourceInfoBaseWebModel {
   /**
    * The default value to use for reports if no run time value is specified
    * @type {AqsJsonNode}
-   * @memberof CustomReportDataSourceInfoAqsWebModel
+   * @memberof CustomReportDataSourceInfoAqsQueryWebModel
    */
   aqs?: AqsJsonNode;
   /**
    * The DoDI code for the AQS query
    * @type {string}
-   * @memberof CustomReportDataSourceInfoAqsWebModel
+   * @memberof CustomReportDataSourceInfoAqsQueryWebModel
    */
   dodiCode: string;
   /**
    * Attributes for the AQS query
    * @type {Array<string>}
-   * @memberof CustomReportDataSourceInfoAqsWebModel
+   * @memberof CustomReportDataSourceInfoAqsQueryWebModel
    */
   attributes?: Array<string>;
   /**
    * JoinAttributes for the AQS query
    * @type {Array<string>}
-   * @memberof CustomReportDataSourceInfoAqsWebModel
+   * @memberof CustomReportDataSourceInfoAqsQueryWebModel
    */
   joinAttributes?: Array<string>;
 }

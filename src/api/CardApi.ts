@@ -162,18 +162,6 @@ export class CardApi extends BaseAPI {
   }
 
   /**
-   * Computes or returns the result of the queries in the card matching the specified code
-   * @summary Get a computed card
-   * @param {string} code The Guc of the card to process
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof CardApi
-   */
-  public cardGetComputedCard(code: string, options?: any) {
-    return CardApiFp(this.configuration).cardGetComputedCard(code, options)(this.fetch, this.basePath);
-  }
-
-  /**
    * Fetches the permissions of a card by its Guc
    * @summary Get a card permissions by its code
    * @param {string} code The Guc for the card whose permissions are being requested

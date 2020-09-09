@@ -141,16 +141,6 @@ export const CardApiFactory = function (configuration?: Configuration, fetch?: F
       return CardApiFp(configuration).cardGet(code, options)(fetch, basePath);
     },
     /**
-     * Computes or returns the result of the queries in the card matching the specified code
-     * @summary Get a computed card
-     * @param {string} code The Guc of the card to process
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    cardGetComputedCard(code: string, options?: any) {
-      return CardApiFp(configuration).cardGetComputedCard(code, options)(fetch, basePath);
-    },
-    /**
      * Fetches the permissions of a card by its Guc
      * @summary Get a card permissions by its code
      * @param {string} code The Guc for the card whose permissions are being requested

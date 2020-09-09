@@ -8,6 +8,7 @@ import { ExtendedCloneWebRequestModel } from './ExtendedCloneWebRequestModel';
 import { ItemDesignsForFilterWebRequestModel } from './ItemDesignsForFilterWebRequestModel';
 import { JobCreateWebRequestModel } from './JobCreateWebRequestModel';
 import { JobEditWebRequestModel } from './JobEditWebRequestModel';
+import { JobsCostsWebRequestModel } from './JobsCostsWebRequestModel';
 import { ExtendedJobApi } from './ExtendedJobApi';
 /**
  * ExtendedJobApi - fetch parameter creator
@@ -54,6 +55,46 @@ export const ExtendedJobApiFetchParamCreator = function (configuration?: Configu
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
       const needsSerialization = (<any>"ApplicableDodisAddWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
+     * @summary Calculates costs for job work units and jobs solely using the data sent in the model
+     * @param {JobsCostsWebRequestModel} model Model containing the details of all jobs that require costs calculation with their team, asset and job work units info.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    jobCalculateJobCosts(model: JobsCostsWebRequestModel, options: any = {}): FetchArgs {
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling jobCalculateJobCosts.');
+      }
+      const localVarPath = `/api/job/calculate-costs`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"JobsCostsWebRequestModel" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {

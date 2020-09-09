@@ -30,6 +30,12 @@ export interface CustomerGetWebResponseModel {
    */
   enabled: boolean;
   /**
+   * Optional time at which this customer has been scheduled to be deleted
+   * @type {string}
+   * @memberof CustomerGetWebResponseModel
+   */
+  expire?: string;
+  /**
    * The id of the cluster this customer belongs to
    * @type {string}
    * @memberof CustomerGetWebResponseModel

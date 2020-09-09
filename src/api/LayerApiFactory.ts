@@ -93,6 +93,20 @@ export const LayerApiFactory = function (configuration?: Configuration, fetch?: 
       return LayerApiFp(configuration).layerGetClusterLayerTile(code, x, y, z, styleIds, options)(fetch, basePath);
     },
     /**
+     * This endpoint allows to query a layer returning big items to be displayed on the map. Only request at zoom level 16 or lower        The tiles returned are GeoJson features Items with the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
+     * @summary Get a heatmap tile for a layer
+     * @param {string} code The code of the layer to query for
+     * @param {number} x The x google tile coordinate
+     * @param {number} y The y google tile coordinate
+     * @param {number} z The z google tile coordinate
+     * @param {Array<string>} [styleIds] The list of style ids to query for.        A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    layerGetHeatmapLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options?: any) {
+      return LayerApiFp(configuration).layerGetHeatmapLayerTile(code, x, y, z, styleIds, options)(fetch, basePath);
+    },
+    /**
      * This endpoint allows to query a layer returning network layer items to be displayed on the map. The tiles returned are GeoJson features containing two types of properties. If the tile contains simplified network geometry, then the following properties are returned:   * type: A string whose value is \"SimplifiedGeometry\"   * styleId: The id of the style that originated this feature If the tile contains network items, then the following properties are returned for each item:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * title: The item title   * subtitle: The item subtitle   * z: The original zoom level that this feature was created for
      * @summary Get a network tile for a layer
      * @param {string} code The code of the layer to query for

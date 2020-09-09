@@ -1,4 +1,5 @@
 import { CustomReportDataSourceInfoBaseEditWebModel } from './CustomReportDataSourceInfoBaseEditWebModel';
+import { DataSourceColumnSortData } from './DataSourceColumnSortData';
 /**
  * Edit data source web request model
  * @export
@@ -29,4 +30,10 @@ export interface EditDataSourceWebRequestModel {
    * @memberof EditDataSourceWebRequestModel
    */
   signature: string;
+  /**
+   * The List of SortingOptions to specify the columns the user wants to sort on.
+   * @type {Array<DataSourceColumnSortData>}
+   * @memberof EditDataSourceWebRequestModel
+   */
+  columnsSortData?: Array<DataSourceColumnSortData>;
 }

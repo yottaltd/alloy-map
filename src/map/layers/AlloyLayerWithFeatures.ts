@@ -13,14 +13,15 @@ import { FeaturesAddedEventHandler } from '../events/FeaturesAddedEventHandler';
 import { AlloyFeature } from '../features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
-import { AlloyLayer } from './AlloyLayer';
+import { AlloyFeaturesLayer } from './AlloyFeaturesLayer';
 
 /**
  * base implementation for alloy layers with features
  * @template T the feature types the loader is expected to load
  * @ignore
  */
-export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements AlloyLayer {
+export abstract class AlloyLayerWithFeatures<T extends AlloyFeature>
+  implements AlloyFeaturesLayer<T> {
   /**
    * debugger instance
    * @ignore
@@ -53,11 +54,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public readonly olSource: OLVectorSource = new OLVectorSource();
 
   /**
-   * the features currently in the source for this layer
+   * @implements
    * @ignore
    * @internal
    */
-  protected readonly currentFeatures = new Map<string, T>();
+  readonly currentFeatures = new Map<string, T>();
 
   /**
    * the active style processor
@@ -128,9 +129,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * adds a feature to the layer
-   * @param feature the feature to add to the layer
-   * @returns a flag indicating if the underlying sources were modified
+   * @implements
    */
   public addFeature(feature: T): boolean {
     // check to see if we already have the feature
@@ -147,9 +146,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * removes a feature from the layer
-   * @param feature the feature to remove from the layer
-   * @returns a flag indicating if the underlying sources were modified
+   * @implements
    */
   public removeFeature(feature: T): boolean {
     // check to see if we already have the feature
@@ -165,10 +162,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * adds several features at once to the layer, should be used instead of adding features
-   * individually where possible
-   * @param features the features to add to the layer
-   * @returns a flag indicating if the underlying sources were modified
+   * @implements
    */
   public addFeatures(features: T[]): boolean {
     const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
@@ -197,8 +191,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * clear all features from the layer
-   * @returns a flag indicating if the underlying sources were modified
+   * @implements
    */
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;

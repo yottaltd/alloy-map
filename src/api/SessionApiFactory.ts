@@ -1,5 +1,7 @@
 import { Configuration } from './configuration';
+import * as url from 'url';
 import { FetchAPI } from './FetchAPI';
+import { CreateSessionFromIdTokenWebRequest } from './CreateSessionFromIdTokenWebRequest';
 import { SessionCreateOAuthUrlWebRequest } from './SessionCreateOAuthUrlWebRequest';
 import { SessionMasterCreateWebRequestModel } from './SessionMasterCreateWebRequestModel';
 import { SessionApiFp } from './SessionApiFp';
@@ -31,14 +33,24 @@ export const SessionApiFactory = function (configuration?: Configuration, fetch?
       return SessionApiFp(configuration).sessionCreate2(customerCode, options)(fetch, basePath);
     },
     /**
-     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter, the user can be redirected to this url and will be faced with authentication provided by the service. A successful challenge will return to the redirect url specified as a parameter and the Alloy session token will be available as the Authorization header in this request.
-     * @summary Gets OAuth provider sign in urls
-     * @param {SessionCreateOAuthUrlWebRequest} model The model containing info about which provider and how to generate sign in urls
+     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter. On calling the url, the user will be faced with authentication provided by the service. A successful challenge will return to the success url specified as a parameter and the Alloy session token will be included in the redirect.
+     * @summary Generates an OAuth provider sign-in url. Supply the final redirect URLs for success or failure.
+     * @param {SessionCreateOAuthUrlWebRequest} model The model gives the OAuth provider and the success and failure URLs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     sessionCreateOAuthUrl(model: SessionCreateOAuthUrlWebRequest, options?: any) {
       return SessionApiFp(configuration).sessionCreateOAuthUrl(model, options)(fetch, basePath);
+    },
+    /**
+     * Return an Alloy Master Session token by reading the user's email from the given OAuth id token
+     * @summary Uses OAuth provider id token to return an Alloy session token on success
+     * @param {CreateSessionFromIdTokenWebRequest} model The model giving the OAuth provider and the id token
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sessionCreateSessionFromIdToken(model: CreateSessionFromIdTokenWebRequest, options?: any) {
+      return SessionApiFp(configuration).sessionCreateSessionFromIdToken(model, options)(fetch, basePath);
     },
     /**
      * Deletes a session, logging out the user

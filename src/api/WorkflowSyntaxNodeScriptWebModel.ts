@@ -1,3 +1,4 @@
+import { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWebModelBase';
 import { WorkflowSyntaxNodeBaseWebModel } from './WorkflowSyntaxNodeBaseWebModel';
 /**
  * 
@@ -11,4 +12,10 @@ export interface WorkflowSyntaxNodeScriptWebModel extends WorkflowSyntaxNodeBase
    * @memberof WorkflowSyntaxNodeScriptWebModel
    */
   script: string;
+  /**
+   * Optional detail about promised return type
+   * @type {DodiAttributeOptionsWebModelBase}
+   * @memberof WorkflowSyntaxNodeScriptWebModel
+   */
+  returnOptions?: DodiAttributeOptionsWebModelBase;
 }

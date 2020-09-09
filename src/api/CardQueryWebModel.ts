@@ -1,4 +1,6 @@
+import { AlloyExceptionWebModel } from './AlloyExceptionWebModel';
 import { AqsJsonNode } from './AqsJsonNode';
+import { CardQueryValidity } from './CardQueryValidity';
 /**
  * Web model for a card query which is either an Aqs Query or an Aqs MathAggregation
  * @export
@@ -29,4 +31,16 @@ export interface CardQueryWebModel {
    * @memberof CardQueryWebModel
    */
   value?: number;
+  /**
+   * It gives an indication of the query validity. If invalid, it tells whether it is a case it is possible recover from or not
+   * @type {CardQueryValidity}
+   * @memberof CardQueryWebModel
+   */
+  validity: CardQueryValidity;
+  /**
+   * If the query is invalid, it explains what error made it invalid
+   * @type {AlloyExceptionWebModel}
+   * @memberof CardQueryWebModel
+   */
+  error?: AlloyExceptionWebModel;
 }

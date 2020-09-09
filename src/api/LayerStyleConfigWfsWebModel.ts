@@ -35,4 +35,10 @@ export interface LayerStyleConfigWfsWebModel extends LayerStyleConfigWebModelBas
    * @memberof LayerStyleConfigWfsWebModel
    */
   version: string;
+  /**
+   * The wfs output format to use
+   * @type {string}
+   * @memberof LayerStyleConfigWfsWebModel
+   */
+  outputFormat?: string;
 }

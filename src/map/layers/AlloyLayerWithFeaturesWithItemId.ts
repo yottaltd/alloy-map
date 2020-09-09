@@ -18,7 +18,7 @@ export abstract class AlloyLayerWithFeaturesWithItemId<
    * @ignore
    * @internal
    */
-  private readonly featureIdsForItemIds = new Map<string, string>();
+  protected readonly featureIdsForItemIds = new Map<string, string>();
 
   /**
    * creates a new instance

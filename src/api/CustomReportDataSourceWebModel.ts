@@ -1,5 +1,6 @@
 import { CustomReportDataSourceHeaderWebModel } from './CustomReportDataSourceHeaderWebModel';
 import { CustomReportDataSourceInfoBaseWebModel } from './CustomReportDataSourceInfoBaseWebModel';
+import { DataSourceColumnSortData } from './DataSourceColumnSortData';
 /**
  * Web model for a custom report data source
  * @export
@@ -12,6 +13,12 @@ export interface CustomReportDataSourceWebModel {
    * @memberof CustomReportDataSourceWebModel
    */
   code: string;
+  /**
+   * The list of columns that will be used for sorting.
+   * @type {Array<DataSourceColumnSortData>}
+   * @memberof CustomReportDataSourceWebModel
+   */
+  columnsSortData?: Array<DataSourceColumnSortData>;
   /**
    * The data source name
    * @type {string}

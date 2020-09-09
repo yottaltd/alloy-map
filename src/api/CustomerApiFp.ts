@@ -55,12 +55,15 @@ export const CustomerApiFp = function(configuration?: Configuration) {
     /**
      * Lists all the customers that the user making the request has access to
      * @summary List the customers on which the requesting user is registered
+     * @param {string} [query] The optional query string to filter customers on
      * @param {boolean} [retrieveLastSeenDate] If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerList(retrieveLastSeenDate?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerListWebResponseModel> {
-      const localVarFetchArgs = CustomerApiFetchParamCreator(configuration).customerList(retrieveLastSeenDate, options);
+    customerList(query?: string, retrieveLastSeenDate?: boolean, page?: number, pageSize?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CustomerListWebResponseModel> {
+      const localVarFetchArgs = CustomerApiFetchParamCreator(configuration).customerList(query, retrieveLastSeenDate, page, pageSize, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

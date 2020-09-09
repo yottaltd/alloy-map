@@ -2,7 +2,6 @@ import { Configuration } from './configuration';
 import * as portableFetch from 'portable-fetch';
 import { FetchAPI } from './FetchAPI';
 import { FetchArgs } from './FetchArgs';
-import { CardComputedGetWebResponseModel } from './CardComputedGetWebResponseModel';
 import { CardCreateWebRequestModel } from './CardCreateWebRequestModel';
 import { CardEditWebRequestModel } from './CardEditWebRequestModel';
 import { CardPermissionsEditWebRequestModel } from './CardPermissionsEditWebRequestModel';
@@ -239,25 +238,6 @@ export const CardApiFp = function(configuration?: Configuration) {
      */
     cardGet(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardWithOperationsSummaryWebResponseModel> {
       const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGet(code, options);
-      return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
-        const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
-        if (configuration && configuration.responseInterceptor) {
-          return configuration.responseInterceptor(response);
-        } else if (response.status >= 200 && response.status < 300) {
-          return response.json();
-        }
-        throw response;
-      };
-    },
-    /**
-     * Computes or returns the result of the queries in the card matching the specified code
-     * @summary Get a computed card
-     * @param {string} code The Guc of the card to process
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    cardGetComputedCard(code: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CardComputedGetWebResponseModel> {
-      const localVarFetchArgs = CardApiFetchParamCreator(configuration).cardGetComputedCard(code, options);
       return async (fetch: FetchAPI = portableFetch, basePath: string = '') => {
         const response = await fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options);
         if (configuration && configuration.responseInterceptor) {

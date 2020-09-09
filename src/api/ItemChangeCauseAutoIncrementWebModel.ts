@@ -1,5 +1,4 @@
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
-import { ItemChangeCauseAutoIncrement } from './ItemChangeCauseAutoIncrement';
 /**
  * 
  * @export

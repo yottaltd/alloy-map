@@ -11,5 +11,7 @@ export enum FavouriteFeatureName {
   Imports = 'Imports',
   Items = 'Items',
   UserGroups = 'UserGroups',
-  Workflows = 'Workflows'
+  Workflows = 'Workflows',
+  Meshes = 'Meshes',
+  Layers = 'Layers'
 }

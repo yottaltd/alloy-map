@@ -341,6 +341,66 @@ export const LayerApiFetchParamCreator = function (configuration?: Configuration
       };
     },
     /**
+     * This endpoint allows to query a layer returning big items to be displayed on the map. Only request at zoom level 16 or lower        The tiles returned are GeoJson features Items with the following properties are returned:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * colour: The item colour   * icon: The item icon code
+     * @summary Get a heatmap tile for a layer
+     * @param {string} code The code of the layer to query for
+     * @param {number} x The x google tile coordinate
+     * @param {number} y The y google tile coordinate
+     * @param {number} z The z google tile coordinate
+     * @param {Array<string>} [styleIds] The list of style ids to query for.        A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    layerGetHeatmapLayerTile(code: string, x: number, y: number, z: number, styleIds?: Array<string>, options: any = {}): FetchArgs {
+      // verify required parameter 'code' is not null or undefined
+      if (code === null || code === undefined) {
+        throw new RequiredError('code','Required parameter code was null or undefined when calling layerGetHeatmapLayerTile.');
+      }
+      // verify required parameter 'x' is not null or undefined
+      if (x === null || x === undefined) {
+        throw new RequiredError('x','Required parameter x was null or undefined when calling layerGetHeatmapLayerTile.');
+      }
+      // verify required parameter 'y' is not null or undefined
+      if (y === null || y === undefined) {
+        throw new RequiredError('y','Required parameter y was null or undefined when calling layerGetHeatmapLayerTile.');
+      }
+      // verify required parameter 'z' is not null or undefined
+      if (z === null || z === undefined) {
+        throw new RequiredError('z','Required parameter z was null or undefined when calling layerGetHeatmapLayerTile.');
+      }
+      const localVarPath = `/api/layer/{code}/{x}/{y}/{z}/heatmap`
+        .replace(`{${"code"}}`, encodeURIComponent(String(code)))
+        .replace(`{${"x"}}`, encodeURIComponent(String(x)))
+        .replace(`{${"y"}}`, encodeURIComponent(String(y)))
+        .replace(`{${"z"}}`, encodeURIComponent(String(z)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      if (styleIds) {
+        localVarQueryParameter['styleIds'] = styleIds;
+      }
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
      * This endpoint allows to query a layer returning network layer items to be displayed on the map. The tiles returned are GeoJson features containing two types of properties. If the tile contains simplified network geometry, then the following properties are returned:   * type: A string whose value is \"SimplifiedGeometry\"   * styleId: The id of the style that originated this feature If the tile contains network items, then the following properties are returned for each item:   * type: A string whose value is \"Item\"   * styleId: The id of the style that originated this feature   * designCode: The code of the design the item belongs to   * itemId: The item id   * title: The item title   * subtitle: The item subtitle   * z: The original zoom level that this feature was created for
      * @summary Get a network tile for a layer
      * @param {string} code The code of the layer to query for

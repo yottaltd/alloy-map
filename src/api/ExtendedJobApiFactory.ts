@@ -6,6 +6,7 @@ import { ExtendedCloneWebRequestModel } from './ExtendedCloneWebRequestModel';
 import { ItemDesignsForFilterWebRequestModel } from './ItemDesignsForFilterWebRequestModel';
 import { JobCreateWebRequestModel } from './JobCreateWebRequestModel';
 import { JobEditWebRequestModel } from './JobEditWebRequestModel';
+import { JobsCostsWebRequestModel } from './JobsCostsWebRequestModel';
 import { ExtendedJobApiFp } from './ExtendedJobApiFp';
 import { ExtendedJobApi } from './ExtendedJobApi';
 /**
@@ -24,6 +25,16 @@ export const ExtendedJobApiFactory = function (configuration?: Configuration, fe
      */
     jobAddApplicableDodis(code: string, model: ApplicableDodisAddWebRequestModel, options?: any) {
       return ExtendedJobApiFp(configuration).jobAddApplicableDodis(code, model, options)(fetch, basePath);
+    },
+    /**
+     * 
+     * @summary Calculates costs for job work units and jobs solely using the data sent in the model
+     * @param {JobsCostsWebRequestModel} model Model containing the details of all jobs that require costs calculation with their team, asset and job work units info.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    jobCalculateJobCosts(model: JobsCostsWebRequestModel, options?: any) {
+      return ExtendedJobApiFp(configuration).jobCalculateJobCosts(model, options)(fetch, basePath);
     },
     /**
      * Clones a job based on the information sent in the model

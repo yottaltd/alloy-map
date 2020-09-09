@@ -18,9 +18,9 @@ export interface ExportWebRequestModel {
    */
   fileName?: string;
   /**
-   * Optionally export item geometry if supported by the design
+   * Obsolete - to export item geometry request \"attributes_itemsGeometry\" or \"all\" as part of the AQS \"attributes\"
    * @type {boolean}
    * @memberof ExportWebRequestModel
    */
-  exportGeometry: boolean;
+  exportGeometry?: boolean;
 }

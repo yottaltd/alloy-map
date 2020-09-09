@@ -1,6 +1,5 @@
 import { ItemChangeCauseWebModelBase } from './ItemChangeCauseWebModelBase';
 import { WorkflowWebModel } from './WorkflowWebModel';
-import { ItemChangeCauseWorkflow } from './ItemChangeCauseWorkflow';
 /**
  * 
  * @export

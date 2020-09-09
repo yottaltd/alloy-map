@@ -1,14 +1,38 @@
 import { CustomerWebModel } from './CustomerWebModel';
 /**
- * Response model for list operation on CustomerWebModel
+ * 
  * @export
  * @interface CustomerListWebResponseModel
  */
 export interface CustomerListWebResponseModel {
   /**
-   * The retrieved customer
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  page: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  pageSize: number;
+  /**
+   * 
    * @type {Array<CustomerWebModel>}
    * @memberof CustomerListWebResponseModel
    */
-  customers: Array<CustomerWebModel>;
+  results: Array<CustomerWebModel>;
+  /**
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  totalPages: number;
+  /**
+   * 
+   * @type {number}
+   * @memberof CustomerListWebResponseModel
+   */
+  totalResults: number;
 }

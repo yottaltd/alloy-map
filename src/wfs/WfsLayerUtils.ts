@@ -9,6 +9,7 @@ import OLKML from 'ol/format/KML';
 import OLWFS from 'ol/format/WFS';
 import OLGeometry from 'ol/geom/Geometry';
 import OLVectorLayer from 'ol/layer/Vector';
+import OLHeatmapLayer from 'ol/layer/Heatmap';
 import OLProjection from 'ol/proj/Projection';
 import OLRenderFeature from 'ol/render/Feature';
 import OLVectorSource from 'ol/source/Vector';
@@ -64,8 +65,88 @@ export abstract class WfsLayerUtils {
     getFeatureUrl.searchParams.set('outputFormat', outputFormat ?? 'json');
 
     const wfsFormat = outputFormat ? WfsUtils.getAlloyWfsFormatForValue(outputFormat) : undefined;
-    const format = WfsLayerUtils.getFormat(wfsFormat);
+    const vectorSource = WfsLayerUtils.createWfsVectorSource(
+      getFeatureUrl,
+      epsg,
+      loadAll,
+      wfsFormat,
+      featureSetter,
+    );
 
+    return new OLVectorLayer({
+      source: vectorSource,
+      zIndex,
+      visible: true,
+      opacity: 1,
+      style: styleFunction,
+    });
+  }
+  /**
+   * Creates an `OLHeatmapLayer` with WFS feature loader
+   * @param url url of WFS service
+   * @param name WFS Feature type name
+   * @param version WFS version
+   * @param epsg epsg code used for features requests
+   * @param zIndex layer z-index
+   * @param loadAll whether to load all features in one go
+   * @param featureSetter custom function to process features
+   * @ignore
+   * @internal
+   */
+  public static createWfsHeatmapLayer(
+    url: string,
+    name: string,
+    version: string,
+    epsg: number,
+    zIndex: AlloyLayerZIndex,
+    weightProperty: string,
+    gradient?: string[],
+    blur?: number,
+    radius?: number,
+    loadAll?: boolean,
+    outputFormat?: string,
+    featureSetter?: (feature: OLFeature[]) => void,
+  ): OLHeatmapLayer {
+    const epsgCode = 'EPSG:' + epsg;
+
+    const getFeatureUrl = new URL(url);
+    getFeatureUrl.searchParams.set('service', 'WFS');
+    getFeatureUrl.searchParams.set('version', version);
+    getFeatureUrl.searchParams.set('request', 'GetFeature');
+    getFeatureUrl.searchParams.set('typename', name);
+    getFeatureUrl.searchParams.set((version.startsWith('1') ? 's' : 'c') + 'rsname', epsgCode);
+    getFeatureUrl.searchParams.set('outputFormat', outputFormat ?? 'json');
+
+    const wfsFormat = outputFormat ? WfsUtils.getAlloyWfsFormatForValue(outputFormat) : undefined;
+    const vectorSource = WfsLayerUtils.createWfsVectorSource(
+      getFeatureUrl,
+      epsg,
+      loadAll,
+      wfsFormat,
+      featureSetter,
+    );
+
+    return new OLHeatmapLayer({
+      source: vectorSource,
+      zIndex,
+      visible: true,
+      opacity: 1,
+      weight: (feature) => feature.get(weightProperty) ?? 1,
+      gradient,
+      blur,
+      radius,
+    });
+  }
+
+  private static createWfsVectorSource(
+    getFeatureUrl: URL,
+    epsg: number,
+    loadAll?: boolean,
+    wfsFormat?: AlloyWfsFormat | undefined,
+    featureSetter?: (feature: OLFeature[]) => void,
+  ): OLVectorSource {
+    const epsgCode = 'EPSG:' + epsg;
+    const format = WfsLayerUtils.getFormat(wfsFormat);
     const vectorSource = new OLVectorSource({
       format,
       loader: (extent, resolution, projection) => {
@@ -132,14 +213,7 @@ export abstract class WfsLayerUtils {
       features: new OLCollection(),
     });
 
-    const vectorLayer = new OLVectorLayer({
-      source: vectorSource,
-      zIndex,
-      visible: true,
-      opacity: 1,
-      style: styleFunction,
-    });
-    return vectorLayer;
+    return vectorSource;
   }
 
   /**

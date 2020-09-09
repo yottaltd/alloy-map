@@ -17,6 +17,7 @@ export enum BackgroundTaskType {
   CustomerBoundingBoxBuilder = 'CustomerBoundingBoxBuilder',
   ItemChangesProcessor = 'ItemChangesProcessor',
   Janitor = 'Janitor',
+  MasterJanitor = 'MasterJanitor',
   LayerBuildMonitor = 'LayerBuildMonitor',
   LayerClusterBuilder = 'LayerClusterBuilder',
   LayerBasicBuilder = 'LayerBasicBuilder',

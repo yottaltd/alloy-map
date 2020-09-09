@@ -2,6 +2,7 @@ import { Configuration } from './configuration';
 import * as url from 'url';
 import { FetchArgs } from './FetchArgs';
 import { RequiredError } from './RequiredError';
+import { CreateSessionFromIdTokenWebRequest } from './CreateSessionFromIdTokenWebRequest';
 import { SessionCreateOAuthUrlWebRequest } from './SessionCreateOAuthUrlWebRequest';
 import { SessionMasterCreateWebRequestModel } from './SessionMasterCreateWebRequestModel';
 import { SessionApi } from './SessionApi';
@@ -89,9 +90,9 @@ export const SessionApiFetchParamCreator = function (configuration?: Configurati
       };
     },
     /**
-     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter, the user can be redirected to this url and will be faced with authentication provided by the service. A successful challenge will return to the redirect url specified as a parameter and the Alloy session token will be available as the Authorization header in this request.
-     * @summary Gets OAuth provider sign in urls
-     * @param {SessionCreateOAuthUrlWebRequest} model The model containing info about which provider and how to generate sign in urls
+     * This endpoint generates a fully qualified url to an OAuth provider specified as a parameter. On calling the url, the user will be faced with authentication provided by the service. A successful challenge will return to the success url specified as a parameter and the Alloy session token will be included in the redirect.
+     * @summary Generates an OAuth provider sign-in url. Supply the final redirect URLs for success or failure.
+     * @param {SessionCreateOAuthUrlWebRequest} model The model gives the OAuth provider and the success and failure URLs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -121,6 +122,46 @@ export const SessionApiFetchParamCreator = function (configuration?: Configurati
       delete localVarUrlObj.search;
       localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
       const needsSerialization = (<any>"SessionCreateOAuthUrlWebRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Return an Alloy Master Session token by reading the user's email from the given OAuth id token
+     * @summary Uses OAuth provider id token to return an Alloy session token on success
+     * @param {CreateSessionFromIdTokenWebRequest} model The model giving the OAuth provider and the id token
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sessionCreateSessionFromIdToken(model: CreateSessionFromIdTokenWebRequest, options: any = {}): FetchArgs {
+      // verify required parameter 'model' is not null or undefined
+      if (model === null || model === undefined) {
+        throw new RequiredError('model','Required parameter model was null or undefined when calling sessionCreateSessionFromIdToken.');
+      }
+      const localVarPath = `/api/session/oauth-token-login`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication token required
+      if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("token")
+					: configuration.apiKey;
+        localVarQueryParameter["token"] = localVarApiKeyValue;
+      }
+
+      localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+
+      localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+      const needsSerialization = (<any>"CreateSessionFromIdTokenWebRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body =  needsSerialization ? JSON.stringify(model || {}) : (model || "");
 
       return {

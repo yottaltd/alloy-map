@@ -21,6 +21,12 @@ export interface WorkflowLogEventTriggerWebModel extends WorkflowLogNodeWebModel
    */
   eventType: ItemChangeType;
   /**
+   * The time of the event that caused the trigger
+   * @type {string}
+   * @memberof WorkflowLogEventTriggerWebModel
+   */
+  eventTime: string;
+  /**
    * The affected attributes if any that caused the trigger
    * @type {Array<string>}
    * @memberof WorkflowLogEventTriggerWebModel

@@ -5,6 +5,7 @@ import { ExtendedCloneWebRequestModel } from './ExtendedCloneWebRequestModel';
 import { ItemDesignsForFilterWebRequestModel } from './ItemDesignsForFilterWebRequestModel';
 import { JobCreateWebRequestModel } from './JobCreateWebRequestModel';
 import { JobEditWebRequestModel } from './JobEditWebRequestModel';
+import { JobsCostsWebRequestModel } from './JobsCostsWebRequestModel';
 import { ExtendedJobApiFp } from './ExtendedJobApiFp';
 /**
  * ExtendedJobApi - object-oriented interface
@@ -24,6 +25,18 @@ export class ExtendedJobApi extends BaseAPI {
    */
   public jobAddApplicableDodis(code: string, model: ApplicableDodisAddWebRequestModel, options?: any) {
     return ExtendedJobApiFp(this.configuration).jobAddApplicableDodis(code, model, options)(this.fetch, this.basePath);
+  }
+
+  /**
+   * 
+   * @summary Calculates costs for job work units and jobs solely using the data sent in the model
+   * @param {JobsCostsWebRequestModel} model Model containing the details of all jobs that require costs calculation with their team, asset and job work units info.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof ExtendedJobApi
+   */
+  public jobCalculateJobCosts(model: JobsCostsWebRequestModel, options?: any) {
+    return ExtendedJobApiFp(this.configuration).jobCalculateJobCosts(model, options)(this.fetch, this.basePath);
   }
 
   /**

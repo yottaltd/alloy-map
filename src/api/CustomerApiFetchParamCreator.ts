@@ -91,11 +91,14 @@ export const CustomerApiFetchParamCreator = function (configuration?: Configurat
     /**
      * Lists all the customers that the user making the request has access to
      * @summary List the customers on which the requesting user is registered
+     * @param {string} [query] The optional query string to filter customers on
      * @param {boolean} [retrieveLastSeenDate] If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in
+     * @param {number} [page] The page number to fetch (1 based)
+     * @param {number} [pageSize] The number of results to return per page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    customerList(retrieveLastSeenDate?: boolean, options: any = {}): FetchArgs {
+    customerList(query?: string, retrieveLastSeenDate?: boolean, page?: number, pageSize?: number, options: any = {}): FetchArgs {
       const localVarPath = `/api/customer`;
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -110,8 +113,20 @@ export const CustomerApiFetchParamCreator = function (configuration?: Configurat
         localVarQueryParameter["token"] = localVarApiKeyValue;
       }
 
+      if (query !== undefined) {
+        localVarQueryParameter['Query'] = query;
+      }
+
       if (retrieveLastSeenDate !== undefined) {
-        localVarQueryParameter['retrieveLastSeenDate'] = retrieveLastSeenDate;
+        localVarQueryParameter['RetrieveLastSeenDate'] = retrieveLastSeenDate;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter['Page'] = page;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter['PageSize'] = pageSize;
       }
 
       localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
