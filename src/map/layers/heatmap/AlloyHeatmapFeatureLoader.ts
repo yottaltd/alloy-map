@@ -7,9 +7,8 @@ import { AlloyMapError } from '../../../error/AlloyMapError';
 import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
 import { FeatureUtils } from '../../../utils/FeatureUtils';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
 import { AlloyFeatureType } from '../../features/AlloyFeatureType';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloyHeatmapClusterFeature } from '../../features/AlloyHeatmapClusterFeature';
 import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
 import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
 import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
@@ -29,9 +28,7 @@ const TILE_GRID_MAX_ZOOM = 16;
  * @ignore
  * @internal
  */
-export class AlloyHeatmapFeatureLoader extends AlloyTileFeatureLoader<
-  AlloyClusterFeature | AlloyItemFeature
-> {
+export class AlloyHeatmapFeatureLoader extends AlloyTileFeatureLoader<AlloyHeatmapClusterFeature> {
   /**
    * the layer we are loading features for
    * @ignore
@@ -90,7 +87,7 @@ export class AlloyHeatmapFeatureLoader extends AlloyTileFeatureLoader<
   /**
    * @override
    */
-  protected featuresLoaded(features: Array<AlloyClusterFeature | AlloyItemFeature>): void {
+  protected featuresLoaded(features: Array<AlloyHeatmapClusterFeature>): void {
     // check if we need to clear the source before adding features
     if (this.shouldClearSource) {
       this.shouldClearSource = false;
@@ -104,40 +101,38 @@ export class AlloyHeatmapFeatureLoader extends AlloyTileFeatureLoader<
    */
   protected requestTile(
     coordinate: AlloyTileCoordinate,
-  ): AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature> {
-    const request = new AlloyTileFeatureRequest<AlloyClusterFeature | AlloyItemFeature>(coordinate);
+  ): AlloyTileFeatureRequest<AlloyHeatmapClusterFeature> {
+    const request = new AlloyTileFeatureRequest<AlloyHeatmapClusterFeature>(coordinate);
 
     // start the http request (promisified), make sure this is setup before we return because others
     // will be listening for this to finish
-    request.result = new Promise<Array<AlloyClusterFeature | AlloyItemFeature>>(
-      (resolve, reject) => {
-        try {
-          const signal = request.controller.signal;
+    request.result = new Promise<Array<AlloyHeatmapClusterFeature>>((resolve, reject) => {
+      try {
+        const signal = request.controller.signal;
 
-          const configuration = this.layer.map.apiConfiguration;
-          const fetchCreator = LayerApiFetchParamCreator(configuration);
-          const fetchArgs = fetchCreator.layerGetClusterLayerTile(
-            this.layer.layerCode,
-            coordinate.x, // x
-            coordinate.y, // y
-            coordinate.z, // z
-            this.styleIds,
-          );
+        const configuration = this.layer.map.apiConfiguration;
+        const fetchCreator = LayerApiFetchParamCreator(configuration);
+        const fetchArgs = fetchCreator.layerGetHeatmapLayerTile(
+          this.layer.layerCode,
+          coordinate.x, // x
+          coordinate.y, // y
+          coordinate.z, // z
+          this.styleIds,
+        );
 
-          fetch(configuration.basePath + fetchArgs.url, {
-            ...fetchArgs.options,
-            signal,
-          })
-            .then((response) =>
-              tileResponseInterceptor<LayerGetClusterTileWebResponseModel>(response),
-            )
-            .then((response) => resolve(this.parseResults(response)))
-            .catch((error) => reject(error));
-        } catch (e) {
-          reject(e);
-        }
-      },
-    );
+        fetch(configuration.basePath + fetchArgs.url, {
+          ...fetchArgs.options,
+          signal,
+        })
+          .then((response) =>
+            tileResponseInterceptor<LayerGetClusterTileWebResponseModel>(response),
+          )
+          .then((response) => resolve(this.parseResults(response)))
+          .catch((error) => reject(error));
+      } catch (e) {
+        reject(e);
+      }
+    });
 
     return request;
   }
@@ -148,7 +143,7 @@ export class AlloyHeatmapFeatureLoader extends AlloyTileFeatureLoader<
    */
   private parseResults(
     response: LayerGetClusterTileWebResponseModel,
-  ): Array<AlloyClusterFeature | AlloyItemFeature> {
+  ): Array<AlloyHeatmapClusterFeature> {
     // return early if no results
     if (response.results.length === 0) {
       return [];
@@ -179,10 +174,8 @@ export class AlloyHeatmapFeatureLoader extends AlloyTileFeatureLoader<
 
       const featureId = FeatureUtils.createFeatureId(this.layer.layerCode, olFeature);
       switch (r.properties.type) {
-        case AlloyFeatureType.Cluster:
-          return new AlloyClusterFeature(featureId, olFeature, r.properties, this.layer.id);
-        case AlloyFeatureType.Item:
-          return new AlloyItemFeature(featureId, olFeature, r.properties, this.layer.id);
+        case AlloyFeatureType.HeatmapCluster:
+          return new AlloyHeatmapClusterFeature(featureId, olFeature, r.properties, this.layer.id);
         default:
           throw new AlloyMapError(
             1553737510,

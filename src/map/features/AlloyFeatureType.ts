@@ -61,4 +61,14 @@ export enum AlloyFeatureType {
    * an alloy wfs feature
    */
   Wfs = 'Wfs',
+
+  /**
+   * an alloy heatmap feature
+   */
+  HeatmapCluster = 'HeatmapCluster',
+
+  /**
+   * an alloy wfs heatmap feature
+   */
+  WfsHeatmap = 'WfsHeatmap',
 }

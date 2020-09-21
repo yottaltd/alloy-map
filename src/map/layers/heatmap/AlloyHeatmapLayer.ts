@@ -1,7 +1,7 @@
 import { Debugger } from 'debug';
 import * as _ from 'lodash';
-import OLHeatmapLayer from 'ol/layer/heatmap';
-import OLVectorSource from 'ol/source/vector';
+import OLHeatmapLayer from 'ol/layer/Heatmap';
+import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import { ProjectionUtils } from '../../../utils/ProjectionUtils';
 import { AlloyBounds } from '../../core/AlloyBounds';
@@ -10,13 +10,13 @@ import { AlloyMap } from '../../core/AlloyMap';
 import { FeaturesAddedEvent } from '../../events/FeaturesAddedEvent';
 import { MapChangeCentreEventHandler } from '../../events/MapChangeCentreEventHandler';
 import { MapChangeZoomEventHandler } from '../../events/MapChangeZoomEventHandler';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
+import { AlloyHeatmapClusterFeature } from '../../features/AlloyHeatmapClusterFeature';
 import { AlloyHeatmapLayerStyle } from '../../styles/AlloyHeatmapLayerStyle';
 import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
 import { AlloyFeaturesLayer } from '../AlloyFeaturesLayer';
 import { AlloyHeatmapFeatureLoader } from './AlloyHeatmapFeatureLoader';
 import { AlloyHeatmapLayerOptions } from './AlloyHeatmapLayerOptions';
+import { FeatureUtils } from '../../../utils/FeatureUtils';
 
 /**
  * an alloy cluster layer uses the `/api/layer/{code}/{x}/{y}/{z}/cluster` endpoint to request and
@@ -24,7 +24,7 @@ import { AlloyHeatmapLayerOptions } from './AlloyHeatmapLayerOptions';
  * dispersed or at a required zoom level then they will become individual items.
  */
 export class AlloyHeatmapLayer
-  implements AlloyFeaturesLayer<AlloyClusterFeature | AlloyItemFeature>, AlloyBoundedLayer {
+  implements AlloyFeaturesLayer<AlloyHeatmapClusterFeature>, AlloyBoundedLayer {
   /**
    * debugger instance
    * @ignore
@@ -54,7 +54,7 @@ export class AlloyHeatmapLayer
    * @ignore
    * @internal
    */
-  readonly currentFeatures = new Map<string, AlloyClusterFeature | AlloyItemFeature>();
+  readonly currentFeatures = new Map<string, AlloyHeatmapClusterFeature>();
 
   /**
    * @implements
@@ -115,7 +115,9 @@ export class AlloyHeatmapLayer
           new OLHeatmapLayer({
             zIndex: AlloyLayerZIndex.SubLayers,
             source: new OLVectorSource(),
-            weight: (feature) => feature.get(style.weightProperty) ?? 1,
+            weight: (feature) =>
+              this.currentFeatures.get(FeatureUtils.getFeatureIdFromOlFeature(feature))?.properties
+                .weight ?? 0,
             gradient: style.gradient,
             blur: style.blur,
             radius: style.radius,
@@ -153,14 +155,14 @@ export class AlloyHeatmapLayer
   /**
    * @implements
    */
-  public getFeatureById(id: string): AlloyClusterFeature | AlloyItemFeature | null {
+  public getFeatureById(id: string): AlloyHeatmapClusterFeature | null {
     return this.currentFeatures.get(id) || null;
   }
 
   /**
    * @implements
    */
-  public addFeature(feature: AlloyClusterFeature | AlloyItemFeature): boolean {
+  public addFeature(feature: AlloyHeatmapClusterFeature): boolean {
     // check to see if we already have the feature
     if (this.currentFeatures.has(feature.id)) {
       this.debugger('feature: %s already exists in layer', feature.id);
@@ -181,7 +183,7 @@ export class AlloyHeatmapLayer
   /**
    * @implements
    */
-  public removeFeature(feature: AlloyClusterFeature | AlloyItemFeature): boolean {
+  public removeFeature(feature: AlloyHeatmapClusterFeature): boolean {
     // check to see if we already have the feature
     if (!this.currentFeatures.has(feature.id)) {
       this.debugger("feature: %s doesn't exists in layer", feature.id);
@@ -201,7 +203,7 @@ export class AlloyHeatmapLayer
   /**
    * @implements
    */
-  public addFeatures(features: Array<AlloyClusterFeature | AlloyItemFeature>): boolean {
+  public addFeatures(features: Array<AlloyHeatmapClusterFeature>): boolean {
     const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
     if (featuresNotInLayer.length === 0) {
       // behind guard because we are performing operations for a log

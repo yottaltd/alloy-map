@@ -1,12 +1,14 @@
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
+import OLPoint from 'ol/geom/Point';
 import { WfsLayerUtils } from '../../../wfs/WfsLayerUtils';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
 import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
+import { AlloyWfsHeatmapFeature } from '../../features/AlloyWfsHeatmapFeature';
 import { AlloyWfsHeatmapLayerStyle } from '../../styles/AlloyWfsHeatmapLayerStyle';
 import { AlloyLayer } from '../AlloyLayer';
 import { AlloyWfsHeatmapLayerOptions } from './AlloyWfsHeatmapLayerOptions';
+import { GeometryUtils } from '../../../utils/GeometryUtils';
 
 /**
  * an alloy wfs layer for rendering wfs features provided externally on the map
@@ -53,7 +55,7 @@ export class AlloyWfsHeatmapLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  private currentFeatures: Map<string, AlloyWfsFeature> = new Map();
+  private currentFeatures: Map<string, AlloyWfsHeatmapFeature> = new Map();
 
   /**
    * creates a new instance
@@ -84,13 +86,15 @@ export class AlloyWfsHeatmapLayer implements AlloyLayer {
               this.debugger('feature: %s already exists in layer', olFeature.getId());
               continue;
             }
-            const feature = new AlloyWfsFeature(
+            const feature = new AlloyWfsHeatmapFeature(
               olFeature.getId().toString(),
               olFeature,
               {},
               this.id,
               style.styleId,
             );
+            const centre = GeometryUtils.getGeometryBoundsForFeature(feature).getCentre();
+            olFeature.setGeometry(new OLPoint(centre.toMapCoordinate()));
             this.currentFeatures.set(feature.id, feature);
           }
         },
@@ -101,7 +105,7 @@ export class AlloyWfsHeatmapLayer implements AlloyLayer {
   /**
    * @implements
    */
-  public getFeatureById(id: string): AlloyWfsFeature | null {
+  public getFeatureById(id: string): AlloyWfsHeatmapFeature | null {
     return this.currentFeatures.get(id) || null;
   }
 

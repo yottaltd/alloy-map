@@ -8,8 +8,8 @@ import OLGML3 from 'ol/format/GML3';
 import OLKML from 'ol/format/KML';
 import OLWFS from 'ol/format/WFS';
 import OLGeometry from 'ol/geom/Geometry';
-import OLVectorLayer from 'ol/layer/Vector';
 import OLHeatmapLayer from 'ol/layer/Heatmap';
+import OLVectorLayer from 'ol/layer/Vector';
 import OLProjection from 'ol/proj/Projection';
 import OLRenderFeature from 'ol/render/Feature';
 import OLVectorSource from 'ol/source/Vector';
@@ -131,7 +131,14 @@ export abstract class WfsLayerUtils {
       zIndex,
       visible: true,
       opacity: 1,
-      weight: (feature) => feature.get(weightProperty) ?? 1,
+      weight: (feature) => {
+        const weight = feature.get(weightProperty);
+        let multiplier = 1;
+        if (weightProperty === 'postmile') {
+          multiplier = 0.01;
+        }
+        return !!weight && typeof weight === 'number' ? weight * multiplier : 1;
+      },
       gradient,
       blur,
       radius,
@@ -144,6 +151,7 @@ export abstract class WfsLayerUtils {
     loadAll?: boolean,
     wfsFormat?: AlloyWfsFormat | undefined,
     featureSetter?: (feature: OLFeature[]) => void,
+    featureConverter?: (feature: OLFeature) => void,
   ): OLVectorSource {
     const epsgCode = 'EPSG:' + epsg;
     const format = WfsLayerUtils.getFormat(wfsFormat);
@@ -193,7 +201,15 @@ export abstract class WfsLayerUtils {
                 if (featureSetter) {
                   featureSetter(features);
                 }
-                vectorSource.addFeatures(features);
+                const newFeatures = features.filter(
+                  (feature) => vectorSource.getFeatureById(feature.getId()) === null,
+                );
+                if (featureConverter) {
+                  newFeatures.forEach((feature) => {
+                    featureConverter(feature);
+                  });
+                }
+                vectorSource.addFeatures(newFeatures);
               }
             } else {
               onError(`failed, status code: ${response.status}, message: ${response.statusText}`);
