@@ -1,5 +1,4 @@
-import { Debugger } from 'debug';
-import * as _ from 'lodash';
+import flatten from 'lodash.flatten';
 import OLFeature from 'ol/Feature';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { SimpleEventDispatcher } from 'ste-simple-events';
@@ -20,13 +19,6 @@ import { AlloyCoordinate } from '../core/AlloyCoordinate';
  * @internal
  */
 export class AlloySelectionInteraction {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * the current selection mode
    */
@@ -64,9 +56,6 @@ export class AlloySelectionInteraction {
    */
   constructor(map: AlloyMap) {
     this.map = map;
-
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloySelectionInteraction.name);
 
     // listen for click events
     this.map.olMap.on('click', (e) => {
@@ -114,12 +103,10 @@ export class AlloySelectionInteraction {
     const oldFeatures = this.map.selectionLayer.features;
 
     // only attempt to remove the feature and track modified
-    this.debugger('remove feature: ', feature.id);
     const modified = this.map.selectionLayer.removeFeature(feature);
 
     // only trigger event on modified
     if (modified) {
-      this.debugger('layer modified, dispatching selection change event');
       this.dispatchFeatureSelectionChangeEvent(oldFeatures, userEvent);
     }
   }
@@ -159,22 +146,17 @@ export class AlloySelectionInteraction {
       throw new AlloyMapError(1554049485, 'feature is not selectable');
     }
 
-    this.debugger('setting selected feature: %s', feature.id);
-
     // check if the feature is already selected
     const oldSelection = this.map.selectionLayer.features;
     if (oldSelection.size === 1 && oldSelection.has(feature.id)) {
-      this.debugger('feature: %s is already selected', feature.id);
       return; // no-op
     }
 
     // clear and add the feature
-    this.debugger('clearing layer and adding feature: %s', feature.id);
     this.map.selectionLayer.clearFeatures();
     this.map.selectionLayer.addFeature(feature);
 
     // we know we need to trigger the event if we got this far
-    this.debugger('dispatching selection change event');
     this.dispatchFeatureSelectionChangeEvent(oldSelection, userEvent);
   }
 
@@ -205,15 +187,6 @@ export class AlloySelectionInteraction {
       throw new AlloyMapError(1554049544, 'one or more features do not allow selection');
     }
 
-    // behind guard because we are performing operations for a log
-    if (this.debugger.enabled) {
-      this.debugger(
-        'setting %d selected features: %o',
-        features.length,
-        features.map((f) => f.id),
-      );
-    }
-
     // check if the features are already selected
     const oldSelection = this.map.selectionLayer.features;
     if (oldSelection.size === features.length) {
@@ -228,31 +201,15 @@ export class AlloySelectionInteraction {
 
       // if its the same then no-op
       if (!hasDifferentFeatures) {
-        // behind guard because we are performing operations for a log
-        if (this.debugger.enabled) {
-          this.debugger(
-            'features are already selected: ',
-            features.map((f) => f.id),
-          );
-        }
         return;
       }
     }
 
-    // behind guard because we are performing operations for a log
-    if (this.debugger.enabled) {
-      this.debugger(
-        'clearing layer and adding %d features: %s',
-        features.length,
-        features.map((f) => f.id),
-      );
-    }
     // clear and add the features
     this.map.selectionLayer.clearFeatures();
     this.map.selectionLayer.addFeatures(features);
 
     // we know we need to trigger the event if we got this far
-    this.debugger('dispatching selection change event');
     this.dispatchFeatureSelectionChangeEvent(oldSelection, userEvent);
   }
 
@@ -282,12 +239,10 @@ export class AlloySelectionInteraction {
     const oldFeatures = this.map.selectionLayer.features;
 
     // only attempt to add the feature and track modified
-    this.debugger('adding feature: ', feature.id);
     const modified = this.map.selectionLayer.addFeature(feature);
 
     // only trigger event on modified
     if (modified) {
-      this.debugger('layer modified, dispatching selection change event');
       this.dispatchFeatureSelectionChangeEvent(oldFeatures, userEvent);
     }
   }
@@ -322,27 +277,17 @@ export class AlloySelectionInteraction {
 
     // no-op
     if (features.length === 0) {
-      this.debugger('selecting 0 features');
       return;
     }
 
     // keep copy of old features (already a new map instance)
     const oldFeatures = this.map.selectionLayer.features;
 
-    // behind guard because we are performing operations for a log
-    if (this.debugger.enabled) {
-      this.debugger(
-        'adding %d features: %s',
-        features.length,
-        features.map((f) => f.id),
-      );
-    }
     // only attempt to add the features and track modified
     const modified = this.map.selectionLayer.addFeatures(features);
 
     // only trigger event on modified
     if (modified) {
-      this.debugger('layer modified, dispatching selection change event');
       this.dispatchFeatureSelectionChangeEvent(oldFeatures, userEvent);
     }
   }
@@ -386,7 +331,6 @@ export class AlloySelectionInteraction {
   private onClick(event: OLMapBrowserPointerEvent): void {
     // short circuit when dragging or selection is off
     if (event.dragging || this.currentSelectionMode === AlloySelectionMode.Off) {
-      this.debugger('pointer dragging or selection mode is Off');
       return;
     }
 
@@ -395,28 +339,15 @@ export class AlloySelectionInteraction {
 
     // if no features were found, deselect
     if (features.length === 0) {
-      this.debugger('no features found for pixel: %o', event.pixel);
       this.setSelectedFeatures([], true);
       return;
     }
 
-    // behind guard because we are performing operations for a log
-    if (this.debugger.enabled) {
-      this.debugger(
-        'found %d features: %o at pixel: %o',
-        features.length,
-        features.map((f) => f.id),
-        event.pixel,
-      );
-    }
-
     // TODO possible z-index issue
     const firstFeature = features[0];
-    this.debugger('first feature: %s for pixel: %o', firstFeature.id, event.pixel);
 
     // if we don't allow selection, deselect and run any custom processing
     if (!firstFeature.allowsSelection) {
-      this.debugger('first feature: %s does not allow selection', firstFeature.id);
       this.setSelectedFeatures([], true);
       this.callFeatureOnSelectionInteraction(firstFeature);
       return;
@@ -425,10 +356,6 @@ export class AlloySelectionInteraction {
     // if it is already the only thing selected then deselect
     const featureAlreadySelected = !!this.map.selectionLayer.getFeatureById(firstFeature.id);
     if (this.map.selectionLayer.features.size === 1 && featureAlreadySelected) {
-      this.debugger(
-        'first feature: %s is the only feature selected, deselecting...',
-        firstFeature.id,
-      );
       this.setSelectedFeatures([], true);
 
       // set the hovered feature because we are over it but it doesn't trigger a pointer move
@@ -453,16 +380,6 @@ export class AlloySelectionInteraction {
           const selectedFeatures = this.map.selectionLayer.features;
           selectedFeatures.delete(firstFeature.id);
 
-          // behind guard because we are performing operations for a log
-          if (this.debugger.enabled) {
-            this.debugger(
-              'first feature: %s was shift/ctrl clicked and already selected, ' +
-                'removing from selection.\nprevious: %o\nnew: %o',
-              firstFeature.id,
-              Array.from(this.map.selectionLayer.features.keys()),
-              Array.from(selectedFeatures.keys()),
-            );
-          }
           this.setSelectedFeatures(Array.from(selectedFeatures.values()), true);
           // we are specifically not calling "onFeatureClicked" when deselecting, think its right?
 
@@ -470,10 +387,6 @@ export class AlloySelectionInteraction {
           // and deselecting means we are hovered over it
           this.map.hoverLayer.setHoveredFeature(firstFeature);
         } else {
-          this.debugger(
-            'first feature: %s was shift/ctrl clicked and not already selected, selecting',
-            firstFeature.id,
-          );
           this.selectFeature(firstFeature, true);
           this.callFeatureOnSelectionInteraction(firstFeature);
 
@@ -507,7 +420,6 @@ export class AlloySelectionInteraction {
    * @param feature the feature to select
    */
   private onClickSelectSingleFeature(feature: AlloyFeature) {
-    this.debugger('first feature: %s was clicked and not already selected, selecting', feature.id);
     this.setSelectedFeature(feature, true);
     this.callFeatureOnSelectionInteraction(feature);
 
@@ -522,7 +434,6 @@ export class AlloySelectionInteraction {
    */
   private callFeatureOnSelectionInteraction(feature: AlloyFeature) {
     if (feature.onSelectionInteraction) {
-      this.debugger('first feature: %s has interaction function, calling...', feature.id);
       feature.onSelectionInteraction(this.map);
     }
   }
@@ -534,16 +445,11 @@ export class AlloySelectionInteraction {
   private getFeaturesForPixel(pixel: number[]) {
     const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
     // map the openlayers layers one to one with ours so indices are the same
-    const olLayers = _.flatten(layers.map((l) => l.olLayers));
+    const olLayers = flatten(layers.map((l) => l.olLayers));
     // create a set for fast lookup
     const olLayersSet = new Set(olLayers);
     // the features we found when clicking
     const features: AlloyFeature[] = [];
-
-    // behind guard because we are performing operations for a log
-    if (this.debugger.enabled) {
-      this.debugger('getting features for pixel: %o in layers: %o', pixel, layers.keys());
-    }
 
     // iterate through each feature at the map pixel
     this.map.olMap.forEachFeatureAtPixel(
@@ -561,24 +467,8 @@ export class AlloySelectionInteraction {
             // if we have a feature add it to the array
             if (feature && (feature.allowsSelection || feature.onSelectionInteraction)) {
               features.push(feature);
-            } else {
-              // behind guard because we are performing operations for a log
-              if (this.debugger.enabled) {
-                this.debugger(
-                  'ol feature found but no alloy feature: %o for layer: %o, ignoring...',
-                  olFeature,
-                  layers[index],
-                );
-              }
             }
-          } else {
-            this.debugger('ol feature found but no matching layer: %o, ignoring...', olFeature);
           }
-        } else {
-          this.debugger(
-            'found ol render feature: %o (should not be possible) ignoring...',
-            olFeature,
-          );
         }
       },
       {

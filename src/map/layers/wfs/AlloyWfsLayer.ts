@@ -1,4 +1,3 @@
-import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import { WfsFeatureDescription } from '../../../wfs/WfsFeatureDescription';
 import { WfsLayerUtils } from '../../../wfs/WfsLayerUtils';
@@ -17,13 +16,6 @@ import { AlloyWfsStyleProcessor } from './AlloyWfsStyleProcessor';
  * an alloy wfs layer for rendering wfs features provided externally on the map
  */
 export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * @implements
    */
@@ -76,7 +68,6 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
     this.id = options.id;
     this.map = options.map;
     this.styles = options.styles;
-    this.debugger = this.map.debugger.extend(AlloyWfsLayer.name + ':' + this.id);
 
     // initialised here because style processor need some of the above internal properties
     this.styleProcessor = new AlloyWfsStyleProcessor(this);
@@ -106,7 +97,6 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
         (olFeatures) => {
           for (const olFeature of olFeatures) {
             if (this.currentFeatures.has(olFeature.getId().toString())) {
-              this.debugger('feature: %s already exists in layer', olFeature.getId());
               continue;
             }
             const feature = new AlloyWfsFeature(

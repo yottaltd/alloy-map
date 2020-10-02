@@ -1,6 +1,6 @@
-import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
-import * as _ from 'lodash';
+import uniq from 'lodash.uniq';
+import flatten from 'lodash.flatten';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryType from 'ol/geom/GeometryType';
@@ -66,13 +66,6 @@ const DRAW_RADIUS = 10;
  * @internal
  */
 export class AlloyDrawInteraction {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * dispatcher for `AlloyDrawEvent`
    */
@@ -150,9 +143,6 @@ export class AlloyDrawInteraction {
    */
   constructor(map: AlloyMap) {
     this.map = map;
-
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyDrawInteraction.name);
 
     // initialise singleton draw layer
     this.drawLayer = new AlloyDrawLayer({
@@ -281,7 +271,7 @@ export class AlloyDrawInteraction {
    * @returns array of `GeoJSONObjectType`
    */
   public getDrawTypes(): GeoJSONObjectType[] {
-    return _.uniq(
+    return uniq(
       this.drawLayer.olSource.getFeatures().map((f) => {
         const geoJsonType = EnumUtils.openlayersGeometryToGeoJSONGeometryType(
           f.getGeometry().getType(),
@@ -523,7 +513,7 @@ export class AlloyDrawInteraction {
     // clears remove layer
     this.removeLayer.clearFeatures();
     // convert all draw layer features to points
-    _.flatten(
+    flatten(
       Array.from(this.drawLayer.features.values()).map((feature) =>
         AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
           feature.olFeature.getGeometry(),

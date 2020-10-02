@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import memoize from 'lodash.memoize';
 import { AlloyMapError } from '../../../error/AlloyMapError';
 import { Colour, ColourUtils } from '../../../utils/ColourUtils';
 
@@ -33,7 +33,7 @@ export abstract class AlloyTextUtils {
   /**
    * the memoized version of `createTextCanvasImplementation`
    */
-  private static readonly memoizedCreateTextCanvas = _.memoize(
+  private static readonly memoizedCreateTextCanvas = memoize(
     AlloyTextUtils.createTextCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
     (text: string, colour: Colour) => AlloyTextUtils.cleanText(text) + ':' + colour,

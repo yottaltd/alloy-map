@@ -48,11 +48,9 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     } else {
       // this is the copy of the super.addFeature
       if (this.currentFeatures.has(feature.id)) {
-        this.debugger('feature: %s already exists in layer', feature.id);
         return false;
       }
 
-      this.debugger('adding feature: %s', feature.id);
       this.currentFeatures.set(feature.id, feature);
       return true;
     }

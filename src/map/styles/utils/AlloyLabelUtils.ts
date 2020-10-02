@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import memoize from 'lodash.memoize';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
@@ -165,7 +165,7 @@ export abstract class AlloyLabelUtils {
   /**
    * the memoized version of `createLabelCanvasImplementation`
    */
-  private static readonly memoizedCreateLabelCanvasImplementation = _.memoize(
+  private static readonly memoizedCreateLabelCanvasImplementation = memoize(
     AlloyLabelUtils.createLabelCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
     (title: string | null, subtitle: string | null, backgroundColour: string) =>
@@ -179,7 +179,7 @@ export abstract class AlloyLabelUtils {
   /**
    * the memoized version of `cleanText`
    */
-  private static readonly memoizedCleanText = _.memoize(AlloyLabelUtils.cleanText);
+  private static readonly memoizedCleanText = memoize(AlloyLabelUtils.cleanText);
 
   /**
    * implementation of the create label canvas

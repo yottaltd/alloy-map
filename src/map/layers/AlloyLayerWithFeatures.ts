@@ -1,4 +1,3 @@
-import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
@@ -21,13 +20,6 @@ import { AlloyLayer } from './AlloyLayer';
  * @ignore
  */
 export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements AlloyLayer {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * @implements
    */
@@ -78,9 +70,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @internal
    */
   constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
-    // set the debugger instance
-    this.debugger = map.debugger.extend(AlloyLayerWithFeatures.name + ':' + id);
-
     this.id = id;
     this.map = map;
     this.olLayers = [
@@ -94,7 +83,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
               AlloyStyleBuilderBuildState.Default,
             );
           } else {
-            this.debugger('style processor called but not set');
             return [];
           }
         },
@@ -135,11 +123,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public addFeature(feature: T): boolean {
     // check to see if we already have the feature
     if (this.currentFeatures.has(feature.id)) {
-      this.debugger('feature: %s already exists in layer', feature.id);
       return false;
     }
 
-    this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
@@ -154,11 +140,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public removeFeature(feature: T): boolean {
     // check to see if we already have the feature
     if (!this.currentFeatures.has(feature.id)) {
-      this.debugger("feature: %s doesn't exists in layer", feature.id);
       return false;
     }
 
-    this.debugger('removing feature: %s', feature.id);
     this.olSource.removeFeature(feature.olFeature);
     this.currentFeatures.delete(feature.id);
     return true;
@@ -173,23 +157,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public addFeatures(features: T[]): boolean {
     const featuresNotInLayer = features.filter((f) => !this.currentFeatures.has(f.id));
     if (featuresNotInLayer.length === 0) {
-      // behind guard because we are performing operations for a log
-      if (this.debugger.enabled) {
-        this.debugger(
-          'all features already exist in layer: %o',
-          features.map((f) => f.id),
-        );
-      }
       return false; // no-op
     }
 
-    // behind guard because we are performing operations for a log
-    if (this.debugger.enabled) {
-      this.debugger(
-        'adding features that are not already in layer: %o',
-        featuresNotInLayer.map((f) => f.id),
-      );
-    }
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
@@ -203,11 +173,8 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;
     if (hasFeatures) {
-      this.debugger('clearing features');
       this.olSource.refresh();
       this.currentFeatures.clear();
-    } else {
-      this.debugger('no features to clear');
     }
     return hasFeatures;
   }

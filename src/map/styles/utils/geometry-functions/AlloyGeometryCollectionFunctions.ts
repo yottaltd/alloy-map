@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import flatten from 'lodash.flatten';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -306,15 +306,13 @@ export abstract class AlloyGeometryCollectionFunctions {
     // create a geometry for each type
     geometries = {
       points: new OLMultiPoint(data.points.map((p) => p.getCoordinates())),
-      multiPoints: new OLMultiPoint(_.flatten(data.multiPoints.map((g) => g.getCoordinates()))),
+      multiPoints: new OLMultiPoint(flatten(data.multiPoints.map((g) => g.getCoordinates()))),
       lineStrings: new OLMultiLineString(data.lineStrings.map((l) => l.getCoordinates())),
       multiLineStrings: new OLMultiLineString(
-        _.flatten(data.multiLineStrings.map((g) => g.getCoordinates())),
+        flatten(data.multiLineStrings.map((g) => g.getCoordinates())),
       ),
       polygons: new OLMultiPolygon(data.polygons.map((p) => p.getCoordinates())),
-      multiPolygons: new OLMultiPolygon(
-        _.flatten(data.multiPolygons.map((g) => g.getCoordinates())),
-      ),
+      multiPolygons: new OLMultiPolygon(flatten(data.multiPolygons.map((g) => g.getCoordinates()))),
     };
 
     // cache and return the results

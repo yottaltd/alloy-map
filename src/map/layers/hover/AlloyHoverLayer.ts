@@ -1,4 +1,3 @@
-import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
@@ -15,13 +14,6 @@ import { AlloyHoverStyleProcessor } from './AlloyHoverStyleProcessor';
  * @internal
  */
 export class AlloyHoverLayer implements AlloyLayer {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * @implements
    */
@@ -67,9 +59,6 @@ export class AlloyHoverLayer implements AlloyLayer {
    */
   constructor(options: AlloyHoverLayerOptions) {
     this.map = options.map;
-
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyHoverLayer.name);
 
     // initialised here because style processor need some of the above internal properties
     this.styleProcessor = new AlloyHoverStyleProcessor(this);

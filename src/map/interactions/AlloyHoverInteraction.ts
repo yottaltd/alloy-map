@@ -1,5 +1,5 @@
-import { Debugger } from 'debug';
-import * as _ from 'lodash';
+import debounce from 'lodash.debounce';
+import flatten from 'lodash.flatten';
 import OLFeature from 'ol/Feature';
 import OLLayer from 'ol/layer/Layer';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
@@ -23,13 +23,6 @@ const POINTER_MOVE_THROTTLE = 50;
  */
 export class AlloyHoverInteraction {
   /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
-  /**
    * the map to add hover interaction to
    */
   private map: AlloyMap;
@@ -52,9 +45,6 @@ export class AlloyHoverInteraction {
   constructor(map: AlloyMap) {
     this.map = map;
 
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyHoverInteraction.name);
-
     // recalculate the payload on initialisation
     this.recalculatePointerMovePayload();
 
@@ -62,7 +52,7 @@ export class AlloyHoverInteraction {
     // processing done for these events
     this.map.olMap.on(
       'pointermove',
-      _.debounce(
+      debounce(
         (e) => this.onPointerMove(e as any /* this is untyped in ol */),
         POINTER_MOVE_THROTTLE,
         {
@@ -161,7 +151,7 @@ export class AlloyHoverInteraction {
    */
   private recalculatePointerMovePayload() {
     const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
-    const olLayers = _.flatten(layers.map((l) => l.olLayers));
+    const olLayers = flatten(layers.map((l) => l.olLayers));
 
     // TODO maybe work out the z-index?
     this.pointerMovePayload = {

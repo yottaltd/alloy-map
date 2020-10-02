@@ -1,6 +1,5 @@
-import { debug, Debugger } from 'debug';
 import { Geometry } from 'geojson';
-import * as _ from 'lodash';
+import debounce from 'lodash.debounce';
 import OLAttribution from 'ol/control/Attribution';
 import OLControl from 'ol/control/Control';
 import OLScaleLine, { Units } from 'ol/control/ScaleLine';
@@ -65,13 +64,6 @@ const DEBOUNCED_EVENT_TIMEOUT = 100;
  * the alloy map manages basemaps, layers and drawing
  */
 export class AlloyMap {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger = debug('alloymaps');
-
   /**
    * the api service to use for making calls to the alloy web api
    * @ignore
@@ -186,7 +178,7 @@ export class AlloyMap {
     // create the view (initial positioning)
     this.olView = new OLView({
       center: options.centre ? options.centre.toMapCoordinate() : [0, 0],
-      zoom: _.clamp(options.zoom || MIN_ZOOM, MIN_ZOOM, MAX_ZOOM),
+      zoom: Math.min(Math.max(options.zoom || MIN_ZOOM, MIN_ZOOM), MAX_ZOOM),
       minZoom: MIN_ZOOM,
       maxZoom: MAX_ZOOM,
     });
@@ -234,7 +226,7 @@ export class AlloyMap {
     // listen for view centre changes
     this.olView.on(
       'change:center',
-      _.debounce(
+      debounce(
         () =>
           this.onChangeCenter.dispatch(
             new MapChangeCentreEvent(
@@ -250,7 +242,7 @@ export class AlloyMap {
     // listen for resolution changes (we broadcast zoom levels)
     this.olView.on(
       'change:resolution',
-      _.debounce(
+      debounce(
         () =>
           this.onChangeZoom.dispatch(
             new MapChangeZoomEvent(this.olView.getZoom(), this.olView.getResolution()),
@@ -380,7 +372,7 @@ export class AlloyMap {
    * @param zoom the zoom level
    */
   public setZoom(zoom: number): void {
-    this.olView.setZoom(_.clamp(zoom || MIN_ZOOM, MIN_ZOOM, MAX_ZOOM));
+    this.olView.setZoom(Math.min(Math.max(zoom || MIN_ZOOM, MIN_ZOOM), MAX_ZOOM));
   }
 
   /**

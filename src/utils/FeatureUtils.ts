@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import { Geometry } from 'geojson';
-import * as _ from 'lodash';
+import flatten from 'lodash.flatten';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import { Extent as OLExtent } from 'ol/extent';
 import OLFeature from 'ol/Feature';
@@ -154,7 +154,7 @@ export abstract class FeatureUtils {
     bufferPercent?: number,
   ): AlloyBounds {
     // flatten coordinates of features
-    const coordinates: OLCoordinate[] = _.flatten(
+    const coordinates: OLCoordinate[] = flatten(
       features.map((feature) =>
         AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(
           feature.olFeature.getGeometry(),
