@@ -1,5 +1,5 @@
-import * as color from 'color';
-import * as DOMPurify from 'dompurify';
+import color from 'color';
+import DOMPurify from 'dompurify';
 import OLImageWMS from 'ol/source/ImageWMS';
 import OLTileWMS from 'ol/source/TileWMS';
 import OLTileGrid from 'ol/tilegrid/TileGrid';

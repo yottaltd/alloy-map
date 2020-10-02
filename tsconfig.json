@@ -4,13 +4,15 @@
     "target": "es2019",
     "module": "esnext",
     "declaration": true,
-    "outDir": "./types",
     "strict": true,
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "noImplicitAny": false,
     "types": ["node"],
-    "stripInternal": true
+    "stripInternal": true,
+    "removeComments": true,
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

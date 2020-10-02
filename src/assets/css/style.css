@@ -1,0 +1,78 @@
+.alloy-map {
+  width: 100%;
+  height: 100%;
+}
+.alloy-map__canvas {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+.ol-overlaycontainer-stopevent {
+  pointer-events: none;
+}
+.ol-overlaycontainer-stopevent > * {
+  pointer-events: auto;
+}
+.ol-box {
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 3px dashed #25aae1;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.alloy-map__scale {
+  padding: 10px;
+  background-color: rgba(10, 49, 82, 0.5);
+  transition: background-color 500ms ease;
+}
+.alloy-map__scale:hover {
+  background-color: #0a3152;
+}
+.alloy-map__scale-inner {
+  border: 1px solid #fff;
+  border-top: none;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+  margin: 1px;
+  will-change: contents, width;
+  transition: all 0.25s;
+}
+.alloy-map__attributions {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 12px;
+  line-height: 12px;
+  background-color: #0a3152;
+  color: #fff;
+  margin: 0;
+  padding: 10px;
+  opacity: 0.5;
+  transition: opacity 500ms ease;
+}
+.alloy-map__attributions:hover {
+  opacity: 1;
+}
+.alloy-map__attributions button {
+  display: none !important;
+}
+.alloy-map__attributions ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.alloy-map__attributions ul li {
+  display: inline-block;
+  margin: 0 2.5px;
+  vertical-align: middle;
+}
+.alloy-map__attributions ul li .basemap-attribution a {
+  display: inline-block;
+  vertical-align: middle;
+}
+.alloy-map__attributions ul li .basemap-attribution img {
+  max-height: 30px;
+}
+.alloy-map__attributions ul li .basemap-attribution p {
+  display: inline-block;
+}

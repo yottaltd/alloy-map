@@ -42,6 +42,8 @@ import { AlloyCoordinate } from './AlloyCoordinate';
 import { AlloyMapOptions } from './AlloyMapOptions';
 import { AlloySelectionMode } from './AlloySelectionMode';
 
+import '../../assets/css/style.css';
+
 /**
  * minimum zoom level for the map
  * @ignore
