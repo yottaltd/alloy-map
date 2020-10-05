@@ -31,6 +31,7 @@
     "test:ci": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress-ci",
     "test": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress",
     "build": "npm run eslint & npm run stylelint & npm run clean & npm run build:less & npm run compile & npm run copy:less",
+    "publish": "node SetupPackage.js & cd dist & npm publish",
     "build:less": "lessc src/assets/less/index.less src/assets/css/style.css",
     "copy:less": "cpy src/assets/css/style.css dist/assets/css",
     "clean": "rimraf dist/",
