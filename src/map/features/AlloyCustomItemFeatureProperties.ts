@@ -1,4 +1,4 @@
-import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
+import { AlloyCustomFeatureProperties } from '@/map/features/AlloyCustomFeatureProperties';
 
 /**
  * the properties for an alloy custom feature

@@ -1,3 +1,4 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
@@ -10,7 +11,6 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLRenderFeature from 'ol/render/Feature';
-import { AlloyMapError } from '../../../../error/AlloyMapError';
 
 /**
  * geometry functions for openlayers styles, this allows us to work with multigeom instances

@@ -1,19 +1,23 @@
+/* eslint-disable max-len */
+
+import { AlloyAnimationManager } from '@/map/animations/AlloyAnimationManager';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyAnimatedPathFeature } from '@/map/features/AlloyAnimatedPathFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyPathNodeConnectorFeature } from '@/map/features/AlloyPathNodeConnectorFeature';
+import { AlloyPathNodeFeature } from '@/map/features/AlloyPathNodeFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyAnimatedPathLayerOptions } from '@/map/layers/animation/AlloyAnimatedPathLayerOptions';
+import { AlloyAnimatedPathStyleProcessor } from '@/map/layers/animation/AlloyAnimatedPathStyleProcessor';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyAnimatedPathFeature } from '../../features/AlloyAnimatedPathFeature';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
-import { AlloyPathNodeFeature } from '../../features/AlloyPathNodeFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyLayer } from '../AlloyLayer';
-import { AlloyAnimatedPathLayerOptions } from './AlloyAnimatedPathLayerOptions';
-import { AlloyAnimatedPathStyleProcessor } from './AlloyAnimatedPathStyleProcessor';
+
+/* eslint-enable max-len */
 
 /**
  * prefix for connector feature ids

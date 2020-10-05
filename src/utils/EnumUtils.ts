@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 
+import { GeoJSONObjectType } from '@/api/GeoJSONObjectType';
+import { AlloyDrawInteractionGeometryType } from '@/map/interactions/AlloyDrawInteractionGeometryType';
+import { AlloyOverlayPositioning } from '@/map/overlays/AlloyOverlayPositioning';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLOverlayPositioning from 'ol/OverlayPositioning';
-import { GeoJSONObjectType } from '../api/GeoJSONObjectType';
-import { AlloyDrawInteractionGeometryType } from '../map/interactions/AlloyDrawInteractionGeometryType';
-import { AlloyOverlayPositioning } from '../map/overlays/AlloyOverlayPositioning';
 
 /* eslint-enable max-len */
 

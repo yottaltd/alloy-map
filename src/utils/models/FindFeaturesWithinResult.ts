@@ -1,4 +1,4 @@
-import { AlloyFeature } from '../../map/features/AlloyFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
 
 /**
  * represents a result for finding features from a location

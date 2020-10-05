@@ -1,17 +1,17 @@
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyWfsFeature } from '@/map/features/AlloyWfsFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyStyledLayer } from '@/map/layers/AlloyStyledLayer';
+import { AlloyWfsLayerOptions } from '@/map/layers/wfs/AlloyWfsLayerOptions';
+import { AlloyWfsStyleProcessor } from '@/map/layers/wfs/AlloyWfsStyleProcessor';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyWfsLayerStyle } from '@/map/styles/AlloyWfsLayerStyle';
+import { WfsFeatureDescription } from '@/wfs/WfsFeatureDescription';
+import { WfsLayerUtils } from '@/wfs/WfsLayerUtils';
+import { WfsUtils } from '@/wfs/WfsUtils';
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
-import { WfsFeatureDescription } from '../../../wfs/WfsFeatureDescription';
-import { WfsLayerUtils } from '../../../wfs/WfsLayerUtils';
-import { WfsUtils } from '../../../wfs/WfsUtils';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyWfsLayerStyle } from '../../styles/AlloyWfsLayerStyle';
-import { AlloyLayer } from '../AlloyLayer';
-import { AlloyStyledLayer } from '../AlloyStyledLayer';
-import { AlloyWfsLayerOptions } from './AlloyWfsLayerOptions';
-import { AlloyWfsStyleProcessor } from './AlloyWfsStyleProcessor';
 
 /**
  * an alloy wfs layer for rendering wfs features provided externally on the map

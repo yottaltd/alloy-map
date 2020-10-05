@@ -1,7 +1,7 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy feature is used to display objects on the map

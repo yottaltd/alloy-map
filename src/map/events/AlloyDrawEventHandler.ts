@@ -1,4 +1,4 @@
-import { AlloyDrawEvent } from './AlloyDrawEvent';
+import { AlloyDrawEvent } from '@/map/events/AlloyDrawEvent';
 
 /**
  * handler for the alloy draw event

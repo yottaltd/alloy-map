@@ -1,7 +1,7 @@
-import { AlloyLayerStyle } from './AlloyLayerStyle';
-import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
-import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
-import { AlloyLayerStyleScale } from './AlloyLayerStyleScale';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
+import { AlloyLayerStyleLabelMode } from '@/map/styles/AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 
 /**
  * an alloy wfs layer style informs an alloy layer about how to style its contents
@@ -66,6 +66,7 @@ export class AlloyWfsLayerStyle extends AlloyLayerStyle {
    * @param icon the icon font class name
    * @param labelTitle WFS property name to use for the title
    * @param labelSubtitle WFS property name to use for the subtitle
+   * @param opacity the opacity to use when displaying style features, defaults to 1
    * @param scale the scale to use when displaying style features, defaults to 1
    * @param loadAll whether all items should be loaded in one go
    * @param outputFormat optional format to use for WFS requests

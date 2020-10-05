@@ -1,6 +1,6 @@
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyLayerStyle } from './AlloyLayerStyle';
-import { AlloyStyleBuilder } from './AlloyStyleBuilder';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
+import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
 
 /**
  * extends the alloy style builder to add layer styles caching

@@ -1,3 +1,4 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryType from 'ol/geom/GeometryType';
@@ -5,7 +6,6 @@ import OLLineString from 'ol/geom/LineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLPoint from 'ol/geom/Point';
 import OLRenderFeature from 'ol/render/Feature';
-import { AlloyMapError } from '../../../../error/AlloyMapError';
 
 /**
  * geometry functions for openlayers styles, modifies linestring geometry for styling

@@ -1,4 +1,4 @@
-import { LayersChangeEvent } from './LayersChangeEvent';
+import { LayersChangeEvent } from '@/map/events/LayersChangeEvent';
 
 /**
  * handler for the layers change event

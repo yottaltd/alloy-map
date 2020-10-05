@@ -1,18 +1,18 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyWfsFeature } from '@/map/features/AlloyWfsFeature';
+import { AlloyWfsLayer } from '@/map/layers/wfs/AlloyWfsLayer';
+import { AlloyWfsLayerStyle } from '@/map/styles/AlloyWfsLayerStyle';
+import { OL_FEATURE_TO_FEATURE_ID } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
+import { AlloyWfsCapabilities } from '@/wfs/AlloyWfsCapabilities';
+import { AlloyWfsFeatureType } from '@/wfs/AlloyWfsFeatureType';
+import { AlloyWfsFormat } from '@/wfs/AlloyWfsFormat';
+import { WfsFeatureDescription } from '@/wfs/WfsFeatureDescription';
+import { WfsFeatureProperty } from '@/wfs/WfsFeatureProperty';
+import { WfsVersionParser } from '@/wfs/WfsVersionParser';
 import { debug, Debugger } from 'debug';
 import OLGeoJSON from 'ol/format/GeoJSON';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyMap } from '../map/core/AlloyMap';
-import { AlloyWfsFeature } from '../map/features/AlloyWfsFeature';
-import { AlloyWfsLayer } from '../map/layers/wfs/AlloyWfsLayer';
-import { AlloyWfsLayerStyle } from '../map/styles/AlloyWfsLayerStyle';
-import { OL_FEATURE_TO_FEATURE_ID } from '../utils/FeatureUtils';
-import { ProjectionUtils } from '../utils/ProjectionUtils';
-import { AlloyWfsCapabilities } from './AlloyWfsCapabilities';
-import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
-import { AlloyWfsFormat } from './AlloyWfsFormat';
-import { WfsFeatureDescription } from './WfsFeatureDescription';
-import { WfsFeatureProperty } from './WfsFeatureProperty';
-import { WfsVersionParser } from './WfsVersionParser';
 
 /**
  * Public WFS utils to get capabilties of WFS service

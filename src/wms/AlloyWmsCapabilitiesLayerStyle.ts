@@ -1,4 +1,4 @@
-import { AlloyWmsCapabilitiesLayerStyleLegend } from './AlloyWmsCapabilitiesLayerStyleLegend';
+import { AlloyWmsCapabilitiesLayerStyleLegend } from '@/wms/AlloyWmsCapabilitiesLayerStyleLegend';
 
 /**
  * WMS Capabilties layer style parameters

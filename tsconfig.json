@@ -9,7 +9,11 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "types": ["node"],
-    "stripInternal": true
+    "stripInternal": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
