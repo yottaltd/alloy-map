@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "lib": ["es6", "dom"],
+    "noImplicitAny": false,
+    "allowJs": true,
+    "baseUrl": "../../",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["**/*.ts"]
+}

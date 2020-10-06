@@ -1,17 +1,17 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyClusterFeature } from '@/map/features/AlloyClusterFeature';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleBuilderWithLayerStyles } from '@/map/styles/AlloyStyleBuilderWithLayerStyles';
+import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
+import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
+import { AlloyTextUtils } from '@/map/styles/utils/AlloyTextUtils';
+import { ColourUtils } from '@/utils/ColourUtils';
+import { NumberFormatUtils } from '@/utils/NumberFormatUtils';
+import { StringUtils } from '@/utils/StringUtils';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { NumberFormatUtils } from '../../../utils/NumberFormatUtils';
-import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
-import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
-import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
-import { AlloyBallUtils } from '../utils/AlloyBallUtils';
-import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
-import { AlloyTextUtils } from '../utils/AlloyTextUtils';
-import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /**
  * cluster scale multiplier for the band 2 to 99 items

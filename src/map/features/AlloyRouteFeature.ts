@@ -1,6 +1,6 @@
-import { AlloyAnimatedPathFeature } from './AlloyAnimatedPathFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyRouteFeatureProperties } from './AlloyRouteFeatureProperties';
+import { AlloyAnimatedPathFeature } from '@/map/features/AlloyAnimatedPathFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyRouteFeatureProperties } from '@/map/features/AlloyRouteFeatureProperties';
 
 /**
  * an alloy Route feature which represents a Route with single line string geometry

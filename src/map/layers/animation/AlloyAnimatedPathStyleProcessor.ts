@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 
-import { AlloyAnimatedPathFeature } from '../../features/AlloyAnimatedPathFeature';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyPathNodeConnectorFeature } from '../../features/AlloyPathNodeConnectorFeature';
-import { AlloyPathNodeFeature } from '../../features/AlloyPathNodeFeature';
-import { AlloyStyleBuilder } from '../../styles/AlloyStyleBuilder';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyPathNodeConnectorStyleBuilder } from '../../styles/builders/AlloyPathNodeConnectorStyleBuilder';
-import { AlloyAnimatedPathLayer } from './AlloyAnimatedPathLayer';
+import { AlloyAnimatedPathFeature } from '@/map/features/AlloyAnimatedPathFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyPathNodeConnectorFeature } from '@/map/features/AlloyPathNodeConnectorFeature';
+import { AlloyPathNodeFeature } from '@/map/features/AlloyPathNodeFeature';
+import { AlloyAnimatedPathLayer } from '@/map/layers/animation/AlloyAnimatedPathLayer';
+import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyPathNodeConnectorStyleBuilder } from '@/map/styles/builders/AlloyPathNodeConnectorStyleBuilder';
 
 /* eslint-enable max-len */
 

@@ -1,12 +1,12 @@
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyWmsLayerOptions } from '@/map/layers/wms/AlloyWmsLayerOptions';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { WmsUtils } from '@/wms/WmsUtils';
 import OLLayer from 'ol/layer/Layer';
 import OLTileLayer from 'ol/layer/Tile';
-import { WmsUtils } from '../../../wms/WmsUtils';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyLayer } from '../AlloyLayer';
-import { AlloyWmsLayerOptions } from './AlloyWmsLayerOptions';
 
 /**
  * an alloy wms layer for rendering external wms tiles on the map

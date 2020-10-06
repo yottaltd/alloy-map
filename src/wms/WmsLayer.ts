@@ -1,4 +1,4 @@
-import { WmsStyle } from './WmsStyle';
+import { WmsStyle } from '@/wms/WmsStyle';
 
 /**
  * wms layer object describing the layer from a wms service

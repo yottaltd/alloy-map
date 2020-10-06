@@ -1,9 +1,9 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyWfsStyleBuilder } from '../../styles/builders/AlloyWfsStyleBuilder';
-import { AlloyWfsLayer } from './AlloyWfsLayer';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyWfsFeature } from '@/map/features/AlloyWfsFeature';
+import { AlloyWfsLayer } from '@/map/layers/wfs/AlloyWfsLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyWfsStyleBuilder } from '@/map/styles/builders/AlloyWfsStyleBuilder';
 
 /**
  * processes the wfs styled feature items

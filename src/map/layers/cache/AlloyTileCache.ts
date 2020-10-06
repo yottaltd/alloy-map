@@ -1,5 +1,5 @@
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
-import { AlloyTileCacheItem } from './AlloyTileCacheItem';
+import { AlloyTileCacheItem } from '@/map/layers/cache/AlloyTileCacheItem';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
 
 /**
  * represents a FIFO style cache for tiles

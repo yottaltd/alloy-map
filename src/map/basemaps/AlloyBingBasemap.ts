@@ -1,8 +1,8 @@
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
 import { DEVICE_PIXEL_RATIO } from 'ol/has';
 import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLBingMaps from 'ol/source/BingMaps';
-import { AlloyBasemap } from './AlloyBasemap';
 
 /**
  * a bing tiled basemap

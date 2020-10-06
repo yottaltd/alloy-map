@@ -1,5 +1,5 @@
-import { AlloyWmtsCapabilitiesLayer } from './AlloyWmtsCapabilitiesLayer';
-import { WmtsCapabilities } from './WmtsCapabilities';
+import { AlloyWmtsCapabilitiesLayer } from '@/wmts/AlloyWmtsCapabilitiesLayer';
+import { WmtsCapabilities } from '@/wmts/WmtsCapabilities';
 
 /**
  * Parsed WMTS Capabilties parameters

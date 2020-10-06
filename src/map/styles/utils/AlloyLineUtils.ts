@@ -1,3 +1,5 @@
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { ColourUtils } from '@/utils/ColourUtils';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
@@ -5,8 +7,6 @@ import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
 
 /**
  * utility for line style

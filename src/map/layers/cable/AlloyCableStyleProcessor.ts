@@ -1,8 +1,9 @@
-import { AlloyCableFeature } from '../../features/AlloyCableFeature';
-import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
-import { AlloyCableStyleBuilder } from '../../styles/builders/AlloyCableStyleBuilder';
-import { AlloyAnimatedPathStyleProcessor } from '../animation/AlloyAnimatedPathStyleProcessor';
-import { AlloyCableLayer } from './AlloyCableLayer';
+import { AlloyCableFeature } from '@/map/features/AlloyCableFeature';
+import { AlloyCableUnitFeature } from '@/map/features/AlloyCableUnitFeature';
+// eslint-disable-next-line max-len
+import { AlloyAnimatedPathStyleProcessor } from '@/map/layers/animation/AlloyAnimatedPathStyleProcessor';
+import { AlloyCableLayer } from '@/map/layers/cable/AlloyCableLayer';
+import { AlloyCableStyleBuilder } from '@/map/styles/builders/AlloyCableStyleBuilder';
 
 /**
  * processes the cable styled feature items

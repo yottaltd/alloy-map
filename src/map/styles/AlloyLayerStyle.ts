@@ -1,7 +1,7 @@
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { AlloyLayerStyleLabelMode } from './AlloyLayerStyleLabelMode';
-import { AlloyLayerStyleOpacity } from './AlloyLayerStyleOpacity';
-import { AlloyLayerStyleScale } from './AlloyLayerStyleScale';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerStyleLabelMode } from '@/map/styles/AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 
 /**
  * regex for testing a colour is valid hex

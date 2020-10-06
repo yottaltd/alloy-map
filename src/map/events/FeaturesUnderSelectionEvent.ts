@@ -1,5 +1,5 @@
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
 
 /**
  * event fired when there is a selection event and there are features obscured or underneath the

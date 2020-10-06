@@ -1,4 +1,4 @@
-import { EpsgIoSearchResult } from './EpsgIoSearchResult';
+import { EpsgIoSearchResult } from '@/utils/epsg-io/EpsgIoSearchResult';
 
 // example request can be seen: http://epsg.io/?q=27700&format=json
 export interface EpsgIoSearchResponse {

@@ -1,3 +1,6 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
+import { ColourUtils } from '@/utils/ColourUtils';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
@@ -5,9 +8,6 @@ import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /**
  * The size in pixels of the rendered label canvas

@@ -1,7 +1,7 @@
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyFeatureType } from '../features/AlloyFeatureType';
-import { AlloyFeatureWithItemId } from '../features/AlloyFeatureWithItemId';
-import { AlloyItemFeature } from '../features/AlloyItemFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyFeatureWithItemId } from '@/map/features/AlloyFeatureWithItemId';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
 
 /**
  * guards for features

@@ -1,5 +1,5 @@
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { EpsgIoSearchResponse } from './EpsgIoSearchResponse';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { EpsgIoSearchResponse } from '@/utils/epsg-io/EpsgIoSearchResponse';
 
 /**
  * Utils for seaching https://epsg.io for EPSG definitions

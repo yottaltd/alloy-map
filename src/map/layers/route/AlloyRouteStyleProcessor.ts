@@ -1,8 +1,9 @@
-import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
-import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
-import { AlloyRouteStyleBuilder } from '../../styles/builders/AlloyRouteStyleBuilder';
-import { AlloyAnimatedPathStyleProcessor } from '../animation/AlloyAnimatedPathStyleProcessor';
-import { AlloyRouteLayer } from './AlloyRouteLayer';
+import { AlloyRouteFeature } from '@/map/features/AlloyRouteFeature';
+import { AlloyRouteWaypointFeature } from '@/map/features/AlloyRouteWaypointFeature';
+// eslint-disable-next-line max-len
+import { AlloyAnimatedPathStyleProcessor } from '@/map/layers//animation/AlloyAnimatedPathStyleProcessor';
+import { AlloyRouteLayer } from '@/map/layers/route/AlloyRouteLayer';
+import { AlloyRouteStyleBuilder } from '@/map/styles/builders/AlloyRouteStyleBuilder';
 
 /**
  * processes the route styled feature items
