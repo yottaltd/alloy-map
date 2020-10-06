@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 
+import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
 import { AlloyMap } from '@/map/core/AlloyMap';
@@ -16,12 +17,15 @@ import { FeatureUtils } from '@/utils/FeatureUtils';
 import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
+import OLFeature from 'ol/Feature';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
+import { ObjectEvent } from 'ol/Object';
 import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+
 /* eslint-enable max-len */
 
 /**
@@ -77,6 +81,13 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * event dispatcher for added features
    */
   private readonly featuresAddedDispatcher = new SimpleEventDispatcher<FeaturesAddedEvent>();
+
+  /**
+   * Handler for feature geometry change
+   * @param e event object
+   */
+  private readonly onChangeGeometryHandler = (e: ObjectEvent) =>
+    this.handleFeatureGeometryChange(e);
 
   /**
    * creates a new instance
@@ -152,7 +163,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
-    this.handleFeatureGeometryChange(feature);
+    feature.olFeature.on('change:geometry', this.onChangeGeometryHandler);
     return true;
   }
 
@@ -203,7 +214,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
     featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
-    features.forEach((feature) => this.handleFeatureGeometryChange(feature));
+    features.forEach((feature) =>
+      feature.olFeature.on('change:geometry', this.onChangeGeometryHandler),
+    );
     return true;
   }
 
@@ -268,26 +281,31 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.featuresAddedDispatcher.unsubscribe(handler);
   }
 
-  private handleFeatureGeometryChange(feature: T) {
-    feature.olFeature.on('change:geometry', (e) => {
-      let shouldClearStyles = false;
-      const geometry = feature.olFeature.getGeometry();
-      if (geometry instanceof OLPolygon) {
-        AlloyPolygonFunctions.removeFromPolygonCache(geometry);
-        shouldClearStyles = true;
-      } else if (geometry instanceof OLMultiPolygon) {
-        AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
-        shouldClearStyles = true;
-      } else if (geometry instanceof OLGeometryCollection) {
-        AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
-        shouldClearStyles = true;
-      }
-      if (shouldClearStyles && this.styleProcessor) {
-        const id = feature.olFeature.getId() ?? feature.id;
-        this.styleProcessor.clearForFeatureId(typeof id === 'string' ? id : id.toString());
-      }
+  private handleFeatureGeometryChange(e: ObjectEvent) {
+    if (!(e.target instanceof OLFeature)) {
+      throw new AlloyMapError(
+        1601995459,
+        'geometry changed for feature but target was not OLFeature',
+      );
+    }
+    const feature = e.target;
+    let shouldClearStyles = false;
+    const geometry = feature.getGeometry();
+    if (geometry instanceof OLPolygon) {
+      AlloyPolygonFunctions.removeFromPolygonCache(geometry);
+      shouldClearStyles = true;
+    } else if (geometry instanceof OLMultiPolygon) {
+      AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
+      shouldClearStyles = true;
+    } else if (geometry instanceof OLGeometryCollection) {
+      AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
+      shouldClearStyles = true;
+    }
+    if (shouldClearStyles && this.styleProcessor) {
+      const id = feature.getId();
+      this.styleProcessor.clearForFeatureId(typeof id === 'string' ? id : id.toString());
+    }
 
-      feature.olFeature.changed();
-    });
+    feature.changed();
   }
 }

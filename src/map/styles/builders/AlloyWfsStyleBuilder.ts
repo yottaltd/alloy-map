@@ -82,7 +82,7 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
       type === OLGeometryType.POLYGON ||
         type === OLGeometryType.MULTI_POLYGON ||
         type === OLGeometryType.GEOMETRY_COLLECTION
-        ? feature.id
+        ? feature.olFeature.getId()
         : undefined,
       // if we have titles and we are in title mode then we need to cache on them
       !!layerStyle.labelTitle &&
