@@ -7,7 +7,7 @@ import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
 import { AlloyBoundedLayer } from '@/map/layers/AlloyBoundedLayer';
 import { AlloyLayerWithFeaturesWithItemId } from '@/map/layers/AlloyLayerWithFeaturesWithItemId';
 import { AlloyStyledLayer } from '@/map/layers/AlloyStyledLayer';
-import { AlloyTileCoordinate } from '@/map/layers/AlloyTileCoordinate';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
 import { AlloyClusterAnimationManager } from '@/map/layers/cluster/AlloyClusterAnimationManager';
 import { AlloyClusterFeatureLoader } from '@/map/layers/cluster/AlloyClusterFeatureLoader';
 import { AlloyClusterLayerOptions } from '@/map/layers/cluster/AlloyClusterLayerOptions';
