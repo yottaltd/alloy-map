@@ -1,5 +1,5 @@
-import { AlloyCoordinate } from './AlloyCoordinate';
-import { AlloyMapScaleOptions } from './AlloyMapScaleOptions';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyMapScaleOptions } from '@/map/core/AlloyMapScaleOptions';
 
 /**
  * options that can be set when initialising an `AlloyMap` instance

@@ -1,10 +1,10 @@
 import { assert } from 'chai';
-import { AlloyBounds } from '../../../src/map/core/AlloyBounds';
-import { AlloyCoordinate } from '../../../src/map/core/AlloyCoordinate';
-import { LayersChangeEvent } from '../../../src/map/events/LayersChangeEvent';
-import { AlloyClusterLayer } from '../../../src/map/layers/cluster/AlloyClusterLayer';
-import { AlloyNetworkLayer } from '../../../src/map/layers/network/AlloyNetworkLayer';
-import { AlloyLayerStyle } from '../../../src/map/styles/AlloyLayerStyle';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { LayersChangeEvent } from '@/map/events/LayersChangeEvent';
+import { AlloyClusterLayer } from '@/map/layers/cluster/AlloyClusterLayer';
+import { AlloyNetworkLayer } from '@/map/layers/network/AlloyNetworkLayer';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
 import MapData from '../MapData';
 
 let mapCentre: AlloyCoordinate;

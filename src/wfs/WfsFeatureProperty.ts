@@ -1,4 +1,4 @@
-import { WfsFeatureDescription } from './WfsFeatureDescription';
+import { WfsFeatureDescription } from '@/wfs/WfsFeatureDescription';
 
 /**
  * the properties of an external WFS feature

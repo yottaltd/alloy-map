@@ -1,5 +1,5 @@
-import { AlloyLayerStyle } from '../styles/AlloyLayerStyle';
-import { AlloyLayer } from './AlloyLayer';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
 
 /**
  * an alloy layer that has layer styles that modify how it is rendered

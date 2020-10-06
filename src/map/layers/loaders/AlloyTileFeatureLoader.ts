@@ -1,14 +1,14 @@
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyTileCache } from '@/map/layers/cache/AlloyTileCache';
+import { AlloyTileRequestCache } from '@/map/layers/cache/AlloyTileRequestCache';
+import { AlloyFeatureLoader } from '@/map/layers/loaders/AlloyFeatureLoader';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
+import { AlloyTileFeatureRequest } from '@/map/layers/loaders/AlloyTileFeatureRequest';
+import { PolyfillExtent } from '@/polyfills/PolyfillExtent';
 import { Debugger } from 'debug';
 import { Extent as OLExtent } from 'ol/extent';
 import OLProjection from 'ol/proj/Projection';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
-import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyTileCache } from '../cache/AlloyTileCache';
-import { AlloyTileRequestCache } from '../cache/AlloyTileRequestCache';
-import { AlloyFeatureLoader } from './AlloyFeatureLoader';
-import { AlloyTileCoordinate } from './AlloyTileCoordinate';
-import { AlloyTileFeatureRequest } from './AlloyTileFeatureRequest';
 
 /**
  * the number of tile requests to cache in memory

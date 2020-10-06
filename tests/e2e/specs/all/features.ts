@@ -1,10 +1,11 @@
 import { assert } from 'chai';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
-import { AlloyCoordinate } from '../../../src/map/core/AlloyCoordinate';
-import { AlloySelectionMode } from '../../../src/map/core/AlloySelectionMode';
-import { AlloyFeature } from '../../../src/map/features/AlloyFeature';
-import { AlloyCustomLayer } from '../../../src/map/layers/custom/AlloyCustomLayer';
-import { AlloyStyleBuilderBuildState } from '../../../src/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloySelectionMode } from '@/map/core/AlloySelectionMode';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyCustomLayer } from '@/map/layers/custom/AlloyCustomLayer';
+// eslint-disable-next-line max-len
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import MapData from '../MapData';
 
 const mapElementId = '#map';

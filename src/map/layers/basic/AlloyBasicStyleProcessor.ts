@@ -1,8 +1,8 @@
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyBasicStyleBuilder } from '../../styles/builders/AlloyBasicStyleBuilder';
-import { AlloyBasicLayer } from './AlloyBasicLayer';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloyBasicLayer } from '@/map/layers/basic/AlloyBasicLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyBasicStyleBuilder } from '@/map/styles/builders/AlloyBasicStyleBuilder';
 
 /**
  * processes the basic styled feature items

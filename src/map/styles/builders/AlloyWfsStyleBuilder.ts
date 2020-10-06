@@ -1,33 +1,33 @@
 /* eslint-disable max-len */
 
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyWfsFeature } from '@/map/features/AlloyWfsFeature';
+import { AlloyLayerStyleLabelMode } from '@/map/styles/AlloyLayerStyleLabelMode';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleBuilderWithLayerStyles } from '@/map/styles/AlloyStyleBuilderWithLayerStyles';
+import { AlloyWfsLayerStyle } from '@/map/styles/AlloyWfsLayerStyle';
+import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
+import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
+import { AlloyLabelUtils } from '@/map/styles/utils/AlloyLabelUtils';
+import { AlloyLineUtils } from '@/map/styles/utils/AlloyLineUtils';
+import { AlloyPolygonUtils } from '@/map/styles/utils/AlloyPolygonUtils';
+import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
+import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { AlloyLineStringFunctions } from '@/map/styles/utils/geometry-functions/AlloyLineStringFunctions';
+import { AlloyMultiLineStringFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiLineStringFunctions';
+import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
+import { ColourUtils } from '@/utils/ColourUtils';
+import { StringUtils } from '@/utils/StringUtils';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPolygon from 'ol/geom/Polygon';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { StringUtils } from '../../../utils/StringUtils';
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyWfsFeature } from '../../features/AlloyWfsFeature';
-import { AlloyLayerStyleLabelMode } from '../AlloyLayerStyleLabelMode';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
-import { AlloyStyleBuilderBuildState } from '../AlloyStyleBuilderBuildState';
-import { AlloyStyleBuilderWithLayerStyles } from '../AlloyStyleBuilderWithLayerStyles';
-import { AlloyWfsLayerStyle } from '../AlloyWfsLayerStyle';
-import { AlloyBallUtils } from '../utils/AlloyBallUtils';
-import { AlloyIconUtils } from '../utils/AlloyIconUtils';
-import { AlloyLabelUtils } from '../utils/AlloyLabelUtils';
-import { AlloyLineUtils } from '../utils/AlloyLineUtils';
-import { AlloyPolygonUtils } from '../utils/AlloyPolygonUtils';
-import { AlloyScaleUtils } from '../utils/AlloyScaleUtils';
-import { AlloyGeometryCollectionFunctions } from '../utils/geometry-functions/AlloyGeometryCollectionFunctions';
-import { AlloyGeometryFunctionUtils } from '../utils/geometry-functions/AlloyGeometryFunctionUtils';
-import { AlloyLineStringFunctions } from '../utils/geometry-functions/AlloyLineStringFunctions';
-import { AlloyMultiLineStringFunctions } from '../utils/geometry-functions/AlloyMultiLineStringFunctions';
-import { AlloyMultiPolygonFunctions } from '../utils/geometry-functions/AlloyMultiPolygonFunctions';
-import { AlloyPolygonFunctions } from '../utils/geometry-functions/AlloyPolygonFunctions';
-import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /* eslint-enable max-len */
 
@@ -1604,11 +1604,16 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     title?: string;
     subtitle?: string;
   } {
+    const titleValue = layerStyle.labelTitle
+      ? feature.olFeature.get(layerStyle.labelTitle)
+      : undefined;
+    const subtitleValue = layerStyle.labelSubtitle
+      ? feature.olFeature.get(layerStyle.labelSubtitle)
+      : undefined;
     return {
-      title: layerStyle.labelTitle ? feature.olFeature.get(layerStyle.labelTitle) : undefined,
-      subtitle: layerStyle.labelSubtitle
-        ? feature.olFeature.get(layerStyle.labelSubtitle)
-        : undefined,
+      title: titleValue !== undefined && titleValue !== null ? String(titleValue) : undefined,
+      subtitle:
+        subtitleValue !== undefined && subtitleValue !== null ? String(subtitleValue) : undefined,
     };
   }
 

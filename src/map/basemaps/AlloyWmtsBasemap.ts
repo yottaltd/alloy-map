@@ -1,11 +1,11 @@
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyWmtsCapabilities } from '@/wmts/AlloyWmtsCapabilities';
+import { AlloyWmtsParameters } from '@/wmts/AlloyWmtsParameters';
+import { WmtsUtils } from '@/wmts/WmtsUtils';
 import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLWMTS from 'ol/source/WMTS';
-import { AlloyWmtsCapabilities } from '../../wmts/AlloyWmtsCapabilities';
-import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
-import { WmtsUtils } from '../../wmts/WmtsUtils';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
-import { AlloyBasemap } from './AlloyBasemap';
 
 /**
  * an alloy tile basemap using an WMTS service

@@ -1,3 +1,9 @@
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+// eslint-disable-next-line max-len
+import { AlloySimplifiedGeometryFeatureProperties } from '@/map/features/AlloySimplifiedGeometryFeatureProperties';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -7,12 +13,6 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyFeature } from './AlloyFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
-// eslint-disable-next-line max-len
-import { AlloySimplifiedGeometryFeatureProperties } from './AlloySimplifiedGeometryFeatureProperties';
 
 /**
  * an alloy simplified geometry feature which represents geometry or geometries that have been

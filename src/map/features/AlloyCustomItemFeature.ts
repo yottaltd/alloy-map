@@ -1,8 +1,8 @@
+import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
+import { AlloyCustomItemFeatureProperties } from '@/map/features/AlloyCustomItemFeatureProperties';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyFeatureWithItemId } from '@/map/features/AlloyFeatureWithItemId';
 import OLFeature from 'ol/Feature';
-import { AlloyCustomFeatureBase } from './AlloyCustomFeatureBase';
-import { AlloyCustomItemFeatureProperties } from './AlloyCustomItemFeatureProperties';
-import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyFeatureWithItemId } from './AlloyFeatureWithItemId';
 
 /**
  * an alloy custom feature with item id which represents something being added to the map by a user

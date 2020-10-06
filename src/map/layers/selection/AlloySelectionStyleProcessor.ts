@@ -1,6 +1,6 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 
 /**
  * processes the selection styled feature items, this reuses the style processors set up for the

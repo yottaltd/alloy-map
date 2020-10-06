@@ -1,3 +1,11 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
+import { AlloyDrawLayerOptions } from '@/map/layers/drawing/AlloyDrawLayerOptions';
+import { AlloyDrawStyleProcessor } from '@/map/layers/drawing/AlloyDrawStyleProcessor';
+import { GeometryUtils } from '@/utils/GeometryUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -9,14 +17,6 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import * as uuid from 'uuid';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { GeometryUtils } from '../../../utils/GeometryUtils';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
-import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
-import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -100,7 +100,42 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
         }
       } else {
         // otherwise wrap all in multi-collection
-        geom = new OLGeometryCollection(geometries);
+        const collection: OLGeometry[] = [];
+
+        // Add Point if only 1 present, otherwise wrap all in MultiPoint
+        const points: OLPoint[] = geometries.filter(
+          (g): g is OLPoint => g.getType() === OLGeometryType.POINT,
+        );
+        if (points.length > 1) {
+          collection.push(new OLMultiPoint(points.map((point) => point.getCoordinates())));
+        } else if (points.length === 1) {
+          collection.push(points[0]);
+        }
+
+        // Add LineString if only 1 present, otherwise wrap all in MultiLineStrings
+        const lineStrings: OLLineString[] = geometries.filter(
+          (g): g is OLLineString => g.getType() === OLGeometryType.LINE_STRING,
+        );
+        if (lineStrings.length > 1) {
+          collection.push(
+            new OLMultiLineString(lineStrings.map((lineString) => lineString.getCoordinates())),
+          );
+        } else if (lineStrings.length === 1) {
+          collection.push(lineStrings[0]);
+        }
+
+        // Add Polygon if only 1 present, otherwise wrap all in MultiPolygon
+        const polygons: OLPolygon[] = geometries.filter(
+          (g): g is OLPolygon => g.getType() === OLGeometryType.POLYGON,
+        );
+        if (polygons.length > 1) {
+          collection.push(new OLMultiPolygon(polygons.map((polygon) => polygon.getCoordinates())));
+        } else if (polygons.length === 1) {
+          collection.push(polygons[0]);
+        }
+
+        // Wrap all geometries in GeometryCollection
+        geom = new OLGeometryCollection(collection);
       }
     }
 

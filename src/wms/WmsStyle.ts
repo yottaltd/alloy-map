@@ -1,4 +1,4 @@
-import { WmsStyleLegend } from './WmsStyleLegend';
+import { WmsStyleLegend } from '@/wms/WmsStyleLegend';
 
 /**
  * wms layer style object describing the layer style from a wms service

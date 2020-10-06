@@ -1,21 +1,21 @@
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { MapChangeCentreEventHandler } from '@/map/events/MapChangeCentreEventHandler';
+import { MapChangeZoomEventHandler } from '@/map/events/MapChangeZoomEventHandler';
+import { AlloyClusterFeature } from '@/map/features/AlloyClusterFeature';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloyBoundedLayer } from '@/map/layers/AlloyBoundedLayer';
+import { AlloyLayerWithFeaturesWithItemId } from '@/map/layers/AlloyLayerWithFeaturesWithItemId';
+import { AlloyStyledLayer } from '@/map/layers/AlloyStyledLayer';
+import { AlloyTileCoordinate } from '@/map/layers/AlloyTileCoordinate';
+import { AlloyClusterAnimationManager } from '@/map/layers/cluster/AlloyClusterAnimationManager';
+import { AlloyClusterFeatureLoader } from '@/map/layers/cluster/AlloyClusterFeatureLoader';
+import { AlloyClusterLayerOptions } from '@/map/layers/cluster/AlloyClusterLayerOptions';
+import { AlloyClusterStyleProcessor } from '@/map/layers/cluster/AlloyClusterStyleProcessor';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
+import { PolyfillExtent } from '@/polyfills/PolyfillExtent';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import OLLineString from 'ol/geom/LineString';
-import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyBounds } from '../../core/AlloyBounds';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { MapChangeCentreEventHandler } from '../../events/MapChangeCentreEventHandler';
-import { MapChangeZoomEventHandler } from '../../events/MapChangeZoomEventHandler';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
-import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
-import { AlloyLayerWithFeaturesWithItemId } from '../AlloyLayerWithFeaturesWithItemId';
-import { AlloyStyledLayer } from '../AlloyStyledLayer';
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
-import { AlloyClusterAnimationManager } from './AlloyClusterAnimationManager';
-import { AlloyClusterFeatureLoader } from './AlloyClusterFeatureLoader';
-import { AlloyClusterLayerOptions } from './AlloyClusterLayerOptions';
-import { AlloyClusterStyleProcessor } from './AlloyClusterStyleProcessor';
 
 /**
  * an alloy cluster layer uses the `/api/layer/{code}/{x}/{y}/{z}/cluster` endpoint to request and

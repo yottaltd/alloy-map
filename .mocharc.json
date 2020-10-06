@@ -1,0 +1,6 @@
+{
+  "ui": "bdd",
+  "reporter": "spec",
+  "extension": ["ts"],
+  "spec": "tests/unit/**/*.spec.ts"
+}

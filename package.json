@@ -1,6 +1,6 @@
 {
   "name": "@yotta/alloy-map",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "repository": {
     "type": "git",
     "url": "https://github.com/yottaltd/alloy-map.git"
@@ -25,6 +25,7 @@
     "test:cypress": "cypress open",
     "test:ci": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress-ci",
     "test": "npm run build & start-server-and-test test:start-server http://localhost:8888 test:cypress",
+    "test:unit": "ts-mocha -r esm -p tests/unit/tsconfig.json --config .mocharc.json --paths",
     "pack": "webpack --config webpack.config.js",
     "build": "npm run eslint & npm run stylelint & npm run pack",
     "docs": "typedoc ./src",
@@ -48,7 +49,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@cypress/webpack-preprocessor": "^4.1.1",
+    "@cypress/webpack-preprocessor": "^5.4.2",
     "@types/chai": "^4.2.7",
     "@types/color": "^3.0.0",
     "@types/debug": "^4.1.5",
@@ -64,16 +65,17 @@
     "@typescript-eslint/parser": "^2.15.0",
     "chai": "^4.2.0",
     "css-loader": "^3.5.2",
-    "cypress": "^4.1.0",
+    "cypress": "^4.12.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-chai-friendly": "^0.5.0",
-    "eslint-plugin-cypress": "^2.8.1",
+    "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "esm": "^3.2.25",
     "http-server": "^0.12.1",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
-    "mocha": "^6.2.2",
+    "mocha": "^6.2.3",
     "npm": "^6.13.4",
     "prettier": "^1.19.1",
     "start-server-and-test": "^1.10.6",
@@ -82,6 +84,7 @@
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
     "ts-loader": "^5.4.5",
+    "ts-mocha": "^7.0.0",
     "typedoc": "^0.17.0",
     "typescript": "^3.7.3",
     "webpack": "^4.41.4",

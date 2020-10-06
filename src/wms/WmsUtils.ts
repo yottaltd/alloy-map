@@ -1,21 +1,21 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { PolyfillTileGrid } from '@/polyfills/PolyfillTileGrid';
+import { PolyfillWms } from '@/polyfills/PolyfillWms';
+import { AlloyWmsCapabilities } from '@/wms/AlloyWmsCapabilities';
+import { AlloyWmsCapabilitiesLayer } from '@/wms/AlloyWmsCapabilitiesLayer';
+import { AlloyWmsCapabilitiesLayerStyle } from '@/wms/AlloyWmsCapabilitiesLayerStyle';
+import { AlloyWmsCapabilitiesLayerStyleLegend } from '@/wms/AlloyWmsCapabilitiesLayerStyleLegend';
+import { AlloyWmsParameters } from '@/wms/AlloyWmsParameters';
+import { WmsLayer } from '@/wms/WmsLayer';
+import { WmsStyle } from '@/wms/WmsStyle';
+import { WmsStyleLegend } from '@/wms/WmsStyleLegend';
 import * as color from 'color';
 import * as DOMPurify from 'dompurify';
 import OLImageWMS from 'ol/source/ImageWMS';
 import OLTileWMS from 'ol/source/TileWMS';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
-import { PolyfillTileGrid } from '../polyfills/PolyfillTileGrid';
-import { PolyfillWms } from '../polyfills/PolyfillWms';
-import { AlloyWmsCapabilities } from './AlloyWmsCapabilities';
-import { AlloyWmsCapabilitiesLayer } from './AlloyWmsCapabilitiesLayer';
-import { AlloyWmsCapabilitiesLayerStyle } from './AlloyWmsCapabilitiesLayerStyle';
-import { AlloyWmsCapabilitiesLayerStyleLegend } from './AlloyWmsCapabilitiesLayerStyleLegend';
-import { AlloyWmsParameters } from './AlloyWmsParameters';
-import { WmsLayer } from './WmsLayer';
-import { WmsStyle } from './WmsStyle';
-import { WmsStyleLegend } from './WmsStyleLegend';
 
 /**
  * Public WMS utils class for getting and processing capabilties

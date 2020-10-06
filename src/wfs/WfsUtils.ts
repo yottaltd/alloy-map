@@ -1,15 +1,18 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyWfsFeature } from '@/map/features/AlloyWfsFeature';
+import { AlloyWfsLayer } from '@/map/layers/wfs/AlloyWfsLayer';
+import { AlloyWfsLayerStyle } from '@/map/styles/AlloyWfsLayerStyle';
+import { OL_FEATURE_TO_FEATURE_ID } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
+import { AlloyWfsCapabilities } from '@/wfs/AlloyWfsCapabilities';
+import { AlloyWfsFeatureType } from '@/wfs/AlloyWfsFeatureType';
+import { AlloyWfsFormat } from '@/wfs/AlloyWfsFormat';
+import { WfsFeatureDescription } from '@/wfs/WfsFeatureDescription';
+import { WfsFeatureProperty } from '@/wfs/WfsFeatureProperty';
+import { WfsVersionParser } from '@/wfs/WfsVersionParser';
 import { debug, Debugger } from 'debug';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyMap } from '../map/core/AlloyMap';
-import { AlloyWfsFeature } from '../map/features/AlloyWfsFeature';
-import { AlloyWfsLayer } from '../map/layers/wfs/AlloyWfsLayer';
-import { AlloyWfsLayerStyle } from '../map/styles/AlloyWfsLayerStyle';
-import { OL_FEATURE_TO_FEATURE_ID } from '../utils/FeatureUtils';
-import { AlloyWfsCapabilities } from './AlloyWfsCapabilities';
-import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
-import { WfsFeatureDescription } from './WfsFeatureDescription';
-import { WfsFeatureProperty } from './WfsFeatureProperty';
-import { WfsVersionParser } from './WfsVersionParser';
+import OLGeoJSON from 'ol/format/GeoJSON';
 
 /**
  * Public WFS utils to get capabilties of WFS service
@@ -56,12 +59,9 @@ export abstract class WfsUtils {
       const domparser = new DOMParser();
       const domdoc = domparser.parseFromString(caps, 'text/xml');
 
-      let rootEl: Element;
-      const rootEls = domdoc.getElementsByTagName('WFS_Capabilities');
-      if (rootEls.length === 1) {
-        rootEl = rootEls[0];
-      } else {
-        rootEl = domdoc.getElementsByTagName('wfs:WFS_Capabilities')[0];
+      const rootEl: Element | null = domdoc.querySelector('WFS_Capabilities');
+      if (!rootEl) {
+        throw new AlloyMapError(1595592193, 'Failed to get WFS capabilities root element');
       }
       WfsUtils.debugger('found capabilities root element');
 
@@ -69,41 +69,24 @@ export abstract class WfsUtils {
       WfsUtils.debugger(`capabilities version = ${attributeVersion}`);
 
       let title = '';
-      const serviceNode = rootEl.querySelector('Service');
-      if (serviceNode) {
-        const titleNode = serviceNode.querySelector('Title');
-        if (titleNode) {
-          title = titleNode.innerHTML;
-        }
+      const titleNode =
+        rootEl.querySelector('Service Title') ||
+        rootEl.querySelector('ServiceIdentification Title');
+      if (titleNode) {
+        title = titleNode.innerHTML;
       }
       WfsUtils.debugger(`capabilties title = ${title}`);
 
       // populate the feature types
       const featureTypes: AlloyWfsFeatureType[] = [];
-      let usePrefix = false;
-      let featureTypeList = rootEl.querySelector('FeatureTypeList');
-      if (!featureTypeList) {
-        featureTypeList = rootEl.getElementsByTagName('wfs:FeatureTypeList')[0];
-        if (featureTypeList) {
-          usePrefix = true;
-        }
-      }
+      const featureTypeList: Element | null = rootEl.querySelector('FeatureTypeList');
       if (featureTypeList) {
-        let featureTypeElements: Element[];
-        if (usePrefix) {
-          featureTypeElements = Array.from(featureTypeList.getElementsByTagName('wfs:FeatureType'));
-        } else {
-          featureTypeElements = Array.from(featureTypeList.querySelectorAll('FeatureType'));
-        }
+        const featureTypeElements: Element[] = Array.from(
+          featureTypeList.querySelectorAll('FeatureType'),
+        );
         featureTypeElements.forEach((ftNode: Element) => {
           try {
-            featureTypes.push(
-              WfsVersionParser.parseFeatureTypeNode(
-                ftNode,
-                attributeVersion,
-                usePrefix || ftNode.tagName.startsWith('wfs:'),
-              ),
-            );
+            featureTypes.push(WfsVersionParser.parseFeatureTypeNode(ftNode, attributeVersion));
           } catch (error) {
             // ignore feature type if something went wrong parsing it
             WfsUtils.debugger('failed to parse feature type node');
@@ -112,10 +95,15 @@ export abstract class WfsUtils {
       } else {
         WfsUtils.debugger('did not find feature type list in capabilities');
       }
+
+      // Get supported output formats
+      const outputFormats = WfsUtils.getOutputFormats(rootEl, attributeVersion);
+
       return {
         title,
         url,
         version: attributeVersion,
+        outputFormats,
         featureTypes,
       };
     } catch (e) {
@@ -143,17 +131,25 @@ export abstract class WfsUtils {
       throw new AlloyMapError(1571669799, 'wfs feature is not assigned to a wfs layer');
     }
 
-    const descriptions = layer.getWfsDescriptionForFeature(feature);
+    const descriptions = layer.getWfsDescriptionForStyleId(feature.styleId);
     const olFeatureProperties = feature.olFeature.getProperties();
     const olFeaturePropertiesKeys = Object.keys(olFeatureProperties);
     for (const key of olFeaturePropertiesKeys) {
-      if (key === OL_FEATURE_TO_FEATURE_ID || key === 'geometry') {
+      if (key === OL_FEATURE_TO_FEATURE_ID) {
         continue;
       }
       if (descriptions === null || descriptions.size === 0 || descriptions.has(key)) {
+        let value = olFeatureProperties[key];
+        if (key === feature.olFeature.getGeometryName()) {
+          value = new OLGeoJSON().writeGeometryObject(value, {
+            dataProjection: ProjectionUtils.API_PROJECTION,
+            featureProjection: ProjectionUtils.MAP_PROJECTION,
+            decimals: 6,
+          });
+        }
         wfsProperties.push({
           name: key,
-          value: olFeatureProperties[key],
+          value,
           description: descriptions ? descriptions.get(key) : undefined,
         });
       }
@@ -172,6 +168,26 @@ export abstract class WfsUtils {
       }
     }
     return wfsProperties;
+  }
+
+  /**
+   * Checks whether output format value is supported
+   * @param value output format value to check whether it's supported
+   * @returns AlloyWfsFormat enum value if provided value is supported
+   */
+  public static getAlloyWfsFormatForValue(value: string): AlloyWfsFormat | undefined {
+    const lowerCaseValue = value.toLowerCase();
+    if (lowerCaseValue === 'json' || lowerCaseValue === 'geojson') {
+      return AlloyWfsFormat.JSON;
+    } else if (lowerCaseValue === 'kml') {
+      return AlloyWfsFormat.KML;
+    } else if (lowerCaseValue === 'esrijson' || lowerCaseValue === 'esrigeojson') {
+      return AlloyWfsFormat.ESRIJSON;
+    } else if (lowerCaseValue === 'gml2') {
+      return AlloyWfsFormat.GML2;
+    } else if (lowerCaseValue === 'gml3') {
+      return AlloyWfsFormat.GML3;
+    }
   }
 
   /**
@@ -213,6 +229,49 @@ export abstract class WfsUtils {
   private static readonly debugger: Debugger = debug('alloymaps').extend(WfsUtils.name);
 
   /**
+   * Parses GetCapabilities response and gets all supported output formats for GetFeature request.
+   * @param root GetCapabilities response root element
+   * @param version WFS service version
+   * @ignore
+   * @internal
+   */
+  private static getOutputFormats(root: Element, version: string): string[] {
+    if (version === '1.0.0') {
+      const resultFormat = root.querySelector('Capability Request GetFeature ResultFormat');
+      if (resultFormat) {
+        const formats = resultFormat.children;
+        const values: string[] = [];
+        for (let i = 0; i < formats.length; i++) {
+          const formatElement = formats.item(i);
+          if (formatElement) {
+            const value = formatElement.tagName;
+            if (WfsUtils.getAlloyWfsFormatForValue(value) !== undefined) {
+              values.push(value);
+            }
+          }
+        }
+        return values;
+      }
+    } else {
+      const allowedValues = root.querySelector(
+        'OperationsMetadata Operation[name=GetFeature] Parameter[name=outputFormat] AllowedValues',
+      );
+      if (allowedValues) {
+        const valueNodes = allowedValues.querySelectorAll('Value');
+        const values: string[] = [];
+        for (let k = 0; k < valueNodes.length; k++) {
+          const value = valueNodes.item(k).innerHTML;
+          if (WfsUtils.getAlloyWfsFormatForValue(value) !== undefined) {
+            values.push(value);
+          }
+        }
+        return values;
+      }
+    }
+    return ['json'];
+  }
+
+  /**
    * parses features type descriptions into a map
    * @param featureTypeDescription xml response of DescribeFeatureType request
    * @param descriptions map to where store descriptions
@@ -230,26 +289,14 @@ export abstract class WfsUtils {
       return;
     }
 
-    const complexTypes = schemaRoot.getElementsByTagName('xsd:complexType');
-    for (let i = 0; i < complexTypes.length; i++) {
-      const complexType = complexTypes.item(i);
-      if (!complexType) {
+    const sequences = schemaRoot.querySelectorAll('complexType complexContent extension sequence');
+    for (let i = 0; i < sequences.length; i++) {
+      const sequence = sequences.item(i);
+      if (!sequence) {
         continue;
       }
-      const complexContent = complexType.getElementsByTagName('xsd:complexContent').item(0);
-      if (!complexContent) {
-        throw new AlloyMapError(1562248352, 'Failed to find complex content node in schema');
-      }
-      const extension = complexContent.getElementsByTagName('xsd:extension').item(0);
-      if (!extension) {
-        throw new AlloyMapError(1562248368, 'Failed to find extension node in schema');
-      }
-      const sequence = extension.getElementsByTagName('xsd:sequence').item(0);
-      if (!sequence) {
-        throw new AlloyMapError(1562248383, 'Failed to find sequence node in schema');
-      }
 
-      const featureTypeElements = sequence.getElementsByTagName('xsd:element');
+      const featureTypeElements = sequence.querySelectorAll('element');
       if (featureTypeElements.length > 0) {
         for (let i = 0; i < featureTypeElements.length; i++) {
           const element = featureTypeElements.item(i);

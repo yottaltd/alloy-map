@@ -1,14 +1,14 @@
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyCustomFeature } from '@/map/features/AlloyCustomFeature';
+import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
+import { AlloyCustomFeatureFactory } from '@/map/features/AlloyCustomFeatureFactory';
+import { AlloyCustomFeatureProperties } from '@/map/features/AlloyCustomFeatureProperties';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
+import { AlloyCustomLayerOptions } from '@/map/layers/custom/AlloyCustomLayerOptions';
+import { AlloyCustomStyleProcessor } from '@/map/layers/custom/AlloyCustomStyleProcessor';
 import * as uuid from 'uuid';
-import { AlloyCoordinate } from '../../core/AlloyCoordinate';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyCustomFeature } from '../../features/AlloyCustomFeature';
-import { AlloyCustomFeatureBase } from '../../features/AlloyCustomFeatureBase';
-import { AlloyCustomFeatureFactory } from '../../features/AlloyCustomFeatureFactory';
-import { AlloyCustomFeatureProperties } from '../../features/AlloyCustomFeatureProperties';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
-import { AlloyCustomLayerOptions } from './AlloyCustomLayerOptions';
-import { AlloyCustomStyleProcessor } from './AlloyCustomStyleProcessor';
 
 /**
  * an alloy custom layer for rendering custom features provided externally on the map, use this to

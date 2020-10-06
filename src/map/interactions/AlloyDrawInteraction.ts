@@ -1,10 +1,29 @@
+import { GeoJSONObjectType } from '@/api/GeoJSONObjectType';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyDrawEvent } from '@/map/events/AlloyDrawEvent';
+import { AlloyDrawEventHandler } from '@/map/events/AlloyDrawEventHandler';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyDrawFeatureProperties } from '@/map/features/AlloyDrawFeatureProperties';
+// eslint-disable-next-line max-len
+import { AlloyDrawInteractionGeometryType } from '@/map/interactions/AlloyDrawInteractionGeometryType';
+import { AlloyDrawLayer } from '@/map/layers/drawing/AlloyDrawLayer';
+// eslint-disable-next-line max-len
+import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { EnumUtils } from '@/utils/EnumUtils';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { GeometryUtils } from '@/utils/GeometryUtils';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
+import OLMultiLineString from 'ol/geom/MultiLineString';
+import OLMultiPoint from 'ol/geom/MultiPoint';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
@@ -17,20 +36,6 @@ import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
-import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { EnumUtils } from '../../utils/EnumUtils';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { GeometryUtils } from '../../utils/GeometryUtils';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
-import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
-import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
-import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
-import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
-// eslint-disable-next-line max-len
-import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
-import { AlloyDrawInteractionGeometryType } from './AlloyDrawInteractionGeometryType';
 
 /**
  * default colour for draw and modify interactions
@@ -367,11 +372,27 @@ export class AlloyDrawInteraction {
           default:
             break;
         }
-        // remove whole point or single feature
+        // if not removing simple feature then remove coordinate and see if whole feature needs to
+        // be removed
+        if (!featureRemove) {
+          GeometryUtils.removeCoordinate(sourceGeometry, coord);
+          if (
+            (sourceGeometry instanceof OLMultiPoint ||
+              sourceGeometry instanceof OLMultiLineString ||
+              sourceGeometry instanceof OLMultiPolygon) &&
+            sourceGeometry.getCoordinates().length === 0
+          ) {
+            featureRemove = true;
+          } else if (
+            sourceGeometry instanceof OLGeometryCollection &&
+            sourceGeometry.getGeometries().length === 0
+          ) {
+            featureRemove = true;
+          }
+        }
+        // remove whole feature
         if (featureRemove) {
           this.drawLayer.removeFeature(sourceFeature);
-        } else {
-          GeometryUtils.removeCoordinate(sourceGeometry, coord);
         }
 
         // fire change event

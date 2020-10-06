@@ -1,4 +1,4 @@
-import { FeatureSelectionChangeEvent } from './FeatureSelectionChangeEvent';
+import { FeatureSelectionChangeEvent } from '@/map/events/FeatureSelectionChangeEvent';
 
 /**
  * handler for the feature selection change event

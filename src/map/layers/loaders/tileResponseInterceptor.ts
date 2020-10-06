@@ -1,4 +1,4 @@
-import { AlloyMapError } from '../../../error/AlloyMapError';
+import { AlloyMapError } from '@/error/AlloyMapError';
 
 /**
  * function for intercepting tile responses and casting to the correct model

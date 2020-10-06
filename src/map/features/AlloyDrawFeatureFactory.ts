@@ -1,8 +1,8 @@
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyDrawFeatureProperties } from '@/map/features/AlloyDrawFeatureProperties';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import OLFeature from 'ol/Feature';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyDrawFeature } from './AlloyDrawFeature';
-import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
-import { AlloyFeature } from './AlloyFeature';
 
 /**
  * factory for creating draw features

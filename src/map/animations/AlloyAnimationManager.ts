@@ -1,3 +1,9 @@
+import { AlloyAnimationListener } from '@/map/animations/AlloyAnimationListener';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { PolyfillExtent } from '@/polyfills/PolyfillExtent';
+import { PolyfillObservable } from '@/polyfills/PolyfillObservable';
+import { PolyfillVectorContext } from '@/polyfills/PolyfillVectorContext';
 import { EventsKey as OLEventsKey } from 'ol/events';
 import OLFeature from 'ol/Feature';
 import OLGeometryType from 'ol/geom/GeometryType';
@@ -6,12 +12,6 @@ import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLRenderEvent from 'ol/render/Event';
-import { PolyfillExtent } from '../../polyfills/PolyfillExtent';
-import { PolyfillObservable } from '../../polyfills/PolyfillObservable';
-import { PolyfillVectorContext } from '../../polyfills/PolyfillVectorContext';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyAnimationListener } from './AlloyAnimationListener';
 
 /**
  * animation manager handles common animation utilities

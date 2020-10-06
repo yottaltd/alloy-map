@@ -1,4 +1,4 @@
-import { AlloyPathNodeFeatureProperties } from './AlloyPathNodeFeatureProperties';
+import { AlloyPathNodeFeatureProperties } from '@/map/features/AlloyPathNodeFeatureProperties';
 
 /**
  * the properties for an alloy cable unit feature

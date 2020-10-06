@@ -1,4 +1,4 @@
-import { AlloyMap } from '../../core/AlloyMap';
+import { AlloyMap } from '@/map/core/AlloyMap';
 
 /**
  * options for the alloy hover layer

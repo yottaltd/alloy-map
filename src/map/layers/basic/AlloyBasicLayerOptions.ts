@@ -1,6 +1,6 @@
-import { AlloyBounds } from '../../core/AlloyBounds';
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
 
 /**
  * options for the alloy basic layer

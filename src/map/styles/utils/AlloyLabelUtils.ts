@@ -1,3 +1,6 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
+import { ColourUtils } from '@/utils/ColourUtils';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
@@ -5,15 +8,18 @@ import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { AlloyLayerStyleScale } from '../AlloyLayerStyleScale';
 
 /**
  * The size in pixels of the rendered label canvas
  * @ignore
  */
 const LABEL_CANVAS_HEIGHT = 30;
+
+/**
+ * Minimum size in pixels of the text part of canvas
+ * @ignore
+ */
+const LABEL_CANVAS_TEXT_MIN_WIDTH = 30;
 
 /**
  * The size in pixels of the rendered arrow width
@@ -48,11 +54,18 @@ const LABEL_TITLE_ONLY_FONT = '700 12px/30px Open Sans, Arial, sans-serif';
 const LABEL_TITLE_LINE_HEIGHT = 11;
 
 /**
+ * The size in pixels of title font (when in title and subtitle mode)
+ * @ignore
+ */
+const LABEL_TITLE_FONT_SIZE = 10;
+
+/**
  * the font and size to use when rendering a title combined with a subtitle, we use a fixed size
  * because using floating point font sizes results in very bad scaling
  * @ignore
  */
-const LABEL_TITLE_FONT = `700 10px/${LABEL_TITLE_LINE_HEIGHT}px Open Sans, Arial, sans-serif`;
+// eslint-disable-next-line max-len
+const LABEL_TITLE_FONT = `700 ${LABEL_TITLE_FONT_SIZE}px/${LABEL_TITLE_LINE_HEIGHT}px Open Sans, Arial, sans-serif`;
 
 /**
  * the line height of the subtitle
@@ -200,7 +213,7 @@ export abstract class AlloyLabelUtils {
     }
 
     // calculate the width of the label based on text
-    if (hasTitle && hasSubtitle) {
+    if (hasSubtitle) {
       // if we have a title and subtitle we need to find the biggest out of title/subtitle
       canvas.width = AlloyLabelUtils.getCanvasWidthWithTitleAndSubtitle(
         context,
@@ -210,6 +223,8 @@ export abstract class AlloyLabelUtils {
     } else if (hasTitle) {
       // otherwise only display title
       canvas.width = AlloyLabelUtils.getCanvasWidthWithTitle(context, title || '');
+    } else {
+      return canvas;
     }
 
     // draw the label background shape
@@ -229,9 +244,9 @@ export abstract class AlloyLabelUtils {
     context.stroke();
 
     // clear the style and render the text
-    if (hasTitle && hasSubtitle) {
+    if (hasSubtitle) {
       // if we have a title and subtitle we need to position differently
-      AlloyLabelUtils.drawTitleAndSubtitle(context, title || '', subtitle || '');
+      AlloyLabelUtils.drawTitleAndSubtitle(context, title || '', subtitle || '', canvas.width);
     } else if (hasTitle) {
       // otherwise only display title
       AlloyLabelUtils.drawTitle(context, title || '');
@@ -270,23 +285,38 @@ export abstract class AlloyLabelUtils {
     context: CanvasRenderingContext2D,
     title: string,
     subtitle: string,
+    canvasWidth: number,
   ) {
-    // draw the title
-    context.beginPath();
-    context.textAlign = 'left';
-    context.textBaseline = 'middle';
-    context.font = LABEL_TITLE_FONT;
-    context.fillStyle = '#ffffff';
-    context.fillText(
-      title,
-      // offset x by width of arrow and leading padding
-      LABEL_ARROW_WIDTH + LABEL_TEXT_PADDING_LEADING,
-      // position the text centrally then subtract half the line height so it appears above the
-      // centreline, baseline is middle so we want half the line height
-      LABEL_CANVAS_HEIGHT / 2 -
-        LABEL_TITLE_LINE_HEIGHT / 2 +
-        Math.floor(LABEL_CANVAS_HEIGHT * 0.05) /* 5% of the overall height to nudge it down */,
-    );
+    if (title) {
+      // draw the title
+      context.beginPath();
+      context.textAlign = 'left';
+      context.textBaseline = 'middle';
+      context.font = LABEL_TITLE_FONT;
+      context.fillStyle = '#ffffff';
+      context.fillText(
+        title,
+        // offset x by width of arrow and leading padding
+        LABEL_ARROW_WIDTH + LABEL_TEXT_PADDING_LEADING,
+        // position the text centrally then subtract half the line height so it appears above the
+        // centreline, baseline is middle so we want half the line height
+        LABEL_CANVAS_HEIGHT / 2 -
+          LABEL_TITLE_LINE_HEIGHT / 2 +
+          Math.floor(LABEL_CANVAS_HEIGHT * 0.05) /* 5% of the overall height to nudge it down */,
+      );
+    } else {
+      context.beginPath();
+      context.fillStyle = 'rgba(146, 146, 146, 0.3)';
+      context.fillRect(
+        LABEL_ARROW_WIDTH + LABEL_TEXT_PADDING_LEADING,
+        LABEL_CANVAS_HEIGHT / 2 - LABEL_TITLE_LINE_HEIGHT + Math.floor(LABEL_CANVAS_HEIGHT * 0.05),
+        canvasWidth -
+          LABEL_TEXT_PADDING_LEADING -
+          LABEL_ARROW_WIDTH -
+          LABEL_TEXT_PADDING_TRAILING / 2,
+        LABEL_TITLE_FONT_SIZE - 2,
+      );
+    }
 
     // draw the subtitle
     context.beginPath();
@@ -355,7 +385,7 @@ export abstract class AlloyLabelUtils {
 
     return (
       // get the larger width from subtitle or title
-      Math.max(titleMetrics.width, subtitleMetrics.width) +
+      Math.max(LABEL_CANVAS_TEXT_MIN_WIDTH, Math.max(titleMetrics.width, subtitleMetrics.width)) +
       // the the leading padding
       LABEL_TEXT_PADDING_LEADING +
       // add the arrow width

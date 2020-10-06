@@ -1,6 +1,6 @@
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyDrawLayer } from '@/map/layers/drawing/AlloyDrawLayer';
 import { Geometry } from 'geojson';
-import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
-import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
 
 /**
  * event fired when a draw feature has been created/modified/deleted
