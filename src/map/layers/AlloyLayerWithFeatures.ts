@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
 import { AlloyMap } from '@/map/core/AlloyMap';
@@ -20,7 +22,6 @@ import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-
 /* eslint-enable max-len */
 
 /**
