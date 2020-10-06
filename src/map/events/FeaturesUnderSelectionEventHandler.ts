@@ -1,4 +1,4 @@
-import { FeaturesUnderSelectionEvent } from './FeaturesUnderSelectionEvent';
+import { FeaturesUnderSelectionEvent } from '@/map/events/FeaturesUnderSelectionEvent';
 
 /**
  * handler for the features under selection event

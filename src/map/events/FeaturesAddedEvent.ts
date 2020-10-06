@@ -1,5 +1,5 @@
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyLayer } from '../layers/AlloyLayer';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
 
 /**
  * Event for the layer features added

@@ -1,6 +1,7 @@
-import { AlloyPathNodeFeature } from './AlloyPathNodeFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyRouteWaypointFeatureProperties } from './AlloyRouteWaypointFeatureProperties';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyPathNodeFeature } from '@/map/features/AlloyPathNodeFeature';
+// eslint-disable-next-line max-len
+import { AlloyRouteWaypointFeatureProperties } from '@/map/features/AlloyRouteWaypointFeatureProperties';
 
 /**
  * an alloy Route waypoint feature which represents a Route waypoint with point geometry

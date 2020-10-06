@@ -1,23 +1,23 @@
 /* eslint-disable max-len */
 
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { GeometryGuards } from '@/map/guards/GeometryGuards';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
+import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { PolyfillExtent } from '@/polyfills/PolyfillExtent';
+import { GeometryUtils } from '@/utils/GeometryUtils';
+import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import flatten from 'lodash.flatten';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import { Extent as OLExtent } from 'ol/extent';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
-import { AlloyFeature } from '../map/features/AlloyFeature';
-import { GeometryGuards } from '../map/guards/GeometryGuards';
-import { AlloyLayer } from '../map/layers/AlloyLayer';
-import { AlloyLayerWithFeatures } from '../map/layers/AlloyLayerWithFeatures';
-import { AlloyGeometryFunctionUtils } from '../map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
-import { PolyfillExtent } from '../polyfills/PolyfillExtent';
-import { GeometryUtils } from './GeometryUtils';
-import { FindFeaturesWithinResult } from './models/FindFeaturesWithinResult';
-import { ProjectionUtils } from './ProjectionUtils';
 
 /* eslint-enable max-len */
 

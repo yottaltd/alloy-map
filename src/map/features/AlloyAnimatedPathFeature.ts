@@ -1,12 +1,13 @@
+import { AlloyAnimationManager } from '@/map/animations/AlloyAnimationManager';
+// eslint-disable-next-line max-len
+import { AlloyAnimatedPathFeatureProperties } from '@/map/features/AlloyAnimatedPathFeatureProperties';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { LineString } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyAnimationManager } from '../animations/AlloyAnimationManager';
-import { AlloyAnimatedPathFeatureProperties } from './AlloyAnimatedPathFeatureProperties';
-import { AlloyFeature } from './AlloyFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy animated path feature which represents an animated path with single line string geometry

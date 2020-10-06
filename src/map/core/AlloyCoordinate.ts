@@ -1,6 +1,6 @@
+import { PolyfillProj } from '@/polyfills/PolyfillProj';
+import { MathUtils } from '@/utils/MathUtils';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
-import { PolyfillProj } from '../../polyfills/PolyfillProj';
-import { MathUtils } from '../../utils/MathUtils';
 
 /**
  * the difference between two lat/lon values allowed to be considered as the same value

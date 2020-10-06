@@ -1,5 +1,5 @@
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { Extent as OLExtent } from 'ol/extent';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
 
 /**
  * event fired when the map centre is changed

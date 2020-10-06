@@ -1,5 +1,5 @@
+import { WmsCapabilities } from '@/wms/WmsCapabilities';
 import OLWmsCapabilities from 'ol/format/WMSCapabilities';
-import { WmsCapabilities } from '../wms/WmsCapabilities';
 
 /**
  * reader for wms capabilties

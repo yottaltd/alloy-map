@@ -68,7 +68,12 @@ export abstract class ColourUtils {
     const rgb = color(colour)
       .lighten(LIGHTEN_AMOUNT)
       .fade(0.5);
-    return [rgb.red(), rgb.green(), rgb.blue(), rgb.alpha()];
+    return [
+      Math.round(rgb.red()),
+      Math.round(rgb.green()),
+      Math.round(rgb.blue()),
+      parseFloat(rgb.alpha().toFixed(2)),
+    ];
   }
 
   /**
@@ -78,7 +83,12 @@ export abstract class ColourUtils {
    */
   public static opacity(colour: Colour, opacity: number): [number, number, number, number] {
     const rgb = color(colour).fade(1 - opacity);
-    return [rgb.red(), rgb.green(), rgb.blue(), rgb.alpha()];
+    return [
+      Math.round(rgb.red()),
+      Math.round(rgb.green()),
+      Math.round(rgb.blue()),
+      parseFloat(rgb.alpha().toFixed(2)),
+    ];
   }
 
   public static toString(colour: Colour): string {

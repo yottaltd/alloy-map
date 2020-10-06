@@ -1,7 +1,7 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import OLLayer from 'ol/layer/Layer';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
 
 /**
  * an alloy layer can be drawn on top of the map to render features or other visualisations

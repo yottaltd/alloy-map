@@ -1,5 +1,5 @@
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyWmsParameters } from '../../../wms/AlloyWmsParameters';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyWmsParameters } from '@/wms/AlloyWmsParameters';
 
 /**
  * options for the alloy WMS layer

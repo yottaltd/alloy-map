@@ -1,6 +1,6 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyTileRequestCacheItem } from './AlloyTileRequestCacheItem';
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyTileRequestCacheItem } from '@/map/layers/cache/AlloyTileRequestCacheItem';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
 
 /**
  * an in memory cache of tile requests that supports cancellation for offscreen tiles

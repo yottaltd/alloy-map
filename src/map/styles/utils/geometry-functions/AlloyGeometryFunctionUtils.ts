@@ -1,3 +1,4 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
 import flatten from 'lodash.flatten';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLFeature from 'ol/Feature';
@@ -11,7 +12,6 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import OLRenderFeature from 'ol/render/Feature';
-import { AlloyMapError } from '../../../../error/AlloyMapError';
 
 /**
  * utility for geometry functions

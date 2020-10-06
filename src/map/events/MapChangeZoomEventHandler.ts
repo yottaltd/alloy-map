@@ -1,4 +1,4 @@
-import { MapChangeZoomEvent } from './MapChangeZoomEvent';
+import { MapChangeZoomEvent } from '@/map/events/MapChangeZoomEvent';
 
 /**
  * handler for the map change zoom event

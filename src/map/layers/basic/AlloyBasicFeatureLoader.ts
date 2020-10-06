@@ -1,17 +1,17 @@
 /* eslint-disable max-len */
 
+import { LayerApiFetchParamCreator } from '@/api/LayerApiFetchParamCreator';
+import { LayerGetBasicTileWebResponseModel } from '@/api/LayerGetBasicTileWebResponseModel';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloyBasicLayer } from '@/map/layers/basic/AlloyBasicLayer';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
+import { AlloyTileFeatureLoader } from '@/map/layers/loaders/AlloyTileFeatureLoader';
+import { AlloyTileFeatureRequest } from '@/map/layers/loaders/AlloyTileFeatureRequest';
+import { tileResponseInterceptor } from '@/map/layers/loaders/tileResponseInterceptor';
+import { PolyfillTileGrid } from '@/polyfills/PolyfillTileGrid';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import OLGeoJSON from 'ol/format/GeoJSON';
-import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
-import { LayerGetBasicTileWebResponseModel } from '../../../api/LayerGetBasicTileWebResponseModel';
-import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
-import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
-import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
-import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
-import { AlloyBasicLayer } from './AlloyBasicLayer';
 
 /* eslint-enable max-len */
 

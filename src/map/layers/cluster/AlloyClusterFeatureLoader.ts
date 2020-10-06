@@ -1,20 +1,20 @@
 /* eslint-disable max-len */
 
+import { LayerApiFetchParamCreator } from '@/api/LayerApiFetchParamCreator';
+import { LayerGetClusterTileWebResponseModel } from '@/api/LayerGetClusterTileWebResponseModel';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyClusterFeature } from '@/map/features/AlloyClusterFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloyClusterLayer } from '@/map/layers/cluster/AlloyClusterLayer';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
+import { AlloyTileFeatureLoader } from '@/map/layers/loaders/AlloyTileFeatureLoader';
+import { AlloyTileFeatureRequest } from '@/map/layers/loaders/AlloyTileFeatureRequest';
+import { tileResponseInterceptor } from '@/map/layers/loaders/tileResponseInterceptor';
+import { PolyfillTileGrid } from '@/polyfills/PolyfillTileGrid';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import OLGeoJSON from 'ol/format/GeoJSON';
-import { LayerApiFetchParamCreator } from '../../../api/LayerApiFetchParamCreator';
-import { LayerGetClusterTileWebResponseModel } from '../../../api/LayerGetClusterTileWebResponseModel';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { PolyfillTileGrid } from '../../../polyfills/PolyfillTileGrid';
-import { FeatureUtils } from '../../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
-import { AlloyFeatureType } from '../../features/AlloyFeatureType';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
-import { AlloyTileFeatureLoader } from '../loaders/AlloyTileFeatureLoader';
-import { AlloyTileFeatureRequest } from '../loaders/AlloyTileFeatureRequest';
-import { tileResponseInterceptor } from '../loaders/tileResponseInterceptor';
-import { AlloyClusterLayer } from './AlloyClusterLayer';
 
 /* eslint-enable max-len */
 

@@ -1,4 +1,4 @@
-import { AlloyLayer } from './AlloyLayer';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
 
 /**
  * an alloy layer that can be enabled/disabled

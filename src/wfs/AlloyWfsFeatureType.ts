@@ -1,4 +1,4 @@
-import { AlloyBounds } from '../map/core/AlloyBounds';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
 
 /**
  * an alloy wfs feature type parameters

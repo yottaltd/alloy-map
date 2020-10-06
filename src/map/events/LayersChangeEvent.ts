@@ -1,4 +1,4 @@
-import { AlloyLayer } from '../layers/AlloyLayer';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
 
 /**
  * event fired when the map layers are changed

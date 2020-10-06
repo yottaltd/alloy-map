@@ -1,18 +1,18 @@
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { FeaturesAddedEvent } from '@/map/events/FeaturesAddedEvent';
+import { FeaturesAddedEventHandler } from '@/map/events/FeaturesAddedEventHandler';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { Geometry } from 'geojson';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
-import { AlloyMap } from '../core/AlloyMap';
-import { FeaturesAddedEvent } from '../events/FeaturesAddedEvent';
-import { FeaturesAddedEventHandler } from '../events/FeaturesAddedEventHandler';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
-import { AlloyLayer } from './AlloyLayer';
 
 /**
  * base implementation for alloy layers with features

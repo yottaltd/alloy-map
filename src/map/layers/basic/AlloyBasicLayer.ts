@@ -1,16 +1,16 @@
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyBounds } from '../../core/AlloyBounds';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { MapChangeCentreEventHandler } from '../../events/MapChangeCentreEventHandler';
-import { MapChangeZoomEventHandler } from '../../events/MapChangeZoomEventHandler';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyLayerStyle } from '../../styles/AlloyLayerStyle';
-import { AlloyBoundedLayer } from '../AlloyBoundedLayer';
-import { AlloyLayerWithFeaturesWithItemId } from '../AlloyLayerWithFeaturesWithItemId';
-import { AlloyStyledLayer } from '../AlloyStyledLayer';
-import { AlloyBasicFeatureLoader } from './AlloyBasicFeatureLoader';
-import { AlloyBasicLayerOptions } from './AlloyBasicLayerOptions';
-import { AlloyBasicStyleProcessor } from './AlloyBasicStyleProcessor';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { MapChangeCentreEventHandler } from '@/map/events/MapChangeCentreEventHandler';
+import { MapChangeZoomEventHandler } from '@/map/events/MapChangeZoomEventHandler';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloyBoundedLayer } from '@/map/layers/AlloyBoundedLayer';
+import { AlloyLayerWithFeaturesWithItemId } from '@/map/layers/AlloyLayerWithFeaturesWithItemId';
+import { AlloyStyledLayer } from '@/map/layers/AlloyStyledLayer';
+import { AlloyBasicFeatureLoader } from '@/map/layers/basic/AlloyBasicFeatureLoader';
+import { AlloyBasicLayerOptions } from '@/map/layers/basic/AlloyBasicLayerOptions';
+import { AlloyBasicStyleProcessor } from '@/map/layers/basic/AlloyBasicStyleProcessor';
+import { AlloyLayerStyle } from '@/map/styles/AlloyLayerStyle';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 
 /**
  * an alloy basic layer uses the `/api/layer/{code}/{x}/{y}/{z}/basic` endpoint to request and

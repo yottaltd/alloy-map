@@ -1,5 +1,5 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyTileCoordinate } from '../loaders/AlloyTileCoordinate';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
 
 /**
  * a cacheable request item that allows cancellation

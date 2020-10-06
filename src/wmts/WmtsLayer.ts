@@ -1,4 +1,4 @@
-import { WmtsStyle } from './WmtsStyle';
+import { WmtsStyle } from '@/wmts/WmtsStyle';
 
 /**
  * wmts layer object describing the layer from a wmts service

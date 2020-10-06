@@ -1,5 +1,5 @@
-import { AlloyCoordinate } from '../../core/AlloyCoordinate';
-import { AlloyOverlayPositioning } from '../AlloyOverlayPositioning';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyOverlayPositioning } from '@/map/overlays/AlloyOverlayPositioning';
 
 /**
  * the options for an alloy custom overlay

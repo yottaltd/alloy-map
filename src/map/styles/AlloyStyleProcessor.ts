@@ -1,10 +1,10 @@
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { FeatureUtils } from '@/utils/FeatureUtils';
 import OLFeature from 'ol/Feature';
 import OLRenderFeature from 'ol/render/Feature';
 import OLStyle from 'ol/style/Style';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyLayer } from '../layers/AlloyLayer';
-import { AlloyStyleBuilderBuildState } from './AlloyStyleBuilderBuildState';
 
 /**
  * base class for processing a layers styles

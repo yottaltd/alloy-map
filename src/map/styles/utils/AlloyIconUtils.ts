@@ -1,14 +1,14 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
+import { AlloyTextUtils } from '@/map/styles/utils/AlloyTextUtils';
+import { Colour, ColourUtils } from '@/utils/ColourUtils';
+import { FontUtils } from '@/utils/FontUtils';
 import memoize from 'lodash.memoize';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { Colour, ColourUtils } from '../../../utils/ColourUtils';
-import { FontUtils } from '../../../utils/FontUtils';
-import { AlloyLayerStyleOpacity } from '../AlloyLayerStyleOpacity';
-import { AlloyTextUtils } from './AlloyTextUtils';
 
 /**
  * the size in pixels of the canvas to render icons on

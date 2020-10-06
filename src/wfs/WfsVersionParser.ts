@@ -1,7 +1,7 @@
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
-import { AlloyCoordinate } from '../map/core/AlloyCoordinate';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyWfsFeatureType } from '@/wfs/AlloyWfsFeatureType';
 
 /**
  * tag names used in WFS GetCapabilties response FeatureType that are used to get info

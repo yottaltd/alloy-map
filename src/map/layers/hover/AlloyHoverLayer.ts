@@ -1,12 +1,12 @@
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyHoverLayerOptions } from '@/map/layers/hover/AlloyHoverLayerOptions';
+import { AlloyHoverStyleProcessor } from '@/map/layers/hover/AlloyHoverStyleProcessor';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyMap } from '../../core/AlloyMap';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyLayer } from '../AlloyLayer';
-import { AlloyHoverLayerOptions } from './AlloyHoverLayerOptions';
-import { AlloyHoverStyleProcessor } from './AlloyHoverStyleProcessor';
 
 /**
  * a special interaction layer for hovering features

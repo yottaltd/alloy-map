@@ -1,3 +1,8 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { MathUtils } from '@/utils/MathUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import {
   Geometry,
   GeometryCollection,
@@ -19,11 +24,6 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import { AlloyMapError } from '../error/AlloyMapError';
-import { AlloyBounds } from '../map/core/AlloyBounds';
-import { AlloyFeature } from '../map/features/AlloyFeature';
-import { MathUtils } from './MathUtils';
-import { ProjectionUtils } from './ProjectionUtils';
 
 /**
  * utils for geometry
@@ -69,9 +69,18 @@ export abstract class GeometryUtils {
    * Removes a coordinate from simple geometry
    * @param geometry parent geometry from which to remove coordinate
    * @param coordinate coordinate to remove from geometry
+   * @returns returns "true" if coordinate has been removed
    */
   public static removeCoordinate(geometry: OLGeometry, coordinate: OLCoordinate): boolean {
     switch (geometry.getType()) {
+      case OLGeometryType.POINT:
+        const point = geometry as OLPoint;
+        let pointRemoved = false;
+        if (GeometryUtils.isCoordinateEqual(point.getCoordinates(), coordinate)) {
+          point.setCoordinates([]);
+          pointRemoved = true;
+        }
+        return pointRemoved;
       case OLGeometryType.MULTI_POINT:
         const multiPoint = geometry as OLMultiPoint;
         const multiPointCoordinates = multiPoint.getCoordinates().slice();
@@ -94,6 +103,9 @@ export abstract class GeometryUtils {
         let lineStringRemoved = false;
         if (lineIdx > -1) {
           lineStringCoordinates.splice(lineIdx, 1);
+          if (lineStringCoordinates.length < 2) {
+            lineStringCoordinates.splice(0, lineStringCoordinates.length);
+          }
           lineStringRemoved = true;
         }
         lineString.setCoordinates(lineStringCoordinates);
@@ -120,12 +132,16 @@ export abstract class GeometryUtils {
         const polygon = geometry as OLPolygon;
         const polygonCoordinates = polygon.getCoordinates().slice();
         let polygonRemoved = false;
-        for (const coords of polygonCoordinates) {
+        for (let i = 0; i < polygonCoordinates.length; i++) {
+          const coords = polygonCoordinates[i];
           const idx = coords.findIndex((pc) => GeometryUtils.isCoordinateEqual(pc, coordinate));
           if (idx > -1) {
             coords.splice(idx, 1);
             if (idx === 0) {
               coords.splice(-1, 1, coords[0].slice() as OLCoordinate);
+            }
+            if (coords.length < 4) {
+              polygonCoordinates.splice(i, 1);
             }
             polygonRemoved = true;
             break;
@@ -174,8 +190,11 @@ export abstract class GeometryUtils {
           const isRemoved = GeometryUtils.removeCoordinate(subGeometry, coordinate);
           if (isRemoved) {
             if (
-              (subGeometry instanceof OLMultiPoint ||
+              (subGeometry instanceof OLPoint ||
+                subGeometry instanceof OLMultiPoint ||
+                subGeometry instanceof OLLineString ||
                 subGeometry instanceof OLMultiLineString ||
+                subGeometry instanceof OLPolygon ||
                 subGeometry instanceof OLMultiPolygon) &&
               subGeometry.getCoordinates().length === 0
             ) {

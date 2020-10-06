@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { AlloyBasemapFactory } from '../../../src/map/basemaps/AlloyBasemapFactory';
+import { AlloyBasemapFactory } from '@/map/basemaps/AlloyBasemapFactory';
 import MapData from '../MapData';
 
 export default function(mapData: MapData) {

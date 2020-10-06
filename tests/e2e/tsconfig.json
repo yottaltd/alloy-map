@@ -3,11 +3,14 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
-    "baseUrl": "../node_modules",
+    "baseUrl": "../../",
     "target": "es5",
     "lib": ["es6", "dom"],
     "types": ["cypress"],
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["**/*.ts"]
+  "include": ["../../node_modules/cypress", "**/*.ts"]
 }

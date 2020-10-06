@@ -1,11 +1,12 @@
+import { AlloyRouteFeature } from '@/map/features/AlloyRouteFeature';
+import { AlloyRouteFeatureProperties } from '@/map/features/AlloyRouteFeatureProperties';
+import { AlloyRouteWaypointFeature } from '@/map/features/AlloyRouteWaypointFeature';
+// eslint-disable-next-line max-len
+import { AlloyRouteWaypointFeatureProperties } from '@/map/features/AlloyRouteWaypointFeatureProperties';
+import { AlloyRouteLayer } from '@/map/layers/route/AlloyRouteLayer';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { LineString, Point } from 'geojson';
 import OLFeature from 'ol/Feature';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyRouteLayer } from '../layers/route/AlloyRouteLayer';
-import { AlloyRouteFeature } from './AlloyRouteFeature';
-import { AlloyRouteFeatureProperties } from './AlloyRouteFeatureProperties';
-import { AlloyRouteWaypointFeature } from './AlloyRouteWaypointFeature';
-import { AlloyRouteWaypointFeatureProperties } from './AlloyRouteWaypointFeatureProperties';
 
 /**
  * factory for creating route features

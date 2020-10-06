@@ -1,13 +1,13 @@
+import { AlloyAnimationManager } from '@/map/animations/AlloyAnimationManager';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { PolyfillExtent } from '@/polyfills/PolyfillExtent';
+import { ColourUtils } from '@/utils/ColourUtils';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLLineString from 'ol/geom/LineString';
 import OLPolygon from 'ol/geom/Polygon';
 import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLFill from 'ol/style/Fill';
 import OLStyle from 'ol/style/Style';
-import { PolyfillExtent } from '../../../polyfills/PolyfillExtent';
-import { ColourUtils } from '../../../utils/ColourUtils';
-import { AlloyAnimationManager } from '../../animations/AlloyAnimationManager';
-import { AlloyFeature } from '../../features/AlloyFeature';
 
 /**
  * 90 degrees in radians

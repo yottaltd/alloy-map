@@ -1,10 +1,10 @@
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
+import { AlloyTileBasemapOptions } from '@/map/basemaps/AlloyTileBasemapOptions';
 import * as DOMPurify from 'dompurify';
+import { DEVICE_PIXEL_RATIO } from 'ol/has';
 import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLXYZ from 'ol/source/XYZ';
-import { DEVICE_PIXEL_RATIO } from 'ol/has';
-import { AlloyBasemap } from './AlloyBasemap';
-import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
 
 /**
  * an alloy tile basemap using an XYZ tiled service
