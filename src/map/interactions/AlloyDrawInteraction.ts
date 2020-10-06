@@ -13,7 +13,6 @@ import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-function
 import { EnumUtils } from '@/utils/EnumUtils';
 import { FeatureUtils } from '@/utils/FeatureUtils';
 import { GeometryUtils } from '@/utils/GeometryUtils';
-import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import uniq from 'lodash.uniq';
 import flatten from 'lodash.flatten';
