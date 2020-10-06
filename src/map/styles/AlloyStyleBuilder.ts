@@ -1,8 +1,8 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleCache } from '@/map/styles/cache/AlloyStyleCache';
 import OLStyle from 'ol/style/Style';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from './AlloyStyleBuilderBuildState';
-import { AlloyStyleCache } from './cache/AlloyStyleCache';
-import { AlloyMapError } from '../../error/AlloyMapError';
 
 /**
  * base class for style builders, it implements caching in a local cache so styles can be reused.

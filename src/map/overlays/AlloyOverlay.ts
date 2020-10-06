@@ -1,5 +1,5 @@
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import OLOverlay from 'ol/Overlay';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
 
 /**
  * an alloy overlay which can add native html elements to the map

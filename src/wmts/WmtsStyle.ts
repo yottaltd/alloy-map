@@ -1,4 +1,4 @@
-import { WmtsStyleLegend } from './WmtsStyleLegend';
+import { WmtsStyleLegend } from '@/wmts/WmtsStyleLegend';
 
 /**
  * wmts layer style object describing the layer style from a wmts service

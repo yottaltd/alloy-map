@@ -1,3 +1,9 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyCustomFeature } from '@/map/features/AlloyCustomFeature';
+import { AlloyCustomFeatureProperties } from '@/map/features/AlloyCustomFeatureProperties';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
@@ -5,12 +11,6 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
-import { AlloyCustomFeature } from './AlloyCustomFeature';
-import { AlloyCustomFeatureProperties } from './AlloyCustomFeatureProperties';
-import { AlloyFeature } from './AlloyFeature';
 
 /**
  * factory for creating custom features

@@ -1,5 +1,5 @@
-import { WmtsLayer } from './WmtsLayer';
-import { WmtsTileMatrixSet } from './WmtsTileMatrixSet';
+import { WmtsLayer } from '@/wmts/WmtsLayer';
+import { WmtsTileMatrixSet } from '@/wmts/WmtsTileMatrixSet';
 
 /**
  * wmts capabilities object describing the capabilities of a wmts service

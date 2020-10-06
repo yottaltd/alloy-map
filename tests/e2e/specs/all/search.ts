@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-import { AlloyCoordinate } from '../../../src/map/core/AlloyCoordinate';
-import { AlloyCustomLayer } from '../../../src/map/layers/custom/AlloyCustomLayer';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyCustomLayer } from '@/map/layers/custom/AlloyCustomLayer';
 import MapData from '../MapData';
 
 export default function(mapData: MapData) {
@@ -13,7 +13,7 @@ export default function(mapData: MapData) {
       });
       const findWithinCoordinate1 = new AlloyCoordinate(-1.320698, 54.51974);
       const findWithinCoordinate2 = new AlloyCoordinate(-1.300971, 54.500017);
-      const delta: number = 30;
+      const delta = 30;
 
       // Add features to the layer.
       const featureWithinCoordinate1 = layer.addPointFeature(
@@ -67,7 +67,7 @@ export default function(mapData: MapData) {
         id: 'featuresWithin',
       });
       const coordinateNotWithin = new AlloyCoordinate(-1.320698, 54.51974);
-      const delta: number = 30;
+      const delta = 30;
 
       // Add features to the layer.
       layer.addPointFeature(

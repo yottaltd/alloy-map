@@ -1,18 +1,22 @@
+/* eslint-disable max-len */
+
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloySelectionMode } from '@/map/core/AlloySelectionMode';
+import { FeatureSelectionChangeEvent } from '@/map/events/FeatureSelectionChangeEvent';
+import { FeatureSelectionChangeEventHandler } from '@/map/events/FeatureSelectionChangeEventHandler';
+import { FeaturesUnderSelectionEvent } from '@/map/events/FeaturesUnderSelectionEvent';
+import { FeaturesUnderSelectionEventHandler } from '@/map/events/FeaturesUnderSelectionEventHandler';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { FeatureUtils } from '@/utils/FeatureUtils';
 import { Debugger } from 'debug';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloySelectionMode } from '../core/AlloySelectionMode';
-import { FeatureSelectionChangeEvent } from '../events/FeatureSelectionChangeEvent';
-import { FeatureSelectionChangeEventHandler } from '../events/FeatureSelectionChangeEventHandler';
-import { FeaturesUnderSelectionEvent } from '../events/FeaturesUnderSelectionEvent';
-import { FeaturesUnderSelectionEventHandler } from '../events/FeaturesUnderSelectionEventHandler';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
+
+/* eslint-enable max-len */
 
 /**
  * adds selection interaction to an alloy map

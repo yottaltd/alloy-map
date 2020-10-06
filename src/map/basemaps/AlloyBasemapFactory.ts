@@ -1,15 +1,15 @@
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
-import { AlloyWmtsParameters } from '../../wmts/AlloyWmtsParameters';
-import { WmtsUtils } from '../../wmts/WmtsUtils';
-import { AlloyBasemap } from './AlloyBasemap';
-import { AlloyBingBasemap } from './AlloyBingBasemap';
-import { AlloyImageWmsBasemap } from './AlloyImageWmsBasemap';
-import { AlloyTileBasemap } from './AlloyTileBasemap';
-import { AlloyTileBasemapOptions } from './AlloyTileBasemapOptions';
-import { AlloyWmsBasemap } from './AlloyWmsBasemap';
-import { AlloyWmtsBasemap } from './AlloyWmtsBasemap';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
+import { AlloyBingBasemap } from '@/map/basemaps/AlloyBingBasemap';
+import { AlloyImageWmsBasemap } from '@/map/basemaps/AlloyImageWmsBasemap';
+import { AlloyTileBasemap } from '@/map/basemaps/AlloyTileBasemap';
+import { AlloyTileBasemapOptions } from '@/map/basemaps/AlloyTileBasemapOptions';
+import { AlloyWmsBasemap } from '@/map/basemaps/AlloyWmsBasemap';
+import { AlloyWmtsBasemap } from '@/map/basemaps/AlloyWmtsBasemap';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
+import { AlloyWmsParameters } from '@/wms/AlloyWmsParameters';
+import { AlloyWmtsParameters } from '@/wmts/AlloyWmtsParameters';
+import { WmtsUtils } from '@/wmts/WmtsUtils';
 
 /**
  * the mapbox user account we use

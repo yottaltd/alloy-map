@@ -1,9 +1,9 @@
-import { AlloyCustomFeatureBase } from '../../features/AlloyCustomFeatureBase';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyCustomStyleBuilder } from '../../styles/builders/AlloyCustomStyleBuilder';
-import { AlloyCustomLayer } from './AlloyCustomLayer';
+import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyCustomLayer } from '@/map/layers/custom/AlloyCustomLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyCustomStyleBuilder } from '@/map/styles/builders/AlloyCustomStyleBuilder';
 
 /**
  * processes the custom styled feature items

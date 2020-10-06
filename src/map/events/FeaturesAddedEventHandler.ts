@@ -1,4 +1,4 @@
-import { FeaturesAddedEvent } from './FeaturesAddedEvent';
+import { FeaturesAddedEvent } from '@/map/events/FeaturesAddedEvent';
 
 /**
  * handler for the layers features added

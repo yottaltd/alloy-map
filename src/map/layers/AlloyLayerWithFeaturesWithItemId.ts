@@ -1,8 +1,8 @@
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { FeatureGuards } from '../guards/FeatureGuards';
-import { AlloyLayerWithFeatures } from './AlloyLayerWithFeatures';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { FeatureGuards } from '@/map/guards/FeatureGuards';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 
 /**
  * base implementation for alloy layers with features with item ids, this will hook into the add,

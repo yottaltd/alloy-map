@@ -1,6 +1,6 @@
-import { AlloyCableUnitFeatureProperties } from './AlloyCableUnitFeatureProperties';
-import { AlloyPathNodeFeature } from './AlloyPathNodeFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
+import { AlloyCableUnitFeatureProperties } from '@/map/features/AlloyCableUnitFeatureProperties';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyPathNodeFeature } from '@/map/features/AlloyPathNodeFeature';
 
 /**
  * an alloy cable unit feature which represents a cable unit with point geometry

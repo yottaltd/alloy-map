@@ -1,8 +1,8 @@
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
-import { AlloySelectionLayerOptions } from './AlloySelectionLayerOptions';
-import { AlloySelectionStyleProcessor } from './AlloySelectionStyleProcessor';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloySelectionLayerOptions } from '@/map/layers/selection/AlloySelectionLayerOptions';
+import { AlloySelectionStyleProcessor } from '@/map/layers/selection/AlloySelectionStyleProcessor';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 
 /**
  * a special interaction layer for selected features

@@ -1,5 +1,17 @@
-/* eslint-disable max-len */
-
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { FeaturesAddedEvent } from '@/map/events/FeaturesAddedEvent';
+import { FeaturesAddedEventHandler } from '@/map/events/FeaturesAddedEventHandler';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -8,20 +20,6 @@ import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { FindFeaturesWithinResult } from '../../utils/models/FindFeaturesWithinResult';
-import { AlloyCoordinate } from '../core/AlloyCoordinate';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
-import { AlloyMap } from '../core/AlloyMap';
-import { FeaturesAddedEvent } from '../events/FeaturesAddedEvent';
-import { FeaturesAddedEventHandler } from '../events/FeaturesAddedEventHandler';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
-import { AlloyGeometryCollectionFunctions } from '../styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
-import { AlloyMultiPolygonFunctions } from '../styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
-import { AlloyPolygonFunctions } from '../styles/utils/geometry-functions/AlloyPolygonFunctions';
-import { AlloyStyleProcessor } from '../styles/AlloyStyleProcessor';
-import { AlloyLayer } from './AlloyLayer';
 
 /* eslint-enable max-len */
 

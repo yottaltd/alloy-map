@@ -1,8 +1,8 @@
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { AlloyOverlay } from '@/map/overlays/AlloyOverlay';
+import { AlloyCustomOverlayOptions } from '@/map/overlays/custom/AlloyCustomOverlayOptions';
+import { EnumUtils } from '@/utils/EnumUtils';
 import OLOverlay from 'ol/Overlay';
-import { EnumUtils } from '../../../utils/EnumUtils';
-import { AlloyCoordinate } from '../../core/AlloyCoordinate';
-import { AlloyOverlay } from '../AlloyOverlay';
-import { AlloyCustomOverlayOptions } from './AlloyCustomOverlayOptions';
 
 /**
  * an alloy custom overlay allows us to put html elements on top of the map

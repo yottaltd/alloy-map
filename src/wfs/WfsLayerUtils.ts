@@ -1,3 +1,9 @@
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { PolyfillLoadingStrategy } from '@/polyfills/PolyfillLoadingStrategy';
+import { PolyfillProj } from '@/polyfills/PolyfillProj';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
+import { AlloyWfsFormat } from '@/wfs/AlloyWfsFormat';
+import { WfsUtils } from '@/wfs/WfsUtils';
 import OLCollection from 'ol/Collection';
 import OLFeature from 'ol/Feature';
 import OLEsriJSON from 'ol/format/EsriJSON';
@@ -13,12 +19,6 @@ import OLProjection from 'ol/proj/Projection';
 import OLRenderFeature from 'ol/render/Feature';
 import OLVectorSource from 'ol/source/Vector';
 import OLStyle from 'ol/style/Style';
-import { AlloyLayerZIndex } from '../map/core/AlloyLayerZIndex';
-import { PolyfillLoadingStrategy } from '../polyfills/PolyfillLoadingStrategy';
-import { PolyfillProj } from '../polyfills/PolyfillProj';
-import { ProjectionUtils } from '../utils/ProjectionUtils';
-import { AlloyWfsFormat } from './AlloyWfsFormat';
-import { WfsUtils } from './WfsUtils';
 
 /**
  * Internal class to create OLVectorLayer with WFS feature loader

@@ -1,11 +1,11 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyRouteFeature } from '../../features/AlloyRouteFeature';
-import { AlloyRouteWaypointFeature } from '../../features/AlloyRouteWaypointFeature';
-import { AlloyManagedLayer } from '../AlloyManagedLayer';
-import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
-import { AlloyRouteAnimationManager } from './AlloyRouteAnimationManager';
-import { AlloyRouteLayerOptions } from './AlloyRouteLayerOptions';
-import { AlloyRouteStyleProcessor } from './AlloyRouteStyleProcessor';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyRouteFeature } from '@/map/features/AlloyRouteFeature';
+import { AlloyRouteWaypointFeature } from '@/map/features/AlloyRouteWaypointFeature';
+import { AlloyManagedLayer } from '@/map/layers/AlloyManagedLayer';
+import { AlloyAnimatedPathLayer } from '@/map/layers/animation/AlloyAnimatedPathLayer';
+import { AlloyRouteAnimationManager } from '@/map/layers/route/AlloyRouteAnimationManager';
+import { AlloyRouteLayerOptions } from '@/map/layers/route/AlloyRouteLayerOptions';
+import { AlloyRouteStyleProcessor } from '@/map/layers/route/AlloyRouteStyleProcessor';
 
 /**
  * an alloy route layer for rendering route and waypoint features provided externally on the map,

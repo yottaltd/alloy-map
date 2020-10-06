@@ -1,11 +1,11 @@
-import { AlloyClusterFeature } from '../../features/AlloyClusterFeature';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyItemFeature } from '../../features/AlloyItemFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyClusterStyleBuilder } from '../../styles/builders/AlloyClusterStyleBuilder';
-import { AlloyItemStyleBuilder } from '../../styles/builders/AlloyItemStyleBuilder';
-import { AlloyClusterLayer } from './AlloyClusterLayer';
+import { AlloyClusterFeature } from '@/map/features/AlloyClusterFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloyClusterLayer } from '@/map/layers/cluster/AlloyClusterLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyClusterStyleBuilder } from '@/map/styles/builders/AlloyClusterStyleBuilder';
+import { AlloyItemStyleBuilder } from '@/map/styles/builders/AlloyItemStyleBuilder';
 
 /**
  * processes the cluster styled feature items

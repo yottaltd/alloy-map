@@ -1,5 +1,16 @@
 /* eslint-disable max-len */
 
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
+import { AlloyDrawLayerOptions } from '@/map/layers/drawing/AlloyDrawLayerOptions';
+import { AlloyDrawStyleProcessor } from '@/map/layers/drawing/AlloyDrawStyleProcessor';
+import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
+import { GeometryUtils } from '@/utils/GeometryUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -11,17 +22,6 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import * as uuid from 'uuid';
-import { AlloyMapError } from '../../../error/AlloyMapError';
-import { GeometryUtils } from '../../../utils/GeometryUtils';
-import { ProjectionUtils } from '../../../utils/ProjectionUtils';
-import { AlloyGeometryCollectionFunctions } from '../../styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
-import { AlloyMultiPolygonFunctions } from '../../styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
-import { AlloyPolygonFunctions } from '../../styles/utils/geometry-functions/AlloyPolygonFunctions';
-import { AlloyLayerZIndex } from '../../core/AlloyLayerZIndex';
-import { AlloyDrawFeature } from '../../features/AlloyDrawFeature';
-import { AlloyLayerWithFeatures } from '../AlloyLayerWithFeatures';
-import { AlloyDrawLayerOptions } from './AlloyDrawLayerOptions';
-import { AlloyDrawStyleProcessor } from './AlloyDrawStyleProcessor';
 
 /* eslint-enable max-len */
 

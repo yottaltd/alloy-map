@@ -1,5 +1,5 @@
-import { AlloyLayer } from './AlloyLayer';
-import { AlloyBounds } from '../core/AlloyBounds';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
 
 /**
  * an alloy layer that has a bounding box to serve features inside

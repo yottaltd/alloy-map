@@ -1,4 +1,5 @@
-import { AlloyWmtsCapabilitiesLayerStyleLegend } from './AlloyWmtsCapabilitiesLayerStyleLegend';
+// eslint-disable-next-line max-len
+import { AlloyWmtsCapabilitiesLayerStyleLegend } from '@/wmts/AlloyWmtsCapabilitiesLayerStyleLegend';
 
 /**
  * WMTS Capabilties layer style parameters

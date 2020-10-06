@@ -1,10 +1,10 @@
+import { AlloyBasemap } from '@/map/basemaps/AlloyBasemap';
+import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyWmsParameters } from '@/wms/AlloyWmsParameters';
+import { WmsUtils } from '@/wms/WmsUtils';
 import BaseLayer from 'ol/layer/Base';
 import OLTileLayer from 'ol/layer/Tile';
 import OLTileWMS from 'ol/source/TileWMS';
-import { AlloyWmsParameters } from '../../wms/AlloyWmsParameters';
-import { WmsUtils } from '../../wms/WmsUtils';
-import { AlloyLayerZIndex } from '../core/AlloyLayerZIndex';
-import { AlloyBasemap } from './AlloyBasemap';
 
 /**
  * an alloy tile basemap using an WMS tiled service

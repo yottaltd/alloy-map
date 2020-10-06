@@ -1,15 +1,15 @@
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyDrawFeatureProperties } from '@/map/features/AlloyDrawFeatureProperties';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+// eslint-disable-next-line max-len
+import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLGeometryType from 'ol/geom/GeometryType';
 import * as uuid from 'uuid';
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-// eslint-disable-next-line max-len
-import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
-import { AlloyDrawFeatureProperties } from './AlloyDrawFeatureProperties';
-import { AlloyFeature } from './AlloyFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
 
 /**
  * an alloy draw feature which represents something being drawn on the map by a user or

@@ -1,5 +1,5 @@
+import { GeoJSONObjectType } from '@/api/GeoJSONObjectType';
 import { Geometry } from 'geojson';
-import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
 
 export abstract class GeometryGuards {
   public static isGeometry(geometry: any): geometry is Geometry {

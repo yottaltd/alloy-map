@@ -1,16 +1,31 @@
+import { GeoJSONObjectType } from '@/api/GeoJSONObjectType';
+import { AlloyMapError } from '@/error/AlloyMapError';
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyDrawEvent } from '@/map/events/AlloyDrawEvent';
+import { AlloyDrawEventHandler } from '@/map/events/AlloyDrawEventHandler';
+import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
+import { AlloyDrawFeatureProperties } from '@/map/features/AlloyDrawFeatureProperties';
+// eslint-disable-next-line max-len
+import { AlloyDrawInteractionGeometryType } from '@/map/interactions/AlloyDrawInteractionGeometryType';
+import { AlloyDrawLayer } from '@/map/layers/drawing/AlloyDrawLayer';
+// eslint-disable-next-line max-len
+import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
+import { EnumUtils } from '@/utils/EnumUtils';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { GeometryUtils } from '@/utils/GeometryUtils';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
-import OLPoint from 'ol/geom/Point';
-import OLPolygon from 'ol/geom/Polygon';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
-import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLPoint from 'ol/geom/Point';
+import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import OLDraw, { createBox as OLCreateBox } from 'ol/interaction/Draw';
 import OLModify from 'ol/interaction/Modify';
@@ -21,20 +36,6 @@ import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 import * as uuid from 'uuid';
-import { GeoJSONObjectType } from '../../api/GeoJSONObjectType';
-import { AlloyMapError } from '../../error/AlloyMapError';
-import { EnumUtils } from '../../utils/EnumUtils';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { GeometryUtils } from '../../utils/GeometryUtils';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyDrawEvent } from '../events/AlloyDrawEvent';
-import { AlloyDrawEventHandler } from '../events/AlloyDrawEventHandler';
-import { AlloyDrawFeature } from '../features/AlloyDrawFeature';
-import { AlloyDrawFeatureProperties } from '../features/AlloyDrawFeatureProperties';
-import { AlloyDrawLayer } from '../layers/drawing/AlloyDrawLayer';
-// eslint-disable-next-line max-len
-import { AlloyGeometryFunctionUtils } from '../styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
-import { AlloyDrawInteractionGeometryType } from './AlloyDrawInteractionGeometryType';
 
 /**
  * default colour for draw and modify interactions

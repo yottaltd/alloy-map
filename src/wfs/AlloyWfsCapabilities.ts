@@ -1,4 +1,4 @@
-import { AlloyWfsFeatureType } from './AlloyWfsFeatureType';
+import { AlloyWfsFeatureType } from '@/wfs/AlloyWfsFeatureType';
 
 /**
  * Wrapper for parsed WFS Capabilties response

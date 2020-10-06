@@ -1,10 +1,10 @@
-import { AlloyCableFeature } from '../../features/AlloyCableFeature';
-import { AlloyCableUnitFeature } from '../../features/AlloyCableUnitFeature';
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyAnimatedPathLayer } from '../animation/AlloyAnimatedPathLayer';
-import { AlloyCableAnimationManager } from './AlloyCableAnimationManager';
-import { AlloyCableLayerOptions } from './AlloyCableLayerOptions';
-import { AlloyCableStyleProcessor } from './AlloyCableStyleProcessor';
+import { AlloyCableFeature } from '@/map/features/AlloyCableFeature';
+import { AlloyCableUnitFeature } from '@/map/features/AlloyCableUnitFeature';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyAnimatedPathLayer } from '@/map/layers/animation/AlloyAnimatedPathLayer';
+import { AlloyCableAnimationManager } from '@/map/layers/cable/AlloyCableAnimationManager';
+import { AlloyCableLayerOptions } from '@/map/layers/cable/AlloyCableLayerOptions';
+import { AlloyCableStyleProcessor } from '@/map/layers/cable/AlloyCableStyleProcessor';
 
 /**
  * an alloy cable layer for rendering cable and feeds features provided externally on the map,

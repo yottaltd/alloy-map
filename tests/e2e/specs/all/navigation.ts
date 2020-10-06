@@ -1,8 +1,8 @@
 import { assert } from 'chai';
-import { AlloyBounds } from '../../../src/map/core/AlloyBounds';
-import { AlloyCoordinate } from '../../../src/map/core/AlloyCoordinate';
-import { MapChangeCentreEvent } from '../../../src/map/events/MapChangeCentreEvent';
-import { MapChangeZoomEvent } from '../../../src/map/events/MapChangeZoomEvent';
+import { AlloyBounds } from '@/map/core/AlloyBounds';
+import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
+import { MapChangeCentreEvent } from '@/map/events/MapChangeCentreEvent';
+import { MapChangeZoomEvent } from '@/map/events/MapChangeZoomEvent';
 import MapData from '../MapData';
 
 let mapCentre: AlloyCoordinate;

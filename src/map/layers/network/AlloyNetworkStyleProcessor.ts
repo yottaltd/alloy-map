@@ -1,8 +1,8 @@
-import { AlloyFeature } from '../../features/AlloyFeature';
-import { AlloyStyleBuilderBuildState } from '../../styles/AlloyStyleBuilderBuildState';
-import { AlloyStyleProcessor } from '../../styles/AlloyStyleProcessor';
-import { AlloyNetworkStyleBuilder } from '../../styles/builders/AlloyNetworkStyleBuilder';
-import { AlloyNetworkLayer } from './AlloyNetworkLayer';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyNetworkLayer } from '@/map/layers/network/AlloyNetworkLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyNetworkStyleBuilder } from '@/map/styles/builders/AlloyNetworkStyleBuilder';
 
 /**
  * processes the network styled feature items

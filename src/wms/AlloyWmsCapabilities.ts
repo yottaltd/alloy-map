@@ -1,4 +1,4 @@
-import { AlloyWmsCapabilitiesLayer } from './AlloyWmsCapabilitiesLayer';
+import { AlloyWmsCapabilitiesLayer } from '@/wms/AlloyWmsCapabilitiesLayer';
 
 /**
  * Parsed WMS Capabilties parameters

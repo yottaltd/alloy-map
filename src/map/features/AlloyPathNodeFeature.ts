@@ -1,11 +1,11 @@
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyFeatureType } from '@/map/features/AlloyFeatureType';
+import { AlloyPathNodeFeatureProperties } from '@/map/features/AlloyPathNodeFeatureProperties';
+import { FeatureUtils } from '@/utils/FeatureUtils';
+import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Point } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLPoint from 'ol/geom/Point';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { ProjectionUtils } from '../../utils/ProjectionUtils';
-import { AlloyFeature } from './AlloyFeature';
-import { AlloyFeatureType } from './AlloyFeatureType';
-import { AlloyPathNodeFeatureProperties } from './AlloyPathNodeFeatureProperties';
 
 /**
  * an alloy path node feature which represents a connected unit with point geometry

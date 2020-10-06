@@ -1,14 +1,14 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
+import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
+import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayer } from '@/map/layers/AlloyLayer';
+import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { FeatureUtils } from '@/utils/FeatureUtils';
 import { Debugger } from 'debug';
 import * as _ from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLLayer from 'ol/layer/Layer';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
-import { FeatureUtils } from '../../utils/FeatureUtils';
-import { AlloyMap } from '../core/AlloyMap';
-import { AlloyCustomFeatureBase } from '../features/AlloyCustomFeatureBase';
-import { AlloyFeature } from '../features/AlloyFeature';
-import { AlloyLayer } from '../layers/AlloyLayer';
-import { AlloyStyleBuilderBuildState } from '../styles/AlloyStyleBuilderBuildState';
 
 /**
  * the number of milliseconds to throttle the pointer move event by
