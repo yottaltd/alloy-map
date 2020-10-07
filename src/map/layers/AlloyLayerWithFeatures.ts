@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+
+import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
 import { AlloyMap } from '@/map/core/AlloyMap';
@@ -7,13 +10,23 @@ import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyLayer } from '@/map/layers/AlloyLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
+import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
+import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
+import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { FeatureUtils } from '@/utils/FeatureUtils';
 import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
+import OLFeature from 'ol/Feature';
+import OLGeometryCollection from 'ol/geom/GeometryCollection';
+import OLMultiPolygon from 'ol/geom/MultiPolygon';
+import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
+import { ObjectEvent } from 'ol/Object';
 import OLVectorSource from 'ol/source/Vector';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+
+/* eslint-enable max-len */
 
 /**
  * base implementation for alloy layers with features
@@ -68,6 +81,15 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * event dispatcher for added features
    */
   private readonly featuresAddedDispatcher = new SimpleEventDispatcher<FeaturesAddedEvent>();
+
+  /**
+   * handler for feature geometry change, we create this once for performance reasons. A single
+   * scoped arrow function here is passed to all geometry change handlers when we setup the
+   * event handlers on the features.
+   * @param e event object
+   */
+  private readonly onChangeGeometryHandler = (e: ObjectEvent) =>
+    this.handleFeatureGeometryChange(e);
 
   /**
    * creates a new instance
@@ -139,10 +161,16 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
       return false;
     }
 
+    // add feature to source and internal dictionary
     this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
+
+    // trigger event for feature added
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
+
+    // attach internal handlers to feature
+    feature.olFeature.on('change:geometry', this.onChangeGeometryHandler);
     return true;
   }
 
@@ -159,6 +187,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
 
     this.debugger('removing feature: %s', feature.id);
+
+    // remove internal handlers
+    feature.olFeature.un('change:geometry', this.onChangeGeometryHandler);
+
+    // remove the feature from source and internal dictionary
     this.olSource.removeFeature(feature.olFeature);
     this.currentFeatures.delete(feature.id);
     return true;
@@ -190,8 +223,18 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
         featuresNotInLayer.map((f) => f.id),
       );
     }
+
+    // add features to source and internal dictionary
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
-    featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
+    featuresNotInLayer.forEach((f) => {
+      // add to internal dictionary
+      this.currentFeatures.set(f.id, f);
+
+      // attach internal handlers to features
+      f.olFeature.on('change:geometry', this.onChangeGeometryHandler);
+    });
+
+    // trigger event for features added
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
     return true;
   }
@@ -203,6 +246,12 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;
     if (hasFeatures) {
+      // remove any internal event handlers
+      this.currentFeatures.forEach((feature) =>
+        feature.olFeature.un('change:geometry', this.onChangeGeometryHandler),
+      );
+
+      // clear features from source and internal dictionary
       this.debugger('clearing features');
       this.olSource.refresh();
       this.currentFeatures.clear();
@@ -255,5 +304,51 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    */
   public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
     this.featuresAddedDispatcher.unsubscribe(handler);
+  }
+
+  /**
+   * handles feature geometry changes
+   * @param e the geometry change event to respond to
+   */
+  private handleFeatureGeometryChange(e: ObjectEvent) {
+    if (!(e.oldValue instanceof OLFeature)) {
+      throw new AlloyMapError(
+        1601995459,
+        'geometry changed for feature but oldValue was not OLFeature',
+      );
+    }
+
+    // get feature and geometry
+    const feature = e.oldValue;
+    this.resetStyle(feature);
+  }
+
+  /**
+   * Temp function
+   * resets style for an ol feature
+   * @param feature openlayers feature for which we want to reset style
+   */
+  public resetStyle(feature: OLFeature) {
+    const geometry = feature.getGeometry();
+
+    // check if we need to clear any caches
+    let shouldClearStyles = false;
+    if (geometry instanceof OLPolygon) {
+      AlloyPolygonFunctions.removeFromPolygonCache(geometry);
+      shouldClearStyles = true;
+    } else if (geometry instanceof OLMultiPolygon) {
+      AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
+      shouldClearStyles = true;
+    } else if (geometry instanceof OLGeometryCollection) {
+      AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
+      shouldClearStyles = true;
+    }
+
+    // if we need to clear anything then clear the the style processor
+    if (shouldClearStyles && this.styleProcessor) {
+      this.styleProcessor.clear();
+    }
+
+    feature.changed();
   }
 }

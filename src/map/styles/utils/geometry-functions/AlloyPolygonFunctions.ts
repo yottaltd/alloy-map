@@ -85,6 +85,15 @@ export abstract class AlloyPolygonFunctions {
   }
 
   /**
+   * removes polygon geometry parameters from cache
+   * @param polygon geometry to remove from cache
+   */
+  public static removeFromPolygonCache(polygon: OLPolygon) {
+    AlloyPolygonFunctions.midPointCache.delete(polygon);
+    AlloyPolygonFunctions.midPointSizeCache.delete(polygon);
+  }
+
+  /**
    * cache of the mid point size for polygons, using a weak map ensures we don't bump the
    * revision counter on the openlayers geometry but we also release memory once nothing references
    * the polygon anymore. the map values are a map of resolution -> size

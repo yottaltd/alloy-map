@@ -59,6 +59,14 @@ export abstract class AlloyAnimatedPathStyleProcessor<
   }
 
   /**
+   * @override
+   */
+  public clear(): void {
+    this.styleBuilder.clear();
+    this.connectorStyleBuilder.clear();
+  }
+
+  /**
    * abstract method to create a required instance of `AlloyStyleBuilder`
    * for an implementation of this style processor
    * @ignore

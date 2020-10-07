@@ -40,4 +40,11 @@ export class AlloyDrawStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
   }
+
+  /**
+   * @override
+   */
+  public clear(): void {
+    this.drawStyleBuilder.clear();
+  }
 }
