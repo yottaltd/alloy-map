@@ -161,10 +161,15 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
       return false;
     }
 
+    // add feature to source and internal dictionary
     this.debugger('adding feature: %s', feature.id);
     this.olSource.addFeature(feature.olFeature);
     this.currentFeatures.set(feature.id, feature);
+
+    // trigger event for feature added
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, [feature]));
+
+    // attach internal handlers to feature
     feature.olFeature.on('change:geometry', this.onChangeGeometryHandler);
     return true;
   }
@@ -182,8 +187,12 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
 
     this.debugger('removing feature: %s', feature.id);
-    this.olSource.removeFeature(feature.olFeature);
+
+    // remove internal handlers
     feature.olFeature.un('change:geometry', this.onChangeGeometryHandler);
+
+    // remove the feature from source and internal dictionary
+    this.olSource.removeFeature(feature.olFeature);
     this.currentFeatures.delete(feature.id);
     return true;
   }
@@ -214,12 +223,19 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
         featuresNotInLayer.map((f) => f.id),
       );
     }
+
+    // add features to source and internal dictionary
     this.olSource.addFeatures(featuresNotInLayer.map((f) => f.olFeature));
-    featuresNotInLayer.forEach((f) => this.currentFeatures.set(f.id, f));
+    featuresNotInLayer.forEach((f) => {
+      // add to internal dictionary
+      this.currentFeatures.set(f.id, f);
+
+      // attach internal handlers to features
+      f.olFeature.on('change:geometry', this.onChangeGeometryHandler);
+    });
+
+    // trigger event for features added
     this.featuresAddedDispatcher.dispatch(new FeaturesAddedEvent(this, featuresNotInLayer));
-    features.forEach((feature) =>
-      feature.olFeature.on('change:geometry', this.onChangeGeometryHandler),
-    );
     return true;
   }
 
@@ -230,11 +246,14 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public clearFeatures(): boolean {
     const hasFeatures = this.currentFeatures.size > 0;
     if (hasFeatures) {
-      this.debugger('clearing features');
-      this.olSource.refresh();
+      // remove any internal event handlers
       this.currentFeatures.forEach((feature) =>
         feature.olFeature.un('change:geometry', this.onChangeGeometryHandler),
       );
+
+      // clear features from source and internal dictionary
+      this.debugger('clearing features');
+      this.olSource.refresh();
       this.currentFeatures.clear();
     } else {
       this.debugger('no features to clear');
