@@ -202,6 +202,7 @@ export abstract class WmsUtils {
       fixedHeight: layer.fixedHeight,
       // removing duplicates here as parent layer CRS will also be included
       crs: layer.CRS ? Array.from(new Set(layer.CRS)) : [],
+      queryable: layer.queryable || false,
     };
   }
 

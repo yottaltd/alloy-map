@@ -41,4 +41,8 @@ export interface AlloyWmsCapabilitiesLayer {
    * Available child layers
    */
   layers: AlloyWmsCapabilitiesLayer[];
+  /**
+   * whether layer can be queried
+   */
+  queryable: boolean;
 }

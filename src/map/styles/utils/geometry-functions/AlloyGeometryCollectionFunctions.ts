@@ -256,6 +256,14 @@ export abstract class AlloyGeometryCollectionFunctions {
   }
 
   /**
+   * removes polygon geometry parameters from cache
+   * @param geometryCollection geometry to remove from cache
+   */
+  public static removeFromPolygonCache(geometryCollection: OLGeometryCollection) {
+    AlloyGeometryCollectionFunctions.largestPolygonCache.delete(geometryCollection);
+  }
+
+  /**
    * cache of the flattened geometry collection data, using a weak map ensures we don't bump the
    * revision counter on the openlayers geometry but we also release memory once nothing references
    * the geometry collection anymore

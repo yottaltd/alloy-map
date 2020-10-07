@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
 import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
@@ -17,6 +19,8 @@ import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
 import * as uuid from 'uuid';
+
+/* eslint-enable max-len */
 
 /**
  * an alloy draw layer for rendering features that have been drawn on the map, use this to
@@ -140,6 +144,21 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
     const geometry: Geometry = ProjectionUtils.GEOJSON.writeGeometryObject(geom);
     GeometryUtils.roundCoordinates(geometry);
     return geometry;
+  }
+
+  /**
+   * updates styles of drawn features
+   * @param feature specify the feature to update styles for or null for all features in the layer
+   * @ignore
+   * @internal
+   */
+  public updateStyles(feature: AlloyDrawFeature | null) {
+    // determine the features to update
+    const features: AlloyDrawFeature[] = feature
+      ? [feature]
+      : Array.from(this.currentFeatures.values());
+
+    features.forEach((clearFeature) => this.resetStyle(clearFeature.olFeature));
   }
 
   /**

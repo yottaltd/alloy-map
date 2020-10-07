@@ -27,4 +27,11 @@ export class AlloyStyleCache {
   public set(key: string, style: OLStyle | OLStyle[]): void {
     this.cache.set(key, style);
   }
+
+  /**
+   * Clears cached styles
+   */
+  public clear(): void {
+    this.cache.clear();
+  }
 }
