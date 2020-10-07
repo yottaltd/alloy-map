@@ -292,7 +292,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @param e the geometry change event to respond to
    */
   private handleFeatureGeometryChange(e: ObjectEvent) {
-    if (!(e.target instanceof OLFeature)) {
+    if (!(e.oldValue instanceof OLFeature)) {
       throw new AlloyMapError(
         1601995459,
         'geometry changed for feature but target was not OLFeature',
@@ -300,7 +300,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
 
     // get feature and geometry
-    const feature = e.target;
+    const feature = e.oldValue;
     const geometry = feature.getGeometry();
 
     // check if we need to clear any caches
