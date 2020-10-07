@@ -6,9 +6,6 @@ import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
 import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from '@/map/layers/drawing/AlloyDrawLayerOptions';
 import { AlloyDrawStyleProcessor } from '@/map/layers/drawing/AlloyDrawStyleProcessor';
-import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
-import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
-import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { GeometryUtils } from '@/utils/GeometryUtils';
 import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
@@ -163,29 +160,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
       ? [feature]
       : Array.from(this.currentFeatures.values());
 
-    features.forEach((clearFeature) => {
-      const geometry = clearFeature.olFeature.getGeometry();
-      let shouldClearStyles = false;
-
-      // selectively eject certain geometry from it's cache so it will redraw
-      if (geometry instanceof OLPolygon) {
-        AlloyPolygonFunctions.removeFromPolygonCache(geometry);
-        shouldClearStyles = true;
-      } else if (geometry instanceof OLMultiPolygon) {
-        AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
-        shouldClearStyles = true;
-      } else if (geometry instanceof OLGeometryCollection) {
-        AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
-        shouldClearStyles = true;
-      }
-
-      // if we should clear and we have a style processor then also wipe it's cached data
-      if (shouldClearStyles && this.styleProcessor) {
-        this.styleProcessor.clear();
-      }
-
-      clearFeature.olFeature.changed();
-    });
+    features.forEach((clearFeature) => this.resetStyle(clearFeature.olFeature));
   }
 
   /**

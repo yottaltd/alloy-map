@@ -320,6 +320,15 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
     // get feature and geometry
     const feature = e.oldValue;
+    this.resetStyle(feature);
+  }
+
+  /**
+   * Temp function
+   * resets style for an ol feature
+   * @param feature openlayers feature for which we want to reset style
+   */
+  public resetStyle(feature: OLFeature) {
     const geometry = feature.getGeometry();
 
     // check if we need to clear any caches
