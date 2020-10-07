@@ -48,7 +48,7 @@ export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clearForFeatureId(id: string): void {
-    this.customStyleBuilder.clear(id);
+  public clear(): void {
+    this.customStyleBuilder.clear();
   }
 }

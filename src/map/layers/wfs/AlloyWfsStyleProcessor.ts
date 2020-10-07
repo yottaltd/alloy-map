@@ -44,7 +44,7 @@ export class AlloyWfsStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clearForFeatureId(id: string): void {
-    this.wfsStyleBuilder.clear(id);
+  public clear(): void {
+    this.wfsStyleBuilder.clear();
   }
 }

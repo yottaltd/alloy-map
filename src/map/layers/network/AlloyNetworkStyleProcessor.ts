@@ -39,7 +39,7 @@ export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clearForFeatureId(id: string): void {
-    this.networkStyleBuilder.clear(id);
+  public clear(): void {
+    this.networkStyleBuilder.clear();
   }
 }

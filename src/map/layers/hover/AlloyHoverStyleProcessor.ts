@@ -40,7 +40,7 @@ export class AlloyHoverStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clearForFeatureId(id: string): void {
+  public clear(): void {
     // do nothing
   }
 }

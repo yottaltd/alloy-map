@@ -29,11 +29,9 @@ export class AlloyStyleCache {
   }
 
   /**
-   * Clears cached styles that contain id as part of the key
+   * Clears cached styles
    */
-  public clear(id: string): void {
-    Array.from(this.cache.keys())
-      .filter((key) => key.includes(id))
-      .forEach((key) => this.cache.delete(key));
+  public clear(): void {
+    this.cache.clear();
   }
 }

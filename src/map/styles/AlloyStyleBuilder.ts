@@ -64,10 +64,10 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
   }
 
   /**
-   * clears cached styles for feature id
+   * clears cached styles
    */
-  public clear(featureId: string): void {
-    this.styleCache.clear(featureId);
+  public clear(): void {
+    this.styleCache.clear();
   }
 
   /**

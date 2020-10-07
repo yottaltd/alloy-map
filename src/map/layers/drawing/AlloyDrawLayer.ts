@@ -181,7 +181,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
 
       // if we should clear and we have a style processor then also wipe it's cached data
       if (shouldClearStyles && this.styleProcessor) {
-        this.styleProcessor.clearForFeatureId(clearFeature.id);
+        this.styleProcessor.clear();
       }
 
       clearFeature.olFeature.changed();

@@ -61,9 +61,9 @@ export abstract class AlloyAnimatedPathStyleProcessor<
   /**
    * @override
    */
-  public clearForFeatureId(id: string): void {
-    this.styleBuilder.clear(id);
-    this.connectorStyleBuilder.clear(id);
+  public clear(): void {
+    this.styleBuilder.clear();
+    this.connectorStyleBuilder.clear();
   }
 
   /**

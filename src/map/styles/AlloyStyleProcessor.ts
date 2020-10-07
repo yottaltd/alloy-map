@@ -61,8 +61,7 @@ export abstract class AlloyStyleProcessor {
   ): OLStyle | OLStyle[];
 
   /**
-   * clears styles for feature id
-   * @param id the id of feature to clear cache for
+   * clears styles
    */
-  public abstract clearForFeatureId(id: string): void;
+  public abstract clear(): void;
 }
