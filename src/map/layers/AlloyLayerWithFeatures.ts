@@ -83,7 +83,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   private readonly featuresAddedDispatcher = new SimpleEventDispatcher<FeaturesAddedEvent>();
 
   /**
-   * Handler for feature geometry change
+   * handler for feature geometry change, we create this once for performance reasons. A single
+   * scoped arrow function here is passed to all geometry change handlers when we setup the
+   * event handlers on the features.
    * @param e event object
    */
   private readonly onChangeGeometryHandler = (e: ObjectEvent) =>
@@ -281,6 +283,10 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.featuresAddedDispatcher.unsubscribe(handler);
   }
 
+  /**
+   * handles feature geometry changes
+   * @param e the geometry change event to respond to
+   */
   private handleFeatureGeometryChange(e: ObjectEvent) {
     if (!(e.target instanceof OLFeature)) {
       throw new AlloyMapError(
@@ -288,9 +294,13 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
         'geometry changed for feature but target was not OLFeature',
       );
     }
+
+    // get feature and geometry
     const feature = e.target;
-    let shouldClearStyles = false;
     const geometry = feature.getGeometry();
+
+    // check if we need to clear any caches
+    let shouldClearStyles = false;
     if (geometry instanceof OLPolygon) {
       AlloyPolygonFunctions.removeFromPolygonCache(geometry);
       shouldClearStyles = true;
@@ -301,6 +311,8 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
       AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
       shouldClearStyles = true;
     }
+
+    // if we need to clear anything then clear the the style processor
     if (shouldClearStyles && this.styleProcessor) {
       const id = feature.getId();
       this.styleProcessor.clearForFeatureId(typeof id === 'string' ? id : id.toString());

@@ -153,16 +153,21 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
 
   /**
    * updates styles of drawn features
+   * @param feature specify the feature to update styles for or null for all features in the layer
    * @ignore
    * @internal
    */
   public updateStyles(feature: AlloyDrawFeature | null) {
+    // determine the features to update
     const features: AlloyDrawFeature[] = feature
       ? [feature]
       : Array.from(this.currentFeatures.values());
+
     features.forEach((clearFeature) => {
       const geometry = clearFeature.olFeature.getGeometry();
       let shouldClearStyles = false;
+
+      // selectively eject certain geometry from it's cache so it will redraw
       if (geometry instanceof OLPolygon) {
         AlloyPolygonFunctions.removeFromPolygonCache(geometry);
         shouldClearStyles = true;
@@ -173,9 +178,12 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
         AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
         shouldClearStyles = true;
       }
+
+      // if we should clear and we have a style processor then also wipe it's cached data
       if (shouldClearStyles && this.styleProcessor) {
         this.styleProcessor.clearForFeatureId(clearFeature.id);
       }
+
       clearFeature.olFeature.changed();
     });
   }
