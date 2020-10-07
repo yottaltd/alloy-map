@@ -52,7 +52,7 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     return StringUtils.cacheKeyConcat(
       resolution,
       state,
-      feature.id, // each cable feature is unique (expensive)
+      feature.olFeature.getId(), // each cable feature is unique (expensive)
       feature instanceof AlloyCableUnitFeature ? feature.properties.icon : undefined,
       feature.olFeature.getRevision(),
     );

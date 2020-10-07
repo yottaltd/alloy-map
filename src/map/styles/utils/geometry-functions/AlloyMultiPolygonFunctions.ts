@@ -44,6 +44,14 @@ export abstract class AlloyMultiPolygonFunctions {
   }
 
   /**
+   * removes polygon geometry parameters from cache
+   * @param multiPolygon geometry to remove from cache
+   */
+  public static removeFromPolygonCache(multiPolygon: OLMultiPolygon) {
+    AlloyMultiPolygonFunctions.largestPolygonCache.delete(multiPolygon);
+  }
+
+  /**
    * cache of the largest polygon for a multi polygon, using a weak map ensures we don't bump the
    * revision counter on the openlayers geometry but we also release memory once nothing references
    * the multi polygon anymore
