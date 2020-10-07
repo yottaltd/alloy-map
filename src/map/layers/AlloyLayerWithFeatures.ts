@@ -183,6 +183,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
     this.debugger('removing feature: %s', feature.id);
     this.olSource.removeFeature(feature.olFeature);
+    feature.olFeature.un('change:geometry', this.onChangeGeometryHandler);
     this.currentFeatures.delete(feature.id);
     return true;
   }
@@ -231,6 +232,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     if (hasFeatures) {
       this.debugger('clearing features');
       this.olSource.refresh();
+      this.currentFeatures.forEach((feature) =>
+        feature.olFeature.un('change:geometry', this.onChangeGeometryHandler),
+      );
       this.currentFeatures.clear();
     } else {
       this.debugger('no features to clear');
