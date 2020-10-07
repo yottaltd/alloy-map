@@ -314,7 +314,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     if (!(e.oldValue instanceof OLFeature)) {
       throw new AlloyMapError(
         1601995459,
-        'geometry changed for feature but target was not OLFeature',
+        'geometry changed for feature but oldValue was not OLFeature',
       );
     }
 
