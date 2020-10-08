@@ -12,12 +12,12 @@
     "stripInternal": true,
     "removeComments": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": "dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["dist/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["dist/**/*.ts"],
   "exclude": ["node_modules"]
 }
