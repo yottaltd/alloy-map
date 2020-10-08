@@ -4,6 +4,7 @@
     "target": "es2019",
     "module": "esnext",
     "declaration": true,
+    "declarationMap": true,
     "strict": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -12,10 +13,10 @@
     "stripInternal": true,
     "removeComments": true,
     "outDir": "dist",
-    "rootDir": "dist",
+    "rootDir": "dist/src",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["dist/*"]
+      "@/*": ["dist/src/*"]
     }
   },
   "include": ["dist/**/*.ts"],

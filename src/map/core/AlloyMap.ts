@@ -44,6 +44,8 @@ import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 
+import '@/assets/css/style.css';
+
 /* eslint-enable max-len */
 
 /**
