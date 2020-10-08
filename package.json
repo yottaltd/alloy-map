@@ -34,7 +34,7 @@
     "prebuild": "npm run eslint & npm run stylelint & npm run clean",
     "build": "npm run build:less & npm run copy:src & npm run compile",
     "build:less": "lessc src/assets/less/index.less src/assets/css/style.css",
-    "copy:src": "cd src & cpy ./** !./assets/less ../dist/src --parents",
+    "copy:src": "cpy ./src/** !./src/assets/less ./dist --parents",
     "clean": "rimraf dist/",
     "precompile": "npx tscpaths -p tsconfig-build.json -s ./dist/src -o ./dist/src",
     "compile": "npx tsc -p tsconfig-build.json",
