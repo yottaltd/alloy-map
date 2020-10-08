@@ -14,9 +14,9 @@
     "removeComments": true,
     "outDir": "dist",
     "rootDir": "dist/src",
-    "baseUrl": "./",
+    "baseUrl": "dist/src",
     "paths": {
-      "@/*": ["dist/src/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["dist/**/*.ts"],
