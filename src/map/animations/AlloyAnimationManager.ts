@@ -10,6 +10,7 @@ import OLGeometryType from 'ol/geom/GeometryType';
 import OLLineString from 'ol/geom/LineString';
 import OLMultiLineString from 'ol/geom/MultiLineString';
 import OLVectorLayer from 'ol/layer/Vector';
+import { ObjectEvent as OLObjectEvent } from 'ol/Object';
 import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
 import OLRenderEvent from 'ol/render/Event';
 
@@ -224,7 +225,7 @@ export abstract class AlloyAnimationManager {
       lineStringFeature,
       {
         preAnimation: () => {
-          const el = (e) => {
+          const el = (e: OLObjectEvent) => {
             if (!paused) {
               return;
             }

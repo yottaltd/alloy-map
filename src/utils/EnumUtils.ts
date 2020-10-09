@@ -9,6 +9,22 @@ import OLOverlayPositioning from 'ol/OverlayPositioning';
 /* eslint-enable max-len */
 
 /**
+ * @ignore
+ * @internal
+ */
+type OLOverlayPositioningKey = keyof typeof OLOverlayPositioning;
+/**
+ * @ignore
+ * @internal
+ */
+type OLGeometryTypeKey = keyof typeof OLGeometryType;
+/**
+ * @ignore
+ * @internal
+ */
+type GeoJSONObjectTypeKey = keyof typeof GeoJSONObjectType;
+
+/**
  * Internal enum utilities
  * @internal
  * @ignore
@@ -22,9 +38,9 @@ export abstract class EnumUtils {
     alloyPositioning: AlloyOverlayPositioning,
   ): OLOverlayPositioning | undefined {
     const member = Object.keys(OLOverlayPositioning).find(
-      (key) => OLOverlayPositioning[key] === String(alloyPositioning),
+      (key) => OLOverlayPositioning[key as OLOverlayPositioningKey] === String(alloyPositioning),
     );
-    return member ? OLOverlayPositioning[member] : undefined;
+    return member ? OLOverlayPositioning[member as OLOverlayPositioningKey] : undefined;
   }
 
   /**
@@ -41,9 +57,9 @@ export abstract class EnumUtils {
     }
 
     const member = Object.keys(OLGeometryType).find(
-      (key) => OLGeometryType[key] === String(geometryType),
+      (key) => OLGeometryType[key as OLGeometryTypeKey] === String(geometryType),
     );
-    return member ? OLGeometryType[member] : undefined;
+    return member ? OLGeometryType[member as OLGeometryTypeKey] : undefined;
   }
 
   /**
@@ -54,8 +70,8 @@ export abstract class EnumUtils {
     geometryType: OLGeometryType,
   ): GeoJSONObjectType | undefined {
     const member = Object.keys(GeoJSONObjectType).find(
-      (key) => GeoJSONObjectType[key] === String(geometryType),
+      (key) => GeoJSONObjectType[key as GeoJSONObjectTypeKey] === String(geometryType),
     );
-    return member ? GeoJSONObjectType[member] : undefined;
+    return member ? GeoJSONObjectType[member as GeoJSONObjectTypeKey] : undefined;
   }
 }

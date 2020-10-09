@@ -6,7 +6,7 @@ import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuild
 import { FeatureUtils } from '@/utils/FeatureUtils';
 import debounce from 'lodash.debounce';
 import flatten from 'lodash.flatten';
-import OLFeature from 'ol/Feature';
+import OLFeature, { FeatureLike as OLFeatureLike } from 'ol/Feature';
 import OLLayer from 'ol/layer/Layer';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 
@@ -93,7 +93,7 @@ export class AlloyHoverInteraction {
     // iterate through each feature at the map pixel
     this.map.olMap.forEachFeatureAtPixel(
       event.pixel,
-      (olFeature, olLayer) => {
+      (olFeature: OLFeatureLike, olLayer: OLLayer) => {
         // potentially a render feature
         if (olFeature instanceof OLFeature) {
           // find our layer index for the openlayers layers
@@ -111,6 +111,7 @@ export class AlloyHoverInteraction {
             }
           }
         }
+        return false;
       },
       {
         // filters the layers to iterate though, we only want alloy layers e.g. not hover layers

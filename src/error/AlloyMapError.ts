@@ -31,6 +31,7 @@ export class AlloyMapError extends Error {
         },
       );
     }
+    return;
   }
 
   /**

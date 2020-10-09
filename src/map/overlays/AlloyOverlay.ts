@@ -21,5 +21,5 @@ export interface AlloyOverlay {
    * sets the overlays position or removes it from the map if null
    * @param coordinate the coordinate to set or null
    */
-  setPosition(coordinate: AlloyCoordinate | null);
+  setPosition(coordinate: AlloyCoordinate | null): void;
 }

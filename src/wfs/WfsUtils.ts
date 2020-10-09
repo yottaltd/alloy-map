@@ -179,6 +179,7 @@ export abstract class WfsUtils {
     } else if (lowerCaseValue === 'gml3') {
       return AlloyWfsFormat.GML3;
     }
+    return;
   }
 
   /**

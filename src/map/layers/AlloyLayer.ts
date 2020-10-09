@@ -42,5 +42,5 @@ export interface AlloyLayer {
    * @ignore
    * @internal
    */
-  dispose();
+  dispose(): void;
 }
