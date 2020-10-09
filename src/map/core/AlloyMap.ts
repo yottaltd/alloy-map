@@ -133,19 +133,9 @@ export class AlloyMap {
   private readonly managedOverlays = new Map<string, AlloyOverlay>();
 
   /**
-   * the hover interaction manager, determines when mouseovers occur etc.
-   */
-  private readonly hoverInteraction: AlloyHoverInteraction;
-
-  /**
    * the selection in polygon interaction manager, determines when clicks occur etc.
    */
   private readonly selectInPolygonInteraction: AlloySelectInPolygonInteraction;
-
-  /**
-   * the ping interaction manager, shows a nice ping animation
-   */
-  private readonly pingInteraction: AlloyPingInteraction;
 
   /**
    * event dispatcher for change center events
@@ -264,11 +254,11 @@ export class AlloyMap {
 
     // setup hover layer, interaction and add it to the map
     this.hoverLayer = new AlloyHoverLayer({ map: this });
-    this.hoverInteraction = new AlloyHoverInteraction(this);
+    new AlloyHoverInteraction(this);
     this.hoverLayer.olLayers.map((olLayer) => this.olMap.addLayer(olLayer));
 
     // setup ping interaction
-    this.pingInteraction = new AlloyPingInteraction(this);
+    new AlloyPingInteraction(this);
 
     // setup select in poly interaction
     this.selectInPolygonInteraction = new AlloySelectInPolygonInteraction(this);
