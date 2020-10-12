@@ -41,7 +41,6 @@
     "clean": "rimraf dist/",
     "precompile": "npx tscpaths -p tsconfig.build.json -s ./dist/src -o ./dist/src",
     "compile": "npx tsc -p tsconfig.build.json",
-    "publish": "node SetupPackage.js & cd dist & npm publish",
     "docs": "typedoc ./src",
     "codegen": "node ./submodules/alloy-typescript-codegen/copyToLocal.js ./submodules/alloy-typescript-codegen/dist ./src/api",
     "eslint": "eslint src/{**/,}*.{ts,js}",

@@ -24,7 +24,7 @@
     "ecmaFeatures": {},
     "sourceType": "module"
   },
-  "ignorePatterns": ["src/api/**", "dist/**"],
+  "ignorePatterns": ["src/api/**", "dist/src/api/**"],
   "rules": {
     "eqeqeq": "warn",
     "no-console": "error",
