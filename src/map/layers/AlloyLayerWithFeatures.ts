@@ -10,17 +10,11 @@ import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyLayer } from '@/map/layers/AlloyLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
-import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
-import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
-import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { FeatureUtils } from '@/utils/FeatureUtils';
 import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
-import OLGeometryCollection from 'ol/geom/GeometryCollection';
-import OLMultiPolygon from 'ol/geom/MultiPolygon';
-import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
 import { ObjectEvent } from 'ol/Object';
 import OLVectorSource from 'ol/source/Vector';
@@ -320,35 +314,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
     // get feature and geometry
     const feature = e.oldValue;
-    this.resetStyle(feature);
-  }
-
-  /**
-   * Temp function
-   * resets style for an ol feature
-   * @param feature openlayers feature for which we want to reset style
-   */
-  public resetStyle(feature: OLFeature) {
-    const geometry = feature.getGeometry();
-
-    // check if we need to clear any caches
-    let shouldClearStyles = false;
-    if (geometry instanceof OLPolygon) {
-      AlloyPolygonFunctions.removeFromPolygonCache(geometry);
-      shouldClearStyles = true;
-    } else if (geometry instanceof OLMultiPolygon) {
-      AlloyMultiPolygonFunctions.removeFromPolygonCache(geometry);
-      shouldClearStyles = true;
-    } else if (geometry instanceof OLGeometryCollection) {
-      AlloyGeometryCollectionFunctions.removeFromPolygonCache(geometry);
-      shouldClearStyles = true;
+    const currentFeature = this.currentFeatures.get(
+      FeatureUtils.getFeatureIdFromOlFeature(feature),
+    );
+    if (currentFeature) {
+      currentFeature.clearCache();
     }
-
-    // if we need to clear anything then clear the the style processor
-    if (shouldClearStyles && this.styleProcessor) {
-      this.styleProcessor.clear();
-    }
-
-    feature.changed();
   }
 }

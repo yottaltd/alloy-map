@@ -15,7 +15,7 @@ import * as uuid from 'uuid';
  * an alloy draw feature which represents something being drawn on the map by a user or
  * added programatically, it can represent anything
  */
-export class AlloyDrawFeature implements AlloyFeature {
+export class AlloyDrawFeature extends AlloyFeature {
   /**
    * creates alloy draw features from an alloy feature, this will break the feature apart into a
    * feature per simple geometry
@@ -84,6 +84,13 @@ export class AlloyDrawFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
    * the properties for the draw feature
    */
   public readonly properties: Readonly<AlloyDrawFeatureProperties>;
@@ -97,6 +104,7 @@ export class AlloyDrawFeature implements AlloyFeature {
    * @internal
    */
   constructor(id: string, olFeature: OLFeature, properties: AlloyDrawFeatureProperties) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

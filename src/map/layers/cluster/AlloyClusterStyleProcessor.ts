@@ -52,12 +52,4 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
   }
-
-  /**
-   * @override
-   */
-  public clear(): void {
-    this.clusterStyleBuilder.clear();
-    this.itemStyleBuilder.clear();
-  }
 }

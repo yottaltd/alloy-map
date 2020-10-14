@@ -17,7 +17,7 @@ import OLPolygon from 'ol/geom/Polygon';
  * an alloy custom feature which represents something being added to the map by a user or
  * programatically, it can represent anything
  */
-export abstract class AlloyCustomFeatureBase implements AlloyFeature {
+export abstract class AlloyCustomFeatureBase extends AlloyFeature {
   /**
    * @implements
    */
@@ -53,6 +53,13 @@ export abstract class AlloyCustomFeatureBase implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
    * the properties for the custom feature
    */
   public readonly properties: Readonly<AlloyCustomFeatureProperties>;
@@ -72,6 +79,7 @@ export abstract class AlloyCustomFeatureBase implements AlloyFeature {
     properties: AlloyCustomFeatureProperties,
     originatingLayerId: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

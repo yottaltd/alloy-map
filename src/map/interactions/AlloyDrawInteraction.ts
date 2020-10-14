@@ -16,6 +16,7 @@ import { GeometryUtils } from '@/utils/GeometryUtils';
 import { Debugger } from 'debug';
 import { Geometry } from 'geojson';
 import * as _ from 'lodash';
+import { EventsKey as OLEventsKey } from 'ol/events';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -30,6 +31,7 @@ import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import OLDraw, { createBox as OLCreateBox } from 'ol/interaction/Draw';
 import OLModify from 'ol/interaction/Modify';
 import OLSelect from 'ol/interaction/Select';
+import { unByKey } from 'ol/Observable';
 import OLCircle from 'ol/style/Circle';
 import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
@@ -397,11 +399,11 @@ export class AlloyDrawInteraction {
 
         // fire change event
         this.dispatcher.dispatch(
-          new AlloyDrawEvent(featureRemove ? null : sourceFeature, this.drawLayer),
+          new AlloyDrawEvent(featureRemove ? null : [sourceFeature], this.drawLayer),
         );
 
         // update any styles for the drawn feature
-        this.drawLayer.updateStyles(featureRemove ? null : sourceFeature);
+        sourceFeature.clearCache();
 
         // re-process point features on remove layer for remove interaction
         this.setRemoveInteractionFeatures();
@@ -465,7 +467,7 @@ export class AlloyDrawInteraction {
       this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
       this.setDoubleClickZoomEnabled(true);
       // dispatch event
-      this.dispatcher.dispatch(new AlloyDrawEvent(feature, this.drawLayer));
+      this.dispatcher.dispatch(new AlloyDrawEvent(feature ? [feature] : null, this.drawLayer));
     });
   }
 
@@ -480,11 +482,27 @@ export class AlloyDrawInteraction {
       style: this.drawStyles,
     });
 
+    const modifiedFeatures: OLFeature[] = [];
+    const modifyListeners: OLEventsKey[] = [];
+
     this.olModify.on('modifystart', (e) => {
       // on modify start cancel draw interaction if available
       if (this.olDraw !== null) {
         this.cancelDraw();
       }
+
+      // add listeners to keep track of modified features
+      modifiedFeatures.splice(0, modifiedFeatures.length);
+      unByKey(modifyListeners);
+      modifyListeners.splice(0, modifyListeners.length);
+      e.features.getArray().forEach((feature) => {
+        modifyListeners.push(
+          feature.on('change', () => {
+            modifiedFeatures.push(feature);
+          }),
+        );
+      });
+
       // disable selection and double-click zoom interactions
       this.wasSelectionEnabled = this.map.selectionInteraction.isEnabled;
       this.map.selectionInteraction.setEnabled(false);
@@ -492,12 +510,20 @@ export class AlloyDrawInteraction {
     });
 
     this.olModify.on('modifyend', (event) => {
-      // find AlloyDrawFeature that was modified in the interaction
-      const drawFeature = this.drawLayer.getFeatureById(
-        FeatureUtils.getFeatureIdFromOlFeature(event.features.item(0)),
-      );
+      // remove listeners
+      unByKey(modifyListeners);
+      modifyListeners.splice(0, modifyListeners.length);
+
+      // find AlloyDrawFeatures that were modified in the interaction
+      const drawFeatures = modifiedFeatures
+        .map((feature) =>
+          this.drawLayer.getFeatureById(FeatureUtils.getFeatureIdFromOlFeature(feature)),
+        )
+        .filter((f): f is AlloyDrawFeature => f !== null);
+      modifiedFeatures.splice(0, modifiedFeatures.length);
+
       // reset interactions and dispatch event if possible
-      this.onModifyEnd(drawFeature);
+      this.onModifyEnd(drawFeatures);
     });
 
     // add modify interaction to the map
@@ -506,20 +532,20 @@ export class AlloyDrawInteraction {
 
   /**
    * resets selection and double-click zoom interactions
-   * and dispatches draw event with modified feature
-   * @param feature modified feature
+   * and dispatches draw event with modified features
+   * @param features modified features
    */
-  private onModifyEnd(feature: AlloyDrawFeature | null) {
+  private onModifyEnd(features: AlloyDrawFeature[]) {
     // reset interactions
     setTimeout(() => {
       this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
       this.setDoubleClickZoomEnabled(true);
       // dispatch draw event if feature is not null
-      if (feature !== null) {
-        this.dispatcher.dispatch(new AlloyDrawEvent(feature, this.drawLayer));
+      if (features) {
+        this.dispatcher.dispatch(new AlloyDrawEvent(features, this.drawLayer));
       }
     });
-    this.drawLayer.updateStyles(feature);
+    features.forEach((feature) => feature.clearCache());
   }
 
   /**

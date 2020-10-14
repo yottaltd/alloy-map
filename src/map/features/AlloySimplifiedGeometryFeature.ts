@@ -18,7 +18,7 @@ import OLPolygon from 'ol/geom/Polygon';
  * an alloy simplified geometry feature which represents geometry or geometries that have been
  * optimised for low lod rendering
  */
-export class AlloySimplifiedGeometryFeature implements AlloyFeature {
+export class AlloySimplifiedGeometryFeature extends AlloyFeature {
   /**
    * @implements
    */
@@ -58,6 +58,13 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
    * the cached properties of the alloy simplified geometry feature
    */
   public readonly properties: Readonly<AlloySimplifiedGeometryFeatureProperties>;
@@ -77,6 +84,7 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
     properties: AlloySimplifiedGeometryFeatureProperties,
     originatingLayerId?: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

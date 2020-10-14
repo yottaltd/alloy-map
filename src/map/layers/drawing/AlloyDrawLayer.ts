@@ -149,21 +149,6 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   }
 
   /**
-   * updates styles of drawn features
-   * @param feature specify the feature to update styles for or null for all features in the layer
-   * @ignore
-   * @internal
-   */
-  public updateStyles(feature: AlloyDrawFeature | null) {
-    // determine the features to update
-    const features: AlloyDrawFeature[] = feature
-      ? [feature]
-      : Array.from(this.currentFeatures.values());
-
-    features.forEach((clearFeature) => this.resetStyle(clearFeature.olFeature));
-  }
-
-  /**
    * @implements
    */
   public dispose() {

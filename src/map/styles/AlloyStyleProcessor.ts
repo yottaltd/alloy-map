@@ -59,9 +59,4 @@ export abstract class AlloyStyleProcessor {
     resolution: number,
     state: AlloyStyleBuilderBuildState,
   ): OLStyle | OLStyle[];
-
-  /**
-   * clears styles
-   */
-  public abstract clear(): void;
 }

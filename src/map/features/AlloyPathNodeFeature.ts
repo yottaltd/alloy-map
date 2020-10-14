@@ -10,7 +10,7 @@ import OLPoint from 'ol/geom/Point';
 /**
  * an alloy path node feature which represents a connected unit with point geometry
  */
-export abstract class AlloyPathNodeFeature implements AlloyFeature {
+export abstract class AlloyPathNodeFeature extends AlloyFeature {
   /**
    * @implements
    */
@@ -50,6 +50,13 @@ export abstract class AlloyPathNodeFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
    * the cached properties of the alloy path node feature
    */
   public readonly properties: Readonly<AlloyPathNodeFeatureProperties>;
@@ -69,6 +76,7 @@ export abstract class AlloyPathNodeFeature implements AlloyFeature {
     properties: AlloyPathNodeFeatureProperties,
     originatingLayerId?: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

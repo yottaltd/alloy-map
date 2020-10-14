@@ -29,9 +29,10 @@ export class AlloyStyleCache {
   }
 
   /**
-   * Clears cached styles
+   * Clears cached styles for key
+   * @param key the cache key for the style
    */
-  public clear(): void {
-    this.cache.clear();
+  public clear(key: string): void {
+    this.cache.delete(key);
   }
 }
