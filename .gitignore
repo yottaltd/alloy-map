@@ -4,6 +4,7 @@ node_modules
 /dist
 /types
 /docs
+/src/assets/css
 
 # cypress io
 tests/e2e/screenshots
