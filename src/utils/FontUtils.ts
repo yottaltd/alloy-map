@@ -38,7 +38,7 @@ export abstract class FontUtils {
     }
 
     // generate the test string mapping
-    const testStrings = {};
+    const testStrings: { [key: string]: string } = {};
     webfonts.forEach((f) => {
       testStrings[f.fontFamily] = f.testString;
 

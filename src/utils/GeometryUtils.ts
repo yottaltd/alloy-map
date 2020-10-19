@@ -13,7 +13,7 @@ import {
   Point,
   Polygon,
 } from 'geojson';
-import * as _ from 'lodash';
+import { memoize } from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -284,7 +284,7 @@ export abstract class GeometryUtils {
    * @ignore
    * @internal
    */
-  private static readonly memoizedRotateCoordinate = _.memoize(
+  private static readonly memoizedRotateCoordinate = memoize(
     GeometryUtils.rotateCoordinateImplementation,
     // custom resolver because lodash only keys on the first argument
     (coordinate: OLCoordinate, angleRadians: number, anchor: OLCoordinate) =>
@@ -296,7 +296,7 @@ export abstract class GeometryUtils {
    * @ignore
    * @internal
    */
-  private static readonly memoizedRoundCoordinate = _.memoize(
+  private static readonly memoizedRoundCoordinate = memoize(
     GeometryUtils.roundCoordinate,
     (coordinate: OLCoordinate) => coordinate.join(','),
   );

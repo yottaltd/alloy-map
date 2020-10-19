@@ -1,6 +1,6 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { Colour, ColourUtils } from '@/utils/ColourUtils';
-import * as _ from 'lodash';
+import { memoize } from 'lodash';
 
 /**
  * the canvas min size, width is always a multiple of this whilst height is always exactly this
@@ -33,7 +33,7 @@ export abstract class AlloyTextUtils {
   /**
    * the memoized version of `createTextCanvasImplementation`
    */
-  private static readonly memoizedCreateTextCanvas = _.memoize(
+  private static readonly memoizedCreateTextCanvas = memoize(
     AlloyTextUtils.createTextCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
     (text: string, colour: Colour) => AlloyTextUtils.cleanText(text) + ':' + colour,

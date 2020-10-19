@@ -3,7 +3,7 @@ import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyTextUtils } from '@/map/styles/utils/AlloyTextUtils';
 import { Colour, ColourUtils } from '@/utils/ColourUtils';
 import { FontUtils } from '@/utils/FontUtils';
-import * as _ from 'lodash';
+import { memoize } from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';
@@ -26,7 +26,7 @@ export abstract class AlloyIconUtils {
    * gets the unicode value for a font class (or classes), **this method is cached**
    * @param classNames the class name or names (space separated) to generate the unicode for
    */
-  public static readonly getUnicodeForFontClass = _.memoize(
+  public static readonly getUnicodeForFontClass = memoize(
     AlloyIconUtils.getUnicodeForFontClassImplementation,
   );
 
@@ -114,7 +114,7 @@ export abstract class AlloyIconUtils {
   /**
    * memoized version of `createIconCanvasImplementation`
    */
-  private static readonly memoizedCreateIconCanvas = _.memoize(
+  private static readonly memoizedCreateIconCanvas = memoize(
     AlloyIconUtils.createIconCanvasImplementation,
     // custom resolver because lodash only keys on the first argument
     (classNames: string, colour: Colour, font: string, fontWeight: number) =>

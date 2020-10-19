@@ -11,7 +11,6 @@ import { AlloyWfsFormat } from '@/wfs/AlloyWfsFormat';
 import { WfsFeatureDescription } from '@/wfs/WfsFeatureDescription';
 import { WfsFeatureProperty } from '@/wfs/WfsFeatureProperty';
 import { WfsVersionParser } from '@/wfs/WfsVersionParser';
-import { debug, Debugger } from 'debug';
 import OLGeoJSON from 'ol/format/GeoJSON';
 
 /**
@@ -36,7 +35,6 @@ export abstract class WfsUtils {
       if (version) {
         capsUrl.searchParams.set('version', version);
       }
-      WfsUtils.debugger(`Fetching WFS capabilities for ${capsUrl.href}`);
 
       const caps = await (await fetch(capsUrl.href)).text();
 
@@ -55,7 +53,6 @@ export abstract class WfsUtils {
    */
   public static async parseCapabilities(url: string, caps: string): Promise<AlloyWfsCapabilities> {
     try {
-      WfsUtils.debugger('parsing xml');
       const domparser = new DOMParser();
       const domdoc = domparser.parseFromString(caps, 'text/xml');
 
@@ -63,10 +60,8 @@ export abstract class WfsUtils {
       if (!rootEl) {
         throw new AlloyMapError(1595592193, 'Failed to get WFS capabilities root element');
       }
-      WfsUtils.debugger('found capabilities root element');
 
       const attributeVersion: string = rootEl.getAttribute('version') || '1.0.0';
-      WfsUtils.debugger(`capabilities version = ${attributeVersion}`);
 
       let title = '';
       const titleNode =
@@ -75,7 +70,6 @@ export abstract class WfsUtils {
       if (titleNode) {
         title = titleNode.innerHTML;
       }
-      WfsUtils.debugger(`capabilties title = ${title}`);
 
       // populate the feature types
       const featureTypes: AlloyWfsFeatureType[] = [];
@@ -89,11 +83,8 @@ export abstract class WfsUtils {
             featureTypes.push(WfsVersionParser.parseFeatureTypeNode(ftNode, attributeVersion));
           } catch (error) {
             // ignore feature type if something went wrong parsing it
-            WfsUtils.debugger('failed to parse feature type node');
           }
         });
-      } else {
-        WfsUtils.debugger('did not find feature type list in capabilities');
       }
 
       // Get supported output formats
@@ -188,6 +179,7 @@ export abstract class WfsUtils {
     } else if (lowerCaseValue === 'gml3') {
       return AlloyWfsFormat.GML3;
     }
+    return;
   }
 
   /**
@@ -208,10 +200,8 @@ export abstract class WfsUtils {
     try {
       // TODO: https://teamyotta.atlassian.net/browse/AL-4636 need to fix this to use imports from
       // correct namespace and elements that reference complexTypes
-      WfsUtils.debugger(`requesting WFS feature type descriptions for ${featureTypeUrl.href}`);
       const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
 
-      WfsUtils.debugger('parsing xml');
       await WfsUtils.parseFeatureTypeDescrption(featureTypeDescription, descriptions);
     } catch (error) {
       throw error instanceof AlloyMapError
@@ -220,13 +210,6 @@ export abstract class WfsUtils {
     }
     return descriptions;
   }
-
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  private static readonly debugger: Debugger = debug('alloymaps').extend(WfsUtils.name);
 
   /**
    * Parses GetCapabilities response and gets all supported output formats for GetFeature request.
@@ -305,8 +288,6 @@ export abstract class WfsUtils {
           }
           const name: string | null = element.getAttribute('name');
           if (name) {
-            WfsUtils.debugger(`Parsing description for parameter ${name}`);
-
             const nillable: string | null = element.getAttribute('nillable');
 
             const minOccursAttribute: string | null = element.getAttribute('minOccurs');

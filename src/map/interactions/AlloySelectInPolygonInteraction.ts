@@ -3,7 +3,6 @@ import { AlloyFeature } from '@/map/features/AlloyFeature';
 // eslint-disable-next-line max-len
 import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-functions/AlloyGeometryFunctionUtils';
 import { FeatureUtils } from '@/utils/FeatureUtils';
-import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLPolygon from 'ol/geom/Polygon';
@@ -40,13 +39,6 @@ const POINT_LINE_COLOUR = '#ffffff';
  * @internal
  */
 export class AlloySelectInPolygonInteraction {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * the map to add selection interaction to
    */
@@ -91,9 +83,6 @@ export class AlloySelectInPolygonInteraction {
    */
   constructor(map: AlloyMap) {
     this.map = map;
-
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloySelectInPolygonInteraction.name);
 
     // create a source and layer to render the interaction
     this.olSource = new OLVectorSource();

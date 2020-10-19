@@ -5,7 +5,6 @@ import { AlloyLayer } from '@/map/layers/AlloyLayer';
 import { AlloyHoverLayerOptions } from '@/map/layers/hover/AlloyHoverLayerOptions';
 import { AlloyHoverStyleProcessor } from '@/map/layers/hover/AlloyHoverStyleProcessor';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
-import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
 
@@ -15,13 +14,6 @@ import OLVectorSource from 'ol/source/Vector';
  * @internal
  */
 export class AlloyHoverLayer implements AlloyLayer {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * @implements
    */
@@ -67,9 +59,6 @@ export class AlloyHoverLayer implements AlloyLayer {
    */
   constructor(options: AlloyHoverLayerOptions) {
     this.map = options.map;
-
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyHoverLayer.name);
 
     // initialised here because style processor need some of the above internal properties
     this.styleProcessor = new AlloyHoverStyleProcessor(this);

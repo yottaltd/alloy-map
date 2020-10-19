@@ -4,10 +4,7 @@ import { fromLonLat, get, toLonLat, transformExtent } from 'ol/proj';
 import { register } from 'ol/proj/proj4';
 import OLProjection from 'ol/proj/Projection';
 
-// ugly hack to allow building taken from here
-// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663
-import * as proj4x from 'proj4';
-const proj4 = (proj4x as any).default;
+import proj4, { ProjectionDefinition } from 'proj4';
 
 /**
  * utility class for accessing ol/proj functions due to typing issues.
@@ -46,7 +43,7 @@ export abstract class PolyfillProj {
    * Registers proj4 with openlayers
    * @param proj proj4 object to register with openlayers
    */
-  public static register(code: string, def: string | proj4x.ProjectionDefinition) {
+  public static register(code: string, def: string | ProjectionDefinition) {
     proj4.defs(code, def);
     register(proj4);
   }

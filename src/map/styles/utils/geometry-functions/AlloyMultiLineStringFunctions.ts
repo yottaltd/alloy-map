@@ -1,5 +1,5 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
-import * as _ from 'lodash';
+import { flatten } from 'lodash';
 import { getCenter } from 'ol/extent';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
@@ -81,7 +81,7 @@ export abstract class AlloyMultiLineStringFunctions {
 
     // get mid point from behind the cache
     return new OLMultiPoint(
-      _.flatten(
+      flatten(
         (olGeometry as OLMultiLineString)
           .getLineStrings()
           .map((l) => [l.getFirstCoordinate(), l.getLastCoordinate()]),

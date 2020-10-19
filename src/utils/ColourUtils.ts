@@ -1,4 +1,4 @@
-import * as color from 'color';
+import color from 'color';
 
 /**
  * consistent percentage when modifying colours

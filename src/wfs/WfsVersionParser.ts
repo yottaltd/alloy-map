@@ -2,7 +2,6 @@ import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyBounds } from '@/map/core/AlloyBounds';
 import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { AlloyWfsFeatureType } from '@/wfs/AlloyWfsFeatureType';
-import { debug, Debugger } from 'debug';
 
 /**
  * tag names used in WFS GetCapabilties response FeatureType that are used to get info
@@ -27,8 +26,6 @@ export abstract class WfsVersionParser {
    * @param version version of WFS service
    */
   public static parseFeatureTypeNode(node: Element, version: string): AlloyWfsFeatureType {
-    WfsVersionParser.debugger('parsing feature type node');
-
     const nameNode = node.querySelector(featureTypeName);
     if (!nameNode) {
       throw new AlloyMapError(1562248616, 'Failed to get feature type name node');
@@ -42,8 +39,6 @@ export abstract class WfsVersionParser {
     const wgs84bboxValue = WfsVersionParser.parseFeatureTypeBbox(node, version);
     const epsgValue = WfsVersionParser.parseFeatureTypeEpsg(node, version);
 
-    WfsVersionParser.debugger(`finished parsing feature type node ${titleValue}`);
-
     return {
       name: nameValue,
       title: titleValue,
@@ -54,12 +49,6 @@ export abstract class WfsVersionParser {
       epsg: epsgValue,
     };
   }
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  private static readonly debugger: Debugger = debug('alloymaps').extend(WfsVersionParser.name);
 
   /**
    * Gets epsg code for WFS Feature type
@@ -69,7 +58,6 @@ export abstract class WfsVersionParser {
    * @internal
    */
   private static parseFeatureTypeEpsg(node: Element, version: string): number {
-    WfsVersionParser.debugger('parsing feature type epsg');
     let srsTag: string;
     switch (version) {
       case '1.0.0':
@@ -94,7 +82,6 @@ export abstract class WfsVersionParser {
     if (typeof srsNumber !== 'number' || isNaN(srsNumber)) {
       throw new AlloyMapError(1562249473, 'Failed to parse srs node value for feature type');
     }
-    WfsVersionParser.debugger(`finished parsing feature type epsg ${srsNumber}`);
     return srsNumber;
   }
 
@@ -109,7 +96,6 @@ export abstract class WfsVersionParser {
     node: Element,
     version: string,
   ): [number, number, number, number] {
-    WfsVersionParser.debugger('parsing feature type bbox');
     const isNew = version !== '1.0.0';
     const bbox: Element | null = node.querySelector(
       isNew ? featureTypeBboxNew : featureTypeBboxOld,
@@ -156,7 +142,6 @@ export abstract class WfsVersionParser {
         );
       }
     });
-    WfsVersionParser.debugger('finished parsing feature type bbox');
     return bboxValue;
   }
 }

@@ -4,9 +4,8 @@ import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyLayer } from '@/map/layers/AlloyLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { FeatureUtils } from '@/utils/FeatureUtils';
-import { Debugger } from 'debug';
-import * as _ from 'lodash';
-import OLFeature from 'ol/Feature';
+import { debounce, flatten } from 'lodash';
+import OLFeature, { FeatureLike as OLFeatureLike } from 'ol/Feature';
 import OLLayer from 'ol/layer/Layer';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 
@@ -22,13 +21,6 @@ const POINTER_MOVE_THROTTLE = 50;
  * @internal
  */
 export class AlloyHoverInteraction {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * the map to add hover interaction to
    */
@@ -52,9 +44,6 @@ export class AlloyHoverInteraction {
   constructor(map: AlloyMap) {
     this.map = map;
 
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyHoverInteraction.name);
-
     // recalculate the payload on initialisation
     this.recalculatePointerMovePayload();
 
@@ -62,7 +51,7 @@ export class AlloyHoverInteraction {
     // processing done for these events
     this.map.olMap.on(
       'pointermove',
-      _.debounce(
+      debounce(
         (e) => this.onPointerMove(e as any /* this is untyped in ol */),
         POINTER_MOVE_THROTTLE,
         {
@@ -103,7 +92,7 @@ export class AlloyHoverInteraction {
     // iterate through each feature at the map pixel
     this.map.olMap.forEachFeatureAtPixel(
       event.pixel,
-      (olFeature, olLayer) => {
+      (olFeature: OLFeatureLike, olLayer: OLLayer) => {
         // potentially a render feature
         if (olFeature instanceof OLFeature) {
           // find our layer index for the openlayers layers
@@ -121,6 +110,7 @@ export class AlloyHoverInteraction {
             }
           }
         }
+        return false;
       },
       {
         // filters the layers to iterate though, we only want alloy layers e.g. not hover layers
@@ -161,7 +151,7 @@ export class AlloyHoverInteraction {
    */
   private recalculatePointerMovePayload() {
     const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
-    const olLayers = _.flatten(layers.map((l) => l.olLayers));
+    const olLayers = flatten(layers.map((l) => l.olLayers));
 
     // TODO maybe work out the z-index?
     this.pointerMovePayload = {

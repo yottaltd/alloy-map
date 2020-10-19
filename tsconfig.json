@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "target": "es2019",
     "module": "esnext",
     "declaration": true,
-    "outDir": "./types",
     "strict": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "noImplicitAny": false,
     "types": ["node"],
     "stripInternal": true,
+    "removeComments": true,
+    "outDir": "dist",
+    "rootDir": "src",
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]

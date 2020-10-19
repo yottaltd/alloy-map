@@ -11,7 +11,6 @@ import { AlloyLayer } from '@/map/layers/AlloyLayer';
 import { AlloyAnimatedPathLayerOptions } from '@/map/layers/animation/AlloyAnimatedPathLayerOptions';
 import { AlloyAnimatedPathStyleProcessor } from '@/map/layers/animation/AlloyAnimatedPathStyleProcessor';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
-import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLVectorLayer from 'ol/layer/Vector';
@@ -31,13 +30,6 @@ const CONNECTOR_ID = 'connector:';
  * and draws connector lines between these
  */
 export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
-  /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
   /**
    * @implements
    */
@@ -126,7 +118,6 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
   constructor(options: AlloyAnimatedPathLayerOptions) {
     this.id = options.id;
     this.map = options.map;
-    this.debugger = this.map.debugger.extend(AlloyAnimatedPathLayer.name + ':' + this.id);
     this.styleProcessor = this.createStyleProcessor();
 
     this.olLayerAnimatedPaths = new OLVectorLayer({

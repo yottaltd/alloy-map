@@ -5,7 +5,6 @@ import { AlloyFeatureLoader } from '@/map/layers/loaders/AlloyFeatureLoader';
 import { AlloyTileCoordinate } from '@/map/layers/loaders/AlloyTileCoordinate';
 import { AlloyTileFeatureRequest } from '@/map/layers/loaders/AlloyTileFeatureRequest';
 import { PolyfillExtent } from '@/polyfills/PolyfillExtent';
-import { Debugger } from 'debug';
 import { Extent as OLExtent } from 'ol/extent';
 import OLProjection from 'ol/proj/Projection';
 import OLTileGrid from 'ol/tilegrid/TileGrid';
@@ -33,11 +32,6 @@ const TILE_CACHE_MINUTES = 1;
  */
 export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements AlloyFeatureLoader {
   /**
-   * debugger instance
-   */
-  protected readonly debugger: Debugger;
-
-  /**
    * the extent to load features within
    */
   private readonly olLayerExtent: OLExtent;
@@ -60,14 +54,11 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
   /**
    * creates a new instance
    * @param olTileGrid the openlayers tilegrid to use for calculating tile coordinates
-   * @param parentDebugger the parent debugger to extend
+   * @param olLayerExtent the openlayers extent of the layer
    */
-  constructor(olTileGrid: OLTileGrid, olLayerExtent: OLExtent, parentDebugger: Debugger) {
+  constructor(olTileGrid: OLTileGrid, olLayerExtent: OLExtent) {
     this.olTileGrid = olTileGrid;
     this.olLayerExtent = olLayerExtent;
-
-    // setup the debugger
-    this.debugger = parentDebugger.extend(AlloyTileFeatureLoader.name);
   }
 
   /**
@@ -78,12 +69,9 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     resolution: number,
     projection: OLProjection,
   ): Promise<void> {
-    this.debugger('load features requested, resolution: %d, extent: %o', resolution, extent);
-
     // short circuit if the view is out of bounds
     if (!PolyfillExtent.intersects(this.olLayerExtent, extent)) {
       this.requestCache.clear(); // clear all requests if we're outside the bounds
-      this.debugger('view is out of bounds');
       return;
     }
 
@@ -104,13 +92,10 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
     // iterate through tile coords for the current extent and zoom
     tileCoordinates.forEach((coordinate) => {
-      this.debugger('features requested for tile, %o', coordinate.olTileCoordinate);
-
       // check the tile cache first, if we have results then use them
       const tileCacheKey = AlloyTileCache.createTimeBasedKey(coordinate, TILE_CACHE_MINUTES);
       const tileCacheItem = this.tileCache.get(tileCacheKey);
       if (tileCacheItem) {
-        this.debugger('request cached, reusing tile, %o', coordinate.olTileCoordinate);
         requests.push(tileCacheItem.result);
         return;
       }
@@ -118,7 +103,6 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
       // short circuit if the tile is out of bounds
       const olTileCoordExtent = this.olTileGrid.getTileCoordExtent(coordinate.olTileCoordinate);
       if (!PolyfillExtent.intersects(this.olLayerExtent, olTileCoordExtent)) {
-        this.debugger('tile is out of bounds');
         return;
       }
 
@@ -167,12 +151,6 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
    */
   private async loadTile(coordinate: AlloyTileCoordinate, tileCacheKey: string): Promise<T[]> {
     // make the request for data
-    this.debugger(
-      'requesting tile data for x: %d, y: %d, z: %d',
-      coordinate.x,
-      coordinate.y,
-      coordinate.z,
-    );
     const request: AlloyTileFeatureRequest<T> = this.requestTile(coordinate);
 
     // add the request to the tile cache early
@@ -186,28 +164,10 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
     try {
       features = await request.result;
     } catch (e) {
-      this.debugger(
-        'failed to get tile data for x: %d, y: %d, z: %d, error: %o',
-        coordinate.x,
-        coordinate.y,
-        coordinate.z,
-        e,
-      );
       return []; // we specifically are not caching failed api calls
     } finally {
       // always remove the request when it completes or fails
       this.requestCache.delete(request, false);
-    }
-
-    // debug message is behind guard because we evaluate length of variable
-    if (this.debugger.enabled) {
-      this.debugger(
-        '%d results added to cache for tile x: %d, y: %d, z: %d',
-        features.length,
-        coordinate.x,
-        coordinate.y,
-        coordinate.z,
-      );
     }
 
     return features;

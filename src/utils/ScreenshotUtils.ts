@@ -139,6 +139,7 @@ export abstract class ScreenshotUtils {
     context.font = `${fontHeight}px "Open Sans"`;
 
     context.strokeText(inner.innerText, offset + width / 2, canvas.height - (offset + height - 2));
+    return;
   }
 
   /**

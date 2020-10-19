@@ -84,10 +84,8 @@ export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyItemF
   private readonly onMapChangeZoom: MapChangeZoomEventHandler = (e) => {
     // short circuit if we have no styles
     if (this.styles.length === 0) {
-      this.debugger('map zoomed, but no styles present, skipping feature loading');
       return;
     }
-    this.debugger('map zoomed, clearing features');
     // tells the feature loader to clear the source next time tiles complete. this leaves the
     // tiles on screen until we have data
     this.featureLoader.clearSourceOnNextLoad();
@@ -105,7 +103,6 @@ export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyItemF
   private readonly onMapChangeCentre: MapChangeCentreEventHandler = (e) => {
     // short circuit if we have no styles
     if (this.styles.length === 0) {
-      this.debugger('map centre changed, but no styles present, skipping feature loading');
       return;
     }
     this.featureLoader.loadFeatures(e.olExtent, e.olResolution, ProjectionUtils.MAP_PROJECTION);

@@ -58,11 +58,7 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyItemFea
    * @internal
    */
   constructor(layer: AlloyBasicLayer) {
-    super(
-      PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM }),
-      layer.bounds.toMapExtent(),
-      layer.debugger,
-    );
+    super(PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM }), layer.bounds.toMapExtent());
     this.layer = layer;
     // calculate the style ids and cache
     this.styleIds = layer.styles.map((s) => s.styleId);

@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.ts',
   mode: 'production',
   //devtool: 'inline-source-map',
   module: {
@@ -12,15 +11,15 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader',
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
       },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, '../../src'),
     },
   },
   output: {

@@ -57,11 +57,7 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
    * @param layer the layer to load features for
    */
   constructor(layer: AlloyNetworkLayer) {
-    super(
-      PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM }),
-      layer.bounds.toMapExtent(),
-      layer.debugger,
-    );
+    super(PolyfillTileGrid.createXYZ({ maxZoom: TILE_GRID_MAX_ZOOM }), layer.bounds.toMapExtent());
     this.layer = layer;
     // calculate the style ids and cache
     this.styleIds = layer.styles.map((s) => s.styleId);

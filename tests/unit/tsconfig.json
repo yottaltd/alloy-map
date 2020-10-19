@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "target": "es2019",
+    "module": "esnext",
     "lib": ["es6", "dom"],
     "noImplicitAny": false,
     "allowJs": true,

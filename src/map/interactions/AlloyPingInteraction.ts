@@ -1,7 +1,6 @@
 import { AlloyMap } from '@/map/core/AlloyMap';
 import { PolyfillObservable } from '@/polyfills/PolyfillObservable';
 import { PolyfillVectorContext } from '@/polyfills/PolyfillVectorContext';
-import { Debugger } from 'debug';
 import OLPoint from 'ol/geom/Point';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import OLCanvasImmediateRenderer from 'ol/render/canvas/Immediate';
@@ -29,13 +28,6 @@ const PING_ANIMATION_MAX_RADIUS = 25;
  */
 export class AlloyPingInteraction {
   /**
-   * debugger instance
-   * @ignore
-   * @internal
-   */
-  public readonly debugger: Debugger;
-
-  /**
    * the map to add selection interaction to
    */
   private map: AlloyMap;
@@ -48,9 +40,6 @@ export class AlloyPingInteraction {
    */
   constructor(map: AlloyMap) {
     this.map = map;
-
-    // set the debugger instance
-    this.debugger = this.map.debugger.extend(AlloyPingInteraction.name);
 
     // listen for click events
     this.map.olMap.on('click', (e) => {
@@ -65,7 +54,6 @@ export class AlloyPingInteraction {
   private onClick(event: OLMapBrowserPointerEvent): void {
     // short circuit when dragging
     if (event.dragging) {
-      this.debugger('pointer dragging');
       return;
     }
 

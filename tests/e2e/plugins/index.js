@@ -2,7 +2,7 @@ const wp = require('@cypress/webpack-preprocessor');
 
 module.exports = (on) => {
   const options = {
-    webpackOptions: require('../../../webpack.config'),
+    webpackOptions: require('../webpack.config'),
   };
 
   // remove externals, we want to load all dependencies into cypress!
