@@ -5,6 +5,7 @@ import {
   containsCoordinate,
   containsExtent,
   Extent as OLExtent,
+  getCenter,
   intersects,
 } from 'ol/extent';
 
@@ -58,5 +59,13 @@ export abstract class PolyfillExtent {
    */
   public static boundingExtent(coordinates: OLCoordinate[]): OLExtent {
     return boundingExtent(coordinates);
+  }
+
+  /**
+   * Calculates the centre coordinate of the provided extent
+   * @param extent extent to get centre coordinate of
+   */
+  public static getCentre(extent: OLExtent): OLCoordinate {
+    return getCenter(extent);
   }
 }

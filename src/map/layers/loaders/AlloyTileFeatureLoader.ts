@@ -38,14 +38,14 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
   protected readonly debugger: Debugger;
 
   /**
+   * the tilegrid to use when computing tile coordinates
+   */
+  public readonly olTileGrid: OLTileGrid;
+
+  /**
    * the extent to load features within
    */
   private readonly olLayerExtent: OLExtent;
-
-  /**
-   * the tilegrid to use when computing tile coordinates
-   */
-  private readonly olTileGrid: OLTileGrid;
 
   /**
    * a cache of tiles requested by this loader
@@ -68,6 +68,16 @@ export abstract class AlloyTileFeatureLoader<T extends AlloyFeature> implements 
 
     // setup the debugger
     this.debugger = parentDebugger.extend(AlloyTileFeatureLoader.name);
+  }
+
+  /**
+   * Gets all features cached for a tile
+   * @param tileCoordinate tile coordinate to get features for
+   */
+  public async getFeatures(tileCoordinate: AlloyTileCoordinate): Promise<T[] | null> {
+    const tileCacheKey = AlloyTileCache.createTimeBasedKey(tileCoordinate, TILE_CACHE_MINUTES);
+    const tileCacheItem = this.tileCache.get(tileCacheKey);
+    return tileCacheItem?.result ?? null;
   }
 
   /**
