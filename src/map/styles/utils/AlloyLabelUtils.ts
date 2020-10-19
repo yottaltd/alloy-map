@@ -1,7 +1,7 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 import { ColourUtils } from '@/utils/ColourUtils';
-import memoize from 'lodash.memoize';
+import { memoize } from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';

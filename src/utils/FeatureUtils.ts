@@ -13,7 +13,7 @@ import { GeometryUtils } from '@/utils/GeometryUtils';
 import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
-import flatten from 'lodash.flatten';
+import { flatten } from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import { Extent as OLExtent } from 'ol/extent';
 import OLFeature from 'ol/Feature';

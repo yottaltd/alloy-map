@@ -36,7 +36,7 @@ import { FontUtils } from '@/utils/FontUtils';
 import { FindFeaturesWithinResult } from '@/utils/models/FindFeaturesWithinResult';
 import { ScreenshotUtils } from '@/utils/ScreenshotUtils';
 import { Geometry } from 'geojson';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 import OLAttribution from 'ol/control/Attribution';
 import OLControl from 'ol/control/Control';
 import OLScaleLine, { Units } from 'ol/control/ScaleLine';

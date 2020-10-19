@@ -13,7 +13,7 @@ import {
   Point,
   Polygon,
 } from 'geojson';
-import memoize from 'lodash.memoize';
+import { memoize } from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';

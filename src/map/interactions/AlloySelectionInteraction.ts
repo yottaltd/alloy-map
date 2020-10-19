@@ -10,7 +10,7 @@ import { FeaturesUnderSelectionEvent } from '@/map/events/FeaturesUnderSelection
 import { FeaturesUnderSelectionEventHandler } from '@/map/events/FeaturesUnderSelectionEventHandler';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { FeatureUtils } from '@/utils/FeatureUtils';
-import flatten from 'lodash.flatten';
+import { flatten } from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent';
 import { SimpleEventDispatcher } from 'ste-simple-events';

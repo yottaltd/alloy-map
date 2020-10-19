@@ -1,6 +1,6 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { Colour, ColourUtils } from '@/utils/ColourUtils';
-import memoize from 'lodash.memoize';
+import { memoize } from 'lodash';
 
 /**
  * the canvas min size, width is always a multiple of this whilst height is always exactly this

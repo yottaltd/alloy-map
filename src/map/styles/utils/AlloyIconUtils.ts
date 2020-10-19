@@ -3,7 +3,7 @@ import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyTextUtils } from '@/map/styles/utils/AlloyTextUtils';
 import { Colour, ColourUtils } from '@/utils/ColourUtils';
 import { FontUtils } from '@/utils/FontUtils';
-import memoize from 'lodash.memoize';
+import { memoize } from 'lodash';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLRenderFeature from 'ol/render/Feature';

@@ -1,5 +1,5 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
-import flatten from 'lodash.flatten';
+import { flatten } from 'lodash';
 import { Coordinate as OLCoordinate } from 'ol/coordinate';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
