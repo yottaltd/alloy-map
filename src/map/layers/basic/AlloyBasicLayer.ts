@@ -1,5 +1,6 @@
 import { AlloyBounds } from '@/map/core/AlloyBounds';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { MapChangeCentreEventHandler } from '@/map/events/MapChangeCentreEventHandler';
 import { MapChangeZoomEventHandler } from '@/map/events/MapChangeZoomEventHandler';
 import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
@@ -39,11 +40,17 @@ export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyItemF
   private readonly featureLoader: AlloyBasicFeatureLoader;
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyBasicLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyBasicLayerOptions) {
     super(options.id, options.map, AlloyLayerZIndex.Layers);
+    this.options = options;
     this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
@@ -76,6 +83,14 @@ export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyItemF
   public dispose() {
     this.map.removeMapChangeZoomListener(this.onMapChangeZoom);
     this.map.removeMapChangeCentreListener(this.onMapChangeCentre);
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyBasicLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyBasicLayer(newOptions);
   }
 
   /**

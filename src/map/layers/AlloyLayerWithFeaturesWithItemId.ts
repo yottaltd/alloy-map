@@ -86,4 +86,9 @@ export abstract class AlloyLayerWithFeaturesWithItemId<
     }
     return null;
   }
+
+  /**
+   * @implements
+   */
+  public abstract clone(map: AlloyMap): AlloyLayerWithFeaturesWithItemId<T>;
 }

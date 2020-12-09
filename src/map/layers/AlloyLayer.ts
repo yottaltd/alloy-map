@@ -42,5 +42,16 @@ export interface AlloyLayer {
    * @ignore
    * @internal
    */
-  dispose();
+  dispose(): void;
+
+  /**
+   * creates a copy of a layer
+   * @param map other map where the copy of a layer will be displayed
+   */
+  clone(map: AlloyMap): AlloyLayer;
+
+  /**
+   * Returns whether a layer is internal
+   */
+  isInternalLayer(): boolean;
 }

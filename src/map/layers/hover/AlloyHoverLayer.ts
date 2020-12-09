@@ -60,6 +60,11 @@ export class AlloyHoverLayer implements AlloyLayer {
   private currentlyHoveredFeature: AlloyFeature | null = null;
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyHoverLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    * @ignore
@@ -67,6 +72,7 @@ export class AlloyHoverLayer implements AlloyLayer {
    */
   constructor(options: AlloyHoverLayerOptions) {
     this.map = options.map;
+    this.options = options;
 
     // set the debugger instance
     this.debugger = this.map.debugger.extend(AlloyHoverLayer.name);
@@ -143,5 +149,20 @@ export class AlloyHoverLayer implements AlloyLayer {
    */
   public dispose() {
     // nothing
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyHoverLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyHoverLayer(newOptions);
+  }
+
+  /**
+   * @implements
+   */
+  public isInternalLayer(): boolean {
+    return true;
   }
 }

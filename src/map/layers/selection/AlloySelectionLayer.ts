@@ -1,8 +1,9 @@
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 import { AlloySelectionLayerOptions } from '@/map/layers/selection/AlloySelectionLayerOptions';
 import { AlloySelectionStyleProcessor } from '@/map/layers/selection/AlloySelectionStyleProcessor';
-import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 
 /**
  * a special interaction layer for selected features
@@ -11,11 +12,17 @@ import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
  */
 export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloySelectionLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloySelectionLayerOptions) {
     super(AlloySelectionLayer.name, options.map, AlloyLayerZIndex.Selection);
+    this.options = options;
 
     // initialised here because style processor need some of the above internal properties
     this.setStyleProcessor(new AlloySelectionStyleProcessor(this));
@@ -95,5 +102,20 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
    */
   public dispose() {
     // nothing
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloySelectionLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloySelectionLayer(newOptions);
+  }
+
+  /**
+   * @implements
+   */
+  public isInternalLayer(): boolean {
+    return true;
   }
 }

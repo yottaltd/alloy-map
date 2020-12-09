@@ -2,6 +2,7 @@
 
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
 import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 import { AlloyDrawLayerOptions } from '@/map/layers/drawing/AlloyDrawLayerOptions';
@@ -30,11 +31,17 @@ import * as uuid from 'uuid';
  */
 export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyDrawLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyDrawLayerOptions) {
     super(AlloyDrawLayer.name + ':' + uuid.v1(), options.map, AlloyLayerZIndex.Drawing);
+    this.options = options;
 
     // initialised here because style processor need some of the above internal properties
     this.setStyleProcessor(new AlloyDrawStyleProcessor(this));
@@ -168,5 +175,20 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
    */
   public dispose() {
     // nothing
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyDrawLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyDrawLayer(newOptions);
+  }
+
+  /**
+   * @implements
+   */
+  public isInternalLayer(): boolean {
+    return true;
   }
 }

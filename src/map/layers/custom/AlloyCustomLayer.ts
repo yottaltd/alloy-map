@@ -1,5 +1,6 @@
 import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { AlloyCustomFeature } from '@/map/features/AlloyCustomFeature';
 import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
 import { AlloyCustomFeatureFactory } from '@/map/features/AlloyCustomFeatureFactory';
@@ -16,11 +17,17 @@ import * as uuid from 'uuid';
  */
 export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureBase> {
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyCustomLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyCustomLayerOptions) {
     super(options.id, options.map, AlloyLayerZIndex.Drawing);
+    this.options = options;
 
     // initialised here because style processor need some of the above internal properties
     this.setStyleProcessor(new AlloyCustomStyleProcessor(this));
@@ -183,5 +190,13 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
    */
   public dispose() {
     // nothing to clean up
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyCustomLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyCustomLayer(newOptions);
   }
 }

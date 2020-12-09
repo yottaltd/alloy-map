@@ -267,6 +267,18 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   public abstract dispose(): void;
 
   /**
+   * @implements
+   */
+  public abstract clone(map: AlloyMap): AlloyLayerWithFeatures<T>;
+
+  /**
+   * @implements
+   */
+  public isInternalLayer(): boolean {
+    return false;
+  }
+
+  /**
    * finds features close to provided source
    * @param source `AlloyCoordinate`, `AlloyFeature` or `Geometry` source to measure distance of
    * features from

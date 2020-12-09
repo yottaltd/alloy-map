@@ -37,12 +37,18 @@ export class AlloyWmsLayer implements AlloyLayer {
   public readonly styleProcessor: AlloyStyleProcessor | null = null;
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyWmsLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyWmsLayerOptions) {
     this.id = options.id;
     this.map = options.map;
+    this.options = options;
 
     this.olLayers = [
       new OLTileLayer({
@@ -64,5 +70,20 @@ export class AlloyWmsLayer implements AlloyLayer {
    */
   public dispose() {
     // do nothing
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyWmsLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyWmsLayer(newOptions);
+  }
+
+  /**
+   * @implements
+   */
+  public isInternalLayer(): boolean {
+    return false;
   }
 }
