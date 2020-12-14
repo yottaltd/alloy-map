@@ -1,7 +1,8 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyPathNodeConnectorFeature } from '@/map/features/AlloyPathNodeConnectorFeature';
 import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
-import { StringUtils } from '@/utils/StringUtils';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
@@ -26,8 +27,8 @@ export class AlloyPathNodeConnectorStyleBuilder extends AlloyStyleBuilder<
   /**
    * @override
    */
-  protected getKey(feature: AlloyPathNodeConnectorFeature): string {
-    return StringUtils.cacheKeyConcat(feature.properties.colour);
+  protected getKey(feature: AlloyPathNodeConnectorFeature): AlloyStyleCacheKey {
+    return AlloyStyleCacheKeyBuilder.create({ colour: feature.properties.colour });
   }
 
   /**

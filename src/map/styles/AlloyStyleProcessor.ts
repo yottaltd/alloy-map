@@ -62,6 +62,7 @@ export abstract class AlloyStyleProcessor {
 
   /**
    * clears styles
+   * @param parts optional key parts to clear cached styles for
    */
-  public abstract clear(): void;
+  public abstract clear(parts?: Record<string, any>): void;
 }

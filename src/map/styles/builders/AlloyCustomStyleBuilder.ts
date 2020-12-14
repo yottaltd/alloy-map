@@ -8,6 +8,8 @@ import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
 import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
 import { AlloyLabelUtils } from '@/map/styles/utils/AlloyLabelUtils';
@@ -21,7 +23,6 @@ import { AlloyMultiLineStringFunctions } from '@/map/styles/utils/geometry-funct
 import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { ColourUtils } from '@/utils/ColourUtils';
-import { StringUtils } from '@/utils/StringUtils';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
@@ -66,15 +67,15 @@ export class AlloyCustomStyleBuilder extends AlloyStyleBuilder<AlloyCustomFeatur
     feature: AlloyCustomFeatureBase,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): string {
-    return StringUtils.cacheKeyConcat(
+  ): AlloyStyleCacheKey {
+    return AlloyStyleCacheKeyBuilder.create({
       state,
       // scaling is undefined or true then we allow the feature to scale normally, if false it is a
       // fixed max size all the time
-      feature.properties.scale === undefined || feature.properties.scale ? resolution : 1,
-      feature.id, // each custom feature is unique (expensive)
-      feature.olFeature.getRevision(),
-    );
+      scale: feature.properties.scale === undefined || feature.properties.scale ? resolution : 1,
+      featureId: feature.id, // each custom feature is unique (expensive)
+      revision: feature.olFeature.getRevision(),
+    });
   }
 
   /**

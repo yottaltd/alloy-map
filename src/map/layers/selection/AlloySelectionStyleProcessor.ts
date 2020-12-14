@@ -40,7 +40,7 @@ export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
+  public clear(parts?: Record<string, any>): void {
     // do nothing
   }
 }

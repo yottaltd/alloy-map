@@ -61,9 +61,9 @@ export abstract class AlloyAnimatedPathStyleProcessor<
   /**
    * @override
    */
-  public clear(): void {
-    this.styleBuilder.clear();
-    this.connectorStyleBuilder.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.styleBuilder.clear(parts);
+    this.connectorStyleBuilder.clear(parts);
   }
 
   /**

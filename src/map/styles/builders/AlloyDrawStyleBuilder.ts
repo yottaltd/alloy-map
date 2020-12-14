@@ -6,6 +6,8 @@ import { AlloyDrawFeature } from '@/map/features/AlloyDrawFeature';
 import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
 import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
 import { AlloyLineUtils } from '@/map/styles/utils/AlloyLineUtils';
@@ -18,7 +20,6 @@ import { AlloyMultiLineStringFunctions } from '@/map/styles/utils/geometry-funct
 import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { ColourUtils } from '@/utils/ColourUtils';
-import { StringUtils } from '@/utils/StringUtils';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
@@ -62,14 +63,14 @@ export class AlloyDrawStyleBuilder extends AlloyStyleBuilder<AlloyDrawFeature> {
     feature: AlloyDrawFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): string {
-    return StringUtils.cacheKeyConcat(
+  ): AlloyStyleCacheKey {
+    return AlloyStyleCacheKeyBuilder.create({
       state,
       // scaling is undefined or true then we allow the feature to scale normally, if false it is a
       // fixed max size all the time
       resolution,
-      feature.id, // each draw feature is unique (expensive)
-    );
+      featureId: feature.olFeature.getId(), // each draw feature is unique (expensive)
+    });
   }
 
   /**

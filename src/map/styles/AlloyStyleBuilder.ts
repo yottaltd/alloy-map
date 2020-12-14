@@ -2,6 +2,7 @@ import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleCache } from '@/map/styles/cache/AlloyStyleCache';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
 import OLStyle from 'ol/style/Style';
 
 /**
@@ -30,7 +31,7 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
     state: AlloyStyleBuilderBuildState,
   ): OLStyle | OLStyle[] {
     // generate the cache key for this feature and resolution
-    const key: string = this.getKey(feature, resolution, state);
+    const key: AlloyStyleCacheKey = this.getKey(feature, resolution, state);
 
     // attempt to get the styles from the cache
     const cachedStyle: OLStyle | OLStyle[] | undefined = this.styleCache.get(key);
@@ -65,9 +66,10 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
 
   /**
    * clears cached styles
+   * @param parts optional key parts to clear cached styles for
    */
-  public clear(): void {
-    this.styleCache.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.styleCache.clear(parts);
   }
 
   /**
@@ -82,7 +84,7 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
     feature: T,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): string;
+  ): AlloyStyleCacheKey;
 
   /**
    * when the style builder decides to generate styles for a feature and resolution due to it

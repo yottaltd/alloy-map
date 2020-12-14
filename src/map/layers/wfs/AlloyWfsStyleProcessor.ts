@@ -44,7 +44,7 @@ export class AlloyWfsStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
-    this.wfsStyleBuilder.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.wfsStyleBuilder.clear(parts);
   }
 }
