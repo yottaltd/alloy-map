@@ -12,7 +12,7 @@ export abstract class AlloyStyleCacheKeyBuilder {
    * @param parts key parts to build into a cache key
    */
   public static create(parts: Record<string, any>): AlloyStyleCacheKey {
-    const key = StringUtils.cacheKeyConcat(...Object.values(parts));
+    const key = StringUtils.cacheKeyConcat(...Object.keys(parts).map((key) => parts[key]));
     return {
       key,
       parts,
