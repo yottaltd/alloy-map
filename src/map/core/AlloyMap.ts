@@ -44,6 +44,7 @@ import OLScaleLine, { Units } from 'ol/control/ScaleLine';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { SimpleEventDispatcher } from 'ste-simple-events';
+import { AlloyHoverMode } from './AlloyHoverMode';
 
 /* eslint-enable max-len */
 
@@ -322,6 +323,13 @@ export class AlloyMap {
   }
 
   /**
+   * the current hover mode
+   */
+  public get hoverMode(): Readonly<AlloyHoverMode> {
+    return this.hoverInteraction.hoverMode;
+  }
+
+  /**
    * the current zoom level
    */
   public get zoom(): number {
@@ -409,6 +417,14 @@ export class AlloyMap {
    */
   public setSelectionMode(mode: AlloySelectionMode): void {
     this.selectionInteraction.setSelectionMode(mode);
+  }
+
+  /**
+   * sets the hover mode for the map and resets any applicable state
+   * @param mode the mode to set
+   */
+  public setHoverMode(mode: AlloyHoverMode): void {
+    this.hoverInteraction.setHoverMode(mode);
   }
 
   /**

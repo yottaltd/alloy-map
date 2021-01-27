@@ -1,3 +1,4 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { AlloyCableFeature } from '@/map/features/AlloyCableFeature';
 import { AlloyCableUnitFeature } from '@/map/features/AlloyCableUnitFeature';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
@@ -39,11 +40,17 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
   private connectedUnitsFeatures: Map<string, AlloyCableUnitFeature> = new Map();
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyCableLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyCableLayerOptions) {
     super(options);
+    this.options = options;
     this.animationManager = new AlloyCableAnimationManager(this.map, this.olLayerAnimatedPaths);
   }
 
@@ -165,6 +172,14 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
       return this.subFeedFeature;
     }
     return this.connectedUnitsFeatures.get(id) || super.getFeatureById(id);
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyCableLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyCableLayer(newOptions);
   }
 
   /**

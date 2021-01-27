@@ -25,11 +25,12 @@ export abstract class AlloyLayerWithFeaturesWithItemId<
    * @param id the id of the layer
    * @param map the map the layer is a member of
    * @param zIndex the z-index of the layer
+   * @param isInternalLayer whether layer is internal
    * @ignore
    * @internal
    */
-  constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
-    super(id, map, zIndex);
+  constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex, isInternalLayer: boolean) {
+    super(id, map, zIndex, isInternalLayer);
   }
 
   /**
@@ -86,4 +87,9 @@ export abstract class AlloyLayerWithFeaturesWithItemId<
     }
     return null;
   }
+
+  /**
+   * @implements
+   */
+  public abstract clone(map: AlloyMap): AlloyLayerWithFeaturesWithItemId<T>;
 }

@@ -1,3 +1,4 @@
+import { AlloyHoverMode } from '@/map/core/AlloyHoverMode';
 import { AlloyMap } from '@/map/core/AlloyMap';
 import { AlloyCustomFeatureBase } from '@/map/features/AlloyCustomFeatureBase';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
@@ -28,6 +29,11 @@ export class AlloyHoverInteraction {
    * @internal
    */
   public readonly debugger: Debugger;
+
+  /**
+   * the current hover mode
+   */
+  private currentHoverMode: AlloyHoverMode = AlloyHoverMode.On;
 
   /**
    * the map to add hover interaction to
@@ -84,12 +90,31 @@ export class AlloyHoverInteraction {
   }
 
   /**
+   * gets the current hover mode
+   */
+  public get hoverMode(): AlloyHoverMode {
+    return this.currentHoverMode;
+  }
+
+  /**
+   * sets the current hover mode and cleans up any state
+   * @param mode the mode to set
+   */
+  public setHoverMode(mode: AlloyHoverMode): void {
+    // remove or trim selection based on certain modes
+    if (mode === AlloyHoverMode.Off) {
+      this.map.hoverLayer.setHoveredFeature(null);
+    }
+    this.currentHoverMode = mode;
+  }
+
+  /**
    * called when the pointer event is triggered
    * @param event the pointer move event
    */
   private onPointerMove(event: OLMapBrowserPointerEvent): void {
-    // short circuit when dragging
-    if (event.dragging) {
+    // short circuit when dragging or hover is off
+    if (event.dragging || this.currentHoverMode === AlloyHoverMode.Off) {
       this.map.hoverLayer.setHoveredFeature(null);
       return;
     }

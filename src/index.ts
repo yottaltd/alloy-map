@@ -4,6 +4,7 @@ export { AlloyBasemap } from './map/basemaps/AlloyBasemap';
 export { AlloyBasemapFactory } from './map/basemaps/AlloyBasemapFactory';
 export { AlloyBounds } from './map/core/AlloyBounds';
 export { AlloyCoordinate } from './map/core/AlloyCoordinate';
+export { AlloyHoverMode } from './map/core/AlloyHoverMode';
 export { AlloyMap } from './map/core/AlloyMap';
 export { AlloyMapOptions } from './map/core/AlloyMapOptions';
 export { AlloyMapScaleOptions } from './map/core/AlloyMapScaleOptions';
