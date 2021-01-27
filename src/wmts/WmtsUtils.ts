@@ -29,9 +29,27 @@ export abstract class WmtsUtils {
     capabilities: AlloyWmtsCapabilities,
     parameters: AlloyWmtsParameters,
   ): OLWMTS {
+    let format: string | undefined;
+    const capsLayer = capabilities.layers.find((layer) => layer.identifier === parameters.layer);
+    if (capsLayer) {
+      const formats = capsLayer.formats;
+      if (formats.indexOf('image/png') >= 0) {
+        format = 'image/png';
+      } else if (formats.indexOf('image/jpeg') >= 0) {
+        format = 'image/jpeg';
+      } else {
+        const firstPng = formats.find((currentFormat) => currentFormat.startsWith('image/png'));
+        format = firstPng;
+        if (!format) {
+          const firstJpeg = formats.find((currentFormat) => currentFormat.startsWith('image/jpeg'));
+          format = firstJpeg;
+        }
+      }
+    }
     const options: OLWMTSOptions = optionsFromCapabilities(capabilities.capabilities.DefaultCaps, {
       layer: parameters.layer,
       style: parameters.style,
+      format,
     });
     options.attributions = parameters.watermark
       ? DOMPurify.sanitize(parameters.watermark)
@@ -146,6 +164,7 @@ export abstract class WmtsUtils {
       title: layer.Title,
       tileMatrixIdentifiers: layer.TileMatrixSetLink.map((link) => link.TileMatrixSet),
       boundingBox,
+      formats: layer.Format,
       styles: layer.Style.map((style) => WmtsUtils.parseWmtsStyle(style)),
     };
   }
