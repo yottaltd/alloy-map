@@ -110,6 +110,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloynetworklayer.html#bounds" class="tsd-kind-icon">bounds</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#isinternallayer" class="tsd-kind-icon">is<wbr>Internal<wbr>Layer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloynetworklayer.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#map" class="tsd-kind-icon">map</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="alloynetworklayer.html#styles" class="tsd-kind-icon">styles</a></li>
@@ -128,6 +129,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloynetworklayer.html#addfeatures" class="tsd-kind-icon">add<wbr>Features</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#addfeaturesaddedlistener" class="tsd-kind-icon">add<wbr>Features<wbr>Added<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="alloynetworklayer.html#clearfeatures" class="tsd-kind-icon">clear<wbr>Features</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="alloynetworklayer.html#clone" class="tsd-kind-icon">clone</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="alloynetworklayer.html#dispose" class="tsd-kind-icon">dispose</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#findfeatureswithin" class="tsd-kind-icon">find<wbr>Features<wbr>Within</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="alloynetworklayer.html#getfeaturebyid" class="tsd-kind-icon">get<wbr>Feature<wbr>ById</a></li>
@@ -153,7 +155,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides AlloyLayerWithFeaturesWithItemId.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/network/AlloyNetworkLayer.ts#L41">src/map/layers/network/AlloyNetworkLayer.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/network/AlloyNetworkLayer.ts#L47">src/map/layers/network/AlloyNetworkLayer.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,7 +188,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/alloyboundedlayer.html">AlloyBoundedLayer</a>.<a href="../interfaces/alloyboundedlayer.html#bounds">bounds</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/network/AlloyNetworkLayer.ts#L26">src/map/layers/network/AlloyNetworkLayer.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/network/AlloyNetworkLayer.ts#L27">src/map/layers/network/AlloyNetworkLayer.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -204,7 +206,25 @@
 						<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#id">id</a></p>
 						<p>Inherited from AlloyLayerWithFeatures.id</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L47">src/map/layers/AlloyLayerWithFeatures.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L47">src/map/layers/AlloyLayerWithFeatures.ts:47</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>implements</dt>
+							<dd></dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="isinternallayer" class="tsd-anchor"></a>
+					<h3>is<wbr>Internal<wbr>Layer</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Internal<wbr>Layer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#isinternallayer">isInternalLayer</a></p>
+						<p>Inherited from AlloyLayerWithFeatures.isInternalLayer</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L57">src/map/layers/AlloyLayerWithFeatures.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -220,7 +240,7 @@
 					<div class="tsd-signature tsd-kind-icon">layer<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/network/AlloyNetworkLayer.ts#L31">src/map/layers/network/AlloyNetworkLayer.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/network/AlloyNetworkLayer.ts#L32">src/map/layers/network/AlloyNetworkLayer.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -237,7 +257,7 @@
 						<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#map">map</a></p>
 						<p>Inherited from AlloyLayerWithFeatures.map</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L52">src/map/layers/AlloyLayerWithFeatures.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L52">src/map/layers/AlloyLayerWithFeatures.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -254,7 +274,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#styles">styles</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/network/AlloyNetworkLayer.ts#L36">src/map/layers/network/AlloyNetworkLayer.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/network/AlloyNetworkLayer.ts#L37">src/map/layers/network/AlloyNetworkLayer.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -278,7 +298,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AlloyLayerWithFeatures.features</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L148">src/map/layers/AlloyLayerWithFeatures.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L154">src/map/layers/AlloyLayerWithFeatures.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -305,7 +325,7 @@
 								<p>Inherited from AlloyLayerWithFeaturesWithItemId.addFeature</p>
 								<p>Overrides AlloyLayerWithFeatures.addFeature</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L38">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L39">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,7 +356,7 @@
 								<p>Inherited from AlloyLayerWithFeaturesWithItemId.addFeatures</p>
 								<p>Overrides AlloyLayerWithFeatures.addFeatures</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L60">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L61">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -366,7 +386,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AlloyLayerWithFeatures.addFeaturesAddedListener</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L297">src/map/layers/AlloyLayerWithFeatures.ts:297</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L308">src/map/layers/AlloyLayerWithFeatures.ts:308</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,7 +419,7 @@
 								<p>Inherited from AlloyLayerWithFeaturesWithItemId.clearFeatures</p>
 								<p>Overrides AlloyLayerWithFeatures.clearFeatures</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L73">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L74">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -409,6 +429,37 @@
 								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="clone" class="tsd-anchor"></a>
+					<h3>clone</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">clone<span class="tsd-signature-symbol">(</span>map<span class="tsd-signature-symbol">: </span><a href="alloymap.html" class="tsd-signature-type">AlloyMap</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="alloynetworklayer.html" class="tsd-signature-type">AlloyNetworkLayer</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#clone">clone</a></p>
+								<p>Overrides AlloyLayerWithFeaturesWithItemId.clone</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/network/AlloyNetworkLayer.ts#L93">src/map/layers/network/AlloyNetworkLayer.ts:93</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>implements</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>map: <a href="alloymap.html" class="tsd-signature-type">AlloyMap</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="alloynetworklayer.html" class="tsd-signature-type">AlloyNetworkLayer</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -423,7 +474,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides AlloyLayerWithFeatures.dispose</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/network/AlloyNetworkLayer.ts#L78">src/map/layers/network/AlloyNetworkLayer.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/network/AlloyNetworkLayer.ts#L85">src/map/layers/network/AlloyNetworkLayer.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -447,7 +498,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AlloyLayerWithFeatures.findFeaturesWithin</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L276">src/map/layers/AlloyLayerWithFeatures.ts:276</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L287">src/map/layers/AlloyLayerWithFeatures.ts:287</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,7 +539,7 @@
 								<p>Implementation of <a href="../interfaces/alloystyledlayer.html">AlloyStyledLayer</a>.<a href="../interfaces/alloystyledlayer.html#getfeaturebyid">getFeatureById</a></p>
 								<p>Inherited from AlloyLayerWithFeatures.getFeatureById</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L141">src/map/layers/AlloyLayerWithFeatures.ts:141</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L147">src/map/layers/AlloyLayerWithFeatures.ts:147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -518,7 +569,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AlloyLayerWithFeaturesWithItemId.getFeatureByItemId</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L82">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L83">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -548,7 +599,7 @@
 								<p>Inherited from AlloyLayerWithFeaturesWithItemId.removeFeature</p>
 								<p>Overrides AlloyLayerWithFeatures.removeFeature</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L49">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeaturesWithItemId.ts#L50">src/map/layers/AlloyLayerWithFeaturesWithItemId.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -578,7 +629,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AlloyLayerWithFeatures.removeFeaturesAddedListener</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L305">src/map/layers/AlloyLayerWithFeatures.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L316">src/map/layers/AlloyLayerWithFeatures.ts:316</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -610,7 +661,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from AlloyLayerWithFeatures.resetStyle</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/dd91c6a/src/map/layers/AlloyLayerWithFeatures.ts#L331">src/map/layers/AlloyLayerWithFeatures.ts:331</a></li>
+									<li>Defined in <a href="https://github.com/yottaltd/alloy-map/blob/71864f5/src/map/layers/AlloyLayerWithFeatures.ts#L342">src/map/layers/AlloyLayerWithFeatures.ts:342</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -658,6 +709,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="alloynetworklayer.html#id" class="tsd-kind-icon">id</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="alloynetworklayer.html#isinternallayer" class="tsd-kind-icon">is<wbr>Internal<wbr>Layer</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="alloynetworklayer.html#layercode" class="tsd-kind-icon">layer<wbr>Code</a>
 							</li>
@@ -681,6 +735,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="alloynetworklayer.html#clearfeatures" class="tsd-kind-icon">clear<wbr>Features</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="alloynetworklayer.html#clone" class="tsd-kind-icon">clone</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="alloynetworklayer.html#dispose" class="tsd-kind-icon">dispose</a>
