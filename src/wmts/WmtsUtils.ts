@@ -33,9 +33,9 @@ export abstract class WmtsUtils {
     const capsLayer = capabilities.layers.find((layer) => layer.identifier === parameters.layer);
     if (capsLayer) {
       const formats = capsLayer.formats;
-      if (formats.includes('image/png')) {
+      if (formats.indexOf('image/png') >= 0) {
         format = 'image/png';
-      } else if (formats.includes('image/jpeg')) {
+      } else if (formats.indexOf('image/jpeg') >= 0) {
         format = 'image/jpeg';
       } else {
         const firstPng = formats.find((currentFormat) => currentFormat.startsWith('image/png'));
