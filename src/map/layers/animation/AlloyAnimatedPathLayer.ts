@@ -50,6 +50,11 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
 
   /**
    * @implements
+   */
+  public readonly isInternalLayer = false;
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
@@ -210,13 +215,6 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
    * @implements
    */
   public abstract clone(map: AlloyMap): AlloyAnimatedPathLayer;
-
-  /**
-   * @implements
-   */
-  public isInternalLayer(): boolean {
-    return false;
-  }
 
   /**
    * Creates style processor for given sub-class

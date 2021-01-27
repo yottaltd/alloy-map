@@ -21,7 +21,7 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
    * @param options the options for the layer
    */
   constructor(options: AlloySelectionLayerOptions) {
-    super(AlloySelectionLayer.name, options.map, AlloyLayerZIndex.Selection);
+    super(AlloySelectionLayer.name, options.map, AlloyLayerZIndex.Selection, true);
     this.options = options;
 
     // initialised here because style processor need some of the above internal properties
@@ -110,12 +110,5 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   public clone(map: AlloyMap): AlloySelectionLayer {
     const newOptions = Object.assign({}, this.options, { map });
     return new AlloySelectionLayer(newOptions);
-  }
-
-  /**
-   * @implements
-   */
-  public isInternalLayer(): boolean {
-    return true;
   }
 }

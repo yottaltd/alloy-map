@@ -36,6 +36,11 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
 
   /**
    * @implements
+   */
+  public readonly isInternalLayer = false;
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
@@ -158,12 +163,5 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
   public clone(map: AlloyMap): AlloyWfsLayer {
     const newOptions = Object.assign({}, this.options, { map });
     return new AlloyWfsLayer(newOptions);
-  }
-
-  /**
-   * @implements
-   */
-  public isInternalLayer(): boolean {
-    return false;
   }
 }

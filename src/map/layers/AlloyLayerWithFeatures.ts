@@ -53,6 +53,11 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
   /**
    * @implements
+   */
+  public readonly isInternalLayer: boolean;
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
@@ -99,12 +104,13 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @ignore
    * @internal
    */
-  constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
+  constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex, isInternalLayer: boolean) {
     // set the debugger instance
     this.debugger = map.debugger.extend(AlloyLayerWithFeatures.name + ':' + id);
 
     this.id = id;
     this.map = map;
+    this.isInternalLayer = isInternalLayer;
     this.olLayers = [
       new OLVectorLayer({
         // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
@@ -270,13 +276,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @implements
    */
   public abstract clone(map: AlloyMap): AlloyLayerWithFeatures<T>;
-
-  /**
-   * @implements
-   */
-  public isInternalLayer(): boolean {
-    return false;
-  }
 
   /**
    * finds features close to provided source

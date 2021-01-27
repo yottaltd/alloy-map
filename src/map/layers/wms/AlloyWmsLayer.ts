@@ -24,6 +24,11 @@ export class AlloyWmsLayer implements AlloyLayer {
 
   /**
    * @implements
+   */
+  public readonly isInternalLayer = false;
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
@@ -78,12 +83,5 @@ export class AlloyWmsLayer implements AlloyLayer {
   public clone(map: AlloyMap): AlloyWmsLayer {
     const newOptions = Object.assign({}, this.options, { map });
     return new AlloyWmsLayer(newOptions);
-  }
-
-  /**
-   * @implements
-   */
-  public isInternalLayer(): boolean {
-    return false;
   }
 }

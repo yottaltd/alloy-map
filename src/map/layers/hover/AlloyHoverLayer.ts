@@ -33,6 +33,11 @@ export class AlloyHoverLayer implements AlloyLayer {
   public readonly map: AlloyMap;
 
   /**
+   * @implements
+   */
+  public readonly isInternalLayer = true;
+
+  /**
    * the openlayers layer to render on
    * @implements
    * @ignore
@@ -157,12 +162,5 @@ export class AlloyHoverLayer implements AlloyLayer {
   public clone(map: AlloyMap): AlloyHoverLayer {
     const newOptions = Object.assign({}, this.options, { map });
     return new AlloyHoverLayer(newOptions);
-  }
-
-  /**
-   * @implements
-   */
-  public isInternalLayer(): boolean {
-    return true;
   }
 }
