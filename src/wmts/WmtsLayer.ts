@@ -28,4 +28,9 @@ export interface WmtsLayer {
    * Array of Tile Matrices supported by this layer
    */
   readonly TileMatrixSetLink: Array<{ TileMatrixSet: string }>;
+
+  /**
+   * Array of available formats
+   */
+  readonly Format: string[];
 }

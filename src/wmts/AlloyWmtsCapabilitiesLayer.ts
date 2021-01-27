@@ -25,4 +25,8 @@ export interface AlloyWmtsCapabilitiesLayer {
    * Available tile matrices for layer
    */
   tileMatrixIdentifiers: string[];
+  /**
+   * Available formats
+   */
+  formats: string[];
 }
