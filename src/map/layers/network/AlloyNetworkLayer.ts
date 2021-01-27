@@ -1,5 +1,6 @@
 import { AlloyBounds } from '@/map/core/AlloyBounds';
 import { AlloyLayerZIndex } from '@/map/core/AlloyLayerZIndex';
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { MapChangeCentreEventHandler } from '@/map/events/MapChangeCentreEventHandler';
 import { MapChangeZoomEventHandler } from '@/map/events/MapChangeZoomEventHandler';
 import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
@@ -41,14 +42,20 @@ export class AlloyNetworkLayer
   private readonly featureLoader: AlloyNetworkFeatureLoader;
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyNetworkLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyNetworkLayerOptions) {
-    super(options.id, options.map, AlloyLayerZIndex.Layers);
+    super(options.id, options.map, AlloyLayerZIndex.Layers, false);
     this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
+    this.options = options;
 
     // initialised here because feature loader and style processor need some of the above internal
     // properties of the layer
@@ -78,6 +85,14 @@ export class AlloyNetworkLayer
   public dispose() {
     this.map.removeMapChangeZoomListener(this.onMapChangeZoom);
     this.map.removeMapChangeCentreListener(this.onMapChangeCentre);
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyNetworkLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyNetworkLayer(newOptions);
   }
 
   /**

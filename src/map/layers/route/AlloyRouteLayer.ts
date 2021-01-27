@@ -1,3 +1,4 @@
+import { AlloyMap } from '@/map/core/AlloyMap';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyRouteFeature } from '@/map/features/AlloyRouteFeature';
 import { AlloyRouteWaypointFeature } from '@/map/features/AlloyRouteWaypointFeature';
@@ -31,11 +32,17 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
   private waypointFeatures: Map<string, AlloyRouteWaypointFeature> = new Map();
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyRouteLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
   constructor(options: AlloyRouteLayerOptions) {
     super(options);
+    this.options = options;
     this.animationManager = new AlloyRouteAnimationManager(this.map, this.olLayerAnimatedPaths);
   }
 
@@ -97,6 +104,14 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
 
     // then try waypoints
     return this.waypointFeatures.get(id) || super.getFeatureById(id);
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyRouteLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyRouteLayer(newOptions);
   }
 
   /**

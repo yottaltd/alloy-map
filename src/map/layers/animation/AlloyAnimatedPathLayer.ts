@@ -50,6 +50,11 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
 
   /**
    * @implements
+   */
+  public readonly isInternalLayer = false;
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
@@ -205,6 +210,11 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
   public dispose() {
     this.animationManager.clearAnimations();
   }
+
+  /**
+   * @implements
+   */
+  public abstract clone(map: AlloyMap): AlloyAnimatedPathLayer;
 
   /**
    * Creates style processor for given sub-class

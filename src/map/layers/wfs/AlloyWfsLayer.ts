@@ -36,6 +36,11 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
 
   /**
    * @implements
+   */
+  public readonly isInternalLayer = false;
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
@@ -69,6 +74,11 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
   > = new Map();
 
   /**
+   * Initialisation options for this layer.
+   */
+  private readonly options: AlloyWfsLayerOptions;
+
+  /**
    * creates a new instance
    * @param options the options for the layer
    */
@@ -76,6 +86,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
     this.id = options.id;
     this.map = options.map;
     this.styles = options.styles;
+    this.options = options;
     this.debugger = this.map.debugger.extend(AlloyWfsLayer.name + ':' + this.id);
 
     // initialised here because style processor need some of the above internal properties
@@ -144,5 +155,13 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
    */
   public dispose() {
     // nothing
+  }
+
+  /**
+   * @implements
+   */
+  public clone(map: AlloyMap): AlloyWfsLayer {
+    const newOptions = Object.assign({}, this.options, { map });
+    return new AlloyWfsLayer(newOptions);
   }
 }
