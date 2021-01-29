@@ -33,11 +33,6 @@ export class AlloyHoverLayer implements AlloyLayer {
   public readonly map: AlloyMap;
 
   /**
-   * @implements
-   */
-  public readonly isInternalLayer = true;
-
-  /**
    * the openlayers layer to render on
    * @implements
    * @ignore

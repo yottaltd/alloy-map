@@ -21,7 +21,7 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
    * @param options the options for the layer
    */
   constructor(options: AlloySelectionLayerOptions) {
-    super(AlloySelectionLayer.name, options.map, AlloyLayerZIndex.Selection, true);
+    super(AlloySelectionLayer.name, options.map, AlloyLayerZIndex.Selection);
     this.options = options;
 
     // initialised here because style processor need some of the above internal properties

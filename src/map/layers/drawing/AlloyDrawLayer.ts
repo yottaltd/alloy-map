@@ -40,7 +40,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
    * @param options the options for the layer
    */
   constructor(options: AlloyDrawLayerOptions) {
-    super(AlloyDrawLayer.name + ':' + uuid.v1(), options.map, AlloyLayerZIndex.Drawing, true);
+    super(AlloyDrawLayer.name + ':' + uuid.v1(), options.map, AlloyLayerZIndex.Drawing);
     this.options = options;
 
     // initialised here because style processor need some of the above internal properties

@@ -51,7 +51,7 @@ export class AlloyNetworkLayer
    * @param options the options for the layer
    */
   constructor(options: AlloyNetworkLayerOptions) {
-    super(options.id, options.map, AlloyLayerZIndex.Layers, false);
+    super(options.id, options.map, AlloyLayerZIndex.Layers);
     this.bounds = options.bounds;
     this.layerCode = options.layerCode;
     this.styles = options.styles;
