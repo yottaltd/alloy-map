@@ -159,13 +159,13 @@ export class AlloyDrawInteraction {
     this.drawLayer = new AlloyDrawLayer({
       map,
     });
-    this.map.addLayer(this.drawLayer);
+    this.drawLayer.olLayers.forEach((olLayer) => this.map.olMap.addLayer(olLayer));
 
     // initialise singleton remove layer
     this.removeLayer = new AlloyDrawLayer({
       map,
     });
-    this.map.addLayer(this.removeLayer);
+    this.removeLayer.olLayers.forEach((olLayer) => this.map.olMap.addLayer(olLayer));
 
     // initialise modify interaction to be available on draw layer when source is not empty
     this.initModify();

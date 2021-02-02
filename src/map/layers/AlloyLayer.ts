@@ -18,11 +18,6 @@ export interface AlloyLayer {
   readonly map: AlloyMap;
 
   /**
-   * whether a layer is internal
-   */
-  readonly isInternalLayer: boolean;
-
-  /**
    * the openlayers layer instance for the alloy layer
    * @ignore
    * @internal

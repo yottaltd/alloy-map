@@ -50,11 +50,6 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
 
   /**
    * @implements
-   */
-  public readonly isInternalLayer = false;
-
-  /**
-   * @implements
    * @ignore
    * @internal
    */

@@ -24,11 +24,6 @@ export class AlloyWmsLayer implements AlloyLayer {
 
   /**
    * @implements
-   */
-  public readonly isInternalLayer = false;
-
-  /**
-   * @implements
    * @ignore
    * @internal
    */
