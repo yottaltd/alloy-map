@@ -253,8 +253,12 @@ export class AlloySelectInPolygonInteraction {
 
     const features: AlloyFeature[] = [];
 
+    // combine all map layers and selection layer
+    const layers = Array.from(this.map.layers.values());
+    layers.push(this.map.selectionLayer);
+
     // iterate through layers to check
-    this.map.layers.forEach((layer) => {
+    layers.forEach((layer) => {
       // grab the source of the layer data and check its a valid source to search
       const sources = layer.olLayers.map((olLayer) => olLayer.getSource());
       for (const source of sources) {
