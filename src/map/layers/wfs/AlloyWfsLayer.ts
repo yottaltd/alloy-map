@@ -36,11 +36,6 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
 
   /**
    * @implements
-   */
-  public readonly isInternalLayer = false;
-
-  /**
-   * @implements
    * @ignore
    * @internal
    */
