@@ -1,6 +1,8 @@
 import { AlloyMapError } from '@/error/AlloyMapError';
 import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+// eslint-disable-next-line max-len
+import { AlloyStyleBuilderCacheDependency } from '@/map/styles/cache/AlloyStyleBuilderCacheDependency';
 import { AlloyStyleCache } from '@/map/styles/cache/AlloyStyleCache';
 import OLStyle from 'ol/style/Style';
 
@@ -60,14 +62,16 @@ export abstract class AlloyStyleBuilder<T extends AlloyFeature> {
 
     // cache the resulting styles and return
     this.styleCache.set(key, newStyle);
+    feature.cacheDependencies.add(new AlloyStyleBuilderCacheDependency(feature, key, this));
     return newStyle;
   }
 
   /**
-   * clears cached styles
+   * Clears cache dependency
+   * @param key cache dependency key to clear
    */
-  public clear(): void {
-    this.styleCache.clear();
+  public clearCache(key: string): void {
+    this.styleCache.clear(key);
   }
 
   /**

@@ -17,7 +17,7 @@ import OLPolygon from 'ol/geom/Polygon';
 /**
  * an alloy item feature which represents a basic item feature on the map
  */
-export class AlloyItemFeature implements AlloyFeature, AlloyFeatureWithItemId {
+export class AlloyItemFeature extends AlloyFeature implements AlloyFeatureWithItemId {
   /**
    * @implements
    */
@@ -58,6 +58,13 @@ export class AlloyItemFeature implements AlloyFeature, AlloyFeatureWithItemId {
 
   /**
    * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
+   * @implements
    */
   public readonly itemId: string;
 
@@ -81,6 +88,7 @@ export class AlloyItemFeature implements AlloyFeature, AlloyFeatureWithItemId {
     properties: AlloyItemFeatureProperties,
     originatingLayerId?: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

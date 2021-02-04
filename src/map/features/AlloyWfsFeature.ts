@@ -16,7 +16,7 @@ import OLPolygon from 'ol/geom/Polygon';
 /**
  * an alloy wfs feature
  */
-export class AlloyWfsFeature implements AlloyFeature {
+export class AlloyWfsFeature extends AlloyFeature {
   /**
    * @implements
    */
@@ -58,6 +58,13 @@ export class AlloyWfsFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
    * the properties for the wfs feature
    */
   public readonly properties: Readonly<AlloyWfsFeatureProperties>;
@@ -79,6 +86,7 @@ export class AlloyWfsFeature implements AlloyFeature {
     originatingLayerId: string,
     styleId: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

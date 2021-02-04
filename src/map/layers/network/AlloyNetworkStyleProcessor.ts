@@ -35,11 +35,4 @@ export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
   ) {
     return this.networkStyleBuilder.build(feature as any, resolution, state);
   }
-
-  /**
-   * @override
-   */
-  public clear(): void {
-    this.networkStyleBuilder.clear();
-  }
 }

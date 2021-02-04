@@ -37,11 +37,4 @@ export class AlloyBasicStyleProcessor extends AlloyStyleProcessor {
   ) {
     return this.basicStyleBuilder.build(feature, resolution, state);
   }
-
-  /**
-   * @override
-   */
-  public clear(): void {
-    this.basicStyleBuilder.clear();
-  }
 }

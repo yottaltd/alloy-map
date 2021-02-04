@@ -10,7 +10,7 @@ export class AlloyDrawEvent {
   /**
    * last drawn, modified or removed feature
    */
-  public feature: AlloyDrawFeature | null;
+  public features: AlloyDrawFeature[] | null;
 
   /**
    * the draw layer that triggered the event
@@ -22,8 +22,8 @@ export class AlloyDrawEvent {
    * @ignore
    * @internal
    */
-  constructor(feature: AlloyDrawFeature | null, drawLayer: AlloyDrawLayer) {
-    this.feature = feature;
+  constructor(features: AlloyDrawFeature[] | null, drawLayer: AlloyDrawLayer) {
+    this.features = features;
     this.drawLayer = drawLayer;
   }
 

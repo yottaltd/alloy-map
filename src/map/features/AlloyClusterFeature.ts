@@ -13,7 +13,7 @@ import OLPoint from 'ol/geom/Point';
 /**
  * an alloy cluster feature which represents several items "clustered" together based on proximity
  */
-export class AlloyClusterFeature implements AlloyFeature {
+export class AlloyClusterFeature extends AlloyFeature {
   /**
    * @implements
    */
@@ -72,6 +72,7 @@ export class AlloyClusterFeature implements AlloyFeature {
     properties: AlloyClusterFeatureProperties,
     originatingLayerId?: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
@@ -82,7 +83,7 @@ export class AlloyClusterFeature implements AlloyFeature {
   }
 
   /**
-   * @implements
+   * @override
    * @ignore
    * @internal
    */

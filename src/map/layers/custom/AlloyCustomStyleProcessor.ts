@@ -44,11 +44,4 @@ export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
       return [];
     }
   }
-
-  /**
-   * @override
-   */
-  public clear(): void {
-    this.customStyleBuilder.clear();
-  }
 }

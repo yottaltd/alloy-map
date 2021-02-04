@@ -13,7 +13,7 @@ import OLLineString from 'ol/geom/LineString';
  * @ignore
  * @internal
  */
-export class AlloyPathNodeConnectorFeature implements AlloyFeature {
+export class AlloyPathNodeConnectorFeature extends AlloyFeature {
   /**
    * @implements
    */
@@ -39,6 +39,13 @@ export class AlloyPathNodeConnectorFeature implements AlloyFeature {
    * @internal
    */
   public originatingLayerId!: undefined; // see end of file for prototype
+
+  /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
 
   /**
    * @implements
@@ -70,6 +77,7 @@ export class AlloyPathNodeConnectorFeature implements AlloyFeature {
     olFeature: OLFeature,
     properties: AlloyPathNodeConnectorFeatureProperties,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;

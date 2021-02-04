@@ -12,7 +12,7 @@ import OLLineString from 'ol/geom/LineString';
 /**
  * an alloy animated path feature which represents an animated path with single line string geometry
  */
-export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
+export abstract class AlloyAnimatedPathFeature extends AlloyFeature {
   /**
    * @implements
    */
@@ -52,6 +52,13 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
   public readonly originatingLayerId?: string;
 
   /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  public readonly onSelectionInteraction: undefined;
+
+  /**
    * the cached properties of the alloy animated path feature
    */
   public readonly properties: Readonly<AlloyAnimatedPathFeatureProperties>;
@@ -78,6 +85,7 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
     animationManager: AlloyAnimationManager,
     layerId: string,
   ) {
+    super();
     this.id = id;
     this.olFeature = olFeature;
     this.properties = properties;
