@@ -19,7 +19,7 @@ import OLMultiPoint from 'ol/geom/MultiPoint';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
 import OLPoint from 'ol/geom/Point';
 import OLPolygon from 'ol/geom/Polygon';
-import * as uuid from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 /* eslint-enable max-len */
 
@@ -40,7 +40,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
    * @param options the options for the layer
    */
   constructor(options: AlloyDrawLayerOptions) {
-    super(AlloyDrawLayer.name + ':' + uuid.v1(), options.map, AlloyLayerZIndex.Drawing);
+    super(AlloyDrawLayer.name + ':' + uuidv1(), options.map, AlloyLayerZIndex.Drawing);
     this.options = options;
 
     // initialised here because style processor need some of the above internal properties

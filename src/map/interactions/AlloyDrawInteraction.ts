@@ -35,7 +35,7 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import * as uuid from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 /**
  * default colour for draw and modify interactions
@@ -238,7 +238,7 @@ export class AlloyDrawInteraction {
     // on draw end save feature and reset interactions
     this.olDraw.on('drawend', (event) => {
       // wrap created draw event feature into AlloyDrawFeature and save to draw layer
-      const feature = new AlloyDrawFeature(uuid.v1(), event.feature, properties);
+      const feature = new AlloyDrawFeature(uuidv1(), event.feature, properties);
       this.drawLayer.addFeature(feature, false);
 
       this.onDrawEnd(feature);
@@ -537,7 +537,7 @@ export class AlloyDrawInteraction {
       ),
     ).forEach((point) => {
       // create a remove feature for each point and add to remove layer
-      const feature = new AlloyDrawFeature(uuid.v1(), new OLFeature(point), {
+      const feature = new AlloyDrawFeature(uuidv1(), new OLFeature(point), {
         icon: 'icon-close',
         colour: DRAW_COLOUR,
       });

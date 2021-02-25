@@ -9,7 +9,7 @@ import { ProjectionUtils } from '@/utils/ProjectionUtils';
 import { Geometry } from 'geojson';
 import OLFeature from 'ol/Feature';
 import OLGeometryType from 'ol/geom/GeometryType';
-import * as uuid from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 /**
  * an alloy draw feature which represents something being drawn on the map by a user or
@@ -39,7 +39,7 @@ export class AlloyDrawFeature implements AlloyFeature {
     // create a new feature for each
     const features: AlloyDrawFeature[] = [];
     for (const geometry of geometries) {
-      features.push(new AlloyDrawFeature(uuid.v1(), new OLFeature(geometry), properties));
+      features.push(new AlloyDrawFeature(uuidv1(), new OLFeature(geometry), properties));
     }
 
     return features;
