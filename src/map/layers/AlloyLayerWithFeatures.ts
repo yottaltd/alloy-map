@@ -291,7 +291,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @ignore
    * @internal
    */
-  protected setStyleProcessor(processor: AlloyStyleProcessor) {
+  protected setStyleProcessor(processor: AlloyStyleProcessor): void {
     this.currentStyleProcessor = processor;
   }
 
@@ -299,7 +299,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * adds a handler to listen for the features added to layer
    * @param handler the handler to call when features have been added
    */
-  public addFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
+  public addFeaturesAddedListener(handler: FeaturesAddedEventHandler): void {
     this.featuresAddedDispatcher.subscribe(handler);
   }
 
@@ -307,7 +307,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * removes a handler listening to the features added to layer
    * @param handler the handler to stop listening
    */
-  public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler) {
+  public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler): void {
     this.featuresAddedDispatcher.unsubscribe(handler);
   }
 
@@ -333,7 +333,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * resets style for an ol feature
    * @param feature openlayers feature for which we want to reset style
    */
-  public resetStyle(feature: OLFeature) {
+  public resetStyle(feature: OLFeature): void {
     const geometry = feature.getGeometry();
 
     // check if we need to clear any caches

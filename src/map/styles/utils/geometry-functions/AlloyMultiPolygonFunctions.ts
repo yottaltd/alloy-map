@@ -47,7 +47,7 @@ export abstract class AlloyMultiPolygonFunctions {
    * removes polygon geometry parameters from cache
    * @param multiPolygon geometry to remove from cache
    */
-  public static removeFromPolygonCache(multiPolygon: OLMultiPolygon) {
+  public static removeFromPolygonCache(multiPolygon: OLMultiPolygon): void {
     AlloyMultiPolygonFunctions.largestPolygonCache.delete(multiPolygon);
   }
 

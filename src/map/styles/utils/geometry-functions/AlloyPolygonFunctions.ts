@@ -88,7 +88,7 @@ export abstract class AlloyPolygonFunctions {
    * removes polygon geometry parameters from cache
    * @param polygon geometry to remove from cache
    */
-  public static removeFromPolygonCache(polygon: OLPolygon) {
+  public static removeFromPolygonCache(polygon: OLPolygon): void {
     AlloyPolygonFunctions.midPointCache.delete(polygon);
     AlloyPolygonFunctions.midPointSizeCache.delete(polygon);
   }

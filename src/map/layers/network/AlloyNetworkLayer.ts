@@ -82,7 +82,7 @@ export class AlloyNetworkLayer
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     this.map.removeMapChangeZoomListener(this.onMapChangeZoom);
     this.map.removeMapChangeCentreListener(this.onMapChangeCentre);
   }

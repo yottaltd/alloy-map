@@ -68,7 +68,7 @@ export class AlloyWmsLayer implements AlloyLayer {
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // do nothing
   }
 

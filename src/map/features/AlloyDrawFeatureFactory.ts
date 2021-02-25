@@ -17,7 +17,7 @@ export abstract class AlloyDrawFeatureFactory {
   public static createFromGeoJson(
     id: string,
     properties: AlloyDrawFeatureProperties,
-    geoJson: any,
+    geoJson: Record<string, any>,
   ): AlloyDrawFeature {
     return new AlloyDrawFeature(
       id,

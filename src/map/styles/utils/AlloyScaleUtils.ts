@@ -39,7 +39,7 @@ export abstract class AlloyScaleUtils {
    * in relation to the resolution
    * @param resolution the resolution to calculate the scale multiplier for
    */
-  public static getScaleMultiplierForResolution(resolution: number) {
+  public static getScaleMultiplierForResolution(resolution: number): number {
     if (resolution >= SCALE_RESOLUTION_MIN) {
       if (resolution >= SCALE_RESOLUTION_MAX) {
         return 0.5;

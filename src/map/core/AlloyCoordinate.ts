@@ -20,7 +20,7 @@ export class AlloyCoordinate {
    * @ignore
    * @internal
    */
-  public static fromMapCoordinate(array: OLCoordinate) {
+  public static fromMapCoordinate(array: OLCoordinate): AlloyCoordinate {
     array = PolyfillProj.toLonLat(array);
     return new AlloyCoordinate(array[0], array[1]);
   }
@@ -59,7 +59,7 @@ export class AlloyCoordinate {
    * checks equality of this instance with another alloy coordinate
    * @param other the other coordinate to compare
    */
-  public equals(other: AlloyCoordinate) {
+  public equals(other: AlloyCoordinate): boolean {
     return (
       MathUtils.approximateEquals(this.lat, other.lat, ALLOWED_EQUALITY_DIFFERENCE) &&
       MathUtils.approximateEquals(this.lon, other.lon, ALLOWED_EQUALITY_DIFFERENCE)

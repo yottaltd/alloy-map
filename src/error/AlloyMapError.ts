@@ -8,7 +8,7 @@ export class AlloyMapError extends Error {
    * @ignore
    * @internal
    */
-  public static parse(potentialAlloyError: any): AlloyMapError | undefined {
+  public static parse(potentialAlloyError: Record<string, any>): AlloyMapError | undefined {
     if (potentialAlloyError instanceof AlloyMapError) {
       return potentialAlloyError;
     }

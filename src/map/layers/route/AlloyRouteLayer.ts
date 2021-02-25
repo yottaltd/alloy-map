@@ -50,7 +50,7 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
    * Sets route feature and starts animation
    * @param route route feature
    */
-  public setRouteFeature(route: AlloyRouteFeature) {
+  public setRouteFeature(route: AlloyRouteFeature): void {
     // clear existing feature animation if applicable
     if (this.routeFeature !== null) {
       this.animationManager.stopAnimation(this.routeFeature);
@@ -68,7 +68,7 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
    * Sets waypoint features for route
    * @param waypoints array of waypoint features
    */
-  public setWaypointFeatures(waypoints: AlloyRouteWaypointFeature[]) {
+  public setWaypointFeatures(waypoints: AlloyRouteWaypointFeature[]): void {
     this.waypointFeatures.clear();
     this.olSourcePathNodes.clear(false);
 
@@ -80,7 +80,7 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
   /**
    * Clears the layer and stops route animation
    */
-  public clear() {
+  public clear(): void {
     // remove any animating feature
     if (this.routeFeature) {
       this.animationManager.stopAnimation(this.routeFeature);

@@ -161,7 +161,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
    * @ignore
    * @internal
    */
-  public updateStyles(feature: AlloyDrawFeature | null) {
+  public updateStyles(feature: AlloyDrawFeature | null): void {
     // determine the features to update
     const features: AlloyDrawFeature[] = feature
       ? [feature]
@@ -173,7 +173,7 @@ export class AlloyDrawLayer extends AlloyLayerWithFeatures<AlloyDrawFeature> {
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // nothing
   }
 

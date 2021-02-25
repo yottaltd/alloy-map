@@ -259,7 +259,7 @@ export abstract class AlloyGeometryCollectionFunctions {
    * removes polygon geometry parameters from cache
    * @param geometryCollection geometry to remove from cache
    */
-  public static removeFromPolygonCache(geometryCollection: OLGeometryCollection) {
+  public static removeFromPolygonCache(geometryCollection: OLGeometryCollection): void {
     AlloyGeometryCollectionFunctions.largestPolygonCache.delete(geometryCollection);
   }
 

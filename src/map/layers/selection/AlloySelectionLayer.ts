@@ -100,7 +100,7 @@ export class AlloySelectionLayer extends AlloyLayerWithFeatures<AlloyFeature> {
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // nothing
   }
 

@@ -46,7 +46,7 @@ export class AlloyRouteAnimationManager extends AlloyAnimationManager {
   /**
    * @implements
    */
-  public startAnimation(route: AlloyFeature) {
+  public startAnimation(route: AlloyFeature): void {
     this.startFeatureAnimation(
       route.olFeature,
       (

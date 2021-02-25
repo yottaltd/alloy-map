@@ -188,7 +188,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // nothing to clean up
   }
 

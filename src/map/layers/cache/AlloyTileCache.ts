@@ -77,7 +77,7 @@ export class AlloyTileCache<T> {
   /**
    * clears the cache
    */
-  public clear() {
+  public clear(): void {
     this.cache.clear();
     this.head = null;
     this.tail = null;
@@ -98,7 +98,7 @@ export class AlloyTileCache<T> {
    * @param key the key to set
    * @param item the item to cache against the key
    */
-  public set(key: string, item: T) {
+  public set(key: string, item: T): void {
     // remove any current item matching the key
     const currentItem = this.cache.get(key) || null;
     if (currentItem !== null) {

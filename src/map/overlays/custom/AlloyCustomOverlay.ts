@@ -44,7 +44,7 @@ export class AlloyCustomOverlay implements AlloyOverlay {
   /**
    * @implements
    */
-  public setPosition(coordinate: AlloyCoordinate | null) {
+  public setPosition(coordinate: AlloyCoordinate | null): void {
     this.olOverlay.setPosition(coordinate !== null ? coordinate.toMapCoordinate() : undefined);
   }
 }

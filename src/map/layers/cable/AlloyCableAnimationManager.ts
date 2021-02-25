@@ -46,7 +46,7 @@ export class AlloyCableAnimationManager extends AlloyAnimationManager {
   /**
    * @implements
    */
-  public startAnimation(cable: AlloyFeature) {
+  public startAnimation(cable: AlloyFeature): void {
     this.startFeatureAnimation(
       cable.olFeature,
       (

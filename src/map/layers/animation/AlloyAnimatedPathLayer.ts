@@ -202,7 +202,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     this.animationManager.clearAnimations();
   }
 
@@ -225,7 +225,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  protected clearConnectorLines() {
+  protected clearConnectorLines(): void {
     this.connectorLineFeatures.clear();
     this.olSourcePathNodeConnectors.clear();
   }
@@ -236,7 +236,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  protected removeConnectorLine(feature: AlloyPathNodeFeature) {
+  protected removeConnectorLine(feature: AlloyPathNodeFeature): void {
     const lineFeature = this.connectorLineFeatures.get(feature.id);
     if (lineFeature) {
       this.olSourcePathNodeConnectors.removeFeature(lineFeature.olFeature);
@@ -251,7 +251,10 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  protected addConnectorLine(feature: AlloyPathNodeFeature, animated: AlloyAnimatedPathFeature) {
+  protected addConnectorLine(
+    feature: AlloyPathNodeFeature,
+    animated: AlloyAnimatedPathFeature,
+  ): void {
     this.removeConnectorLine(feature);
 
     const unitCoordinate = feature.getExpectedGeometry().getCoordinates();

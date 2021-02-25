@@ -9,6 +9,7 @@ import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyPathNodeConnectorStyleBuilder } from '@/map/styles/builders/AlloyPathNodeConnectorStyleBuilder';
+import { Style } from 'ol/style';
 
 /* eslint-enable max-len */
 
@@ -48,7 +49,7 @@ export abstract class AlloyAnimatedPathStyleProcessor<
     feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ) {
+  ): Style | Style[] {
     if (feature instanceof AlloyAnimatedPathFeature || feature instanceof AlloyPathNodeFeature) {
       return this.styleBuilder.build(feature as F, resolution, state);
     } else if (feature instanceof AlloyPathNodeConnectorFeature) {

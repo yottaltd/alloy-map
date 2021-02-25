@@ -190,7 +190,7 @@ export class AlloyDrawInteraction {
   /**
    * stops all interactions and clears draw layer
    */
-  public clear() {
+  public clear(): void {
     this.cancelRemoval();
     this.onDrawEnd(null);
     this.drawLayer.clearFeatures();
@@ -201,7 +201,7 @@ export class AlloyDrawInteraction {
    * Removes a draw feature from draw layer
    * @param feature `AlloyDrawFeature` to remove from draw source
    */
-  public removeFeature(feature: AlloyDrawFeature) {
+  public removeFeature(feature: AlloyDrawFeature): void {
     this.drawLayer.removeFeature(feature);
   }
 
@@ -211,7 +211,10 @@ export class AlloyDrawInteraction {
    * @param type geometry type to draw
    * @param properties properties for feature to be drawn
    */
-  public startDraw(type: AlloyDrawInteractionGeometryType, properties: AlloyDrawFeatureProperties) {
+  public startDraw(
+    type: AlloyDrawInteractionGeometryType,
+    properties: AlloyDrawFeatureProperties,
+  ): void {
     // cancels previous draw interaction
     this.removeDrawInteraction();
 
@@ -249,7 +252,7 @@ export class AlloyDrawInteraction {
   }
 
   // resets draw interaction
-  public cancelDraw() {
+  public cancelDraw(): void {
     this.onDrawEnd(null);
   }
 
@@ -257,7 +260,7 @@ export class AlloyDrawInteraction {
    * adds a draw feature to the layer
    * @param feature `AlloyDrawFeature` to add to draw layer
    */
-  public addDrawFeature(feature: AlloyDrawFeature) {
+  public addDrawFeature(feature: AlloyDrawFeature): void {
     this.drawLayer.addFeature(feature);
   }
 
@@ -298,7 +301,7 @@ export class AlloyDrawInteraction {
   /**
    * Starts vertices removal interaction
    */
-  public startRemoval() {
+  public startRemoval(): void {
     // cancel existing removal if available
     this.cancelRemoval();
 

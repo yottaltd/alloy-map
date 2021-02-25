@@ -71,7 +71,7 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyItemFea
   /**
    * sets the internal flag to clear the source on next valid tile load
    */
-  public clearSourceOnNextLoad() {
+  public clearSourceOnNextLoad(): void {
     this.shouldClearSource = true;
   }
 

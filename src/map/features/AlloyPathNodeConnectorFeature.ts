@@ -91,7 +91,7 @@ export class AlloyPathNodeConnectorFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setGeometry(geometry: LineString | null) {
+  public setGeometry(geometry: LineString | null): void {
     if (geometry === null) {
       this.olFeature.setGeometry(undefined);
     } else {
@@ -102,7 +102,7 @@ export class AlloyPathNodeConnectorFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setVisible(visible: boolean) {
+  public setVisible(visible: boolean): void {
     this.olFeature.setStyle(visible ? null : []);
   }
 }
