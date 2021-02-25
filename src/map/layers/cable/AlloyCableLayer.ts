@@ -58,7 +58,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
    * Sets cable feature and starts animation
    * @param cable cable feature
    */
-  public setCableFeature(cable: AlloyCableFeature) {
+  public setCableFeature(cable: AlloyCableFeature): void {
     // clear any animations
     if (this.cableFeature) {
       this.animationManager.stopAnimation(this.cableFeature);
@@ -79,7 +79,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
    * Sets main feed feature for cable
    * @param feed main feed feature
    */
-  public setMainFeed(feed: AlloyCableUnitFeature | null) {
+  public setMainFeed(feed: AlloyCableUnitFeature | null): void {
     // first remove old main feed if available
     if (this.mainFeedFeature) {
       this.olSourcePathNodes.removeFeature(this.mainFeedFeature.olFeature);
@@ -100,7 +100,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
    * Sets sub feed feature for cable
    * @param feed sub feed feature
    */
-  public setSubFeed(feed: AlloyCableUnitFeature | null) {
+  public setSubFeed(feed: AlloyCableUnitFeature | null): void {
     // first remove old sub feed if available
     if (this.subFeedFeature) {
       this.olSourcePathNodes.removeFeature(this.subFeedFeature.olFeature);
@@ -121,7 +121,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
    * Sets connected unit features for cable
    * @param units array of connected unit features
    */
-  public setConnectedUnits(units: AlloyCableUnitFeature[]) {
+  public setConnectedUnits(units: AlloyCableUnitFeature[]): void {
     // first remove all old connected units
     for (const unit of Array.from(this.connectedUnitsFeatures.values())) {
       this.olSourcePathNodes.removeFeature(unit.olFeature);
@@ -142,7 +142,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
   /**
    * Clears the layer and stops cable animation
    */
-  public clear() {
+  public clear(): void {
     // clear cable
     if (this.cableFeature) {
       this.animationManager.stopAnimation(this.cableFeature);

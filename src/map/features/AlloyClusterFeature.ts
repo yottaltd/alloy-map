@@ -110,14 +110,14 @@ export class AlloyClusterFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setGeometry(geometry: Geometry | null) {
+  public setGeometry(geometry: Geometry | null): void {
     throw new AlloyMapError(1559223891, 'modifying geometry of cluster features is not allowed');
   }
 
   /**
    * @implements
    */
-  public setVisible(visible: boolean) {
+  public setVisible(visible: boolean): void {
     this.olFeature.setStyle(visible ? null : []);
   }
 }

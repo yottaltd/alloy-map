@@ -28,7 +28,7 @@ export abstract class FontUtils {
    * loads webfonts so they are ready for the rendering pipeline
    * @param webfonts the webfonts to begin loading
    */
-  public static load(webfonts: Array<{ fontFamily: string; testString: string }>) {
+  public static load(webfonts: Array<{ fontFamily: string; testString: string }>): void {
     // filter out fonts already requested
     webfonts = webfonts.filter((f) => !FontUtils.fonts.has(f.fontFamily));
 

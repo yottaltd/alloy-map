@@ -27,9 +27,7 @@ export abstract class ColourUtils {
    * @param colour the colour to darken
    */
   public static darkenBorder(colour: Colour): string {
-    return color(colour)
-      .darken(DARKEN_AMOUNT)
-      .hex();
+    return color(colour).darken(DARKEN_AMOUNT).hex();
   }
 
   /**
@@ -47,9 +45,7 @@ export abstract class ColourUtils {
    * @param colour the colour to lighten
    */
   public static lightenBackground(colour: Colour): string {
-    return color(colour)
-      .lighten(LIGHTEN_AMOUNT)
-      .hex();
+    return color(colour).lighten(LIGHTEN_AMOUNT).hex();
   }
 
   /**
@@ -65,9 +61,7 @@ export abstract class ColourUtils {
    * @param colour the colour to generate the halo colour for
    */
   public static lightenHalo(colour: Colour): [number, number, number, number] {
-    const rgb = color(colour)
-      .lighten(LIGHTEN_AMOUNT)
-      .fade(0.5);
+    const rgb = color(colour).lighten(LIGHTEN_AMOUNT).fade(0.5);
     return [
       Math.round(rgb.red()),
       Math.round(rgb.green()),

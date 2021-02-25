@@ -35,7 +35,7 @@ import OLFill from 'ol/style/Fill';
 import OLStroke from 'ol/style/Stroke';
 import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
-import * as uuid from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 /**
  * default colour for draw and modify interactions
@@ -190,7 +190,7 @@ export class AlloyDrawInteraction {
   /**
    * stops all interactions and clears draw layer
    */
-  public clear() {
+  public clear(): void {
     this.cancelRemoval();
     this.onDrawEnd(null);
     this.drawLayer.clearFeatures();
@@ -201,7 +201,7 @@ export class AlloyDrawInteraction {
    * Removes a draw feature from draw layer
    * @param feature `AlloyDrawFeature` to remove from draw source
    */
-  public removeFeature(feature: AlloyDrawFeature) {
+  public removeFeature(feature: AlloyDrawFeature): void {
     this.drawLayer.removeFeature(feature);
   }
 
@@ -211,7 +211,10 @@ export class AlloyDrawInteraction {
    * @param type geometry type to draw
    * @param properties properties for feature to be drawn
    */
-  public startDraw(type: AlloyDrawInteractionGeometryType, properties: AlloyDrawFeatureProperties) {
+  public startDraw(
+    type: AlloyDrawInteractionGeometryType,
+    properties: AlloyDrawFeatureProperties,
+  ): void {
     // cancels previous draw interaction
     this.removeDrawInteraction();
 
@@ -238,7 +241,7 @@ export class AlloyDrawInteraction {
     // on draw end save feature and reset interactions
     this.olDraw.on('drawend', (event) => {
       // wrap created draw event feature into AlloyDrawFeature and save to draw layer
-      const feature = new AlloyDrawFeature(uuid.v1(), event.feature, properties);
+      const feature = new AlloyDrawFeature(uuidv1(), event.feature, properties);
       this.drawLayer.addFeature(feature, false);
 
       this.onDrawEnd(feature);
@@ -249,7 +252,7 @@ export class AlloyDrawInteraction {
   }
 
   // resets draw interaction
-  public cancelDraw() {
+  public cancelDraw(): void {
     this.onDrawEnd(null);
   }
 
@@ -257,7 +260,7 @@ export class AlloyDrawInteraction {
    * adds a draw feature to the layer
    * @param feature `AlloyDrawFeature` to add to draw layer
    */
-  public addDrawFeature(feature: AlloyDrawFeature) {
+  public addDrawFeature(feature: AlloyDrawFeature): void {
     this.drawLayer.addFeature(feature);
   }
 
@@ -298,7 +301,7 @@ export class AlloyDrawInteraction {
   /**
    * Starts vertices removal interaction
    */
-  public startRemoval() {
+  public startRemoval(): void {
     // cancel existing removal if available
     this.cancelRemoval();
 
@@ -537,7 +540,7 @@ export class AlloyDrawInteraction {
       ),
     ).forEach((point) => {
       // create a remove feature for each point and add to remove layer
-      const feature = new AlloyDrawFeature(uuid.v1(), new OLFeature(point), {
+      const feature = new AlloyDrawFeature(uuidv1(), new OLFeature(point), {
         icon: 'icon-close',
         colour: DRAW_COLOUR,
       });

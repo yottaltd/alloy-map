@@ -101,7 +101,7 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setGeometry(geometry: LineString | null) {
+  public setGeometry(geometry: LineString | null): void {
     this.animationManager.stopAnimation(this);
     if (geometry === null) {
       this.olFeature.setGeometry(undefined);
@@ -114,7 +114,7 @@ export abstract class AlloyAnimatedPathFeature implements AlloyFeature {
   /**
    * @implements
    */
-  public setVisible(visible: boolean) {
+  public setVisible(visible: boolean): void {
     this.olFeature.setStyle(visible ? null : []);
     if (visible) {
       this.animationManager.startAnimation(this);

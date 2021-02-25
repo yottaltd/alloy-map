@@ -148,7 +148,7 @@ export class AlloyWfsLayer implements AlloyLayer, AlloyStyledLayer {
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // nothing
   }
 

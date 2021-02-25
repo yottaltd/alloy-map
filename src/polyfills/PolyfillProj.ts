@@ -46,7 +46,7 @@ export abstract class PolyfillProj {
    * Registers proj4 with openlayers
    * @param proj proj4 object to register with openlayers
    */
-  public static register(code: string, def: string | proj4x.ProjectionDefinition) {
+  public static register(code: string, def: string | proj4x.ProjectionDefinition): void {
     proj4.defs(code, def);
     register(proj4);
   }

@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 
 <html>
+  <head>
+    <title>Alloy Map Sandbox - Empty</title>
+    <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
 
-<head>
-  <title>Alloy Map Sandbox - Empty</title>
-  <link rel="stylesheet" href="https://cdn.labs.alloyapp.io/alloyicons.css" />
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
+      #wrapper {
+        background-color: #ccc;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
 
-    #wrapper {
-      background-color: #ccc;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
+  <body>
+    <!-- dom elements for test setup -->
+    <div id="wrapper">
+      <div id="map" style="width: 100%; height: 800px"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+    <script src="../../dist/alloy-map.js"></script>
 
-<body>
-  <!-- dom elements for test setup -->
-  <div id="wrapper">
-    <div id="map" style="width: 100%; height: 800px;"></div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
-  <script src="../../dist/alloy-map.js"></script>
+    <script>
+      localStorage.debug = 'alloymaps:*';
 
-  <script>
-    localStorage.debug = 'alloymaps:*';
-
-    const map = new alloymap.AlloyMap({
-      api: 'https://api.labs.alloyapp.io/',
-      token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
-      element: document.getElementById('map'),
-      centre: new alloymap.AlloyCoordinate(-2, 52),
-      zoom: 10,
-    });
-    const basemap = alloymap.AlloyBasemapFactory.createSkyward();
-    map.setBasemap(basemap);
-  </script>
-</body>
-
+      const map = new alloymap.AlloyMap({
+        api: 'https://api.labs.alloyapp.io/',
+        token: 'c0c1e855-a4b1-48b1-a297-d6ad98e9a7a8',
+        element: document.getElementById('map'),
+        centre: new alloymap.AlloyCoordinate(-2, 52),
+        zoom: 10,
+      });
+      const basemap = alloymap.AlloyBasemapFactory.createSkyward();
+      map.setBasemap(basemap);
+    </script>
+  </body>
 </html>

@@ -157,7 +157,7 @@ export abstract class AlloyCustomItemFeatureFactory {
     id: string,
     properties: AlloyCustomItemFeatureProperties,
     customLayerId: string,
-    geoJson: any,
+    geoJson: Record<string, any>,
   ): AlloyCustomItemFeature {
     if (!geoJson) {
       throw new AlloyMapError(1559559645, 'geo json parameter must be defined');

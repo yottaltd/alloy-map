@@ -8,7 +8,8 @@ import OLFeature from 'ol/Feature';
  * an alloy custom feature with item id which represents something being added to the map by a user
  * or programatically, it can represent any item
  */
-export class AlloyCustomItemFeature extends AlloyCustomFeatureBase
+export class AlloyCustomItemFeature
+  extends AlloyCustomFeatureBase
   implements AlloyFeatureWithItemId {
   /**
    * @implements

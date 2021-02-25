@@ -72,7 +72,7 @@ export abstract class AlloyAnimationManager {
   /**
    * clears all running animations
    */
-  public clearAnimations() {
+  public clearAnimations(): void {
     this.animatingFeatures.clear();
   }
 
@@ -80,7 +80,7 @@ export abstract class AlloyAnimationManager {
    * stops animation a single feature
    * @param feature the feature to stop animations for
    */
-  public stopAnimation(feature: AlloyFeature) {
+  public stopAnimation(feature: AlloyFeature): void {
     this.animatingFeatures.delete(feature.olFeature);
   }
 
@@ -97,7 +97,7 @@ export abstract class AlloyAnimationManager {
       renderer: OLCanvasImmediateRenderer,
       ratio: number,
     ) => void,
-  ) {
+  ): void {
     if (this.animatingFeatures.has(feature)) {
       this.animatingFeatures.delete(feature);
     }

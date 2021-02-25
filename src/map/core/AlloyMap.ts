@@ -686,14 +686,14 @@ export class AlloyMap {
    * @param width DOM width in pixels
    * @param height DOM height in pixels
    */
-  public setSize(width: number, height: number) {
+  public setSize(width: number, height: number): void {
     this.olMap.setSize([width, height]);
   }
 
   /**
    * Request a map rendering (at the next animation frame).
    */
-  public render() {
+  public render(): void {
     this.olMap.render();
   }
 
@@ -800,7 +800,11 @@ export class AlloyMap {
    * @param bufferPercent whether to add a buffer around wrapped features
    * @param animate whether to animate to the viewport
    */
-  public fitFeaturesViewport(features: AlloyFeature[], bufferPercent?: number, animate?: boolean) {
+  public fitFeaturesViewport(
+    features: AlloyFeature[],
+    bufferPercent?: number,
+    animate?: boolean,
+  ): void {
     this.setViewport(FeatureUtils.calculateFeaturesBounds(features, bufferPercent), animate);
   }
 
@@ -808,7 +812,7 @@ export class AlloyMap {
    * Force a recalculation of the map viewport size. This should be called when third-party code
    * changes the size of the map viewport.
    */
-  public updateSize() {
+  public updateSize(): void {
     this.olMap.updateSize();
   }
 }

@@ -9,7 +9,7 @@ import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyLayerWithFeatures } from '@/map/layers/AlloyLayerWithFeatures';
 import { AlloyCustomLayerOptions } from '@/map/layers/custom/AlloyCustomLayerOptions';
 import { AlloyCustomStyleProcessor } from '@/map/layers/custom/AlloyCustomStyleProcessor';
-import * as uuid from 'uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 /**
  * an alloy custom layer for rendering custom features provided externally on the map, use this to
@@ -43,7 +43,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     coordinate: AlloyCoordinate,
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createPoint(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       coordinate,
@@ -62,7 +62,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     coordinates: AlloyCoordinate[],
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createMultiPoint(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       coordinates,
@@ -81,7 +81,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     coordinates: AlloyCoordinate[],
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createLineString(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       coordinates,
@@ -100,7 +100,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     coordinates: AlloyCoordinate[][],
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createMultiLineString(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       coordinates,
@@ -119,7 +119,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     coordinates: AlloyCoordinate[][],
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createPolygon(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       coordinates,
@@ -138,7 +138,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     coordinates: AlloyCoordinate[][][],
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createMultiPolygon(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       coordinates,
@@ -157,7 +157,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     geoJson: string | any,
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createFromGeoJson(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       geoJson,
@@ -176,7 +176,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
     feature: AlloyFeature,
   ): AlloyCustomFeature {
     const newFeature = AlloyCustomFeatureFactory.createFromFeature(
-      uuid.v1(),
+      uuidv1(),
       properties,
       this.id,
       feature,
@@ -188,7 +188,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // nothing to clean up
   }
 

@@ -124,7 +124,7 @@ export class AlloyHoverLayer implements AlloyLayer {
    * @ignore
    * @internal
    */
-  public setHoveredFeature(feature: AlloyFeature | null) {
+  public setHoveredFeature(feature: AlloyFeature | null): void {
     // no-op
     if (feature === this.currentlyHoveredFeature) {
       return;
@@ -147,7 +147,7 @@ export class AlloyHoverLayer implements AlloyLayer {
   /**
    * @implements
    */
-  public dispose() {
+  public dispose(): void {
     // nothing
   }
 

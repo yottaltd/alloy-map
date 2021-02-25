@@ -4,6 +4,7 @@ import { AlloyDrawLayer } from '@/map/layers/drawing/AlloyDrawLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyDrawStyleBuilder } from '@/map/styles/builders/AlloyDrawStyleBuilder';
+import { Style } from 'ol/style';
 
 /**
  * processes the draw styled feature items
@@ -33,7 +34,7 @@ export class AlloyDrawStyleProcessor extends AlloyStyleProcessor {
     feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ) {
+  ): Style | Style[] {
     if (feature instanceof AlloyDrawFeature) {
       return this.drawStyleBuilder.build(feature, resolution, state);
     } else {
