@@ -3,7 +3,7 @@ import { AlloyCoordinate } from '@/map/core/AlloyCoordinate';
 import { AlloyCustomLayer } from '@/map/layers/custom/AlloyCustomLayer';
 import MapData from '../MapData';
 
-export default function(mapData: MapData) {
+export default function (mapData: MapData) {
   describe('search', () => {
     it('should find features within', () => {
       // Test data.

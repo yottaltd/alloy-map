@@ -32,24 +32,33 @@
     "no-prototype-builtins": "off",
     "no-unused-expressions": "off",
     "no-case-declarations": "off",
-    "max-len": ["warn", {
-      "code": 100,
-      "ignoreUrls": true
-    }],
+    "max-len": [
+      "warn",
+      {
+        "code": 100,
+        "ignoreUrls": true
+      }
+    ],
     "quotes": ["error", "single", "avoid-escape"],
     "chai-friendly/no-unused-expressions": "error",
     "@typescript-eslint/prefer-for-of": ["warn"],
     "@typescript-eslint/no-inferrable-types": ["warn"],
     "@typescript-eslint/explicit-function-return-type": ["off"],
-    "@typescript-eslint/no-use-before-define": ["error", {
-      "functions": false
-    }],
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        "functions": false
+      }
+    ],
     "@typescript-eslint/camelcase": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
     "@typescript-eslint/no-empty-interface": ["off"],
-    "@typescript-eslint/no-unused-vars": ["warn", {
-      "args": "none"
-    }],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "args": "none"
+      }
+    ],
     "cypress/no-unnecessary-waiting": "off",
     "prettier/prettier": "error"
   }

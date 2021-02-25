@@ -12,7 +12,7 @@ const mapElementId = '#map';
 
 let mapCentre: AlloyCoordinate;
 
-export default function(mapData: MapData) {
+export default function (mapData: MapData) {
   describe('features', () => {
     beforeEach(() => (mapCentre = mapData.map.centre));
 

@@ -9,7 +9,7 @@ import MapData from '../MapData';
 
 let mapCentre: AlloyCoordinate;
 
-export default function(mapData: MapData) {
+export default function (mapData: MapData) {
   describe('layers', () => {
     beforeEach(() => (mapCentre = mapData.map.centre));
 

@@ -55,10 +55,7 @@ export abstract class WmsUtils {
         TRANSPARENT: transparent,
         BGCOLOR: options.colour
           ? // special colour format for WMS
-            color(options.colour)
-              .hex()
-              .toUpperCase()
-              .replace('#', '0x')
+            color(options.colour).hex().toUpperCase().replace('#', '0x')
           : undefined,
       },
       attributions: options.watermark ? DOMPurify.sanitize(options.watermark) : undefined,
@@ -88,10 +85,7 @@ export abstract class WmsUtils {
         TRANSPARENT: transparent,
         BGCOLOR: options.colour
           ? // special colour format for WMS
-            color(options.colour)
-              .hex()
-              .toUpperCase()
-              .replace('#', '0x')
+            color(options.colour).hex().toUpperCase().replace('#', '0x')
           : undefined,
       },
       attributions: options.watermark ? DOMPurify.sanitize(options.watermark) : undefined,

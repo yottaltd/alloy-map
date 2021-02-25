@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { AlloyBasemapFactory } from '@/map/basemaps/AlloyBasemapFactory';
 import MapData from '../MapData';
 
-export default function(mapData: MapData) {
+export default function (mapData: MapData) {
   describe('basemaps', () => {
     it('should set skyward basemap', () => {
       // test data

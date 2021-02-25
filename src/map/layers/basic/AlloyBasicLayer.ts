@@ -17,7 +17,8 @@ import { ProjectionUtils } from '@/utils/ProjectionUtils';
  * an alloy basic layer uses the `/api/layer/{code}/{x}/{y}/{z}/basic` endpoint to request and
  * display features. All features will be individual items.
  */
-export class AlloyBasicLayer extends AlloyLayerWithFeaturesWithItemId<AlloyItemFeature>
+export class AlloyBasicLayer
+  extends AlloyLayerWithFeaturesWithItemId<AlloyItemFeature>
   implements AlloyBoundedLayer, AlloyStyledLayer {
   /**
    * @implements

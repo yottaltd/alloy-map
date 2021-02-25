@@ -8,7 +8,7 @@ import MapData from '../MapData';
 let mapCentre: AlloyCoordinate;
 let mapZoom: number;
 
-export default function(mapData: MapData) {
+export default function (mapData: MapData) {
   describe('navigation', () => {
     beforeEach(() => {
       mapCentre = mapData.map.centre;

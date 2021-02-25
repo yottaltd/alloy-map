@@ -14,7 +14,7 @@ const wfsFeaturesPrefixCapabilities =
 const wfsFeaturesPrefixCapabilitiesParsed =
   'tests/e2e/specs/all/wfs/bristol_gov_uk_WFS_GetCapabilitiesParsed.json';
 
-export default function(mapData: MapData) {
+export default function (mapData: MapData) {
   describe('wfs capabilities parsing', () => {
     it('should parse capabilities without prefix', () => {
       // root and nodes without prefixes
