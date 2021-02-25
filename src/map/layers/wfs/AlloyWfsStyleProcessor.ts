@@ -4,7 +4,7 @@ import { AlloyWfsLayer } from '@/map/layers/wfs/AlloyWfsLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyWfsStyleBuilder } from '@/map/styles/builders/AlloyWfsStyleBuilder';
-import { Style } from 'ol/style';
+import OLStyle from 'ol/style/Style';
 
 /**
  * processes the wfs styled feature items
@@ -34,7 +34,7 @@ export class AlloyWfsStyleProcessor extends AlloyStyleProcessor {
     feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): Style | Style[] {
+  ): OLStyle | OLStyle[] {
     if (feature instanceof AlloyWfsFeature) {
       return this.wfsStyleBuilder.build(feature, resolution, state);
     } else {

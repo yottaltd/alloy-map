@@ -1,9 +1,10 @@
-import { AlloyFeature } from '@/map/features/AlloyFeature';
+import { AlloyItemFeature } from '@/map/features/AlloyItemFeature';
+import { AlloySimplifiedGeometryFeature } from '@/map/features/AlloySimplifiedGeometryFeature';
 import { AlloyNetworkLayer } from '@/map/layers/network/AlloyNetworkLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyNetworkStyleBuilder } from '@/map/styles/builders/AlloyNetworkStyleBuilder';
-import { Style } from 'ol/style';
+import OLStyle from 'ol/style/Style';
 
 /**
  * processes the network styled feature items
@@ -30,11 +31,11 @@ export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
    * @override
    */
   public onStyleProcessWithAlloyFeature(
-    feature: AlloyFeature,
+    feature: AlloyItemFeature | AlloySimplifiedGeometryFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): Style | Style[] {
-    return this.networkStyleBuilder.build(feature as any, resolution, state);
+  ): OLStyle | OLStyle[] {
+    return this.networkStyleBuilder.build(feature, resolution, state);
   }
 
   /**

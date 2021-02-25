@@ -6,7 +6,7 @@ import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuild
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyClusterStyleBuilder } from '@/map/styles/builders/AlloyClusterStyleBuilder';
 import { AlloyItemStyleBuilder } from '@/map/styles/builders/AlloyItemStyleBuilder';
-import { Style } from 'ol/style';
+import OLStyle from 'ol/style/Style';
 
 /**
  * processes the cluster styled feature items
@@ -44,7 +44,7 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
     feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): Style | Style[] {
+  ): OLStyle | OLStyle[] {
     if (feature instanceof AlloyClusterFeature) {
       return this.clusterStyleBuilder.build(feature, resolution, state);
     } else if (feature instanceof AlloyItemFeature) {

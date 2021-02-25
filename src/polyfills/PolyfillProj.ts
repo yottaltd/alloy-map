@@ -7,7 +7,7 @@ import OLProjection from 'ol/proj/Projection';
 // ugly hack to allow building taken from here
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663
 import * as proj4x from 'proj4';
-const proj4 = (proj4x as any).default;
+const proj4 = proj4x.default;
 
 /**
  * utility class for accessing ol/proj functions due to typing issues.

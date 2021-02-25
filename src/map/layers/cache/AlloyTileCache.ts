@@ -140,7 +140,7 @@ export class AlloyTileCache<T> {
    * removes an item from the cache and updates any internals
    * @param item the item to remove
    */
-  private removeItem(item: AlloyTileCacheItem<T>) {
+  private removeItem(item: AlloyTileCacheItem<T>): void {
     if (this.head === item) {
       this.head = item.next;
     }

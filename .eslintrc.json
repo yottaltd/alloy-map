@@ -4,5 +4,6 @@
     "@yottaltd/eslint-config/lib/defaults",
     "@yottaltd/eslint-config/lib/unit-tests",
     "@yottaltd/eslint-config/lib/e2e-tests"
-  ]
+  ],
+  "ignorePatterns": ["src/api/**", "dist/**"]
 }

@@ -101,6 +101,7 @@ export class AlloySimplifiedGeometryFeature implements AlloyFeature {
     | OLMultiPolygon
     | OLGeometryCollection {
     // naughty cast here but we are expecting the geometry to be any of the above
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.olFeature.getGeometry() as any;
   }
 

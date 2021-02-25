@@ -77,7 +77,7 @@ export class AlloyPingInteraction {
    * starts a standard ping animation
    * @param olPoint the point of origin
    */
-  private ping(olPoint: OLPoint) {
+  private ping(olPoint: OLPoint): void {
     const basemap = this.map.basemap;
     if (!basemap) {
       return;
@@ -85,7 +85,7 @@ export class AlloyPingInteraction {
 
     const start = new Date().getTime();
 
-    const animate = (e: OLRenderEvent) => {
+    const animate = (e: OLRenderEvent): void => {
       // WARNING! There be demons ahead! if we change renderers e.g. webgl then this will fail
       const immediate: OLCanvasImmediateRenderer = PolyfillVectorContext.getVectorContext(e);
       const elapsed = e.frameState.time - start;

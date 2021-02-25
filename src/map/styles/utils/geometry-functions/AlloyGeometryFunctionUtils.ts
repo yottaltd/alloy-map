@@ -28,7 +28,7 @@ export abstract class AlloyGeometryFunctionUtils {
     from: (olFeature: OLFeature | OLRenderFeature) => OLGeometry,
     ...to: Array<(olGeometry: OLGeometry) => OLGeometry>
   ): (olFeature: OLFeature | OLRenderFeature) => OLGeometry {
-    return (olFeature: OLFeature | OLRenderFeature) =>
+    return (olFeature: OLFeature | OLRenderFeature): OLGeometry =>
       to.reduce((prev, curr) => curr(prev), from(olFeature));
   }
 
@@ -38,13 +38,14 @@ export abstract class AlloyGeometryFunctionUtils {
    */
   public static convertGeometryToMultiPoint(geometry: OLGeometry): OLMultiPoint {
     switch (geometry.getType()) {
-      case OLGeometryType.GEOMETRY_COLLECTION:
+      case OLGeometryType.GEOMETRY_COLLECTION: {
         const points: OLCoordinate[] = _.flatten(
           (geometry as OLGeometryCollection)
             .getGeometries()
             .map((g) => AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(g).getCoordinates()),
         );
         return new OLMultiPoint(points);
+      }
       case OLGeometryType.LINE_STRING:
         return new OLMultiPoint((geometry as OLLineString).getCoordinates());
       case OLGeometryType.MULTI_LINE_STRING:

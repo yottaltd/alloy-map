@@ -171,6 +171,7 @@ export class AlloyNetworkFeatureLoader extends AlloyTileFeatureLoader<
     // result in the following process, be careful when modifying these and make sure they match
     // what the service is giving us. Think about performance because there could be MANY results
     // and this is called potentially 30-40 times in a second when panning
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return response.results.map((r: any /* we don't have typings */, i: number) => {
       // we switch on "type" we know this exists because of the spec for the cluster endpoint
       const olFeature = olFeatures[i];

@@ -16,6 +16,7 @@ import OLFeature from 'ol/Feature';
 import OLLineString from 'ol/geom/LineString';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import OLStyle from 'ol/style/Style';
 
 /* eslint-enable max-len */
 
@@ -131,7 +132,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
 
     this.olLayerAnimatedPaths = new OLVectorLayer({
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => {
+      style: (olFeature, resolution): OLStyle | OLStyle[] => {
         if (this.styleProcessor) {
           return this.styleProcessor.onStyleProcess(
             olFeature,
@@ -148,7 +149,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
 
     this.olLayerPathNodes = new OLVectorLayer({
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => {
+      style: (olFeature, resolution): OLStyle | OLStyle[] => {
         if (this.styleProcessor) {
           return this.styleProcessor.onStyleProcess(
             olFeature,
@@ -165,7 +166,7 @@ export abstract class AlloyAnimatedPathLayer implements AlloyLayer {
 
     this.olLayerPathNodeConnectors = new OLVectorLayer({
       // set the styling for the layer, we use an arrow function here else "this" resolves wrong
-      style: (olFeature, resolution) => {
+      style: (olFeature, resolution): OLStyle | OLStyle[] => {
         if (this.styleProcessor) {
           return this.styleProcessor.onStyleProcess(
             olFeature,

@@ -106,6 +106,7 @@ export class AlloyItemFeature implements AlloyFeature, AlloyFeatureWithItemId {
     | OLGeometryCollection {
     // naughty cast here but we are expecting the geometry to always be of one of the above types
     // the reason we don't check is down to performance
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.olFeature.getGeometry() as any;
   }
 

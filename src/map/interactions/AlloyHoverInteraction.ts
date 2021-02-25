@@ -68,18 +68,14 @@ export class AlloyHoverInteraction {
     // processing done for these events
     this.map.olMap.on(
       'pointermove',
-      _.debounce(
-        (e) => this.onPointerMove(e as any /* this is untyped in ol */),
-        POINTER_MOVE_THROTTLE,
-        {
-          // call the function immediately
-          leading: true,
-          // always call it after the events stop
-          trailing: true,
-          // the max amount of time between calling e.g. user keeps moving the mouse for 1s
-          maxWait: POINTER_MOVE_THROTTLE,
-        },
-      ),
+      _.debounce((e) => this.onPointerMove(e as OLMapBrowserPointerEvent), POINTER_MOVE_THROTTLE, {
+        // call the function immediately
+        leading: true,
+        // always call it after the events stop
+        trailing: true,
+        // the max amount of time between calling e.g. user keeps moving the mouse for 1s
+        maxWait: POINTER_MOVE_THROTTLE,
+      }),
     );
 
     // listen for layer changes to cache computed data
@@ -184,7 +180,7 @@ export class AlloyHoverInteraction {
   /**
    * recalculates the payload of data used on pointer movement
    */
-  private recalculatePointerMovePayload() {
+  private recalculatePointerMovePayload(): void {
     const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
     const olLayers = _.flatten(layers.map((l) => l.olLayers));
 

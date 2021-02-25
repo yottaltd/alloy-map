@@ -4,7 +4,7 @@ import { AlloyCustomLayer } from '@/map/layers/custom/AlloyCustomLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyCustomStyleBuilder } from '@/map/styles/builders/AlloyCustomStyleBuilder';
-import { Style } from 'ol/style';
+import OLStyle from 'ol/style/Style';
 
 /**
  * processes the custom styled feature items
@@ -34,7 +34,7 @@ export class AlloyCustomStyleProcessor extends AlloyStyleProcessor {
     feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): Style | Style[] {
+  ): OLStyle | OLStyle[] {
     if (feature instanceof AlloyCustomFeatureBase) {
       return this.customStyleBuilder.build(
         feature,
