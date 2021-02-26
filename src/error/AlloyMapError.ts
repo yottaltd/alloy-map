@@ -21,7 +21,7 @@ export class AlloyMapError extends Error {
       potentialAlloyError.hasOwnProperty('httpStatusCode') &&
       potentialAlloyError.hasOwnProperty('message')
     ) {
-      let message: string;
+      let message = 'No error message provided.';
       let errorCode: number;
       let httpStatusCode: number;
       let category: string;
@@ -36,8 +36,6 @@ export class AlloyMapError extends Error {
 
       if (typeof potentialAlloyError.message === 'string') {
         message = potentialAlloyError.message;
-      } else {
-        throw new Error('Failed to parse AlloyMapError - message was of invalid type.');
       }
 
       if (typeof potentialAlloyError.httpStatusCode === 'string') {
