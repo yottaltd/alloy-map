@@ -124,7 +124,7 @@ export class AlloyHoverInteraction {
     // iterate through each feature at the map pixel
     this.map.olMap.forEachFeatureAtPixel(
       event.pixel,
-      (olFeature, olLayer) => {
+      (olFeature, olLayer): boolean | undefined => {
         // potentially a render feature
         if (olFeature instanceof OLFeature) {
           // find our layer index for the openlayers layers
@@ -142,6 +142,8 @@ export class AlloyHoverInteraction {
             }
           }
         }
+
+        return undefined;
       },
       {
         // filters the layers to iterate though, we only want alloy layers e.g. not hover layers

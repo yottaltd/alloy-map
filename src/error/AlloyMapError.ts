@@ -60,6 +60,8 @@ export class AlloyMapError extends Error {
         category,
       });
     }
+
+    return undefined;
   }
 
   /**
