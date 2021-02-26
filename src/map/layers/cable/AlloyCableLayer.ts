@@ -196,7 +196,7 @@ export class AlloyCableLayer extends AlloyAnimatedPathLayer {
    * @ignore
    * @internal
    */
-  private addAllConnectorLines() {
+  private addAllConnectorLines(): void {
     this.clearConnectorLines();
     if (!this.cableFeature) {
       return;

@@ -14,6 +14,7 @@ export abstract class FeatureGuards {
   public static isAlloyFeatureWithItemId(
     feature: AlloyFeature,
   ): feature is AlloyFeature & AlloyFeatureWithItemId {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return feature.hasOwnProperty('itemId') && typeof (feature as any).itemId === 'string';
   }
 

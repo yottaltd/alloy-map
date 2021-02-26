@@ -8,6 +8,7 @@ import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuild
 import { Debugger } from 'debug';
 import OLVectorLayer from 'ol/layer/Vector';
 import OLVectorSource from 'ol/source/Vector';
+import OLStyle from 'ol/style/Style';
 
 /**
  * a special interaction layer for hovering features
@@ -87,7 +88,7 @@ export class AlloyHoverLayer implements AlloyLayer {
     this.olLayers = [
       new OLVectorLayer({
         // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
-        style: (olFeature, resolution) =>
+        style: (olFeature, resolution): OLStyle | OLStyle[] =>
           this.styleProcessor.onStyleProcess(
             olFeature,
             resolution,

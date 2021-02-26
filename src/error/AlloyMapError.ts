@@ -8,7 +8,7 @@ export class AlloyMapError extends Error {
    * @ignore
    * @internal
    */
-  public static parse(potentialAlloyError: Record<string, any>): AlloyMapError | undefined {
+  public static parse(potentialAlloyError: Record<string, unknown>): AlloyMapError | undefined {
     if (potentialAlloyError instanceof AlloyMapError) {
       return potentialAlloyError;
     }
@@ -21,16 +21,45 @@ export class AlloyMapError extends Error {
       potentialAlloyError.hasOwnProperty('httpStatusCode') &&
       potentialAlloyError.hasOwnProperty('message')
     ) {
-      return new AlloyMapError(
-        parseInt(potentialAlloyError.errorCode.substring(1), 10),
-        potentialAlloyError.message || '',
-        {
-          httpStatusCode: potentialAlloyError.httpStatusCode,
-          data: potentialAlloyError.errorData,
-          category: potentialAlloyError.category,
-        },
-      );
+      let message = 'No error message provided.';
+      let errorCode: number;
+      let httpStatusCode: number;
+      let category: string;
+
+      if (typeof potentialAlloyError.errorCode === 'string') {
+        errorCode = parseInt(potentialAlloyError.errorCode.substring(1), 10);
+      } else if (typeof potentialAlloyError.errorCode === 'number') {
+        errorCode = potentialAlloyError.errorCode;
+      } else {
+        throw new Error('Failed to parse AlloyMapError - errorCode was of invalid type.');
+      }
+
+      if (typeof potentialAlloyError.message === 'string') {
+        message = potentialAlloyError.message;
+      }
+
+      if (typeof potentialAlloyError.httpStatusCode === 'string') {
+        httpStatusCode = parseInt(potentialAlloyError.httpStatusCode, 10);
+      } else if (typeof potentialAlloyError.httpStatusCode === 'number') {
+        httpStatusCode = potentialAlloyError.httpStatusCode;
+      } else {
+        throw new Error('Failed to parse AlloyMapError - httpStatusCode was of invalid type.');
+      }
+
+      if (typeof potentialAlloyError.category === 'string') {
+        category = potentialAlloyError.category;
+      } else {
+        throw new Error('Failed to parse AlloyMapError - category was of invalid type.');
+      }
+
+      return new AlloyMapError(errorCode, message, {
+        httpStatusCode,
+        data: potentialAlloyError.errorData,
+        category,
+      });
     }
+
+    return undefined;
   }
 
   /**
@@ -46,7 +75,7 @@ export class AlloyMapError extends Error {
   /**
    * the optional error data
    */
-  public readonly data?: any;
+  public readonly data?: unknown;
 
   /**
    * the optional error category
@@ -64,7 +93,7 @@ export class AlloyMapError extends Error {
     message: string,
     options?: {
       httpStatusCode?: number;
-      data?: any;
+      data?: unknown;
       category?: string;
     },
   ) {

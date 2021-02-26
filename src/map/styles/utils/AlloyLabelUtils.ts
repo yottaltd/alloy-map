@@ -260,7 +260,7 @@ export abstract class AlloyLabelUtils {
    * @param context the canvas context to draw with
    * @param title the title text to show
    */
-  private static drawTitle(context: CanvasRenderingContext2D, title: string) {
+  private static drawTitle(context: CanvasRenderingContext2D, title: string): void {
     context.beginPath();
     context.textAlign = 'left';
     context.textBaseline = 'middle';
@@ -286,7 +286,7 @@ export abstract class AlloyLabelUtils {
     title: string,
     subtitle: string,
     canvasWidth: number,
-  ) {
+  ): void {
     if (title) {
       // draw the title
       context.beginPath();
@@ -341,7 +341,7 @@ export abstract class AlloyLabelUtils {
    * @param context the canvas context to calculate font sizes with
    * @param title the title
    */
-  private static getCanvasWidthWithTitle(context: CanvasRenderingContext2D, title: string) {
+  private static getCanvasWidthWithTitle(context: CanvasRenderingContext2D, title: string): number {
     // set font to use
     context.font = LABEL_TITLE_ONLY_FONT;
 
@@ -370,7 +370,7 @@ export abstract class AlloyLabelUtils {
     context: CanvasRenderingContext2D,
     title: string,
     subtitle: string,
-  ) {
+  ): number {
     // set font to use
     context.font = LABEL_TITLE_FONT;
 

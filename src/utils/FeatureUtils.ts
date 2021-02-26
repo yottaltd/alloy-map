@@ -183,7 +183,7 @@ export abstract class FeatureUtils {
    * @param olFeature the openlayers feature to get the id from
    */
   public static getFeatureIdFromOlFeature(olFeature: OLFeature): string {
-    const id: any = olFeature.getProperties()[OL_FEATURE_TO_FEATURE_ID];
+    const id: unknown = olFeature.getProperties()[OL_FEATURE_TO_FEATURE_ID];
     if (typeof id !== 'string') {
       throw new AlloyMapError(1554055460, 'failed to get feature id from ol feature', {
         data: {

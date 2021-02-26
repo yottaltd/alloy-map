@@ -154,7 +154,7 @@ export class AlloyCustomLayer extends AlloyLayerWithFeatures<AlloyCustomFeatureB
    */
   public addFeatureFromGeoJson(
     properties: AlloyCustomFeatureProperties,
-    geoJson: string | any,
+    geoJson: string | Record<string, unknown>,
   ): AlloyCustomFeature {
     const feature = AlloyCustomFeatureFactory.createFromGeoJson(
       uuidv1(),

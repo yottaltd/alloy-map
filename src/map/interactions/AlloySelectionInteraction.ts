@@ -510,7 +510,7 @@ export class AlloySelectionInteraction {
    * helper for onclick function to make selecting a single feature reusable
    * @param feature the feature to select
    */
-  private onClickSelectSingleFeature(feature: AlloyFeature) {
+  private onClickSelectSingleFeature(feature: AlloyFeature): void {
     this.debugger('first feature: %s was clicked and not already selected, selecting', feature.id);
     this.setSelectedFeature(feature, true);
     this.callFeatureOnSelectionInteraction(feature);
@@ -524,7 +524,7 @@ export class AlloySelectionInteraction {
    * helper to call the selection interaction on a feature (if it has one)
    * @param feature the feature to call the function for
    */
-  private callFeatureOnSelectionInteraction(feature: AlloyFeature) {
+  private callFeatureOnSelectionInteraction(feature: AlloyFeature): void {
     if (feature.onSelectionInteraction) {
       this.debugger('first feature: %s has interaction function, calling...', feature.id);
       feature.onSelectionInteraction(this.map);
@@ -535,7 +535,7 @@ export class AlloySelectionInteraction {
    * finds all the features in managed layers (excluding hover etc.) under the provided pixel coord
    * @param pixel the pixel coordinate to find features under
    */
-  private getFeaturesForPixel(pixel: number[]) {
+  private getFeaturesForPixel(pixel: number[]): AlloyFeature[] {
     const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
     // map the openlayers layers one to one with ours so indices are the same
     const olLayers = _.flatten(layers.map((l) => l.olLayers));
@@ -602,7 +602,7 @@ export class AlloySelectionInteraction {
   private dispatchFeatureSelectionChangeEvent(
     oldFeatures: Map<string, AlloyFeature>,
     userEvent: boolean,
-  ) {
+  ): void {
     this.onFeatureSelectionChange.dispatch(
       // features getter already makes a new map instance
       new FeatureSelectionChangeEvent(this.map.selectionLayer.features, oldFeatures, userEvent),

@@ -116,31 +116,6 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
 
   /**
    * @implements
-   * @ignore
-   * @internal
-   */
-  protected createStyleProcessor(): AlloyRouteStyleProcessor {
-    return new AlloyRouteStyleProcessor(this);
-  }
-
-  /**
-   * Adds connector lines for all waypoints
-   * @ignore
-   * @internal
-   */
-  private addAllConnectorLines() {
-    this.clearConnectorLines();
-    if (!this.routeFeature) {
-      return;
-    }
-
-    for (const waypointFeature of Array.from(this.waypointFeatures.values())) {
-      this.addConnectorLine(waypointFeature, this.routeFeature);
-    }
-  }
-
-  /**
-   * @implements
    */
   public enable(): void {
     if (this.routeFeature) {
@@ -161,5 +136,30 @@ export class AlloyRouteLayer extends AlloyAnimatedPathLayer implements AlloyMana
     this.olLayerAnimatedPaths.setOpacity(0.25);
     this.olLayerPathNodes.setOpacity(0);
     this.olLayerPathNodeConnectors.setOpacity(0);
+  }
+
+  /**
+   * @implements
+   * @ignore
+   * @internal
+   */
+  protected createStyleProcessor(): AlloyRouteStyleProcessor {
+    return new AlloyRouteStyleProcessor(this);
+  }
+
+  /**
+   * Adds connector lines for all waypoints
+   * @ignore
+   * @internal
+   */
+  private addAllConnectorLines(): void {
+    this.clearConnectorLines();
+    if (!this.routeFeature) {
+      return;
+    }
+
+    for (const waypointFeature of Array.from(this.waypointFeatures.values())) {
+      this.addConnectorLine(waypointFeature, this.routeFeature);
+    }
   }
 }

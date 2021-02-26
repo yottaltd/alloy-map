@@ -3,7 +3,7 @@ import { AlloyBasicLayer } from '@/map/layers/basic/AlloyBasicLayer';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
 import { AlloyBasicStyleBuilder } from '@/map/styles/builders/AlloyBasicStyleBuilder';
-import { Style } from 'ol/style';
+import OLStyle from 'ol/style/Style';
 
 /**
  * processes the basic styled feature items
@@ -35,7 +35,7 @@ export class AlloyBasicStyleProcessor extends AlloyStyleProcessor {
     feature: AlloyItemFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): Style | Style[] {
+  ): OLStyle | OLStyle[] {
     return this.basicStyleBuilder.build(feature, resolution, state);
   }
 

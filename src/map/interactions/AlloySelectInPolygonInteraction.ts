@@ -5,6 +5,7 @@ import { AlloyGeometryFunctionUtils } from '@/map/styles/utils/geometry-function
 import { FeatureUtils } from '@/utils/FeatureUtils';
 import { Debugger } from 'debug';
 import OLFeature from 'ol/Feature';
+import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLPolygon from 'ol/geom/Polygon';
 import OLDoubleClickZoom from 'ol/interaction/DoubleClickZoom';
@@ -121,7 +122,7 @@ export class AlloySelectInPolygonInteraction {
               width: 4,
             }),
           }),
-          geometry: (f: OLFeature | OLRenderFeature) => {
+          geometry: (f: OLFeature | OLRenderFeature): OLGeometry | OLRenderFeature => {
             if (f instanceof OLRenderFeature) {
               return f;
             }

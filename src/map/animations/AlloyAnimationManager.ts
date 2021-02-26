@@ -103,7 +103,7 @@ export abstract class AlloyAnimationManager {
     }
     this.animatingFeatures.add(feature);
 
-    const animateLineString = (lineString: OLLineString) => {
+    const animateLineString = (lineString: OLLineString): void => {
       const length = lineString.getLength();
       const ratioStep = Math.max(50, Math.min(Math.sqrt(length), 500));
       const scale = ratioStep / length;
@@ -149,7 +149,7 @@ export abstract class AlloyAnimationManager {
     feature: OLFeature,
     animationListener: AlloyAnimationListener,
     duration: number,
-  ) {
+  ): void {
     // remove existing animation for feature if already setup
     if (this.animationKeys.has(feature)) {
       const key = this.animationKeys.get(feature);
@@ -210,7 +210,7 @@ export abstract class AlloyAnimationManager {
     let centreChangeListener: OLEventsKey | OLEventsKey[] = [];
     let resolutionChangeListener: OLEventsKey | OLEventsKey[] = [];
     let paused = false;
-    const removeListeners = () => {
+    const removeListeners = (): void => {
       if (centreChangeListener) {
         PolyfillObservable.unByKey(centreChangeListener);
       }
@@ -224,7 +224,7 @@ export abstract class AlloyAnimationManager {
       lineStringFeature,
       {
         preAnimation: () => {
-          const el = (e) => {
+          const el = (e): void => {
             if (!paused) {
               return;
             }

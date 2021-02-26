@@ -73,7 +73,7 @@ export abstract class GeometryUtils {
    */
   public static removeCoordinate(geometry: OLGeometry, coordinate: OLCoordinate): boolean {
     switch (geometry.getType()) {
-      case OLGeometryType.POINT:
+      case OLGeometryType.POINT: {
         const point = geometry as OLPoint;
         let pointRemoved = false;
         if (GeometryUtils.isCoordinateEqual(point.getCoordinates(), coordinate)) {
@@ -81,7 +81,8 @@ export abstract class GeometryUtils {
           pointRemoved = true;
         }
         return pointRemoved;
-      case OLGeometryType.MULTI_POINT:
+      }
+      case OLGeometryType.MULTI_POINT: {
         const multiPoint = geometry as OLMultiPoint;
         const multiPointCoordinates = multiPoint.getCoordinates().slice();
         const pointIdx = multiPointCoordinates.findIndex((mpc) =>
@@ -94,7 +95,8 @@ export abstract class GeometryUtils {
         }
         multiPoint.setCoordinates(multiPointCoordinates);
         return multiPointRemoved;
-      case OLGeometryType.LINE_STRING:
+      }
+      case OLGeometryType.LINE_STRING: {
         const lineString = geometry as OLLineString;
         const lineStringCoordinates = lineString.getCoordinates().slice();
         const lineIdx = lineStringCoordinates.findIndex((lsc) =>
@@ -110,7 +112,8 @@ export abstract class GeometryUtils {
         }
         lineString.setCoordinates(lineStringCoordinates);
         return lineStringRemoved;
-      case OLGeometryType.MULTI_LINE_STRING:
+      }
+      case OLGeometryType.MULTI_LINE_STRING: {
         const multiLineString = geometry as OLMultiLineString;
         const multiLineStringCoordinates = multiLineString.getCoordinates().slice();
         let multiLineStringRemoved = false;
@@ -128,7 +131,8 @@ export abstract class GeometryUtils {
         }
         multiLineString.setCoordinates(multiLineStringCoordinates);
         return multiLineStringRemoved;
-      case OLGeometryType.POLYGON:
+      }
+      case OLGeometryType.POLYGON: {
         const polygon = geometry as OLPolygon;
         const polygonCoordinates = polygon.getCoordinates().slice();
         let polygonRemoved = false;
@@ -149,7 +153,8 @@ export abstract class GeometryUtils {
         }
         polygon.setCoordinates(polygonCoordinates);
         return polygonRemoved;
-      case OLGeometryType.MULTI_POLYGON:
+      }
+      case OLGeometryType.MULTI_POLYGON: {
         const multiPolygon = geometry as OLMultiPolygon;
         const multiPolygonCoordinates = multiPolygon.getCoordinates().slice();
         let multiPolygonRemoved = false;
@@ -181,7 +186,8 @@ export abstract class GeometryUtils {
         }
         multiPolygon.setCoordinates(multiPolygonCoordinates);
         return multiPolygonRemoved;
-      case OLGeometryType.GEOMETRY_COLLECTION:
+      }
+      case OLGeometryType.GEOMETRY_COLLECTION: {
         const geometryCollection = geometry as OLGeometryCollection;
         const subGeometries = geometryCollection.getGeometries();
         let geometryCollectionRemoved = false;
@@ -206,6 +212,7 @@ export abstract class GeometryUtils {
         }
         geometryCollection.setGeometries(subGeometries);
         return geometryCollectionRemoved;
+      }
       default:
         throw new AlloyMapError(1587399847, `Unhandled geometry type ${geometry.getType()}`);
     }
@@ -219,35 +226,40 @@ export abstract class GeometryUtils {
    */
   public static roundCoordinates(geometry: Geometry): void {
     switch (geometry.type) {
-      case 'Point':
+      case 'Point': {
         const point = geometry as Point;
         point.coordinates = GeometryUtils.memoizedRoundCoordinate(point.coordinates);
         break;
-      case 'MultiPoint':
+      }
+      case 'MultiPoint': {
         const multiPoint = geometry as MultiPoint;
         multiPoint.coordinates = multiPoint.coordinates.map((coordinate) =>
           GeometryUtils.memoizedRoundCoordinate(coordinate),
         );
         break;
-      case 'LineString':
+      }
+      case 'LineString': {
         const lineString = geometry as LineString;
         lineString.coordinates = lineString.coordinates.map((coordinate) =>
           GeometryUtils.memoizedRoundCoordinate(coordinate),
         );
         break;
-      case 'MultiLineString':
+      }
+      case 'MultiLineString': {
         const multiLineString = geometry as MultiLineString;
         multiLineString.coordinates = multiLineString.coordinates.map((lineCoordinates) =>
           lineCoordinates.map((coordinate) => GeometryUtils.memoizedRoundCoordinate(coordinate)),
         );
         break;
-      case 'Polygon':
+      }
+      case 'Polygon': {
         const polygon = geometry as Polygon;
         polygon.coordinates = polygon.coordinates.map((ringCoordinates) =>
           ringCoordinates.map((coordinate) => GeometryUtils.memoizedRoundCoordinate(coordinate)),
         );
         break;
-      case 'MultiPolygon':
+      }
+      case 'MultiPolygon': {
         const multiPolygon = geometry as MultiPolygon;
         multiPolygon.coordinates = multiPolygon.coordinates.map((polygonCoordinates) =>
           polygonCoordinates.map((ringCoordinates) =>
@@ -255,12 +267,14 @@ export abstract class GeometryUtils {
           ),
         );
         break;
-      case 'GeometryCollection':
+      }
+      case 'GeometryCollection': {
         const geometryCollection = geometry as GeometryCollection;
         geometryCollection.geometries.forEach((subGeometry: Geometry) =>
           GeometryUtils.roundCoordinates(subGeometry),
         );
         break;
+      }
       default:
         throw new AlloyMapError(1559909581, 'Unsupported geometry type');
     }

@@ -24,6 +24,7 @@ import OLPolygon from 'ol/geom/Polygon';
 import OLVectorLayer from 'ol/layer/Vector';
 import { ObjectEvent } from 'ol/Object';
 import OLVectorSource from 'ol/source/Vector';
+import OLStyle from 'ol/style/Style';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 
 /* eslint-enable max-len */
@@ -83,15 +84,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   private readonly featuresAddedDispatcher = new SimpleEventDispatcher<FeaturesAddedEvent>();
 
   /**
-   * handler for feature geometry change, we create this once for performance reasons. A single
-   * scoped arrow function here is passed to all geometry change handlers when we setup the
-   * event handlers on the features.
-   * @param e event object
-   */
-  private readonly onChangeGeometryHandler = (e: ObjectEvent) =>
-    this.handleFeatureGeometryChange(e);
-
-  /**
    * creates a new instance
    * @param id the id of the layer
    * @param map the map the layer is a member of
@@ -99,7 +91,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    * @ignore
    * @internal
    */
-  constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
+  protected constructor(id: string, map: AlloyMap, zIndex: AlloyLayerZIndex) {
     // set the debugger instance
     this.debugger = map.debugger.extend(AlloyLayerWithFeatures.name + ':' + id);
 
@@ -108,7 +100,7 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     this.olLayers = [
       new OLVectorLayer({
         // set the style for the layer, we use a fat arrow function here else "this" resolves wrong
-        style: (olFeature, resolution) => {
+        style: (olFeature, resolution): OLStyle | OLStyle[] => {
           if (this.currentStyleProcessor) {
             return this.currentStyleProcessor.onStyleProcess(
               olFeature,
@@ -128,18 +120,18 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
   /**
    * @implements
+   */
+  public getFeatureById(id: string): T | null {
+    return this.currentFeatures.get(id) || null;
+  }
+
+  /**
+   * @implements
    * @ignore
    * @internal
    */
   public get styleProcessor(): AlloyStyleProcessor | null {
     return this.currentStyleProcessor;
-  }
-
-  /**
-   * @implements
-   */
-  public getFeatureById(id: string): T | null {
-    return this.currentFeatures.get(id) || null;
   }
 
   /**
@@ -286,16 +278,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
   }
 
   /**
-   * sets the style processor
-   * @param processor the processor for styles
-   * @ignore
-   * @internal
-   */
-  protected setStyleProcessor(processor: AlloyStyleProcessor): void {
-    this.currentStyleProcessor = processor;
-  }
-
-  /**
    * adds a handler to listen for the features added to layer
    * @param handler the handler to call when features have been added
    */
@@ -309,23 +291,6 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
    */
   public removeFeaturesAddedListener(handler: FeaturesAddedEventHandler): void {
     this.featuresAddedDispatcher.unsubscribe(handler);
-  }
-
-  /**
-   * handles feature geometry changes
-   * @param e the geometry change event to respond to
-   */
-  private handleFeatureGeometryChange(e: ObjectEvent) {
-    if (!(e.oldValue instanceof OLFeature)) {
-      throw new AlloyMapError(
-        1601995459,
-        'geometry changed for feature but oldValue was not OLFeature',
-      );
-    }
-
-    // get feature and geometry
-    const feature = e.oldValue;
-    this.resetStyle(feature);
   }
 
   /**
@@ -355,5 +320,41 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
     }
 
     feature.changed();
+  }
+
+  /**
+   * sets the style processor
+   * @param processor the processor for styles
+   * @ignore
+   * @internal
+   */
+  protected setStyleProcessor(processor: AlloyStyleProcessor): void {
+    this.currentStyleProcessor = processor;
+  }
+
+  /**
+   * handler for feature geometry change, we create this once for performance reasons. A single
+   * scoped arrow function here is passed to all geometry change handlers when we setup the
+   * event handlers on the features.
+   * @param e event object
+   */
+  private readonly onChangeGeometryHandler = (e: ObjectEvent): void =>
+    this.handleFeatureGeometryChange(e);
+
+  /**
+   * handles feature geometry changes
+   * @param e the geometry change event to respond to
+   */
+  private handleFeatureGeometryChange(e: ObjectEvent): void {
+    if (!(e.oldValue instanceof OLFeature)) {
+      throw new AlloyMapError(
+        1601995459,
+        'geometry changed for feature but oldValue was not OLFeature',
+      );
+    }
+
+    // get feature and geometry
+    const feature = e.oldValue;
+    this.resetStyle(feature);
   }
 }

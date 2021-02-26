@@ -188,6 +188,8 @@ export abstract class WfsUtils {
     } else if (lowerCaseValue === 'gml3') {
       return AlloyWfsFormat.GML3;
     }
+
+    return undefined;
   }
 
   /**
@@ -212,7 +214,7 @@ export abstract class WfsUtils {
       const featureTypeDescription = await (await fetch(featureTypeUrl.href)).text();
 
       WfsUtils.debugger('parsing xml');
-      await WfsUtils.parseFeatureTypeDescrption(featureTypeDescription, descriptions);
+      await WfsUtils.parseFeatureTypeDescription(featureTypeDescription, descriptions);
     } catch (error) {
       throw error instanceof AlloyMapError
         ? error
@@ -278,10 +280,10 @@ export abstract class WfsUtils {
    * @ignore
    * @internal
    */
-  private static async parseFeatureTypeDescrption(
+  private static async parseFeatureTypeDescription(
     featureTypeDescription: string,
     descriptions: Map<string, WfsFeatureDescription>,
-  ) {
+  ): Promise<void> {
     const domparser = new DOMParser();
     const domdoc = domparser.parseFromString(featureTypeDescription, 'text/xml');
     const schemaRoot = domdoc.getElementsByTagName('xsd:schema').item(0);

@@ -138,7 +138,7 @@ export class AlloyDrawInteraction {
           width: DRAW_LINE_WIDTH,
         }),
       }),
-      geometry: (f) =>
+      geometry: (f): OLGeometry =>
         AlloyGeometryFunctionUtils.convertGeometryToMultiPoint(f.getGeometry() as OLGeometry),
     }),
   ];
@@ -439,7 +439,7 @@ export class AlloyDrawInteraction {
   /**
    * Removes draw interaction from the map and resets the variable
    */
-  private removeDrawInteraction() {
+  private removeDrawInteraction(): void {
     if (this.olDraw !== null) {
       this.map.olMap.removeInteraction(this.olDraw);
       this.olDraw = null;
@@ -449,7 +449,7 @@ export class AlloyDrawInteraction {
   /**
    * Removes modify interaction from the map and resets the variable
    */
-  private removeModifyInteraction() {
+  private removeModifyInteraction(): void {
     if (this.olModify !== null) {
       this.map.olMap.removeInteraction(this.olModify);
       this.olModify = null;
@@ -461,7 +461,7 @@ export class AlloyDrawInteraction {
    * and dispatches draw event with drawn feature or null if was cancelled
    * @param feature drawn feature or null if draw interaction was cancelled
    */
-  private onDrawEnd(feature: AlloyDrawFeature | null) {
+  private onDrawEnd(feature: AlloyDrawFeature | null): void {
     // reset interactions
     this.removeDrawInteraction();
     setTimeout(() => {
@@ -475,7 +475,7 @@ export class AlloyDrawInteraction {
   /**
    * initialise modify interaction
    */
-  private initModify() {
+  private initModify(): void {
     this.removeModifyInteraction();
     // create new modify interaction for all features in draw layer with default draw styles
     this.olModify = new OLModify({
@@ -512,7 +512,7 @@ export class AlloyDrawInteraction {
    * and dispatches draw event with modified feature
    * @param feature modified feature
    */
-  private onModifyEnd(feature: AlloyDrawFeature | null) {
+  private onModifyEnd(feature: AlloyDrawFeature | null): void {
     // reset interactions
     setTimeout(() => {
       this.map.selectionInteraction.setEnabled(this.wasSelectionEnabled);
@@ -528,7 +528,7 @@ export class AlloyDrawInteraction {
   /**
    * processes draw layer features and creates point features for remove layer from all coordinates
    */
-  private setRemoveInteractionFeatures() {
+  private setRemoveInteractionFeatures(): void {
     // clears remove layer
     this.removeLayer.clearFeatures();
     // convert all draw layer features to points

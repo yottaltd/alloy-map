@@ -68,18 +68,14 @@ export class AlloyHoverInteraction {
     // processing done for these events
     this.map.olMap.on(
       'pointermove',
-      _.debounce(
-        (e) => this.onPointerMove(e as any /* this is untyped in ol */),
-        POINTER_MOVE_THROTTLE,
-        {
-          // call the function immediately
-          leading: true,
-          // always call it after the events stop
-          trailing: true,
-          // the max amount of time between calling e.g. user keeps moving the mouse for 1s
-          maxWait: POINTER_MOVE_THROTTLE,
-        },
-      ),
+      _.debounce((e) => this.onPointerMove(e as OLMapBrowserPointerEvent), POINTER_MOVE_THROTTLE, {
+        // call the function immediately
+        leading: true,
+        // always call it after the events stop
+        trailing: true,
+        // the max amount of time between calling e.g. user keeps moving the mouse for 1s
+        maxWait: POINTER_MOVE_THROTTLE,
+      }),
     );
 
     // listen for layer changes to cache computed data
@@ -128,7 +124,7 @@ export class AlloyHoverInteraction {
     // iterate through each feature at the map pixel
     this.map.olMap.forEachFeatureAtPixel(
       event.pixel,
-      (olFeature, olLayer) => {
+      (olFeature, olLayer): boolean | undefined => {
         // potentially a render feature
         if (olFeature instanceof OLFeature) {
           // find our layer index for the openlayers layers
@@ -146,6 +142,8 @@ export class AlloyHoverInteraction {
             }
           }
         }
+
+        return undefined;
       },
       {
         // filters the layers to iterate though, we only want alloy layers e.g. not hover layers
@@ -184,7 +182,7 @@ export class AlloyHoverInteraction {
   /**
    * recalculates the payload of data used on pointer movement
    */
-  private recalculatePointerMovePayload() {
+  private recalculatePointerMovePayload(): void {
     const layers = Array.from(this.map.layers.values()).concat(this.map.selectionLayer);
     const olLayers = _.flatten(layers.map((l) => l.olLayers));
 

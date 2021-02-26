@@ -11,7 +11,7 @@ export interface WfsFeatureProperty {
   /**
    * WFS feature property value
    */
-  value?: any;
+  value?: unknown;
   /**
    * Description of WFS feature property if available
    */

@@ -1,7 +1,7 @@
 import { AlloyFeature } from '@/map/features/AlloyFeature';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleProcessor } from '@/map/styles/AlloyStyleProcessor';
-import { Style } from 'ol/style';
+import OLStyle from 'ol/style/Style';
 
 /**
  * processes the selection styled feature items, this reuses the style processors set up for the
@@ -17,7 +17,7 @@ export class AlloySelectionStyleProcessor extends AlloyStyleProcessor {
     feature: AlloyFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): Style | Style[] {
+  ): OLStyle | OLStyle[] {
     // if we don't have an originating layer then bail
     if (!feature.originatingLayerId) {
       return [];

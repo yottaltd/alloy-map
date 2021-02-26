@@ -162,6 +162,7 @@ export class AlloyBasicFeatureLoader extends AlloyTileFeatureLoader<AlloyItemFea
     // result in the following process, be careful when modifying these and make sure they match
     // what the service is giving us. Think about performance because there could be MANY results
     // and this is called potentially 30-40 times in a second when panning
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return response.results.map((r: any /* we don't have typings */, i: number) => {
       const olFeature = olFeatures[i];
       const featureId = FeatureUtils.createFeatureId(this.layer.layerCode, olFeature);

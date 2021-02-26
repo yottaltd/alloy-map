@@ -68,7 +68,7 @@ export abstract class WfsLayerUtils {
 
     const vectorSource = new OLVectorSource({
       format,
-      loader: (extent, resolution, projection) => {
+      loader: (extent, resolution, projection): void => {
         const extentUrl = new URL(getFeatureUrl.href);
         if (!loadAll) {
           extentUrl.searchParams.set(
@@ -77,10 +77,11 @@ export abstract class WfsLayerUtils {
           );
         }
 
-        const onError = (e: any) =>
+        const onError = (e: string): void =>
           // eslint-disable-next-line no-console
           console.error('failed to fetch WFS features for extent', extent, e);
-        const fetchPromise = async () => {
+
+        const fetchPromise = async (): Promise<void> => {
           try {
             const response = await fetch(extentUrl.href);
             if (response.status === 200) {
