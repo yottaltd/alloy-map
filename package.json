@@ -37,8 +37,6 @@
     "stylelint:fix": "stylelint --fix src/assets/less/{**/,}*.{css,less}"
   },
   "dependencies": {
-    "@yottaltd/eslint-config": "^1.0.2",
-    "@yottaltd/eslint-plugin": "^1.1.1",
     "color": "^3.1.3",
     "debug": "^4.3.1",
     "dompurify": "^2.2.6",
@@ -52,6 +50,8 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "@yottaltd/eslint-config": "^1.0.2",
+    "@yottaltd/eslint-plugin": "^1.1.1",
     "@cypress/webpack-preprocessor": "^5.6.0",
     "@types/chai": "^4.2.15",
     "@types/color": "^3.0.1",
