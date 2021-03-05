@@ -41,7 +41,7 @@ export class AlloyNetworkStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
-    this.networkStyleBuilder.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.networkStyleBuilder.clear(parts);
   }
 }

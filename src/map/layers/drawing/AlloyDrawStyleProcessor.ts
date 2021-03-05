@@ -45,7 +45,7 @@ export class AlloyDrawStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
-    this.drawStyleBuilder.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.drawStyleBuilder.clear(parts);
   }
 }

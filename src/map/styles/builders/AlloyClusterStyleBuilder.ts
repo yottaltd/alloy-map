@@ -4,12 +4,13 @@ import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '@/map/styles/AlloyStyleBuilderWithLayerStyles';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
 import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
 import { AlloyTextUtils } from '@/map/styles/utils/AlloyTextUtils';
 import { ColourUtils } from '@/utils/ColourUtils';
 import { NumberFormatUtils } from '@/utils/NumberFormatUtils';
-import { StringUtils } from '@/utils/StringUtils';
 import OLIcon from 'ol/style/Icon';
 import OLStyle from 'ol/style/Style';
 
@@ -53,7 +54,7 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     feature: AlloyClusterFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): string {
+  ): AlloyStyleCacheKey {
     const layerStyle = this.layerStyles.get(feature.properties.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1554163345, 'missing layer style: ' + feature.properties.styleId);
@@ -63,15 +64,16 @@ export class AlloyClusterStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     // string concatenation
     const text = NumberFormatUtils.smallFormatNumber(feature.properties.count);
 
-    return StringUtils.cacheKeyConcat(
+    return AlloyStyleCacheKeyBuilder.create({
       state,
       resolution,
       // icon is not in here because clusters don't have them
-      layerStyle.colour,
-      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
-      layerStyle.scale,
-      text,
-    );
+      colour: layerStyle.colour,
+      opacity: state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
+      scale: layerStyle.scale,
+      // caching text with icon key to be inline with other builders
+      icon: text,
+    });
   }
 
   /**

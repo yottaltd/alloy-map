@@ -41,7 +41,7 @@ export class AlloyHoverStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
+  public clear(parts?: Record<string, any>): void {
     // do nothing
   }
 }

@@ -6,13 +6,14 @@ import { AlloyCableUnitFeature } from '@/map/features/AlloyCableUnitFeature';
 import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
 import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
 import { AlloyLineUtils } from '@/map/styles/utils/AlloyLineUtils';
 import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
 import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
 import { ColourUtils } from '@/utils/ColourUtils';
-import { StringUtils } from '@/utils/StringUtils';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLStyle from 'ol/style/Style';
 
@@ -48,14 +49,14 @@ export class AlloyCableStyleBuilder extends AlloyStyleBuilder<
     feature: AlloyCableFeature | AlloyCableUnitFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): string {
-    return StringUtils.cacheKeyConcat(
+  ): AlloyStyleCacheKey {
+    return AlloyStyleCacheKeyBuilder.create({
       resolution,
       state,
-      feature.olFeature.getId(), // each cable feature is unique (expensive)
-      feature instanceof AlloyCableUnitFeature ? feature.properties.icon : undefined,
-      feature.olFeature.getRevision(),
-    );
+      featureId: feature.olFeature.getId(), // each cable feature is unique (expensive)
+      icon: feature instanceof AlloyCableUnitFeature ? feature.properties.icon : undefined,
+      revision: feature.olFeature.getRevision(),
+    });
   }
 
   /**

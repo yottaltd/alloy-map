@@ -316,7 +316,9 @@ export abstract class AlloyLayerWithFeatures<T extends AlloyFeature> implements 
 
     // if we need to clear anything then clear the the style processor
     if (shouldClearStyles && this.styleProcessor) {
-      this.styleProcessor.clear();
+      this.styleProcessor.clear({
+        featureId: feature.getId(),
+      });
     }
 
     feature.changed();

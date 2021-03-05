@@ -9,6 +9,8 @@ import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 import { AlloyStyleBuilderBuildState } from '@/map/styles/AlloyStyleBuilderBuildState';
 import { AlloyStyleBuilderWithLayerStyles } from '@/map/styles/AlloyStyleBuilderWithLayerStyles';
 import { AlloyWfsLayerStyle } from '@/map/styles/AlloyWfsLayerStyle';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
 import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
 import { AlloyLabelUtils } from '@/map/styles/utils/AlloyLabelUtils';
@@ -22,7 +24,6 @@ import { AlloyMultiLineStringFunctions } from '@/map/styles/utils/geometry-funct
 import { AlloyMultiPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyMultiPolygonFunctions';
 import { AlloyPolygonFunctions } from '@/map/styles/utils/geometry-functions/AlloyPolygonFunctions';
 import { ColourUtils } from '@/utils/ColourUtils';
-import { StringUtils } from '@/utils/StringUtils';
 import OLGeometryCollection from 'ol/geom/GeometryCollection';
 import OLGeometryType from 'ol/geom/GeometryType';
 import OLMultiPolygon from 'ol/geom/MultiPolygon';
@@ -67,36 +68,39 @@ export class AlloyWfsStyleBuilder extends AlloyStyleBuilderWithLayerStyles<
     feature: AlloyWfsFeature,
     resolution: number,
     state: AlloyStyleBuilderBuildState,
-  ): string {
+  ): AlloyStyleCacheKey {
     const layerStyle = this.layerStyles.get(feature.styleId);
     if (!layerStyle) {
       throw new AlloyMapError(1562245691, 'missing layer style: ' + feature.styleId);
     }
     const type = feature.getExpectedGeometry().getType();
-    return StringUtils.cacheKeyConcat(
+    return AlloyStyleCacheKeyBuilder.create({
       state,
       resolution,
-      layerStyle.colour,
-      layerStyle.scale !== AlloyLayerStyleScale.Tiny ? layerStyle.icon : undefined,
+      colour: layerStyle.colour,
+      icon: layerStyle.scale !== AlloyLayerStyleScale.Tiny ? layerStyle.icon : undefined,
       // if polygon then we need to cache per feature due to centre of polygon calcuations
-      type === OLGeometryType.POLYGON ||
+      featureId:
+        type === OLGeometryType.POLYGON ||
         type === OLGeometryType.MULTI_POLYGON ||
         type === OLGeometryType.GEOMETRY_COLLECTION
-        ? feature.olFeature.getId()
-        : undefined,
+          ? feature.olFeature.getId()
+          : undefined,
       // if we have titles and we are in title mode then we need to cache on them
-      !!layerStyle.labelTitle &&
+      title:
+        !!layerStyle.labelTitle &&
         (layerStyle.labelMode === AlloyLayerStyleLabelMode.Title ||
           layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle)
-        ? feature.olFeature.get(layerStyle.labelTitle)
-        : undefined,
+          ? feature.olFeature.get(layerStyle.labelTitle)
+          : undefined,
       // if we have subtitles and we are in subtitle mode then we need to cache on them
-      !!layerStyle.labelSubtitle &&
+      subtitle:
+        !!layerStyle.labelSubtitle &&
         layerStyle.labelMode === AlloyLayerStyleLabelMode.TitleAndSubtitle
-        ? feature.olFeature.get(layerStyle.labelSubtitle)
-        : undefined,
-      state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
-    );
+          ? feature.olFeature.get(layerStyle.labelSubtitle)
+          : undefined,
+      opacity: state === AlloyStyleBuilderBuildState.Default ? layerStyle.opacity.value : 1,
+    });
   }
 
   /**

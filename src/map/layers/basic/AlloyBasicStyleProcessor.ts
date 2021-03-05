@@ -42,7 +42,7 @@ export class AlloyBasicStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
-    this.basicStyleBuilder.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.basicStyleBuilder.clear(parts);
   }
 }

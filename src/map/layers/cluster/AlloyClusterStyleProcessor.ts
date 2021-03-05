@@ -57,8 +57,8 @@ export class AlloyClusterStyleProcessor extends AlloyStyleProcessor {
   /**
    * @override
    */
-  public clear(): void {
-    this.clusterStyleBuilder.clear();
-    this.itemStyleBuilder.clear();
+  public clear(parts?: Record<string, any>): void {
+    this.clusterStyleBuilder.clear(parts);
+    this.itemStyleBuilder.clear(parts);
   }
 }

@@ -6,6 +6,8 @@ import { AlloyRouteWaypointFeature } from '@/map/features/AlloyRouteWaypointFeat
 import { AlloyLayerStyleOpacity } from '@/map/styles/AlloyLayerStyleOpacity';
 import { AlloyLayerStyleScale } from '@/map/styles/AlloyLayerStyleScale';
 import { AlloyStyleBuilder } from '@/map/styles/AlloyStyleBuilder';
+import { AlloyStyleCacheKey } from '@/map/styles/cache/AlloyStyleCacheKey';
+import { AlloyStyleCacheKeyBuilder } from '@/map/styles/cache/AlloyStyleCacheKeyBuilder';
 import { AlloyBallUtils } from '@/map/styles/utils/AlloyBallUtils';
 import { AlloyIconUtils } from '@/map/styles/utils/AlloyIconUtils';
 import { AlloyLabelUtils } from '@/map/styles/utils/AlloyLabelUtils';
@@ -13,7 +15,6 @@ import { AlloyLineUtils } from '@/map/styles/utils/AlloyLineUtils';
 import { AlloyScaleUtils } from '@/map/styles/utils/AlloyScaleUtils';
 import { AlloyGeometryCollectionFunctions } from '@/map/styles/utils/geometry-functions/AlloyGeometryCollectionFunctions';
 import { ColourUtils } from '@/utils/ColourUtils';
-import { StringUtils } from '@/utils/StringUtils';
 import OLFeature from 'ol/Feature';
 import OLGeometry from 'ol/geom/Geometry';
 import OLGeometryType from 'ol/geom/GeometryType';
@@ -52,18 +53,20 @@ export class AlloyRouteStyleBuilder extends AlloyStyleBuilder<
   protected getKey(
     feature: AlloyRouteFeature | AlloyRouteWaypointFeature,
     resolution: number,
-  ): string {
-    return StringUtils.cacheKeyConcat(
+  ): AlloyStyleCacheKey {
+    return AlloyStyleCacheKeyBuilder.create({
       resolution,
-      feature.olFeature.getId(), // each route feature is unique (expensive)
-      feature.properties.colour,
-      feature instanceof AlloyRouteWaypointFeature ? feature.properties.title : undefined,
-      feature instanceof AlloyRouteWaypointFeature ? feature.properties.subtitle : undefined,
-      feature instanceof AlloyRouteWaypointFeature
-        ? feature.properties.icon || feature.properties.text
-        : undefined,
-      feature.olFeature.getRevision(),
-    );
+      featureId: feature.olFeature.getId(), // each route feature is unique (expensive)
+      colour: feature.properties.colour,
+      title: feature instanceof AlloyRouteWaypointFeature ? feature.properties.title : undefined,
+      subtitle:
+        feature instanceof AlloyRouteWaypointFeature ? feature.properties.subtitle : undefined,
+      icon:
+        feature instanceof AlloyRouteWaypointFeature
+          ? feature.properties.icon || feature.properties.text
+          : undefined,
+      revision: feature.olFeature.getRevision(),
+    });
   }
 
   /**
